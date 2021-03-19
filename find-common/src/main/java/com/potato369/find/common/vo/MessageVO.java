@@ -44,7 +44,7 @@ public class MessageVO {
     /**
      * 未读申请加微信消息数据
      */
-    @JSONField(name = "applications")
-    @JsonProperty(value = "applications")
+    @JSONField(name = "list")
+    @JsonProperty(value = "list")
     private List<MessageInfoVO> messageInfoVOs;
 }

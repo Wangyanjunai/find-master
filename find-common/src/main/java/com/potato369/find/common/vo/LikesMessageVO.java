@@ -17,18 +17,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class LikesMessageVO {
-	
-    //最新一条点赞用户的头像
-    @JSONField(name = "head")
-    @JsonProperty(value = "head")
-    private String head;
-
     //最新一条点赞消息内容
     @JSONField(name = "content")
     @JsonProperty(value = "content")
     private String content;
     
-    //未读点赞消息条数
+    //未读点赞消息总条数
     @JSONField(name = "count")
     @JsonProperty(value = "count")
     private Integer count;

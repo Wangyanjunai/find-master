@@ -37,7 +37,7 @@ public class MessageVO2 {
     /**
      * 点赞数据列表
      */
-    @JSONField(name = "likes")
-    @JsonProperty(value = "likes")
+    @JSONField(name = "list")
+    @JsonProperty(value = "list")
     private List<LikesInfoVO> likesInfoVOs;
 }

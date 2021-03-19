@@ -19,12 +19,10 @@ import com.potato369.find.common.vo.MessageInfoVO;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.mbg.mapper.MessageMapper;
-import com.potato369.find.mbg.mapper.UserMapper;
 import com.potato369.find.mbg.model.LikesMessageRecord;
 import com.potato369.find.mbg.model.Message;
 import com.potato369.find.mbg.model.MessageExample;
 import com.potato369.find.mbg.model.NotLikesMessageRecord;
-import com.potato369.find.mbg.model.User;
 import com.potato369.find.message.config.props.ProjectUrlProps;
 import com.potato369.find.message.service.MessageService;
 
@@ -35,19 +33,12 @@ public class MessageServiceImpl implements MessageService {
 
     private MessageMapper messageMapperReader;
     
-    private UserMapper userMapperReader;
-    
     private ProjectUrlProps projectUrlProps;
 
     @Autowired
     public void setMessageMapperReader(MessageMapper messageMapperReader) {
         this.messageMapperReader = messageMapperReader;
     }
-    
-    @Autowired
-    public void setUserMapperReader(UserMapper userMapperReader) {
-		this.userMapperReader = userMapperReader;
-	}
 
 	@Autowired
     public void setProjectUrlProps(ProjectUrlProps projectUrlProps) {
@@ -57,6 +48,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional(readOnly = true)
     public LikesMessageVO selectLikesMessage(Long userId) {
+    	//查询未读点赞消息总条数
         MessageExample messageExample = new MessageExample();
         messageExample.setDistinct(true);
         messageExample.setOrderByClause("create_time DESC, update_time DESC");
@@ -65,19 +57,21 @@ public class MessageServiceImpl implements MessageService {
                 .andStatusEqualTo(MessageStatusEnum.UNREAD.getStatus())
                 .andRecipientUserIdEqualTo(userId);
         LikesMessageVO likesMessageVO = new LikesMessageVO();
-        List<Message> messages = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
-        likesMessageVO.setCount(messages.size());
+        List<Message> messages = this.messageMapperReader.selectByExample(messageExample);
         if (messages != null && !messages.isEmpty()) {
-            Message message = messages.get(0);
-            Long userSendUserId= message.getSendUserId();
-            User sendUser = this.userMapperReader.selectByPrimaryKey(userSendUserId);
-            likesMessageVO.setHead(
-            		  StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                    + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                    + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                    + userSendUserId
-                    + "/"
-                    + sendUser.getHeadIcon());
+        	likesMessageVO.setCount(messages.size());
+		} else {
+			likesMessageVO.setCount(0);
+		}
+        MessageExample messageExample2 = new MessageExample();
+        messageExample.setDistinct(true);
+        messageExample.setOrderByClause("create_time DESC, update_time DESC");
+        messageExample.createCriteria()
+                .andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage())
+                .andRecipientUserIdEqualTo(userId);
+        List<Message> messages2 = this.messageMapperReader.selectByExampleWithBLOBs(messageExample2);
+        if (messages2 != null && !messages2.isEmpty()) {
+            Message message = messages2.get(0);
             likesMessageVO.setContent(message.getContent());
         }
         return likesMessageVO;

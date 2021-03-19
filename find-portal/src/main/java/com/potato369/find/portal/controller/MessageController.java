@@ -53,7 +53,7 @@ public class MessageController {
      * @apiSuccess (200) {int} [count] 未读点赞消息总条数
      * @apiSuccess (200) {long} [totalCount] 未读申请加微信消息总条数
      * @apiSuccess (200) {int} [totalPage] 申请加微信消息总页数
-     * @apiSuccess (200) {object[]} [applications] 申请加微信消息数据
+     * @apiSuccess (200) {object[]} [list] 申请加微信消息数据
      * @apiSuccess (200) {long} [userId] 申请加微信发送者用户id
      * @apiSuccess (200) {string} [head] 申请加微信发送者用户头像
      * @apiSuccess (200) {string} [nickname] 申请加微信发送者用户昵称
@@ -66,13 +66,12 @@ public class MessageController {
 		    "msg":"返回数据成功",
 		    "data":{
 		        "likes":{
-		            "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		            "content":"阿萌赞了你的动态差点就掉下去了！",
 		            "count":5
 		        },
 		        "totalCount":5,
 		        "totalPage":1,
-		        "applications":[
+		        "list":[
 		            {
 		                "userId":60,
 		                "head":"http://8.135.36.45:8000/find/img/head/60/01.png",
@@ -162,7 +161,7 @@ public class MessageController {
      * @apiSuccess (200) {object} [data] 消息数据
      * @apiSuccess (200) {long} [totalCount] 未读点赞消息总条数
      * @apiSuccess (200) {int} [totalPage] 点赞消息总页数
-     * @apiSuccess (200) {object[]} [likes] 点赞消息数据
+     * @apiSuccess (200) {object[]} [list] 点赞消息数据
      * @apiSuccess (200) {long} [userId] 点赞者用户id
      * @apiSuccess (200) {string} [head] 点赞者用户头像
      * @apiSuccess (200) {string} [content] 点赞者发送消息内容
@@ -177,7 +176,7 @@ public class MessageController {
 		    "data":{
 		        "totalCount":30,
 		        "totalPage":2,
-		        "likes":[
+		        "list":[
 		            {
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",

@@ -31,8 +31,8 @@ public class MessageController {
 	/**
 	 * 消息主界面获取点赞和申请加微信
      * @param userId   用户id
-     * @param pageNum  当前页码
-     * @param pageSize 每页数量
+     * @param pageNum  当前页码，默认：1
+     * @param pageSize 每页数量，默认：20
      */
     @ApiOperation(value = "消息主界面获取点赞和申请加微信", notes = "消息主界面获取点赞和申请加微信")
 	@GetMapping(value = "/{id}/all.do")
@@ -46,8 +46,8 @@ public class MessageController {
     /**
      * 被点赞的动态内容消息记录
      * @param userId   用户id
-     * @param pageNum  页码
-     * @param pageSize 每页数量
+     * @param pageNum  当前页码，默认：1
+     * @param pageSize 每页数量，默认：20
      */
     @ApiOperation(value = "被点赞的动态内容消息记录", notes = "被点赞的动态内容消息记录")
     @GetMapping(value = "/{id}/likes.do")
