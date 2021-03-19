@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Api(value = "消息模块消息推送控制器类")
+@Api(value = "消息模块消息推送控制器类", consumes = "消息模块消息推送控制器类")
 @RestController
 @RequestMapping("/v1/message")
 public class PushMessageController {
