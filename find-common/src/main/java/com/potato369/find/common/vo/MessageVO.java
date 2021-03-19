@@ -21,28 +21,28 @@ import lombok.ToString;
 public class MessageVO {
 
     /**
-     * likes:点赞信息
+     * likes:未读点赞消息数据
      */
     @JSONField(name = "likes")
     @JsonProperty(value = "likes")
     private LikesMessageVO likesMessageVO;
 
     /**
-     * totalCount:申请加微信总条数
+     * totalCount:未读申请加微信消息总条数
      */
     @JSONField(name = "totalCount")
     @JsonProperty(value = "totalCount")
     private Long totalCount;
 
     /**
-     * totalPage:申请加微信总页数
+     * totalPage:未读申请加微信消息总页数
      */
     @JSONField(name = "totalPage")
     @JsonProperty(value = "totalPage")
     private Integer totalPage;
 
     /**
-     * 申请加微信数据列表
+     * 未读申请加微信消息数据
      */
     @JSONField(name = "applications")
     @JsonProperty(value = "applications")

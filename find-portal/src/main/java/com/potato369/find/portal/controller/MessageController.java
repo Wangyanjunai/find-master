@@ -33,163 +33,380 @@ public class MessageController {
     }
 
     /**
-     * @api {post} http://124.71.38.2:8084/find/message/{id}/all 分页获取消息列表接口
+     * @api {get} http://8.135.36.45:8084/find/message/{id}/all 分页获取消息界面点赞和申请加微信消息列表接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
-     * @apiName 分页获取消息列表
+     * @apiName 分页获取消息界面点赞和申请加微信消息列表
      * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页码
-     * @apiParam (接口请求参数) {int} [pageSize] 每页数量
-     * @apiParamExample {json} 请求示例01（发布图片有具体发布定位地址）
+     * @apiParam (接口请求参数) {int} [pageNum] 当前页码，默认：1
+     * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
+     * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -X GET "http://124.71.38.2:8084/find/message/29/all?pageNum=1&pageSize=20" -H "accept: application/json"
+     * curl -v -X GET "http://8.135.36.45:8084/find/message/29/all?pageNum=1&pageSize=20" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [RELEASED] 发布状态
-     * @apiSuccessExample {json} 200响应示例01（发布图片有具体发布定位地址）
+     * @apiSuccess (200) {object} [data] 消息数据
+     * @apiSuccess (200) {object} [likes] 点赞消息数据
+     * @apiSuccess (200) {string} [head] 最新点赞者用户头像
+     * @apiSuccess (200) {string} [content] 最新点赞消息内容
+     * @apiSuccess (200) {int} [count] 未读点赞消息总条数
+     * @apiSuccess (200) {long} [totalCount] 未读申请加微信消息总条数
+     * @apiSuccess (200) {int} [totalPage] 申请加微信消息总页数
+     * @apiSuccess (200) {object[]} [applications] 申请加微信消息数据
+     * @apiSuccess (200) {long} [userId] 申请加微信发送者用户id
+     * @apiSuccess (200) {string} [head] 申请加微信发送者用户头像
+     * @apiSuccess (200) {string} [nickname] 申请加微信发送者用户昵称
+     * @apiSuccess (200) {string} [content] 申请加微信发送消息内容
+     * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "发布动态内容成功。",
-     * "data": {
-     * 	"RELEASED": "OK"
-     * }
-     * }
-     * @apiParamExample {json} 请求示例02（发布图片有客户端IP）
-     * HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
-     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release
-     * -d '{
-     * "imei": "895568564457954422",
-     * "attacheInfoDataType": "1",
-     * "files": "C:\Users\Administrator\Pictures\images\01.jpg,
-     * C:\Users\Administrator\Pictures\images\02.jpg,
-     * C:\Users\Administrator\Pictures\images\03.jpg,
-     * C:\Users\Administrator\Pictures\images\04.jpg",
-     * "model": "vivo x7 plus",
-     * "sysName": "Android",
-     * "sysCode": "9.0",
-     * "networkMode": "WIFI",
-     * "ip": "183.14.31.54",
-     * "publicStatus": "0",
-     * "content": "发布照片。"
-     * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [RELEASED] 发布状态
-     * @apiSuccessExample {json} 200响应示例02（发布图片有客户端IP）
-     * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "发布动态内容成功。",
-     * "data": {
-     * "RELEASED": "OK"
-     * }
-     * }
-     * @apiParamExample {json} 请求示例03（发布语音有客户端IP）
-     * HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
-     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release
-     * -d '{
-     * "imei": "895568564457954422",
-     * "attacheInfoDataType": "2",
-     * "files": "F:\文件\各种音乐\(DJ)中文DJ\7姨、高梦瑶、妖姬 - 威震八方.mp3",
-     * "model": "vivo x7 plus",
-     * "sysName": "Android",
-     * "sysCode": "9.0",
-     * "networkMode": "WIFI",
-     * "ip": "183.14.31.54",
-     * "publicStatus": "0",
-     * "content": "发布语音。"
-     * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [RELEASED] 发布状态
-     * @apiSuccessExample {json} 200响应示例03（发布语音有客户端IP）
-     * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "发布动态内容成功。",
-     * "data": {
-     * "RELEASED": "OK"
-     * }
-     * }
-     * @apiParamExample {json} 请求示例04（发布纯文字有客户端IP）
-     * HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
-     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release
-     * -d '{
-     * "imei": "895568564457954422",
-     * "attacheInfoDataType": "0",
-     * "model": "vivo x7 plus",
-     * "sysName": "Android",
-     * "sysCode": "9.0",
-     * "networkMode": "WIFI",
-     * "ip": "183.14.31.54",
-     * "publicStatus": "0",
-     * "content": "发布语音。"
-     * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [RELEASED] 发布状态
-     * @apiSuccessExample {json} 200响应示例04（发布纯文字有客户端IP）
-     * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "发布动态内容成功。",
-     * "data": {
-     * "RELEASED": "OK"
-     * }
-     * }
+		{
+		    "status":200,
+		    "code":0,
+		    "msg":"返回数据成功",
+		    "data":{
+		        "likes":{
+		            "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		            "content":"阿萌赞了你的动态差点就掉下去了！",
+		            "count":5
+		        },
+		        "totalCount":5,
+		        "totalPage":1,
+		        "applications":[
+		            {
+		                "userId":60,
+		                "head":"http://8.135.36.45:8000/find/img/head/60/01.png",
+		                "nickname":"尘埃",
+		                "content":"需要加您的微信?"
+		            },
+		            {
+		                "userId":62,
+		                "head":"http://8.135.36.45:8000/find/img/head/62/02.png",
+		                "nickname":"蓝梧桐",
+		                "content":"需要加您的微信?"
+		            },
+		            {
+		                "userId":61,
+		                "head":"http://8.135.36.45:8000/find/img/head/61/01.png",
+		                "nickname":"长安",
+		                "content":"需要加您的微信?"
+		            },
+		            {
+		                "userId":71,
+		                "head":"http://8.135.36.45:8000/find/img/head/71/07.png",
+		                "nickname":"弦雨晴",
+		                "content":"需要加您的微信?"
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "nickname":"阿萌",
+		                "content":"需要加您的微信?"
+		            }
+		        ]
+		    }
+		}
      * @apiError (403) {int{0-65535}} status 响应状态码
      * @apiError (403) {long{0-500}} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
-     * {
-     * "status": 403,
-     * "code": 199,
-     * "msg": "未找到用户信息！"
-     * }
+      {
+      	"status": 403,
+      	"code": 199,
+      	"msg": "未找到用户信息！"
+      }
      * @apiError (404) {int{0-65535}} status 响应状态码
      * @apiError (404) {long{0-500}} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
-     * {
-     * "status": 404,
-     * "code": 200,
-     * "msg": "接口未注册！"
-     * }
+      {
+      	"status": 404,
+      	"code": 200,
+      	"msg": "接口未注册！"
+      }
      * @apiError (500) {int{0-65535}} status 响应状态码
      * @apiError (500) {long{0-500}} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
-     * {
-     * "status": 500,
-     * "code": 205,
-     * "msg": "服务器未响应！"
-     * }
+      {
+      	"status": 500,
+      	"code": 205,
+      	"msg": "服务器未响应！"
+      }
      */
     @GetMapping(value = "/{id}/all")
-    @ApiOperation(value = "分页获取消息界面用户最近一条点赞和申请加微信消息列表接口", notes = "用于分页获取消息界面用户最近一条点赞和申请加微信消息列表。")
+    @ApiOperation(value = "分页获取消息界面点赞和申请加微信消息列表接口", notes = "用于用户分页获取消息界面点赞和申请加微信消息列表。")
     @ApiResponses(@ApiResponse(code = 200, message = "分页获取消息界面用户最近一条点赞和申请加微信消息列表成功", response = CommonResult.class))
     CommonResult<MessageVO> findAll(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
     		@RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码，默认：当前第1页", example = "1") Integer pageNum, // 当前页码，默认：当前第1页
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量，默认：每页20条", example = "20") Integer pageSize) {// 每页数量，默认：每页20条
         return this.messageFeignClient.findAll(userId, pageNum, pageSize);
     }
-
+    /**
+     * @api {get} http://8.135.36.45:8084/find/message/{id}/likes 分页获取点赞消息列表接口
+     * @apiVersion 1.0.0
+     * @apiGroup 消息模块API
+     * @apiName 分页获取点赞消息列表
+     * @apiParam (接口请求参数) {long} id 用户id 消息接收者用户id
+     * @apiParam (接口请求参数) {int} [pageNum] 当前页码，默认：1
+     * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl -v -X GET "http://8.135.36.45:8084/find/message/29/likes?pageNum=1&pageSize=20" -H "accept: application/json"
+     * @apiSuccess (200) {long{0-500}} code 信息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {object} [data] 消息数据
+     * @apiSuccess (200) {long} [totalCount] 未读点赞消息总条数
+     * @apiSuccess (200) {int} [totalPage] 点赞消息总页数
+     * @apiSuccess (200) {object[]} [likes] 点赞消息数据
+     * @apiSuccess (200) {long} [userId] 点赞者用户id
+     * @apiSuccess (200) {string} [head] 点赞者用户头像
+     * @apiSuccess (200) {string} [content] 点赞者发送消息内容
+     * @apiSuccess (200) {string} [attacheType] 点赞的动态内容类型，0->图片，1->语音
+     * @apiSuccess (200) {string[]} [filenameList] 点赞的动态文件名称列表
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+		{
+		    "status":200,
+		    "code":0,
+		    "msg":"返回数据成功",
+		    "data":{
+		        "totalCount":30,
+		        "totalPage":2,
+		        "likes":[
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态差点就掉下去了！",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/28/20200611/03.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态差点就掉下去了！",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200427/014.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态差点就掉下去了！",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200502/07.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200502/09.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态差点就掉下去了！",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200503/03.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200503/05.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200503/08.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态差点就掉下去了！",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200505/12.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200505/13.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200505/15.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态差点就掉下去了！",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200507/04.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态这组我比较喜欢",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/28/20200611/03.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态这组我比较喜欢",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200427/014.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态这组我比较喜欢",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200502/07.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200502/09.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态这组我比较喜欢",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200503/03.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200503/05.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200503/08.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态这组我比较喜欢",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200505/12.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200505/13.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200505/15.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态这组我比较喜欢",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200507/04.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态51出门熏人",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/28/20200611/03.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态51出门熏人",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200427/014.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态51出门熏人",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200502/07.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200502/09.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态51出门熏人",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200503/03.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200503/05.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200503/08.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态51出门熏人",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200505/12.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200505/13.png",
+		                    "http://8.135.36.45:8000/find/res/images/29/20200505/15.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态51出门熏人",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200507/04.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态摩天轮旋转",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/28/20200611/03.png"
+		                ]
+		            },
+		            {
+		                "userId":70,
+		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+		                "content":"阿萌赞了你的动态摩天轮旋转",
+		                "attacheType":"0",
+		                "filenameList":[
+		                    "http://8.135.36.45:8000/find/res/images/29/20200427/014.png"
+		                ]
+		            }
+		        ]
+		    }
+		}
+     * @apiError (403) {int{0-65535}} status 响应状态码
+     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {String} msg 说明
+     * @apiErrorExample {json} 403错误
+     * HTTP/1.1 403 403响应
+      {
+      	"status": 403,
+      	"code": 199,
+      	"msg": "未找到用户信息！"
+      }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+      {
+      	"status": 404,
+      	"code": 200,
+      	"msg": "接口未注册！"
+      }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+      {
+      	"status": 500,
+      	"code": 205,
+      	"msg": "服务器未响应！"
+      }
+     */
     @GetMapping(value = "{id}/likes")
     @ApiOperation(value = "分页获取点赞消息列表接口", notes = "分页获取点赞消息列表。")
     @ApiResponses(@ApiResponse(code = 200, message = "分页获取点赞消息列表成功", response = CommonResult.class))

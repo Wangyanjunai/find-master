@@ -28,7 +28,7 @@ public class LikesMessageVO {
     @JsonProperty(value = "content")
     private String content;
     
-    //未读点赞消息总条数
+    //未读点赞消息条数
     @JSONField(name = "count")
     @JsonProperty(value = "count")
     private Integer count;
