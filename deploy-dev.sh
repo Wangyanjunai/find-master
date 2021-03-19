@@ -5,8 +5,8 @@
 # shellcheck disable=SC2046
 # shellcheck disable=SC2009
 kill -9 $(ps -ef | grep java | awk '{print $2}')
-cd /d/Users/Administrator/eclipse-workspace-202006/www.xuegod.cn/code/find-master || exit
-svn up .
+cd /d/Users/wangyanjun/workspace/prod/find-master || exit
+git pull
 mvn clean package
 rm -rf ~/jar/*.jar
 mv find-admin/target/*.jar ~/jar/

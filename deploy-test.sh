@@ -5,7 +5,7 @@
 # shellcheck disable=SC2046
 kill -9 $(ps -ef | grep java | grep find | awk '{print $2}')
 cd ~/code/find-master/ || exit
-svn up .
+git pull
 mvn clean package
 rm -rf ~/jar/*.jar
 mv find-admin/target/*.jar ~/jar/

@@ -55,7 +55,7 @@ public class MessageController {
      * "code": 0,
      * "msg": "发布动态内容成功。",
      * "data": {
-     * "RELEASED": "OK"
+     * 	"RELEASED": "OK"
      * }
      * }
      * @apiParamExample {json} 请求示例02（发布图片有客户端IP）
