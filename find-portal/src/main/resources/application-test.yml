@@ -1,0 +1,16 @@
+logging:
+  config: classpath:logback-spring-test.xml
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 120.24.27.86:8848
+        namespace: ff16f08d-13a1-481f-a01c-fefc6d33cb74
+  datasource:
+    druid:
+      username: find                                          #数据库连接用户名
+      password: XueGod!@#123                                  #数据库连接密码
+      url: jdbc:mysql://localhost:3306/find_dev_test01?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true  #数据库连接URL
+      initial-size: 2                                         #数据库初始化连接大小
+      min-idle: 5                                             #数据库最小连接池数量
+      max-active: 8                                           #数据库最大连接池数量              

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.potato369.find.mbg.mapper.AttacheInfoMapper">
+    <resultMap id="BaseResultMap" type="com.potato369.find.mbg.model.AttacheInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+        <result column="dynamic_info_by" jdbcType="BIGINT" property="dynamicInfoBy"/>
+        <result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+        <result column="data_type" jdbcType="CHAR" property="dataType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="reserve_column01" jdbcType="VARCHAR" property="reserveColumn01"/>
+        <result column="reserve_column02" jdbcType="VARCHAR" property="reserveColumn02"/>
+        <result column="reserve_column03" jdbcType="VARCHAR" property="reserveColumn03"/>
+        <result column="reserve_column04" jdbcType="VARCHAR" property="reserveColumn04"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, status, dynamic_info_by, file_name, data_type, create_time, update_time, reserve_column01,
+    reserve_column02, reserve_column03, reserve_column04
+    </sql>
+    <select id="selectByExample" parameterType="com.potato369.find.mbg.model.AttacheInfoExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from attache_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from attache_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from attache_info
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.potato369.find.mbg.model.AttacheInfoExample">
+        delete from attache_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.potato369.find.mbg.model.AttacheInfo">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into attache_info (status, dynamic_info_by, file_name,
+        data_type, create_time, update_time,
+        reserve_column01, reserve_column02, reserve_column03,
+        reserve_column04)
+        values (#{status,jdbcType=CHAR}, #{dynamicInfoBy,jdbcType=BIGINT}, #{fileName,jdbcType=VARCHAR},
+        #{dataType,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{reserveColumn01,jdbcType=VARCHAR}, #{reserveColumn02,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR},
+        #{reserveColumn04,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.potato369.find.mbg.model.AttacheInfo">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into attache_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="status != null">
+                status,
+            </if>
+            <if test="dynamicInfoBy != null">
+                dynamic_info_by,
+            </if>
+            <if test="fileName != null">
+                file_name,
+            </if>
+            <if test="dataType != null">
+                data_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="reserveColumn01 != null">
+                reserve_column01,
+            </if>
+            <if test="reserveColumn02 != null">
+                reserve_column02,
+            </if>
+            <if test="reserveColumn03 != null">
+                reserve_column03,
+            </if>
+            <if test="reserveColumn04 != null">
+                reserve_column04,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="dynamicInfoBy != null">
+                #{dynamicInfoBy,jdbcType=BIGINT},
+            </if>
+            <if test="fileName != null">
+                #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="dataType != null">
+                #{dataType,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reserveColumn01 != null">
+                #{reserveColumn01,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn02 != null">
+                #{reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn03 != null">
+                #{reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn04 != null">
+                #{reserveColumn04,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.potato369.find.mbg.model.AttacheInfoExample"
+            resultType="java.lang.Long">
+        select count(*) from attache_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update attache_info
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=CHAR},
+            </if>
+            <if test="record.dynamicInfoBy != null">
+                dynamic_info_by = #{record.dynamicInfoBy,jdbcType=BIGINT},
+            </if>
+            <if test="record.fileName != null">
+                file_name = #{record.fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.dataType != null">
+                data_type = #{record.dataType,jdbcType=CHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.reserveColumn01 != null">
+                reserve_column01 = #{record.reserveColumn01,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn02 != null">
+                reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn03 != null">
+                reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn04 != null">
+                reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update attache_info
+        set id = #{record.id,jdbcType=BIGINT},
+        status = #{record.status,jdbcType=CHAR},
+        dynamic_info_by = #{record.dynamicInfoBy,jdbcType=BIGINT},
+        file_name = #{record.fileName,jdbcType=VARCHAR},
+        data_type = #{record.dataType,jdbcType=CHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        reserve_column01 = #{record.reserveColumn01,jdbcType=VARCHAR},
+        reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.potato369.find.mbg.model.AttacheInfo">
+        update attache_info
+        <set>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="dynamicInfoBy != null">
+                dynamic_info_by = #{dynamicInfoBy,jdbcType=BIGINT},
+            </if>
+            <if test="fileName != null">
+                file_name = #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="dataType != null">
+                data_type = #{dataType,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reserveColumn01 != null">
+                reserve_column01 = #{reserveColumn01,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn02 != null">
+                reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn03 != null">
+                reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn04 != null">
+                reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.potato369.find.mbg.model.AttacheInfo">
+        update attache_info
+        set status           = #{status,jdbcType=CHAR},
+            dynamic_info_by  = #{dynamicInfoBy,jdbcType=BIGINT},
+            file_name        = #{fileName,jdbcType=VARCHAR},
+            data_type        = #{dataType,jdbcType=CHAR},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            update_time      = #{updateTime,jdbcType=TIMESTAMP},
+            reserve_column01 = #{reserveColumn01,jdbcType=VARCHAR},
+            reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+            reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

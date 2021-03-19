@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.potato369.find.mbg.mapper.DynamicMapper">
+    <resultMap id="BaseResultMap" type="com.potato369.find.mbg.model.Dynamic">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="imei" jdbcType="VARCHAR" property="imei"/>
+        <result column="model" jdbcType="VARCHAR" property="model"/>
+        <result column="sys_name" jdbcType="VARCHAR" property="sysName"/>
+        <result column="sys_code" jdbcType="VARCHAR" property="sysCode"/>
+        <result column="network_mode" jdbcType="CHAR" property="networkMode"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="district" jdbcType="VARCHAR" property="district"/>
+        <result column="other" jdbcType="VARCHAR" property="other"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="reserve_column01" jdbcType="VARCHAR" property="reserveColumn01"/>
+        <result column="reserve_column02" jdbcType="VARCHAR" property="reserveColumn02"/>
+        <result column="reserve_column03" jdbcType="VARCHAR" property="reserveColumn03"/>
+        <result column="reserve_column04" jdbcType="VARCHAR" property="reserveColumn04"/>
+    </resultMap>
+
+    <resultMap id="LocationResultMap" type="com.potato369.find.mbg.model.DynamicLocation">
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="district" jdbcType="VARCHAR" property="district"/>
+        <result column="other" jdbcType="VARCHAR" property="other"/>
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, user_id, nick_name, imei, model, sys_name, sys_code, network_mode, country, province,
+    city, district, other, create_time, update_time, reserve_column01, reserve_column02, 
+    reserve_column03, reserve_column04
+    </sql>
+    <sql id="Location_Column_List">
+        country, province, city, district, other
+    </sql>
+    <select id="selectByExample" parameterType="com.potato369.find.mbg.model.DynamicExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from dynamic
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from dynamic
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectByUserId" parameterType="java.lang.Long" resultMap="LocationResultMap">
+        select
+        <include refid="Location_Column_List"/>
+        from dynamic
+        where user_id = #{userId,jdbcType=BIGINT}
+        order by create_time desc, update_time desc limit 0, 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from dynamic
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.potato369.find.mbg.model.DynamicExample">
+        delete from dynamic
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.potato369.find.mbg.model.Dynamic">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into dynamic (user_id, nick_name, imei,
+        model, sys_name, sys_code,
+        network_mode, country, province,
+        city, district, other,
+        create_time, update_time, reserve_column01,
+        reserve_column02, reserve_column03, reserve_column04
+        )
+        values (#{userId,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR},
+        #{model,jdbcType=VARCHAR}, #{sysName,jdbcType=VARCHAR}, #{sysCode,jdbcType=VARCHAR},
+        #{networkMode,jdbcType=CHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
+        #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{reserveColumn01,jdbcType=VARCHAR},
+        #{reserveColumn02,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertImport" parameterType="com.potato369.find.mbg.model.Dynamic">
+        insert into dynamic (id, user_id, nick_name, imei,
+                             model, sys_name, sys_code,
+                             network_mode, country, province,
+                             city, district, other,
+                             create_time, update_time, reserve_column01,
+                             reserve_column02, reserve_column03, reserve_column04)
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR},
+                #{imei,jdbcType=VARCHAR},
+                #{model,jdbcType=VARCHAR}, #{sysName,jdbcType=VARCHAR}, #{sysCode,jdbcType=VARCHAR},
+                #{networkMode,jdbcType=CHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
+                #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{reserveColumn01,jdbcType=VARCHAR},
+                #{reserveColumn02,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR},
+                #{reserveColumn04,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.potato369.find.mbg.model.Dynamic">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into dynamic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="nickName != null">
+                nick_name,
+            </if>
+            <if test="imei != null">
+                imei,
+            </if>
+            <if test="model != null">
+                model,
+            </if>
+            <if test="sysName != null">
+                sys_name,
+            </if>
+            <if test="sysCode != null">
+                sys_code,
+            </if>
+            <if test="networkMode != null">
+                network_mode,
+            </if>
+            <if test="country != null">
+                country,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="district != null">
+                district,
+            </if>
+            <if test="other != null">
+                other,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="reserveColumn01 != null">
+                reserve_column01,
+            </if>
+            <if test="reserveColumn02 != null">
+                reserve_column02,
+            </if>
+            <if test="reserveColumn03 != null">
+                reserve_column03,
+            </if>
+            <if test="reserveColumn04 != null">
+                reserve_column04,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="imei != null">
+                #{imei,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="sysName != null">
+                #{sysName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysCode != null">
+                #{sysCode,jdbcType=VARCHAR},
+            </if>
+            <if test="networkMode != null">
+                #{networkMode,jdbcType=CHAR},
+            </if>
+            <if test="country != null">
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="other != null">
+                #{other,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reserveColumn01 != null">
+                #{reserveColumn01,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn02 != null">
+                #{reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn03 != null">
+                #{reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn04 != null">
+                #{reserveColumn04,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.potato369.find.mbg.model.DynamicExample" resultType="java.lang.Long">
+        select count(*) from dynamic
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update dynamic
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=BIGINT},
+            </if>
+            <if test="record.nickName != null">
+                nick_name = #{record.nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.imei != null">
+                imei = #{record.imei,jdbcType=VARCHAR},
+            </if>
+            <if test="record.model != null">
+                model = #{record.model,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sysName != null">
+                sys_name = #{record.sysName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sysCode != null">
+                sys_code = #{record.sysCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.networkMode != null">
+                network_mode = #{record.networkMode,jdbcType=CHAR},
+            </if>
+            <if test="record.country != null">
+                country = #{record.country,jdbcType=VARCHAR},
+            </if>
+            <if test="record.province != null">
+                province = #{record.province,jdbcType=VARCHAR},
+            </if>
+            <if test="record.city != null">
+                city = #{record.city,jdbcType=VARCHAR},
+            </if>
+            <if test="record.district != null">
+                district = #{record.district,jdbcType=VARCHAR},
+            </if>
+            <if test="record.other != null">
+                other = #{record.other,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.reserveColumn01 != null">
+                reserve_column01 = #{record.reserveColumn01,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn02 != null">
+                reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn03 != null">
+                reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn04 != null">
+                reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update dynamic
+        set id = #{record.id,jdbcType=BIGINT},
+        user_id = #{record.userId,jdbcType=BIGINT},
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+        imei = #{record.imei,jdbcType=VARCHAR},
+        model = #{record.model,jdbcType=VARCHAR},
+        sys_name = #{record.sysName,jdbcType=VARCHAR},
+        sys_code = #{record.sysCode,jdbcType=VARCHAR},
+        network_mode = #{record.networkMode,jdbcType=CHAR},
+        country = #{record.country,jdbcType=VARCHAR},
+        province = #{record.province,jdbcType=VARCHAR},
+        city = #{record.city,jdbcType=VARCHAR},
+        district = #{record.district,jdbcType=VARCHAR},
+        other = #{record.other,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        reserve_column01 = #{record.reserveColumn01,jdbcType=VARCHAR},
+        reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.potato369.find.mbg.model.Dynamic">
+        update dynamic
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="imei != null">
+                imei = #{imei,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                model = #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="sysName != null">
+                sys_name = #{sysName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysCode != null">
+                sys_code = #{sysCode,jdbcType=VARCHAR},
+            </if>
+            <if test="networkMode != null">
+                network_mode = #{networkMode,jdbcType=CHAR},
+            </if>
+            <if test="country != null">
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                district = #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="other != null">
+                other = #{other,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reserveColumn01 != null">
+                reserve_column01 = #{reserveColumn01,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn02 != null">
+                reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn03 != null">
+                reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn04 != null">
+                reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.potato369.find.mbg.model.Dynamic">
+        update dynamic
+        set user_id          = #{userId,jdbcType=BIGINT},
+            nick_name        = #{nickName,jdbcType=VARCHAR},
+            imei             = #{imei,jdbcType=VARCHAR},
+            model            = #{model,jdbcType=VARCHAR},
+            sys_name         = #{sysName,jdbcType=VARCHAR},
+            sys_code         = #{sysCode,jdbcType=VARCHAR},
+            network_mode     = #{networkMode,jdbcType=CHAR},
+            country          = #{country,jdbcType=VARCHAR},
+            province         = #{province,jdbcType=VARCHAR},
+            city             = #{city,jdbcType=VARCHAR},
+            district         = #{district,jdbcType=VARCHAR},
+            other            = #{other,jdbcType=VARCHAR},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            update_time      = #{updateTime,jdbcType=TIMESTAMP},
+            reserve_column01 = #{reserveColumn01,jdbcType=VARCHAR},
+            reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+            reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

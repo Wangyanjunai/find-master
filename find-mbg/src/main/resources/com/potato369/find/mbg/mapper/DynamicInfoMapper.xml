@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.potato369.find.mbg.mapper.DynamicInfoMapper">
+    <resultMap id="BaseResultMap" type="com.potato369.find.mbg.model.DynamicInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="dynamic_id" jdbcType="BIGINT" property="dynamic_id"/>
+        <result column="dynamic_status" jdbcType="CHAR" property="dynamicStatus"/>
+        <result column="public_status" jdbcType="CHAR" property="publicStatus"/>
+        <result column="likes" jdbcType="INTEGER" property="likes"/>
+        <result column="applications" jdbcType="INTEGER" property="applications"/>
+        <result column="shares" jdbcType="INTEGER" property="shares"/>
+        <result column="attache_type" jdbcType="CHAR" property="attacheType"/>
+        <result column="attache_number" jdbcType="INTEGER" property="attacheNumber"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="reserve_column02" jdbcType="VARCHAR" property="reserveColumn02"/>
+        <result column="reserve_column03" jdbcType="VARCHAR" property="reserveColumn03"/>
+        <result column="reserve_column04" jdbcType="VARCHAR" property="reserveColumn04"/>
+    </resultMap>
+    <resultMap id="BaseResultMap2" type="com.potato369.find.mbg.model.DynamicInfoData">
+        <id column="user_id" jdbcType="BIGINT" property="userId"/><!-- 用户id -->
+        <result column="head_icon" jdbcType="VARCHAR" property="headIcon"/><!-- 用户头像图片地址 -->
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/><!-- 用户昵称 -->
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/><!-- 动态内容发布时间 -->
+        <result column="dynamic_info_id" jdbcType="BIGINT" property="dynamicInfoId"/><!-- 动态内容id -->
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/><!-- 动态内容 -->
+        <result column="public_status" jdbcType="VARCHAR" property="publishStatus"/><!-- 是否公开定位 -->
+        <result column="country" jdbcType="VARCHAR" property="country"/><!-- 定位地址（国家） -->
+        <result column="province" jdbcType="VARCHAR" property="province"/><!-- 定位地址（省份）-->
+        <result column="city" jdbcType="VARCHAR" property="city"/><!-- 定位地址（城市） -->
+        <result column="likes" jdbcType="INTEGER" property="likes"/><!-- 点赞数 -->
+        <result column="applications" jdbcType="INTEGER" property="applications"/><!-- 申请加微信数 -->
+        <result column="attache_file_data_type" jdbcType="VARCHAR" property="attacheFileDataType"/><!-- 附件存储文件类型 -->
+        <result column="attache_file_name_list" jdbcType="VARCHAR" property="fileName"/><!-- 附件存储文件名称列表 -->
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.potato369.find.mbg.model.DynamicInfo">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, user_id, dynamic_id, dynamic_status, public_status, likes, applications, shares, attache_type,
+    attache_number, create_time, update_time, reserve_column02, reserve_column03, reserve_column04
+    </sql>
+    <sql id="Blob_Column_List">
+        content
+    </sql>
+    <select id="selectByExampleWithBLOBs" parameterType="com.potato369.find.mbg.model.DynamicInfoExample"
+            resultMap="ResultMapWithBLOBs">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from dynamic_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" parameterType="com.potato369.find.mbg.model.DynamicInfoExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from dynamic_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from dynamic_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from dynamic_info
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.potato369.find.mbg.model.DynamicInfoExample">
+        delete from dynamic_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.potato369.find.mbg.model.DynamicInfo">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into dynamic_info (user_id, dynamic_status, public_status,
+        likes, applications, shares,
+        attache_type, attache_number, create_time,
+        update_time, dynamic_id, reserve_column02,
+        reserve_column03, reserve_column04, content
+        )
+        values (#{userId,jdbcType=BIGINT}, #{dynamicStatus,jdbcType=CHAR}, #{publicStatus,jdbcType=CHAR},
+        #{likes,jdbcType=INTEGER}, #{applications,jdbcType=INTEGER}, #{shares,jdbcType=INTEGER},
+        #{attacheType,jdbcType=CHAR}, #{attacheNumber,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}, #{dynamic_id,jdbcType=BIGINT}, #{reserveColumn02,jdbcType=VARCHAR},
+        #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+    <insert id="insertImport" parameterType="com.potato369.find.mbg.model.DynamicInfo">
+        insert into dynamic_info (id, user_id, dynamic_status, public_status,
+                                  likes, applications, shares,
+                                  attache_type, attache_number, create_time,
+                                  update_time, dynamic_id, reserve_column02,
+                                  reserve_column03, reserve_column04, content)
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{dynamicStatus,jdbcType=CHAR},
+                #{publicStatus,jdbcType=CHAR},
+                #{likes,jdbcType=INTEGER}, #{applications,jdbcType=INTEGER}, #{shares,jdbcType=INTEGER},
+                #{attacheType,jdbcType=CHAR}, #{attacheNumber,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{dynamic_id,jdbcType=BIGINT}, #{reserveColumn02,jdbcType=VARCHAR},
+                #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR},
+                #{content,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.potato369.find.mbg.model.DynamicInfo">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into dynamic_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="dynamic_id != null">
+                dynamic_id,
+            </if>
+            <if test="dynamicStatus != null">
+                dynamic_status,
+            </if>
+            <if test="publicStatus != null">
+                public_status,
+            </if>
+            <if test="likes != null">
+                likes,
+            </if>
+            <if test="applications != null">
+                applications,
+            </if>
+            <if test="shares != null">
+                shares,
+            </if>
+            <if test="attacheType != null">
+                attache_type,
+            </if>
+            <if test="attacheNumber != null">
+                attache_number,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="reserveColumn02 != null">
+                reserve_column02,
+            </if>
+            <if test="reserveColumn03 != null">
+                reserve_column03,
+            </if>
+            <if test="reserveColumn04 != null">
+                reserve_column04,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="dynamic_id != null">
+                #{dynamic_id,jdbcType=BIGINT},
+            </if>
+            <if test="dynamicStatus != null">
+                #{dynamicStatus,jdbcType=CHAR},
+            </if>
+            <if test="publicStatus != null">
+                #{publicStatus,jdbcType=CHAR},
+            </if>
+            <if test="likes != null">
+                #{likes,jdbcType=INTEGER},
+            </if>
+            <if test="applications != null">
+                #{applications,jdbcType=INTEGER},
+            </if>
+            <if test="shares != null">
+                #{shares,jdbcType=INTEGER},
+            </if>
+            <if test="attacheType != null">
+                #{attacheType,jdbcType=CHAR},
+            </if>
+            <if test="attacheNumber != null">
+                #{attacheNumber,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reserveColumn02 != null">
+                #{reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn03 != null">
+                #{reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn04 != null">
+                #{reserveColumn04,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.potato369.find.mbg.model.DynamicInfoExample"
+            resultType="java.lang.Long">
+        select count(1) from dynamic_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <select id="selectDynamicInfoData" parameterType="com.potato369.find.mbg.model.DynamicInfoParam"
+            resultMap="BaseResultMap2">
+        SELECT DISTINCT
+        	ur.`id` AS `user_id`,
+        	ur.`head_icon` AS `head_icon`,
+        	ur.`nick_name` AS `nick_name`,
+        	di.`create_time` AS `create_time`,
+        	di.`id` AS `dynamic_info_id`,
+        	di.`content` AS `content`,
+        	di.`public_status` AS `public_status`,
+        	CONCAT( dy.`country`, '·' ) AS `country`,
+        	CONCAT( dy.`province`, '·' ) AS `province`,
+        	CONCAT( dy.`city`) AS `city`,
+        	di.`likes` AS `likes`,
+        	di.`applications` AS `applications`,
+        	ai.`data_type` AS `attache_file_data_type`,
+        	ai.`file_name` AS `attache_file_name_list`,
+        	di.`dynamic_status`,
+        	di.`update_time`
+        FROM
+        	`dynamic_info` di,
+        	`dynamic` dy,
+        	`attache_info` ai,
+        	`user` ur
+        WHERE dy.`id` = di.`dynamic_id`
+        	AND di.`id` = ai.`dynamic_info_by`
+        	AND dy.`user_id` = ur.`id`
+        	AND di.`dynamic_status`<![CDATA[!=]]>'1'
+        	<if test="param != null">
+				<if test="param.gender != null">
+					AND ur.`gender`<![CDATA[=]]>#{param.gender, jdbcType=CHAR}
+				</if>
+				<if test="param.minAge != null">
+					AND STR_TO_DATE(CONCAT_WS('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s')<![CDATA[<=]]>#{param.minAge, jdbcType=TIMESTAMP}
+				</if>
+				<if test="param.maxAge != null">
+					AND STR_TO_DATE(CONCAT_WS('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s')<![CDATA[>=]]>#{param.maxAge, jdbcType=TIMESTAMP}
+				</if>
+				<if test="param.constellations != null and param.constellations.size() > 0">
+                 	AND ur.`constellation` IN (
+                 		<foreach collection="param.constellations" item="constellation" index="index" separator=",">
+                       		#{constellation}
+                 		</foreach>)
+            	</if>
+				<if test="param.blackRecordUserIdLongList != null and param.blackRecordUserIdLongList.size() > 0">
+					AND ur.`id` NOT IN (
+					<foreach collection="param.blackRecordUserIdLongList" item="uid" index="index"
+						separator=",">
+						#{uid}
+					</foreach>
+					)
+				</if>        	
+	           	<if test="param.dataType != null">
+					AND ai.`data_type`<![CDATA[=]]>#{param.dataType, jdbcType=CHAR}
+				</if>
+				<if test="param.countryLocations != null and param.countryLocations.size() > 0">
+                 	AND dy.`country` IN (
+                 		<foreach collection="param.countryLocations" item="country" index="index" separator=",">
+                       		#{country}
+                 		</foreach>)
+            	</if>
+            	<if test="param.provinceLocations != null and param.provinceLocations.size() > 0">
+                 AND dy.`province` IN ( 
+                 	<foreach collection="param.provinceLocations" item="province" index="index" separator=",">
+                       	#{province}
+                 	</foreach>)
+            	</if>
+            	<if test="param.cityLocations != null and param.cityLocations.size() > 0">
+                 	AND dy.`city` IN (
+                 		<foreach collection="param.cityLocations" item="city" index="index" separator=",">
+                       		#{city}
+                 		</foreach>)
+            	</if>
+        </if>
+        ORDER BY di.`dynamic_status` DESC, di.`create_time` DESC, di.`update_time` DESC
+    </select>
+    
+    <select id="selectMyDynamicInfoData" parameterType="java.lang.Long" resultMap="BaseResultMap2">
+		SELECT DISTINCT
+			di.`id` AS dynamic_info_id,
+			ur.`id` AS user_id,
+			ur.`head_icon` AS head_icon,
+			ur.`nick_name` AS nick_name,
+			di.`create_time` AS create_time,
+			di.`content` AS content,
+			di.`public_status` AS public_status,
+			CONCAT( dy.`country`, '·' ) AS country,
+			CONCAT( dy.`province`, '·' ) AS province,
+			CONCAT( dy.`city` ) AS city,
+			di.`likes` AS likes,
+			di.`applications` AS applications,
+			di.`shares` AS shares,
+			ai.id AS attache_file_id,
+			ai.data_type AS attache_file_data_type,
+			ai.file_name AS attache_file_name_list,
+			di.`dynamic_status`,
+        	di.`update_time` 
+		FROM
+			`dynamic_info` di,
+			`dynamic` dy,
+			`attache_info` ai,
+			`user` ur 
+		WHERE
+			dy.`id` = di.`dynamic_id` 
+			AND di.`id` = ai.`dynamic_info_by` 
+			AND dy.`user_id` = ur.`id` 
+			AND di.`dynamic_status` <![CDATA[!=]]> '1' 
+			AND ur.`id` = #{userId, jdbcType=BIGINT}
+        ORDER BY di.`dynamic_status` DESC, di.`create_time` DESC, di.`update_time` DESC
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update dynamic_info
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=BIGINT},
+            </if>
+            <if test="record.dynamicStatus != null">
+                dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
+            </if>
+            <if test="record.publicStatus != null">
+                public_status = #{record.publicStatus,jdbcType=CHAR},
+            </if>
+            <if test="record.likes != null">
+                likes = #{record.likes,jdbcType=INTEGER},
+            </if>
+            <if test="record.applications != null">
+                applications = #{record.applications,jdbcType=INTEGER},
+            </if>
+            <if test="record.shares != null">
+                shares = #{record.shares,jdbcType=INTEGER},
+            </if>
+            <if test="record.attacheType != null">
+                attache_type = #{record.attacheType,jdbcType=CHAR},
+            </if>
+            <if test="record.attacheNumber != null">
+                attache_number = #{record.attacheNumber,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.dynamic_id != null">
+                dynamic_id = #{record.dynamic_id,jdbcType=BIGINT},
+            </if>
+            <if test="record.reserveColumn02 != null">
+                reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn03 != null">
+                reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn04 != null">
+                reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
+            </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update dynamic_info
+        set id = #{record.id,jdbcType=BIGINT},
+        user_id = #{record.userId,jdbcType=BIGINT},
+        dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
+        public_status = #{record.publicStatus,jdbcType=CHAR},
+        likes = #{record.likes,jdbcType=INTEGER},
+        applications = #{record.applications,jdbcType=INTEGER},
+        shares = #{record.shares,jdbcType=INTEGER},
+        attache_type = #{record.attacheType,jdbcType=CHAR},
+        attache_number = #{record.attacheNumber,jdbcType=INTEGER},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        dynamic_id = #{dynamic_id,jdbcType=BIGINT},
+        reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
+        content = #{record.content,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update dynamic_info
+        set id = #{record.id,jdbcType=BIGINT},
+        user_id = #{record.userId,jdbcType=BIGINT},
+        dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
+        public_status = #{record.publicStatus,jdbcType=CHAR},
+        likes = #{record.likes,jdbcType=INTEGER},
+        applications = #{record.applications,jdbcType=INTEGER},
+        shares = #{record.shares,jdbcType=INTEGER},
+        attache_type = #{record.attacheType,jdbcType=CHAR},
+        attache_number = #{record.attacheNumber,jdbcType=INTEGER},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        dynamic_id = #{record.dynamic_id,jdbcType=BIGINT},
+        reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.potato369.find.mbg.model.DynamicInfo">
+        update dynamic_info
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="dynamicStatus != null">
+                dynamic_status = #{dynamicStatus,jdbcType=CHAR},
+            </if>
+            <if test="publicStatus != null">
+                public_status = #{publicStatus,jdbcType=CHAR},
+            </if>
+            <if test="likes != null">
+                likes = #{likes,jdbcType=INTEGER},
+            </if>
+            <if test="applications != null">
+                applications = #{applications,jdbcType=INTEGER},
+            </if>
+            <if test="shares != null">
+                shares = #{shares,jdbcType=INTEGER},
+            </if>
+            <if test="attacheType != null">
+                attache_type = #{attacheType,jdbcType=CHAR},
+            </if>
+            <if test="attacheNumber != null">
+                attache_number = #{attacheNumber,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dynamic_id != null">
+                dynamic_id = #{dynamic_id,jdbcType=BIGINT},
+            </if>
+            <if test="reserveColumn02 != null">
+                reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn03 != null">
+                reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn04 != null">
+                reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.potato369.find.mbg.model.DynamicInfo">
+        update dynamic_info
+        set user_id          = #{userId,jdbcType=BIGINT},
+            dynamic_status   = #{dynamicStatus,jdbcType=CHAR},
+            public_status    = #{publicStatus,jdbcType=CHAR},
+            likes            = #{likes,jdbcType=INTEGER},
+            applications     = #{applications,jdbcType=INTEGER},
+            shares           = #{shares,jdbcType=INTEGER},
+            attache_type     = #{attacheType,jdbcType=CHAR},
+            attache_number   = #{attacheNumber,jdbcType=INTEGER},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            update_time      = #{updateTime,jdbcType=TIMESTAMP},
+            dynamic_id       = #{dynamic_id,jdbcType=BIGINT},
+            reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+            reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
+            content          = #{content,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.potato369.find.mbg.model.DynamicInfo">
+        update dynamic_info
+        set user_id          = #{userId,jdbcType=BIGINT},
+            dynamic_status   = #{dynamicStatus,jdbcType=CHAR},
+            public_status    = #{publicStatus,jdbcType=CHAR},
+            likes            = #{likes,jdbcType=INTEGER},
+            applications     = #{applications,jdbcType=INTEGER},
+            shares           = #{shares,jdbcType=INTEGER},
+            attache_type     = #{attacheType,jdbcType=CHAR},
+            attache_number   = #{attacheNumber,jdbcType=INTEGER},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            update_time      = #{updateTime,jdbcType=TIMESTAMP},
+            dynamic_id       = #{dynamic_id,jdbcType=BIGINT},
+            reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+            reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

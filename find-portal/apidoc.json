@@ -1,0 +1,26 @@
+{
+  "name": "觅鹿项目",
+  "version": "1.0.0",
+  "description": "觅鹿项目接口文档",
+  "title": "觅鹿项目",
+  "url": "http://w168428j19.51mypc.cn",
+  "sampleUrl": "http://w168428j19.51mypc.cn",
+  "header": {
+    "title": "觅鹿项目Header",
+    "filename": "header.md"
+  },
+  "footer": {
+    "title": "觅鹿项目Footer",
+    "filename": "footer.md"
+  },
+  "order": [
+    "Error",
+    "Define",
+    "PostTitleAndError",
+    "PostError"
+  ],
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}
