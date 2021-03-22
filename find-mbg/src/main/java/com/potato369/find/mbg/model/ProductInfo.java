@@ -5,6 +5,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductInfo implements Serializable {
     @ApiModelProperty(value = "商品id，主键")
     private Long id;

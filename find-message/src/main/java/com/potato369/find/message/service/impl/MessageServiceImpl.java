@@ -19,10 +19,12 @@ import com.potato369.find.common.vo.MessageInfoVO;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.mbg.mapper.MessageMapper;
+import com.potato369.find.mbg.mapper.UserMapper;
 import com.potato369.find.mbg.model.LikesMessageRecord;
 import com.potato369.find.mbg.model.Message;
 import com.potato369.find.mbg.model.MessageExample;
 import com.potato369.find.mbg.model.NotLikesMessageRecord;
+import com.potato369.find.mbg.model.User;
 import com.potato369.find.message.config.props.ProjectUrlProps;
 import com.potato369.find.message.service.MessageService;
 
@@ -33,12 +35,19 @@ public class MessageServiceImpl implements MessageService {
 
     private MessageMapper messageMapperReader;
     
+    private UserMapper userMapperReader;
+    
     private ProjectUrlProps projectUrlProps;
 
     @Autowired
     public void setMessageMapperReader(MessageMapper messageMapperReader) {
         this.messageMapperReader = messageMapperReader;
     }
+
+    @Autowired
+	public void setUserMapperReader(UserMapper userMapperReader) {
+		this.userMapperReader = userMapperReader;
+	}
 
 	@Autowired
     public void setProjectUrlProps(ProjectUrlProps projectUrlProps) {
@@ -63,10 +72,11 @@ public class MessageServiceImpl implements MessageService {
 		} else {
 			likesMessageVO.setCount(0);
 		}
+        //查询最后一条点赞消息记录
         MessageExample messageExample2 = new MessageExample();
-        messageExample.setDistinct(true);
-        messageExample.setOrderByClause("create_time DESC, update_time DESC");
-        messageExample.createCriteria()
+        messageExample2.setDistinct(true);
+        messageExample2.setOrderByClause("create_time DESC, update_time DESC");
+        messageExample2.createCriteria()
                 .andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage())
                 .andRecipientUserIdEqualTo(userId);
         List<Message> messages2 = this.messageMapperReader.selectByExampleWithBLOBs(messageExample2);
@@ -151,6 +161,38 @@ public class MessageServiceImpl implements MessageService {
 		messageVO2.setLikesInfoVOs(likesInfoVOs);
 		return messageVO2;
 	}
-	
-	
+
+	@Override
+	public MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize) {
+		MessageVO messageVO = MessageVO.builder().build();
+        messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
+		final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize)
+				.doSelectPageInfo(() -> this.messageMapperReader.selectApplicationMessageRecordByUserId(userId));
+		List<Message> messages = listPageInfo.getList();
+		List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
+		if (messages != null && !messages.isEmpty()) {
+			for (Message message : messages) {
+				MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
+				User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+				messageInfoVO.setUserId(user.getId());
+				messageInfoVO.setHead(
+					  StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                    + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                    + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                    + user.getId()
+                    + "/"
+                    + user.getHeadIcon());
+				messageInfoVO.setNickname(user.getNickName());
+				messageInfoVO.setContent(message.getContent());
+				Long count = this.messageMapperReader.
+						selectApplicationMessageRecordBySendUserIdAndRecipientUserIdCount(message.getSendUserId(), message.getRecipientUserId());
+				messageInfoVO.setCount(count);
+				messageInfoVOs.add(messageInfoVO);
+			}
+		}
+		messageVO.setMessageInfoVOs(messageInfoVOs);
+		messageVO.setTotalCount(listPageInfo.getTotal());
+		messageVO.setTotalPage(listPageInfo.getPages());
+		return messageVO;
+	}
 }

@@ -2,6 +2,9 @@ package com.potato369.find.mbg.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Demo implements Serializable {
     private Long id;
 
