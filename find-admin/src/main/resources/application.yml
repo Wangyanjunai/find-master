@@ -57,6 +57,10 @@ spring:
     prefer-file-system-access: true
     suffix: .ftl
     template-loader-path: classpath:/templates/
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 server:
   port: 8085
   servlet:
@@ -68,14 +72,14 @@ mybatis:
     map-underscore-to-camel-case: true
   type-aliases-package: com.potato369.find.mbg.model
   mapper-locations:
-    -  classpath:com/potato369/find/mbg/mapper/*Mapper.xml
+    - classpath:com/potato369/find/mbg/mapper/*Mapper.xml
 pagehelper:
   support-methods-arguments: true
   reasonable: false
   helper-dialect: mysql
 
 #项目路径参数配置
-project-url: 
+project-url:
   project-name: /find
   res-app-img: /img/app/
   res-head-icon: /img/head/
