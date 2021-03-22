@@ -203,7 +203,113 @@
 		ORDER BY
 			me.`create_time` DESC,
 			me.`update_time` DESC
-    </select>        
+    </select>
+    <select id="selectApplicationMessageRecordByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+			`id`,
+			`send_user_id`,
+			`recipient_user_id`,
+			`content`,
+			`send_mode`,
+			`status`,
+			`create_time` 
+		FROM
+			`message` 
+		WHERE
+			`reserve_column01`<![CDATA[=]]>'applications' 
+			AND `recipient_user_id`<![CDATA[=]]>#{userId, jdbcType=BIGINT}
+		GROUP BY
+			`send_user_id`
+		ORDER BY
+			`create_time` DESC    	
+    </select>
+    
+    <select id="selectApplicationMessageRecordBySendUserIdAndRecipientUserIdCount" parameterType="java.lang.Long" resultType="java.lang.Long">
+		SELECT
+			COUNT( 1 ) 
+		FROM
+			(
+			SELECT
+				`id`,
+				`send_user_id`,
+				`recipient_user_id`,
+				`content`,
+				`send_mode`,
+				`status`,
+				`create_time` 
+			FROM
+				`message` 
+			WHERE
+				`reserve_column01`<![CDATA[=]]>'applications' 
+				AND `send_user_id`<![CDATA[=]]>#{sendUserId, jdbcType=BIGINT} 
+				AND `recipient_user_id`<![CDATA[=]]>#{recipientUserId, jdbcType=BIGINT} 
+		UNION
+			SELECT
+				`id`,
+				`send_user_id`,
+				`recipient_user_id`,
+				`content`,
+				`send_mode`,
+				`status`,
+				`create_time` 
+			FROM
+				`message` 
+			WHERE
+				`reserve_column01`<![CDATA[=]]>'applications' 
+				AND `send_user_id`<![CDATA[=]]>#{recipientUserId, jdbcType=BIGINT} 
+				AND `recipient_user_id`<![CDATA[=]]>#{sendUserId, jdbcType=BIGINT} 
+			) AS a
+		WHERE
+			a.`status`<![CDATA[=]]>'0' 
+		ORDER BY
+			a.`create_time` DESC    	
+    </select>
+    
+    <select id="selectApplicationMessageRecordBySendUserIdAndRecipientUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+			a.`id`,
+			a.`send_user_id`,
+			a.`recipient_user_id`,
+			a.`content`,
+			a.`send_mode`,
+			a.`status`,
+			a.`create_time` 
+		FROM
+			(
+			SELECT
+				`id`,
+				`send_user_id`,
+				`recipient_user_id`,
+				`content`,
+				`send_mode`,
+				`status`,
+				`create_time` 
+			FROM
+				`message` 
+			WHERE
+				`reserve_column01`<![CDATA[!=]]>'likes' 
+				AND `send_user_id`<![CDATA[=]]>#{sendUserId, jdbcType=BIGINT} 
+				AND `recipient_user_id`<![CDATA[=]]>#{recipientUserId, jdbcType=BIGINT} 
+		UNION
+			SELECT
+				`id`,
+				`send_user_id`,
+				`recipient_user_id`,
+				`content`,
+				`send_mode`,
+				`status`,
+				`create_time` 
+			FROM
+				`message` 
+			WHERE
+				`reserve_column01`<![CDATA[!=]]>'likes' 
+				AND `send_user_id`<![CDATA[=]]>#{recipientUserId, jdbcType=BIGINT} 
+				AND `recipient_user_id`<![CDATA[=]]>#{sendUserId, jdbcType=BIGINT} 
+			) AS a 
+		ORDER BY
+			a.`create_time` DESC   	
+    </select>            
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
         from message

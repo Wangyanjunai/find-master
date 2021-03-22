@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReportCategory implements Serializable {
     @ApiModelProperty(value = "类目id，主键")
     private Long id;

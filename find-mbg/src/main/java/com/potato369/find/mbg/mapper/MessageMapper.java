@@ -26,11 +26,17 @@ public interface MessageMapper {
 
     Message selectByPrimaryKey(Long id);
     
-    List<LikesRecord> selectLikesRecordByUserId(Long userId);
+    List<LikesRecord> selectLikesRecordByUserId(@Param("userId") Long userId);
     
-    List<NotLikesMessageRecord> selectUnLikesRecordByUserId(Long userId);
+    List<NotLikesMessageRecord> selectUnLikesRecordByUserId(@Param("userId") Long userId);
     
-    List<LikesMessageRecord> selectLikesMessageRecordByUserId(Long userId);  
+    List<LikesMessageRecord> selectLikesMessageRecordByUserId(@Param("userId") Long userId);
+    
+    List<Message> selectApplicationMessageRecordByUserId(@Param("userId") Long userId);
+    
+    long selectApplicationMessageRecordBySendUserIdAndRecipientUserIdCount(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
+    
+    List<Message> selectApplicationMessageRecordBySendUserIdAndRecipientUserId(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 
     int updateByExampleSelective(@Param("record") Message record, @Param("example") MessageExample example);
 

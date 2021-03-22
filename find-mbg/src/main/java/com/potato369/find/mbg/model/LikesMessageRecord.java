@@ -1,8 +1,11 @@
 package com.potato369.find.mbg.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import io.swagger.annotations.ApiModelProperty;
 
 //用户点赞记录
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LikesMessageRecord {
 	//点赞用户id
 	@ApiModelProperty(value = "点赞用户id")

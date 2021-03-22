@@ -40,7 +40,7 @@ public class MessageController {
 			@PathVariable(name = "id", required = true) @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
 			@RequestParam(name = "pageNum", defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码", example = "1") Integer pageNum,
 			@RequestParam(name = "pageSize", defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
-		return CommonResult.success(this.messageService.selectNotLikesMessage(userId, pageNum, pageSize));
+		return CommonResult.success(this.messageService.selectApplicationsMessage(userId, pageNum, pageSize));
 	}
     
     /**
@@ -56,5 +56,22 @@ public class MessageController {
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "页码", example = "1") Integer pageNum,
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
 		return CommonResult.success(this.messageService.selectLikesMessage(userId, pageNum, pageSize));
+	}
+    
+    /**
+     * 申请加微信和发送的普通消息记录
+     * @param sendUserId   申请加微信发送者用户id
+     * @param recipientUserId   申请加微信接收者用户id
+     * @param pageNum  当前页码，默认：1
+     * @param pageSize 每页数量，默认：20
+     */
+    @ApiOperation(value = "申请加微信和发送的普通消息记录", notes = "申请加微信和发送的普通消息记录")
+    @GetMapping(value = "/{id1}/{id2}/appliactions.do")
+    public CommonResult<MessageVO2> findappliactions(
+    		@PathVariable(name = "id1") @ApiParam(name = "id1", value = "申请加微信发送者用户id", required = true, example = "1") Long sendUserId,
+    		@PathVariable(name = "id2") @ApiParam(name = "id2", value = "申请加微信接收者用户id", required = true, example = "2") Long recipientUserId,
+            @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "页码", example = "1") Integer pageNum,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
+		return null;
 	}
 }

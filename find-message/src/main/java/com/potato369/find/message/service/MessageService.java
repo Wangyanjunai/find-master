@@ -29,4 +29,11 @@ public interface MessageService {
 	 * @return
 	 */
 	MessageVO2 selectLikesMessage(Long userId, Integer pageNum, Integer pageSize);
+	
+	/**
+	 * 根据用户id查询某个用户收到的申请加微信消息记录
+	 * @param userId	用户id
+	 * @return
+	 */
+	MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize);
 }

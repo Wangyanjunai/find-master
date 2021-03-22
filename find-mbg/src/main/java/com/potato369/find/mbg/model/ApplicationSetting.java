@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApplicationSetting implements Serializable {
     @ApiModelProperty(value = "配置id，主键")
     private Long id;

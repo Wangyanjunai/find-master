@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OperateRecord implements Serializable {
     @ApiModelProperty(value = "id，主键")
     private Long id;
