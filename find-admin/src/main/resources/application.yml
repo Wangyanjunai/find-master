@@ -58,7 +58,7 @@ spring:
     suffix: .ftl
     template-loader-path: classpath:/templates/
   jackson:
-    default-property-inclusion: non_null
+    default-property-inclusion: NON_NULL
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 server:
