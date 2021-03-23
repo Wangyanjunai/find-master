@@ -38,7 +38,7 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取消息界面点赞和申请加微信消息列表
-     * @apiParam (接口请求参数) {long} id 用户id
+     * @apiParam (接口请求参数) {long} id 消息接收者用户id
      * @apiParam (接口请求参数) {int} [pageNum] 当前页码，默认：1
      * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
      * @apiParamExample {json} 请求示例
@@ -156,7 +156,7 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取点赞消息列表
-     * @apiParam (接口请求参数) {long} id 用户id 消息接收者用户id
+     * @apiParam (接口请求参数) {long} id 消息接收者用户id
      * @apiParam (接口请求参数) {int} [pageNum] 当前页码，默认：1
      * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
      * @apiParamExample {json} 请求示例
@@ -427,8 +427,8 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取消息历史记录列表
-     * @apiParam (接口请求参数) {long} id1 用户id 消息发送者用户id
-     * @apiParam (接口请求参数) {long} id2 用户id 消息接收者用户id
+     * @apiParam (接口请求参数) {long} id1 消息发送者用户id
+     * @apiParam (接口请求参数) {long} id2 消息接收者用户id
      * @apiParam (接口请求参数) {int} [pageNum] 当前页码，默认：1
      * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
      * @apiParamExample {json} 请求示例

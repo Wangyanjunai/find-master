@@ -2449,14 +2449,14 @@ define({ "api": [
             "type": "long",
             "optional": false,
             "field": "id1",
-            "description": "<p>用户id 消息发送者用户id</p>"
+            "description": "<p>消息发送者用户id</p>"
           },
           {
             "group": "接口请求参数",
             "type": "long",
             "optional": false,
             "field": "id2",
-            "description": "<p>用户id 消息接收者用户id</p>"
+            "description": "<p>消息接收者用户id</p>"
           },
           {
             "group": "接口请求参数",
@@ -2722,7 +2722,7 @@ define({ "api": [
             "type": "long",
             "optional": false,
             "field": "id",
-            "description": "<p>用户id</p>"
+            "description": "<p>消息接收者用户id</p>"
           },
           {
             "group": "接口请求参数",
@@ -2974,7 +2974,7 @@ define({ "api": [
             "type": "long",
             "optional": false,
             "field": "id",
-            "description": "<p>用户id 消息接收者用户id</p>"
+            "description": "<p>消息接收者用户id</p>"
           },
           {
             "group": "接口请求参数",
