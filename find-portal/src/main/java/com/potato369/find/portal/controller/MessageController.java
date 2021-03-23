@@ -59,6 +59,7 @@ public class MessageController {
      * @apiSuccess (200) {string} [head] 申请加微信发送者用户头像
      * @apiSuccess (200) {string} [nickname] 申请加微信发送者用户昵称
      * @apiSuccess (200) {string} [content] 申请加微信发送消息内容
+     * @apiSuccess (200) {long} [count] 申请加微信未读消息数量
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
 		{
@@ -77,31 +78,36 @@ public class MessageController {
 		                "userId":60,
 		                "head":"http://8.135.36.45:8000/find/img/head/60/01.png",
 		                "nickname":"尘埃",
-		                "content":"需要加您的微信?"
+		                "content":"需要加您的微信?",
+		                "count":5
 		            },
 		            {
 		                "userId":62,
 		                "head":"http://8.135.36.45:8000/find/img/head/62/02.png",
 		                "nickname":"蓝梧桐",
-		                "content":"需要加您的微信?"
+		                "content":"需要加您的微信?",
+		                "count":5
 		            },
 		            {
 		                "userId":61,
 		                "head":"http://8.135.36.45:8000/find/img/head/61/01.png",
 		                "nickname":"长安",
-		                "content":"需要加您的微信?"
+		                "content":"需要加您的微信?",
+		                "count":6
 		            },
 		            {
 		                "userId":71,
 		                "head":"http://8.135.36.45:8000/find/img/head/71/07.png",
 		                "nickname":"弦雨晴",
-		                "content":"需要加您的微信?"
+		                "content":"需要加您的微信?",
+		                "count":6
 		            },
 		            {
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "nickname":"阿萌",
-		                "content":"需要加您的微信?"
+		                "content":"需要加您的微信?",
+		                "count":1
 		            }
 		        ]
 		    }
