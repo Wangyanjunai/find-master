@@ -464,7 +464,7 @@ public class MessageController {
 					"sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
 					"sendUserNickname": "尘埃",
 					"recipientUserId": 29,
-					"recipientUserHeadIcon": "http://8.135.36.45:8000/find/img/head/29/014.png",
+					"recipientUserHead": "http://8.135.36.45:8000/find/img/head/29/014.png",
 					"recipientUserNickname": "深兰",
 					"sendDateTime": "2021年03月16日 11:13:04",
 					"content": "需要加您的微信?"
@@ -474,7 +474,7 @@ public class MessageController {
 					"sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
 					"sendUserNickname": "尘埃",
 					"recipientUserId": 29,
-					"recipientUserHeadIcon": "http://8.135.36.45:8000/find/img/head/29/014.png",
+					"recipientUserHead": "http://8.135.36.45:8000/find/img/head/29/014.png",
 					"recipientUserNickname": "深兰",
 					"sendDateTime": "2021年03月16日 11:12:55",
 					"content": "需要加您的微信?"
@@ -484,7 +484,7 @@ public class MessageController {
 					"sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
 					"sendUserNickname": "尘埃",
 					"recipientUserId": 29,
-					"recipientUserHeadIcon": "http://8.135.36.45:8000/find/img/head/29/014.png",
+					"recipientUserHead": "http://8.135.36.45:8000/find/img/head/29/014.png",
 					"recipientUserNickname": "深兰",
 					"sendDateTime": "2021年03月16日 11:12:48",
 					"content": "需要加您的微信?"
@@ -494,7 +494,7 @@ public class MessageController {
 					"sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
 					"sendUserNickname": "尘埃",
 					"recipientUserId": 29,
-					"recipientUserHeadIcon": "http://8.135.36.45:8000/find/img/head/29/014.png",
+					"recipientUserHead": "http://8.135.36.45:8000/find/img/head/29/014.png",
 					"recipientUserNickname": "深兰",
 					"sendDateTime": "2021年03月16日 11:12:29",
 					"content": "需要加您的微信?"
@@ -504,7 +504,7 @@ public class MessageController {
 					"sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
 					"sendUserNickname": "尘埃",
 					"recipientUserId": 29,
-					"recipientUserHeadIcon": "http://8.135.36.45:8000/find/img/head/29/014.png",
+					"recipientUserHead": "http://8.135.36.45:8000/find/img/head/29/014.png",
 					"recipientUserNickname": "深兰",
 					"sendDateTime": "2021年03月16日 10:55:39",
 					"content": "需要加您的微信?"
