@@ -13,11 +13,14 @@ import com.github.pagehelper.PageInfo;
 import com.potato369.find.common.enums.AttacheInfoDataTypeEnum;
 import com.potato369.find.common.enums.MessageStatusEnum;
 import com.potato369.find.common.enums.MessageTypeEnum;
+import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.vo.LikesInfoVO;
 import com.potato369.find.common.vo.LikesMessageVO;
 import com.potato369.find.common.vo.MessageInfoVO;
+import com.potato369.find.common.vo.MessageInfoVO2;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
+import com.potato369.find.common.vo.MessageVO3;
 import com.potato369.find.mbg.mapper.MessageMapper;
 import com.potato369.find.mbg.mapper.UserMapper;
 import com.potato369.find.mbg.model.LikesMessageRecord;
@@ -92,8 +95,7 @@ public class MessageServiceImpl implements MessageService {
     public MessageVO selectNotLikesMessage(Long userId, Integer pageNum, Integer pageSize) {
         MessageVO messageVO = new MessageVO();
         messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
-        final PageInfo<NotLikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
-                .doSelectPageInfo(() -> this.messageMapperReader.selectUnLikesRecordByUserId(userId));
+        final PageInfo<NotLikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectUnLikesRecordByUserId(userId));
         messageVO.setTotalCount(listPageInfo.getTotal());
         messageVO.setTotalPage(listPageInfo.getPages());
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
@@ -121,8 +123,7 @@ public class MessageServiceImpl implements MessageService {
 	@Transactional(readOnly = true)
 	public MessageVO2 selectLikesMessage(Long userId, Integer pageNum, Integer pageSize) {
 		MessageVO2 messageVO2 = MessageVO2.builder().build();
-		final PageInfo<LikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
-				.doSelectPageInfo(() -> this.messageMapperReader.selectLikesMessageRecordByUserId(userId));
+		final PageInfo<LikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectLikesMessageRecordByUserId(userId));
 		messageVO2.setTotalCount(listPageInfo.getTotal());
 		messageVO2.setTotalPage(listPageInfo.getPages());
 		List<LikesInfoVO> likesInfoVOs = new ArrayList<>();
@@ -166,26 +167,26 @@ public class MessageServiceImpl implements MessageService {
 	public MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize) {
 		MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
-		final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize)
-				.doSelectPageInfo(() -> this.messageMapperReader.selectApplicationMessageRecordByUserId(userId));
+		final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectApplicationMessageRecordByUserId(userId));
 		List<Message> messages = listPageInfo.getList();
 		List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
 		if (messages != null && !messages.isEmpty()) {
 			for (Message message : messages) {
 				MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
 				User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
-				messageInfoVO.setUserId(user.getId());
-				messageInfoVO.setHead(
-					  StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                    + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                    + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                    + user.getId()
-                    + "/"
-                    + user.getHeadIcon());
-				messageInfoVO.setNickname(user.getNickName());
+				if (user != null) {
+					messageInfoVO.setUserId(user.getId());
+					messageInfoVO.setHead(
+							StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+							+ StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+							+ StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+							+ user.getId()
+							+ "/"
+							+ user.getHeadIcon());
+					messageInfoVO.setNickname(user.getNickName());
+				}
 				messageInfoVO.setContent(message.getContent());
-				Long count = this.messageMapperReader.
-						selectApplicationMessageRecordBySendUserIdAndRecipientUserIdCount(message.getSendUserId(), message.getRecipientUserId());
+				Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
 				messageInfoVO.setCount(count);
 				messageInfoVOs.add(messageInfoVO);
 			}
@@ -194,5 +195,51 @@ public class MessageServiceImpl implements MessageService {
 		messageVO.setTotalCount(listPageInfo.getTotal());
 		messageVO.setTotalPage(listPageInfo.getPages());
 		return messageVO;
+	}
+
+	@Override
+	public MessageVO3 selectMessageRecord(Long sendUserId, Long recipientUserId, Integer pageNum, Integer pageSize) {
+		MessageVO3 messageVO3 = MessageVO3.builder().build();
+		final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectMessageRecord(sendUserId, recipientUserId));
+		List<Message> messages = listPageInfo.getList();
+		long totalCount = listPageInfo.getTotal();
+		int totalPage = listPageInfo.getPages();
+		List<MessageInfoVO2> messageInfoVO2s = new ArrayList<>();
+		if (messages != null && !messages.isEmpty()) {
+			for (Message message : messages) {
+				long sendUserIdTmp = message.getSendUserId();
+				User sendUser = this.userMapperReader.selectByPrimaryKey(sendUserIdTmp);
+				long recipientUserIdTmp = message.getRecipientUserId();
+				User recipientUser = this.userMapperReader.selectByPrimaryKey(recipientUserIdTmp);
+				if (sendUser != null && recipientUser != null) {
+					MessageInfoVO2 messageInfoVO2 = MessageInfoVO2.builder().build();
+					messageInfoVO2.setSendDateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
+					messageInfoVO2.setSendUserId(sendUserIdTmp);
+					messageInfoVO2.setSendUserNickname(sendUser.getNickName());
+					messageInfoVO2.setSendUserHeadIcon(
+							  StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+							+ StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+							+ StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+							+ sendUser.getId()
+							+ "/"
+							+ sendUser.getHeadIcon());
+					messageInfoVO2.setContent(message.getContent());
+					messageInfoVO2.setRecipientUserId(recipientUserIdTmp);
+					messageInfoVO2.setRecipientUserHeadIcon(
+							  StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+							+ StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+							+ StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+							+ recipientUser.getId()
+							+ "/"
+							+ recipientUser.getHeadIcon());
+					messageInfoVO2.setRecipientUserNickname(recipientUser.getNickName());
+					messageInfoVO2s.add(messageInfoVO2);
+				}
+			}
+		}
+		messageVO3.setMessageInfoVO2s(messageInfoVO2s);
+		messageVO3.setTotalCount(totalCount);
+		messageVO3.setTotalPage(totalPage);
+		return messageVO3;
 	}
 }

@@ -224,7 +224,7 @@
 			`create_time` DESC    	
     </select>
     
-    <select id="selectApplicationMessageRecordBySendUserIdAndRecipientUserIdCount" parameterType="java.lang.Long" resultType="java.lang.Long">
+    <select id="selectMessageRecordCount" parameterType="java.lang.Long" resultType="java.lang.Long">
 		SELECT
 			COUNT( 1 ) 
 		FROM
@@ -265,7 +265,7 @@
 			a.`create_time` DESC    	
     </select>
     
-    <select id="selectApplicationMessageRecordBySendUserIdAndRecipientUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectMessageRecord" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		SELECT
 			a.`id`,
 			a.`send_user_id`,
@@ -283,7 +283,7 @@
 				`content`,
 				`send_mode`,
 				`status`,
-				`create_time` 
+				`create_time`
 			FROM
 				`message` 
 			WHERE
@@ -298,7 +298,7 @@
 				`content`,
 				`send_mode`,
 				`status`,
-				`create_time` 
+				`create_time`
 			FROM
 				`message` 
 			WHERE
@@ -307,7 +307,7 @@
 				AND `recipient_user_id`<![CDATA[=]]>#{sendUserId, jdbcType=BIGINT} 
 			) AS a 
 		ORDER BY
-			a.`create_time` DESC   	
+			a.`create_time` DESC
     </select>            
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

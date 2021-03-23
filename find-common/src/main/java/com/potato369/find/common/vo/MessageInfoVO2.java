@@ -1,7 +1,5 @@
 package com.potato369.find.common.vo;
 
-import java.util.Date;
-
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -44,7 +42,7 @@ public class MessageInfoVO2 {
 
 	// 消息发送者用户头像
 	@JSONField(name = "recipientUserHeadIcon")
-	@JsonProperty(value = "recipientUserHeadIcon")
+	@JsonProperty(value = "recipientUserHead")
 	private String recipientUserHeadIcon;
 
 	// 消息发送者用户昵称
@@ -55,7 +53,7 @@ public class MessageInfoVO2 {
 	// 消息发送时间
 	@JSONField(name = "sendDateTime")
 	@JsonProperty(value = "sendDateTime")
-	private Date sendDateTime;
+	private String sendDateTime;
 
 	// 发送的消息内容
 	@JSONField(name = "content")

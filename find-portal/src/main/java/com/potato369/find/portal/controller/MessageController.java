@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
+import com.potato369.find.common.vo.MessageVO3;
 import com.potato369.find.portal.feign.MessageService;
 
 import io.swagger.annotations.Api;
@@ -142,7 +143,7 @@ public class MessageController {
     CommonResult<MessageVO> findAll(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
     		@RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码，默认：当前第1页", example = "1") Integer pageNum, // 当前页码，默认：当前第1页
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量，默认：每页20条", example = "20") Integer pageSize) {// 每页数量，默认：每页20条
-        return this.messageFeignClient.findAll(userId, pageNum, pageSize);
+        return this.messageFeignClient.all(userId, pageNum, pageSize);
     }
     /**
      * @api {get} http://8.135.36.45:8084/find/message/{id}/likes 分页获取点赞消息列表接口
@@ -412,6 +413,137 @@ public class MessageController {
     CommonResult<MessageVO2> findLikes(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
     		@RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码，默认：当前第1页", example = "1") Integer pageNum, // 当前页码，默认：当前第1页
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量，默认：每页20条", example = "20") Integer pageSize) {// 每页数量，默认：每页20条
-        return this.messageFeignClient.findLikes(userId, pageNum, pageSize);
+        return this.messageFeignClient.likes(userId, pageNum, pageSize);
+    }
+    
+    /**
+     * @api {get} http://8.135.36.45:8084/find/message/{id1}/{id2}/messages 分页获取消息历史记录列表接口
+     * @apiVersion 1.0.0
+     * @apiGroup 消息模块API
+     * @apiName 分页获取消息历史记录列表
+     * @apiParam (接口请求参数) {long} id1 用户id 消息发送者用户id
+     * @apiParam (接口请求参数) {long} id2 用户id 消息接收者用户id
+     * @apiParam (接口请求参数) {int} [pageNum] 当前页码，默认：1
+     * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl -v -X GET "http://8.135.36.45:8084/find/message/60/29/messages?pageNum=1&pageSize=20" -H "accept: application/json"
+     * @apiSuccess (200) {long{0-500}} code 信息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {object} [data] 消息历史记录数据
+     * @apiSuccess (200) {long} [totalCount] 消息历史记录总条数
+     * @apiSuccess (200) {int} [totalPage] 消息历史记录总页数
+     * @apiSuccess (200) {object[]} [list] 消息历史记录数据列表
+     * @apiSuccess (200) {long} [sendUserId] 消息发送者用户id
+     * @apiSuccess (200) {string} [sendUserHead] 消息发送者用户头像
+     * @apiSuccess (200) {string} [sendUserNickname] 消息发送者用户昵称
+     * @apiSuccess (200) {long} [recipientUserId] 消息发送者用户id
+     * @apiSuccess (200) {string} [recipientUserHead] 消息发送者用户头像
+     * @apiSuccess (200) {string} [recipientUserNickname] 消息发送者用户昵称
+     * @apiSuccess (200) {string} [sendDateTime] 消息发送时间
+     * @apiSuccess (200) {string} [content] 消息内容
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+		{
+		"status": 200,
+		"code": 0,
+		"msg": "返回数据成功",
+		"data": {
+			"totalCount": 5,
+			"totalPage": 1,
+			"list": [
+				{
+					"sendUserId": 60,
+					"sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
+					"sendUserNickname": "尘埃",
+					"recipientUserId": 29,
+					"recipientUserHeadIcon": "http://8.135.36.45:8000/find/img/head/29/014.png",
+					"recipientUserNickname": "深兰",
+					"sendDateTime": "2021年03月16日 11:13:04",
+					"content": "需要加您的微信?"
+				},
+				{
+					"sendUserId": 60,
+					"sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
+					"sendUserNickname": "尘埃",
+					"recipientUserId": 29,
+					"recipientUserHeadIcon": "http://8.135.36.45:8000/find/img/head/29/014.png",
+					"recipientUserNickname": "深兰",
+					"sendDateTime": "2021年03月16日 11:12:55",
+					"content": "需要加您的微信?"
+				},
+				{
+					"sendUserId": 60,
+					"sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
+					"sendUserNickname": "尘埃",
+					"recipientUserId": 29,
+					"recipientUserHeadIcon": "http://8.135.36.45:8000/find/img/head/29/014.png",
+					"recipientUserNickname": "深兰",
+					"sendDateTime": "2021年03月16日 11:12:48",
+					"content": "需要加您的微信?"
+				},
+				{
+					"sendUserId": 60,
+					"sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
+					"sendUserNickname": "尘埃",
+					"recipientUserId": 29,
+					"recipientUserHeadIcon": "http://8.135.36.45:8000/find/img/head/29/014.png",
+					"recipientUserNickname": "深兰",
+					"sendDateTime": "2021年03月16日 11:12:29",
+					"content": "需要加您的微信?"
+				},
+				{
+					"sendUserId": 60,
+					"sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
+					"sendUserNickname": "尘埃",
+					"recipientUserId": 29,
+					"recipientUserHeadIcon": "http://8.135.36.45:8000/find/img/head/29/014.png",
+					"recipientUserNickname": "深兰",
+					"sendDateTime": "2021年03月16日 10:55:39",
+					"content": "需要加您的微信?"
+				}
+			  ]
+			}
+		}
+     * @apiError (403) {int{0-65535}} status 响应状态码
+     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {String} msg 说明
+     * @apiErrorExample {json} 403错误
+     * HTTP/1.1 403 403响应
+      {
+      	"status": 403,
+      	"code": 199,
+      	"msg": "未找到用户信息！"
+      }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+      {
+      	"status": 404,
+      	"code": 200,
+      	"msg": "接口未注册！"
+      }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+      {
+      	"status": 500,
+      	"code": 205,
+      	"msg": "服务器未响应！"
+      }
+     */    
+    @GetMapping(value = "/{id1}/{id2}/messages")
+    @ApiOperation(value = "分页获取消息历史记录列表接口", notes = "分页获取消息历史记录列表接口")
+    public CommonResult<MessageVO3> messages(
+    		@PathVariable(name = "id1") @ApiParam(name = "id1", value = "消息发送者用户id", required = true, example = "1") Long sendUserId,
+    		@PathVariable(name = "id2") @ApiParam(name = "id2", value = "消息接收者用户id", required = true, example = "2") Long recipientUserId,
+            @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码", example = "1") Integer pageNum,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
+    	return this.messageFeignClient.messages(sendUserId, recipientUserId, pageNum, pageSize);
     }
 }

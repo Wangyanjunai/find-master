@@ -20,7 +20,7 @@ public interface ApplicationRecordMapper {
 
     ApplicationRecord selectByPrimaryKey(Long id);
 
-    int selectCountDateByUserId(Long userId);
+    int selectCountDateByUserId(@Param("userId") Long userId);
 
     int updateByExampleSelective(@Param("record") ApplicationRecord record, @Param("example") ApplicationRecordExample example);
 

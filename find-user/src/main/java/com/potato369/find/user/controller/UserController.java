@@ -500,7 +500,7 @@ public class UserController {
                     user1.setProvince(province);
                     user1.setCity(city);
                 } else {
-                    //根据ip调用百度定位获取地址
+                    // 根据IP调用百度定位获取地址
                     if (StrUtil.isNotEmpty(ip)) {
                         LocationDTO locationDTO = this.getLocation(country, province, city, ip);
                         user1.setIp(locationDTO.getIp());
@@ -514,7 +514,6 @@ public class UserController {
                         user1.setCity(city);
                     }
                 }
-                //user1.setBackgroundIcon(StrUtil.trimToNull(this.projectUrlProps.getDefaultBgIcon()));
                 user1.setGender(gender);
                 if (UserGenderEnum.Female.getCode().toString().equals(user1.getGender())) {
                     if (StrUtil.isEmpty(autograph)) {
@@ -532,7 +531,7 @@ public class UserController {
                         user1.setAutograph(autograph);
                     }
                 }
-                //头像图片上传服务器
+                // 头像图片上传服务器
                 int result = this.userMapperWrite.insertSelective(user1);
                 // 头像图片存储本地路径
                 String headIconFilePath = StrUtil.trimToNull(this.projectUrlProps.getUploadRes())
