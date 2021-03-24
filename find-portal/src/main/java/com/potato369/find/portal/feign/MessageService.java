@@ -1,8 +1,11 @@
 package com.potato369.find.portal.feign;
 
+import java.util.Map;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.potato369.find.common.api.CommonResult;
@@ -30,4 +33,9 @@ public interface MessageService {
     							      @PathVariable(name = "id2") Long recipientUserId,
                                       @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                       @RequestParam(name = "pageSize", required = false, defaultValue = "20") Integer pageSize);
+    
+    @PostMapping(value = "/find/v1/message/{id1}/{id2}/send.do")
+    CommonResult<Map<String, Object>> send(@PathVariable(name = "id1") Long sendUserId,
+    							      @PathVariable(name = "id2") Long recipientUserId,
+                                      @RequestParam(name = "content") String content);
 }

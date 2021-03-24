@@ -1,5 +1,7 @@
 package com.potato369.find.portal.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -551,5 +553,71 @@ public class MessageController {
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码", example = "1") Integer pageNum,
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
     	return this.messageFeignClient.messages(sendUserId, recipientUserId, pageNum, pageSize);
+    }
+    
+    /**
+     * @api {get} http://8.135.36.45:8084/find/message/{id1}/{id2}/send 发送消息接口
+     * @apiVersion 1.0.0
+     * @apiGroup 消息模块API
+     * @apiName 发送消息
+     * @apiParam (接口请求参数) {long} id1 消息发送者用户id
+     * @apiParam (接口请求参数) {long} id2 消息接收者用户id
+     * @apiParam (接口请求参数) {string} content 消息内容
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl -v -X GET "http://8.135.36.45:8084/find/message/60/29/send?content=可以申请加你的微信吗？" -H "accept: application/json"
+     * @apiSuccess (200) {long{0-500}} code 信息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {object} [data] 发送状态数据
+     * @apiSuccess (200) {string} [SEND] OK->发送成功，ERROR->发送失败
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+		{
+		"status": 200,
+		"code": 0,
+		"msg": "发送消息成功。",
+		"data": {
+				"SEND": "OK"
+			}
+		}
+     * @apiError (403) {int{0-65535}} status 响应状态码
+     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {String} msg 说明
+     * @apiErrorExample {json} 403错误
+     * HTTP/1.1 403 403响应
+      {
+      	"status": 403,
+      	"code": 199,
+      	"msg": "未找到用户信息！"
+      }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+      {
+      	"status": 404,
+      	"code": 200,
+      	"msg": "接口未注册！"
+      }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+      {
+      	"status": 500,
+      	"code": 205,
+      	"msg": "服务器未响应！"
+      }
+     */    
+    @GetMapping(value = "/{id1}/{id2}/send")
+    @ApiOperation(value = "发送消息接口", notes = "发送消息接口")
+    public CommonResult<Map<String, Object>> send(
+    		@PathVariable(name = "id1") @ApiParam(name = "id1", value = "消息发送者用户id", required = true, example = "1") Long sendUserId,
+    		@PathVariable(name = "id2") @ApiParam(name = "id2", value = "消息接收者用户id", required = true, example = "2") Long recipientUserId,
+    		@RequestParam(name = "content", defaultValue = "可以申请加你的微信吗？") @ApiParam(name = "content", value = "消息内容", required = true, example = "可以申请加你的微信吗？") String content) {
+    	return this.messageFeignClient.send(sendUserId, recipientUserId, content);
     }
 }

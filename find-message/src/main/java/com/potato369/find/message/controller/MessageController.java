@@ -1,8 +1,11 @@
 package com.potato369.find.message.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,4 +78,20 @@ public class MessageController {
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
 		return CommonResult.success(this.messageService.selectMessageRecord(sendUserId, recipientUserId, pageNum, pageSize));
 	}
+    
+    /**
+     * 发送消息
+     * @param sendUserId 消息发送者用户id
+     * @param recipientUserId 消息收者用户id
+     * @param pageNum 当前页码，默认：1
+     * @param pageSize 每页数量，默认：20
+     */
+    @ApiOperation(value = "发送消息接口", notes = "发送消息接口")
+    @PostMapping(value = "/{id1}/{id2}/send.do")
+    public CommonResult<Map<String, Object>> send(
+    		@PathVariable(name = "id1") @ApiParam(name = "id1", value = "消息发送者用户id", required = true, example = "1") Long sendUserId,
+    		@PathVariable(name = "id2") @ApiParam(name = "id2", value = "消息接收者用户id", required = true, example = "2") Long recipientUserId,
+    		@RequestParam(name = "content") @ApiParam(name = "content", value = "消息内容", required = true, example = "可以申请加你的微信吗？") String content) {
+    	return this.messageService.sendMessageAndPush(sendUserId, recipientUserId, content);
+    }
 }

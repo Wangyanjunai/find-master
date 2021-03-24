@@ -2,7 +2,10 @@ package com.potato369.find.message.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.enums.AttacheInfoDataTypeEnum;
+import com.potato369.find.common.enums.MessageSendModeEnum;
 import com.potato369.find.common.enums.MessageStatusEnum;
 import com.potato369.find.common.enums.MessageTypeEnum;
 import com.potato369.find.common.utils.DateUtil;
@@ -28,6 +33,7 @@ import com.potato369.find.mbg.model.Message;
 import com.potato369.find.mbg.model.MessageExample;
 import com.potato369.find.mbg.model.NotLikesMessageRecord;
 import com.potato369.find.mbg.model.User;
+import com.potato369.find.message.config.bean.PushBean;
 import com.potato369.find.message.config.props.ProjectUrlProps;
 import com.potato369.find.message.service.MessageService;
 
@@ -38,9 +44,13 @@ public class MessageServiceImpl implements MessageService {
 
     private MessageMapper messageMapperReader;
     
+    private MessageMapper messageMapperWriter;
+    
     private UserMapper userMapperReader;
     
     private ProjectUrlProps projectUrlProps;
+    
+    private JiGuangPushServiceImpl jiGuangPushService;
 
     @Autowired
     public void setMessageMapperReader(MessageMapper messageMapperReader) {
@@ -241,5 +251,39 @@ public class MessageServiceImpl implements MessageService {
 		messageVO3.setTotalCount(totalCount);
 		messageVO3.setTotalPage(totalPage);
 		return messageVO3;
+	}
+
+	@Override
+	public CommonResult<Map<String, Object>> sendMessageAndPush(Long sendUserId, Long recipientUserId, String content) {
+		Map<String, Object> data = new ConcurrentHashMap<>();
+		data.put("SEND", "ERROR");
+		String msg = "";
+		String sendMode = MessageSendModeEnum.ACTIVE.getStatus();
+        Message messageRecord = new Message();
+        messageRecord.setSendMode(sendMode);
+        messageRecord.setSendUserId(sendUserId);
+        messageRecord.setRecipientUserId(recipientUserId);
+        messageRecord.setContent(content);
+        messageRecord.setReserveColumn01(MessageTypeEnum.Commons.getMessage());
+        int b = this.messageMapperWriter.insertSelective(messageRecord);
+        if (b > 0) {
+            data.put("SEND", "OK");
+            msg = "发送消息成功。";
+            User sendUser = this.userMapperReader.selectByPrimaryKey(sendUserId);
+            User recipientUser = this.userMapperReader.selectByPrimaryKey(recipientUserId);
+            assert sendUser != null;
+            assert recipientUser != null;
+            String title = sendUser.getNickName();//消息标题
+            Map<String, String> extras = new HashMap<>();
+            PushBean pushBean = new PushBean();
+    		pushBean.setAlert(content);
+    		pushBean.setTitle(title);
+    		pushBean.setExtras(extras);
+    		this.jiGuangPushService.pushAndroid(pushBean, recipientUser.getReserveColumn03());
+        } else {
+            data.put("SEND", "ERROR");
+            msg = "发送消息失败。";
+        }
+        return CommonResult.success(data, msg);
 	}
 }

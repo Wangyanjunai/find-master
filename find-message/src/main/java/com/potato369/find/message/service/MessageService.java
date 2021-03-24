@@ -1,5 +1,8 @@
 package com.potato369.find.message.service;
 
+import java.util.Map;
+
+import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.vo.LikesMessageVO;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
@@ -52,4 +55,12 @@ public interface MessageService {
 	 * @param pageSize 每页数量
 	 */
 	MessageVO3 selectMessageRecord(Long sendUserId, Long recipientUserId, Integer pageNum, Integer pageSize);
+	
+	/**
+	 * 发送消息
+	 * @param sendUserId 消息接收者用户id
+	 * @param recipientUserId 消息发送者用户id
+	 * @param content 消息内容
+	 */
+	CommonResult<Map<String, Object>> sendMessageAndPush(Long sendUserId, Long recipientUserId,String content);
 }
