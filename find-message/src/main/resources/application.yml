@@ -33,7 +33,11 @@ spring:
       port: 35735
     restart:
       enabled: true
-      additional-paths: src/main/java, src/main/resources    
+      additional-paths: src/main/java, src/main/resources
+  jackson:
+    default-property-inclusion: NON_NULL
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 server:
   servlet:
     context-path: /find

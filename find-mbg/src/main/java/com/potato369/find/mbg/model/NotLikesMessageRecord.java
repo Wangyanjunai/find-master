@@ -1,8 +1,11 @@
 package com.potato369.find.mbg.model;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import io.swagger.annotations.ApiModelProperty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NotLikesMessageRecord {
 	
 	//发送消息内容

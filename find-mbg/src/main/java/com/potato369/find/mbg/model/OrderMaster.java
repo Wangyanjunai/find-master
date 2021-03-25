@@ -6,11 +6,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.potato369.find.common.utils.EnumUtil;
 import com.potato369.find.common.enums.OrderStatusEnum;
 import com.potato369.find.common.enums.PayModeEnum;
 import com.potato369.find.common.enums.PayStatusEnum;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderMaster implements Serializable {
     @ApiModelProperty(value = "id，主键")
     private Long id;

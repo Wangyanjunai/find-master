@@ -41,6 +41,10 @@ spring:
       max-file-size: 5MB
       #限制上传的多个文件的总大小
       max-request-size: 50MB
+  jackson:
+    default-property-inclusion: NON_NULL
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 server:
   servlet:
     context-path: /find

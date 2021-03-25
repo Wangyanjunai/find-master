@@ -779,6 +779,9 @@ public class DynamicController {
                     return CommonResult.success(data, "申请加微信出错，今天申请加微信次数超限，明天再试。");
                 }
             }
+            //TODO 是否需要判断一天只能申请加不同的人的微信一次，加同一个人的微信一天只能发送一次，对方没有回复是不能继续发送的。
+            DynamicInfo dynamicInfo2 = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
+            dynamicInfo2.getUserId();
             ApplicationRecord applicationRecord = new ApplicationRecord();
             applicationRecord.setDynamicInfoId(dynamicInfoId);
             applicationRecord.setUserId(userId);

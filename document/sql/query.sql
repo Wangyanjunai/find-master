@@ -218,3 +218,131 @@ WHERE
 	AND me.`status` = '0' 
 ORDER BY
 	me.`create_time` DESC;
+
+-- 查询点赞发送者和接收者列表
+SELECT
+	a.`id`,
+	a.`send_user_id`,
+	a.`recipient_user_id`,
+	a.`content`,
+	a.`send_mode`,
+	a.`status`,
+	a.`create_time`
+FROM
+	(
+	SELECT
+	`id`,
+	`send_user_id`,
+	`recipient_user_id`,
+	`content`,
+	`send_mode`,
+	`status`,
+	`create_time` 
+	FROM
+		`message` 
+	WHERE
+		`reserve_column01` = 'applications' 
+		AND `send_user_id` = 29 
+UNION
+	SELECT
+	`id`,
+	`send_user_id`,
+	`recipient_user_id`,
+	`content`,
+	`send_mode`,
+	`status`,
+	`create_time` 
+	FROM
+		`message` 
+	WHERE
+		`reserve_column01` = 'applications' 
+		AND `recipient_user_id` = 29 
+		) AS a 
+	GROUP BY
+		a.`send_user_id`,
+		a.`recipient_user_id` 
+	ORDER BY
+		a.`create_time` DESC;
+	
+-- 查询点赞消息记录	
+SELECT
+	a.`id`,
+	a.`send_user_id`,
+	a.`recipient_user_id`,
+	a.`content`,
+	a.`send_mode`,
+	a.`status`,
+	a.`create_time` 
+FROM
+	(
+SELECT
+	`id`,
+	`send_user_id`,
+	`recipient_user_id`,
+	`content`,
+	`send_mode`,
+	`status`,
+	`create_time` 
+FROM
+	`message` 
+WHERE
+	`reserve_column01` = 'applications' 
+	AND `send_user_id` = 60 
+	AND `recipient_user_id` = 29 UNION
+SELECT
+	`id`,
+	`send_user_id`,
+	`recipient_user_id`,
+	`content`,
+	`send_mode`,
+	`status`,
+	`create_time` 
+FROM
+	`message` 
+WHERE
+	`reserve_column01` = 'applications' 
+	AND `send_user_id` = 29 
+	AND `recipient_user_id` = 60 
+	) AS a 
+ORDER BY
+	a.`create_time` DESC;
+		
+-- 查询点赞消息记录条数	
+SELECT
+	COUNT( 1 ) 
+FROM
+	(
+SELECT
+	`id`,
+	`send_user_id`,
+	`recipient_user_id`,
+	`content`,
+	`send_mode`,
+	`status`,
+	`create_time` 
+FROM
+	`message` 
+WHERE
+	`reserve_column01` = 'applications' 
+	AND `send_user_id` = 60 
+	AND `recipient_user_id` = 29 UNION
+SELECT
+	`id`,
+	`send_user_id`,
+	`recipient_user_id`,
+	`content`,
+	`send_mode`,
+	`status`,
+	`create_time` 
+FROM
+	`message` 
+WHERE
+	`reserve_column01` = 'applications' 
+	AND `send_user_id` = 29 
+	AND `recipient_user_id` = 60 
+	) AS a 
+WHERE
+	a.`status` = '0' 
+ORDER BY
+	a.`create_time` DESC;	
+	

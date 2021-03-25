@@ -20,26 +20,26 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MessageVO2 {
+public class MessageVO3 {
 
     /**
-     * totalCount:点赞总条数
+     * totalCount:消息记录总条数
      */
     @JSONField(name = "totalCount")
     @JsonProperty(value = "totalCount")
     private Long totalCount;
 
     /**
-     * totalPage:点赞总页数
+     * totalPage:消息记录总页数
      */
     @JSONField(name = "totalPage")
     @JsonProperty(value = "totalPage")
     private Integer totalPage;
 
     /**
-     * 点赞数据列表
+     * 消息记录数据列表
      */
     @JSONField(name = "list")
     @JsonProperty(value = "list")
-    private List<LikesInfoVO> likesInfoVOs;
+    private List<MessageInfoVO2> messageInfoVO2s;
 }

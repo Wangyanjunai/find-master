@@ -812,33 +812,33 @@ public class DynamicController {
      * @apiSuccess (200) {string[]} [attacheFileUrlList] 附件文件地址列表
      * @apiSuccessExample {json} 200响应示例01
      * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "获取觅鹿界面发布的动态内容信息列表成功",
-     * "data": {
-     * "totalPage": 1,
-     * "list": [
-     * {
-     * "userId": 71,
-     * "headUrl": "http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
-     * "nickname": "杨贵妃",
-     * "publishTime": "2021-02-01 14:35:23",
-     * "dynamicInfoId": 86,
-     * "content": "刚刚注册，请多关照小妹子！！",
-     * "address": "广西省南宁市",
-     * "likes": 0,
-     * "likeStatus": false,
-     * "applications": 5,
-     * "applicationStatus": true,
-     * "dataType": "1",
-     * "attacheFileUrlList": [
-     * "http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
-     * ]
-     * }
-     * ]
-     * }
-     * }
+		{
+		    "status":200,
+		    "code":0,
+		    "msg":"获取觅鹿界面发布的动态内容信息列表成功",
+		    "data":{
+		        "totalPage":1,
+		        "list":[
+		            {
+		                "userId":71,
+		                "headUrl":"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
+		                "nickname":"杨贵妃",
+		                "publishTime":"2021-02-01 14:35:23",
+		                "dynamicInfoId":86,
+		                "content":"刚刚注册，请多关照小妹子！！",
+		                "address":"广西省南宁市",
+		                "likes":0,
+		                "likeStatus":false,
+		                "applications":5,
+		                "applicationStatus":true,
+		                "dataType":"1",
+		                "attacheFileUrlList":[
+		                    "http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
+		                ]
+		            }
+		        ]
+		    }
+		}
      * @apiError (404) {int{0-65535}} timestamp 响应时间戳
      * @apiError (404) {long{0-500}} status 消息码
      * @apiError (404) {String} error 错误说明
@@ -913,33 +913,33 @@ public class DynamicController {
      * @apiSuccess (200) {list} [attacheFileUrlList] 附件文件地址列表
      * @apiSuccessExample {json} 200响应示例01
      * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "获取觅鹿界面发布的动态内容信息列表成功",
-     * "data": {
-     * "totalPage": 1,
-     * "list": [
-     * {
-     * "userId": 71,
-     * "headUrl": "http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
-     * "nickname": "杨贵妃",
-     * "publishTime": "2021-02-01 14:35:23",
-     * "dynamicInfoId": 86,
-     * "content": "刚刚注册，请多关照小妹子！！",
-     * "address": "广西省南宁市",
-     * "likes": 0,
-     * "likeStatus": false,
-     * "applications": 5,
-     * "applicationStatus": true,
-     * "dataType": "1",
-     * "attacheFileUrlList": [
-     * "http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
-     * ]
-     * }
-     * ]
-     * }
-     * }
+		{
+		    "status":200,
+		    "code":0,
+		    "msg":"获取觅鹿界面发布的动态内容信息列表成功",
+		    "data":{
+		        "totalPage":1,
+		        "list":[
+		            {
+		                "userId":71,
+		                "headUrl":"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
+		                "nickname":"杨贵妃",
+		                "publishTime":"2021-02-01 14:35:23",
+		                "dynamicInfoId":86,
+		                "content":"刚刚注册，请多关照小妹子！！",
+		                "address":"广西省南宁市",
+		                "likes":0,
+		                "likeStatus":false,
+		                "applications":5,
+		                "applicationStatus":true,
+		                "dataType":"1",
+		                "attacheFileUrlList":[
+		                    "http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
+		                ]
+		            }
+		        ]
+		    }
+		}
      * @apiError (404) {int{0-65535}} timestamp 响应时间戳
      * @apiError (404) {long{0-500}} status 消息码
      * @apiError (404) {String} error 错误说明
@@ -1014,33 +1014,33 @@ public class DynamicController {
      * @apiSuccess (200) {list} [attacheFileUrlList] 附件文件地址列表
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "分页获取用户自己发布的所有动态内容列表成功。",
-     * "data": {
-     * "totalPage": 1,
-     * "list": [
-     * {
-     * "userId": 71,
-     * "headUrl": "http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
-     * "nickname": "杨贵妃",
-     * "publishTime": "2021-02-01 14:35:23",
-     * "dynamicInfoId": 86,
-     * "content": "刚刚注册，请多关照小妹子！！",
-     * "address": "广西省南宁市",
-     * "likes": 0,
-     * "likeStatus": false,
-     * "applications": 5,
-     * "applicationStatus": false,
-     * "dataType": "0",
-     * "attacheFileUrlList": [
-     * "http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
-     * ]
-     * }
-     * ]
-     * }
-     * }
+		{
+		    "status":200,
+		    "code":0,
+		    "msg":"分页获取用户自己发布的所有动态内容列表成功。",
+		    "data":{
+		        "totalPage":1,
+		        "list":[
+		            {
+		                "userId":71,
+		                "headUrl":"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
+		                "nickname":"杨贵妃",
+		                "publishTime":"2021-02-01 14:35:23",
+		                "dynamicInfoId":86,
+		                "content":"刚刚注册，请多关照小妹子！！",
+		                "address":"广西省南宁市",
+		                "likes":0,
+		                "likeStatus":false,
+		                "applications":5,
+		                "applicationStatus":false,
+		                "dataType":"0",
+		                "attacheFileUrlList":[
+		                    "http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
+		                ]
+		            }
+		        ]
+		    }
+		}
      * @apiError (404) {int{0-65535}} timestamp 响应时间戳
      * @apiError (404) {long{0-500}} status 消息码
      * @apiError (404) {String} error 错误说明

@@ -2,10 +2,10 @@ define({ "api": [
   {
     "type": "put",
     "url": "http://124.71.38.2:8084/find/dynamic/{id}/share",
-    "title": "分享动态接口",
+    "title": "分享动态内容接口",
     "version": "1.0.0",
     "group": "动态模块API",
-    "name": "分享动态",
+    "name": "分享内容动态",
     "parameter": {
       "fields": {
         "接口请求参数": [
@@ -93,7 +93,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"分享动态内容成功。\",\n\t\t    \"data\": {\n\t\t        \"SHARED\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"分享动态内容成功。\",\n\"data\": {\n\"SHARED\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -271,12 +271,12 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例01（是自己发布的动态内容， 删除成功）",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"删除动态内容成功。\",\n\t\t    \"data\": {\n\t\t        \"DELETED\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"删除动态内容成功。\",\n\"data\": {\n\"DELETED\": \"OK\"\n}\n}",
           "type": "json"
         },
         {
           "title": "200 响应示例02（非自己发布的动态内容， 删除失败）",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"删除动态内容失败。\",\n\t\t    \"data\": {\n\t\t        \"DELETED\": \"ERROR\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"删除动态内容失败。\",\n\"data\": {\n\"DELETED\": \"ERROR\"\n}\n}",
           "type": "json"
         }
       ]
@@ -372,10 +372,10 @@ define({ "api": [
   {
     "type": "post",
     "url": "http://124.71.38.2:8084/find/dynamic/{id}/release",
-    "title": "发布动态接口",
+    "title": "发布动态内容接口",
     "version": "1.0.0",
     "group": "动态模块API",
-    "name": "发布动态",
+    "name": "发布动态内容",
     "parameter": {
       "fields": {
         "接口请求参数": [
@@ -402,7 +402,7 @@ define({ "api": [
             ],
             "optional": false,
             "field": "attacheInfoDataType",
-            "description": "<p>附件类型：0-&gt;图片，1-&gt;语音</p>"
+            "description": "<p>附件类型：0-&gt;图片；1-&gt;语音</p>"
           },
           {
             "group": "接口请求参数",
@@ -412,7 +412,7 @@ define({ "api": [
             ],
             "optional": true,
             "field": "files",
-            "description": "<p>附件文件数组，说明：图片文件数组不能超过4张包括4张，语音文件数组不能超过1个包括1个</p>"
+            "description": "<p>附件数组，说明：图片文件不能超过4张包括4张，语音文件不能超过1个包括1个</p>"
           },
           {
             "group": "接口请求参数",
@@ -438,9 +438,16 @@ define({ "api": [
           {
             "group": "接口请求参数",
             "type": "string",
+            "allowedValues": [
+              "{\"2G\"",
+              "\"3G\"",
+              "\"4G\"",
+              "\"5G\"",
+              "\"WIFI\""
+            ],
             "optional": true,
             "field": "networkMode",
-            "description": "<p>网络方式</p>"
+            "description": "<p>上网方式</p>"
           },
           {
             "group": "接口请求参数",
@@ -454,21 +461,21 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "country",
-            "description": "<p>设备定位（国）</p>"
+            "description": "<p>定位（国家）</p>"
           },
           {
             "group": "接口请求参数",
             "type": "string",
             "optional": true,
             "field": "province",
-            "description": "<p>设备定位（省）</p>"
+            "description": "<p>定位（省份）</p>"
           },
           {
             "group": "接口请求参数",
             "type": "string",
             "optional": true,
             "field": "city",
-            "description": "<p>设备定位（市）</p>"
+            "description": "<p>定位（城市）</p>"
           },
           {
             "group": "接口请求参数",
@@ -479,7 +486,7 @@ define({ "api": [
             ],
             "optional": true,
             "field": "publicStatus",
-            "description": "<p>是否公开定位状态，0-&gt;未公开；1-&gt;公开，不传默认0</p>"
+            "description": "<p>是否公开定位，0-&gt;未公开；1-&gt;公开，默认0</p>"
           },
           {
             "group": "接口请求参数",
@@ -569,12 +576,12 @@ define({ "api": [
         },
         {
           "title": "200响应示例03（发布语音有客户端IP）",
-          "content": "HTTP/1.1 200 OK\n{\n\t\"status\": 200,\n\t\"code\": 0,\n\t\"msg\": \"发布动态内容成功。\",\n\t\"data\": {\n\t\t\"RELEASED\": \"OK\"\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"发布动态内容成功。\",\n\"data\": {\n\"RELEASED\": \"OK\"\n}\n}",
           "type": "json"
         },
         {
           "title": "200响应示例04（发布纯文字有客户端IP）",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"发布动态内容成功。\",\n\"data\": {\n\t\t\"RELEASED\": \"OK\"\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"发布动态内容成功。\",\n\"data\": {\n\"RELEASED\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -660,17 +667,17 @@ define({ "api": [
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n{\n\t\"status\": 403,\n\t\"code\": 199,\n\t\"msg\": \"未找到用户信息！\"\n}",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\"status\": 404,\n\t\"code\": 200,\n\t\"msg\": \"接口未注册！\"\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\t\"status\": 500,\n\t\"code\": 205,\n\t\"msg\": \"服务器未响应！\"\n}",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]
@@ -705,28 +712,28 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "ip",
-            "description": "<p>客户端IP，不能与发布动态定位（国）、（省）、（市）同时不传或者为空，如果同时都传或者都不为空，以传的发布动态定位（国）、（省）、（市）为准</p>"
+            "description": "<p>客户端IP，说明：不能与定位（国家）、（省份）、（城市）同时为空，如果同时都不为空，以定位（国家）、（省份）、（城市）为准</p>"
           },
           {
             "group": "接口请求参数",
             "type": "string",
             "optional": true,
             "field": "country",
-            "description": "<p>发布动态定位（国）</p>"
+            "description": "<p>定位（国家）</p>"
           },
           {
             "group": "接口请求参数",
             "type": "string",
             "optional": true,
             "field": "province",
-            "description": "<p>发布动态定位（省）</p>"
+            "description": "<p>定位（省份）</p>"
           },
           {
             "group": "接口请求参数",
             "type": "string",
             "optional": true,
             "field": "city",
-            "description": "<p>发布动态定位（市）</p>"
+            "description": "<p>定位（城市）</p>"
           }
         ]
       },
@@ -737,12 +744,12 @@ define({ "api": [
           "type": "json"
         },
         {
-          "title": "请求示例02（有发布定位地址（国）、省、市）",
+          "title": "请求示例02（有定位（国家）、（省份）、（城市））",
           "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/updateLocation -d '{\"country\": \"中国\", \"province\": \"广东\", \"city\": \"深圳\"}'",
           "type": "json"
         },
         {
-          "title": "请求示例03（有客户端IP，发布定位地址（国）、（省）、（市））",
+          "title": "请求示例03（有客户端IP，定位（国家）、（省份）、（城市））",
           "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/updateLocation\n-d '{\n\"ip\": \"183.14.133.239\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"深圳\"\n}'",
           "type": "json"
         }
@@ -805,7 +812,7 @@ define({ "api": [
           "type": "json"
         },
         {
-          "title": "200 响应示例02（有发布定位地址（国）、（省）、（市））",
+          "title": "200 响应示例02（有有定位（国家）、（省份）、（城市））",
           "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"更新用户发布动态定位成功。\",\n\"data\": {\n\"UPDATE\": \"OK\"\n}\n}",
           "type": "json"
         },
@@ -819,7 +826,7 @@ define({ "api": [
     "error": {
       "examples": [
         {
-          "title": "403错误 （客户端IP，发布定位地址（国）、（省）、（市）都不传）",
+          "title": "403错误 （客户端IP，定位（国家）、（省份）、（城市）都为空）",
           "content": "HTTP/1.1 400 400响应\n{\n\"status\": 400,\n\"code\": 500,\n\"msg\": \"检查失败，客户端IP，发布动态定位（国）、（省）、（市）不能同时不传或者为空。\",\n\"data\": null\n}",
           "type": "json"
         },
@@ -1226,17 +1233,17 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例01（取消点赞，点赞记录不存在）",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"取消点赞，点赞记录信息不存在。\",\n\t\t    \"data\": {\n\t\t        \"LIKED\": \"ERROR\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"取消点赞，点赞记录信息不存在。\",\n\"data\": {\n\"LIKED\": \"ERROR\"\n}\n}",
           "type": "json"
         },
         {
           "title": "200 响应示例02（取消点赞，点赞记录存在）",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"取消点赞，取消成功。\",\n\t\t    \"data\": {\n\t\t        \"LIKED\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"取消点赞，取消成功。\",\n\"data\": {\n\"LIKED\": \"OK\"\n}\n}",
           "type": "json"
         },
         {
           "title": "200 响应示例03（点赞，点赞记录不存在）",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"创建点赞，点赞成功。\",\n\t\t    \"data\": {\n\t\t        \"LIKED\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"创建点赞，点赞成功。\",\n\"data\": {\n\"LIKED\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -1422,12 +1429,12 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例01（第1次申请加微信）",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"申请加微信成功。\",\n\t\t    \"data\": {\n\t\t        \"APPLICATION\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"申请加微信成功。\",\n\"data\": {\n\"APPLICATION\": \"OK\"\n}\n}",
           "type": "json"
         },
         {
           "title": "200 响应示例02（第6次申请加微信）",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"申请加微信出错，当天申请加微信次数超限。\",\n\t\t    \"data\": {\n\t\t        \"APPLICATION\": \"ERROR\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"申请加微信出错，当天申请加微信次数超限。\",\n\"data\": {\n\"APPLICATION\": \"ERROR\"\n}\n}",
           "type": "json"
         }
       ]
@@ -1778,7 +1785,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例01",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"获取觅鹿界面发布的动态内容信息列表成功\",\n\t\t    \"data\": {\n\t\t        \"totalPage\": 1,\n\t\t        \"list\": [\n\t\t            {\n\t\t                \"userId\": 71,\n\t\t                \"headUrl\": \"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\": \"杨贵妃\",\n\t\t                \"publishTime\": \"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\": 86,\n\t\t                \"content\": \"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\": \"广西省南宁市\",\n\t\t                \"likes\": 0,\n\t\t                \"likeStatus\": false,\n\t\t                \"applications\": 5,\n\t\t                \"applicationStatus\": true,\n\t\t                \"dataType\": \"1\",\n\t\t                \"attacheFileUrlList\": [\n\t\t                    \"http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"获取觅鹿界面发布的动态内容信息列表成功\",\n\t\t    \"data\":{\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":71,\n\t\t                \"headUrl\":\"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\":\"杨贵妃\",\n\t\t                \"publishTime\":\"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\":86,\n\t\t                \"content\":\"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\":\"广西省南宁市\",\n\t\t                \"likes\":0,\n\t\t                \"likeStatus\":false,\n\t\t                \"applications\":5,\n\t\t                \"applicationStatus\":true,\n\t\t                \"dataType\":\"1\",\n\t\t                \"attacheFileUrlList\":[\n\t\t                    \"http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -2056,7 +2063,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"分页获取用户自己发布的所有动态内容列表成功。\",\n\t\t    \"data\": {\n\t\t        \"totalPage\": 1,\n\t\t        \"list\": [\n\t\t            {\n\t\t                \"userId\": 71,\n\t\t                \"headUrl\": \"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\": \"杨贵妃\",\n\t\t                \"publishTime\": \"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\": 86,\n\t\t                \"content\": \"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\": \"广西省南宁市\",\n\t\t                \"likes\": 0,\n\t\t                \"likeStatus\": false,\n\t\t                \"applications\": 5,\n\t\t                \"applicationStatus\": false,\n\t\t                \"dataType\": \"0\",\n\t\t                \"attacheFileUrlList\": [\n\t\t                    \"http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"分页获取用户自己发布的所有动态内容列表成功。\",\n\t\t    \"data\":{\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":71,\n\t\t                \"headUrl\":\"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\":\"杨贵妃\",\n\t\t                \"publishTime\":\"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\":86,\n\t\t                \"content\":\"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\":\"广西省南宁市\",\n\t\t                \"likes\":0,\n\t\t                \"likeStatus\":false,\n\t\t                \"applications\":5,\n\t\t                \"applicationStatus\":false,\n\t\t                \"dataType\":\"0\",\n\t\t                \"attacheFileUrlList\":[\n\t\t                    \"http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -2334,7 +2341,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例01",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"获取觅鹿界面发布的动态内容信息列表成功\",\n\t\t    \"data\": {\n\t\t        \"totalPage\": 1,\n\t\t        \"list\": [\n\t\t            {\n\t\t                \"userId\": 71,\n\t\t                \"headUrl\": \"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\": \"杨贵妃\",\n\t\t                \"publishTime\": \"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\": 86,\n\t\t                \"content\": \"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\": \"广西省南宁市\",\n\t\t                \"likes\": 0,\n\t\t                \"likeStatus\": false,\n\t\t                \"applications\": 5,\n\t\t                \"applicationStatus\": true,\n\t\t                \"dataType\": \"1\",\n\t\t                \"attacheFileUrlList\": [\n\t\t                    \"http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"获取觅鹿界面发布的动态内容信息列表成功\",\n\t\t    \"data\":{\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":71,\n\t\t                \"headUrl\":\"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\":\"杨贵妃\",\n\t\t                \"publishTime\":\"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\":86,\n\t\t                \"content\":\"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\":\"广西省南宁市\",\n\t\t                \"likes\":0,\n\t\t                \"likeStatus\":false,\n\t\t                \"applications\":5,\n\t\t                \"applicationStatus\":true,\n\t\t                \"dataType\":\"1\",\n\t\t                \"attacheFileUrlList\":[\n\t\t                    \"http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -2428,6 +2435,972 @@ define({ "api": [
     ]
   },
   {
+    "type": "get",
+    "url": "http://8.135.36.45:8084/find/message/{id1}/{id2}/messages",
+    "title": "分页获取消息历史记录列表接口",
+    "version": "1.0.0",
+    "group": "消息模块API",
+    "name": "分页获取消息历史记录列表",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id1",
+            "description": "<p>消息发送者用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id2",
+            "description": "<p>消息接收者用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "int",
+            "optional": true,
+            "field": "pageNum",
+            "description": "<p>当前页码，默认：1</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "int",
+            "optional": true,
+            "field": "pageSize",
+            "description": "<p>每页数量，默认：20</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://8.135.36.45:8084/find/message/60/29/messages?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>消息历史记录数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "totalCount",
+            "description": "<p>消息历史记录总条数</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "optional": true,
+            "field": "totalPage",
+            "description": "<p>消息历史记录总页数</p>"
+          },
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": true,
+            "field": "list",
+            "description": "<p>消息历史记录数据列表</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "sendUserId",
+            "description": "<p>消息发送者用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "sendUserHead",
+            "description": "<p>消息发送者用户头像</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "sendUserNickname",
+            "description": "<p>消息发送者用户昵称</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "recipientUserId",
+            "description": "<p>消息发送者用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "recipientUserHead",
+            "description": "<p>消息发送者用户头像</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "recipientUserNickname",
+            "description": "<p>消息发送者用户昵称</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "sendDateTime",
+            "description": "<p>消息发送时间</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "content",
+            "description": "<p>消息内容</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t\"status\": 200,\n\t\t\"code\": 0,\n\t\t\"msg\": \"返回数据成功\",\n\t\t\"data\": {\n\t\t\t\"totalCount\": 5,\n\t\t\t\"totalPage\": 1,\n\t\t\t\"list\": [\n\t\t\t\t{\n\t\t\t\t\t\"sendUserId\": 60,\n\t\t\t\t\t\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t\t\t\t\"sendUserNickname\": \"尘埃\",\n\t\t\t\t\t\"recipientUserId\": 29,\n\t\t\t\t\t\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\t\t\t\t\t\"recipientUserNickname\": \"深兰\",\n\t\t\t\t\t\"sendDateTime\": \"2021年03月16日 11:13:04\",\n\t\t\t\t\t\"content\": \"需要加您的微信?\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"sendUserId\": 60,\n\t\t\t\t\t\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t\t\t\t\"sendUserNickname\": \"尘埃\",\n\t\t\t\t\t\"recipientUserId\": 29,\n\t\t\t\t\t\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\t\t\t\t\t\"recipientUserNickname\": \"深兰\",\n\t\t\t\t\t\"sendDateTime\": \"2021年03月16日 11:12:55\",\n\t\t\t\t\t\"content\": \"需要加您的微信?\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"sendUserId\": 60,\n\t\t\t\t\t\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t\t\t\t\"sendUserNickname\": \"尘埃\",\n\t\t\t\t\t\"recipientUserId\": 29,\n\t\t\t\t\t\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\t\t\t\t\t\"recipientUserNickname\": \"深兰\",\n\t\t\t\t\t\"sendDateTime\": \"2021年03月16日 11:12:48\",\n\t\t\t\t\t\"content\": \"需要加您的微信?\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"sendUserId\": 60,\n\t\t\t\t\t\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t\t\t\t\"sendUserNickname\": \"尘埃\",\n\t\t\t\t\t\"recipientUserId\": 29,\n\t\t\t\t\t\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\t\t\t\t\t\"recipientUserNickname\": \"深兰\",\n\t\t\t\t\t\"sendDateTime\": \"2021年03月16日 11:12:29\",\n\t\t\t\t\t\"content\": \"需要加您的微信?\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"sendUserId\": 60,\n\t\t\t\t\t\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t\t\t\t\"sendUserNickname\": \"尘埃\",\n\t\t\t\t\t\"recipientUserId\": 29,\n\t\t\t\t\t\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\t\t\t\t\t\"recipientUserNickname\": \"深兰\",\n\t\t\t\t\t\"sendDateTime\": \"2021年03月16日 10:55:39\",\n\t\t\t\t\t\"content\": \"需要加您的微信?\"\n\t\t\t\t}\n\t\t\t  ]\n\t\t\t}\n\t\t}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n      {\n      \t\"status\": 403,\n      \t\"code\": 199,\n      \t\"msg\": \"未找到用户信息！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n      {\n      \t\"status\": 404,\n      \t\"code\": 200,\n      \t\"msg\": \"接口未注册！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n      {\n      \t\"status\": 500,\n      \t\"code\": 205,\n      \t\"msg\": \"服务器未响应！\"\n      }",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/MessageController.java",
+    "groupTitle": "消息模块API",
+    "sampleRequest": [
+      {
+        "url": "http://8.135.36.45:8084/find/message/{id1}/{id2}/messages"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "http://8.135.36.45:8084/find/message/{id}/all",
+    "title": "分页获取消息界面点赞和申请加微信消息列表接口",
+    "version": "1.0.0",
+    "group": "消息模块API",
+    "name": "分页获取消息界面点赞和申请加微信消息列表",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id",
+            "description": "<p>消息接收者用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "int",
+            "optional": true,
+            "field": "pageNum",
+            "description": "<p>当前页码，默认：1</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "int",
+            "optional": true,
+            "field": "pageSize",
+            "description": "<p>每页数量，默认：20</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://8.135.36.45:8084/find/message/29/all?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>消息数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "likes",
+            "description": "<p>点赞消息数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "head",
+            "description": "<p>最新点赞者用户头像</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "content",
+            "description": "<p>最新点赞消息内容</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "optional": true,
+            "field": "count",
+            "description": "<p>未读点赞消息总条数</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "totalCount",
+            "description": "<p>未读申请加微信消息总条数</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "optional": true,
+            "field": "totalPage",
+            "description": "<p>申请加微信消息总页数</p>"
+          },
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": true,
+            "field": "list",
+            "description": "<p>申请加微信消息数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "userId",
+            "description": "<p>申请加微信发送者用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "nickname",
+            "description": "<p>申请加微信发送者用户昵称</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"返回数据成功\",\n\t\t    \"data\":{\n\t\t        \"likes\":{\n\t\t            \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t            \"count\":5\n\t\t        },\n\t\t        \"totalCount\":5,\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":60,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t                \"nickname\":\"尘埃\",\n\t\t                \"content\":\"需要加您的微信?\",\n\t\t                \"count\":5\n\t\t            },\n\t\t            {\n\t\t                \"userId\":62,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/62/02.png\",\n\t\t                \"nickname\":\"蓝梧桐\",\n\t\t                \"content\":\"需要加您的微信?\",\n\t\t                \"count\":5\n\t\t            },\n\t\t            {\n\t\t                \"userId\":61,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/61/01.png\",\n\t\t                \"nickname\":\"长安\",\n\t\t                \"content\":\"需要加您的微信?\",\n\t\t                \"count\":6\n\t\t            },\n\t\t            {\n\t\t                \"userId\":71,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/71/07.png\",\n\t\t                \"nickname\":\"弦雨晴\",\n\t\t                \"content\":\"需要加您的微信?\",\n\t\t                \"count\":6\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"nickname\":\"阿萌\",\n\t\t                \"content\":\"需要加您的微信?\",\n\t\t                \"count\":1\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n      {\n      \t\"status\": 403,\n      \t\"code\": 199,\n      \t\"msg\": \"未找到用户信息！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n      {\n      \t\"status\": 404,\n      \t\"code\": 200,\n      \t\"msg\": \"接口未注册！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n      {\n      \t\"status\": 500,\n      \t\"code\": 205,\n      \t\"msg\": \"服务器未响应！\"\n      }",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/MessageController.java",
+    "groupTitle": "消息模块API",
+    "sampleRequest": [
+      {
+        "url": "http://8.135.36.45:8084/find/message/{id}/all"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "http://8.135.36.45:8084/find/message/{id}/likes",
+    "title": "分页获取点赞消息列表接口",
+    "version": "1.0.0",
+    "group": "消息模块API",
+    "name": "分页获取点赞消息列表",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id",
+            "description": "<p>消息接收者用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "int",
+            "optional": true,
+            "field": "pageNum",
+            "description": "<p>当前页码，默认：1</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "int",
+            "optional": true,
+            "field": "pageSize",
+            "description": "<p>每页数量，默认：20</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://8.135.36.45:8084/find/message/29/likes?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>消息数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "totalCount",
+            "description": "<p>未读点赞消息总条数</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "optional": true,
+            "field": "totalPage",
+            "description": "<p>点赞消息总页数</p>"
+          },
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": true,
+            "field": "list",
+            "description": "<p>点赞消息数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "userId",
+            "description": "<p>点赞者用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "head",
+            "description": "<p>点赞者用户头像</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "content",
+            "description": "<p>点赞者发送消息内容</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "attacheType",
+            "description": "<p>点赞的动态内容类型，0-&gt;图片，1-&gt;语音</p>"
+          },
+          {
+            "group": "200",
+            "type": "string[]",
+            "optional": true,
+            "field": "filenameList",
+            "description": "<p>点赞的动态文件名称列表</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"返回数据成功\",\n\t\t    \"data\":{\n\t\t        \"totalCount\":30,\n\t\t        \"totalPage\":2,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n      {\n      \t\"status\": 403,\n      \t\"code\": 199,\n      \t\"msg\": \"未找到用户信息！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n      {\n      \t\"status\": 404,\n      \t\"code\": 200,\n      \t\"msg\": \"接口未注册！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n      {\n      \t\"status\": 500,\n      \t\"code\": 205,\n      \t\"msg\": \"服务器未响应！\"\n      }",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/MessageController.java",
+    "groupTitle": "消息模块API",
+    "sampleRequest": [
+      {
+        "url": "http://8.135.36.45:8084/find/message/{id}/likes"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "http://8.135.36.45:8084/find/message/{id1}/{id2}/send",
+    "title": "发送消息接口",
+    "version": "1.0.0",
+    "group": "消息模块API",
+    "name": "发送消息",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id1",
+            "description": "<p>消息发送者用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id2",
+            "description": "<p>消息接收者用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": false,
+            "field": "content",
+            "description": "<p>消息内容</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://8.135.36.45:8084/find/message/60/29/send?content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>发送状态数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "SEND",
+            "description": "<p>OK-&gt;发送成功，ERROR-&gt;发送失败</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t\"status\": 200,\n\t\t\"code\": 0,\n\t\t\"msg\": \"发送消息成功。\",\n\t\t\"data\": {\n\t\t\t\t\"SEND\": \"OK\"\n\t\t\t}\n\t\t}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n      {\n      \t\"status\": 403,\n      \t\"code\": 199,\n      \t\"msg\": \"未找到用户信息！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n      {\n      \t\"status\": 404,\n      \t\"code\": 200,\n      \t\"msg\": \"接口未注册！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n      {\n      \t\"status\": 500,\n      \t\"code\": 205,\n      \t\"msg\": \"服务器未响应！\"\n      }",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/MessageController.java",
+    "groupTitle": "消息模块API",
+    "sampleRequest": [
+      {
+        "url": "http://8.135.36.45:8084/find/message/{id1}/{id2}/send"
+      }
+    ]
+  },
+  {
     "type": "put",
     "url": "http://124.71.38.2:8081/find/v1/user/{id}/uploadRegId.do",
     "title": "上报极光推送设备标识接口",
@@ -2449,7 +3422,7 @@ define({ "api": [
             "type": "string",
             "optional": false,
             "field": "regId",
-            "description": "<p>极光推送唯一设备的标识</p>"
+            "description": "<p>极光推送唯一设备标识</p>"
           }
         ]
       },
@@ -5353,12 +6326,12 @@ define({ "api": [
       "examples": [
         {
           "title": "200（微信支付）响应示例01",
-          "content": "HTTPS/1.1 200 OK\n\t\t{\n\t\t    \"code\": 0,\n\t\t    \"data\": {\n\t\t        \"trade_info\": {\n\t\t            \"appid\": \"wx394471ab93938b34\",\n\t\t            \"err_code\": \"Success\",\n\t\t            \"err_code_des\": \"请求微信支付统一下单接口生成APP支付预付单信息成功。\",\n\t\t            \"noncestr\": \"1610960641587\",\n\t\t            \"out_trade_no\": \"2021011817040003581135ba8bfa742a\",\n\t\t            \"package\": \"Sign=WXPay\",\n\t\t            \"partnerid\": \"1539515591\",\n\t\t            \"prepayid\": \"wx1817040283097360129d35d33dfc5a0000\",\n\t\t            \"result_code\": \"Success\",\n\t\t            \"return_code\": \"Success\",\n\t\t            \"return_msg\": \"生成微信APP支付预支付订单信息成功。\",\n\t\t            \"sign\": \"0F6E2CB474B2A6B675D35D3F9215086D\",\n\t\t            \"timestamp\": \"1610960641\"\n\t\t        }\n\t\t    },\n\t\t    \"msg\": \"返回数据成功\",\n\t\t    \"status\": 200\n\t\t}",
+          "content": "HTTPS/1.1 200 OK\n{\n\"code\": 0,\n\"data\": {\n\"trade_info\": {\n\"appid\": \"wx394471ab93938b34\",\n\"err_code\": \"Success\",\n\"err_code_des\": \"请求微信支付统一下单接口生成APP支付预付单信息成功。\",\n\"noncestr\": \"1610960641587\",\n\"out_trade_no\": \"2021011817040003581135ba8bfa742a\",\n\"package\": \"Sign=WXPay\",\n\"partnerid\": \"1539515591\",\n\"prepayid\": \"wx1817040283097360129d35d33dfc5a0000\",\n\"result_code\": \"Success\",\n\"return_code\": \"Success\",\n\"return_msg\": \"生成微信APP支付预支付订单信息成功。\",\n\"sign\": \"0F6E2CB474B2A6B675D35D3F9215086D\",\n\"timestamp\": \"1610960641\"\n}\n},\n\"msg\": \"返回数据成功\",\n\"status\": 200\n}",
           "type": "json"
         },
         {
           "title": "200（支付宝支付）响应示例01",
-          "content": "HTTPS/1.1 200 OK\n\t\t{\n\t\t    \"code\": 0,\n\t\t    \"data\": {\n\t\t        \"trade_info\": {\n\t\t            \"appid\": \"2021001183634710\",\n\t\t            \"err_code\": \"Success\",\n\t\t            \"err_code_des\": \"生成支付宝APP预支付订单信息返回数据成功。\",\n\t\t            \"orderString\": \"alipay_sdk=alipay-sdk-java-3.7.110.ALL&app_id=2021001183634710&biz_content=%7B%22goods_type%22%3A%220%22%2C%22out_trade_no%22%3A%22202101181714518933f2c2fe0f3fa423%22%2C%22subject%22%3A%22%E5%85%85%E5%80%BC2%E4%B8%AA%E6%9C%88VIP%22%2C%22timeout_express%22%3A%2230%22%2C%22total_amount%22%3A%221%22%7D&charset=UTF-8&format=JSON&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Fw168428j19.51mypc.cn%2Ffind%2Fv1%2Forder%2Fpay%2Falipay-notify.do&sign=Hi4DY84hHqM%2F3SrBCCtUYfDd9i8ZKrf8QF0O3nRRO0bgvS7GTyuLOhaJQ9Td%2FLMfsvU7G0OPh7PABaslzRLqRKdVrMe0LvrVtBQQJ2%2BKh0w0YGOSoIV7tGq%2Bkz2hs4%2FmH%2FLfLH2XX2tSDOi3HM6CdhhF7SkX7DFEbgowLGR3VtRVpbKVBtpHKHVk%2BQbxlPnkiDNb9u6bnefb2kBYJB6AGLL7E7PrwQOx61yezFg8HBAd7Ic%2FNstMEZ%2BX5ZcCSQaiRbaAQ5iZTTiFiyF66bHtTTYrlT2M37JxO6VQ2o5Rn4EOKS4d1NwqaqUnGg7upZH4ygqbZFkaAvDGo3bbS%2FnZ0Q%3D%3D&sign_type=RSA2&timestamp=2021-01-18+17%3A14%3A51&version=2.0\",\n\t\t            \"out_trade_no\": \"202101181714518933f2c2fe0f3fa423\",\n\t\t            \"result_code\": \"Success\",\n\t\t            \"return_code\": \"Success\",\n\t\t            \"return_msg\": \"生成支付宝APP预支付订单信息返回数据成功。\"\n\t\t        }\n\t\t    },\n\t\t    \"msg\": \"返回数据成功\",\n\t\t    \"status\": 200\n\t\t}",
+          "content": "HTTPS/1.1 200 OK\n{\n\"code\": 0,\n\"data\": {\n\"trade_info\": {\n\"appid\": \"2021001183634710\",\n\"err_code\": \"Success\",\n\"err_code_des\": \"生成支付宝APP预支付订单信息返回数据成功。\",\n\"orderString\": \"alipay_sdk=alipay-sdk-java-3.7.110.ALL&app_id=2021001183634710&biz_content=%7B%22goods_type%22%3A%220%22%2C%22out_trade_no%22%3A%22202101181714518933f2c2fe0f3fa423%22%2C%22subject%22%3A%22%E5%85%85%E5%80%BC2%E4%B8%AA%E6%9C%88VIP%22%2C%22timeout_express%22%3A%2230%22%2C%22total_amount%22%3A%221%22%7D&charset=UTF-8&format=JSON&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Fw168428j19.51mypc.cn%2Ffind%2Fv1%2Forder%2Fpay%2Falipay-notify.do&sign=Hi4DY84hHqM%2F3SrBCCtUYfDd9i8ZKrf8QF0O3nRRO0bgvS7GTyuLOhaJQ9Td%2FLMfsvU7G0OPh7PABaslzRLqRKdVrMe0LvrVtBQQJ2%2BKh0w0YGOSoIV7tGq%2Bkz2hs4%2FmH%2FLfLH2XX2tSDOi3HM6CdhhF7SkX7DFEbgowLGR3VtRVpbKVBtpHKHVk%2BQbxlPnkiDNb9u6bnefb2kBYJB6AGLL7E7PrwQOx61yezFg8HBAd7Ic%2FNstMEZ%2BX5ZcCSQaiRbaAQ5iZTTiFiyF66bHtTTYrlT2M37JxO6VQ2o5Rn4EOKS4d1NwqaqUnGg7upZH4ygqbZFkaAvDGo3bbS%2FnZ0Q%3D%3D&sign_type=RSA2&timestamp=2021-01-18+17%3A14%3A51&version=2.0\",\n\"out_trade_no\": \"202101181714518933f2c2fe0f3fa423\",\n\"result_code\": \"Success\",\n\"return_code\": \"Success\",\n\"return_msg\": \"生成支付宝APP预支付订单信息返回数据成功。\"\n}\n},\n\"msg\": \"返回数据成功\",\n\"status\": 200\n}",
           "type": "json"
         }
       ]
@@ -5444,17 +6417,17 @@ define({ "api": [
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\t\"status\": 403,\n      \t\t\"code\": 199,\n      \t\t\"msg\": \"未找到用户信息！\",\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\",\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      {\n      \t\t\"status\": 404,\n     \t\t\"code\": 200,\n      \t\t\"msg\": \"接口未注册！\",\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n      \t\t\"status\": 500,\n      \t\t\"code\": 205,\n      \t\t\"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]
@@ -5575,7 +6548,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTPS/1.1 200 OK\n\t\t{\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"查询充值会员时长套餐产品列表成功\",\n\t\t    \"status\": 200,\n\t\t    \"data\": {\n\t\t        \"list\": [\n\t\t            {\n\t\t                \"desc\": \"60元/月\",\n\t\t                \"icon\": \"http://124.71.38.2:9000/find/img/app/product/01.png\",\n\t\t                \"name\": \"2个月\",\n\t\t                \"pid\": 1,\n\t\t                \"price\": 120.00\n\t\t            },\n\t\t            {\n\t\t                \"desc\": \"50元/月\",\n\t\t                \"icon\": \"http://124.71.38.2:9000/find/img/app/product/02.png\",\n\t\t                \"name\": \"3个月\",\n\t\t                \"pid\": 2,\n\t\t                \"price\": 180.00\n\t\t            },\n\t\t            {\n\t\t                \"desc\": \"41.3元/月\",\n\t\t                \"icon\": \"http://124.71.38.2:9000/find/img/app/product/03.png\",\n\t\t                \"name\": \"6个月\",\n\t\t                \"pid\": 3,\n\t\t                \"price\": 248.00\n\t\t            },\n\t\t            {\n\t\t                \"desc\": \"33元/月\",\n\t\t                \"icon\": \"http://124.71.38.2:9000/find/img/app/product/04.png\",\n\t\t                \"name\": \"12个月\",\n\t\t                \"pid\": 4,\n\t\t                \"price\": 369.00\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTPS/1.1 200 OK\n{\n\"code\": 0,\n\"msg\": \"查询充值会员时长套餐产品列表成功\",\n\"status\": 200,\n\"data\": {\n\"list\": [\n{\n\"desc\": \"60元/月\",\n\"icon\": \"http://124.71.38.2:9000/find/img/app/product/01.png\",\n\"name\": \"2个月\",\n\"pid\": 1,\n\"price\": 120.00\n},\n{\n\"desc\": \"50元/月\",\n\"icon\": \"http://124.71.38.2:9000/find/img/app/product/02.png\",\n\"name\": \"3个月\",\n\"pid\": 2,\n\"price\": 180.00\n},\n{\n\"desc\": \"41.3元/月\",\n\"icon\": \"http://124.71.38.2:9000/find/img/app/product/03.png\",\n\"name\": \"6个月\",\n\"pid\": 3,\n\"price\": 248.00\n},\n{\n\"desc\": \"33元/月\",\n\"icon\": \"http://124.71.38.2:9000/find/img/app/product/04.png\",\n\"name\": \"12个月\",\n\"pid\": 4,\n\"price\": 369.00\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -5661,17 +6634,17 @@ define({ "api": [
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\t\"status\": 403,\n      \t\t\"code\": 199,\n      \t\t\"msg\": \"未找到用户信息！\",\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\",\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      {\n      \t\t\"status\": 404,\n     \t\t\"code\": 200,\n      \t\t\"msg\": \"接口未注册！\",\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n      \t\t\"status\": 500,\n      \t\t\"code\": 205,\n      \t\t\"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]

@@ -23,9 +23,9 @@ project-url:
 #集成极光推送配置
 jpush:
   #AppKey为极光平台应用的唯一标识
-  app-key: eb67142502ec9f5556875b9a
+  app-key: 2ca10b44a1a6a77c278cbf0a
   #用于服务器端API调用时与AppKey配合使用达到鉴权的目的，请保管好Master Secret防止外泄
-  master-secret: 186aa57bc697c94f8698bbbf
+  master-secret: c165704661401d94f6c7a7d8
   #离线消息保留时长(秒)
   live-time: 86400
   #一次推送最大数量(极光限制1000)
