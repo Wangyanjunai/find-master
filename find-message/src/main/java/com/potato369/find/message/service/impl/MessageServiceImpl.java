@@ -120,7 +120,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public MessageVO2 selectLikesMessage(Long userId, Integer pageNum, Integer pageSize) {
 		MessageVO2 messageVO2 = MessageVO2.builder().build();
 		final PageInfo<LikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectLikesMessageRecordByUserId(userId));
@@ -283,6 +283,7 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public CommonResult<Map<String, Object>> allRead(Long recipientUserId) {
 		Map<String, Object> data = new ConcurrentHashMap<>();
 		String key = "UPDATE";
