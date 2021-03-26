@@ -168,7 +168,7 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/dynamic/70/share1.do\"\n}",
+          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/dynamic/70/share1\"\n}",
           "type": "json"
         },
         {
@@ -351,7 +351,7 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/dynamic/1/delete1.do\"\n}",
+          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/dynamic/1/delete1\"\n}",
           "type": "json"
         },
         {
@@ -1051,7 +1051,7 @@
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/v1/dynamic/1/checkLocation1.do\"\n}",
+          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/v1/dynamic/1/checkLocation1\"\n}",
           "type": "json"
         },
         {
@@ -1509,7 +1509,7 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"find/dynamic/70/application1.do\"\n}",
+          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"find/dynamic/70/application1\"\n}",
           "type": "json"
         },
         {
@@ -1860,7 +1860,7 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/dynamic/70/screen1.do\"\n}",
+          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/dynamic/70/screen1\"\n}",
           "type": "json"
         },
         {
@@ -3584,7 +3584,7 @@
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/v1/user/{id}/uploadRegId.do",
+    "url": "http://8.135.36.45:8084/find/user/{id}/uploadRegId",
     "title": "上报极光推送设备标识接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -3611,7 +3611,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/v1/user/70/uploadRegId.do?regId=1507bfd3f76139cd43a",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a",
           "type": "json"
         }
       ]
@@ -3771,7 +3771,7 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/v1/user/{id}/uploadRegId.do"
+        "url": "http://8.135.36.45:8084/find/user/{id}/uploadRegId"
       }
     ]
   },
@@ -4892,7 +4892,7 @@
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/user/{id}/query.do",
+    "url": "http://8.135.36.45:8084/find/user/{id}/query",
     "title": "查看用户资料接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5103,7 +5103,7 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/query.do"
+        "url": "http://8.135.36.45:8084/find/user/{id}/query"
       }
     ]
   },

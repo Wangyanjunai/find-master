@@ -47,7 +47,7 @@ public class UserController {
 	
 	//上报或者更新极光推送唯一设备的标识接口
 	/**
-     * @api {put} http://8.135.36.45:8084/find/v1/user/{id}/uploadRegId.do 上报极光推送设备标识接口
+     * @api {put} http://8.135.36.45:8084/find/user/{id}/uploadRegId 上报极光推送设备标识接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 上报极光推送设备标识
@@ -55,7 +55,7 @@ public class UserController {
      * @apiParam (接口请求参数) {string} regId 极光推送唯一设备标识
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT http://8.135.36.45:8084/find/v1/user/70/uploadRegId.do?regId=1507bfd3f76139cd43a
+     * curl -v -X PUT http://8.135.36.45:8084/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -623,7 +623,7 @@ public class UserController {
 	}
 	
 	/**
-     * @api {get} http://8.135.36.45:8084/find/user/{id}/query.do 查看用户资料接口
+     * @api {get} http://8.135.36.45:8084/find/user/{id}/query 查看用户资料接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 查看用户资料

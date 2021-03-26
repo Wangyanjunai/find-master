@@ -436,7 +436,7 @@ public class DynamicController {
      * "status": 404,
      * "error": "Not Found",
      * "message": "No message available",
-     * "path": "/find/v1/dynamic/1/checkLocation1.do"
+     * "path": "/find/v1/dynamic/1/checkLocation1"
      * }
      * @apiError (500) {int{0-65535}} status 响应状态码
      * @apiError (500) {long{0-500}} code 消息码
@@ -514,7 +514,7 @@ public class DynamicController {
      * "status": 404,
      * "error": "Not Found",
      * "message": "No message available",
-     * "path": "/find/dynamic/1/delete1.do"
+     * "path": "/find/dynamic/1/delete1"
      * }
      * @apiError (500) {int{0-65535}} status 响应状态码
      * @apiError (500) {long{0-500}} code 消息码
@@ -599,7 +599,7 @@ public class DynamicController {
      * "status": 404,
      * "error": "Not Found",
      * "message": "No message available",
-     * "path": "find/dynamic/70/application1.do"
+     * "path": "find/dynamic/70/application1"
      * }
      * @apiError (500) {int{0-65535}} status 响应状态码
      * @apiError (500) {long{0-500}} code 消息码
@@ -757,7 +757,7 @@ public class DynamicController {
      * "status": 404,
      * "error": "Not Found",
      * "message": "No message available",
-     * "path": "/find/dynamic/70/share1.do"
+     * "path": "/find/dynamic/70/share1"
      * }
      * @apiError (500) {int{0-65535}} status 响应状态码
      * @apiError (500) {long{0-500}} code 消息码
@@ -952,7 +952,7 @@ public class DynamicController {
      * "status": 404,
      * "error": "Not Found",
      * "message": "No message available",
-     * "path": "/find/dynamic/70/screen1.do"
+     * "path": "/find/dynamic/70/screen1"
      * }
      * @apiError (500) {int{0-65535}} status 响应状态码
      * @apiError (500) {long{0-500}} code 消息码
