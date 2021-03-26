@@ -42,32 +42,22 @@ import cn.hutool.core.util.StrUtil;
 @Service
 public class MessageServiceImpl implements MessageService {
 
+	@Autowired
     private MessageMapper messageMapperReader;
     
+    @Autowired
     private MessageMapper messageMapperWriter;
     
+    @Autowired
     private UserMapper userMapperReader;
     
+    @Autowired
     private ProjectUrlProps projectUrlProps;
     
+    @Autowired
     private JiGuangPushServiceImpl jiGuangPushService;
 
-    @Autowired
-    public void setMessageMapperReader(MessageMapper messageMapperReader) {
-        this.messageMapperReader = messageMapperReader;
-    }
-
-    @Autowired
-	public void setUserMapperReader(UserMapper userMapperReader) {
-		this.userMapperReader = userMapperReader;
-	}
-
-	@Autowired
-    public void setProjectUrlProps(ProjectUrlProps projectUrlProps) {
-		this.projectUrlProps = projectUrlProps;
-	}
-
-    @Override
+	@Override
     @Transactional(readOnly = true)
     public LikesMessageVO selectLikesMessage(Long userId) {
     	//查询未读点赞消息总条数
@@ -168,12 +158,14 @@ public class MessageServiceImpl implements MessageService {
             }
             likesInfoVO.setAttacheFilenameList(fileNameList03);
 			likesInfoVOs.add(likesInfoVO);
+			this.messageMapperWriter.updateLikesMessage(likesInfoVO.getUserId(), userId);
 		}
 		messageVO2.setLikesInfoVOs(likesInfoVOs);
 		return messageVO2;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize) {
 		MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
@@ -208,6 +200,7 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public MessageVO3 selectMessageRecord(Long sendUserId, Long recipientUserId, Integer pageNum, Integer pageSize) {
 		MessageVO3 messageVO3 = MessageVO3.builder().build();
 		final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectMessageRecord(sendUserId, recipientUserId));
@@ -245,6 +238,7 @@ public class MessageServiceImpl implements MessageService {
 					messageInfoVO2.setRecipientUserNickname(recipientUser.getNickName());
 					messageInfoVO2s.add(messageInfoVO2);
 				}
+				this.messageMapperWriter.updateApplicationMessage(sendUserId, recipientUserId);
 			}
 		}
 		messageVO3.setMessageInfoVO2s(messageInfoVO2s);
@@ -254,6 +248,7 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public CommonResult<Map<String, Object>> sendMessageAndPush(Long sendUserId, Long recipientUserId, String content) {
 		Map<String, Object> data = new ConcurrentHashMap<>();
 		data.put("SEND", "ERROR");
@@ -285,5 +280,20 @@ public class MessageServiceImpl implements MessageService {
             msg = "发送消息失败。";
         }
         return CommonResult.success(data, msg);
+	}
+
+	@Override
+	public CommonResult<Map<String, Object>> allRead(Long recipientUserId) {
+		Map<String, Object> data = new ConcurrentHashMap<>();
+		String key = "UPDATE";
+		String value = "ERROR";
+		String msg = "标记全部消息已读失败。";
+		int result = this.messageMapperWriter.updateAllByUserId(recipientUserId);
+		if (result > 0) {
+			value = "OK";
+            msg = "标记全部消息已读成功。";
+		}
+		data.put(key, value);
+		return CommonResult.success(data, msg);
 	}
 }

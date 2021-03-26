@@ -58,9 +58,15 @@ public interface MessageService {
 	
 	/**
 	 * 发送消息
-	 * @param sendUserId 消息接收者用户id
-	 * @param recipientUserId 消息发送者用户id
+	 * @param sendUserId 消息发送者用户id
+	 * @param recipientUserId 消息接收者用户id 
 	 * @param content 消息内容
 	 */
 	CommonResult<Map<String, Object>> sendMessageAndPush(Long sendUserId, Long recipientUserId,String content);
+	
+	/**
+	 * 标记全部消息已读
+	 * @param recipientUserId 消息接收者用户id
+	 */
+	CommonResult<Map<String, Object>> allRead(Long recipientUserId);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -93,5 +94,16 @@ public class MessageController {
     		@PathVariable(name = "id2") @ApiParam(name = "id2", value = "消息接收者用户id", required = true, example = "2") Long recipientUserId,
     		@RequestParam(name = "content") @ApiParam(name = "content", value = "消息内容", required = true, example = "可以申请加你的微信吗？") String content) {
     	return this.messageService.sendMessageAndPush(sendUserId, recipientUserId, content);
+    }
+    
+    /**
+     * 标记全部消息已读
+     * @param recipientUserId 消息收者用户id
+     */
+    @ApiOperation(value = "标记全部消息已读接口", notes = "标记全部消息已读接口")
+    @PutMapping(value = "/{id}/updateAll.do")
+    public CommonResult<Map<String, Object>> updateAll(
+    		@PathVariable(name = "id") @ApiParam(name = "id", value = "消息收者用户id", required = true, example = "1") Long recipientUserId){
+    	return this.messageService.allRead(recipientUserId);
     }
 }
