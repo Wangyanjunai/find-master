@@ -2435,6 +2435,188 @@ define({ "api": [
     ]
   },
   {
+    "type": "put",
+    "url": "http://8.135.36.45:8084/find/message/{id}/updateAll",
+    "title": "全部消息已读接口",
+    "version": "1.0.0",
+    "group": "消息模块API",
+    "name": "全部消息已读",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id",
+            "description": "<p>消息接收者用户id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://8.135.36.45:8084/find/message/60/updateAll\" -H \"accept: application/json\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>标记已读状态数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "UPDATE",
+            "description": "<p>OK-&gt;标记已读成功，ERROR-&gt;标记已读失败</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t\"status\": 200,\n\t\t\"code\": 0,\n\t\t\"msg\": \"标记已读成功。\",\n\t\t\"data\": {\n\t\t\t\t\"UPDATE\": \"OK\"\n\t\t\t}\n\t\t}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n      {\n      \t\"status\": 403,\n      \t\"code\": 199,\n      \t\"msg\": \"未找到用户信息！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n      {\n      \t\"status\": 404,\n      \t\"code\": 200,\n      \t\"msg\": \"接口未注册！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n      {\n      \t\"status\": 500,\n      \t\"code\": 205,\n      \t\"msg\": \"服务器未响应！\"\n      }",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/MessageController.java",
+    "groupTitle": "消息模块API",
+    "sampleRequest": [
+      {
+        "url": "http://8.135.36.45:8084/find/message/{id}/updateAll"
+      }
+    ]
+  },
+  {
     "type": "get",
     "url": "http://8.135.36.45:8084/find/message/{id1}/{id2}/messages",
     "title": "分页获取消息历史记录列表接口",
@@ -3205,7 +3387,7 @@ define({ "api": [
     ]
   },
   {
-    "type": "get",
+    "type": "post",
     "url": "http://8.135.36.45:8084/find/message/{id1}/{id2}/send",
     "title": "发送消息接口",
     "version": "1.0.0",
@@ -3240,7 +3422,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://8.135.36.45:8084/find/message/60/29/send?content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/29/send?content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]

@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.potato369.find.common.api.CommonResult;
@@ -38,4 +39,7 @@ public interface MessageService {
     CommonResult<Map<String, Object>> send(@PathVariable(name = "id1") Long sendUserId,
     							      @PathVariable(name = "id2") Long recipientUserId,
                                       @RequestParam(name = "content") String content);
+    
+    @PutMapping(value = "/find/v1/message/{id}/updateAll.do")
+    CommonResult<Map<String, Object>> allRead(@PathVariable(name = "id") Long recipientUserId);
 }
