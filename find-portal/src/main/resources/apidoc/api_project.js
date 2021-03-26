@@ -3,8 +3,8 @@ define({
   "version": "1.0.0",
   "description": "觅鹿项目接口文档",
   "title": "觅鹿项目",
-  "url": "http://w168428j19.51mypc.cn",
-  "sampleUrl": "http://w168428j19.51mypc.cn",
+  "url": "http://8.135.36.45:8084",
+  "sampleUrl": "http://8.135.36.45:8084",
   "header": {
     "title": "觅鹿项目Header",
     "content": ""
@@ -27,7 +27,7 @@ define({
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2021-03-26T03:57:32.576Z",
+    "time": "2021-03-26T07:32:18.869Z",
     "url": "https://apidocjs.com",
     "version": "0.25.0"
   }

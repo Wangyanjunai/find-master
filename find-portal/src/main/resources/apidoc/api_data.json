@@ -1,7 +1,7 @@
 [
   {
     "type": "put",
-    "url": "http://124.71.38.2:8084/find/dynamic/{id}/share",
+    "url": "http://8.135.36.45:8084/find/dynamic/{id}/share",
     "title": "分享动态内容接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -42,7 +42,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/share?dynamicInfoId=86&mode=0",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/share?dynamicInfoId=86&mode=0",
           "type": "json"
         }
       ]
@@ -182,13 +182,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/dynamic/{id}/share"
+        "url": "http://8.135.36.45:8084/find/dynamic/{id}/share"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://124.71.38.2:8084/find/dynamic/{id}/delete",
+    "url": "http://8.135.36.45:8084/find/dynamic/{id}/delete",
     "title": "删除动态内容接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -215,12 +215,12 @@
       "examples": [
         {
           "title": "请求示例01（是自己发布的动态内容， 删除成功）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/delete?dynamicInfoId=85",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/delete?dynamicInfoId=85",
           "type": "json"
         },
         {
           "title": "请求示例02（非自己发布的动态内容， 删除失败）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/delete?dynamicInfoId=86",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/delete?dynamicInfoId=86",
           "type": "json"
         }
       ]
@@ -365,13 +365,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/dynamic/{id}/delete"
+        "url": "http://8.135.36.45:8084/find/dynamic/{id}/delete"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://124.71.38.2:8084/find/dynamic/{id}/release",
+    "url": "http://8.135.36.45:8084/find/dynamic/{id}/release",
     "title": "发布动态内容接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -500,22 +500,22 @@
       "examples": [
         {
           "title": "请求示例01（发布图片有具体发布定位地址）",
-          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"1\",\n\"files\": \"C:\\Users\\Administrator\\Pictures\\images\\01.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\02.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\03.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\04.jpg\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"广州\",\n\"publicStatus\": \"0\",\n\"content\": \"发布照片。\"\n}'",
+          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"1\",\n\"files\": \"C:\\Users\\Administrator\\Pictures\\images\\01.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\02.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\03.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\04.jpg\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"广州\",\n\"publicStatus\": \"0\",\n\"content\": \"发布照片。\"\n}'",
           "type": "json"
         },
         {
           "title": "请求示例02（发布图片有客户端IP）",
-          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"1\",\n\"files\": \"C:\\Users\\Administrator\\Pictures\\images\\01.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\02.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\03.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\04.jpg\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布照片。\"\n}'",
+          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"1\",\n\"files\": \"C:\\Users\\Administrator\\Pictures\\images\\01.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\02.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\03.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\04.jpg\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布照片。\"\n}'",
           "type": "json"
         },
         {
           "title": "请求示例03（发布语音有客户端IP）",
-          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"2\",\n\"files\": \"F:\\文件\\各种音乐\\(DJ)中文DJ\\7姨、高梦瑶、妖姬 - 威震八方.mp3\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布语音。\"\n}'",
+          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"2\",\n\"files\": \"F:\\文件\\各种音乐\\(DJ)中文DJ\\7姨、高梦瑶、妖姬 - 威震八方.mp3\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布语音。\"\n}'",
           "type": "json"
         },
         {
           "title": "请求示例04（发布纯文字有客户端IP）",
-          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"0\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布语音。\"\n}'",
+          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"0\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布语音。\"\n}'",
           "type": "json"
         }
       ]
@@ -686,13 +686,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/dynamic/{id}/release"
+        "url": "http://8.135.36.45:8084/find/dynamic/{id}/release"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://124.71.38.2:8084/find/dynamic/{id}/updateLocation",
+    "url": "http://8.135.36.45:8084/find/dynamic/{id}/updateLocation",
     "title": "更新动态地址定位接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -740,17 +740,17 @@
       "examples": [
         {
           "title": "请求示例01（有客户端IP）",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/updateLocation -d '{\"ip\":\"183.14.133.239\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation -d '{\"ip\":\"183.14.133.239\"}'",
           "type": "json"
         },
         {
           "title": "请求示例02（有定位（国家）、（省份）、（城市））",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/updateLocation -d '{\"country\": \"中国\", \"province\": \"广东\", \"city\": \"深圳\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation -d '{\"country\": \"中国\", \"province\": \"广东\", \"city\": \"深圳\"}'",
           "type": "json"
         },
         {
           "title": "请求示例03（有客户端IP，定位（国家）、（省份）、（城市））",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/updateLocation\n-d '{\n\"ip\": \"183.14.133.239\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"深圳\"\n}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation\n-d '{\n\"ip\": \"183.14.133.239\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"深圳\"\n}'",
           "type": "json"
         }
       ]
@@ -818,7 +818,7 @@
         },
         {
           "title": "200响应示例03（有客户端IP，发布定位地址（国）、（省）、（市））",
-          "content": "HTTP/1.1 200 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/updateLocation",
+          "content": "HTTP/1.1 200 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation",
           "type": "json"
         }
       ]
@@ -912,13 +912,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/dynamic/{id}/updateLocation"
+        "url": "http://8.135.36.45:8084/find/dynamic/{id}/updateLocation"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://124.71.38.2:8084/find/dynamic/{id}/checkLocation",
+    "url": "http://8.135.36.45:8084/find/dynamic/{id}/checkLocation",
     "title": "检查定位地址是否更改接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -966,17 +966,17 @@
       "examples": [
         {
           "title": "请求示例01（有客户端IP）",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/checkLocation -d '{\"ip\":\"183.14.133.239\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation -d '{\"ip\":\"183.14.133.239\"}'",
           "type": "json"
         },
         {
           "title": "请求示例02（有发布定位地址（国）、省、市）",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/checkLocation -d '{\"country\": \"中国\", \"province\": \"广东\", \"city\": \"深圳\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation -d '{\"country\": \"中国\", \"province\": \"广东\", \"city\": \"深圳\"}'",
           "type": "json"
         },
         {
           "title": "请求示例03（有客户端IP，发布定位地址（国）、（省）、（市））",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/checkLocation\n-d '{\n\"ip\": \"183.14.133.239\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"深圳\"\n}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation\n-d '{\n\"ip\": \"183.14.133.239\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"深圳\"\n}'",
           "type": "json"
         }
       ]
@@ -1037,7 +1037,7 @@
         },
         {
           "title": "200响应示例03（有客户端IP，发布定位地址（国）、（省）、（市））",
-          "content": "HTTP/1.1 200 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/checkLocation -d '{}'",
+          "content": "HTTP/1.1 200 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation -d '{}'",
           "type": "json"
         }
       ]
@@ -1131,13 +1131,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/dynamic/{id}/checkLocation"
+        "url": "http://8.135.36.45:8084/find/dynamic/{id}/checkLocation"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://124.71.38.2:8084/find/dynamic/{id}/likes",
+    "url": "http://8.135.36.45:8084/find/dynamic/{id}/likes",
     "title": "点赞或取消点赞接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -1172,17 +1172,17 @@
       "examples": [
         {
           "title": "请求示例01（取消点赞，点赞记录不存在）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0",
           "type": "json"
         },
         {
           "title": "请求示例02（取消点赞，点赞记录存在）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0",
           "type": "json"
         },
         {
           "title": "请求示例03（点赞，点赞记录不存在）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/likes?dynamicInfoId=86&type=1",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=1",
           "type": "json"
         }
       ]
@@ -1332,13 +1332,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/dynamic/{id}/likes"
+        "url": "http://8.135.36.45:8084/find/dynamic/{id}/likes"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://124.71.38.2:8084/find/dynamic/{id}/application",
+    "url": "http://8.135.36.45:8084/find/dynamic/{id}/application",
     "title": "申请加微信接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -1373,12 +1373,12 @@
       "examples": [
         {
           "title": "请求示例01（第1次申请加微信）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信，请发送微信号码过来",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信，请发送微信号码过来",
           "type": "json"
         },
         {
           "title": "请求示例02（第6次申请加微信）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信16",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信16",
           "type": "json"
         }
       ]
@@ -1523,13 +1523,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/dynamic/{id}/application"
+        "url": "http://8.135.36.45:8084/find/dynamic/{id}/application"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://124.71.38.2:8084/find/dynamic/{id}/screen",
+    "url": "http://8.135.36.45:8084/find/dynamic/{id}/screen",
     "title": "筛选动态内容列表接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -1636,7 +1636,7 @@
       "examples": [
         {
           "title": "请求示例01",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET http://124.71.38.2:8084/find/dynamic/71/screen?pageNum=1&pageSize=20&gender=0&minAge=16&maxAge=39&constellation=巨蟹座&dataType=0&provinceList=广东省,广西省,湖南省&cityList=深圳市,广州市,南宁市,长沙市",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET http://8.135.36.45:8084/find/dynamic/71/screen?pageNum=1&pageSize=20&gender=0&minAge=16&maxAge=39&constellation=巨蟹座&dataType=0&provinceList=广东省,广西省,湖南省&cityList=深圳市,广州市,南宁市,长沙市",
           "type": "json"
         }
       ]
@@ -1785,7 +1785,7 @@
       "examples": [
         {
           "title": "200响应示例01",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"获取觅鹿界面发布的动态内容信息列表成功\",\n\t\t    \"data\":{\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":71,\n\t\t                \"headUrl\":\"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\":\"杨贵妃\",\n\t\t                \"publishTime\":\"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\":86,\n\t\t                \"content\":\"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\":\"广西省南宁市\",\n\t\t                \"likes\":0,\n\t\t                \"likeStatus\":false,\n\t\t                \"applications\":5,\n\t\t                \"applicationStatus\":true,\n\t\t                \"dataType\":\"1\",\n\t\t                \"attacheFileUrlList\":[\n\t\t                    \"http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"获取觅鹿界面发布的动态内容信息列表成功\",\n\t\t    \"data\":{\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":71,\n\t\t                \"headUrl\":\"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\":\"杨贵妃\",\n\t\t                \"publishTime\":\"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\":86,\n\t\t                \"content\":\"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\":\"广西省南宁市\",\n\t\t                \"likes\":0,\n\t\t                \"likeStatus\":false,\n\t\t                \"applications\":5,\n\t\t                \"applicationStatus\":true,\n\t\t                \"dataType\":\"1\",\n\t\t                \"attacheFileUrlList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -1874,13 +1874,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/dynamic/{id}/screen"
+        "url": "http://8.135.36.45:8084/find/dynamic/{id}/screen"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://124.71.38.2:8084/find/dynamic/{id}/mylist",
+    "url": "http://8.135.36.45:8084/find/dynamic/{id}/mylist",
     "title": "获取自己的动态内容列表接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -1914,7 +1914,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8084/find/dynamic/71/mylist?pageNum=1&pageSize=20",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/71/mylist?pageNum=1&pageSize=20",
           "type": "json"
         }
       ]
@@ -2063,7 +2063,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"分页获取用户自己发布的所有动态内容列表成功。\",\n\t\t    \"data\":{\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":71,\n\t\t                \"headUrl\":\"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\":\"杨贵妃\",\n\t\t                \"publishTime\":\"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\":86,\n\t\t                \"content\":\"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\":\"广西省南宁市\",\n\t\t                \"likes\":0,\n\t\t                \"likeStatus\":false,\n\t\t                \"applications\":5,\n\t\t                \"applicationStatus\":false,\n\t\t                \"dataType\":\"0\",\n\t\t                \"attacheFileUrlList\":[\n\t\t                    \"http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"分页获取用户自己发布的所有动态内容列表成功。\",\n\t\t    \"data\":{\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":71,\n\t\t                \"headUrl\":\"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\":\"杨贵妃\",\n\t\t                \"publishTime\":\"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\":86,\n\t\t                \"content\":\"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\":\"广西省南宁市\",\n\t\t                \"likes\":0,\n\t\t                \"likeStatus\":false,\n\t\t                \"applications\":5,\n\t\t                \"applicationStatus\":false,\n\t\t                \"dataType\":\"0\",\n\t\t                \"attacheFileUrlList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -2152,13 +2152,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/dynamic/{id}/mylist"
+        "url": "http://8.135.36.45:8084/find/dynamic/{id}/mylist"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://124.71.38.2:8084/find/dynamic/{id}/list",
+    "url": "http://8.135.36.45:8084/find/dynamic/{id}/list",
     "title": "觅鹿主界面动态内容列表接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -2192,7 +2192,7 @@
       "examples": [
         {
           "title": "请求示例01",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8084/find/dynamic/73/list?pageNum=1&pageSize=20",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/73/list?pageNum=1&pageSize=20",
           "type": "json"
         }
       ]
@@ -2341,7 +2341,7 @@
       "examples": [
         {
           "title": "200响应示例01",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"获取觅鹿界面发布的动态内容信息列表成功\",\n\t\t    \"data\":{\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":71,\n\t\t                \"headUrl\":\"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\":\"杨贵妃\",\n\t\t                \"publishTime\":\"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\":86,\n\t\t                \"content\":\"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\":\"广西省南宁市\",\n\t\t                \"likes\":0,\n\t\t                \"likeStatus\":false,\n\t\t                \"applications\":5,\n\t\t                \"applicationStatus\":true,\n\t\t                \"dataType\":\"1\",\n\t\t                \"attacheFileUrlList\":[\n\t\t                    \"http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"获取觅鹿界面发布的动态内容信息列表成功\",\n\t\t    \"data\":{\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":71,\n\t\t                \"headUrl\":\"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\",\n\t\t                \"nickname\":\"杨贵妃\",\n\t\t                \"publishTime\":\"2021-02-01 14:35:23\",\n\t\t                \"dynamicInfoId\":86,\n\t\t                \"content\":\"刚刚注册，请多关照小妹子！！\",\n\t\t                \"address\":\"广西省南宁市\",\n\t\t                \"likes\":0,\n\t\t                \"likeStatus\":false,\n\t\t                \"applications\":5,\n\t\t                \"applicationStatus\":true,\n\t\t                \"dataType\":\"1\",\n\t\t                \"attacheFileUrlList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -2430,7 +2430,7 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/dynamic/{id}/list"
+        "url": "http://8.135.36.45:8084/find/dynamic/{id}/list"
       }
     ]
   },
@@ -3584,7 +3584,7 @@
   },
   {
     "type": "put",
-    "url": "http://124.71.38.2:8081/find/v1/user/{id}/uploadRegId.do",
+    "url": "http://8.135.36.45:8084/find/v1/user/{id}/uploadRegId.do",
     "title": "上报极光推送设备标识接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -3611,7 +3611,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://124.71.38.2:8081/find/v1/user/70/uploadRegId.do?regId=1507bfd3f76139cd43a",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/v1/user/70/uploadRegId.do?regId=1507bfd3f76139cd43a",
           "type": "json"
         }
       ]
@@ -3771,13 +3771,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8081/find/v1/user/{id}/uploadRegId.do"
+        "url": "http://8.135.36.45:8084/find/v1/user/{id}/uploadRegId.do"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://124.71.38.2:8084/find/user/{id}/head",
+    "url": "http://8.135.36.45:8084/find/user/{id}/head",
     "title": "修改头像接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -3862,7 +3862,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"返回数据成功\",\n\t\t    \"data\": {\n\t\t        \"head\": \"http://124.71.38.2:9000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\t\t        \"id\": 1\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"返回数据成功\",\n\t\t    \"data\": {\n\t\t        \"head\": \"http://8.135.36.45:8000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\t\t        \"id\": 1\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -3967,13 +3967,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/{id}/head"
+        "url": "http://8.135.36.45:8084/find/user/{id}/head"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://124.71.38.2:8084/find/user/{id}/background",
+    "url": "http://8.135.36.45:8084/find/user/{id}/background",
     "title": "修改背景图接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -4058,7 +4058,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"返回数据成功\",\n\t\t    \"data\": {\n\t\t        \"bg\": \"http://124.71.38.2:9000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\t\t        \"id\": 1\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"返回数据成功\",\n\t\t    \"data\": {\n\t\t        \"bg\": \"http://8.135.36.45:8000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\t\t        \"id\": 1\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -4163,13 +4163,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/{id}/background"
+        "url": "http://8.135.36.45:8084/find/user/{id}/background"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://124.71.38.2:8084/find/user/isreg?phone={手机号码}",
+    "url": "http://8.135.36.45:8084/find/user/isreg?phone={手机号码}",
     "title": "判断手机号是否注册接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -4190,7 +4190,7 @@
       "examples": [
         {
           "title": "请求示例（判断手机号是否注册）",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET http://124.71.38.2:8081/find/user/isreg?phone=18138802541",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET http://8.135.36.45:8084/find/user/isreg?phone=18138802541",
           "type": "json"
         }
       ]
@@ -4325,13 +4325,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/isreg?phone={手机号码}"
+        "url": "http://8.135.36.45:8084/find/user/isreg?phone={手机号码}"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://124.71.38.2:8084/find/user/{id}/pushOrPull",
+    "url": "http://8.135.36.45:8084/find/user/{id}/pushOrPull",
     "title": "拉入推出黑名单接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -4365,7 +4365,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X POST -v http://124.71.38.2:8084/find/user/1/pushOrPull -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"blackUserId\":2, \"type\":0}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X POST -v http://8.135.36.45:8084/find/user/1/pushOrPull -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"blackUserId\":2, \"type\":0}'",
           "type": "json"
         }
       ]
@@ -4503,13 +4503,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/{id}/pushOrPull"
+        "url": "http://8.135.36.45:8084/find/user/{id}/pushOrPull"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://124.71.38.2:8084/find/user/{id}/update",
+    "url": "http://8.135.36.45:8084/find/user/{id}/update",
     "title": "更新用户资料接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -4583,32 +4583,32 @@
       "examples": [
         {
           "title": "请求示例 修改昵称",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://124.71.38.2:8084/find/user/{id}/update -H \"Content-Type: application/json;;charset=UTF-8\" -d '{\"nickname\":\"王6\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;;charset=UTF-8\" -d '{\"nickname\":\"王6\"}'",
           "type": "json"
         },
         {
           "title": "请求示例 修改微信号",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://124.71.38.2:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"weixinId\":\"12622\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"weixinId\":\"12622\"}'",
           "type": "json"
         },
         {
           "title": "请求示例 修改出生年月日和星座",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://124.71.38.2:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"双子座\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"双子座\"}'",
           "type": "json"
         },
         {
           "title": "请求示例 修改签名",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://124.71.38.2:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"autograph\":\"12622\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"autograph\":\"12622\"}'",
           "type": "json"
         },
         {
           "title": "请求示例 修改签名和出生年月日，星座",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://124.71.38.2:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"autograph\":\"126我的2\", \"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"水平座\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"autograph\":\"126我的2\", \"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"水平座\"}'",
           "type": "json"
         },
         {
           "title": "请求示例 修改签名，出生年月日，星座，昵称，微信号",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://124.71.38.2:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"nickname\":\"王666\", \"weixinId\":\"12622www\", \"autograph\":\"126我的ss2\", \"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"射手座\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"nickname\":\"王666\", \"weixinId\":\"12622www\", \"autograph\":\"126我的ss2\", \"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"射手座\"}'",
           "type": "json"
         }
       ]
@@ -4727,13 +4727,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/{id}/update"
+        "url": "http://8.135.36.45:8084/find/user/{id}/update"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://124.71.38.2:8084/find/user/{id}/queryWeixin",
+    "url": "http://8.135.36.45:8084/find/user/{id}/queryWeixin",
     "title": "查看用户微信号接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -4753,7 +4753,7 @@
       "examples": [
         {
           "title": "请求示例 修改昵称",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://124.71.38.2:8084/find/user/1/queryWeixin",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/queryWeixin",
           "type": "json"
         }
       ]
@@ -4886,13 +4886,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/{id}/queryWeixin"
+        "url": "http://8.135.36.45:8084/find/user/{id}/queryWeixin"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://124.71.38.2:8084/find/user/{id}/query.do",
+    "url": "http://8.135.36.45:8084/find/user/{id}/query.do",
     "title": "查看用户资料接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -4912,7 +4912,7 @@
       "examples": [
         {
           "title": "请求示例 获取用户资料",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://124.71.38.2:8084/find/user/1/query",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/query",
           "type": "json"
         }
       ]
@@ -5028,7 +5028,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"查看用户个人资料成功\",\n\t\t    \"data\": {\n\t\t        \"user\": {\n\t\t            \"id\": 1,\n\t\t            \"nickname\": \"王666\",\n\t\t            \"head\": \"http://124.71.38.2:9000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\t\t            \"bg\": \"http://124.71.38.2:9000/find/img/background/a1bf6181-ebd0-43b4-8e91-761ec8fc83ab_admin055.jpg\",\n\t\t            \"grade\": 0,\n\t\t            \"age\": 24,\n\t\t            \"gender\": \"1\",\n\t\t            \"autograph\": \"126我的ss2\"\n\t\t        }\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"查看用户个人资料成功\",\n\t\t    \"data\": {\n\t\t        \"user\": {\n\t\t            \"id\": 1,\n\t\t            \"nickname\": \"王666\",\n\t\t            \"head\": \"http://8.135.36.45:8000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\t\t            \"bg\": \"http://8.135.36.45:8000/find/img/background/a1bf6181-ebd0-43b4-8e91-761ec8fc83ab_admin055.jpg\",\n\t\t            \"grade\": 0,\n\t\t            \"age\": 24,\n\t\t            \"gender\": \"1\",\n\t\t            \"autograph\": \"126我的ss2\"\n\t\t        }\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -5103,13 +5103,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/{id}/query.do"
+        "url": "http://8.135.36.45:8084/find/user/{id}/query.do"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://124.71.38.2:8084/find/user/{id}/report",
+    "url": "http://8.135.36.45:8084/find/user/{id}/report",
     "title": "用户举报接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5161,7 +5161,7 @@
       "examples": [
         {
           "title": "请求示例 查看用户举报类型",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X POST -v http://124.71.38.2:8084/find/user/{id}/report -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"categoryId\":1, \"reportType\":1, \"beingReportId\":3, \"reportContent\":\"老是打广告dddddd+++++++！！！！！\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X POST -v http://8.135.36.45:8084/find/user/{id}/report -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"categoryId\":1, \"reportType\":1, \"beingReportId\":3, \"reportContent\":\"老是打广告dddddd+++++++！！！！！\"}'",
           "type": "json"
         }
       ]
@@ -5287,13 +5287,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/{id}/report"
+        "url": "http://8.135.36.45:8084/find/user/{id}/report"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://124.71.38.2:8084/find/user/reg",
+    "url": "http://8.135.36.45:8084/find/user/reg",
     "title": "用户注册接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5580,7 +5580,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"登录或者注册成功。\",\n\t\t    \"data\": {\n\t\t        \"user\": {\n\t\t            \"id\": 21,\n\t\t            \"gender\": \"1\",\n\t\t            \"nickname\": \"张三\",\n\t\t            \"head\": \"http://124.71.38.2:9000/find/img/head/head.png\",\n\t\t            \"bg\": \"http://124.71.38.2:9000/find/img/background/bg.png\",\n\t\t            \"autograph\": \"新人小生，初来乍到，请多关照。\"\n\t\t        }\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"登录或者注册成功。\",\n\t\t    \"data\": {\n\t\t        \"user\": {\n\t\t            \"id\": 21,\n\t\t            \"gender\": \"1\",\n\t\t            \"nickname\": \"张三\",\n\t\t            \"head\": \"http://8.135.36.45:8000/find/img/head/head.png\",\n\t\t            \"bg\": \"http://8.135.36.45:8000/find/img/background/bg.png\",\n\t\t            \"autograph\": \"新人小生，初来乍到，请多关照。\"\n\t\t        }\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -5685,13 +5685,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/reg"
+        "url": "http://8.135.36.45:8084/find/user/reg"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://124.71.38.2:8084/find/user/login",
+    "url": "http://8.135.36.45:8084/find/user/login",
     "title": "用户登录接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5744,12 +5744,12 @@
       "examples": [
         {
           "title": "请求示例01（手机号码和客户端IP登录）",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://124.71.38.2:8084/find/user/login?phone=18138812310&ip=183.14.29.70",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/login?phone=18138812310&ip=183.14.29.70",
           "type": "json"
         },
         {
           "title": "请求示例02（手机号码和定位地址登录）",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://124.71.38.2:8084/find/user/login?phone=18138812236&country=中国&province=广东省&city=深圳市",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/login?phone=18138812236&country=中国&province=广东省&city=深圳市",
           "type": "json"
         }
       ]
@@ -5842,7 +5842,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"登录成功。\",\n\t\t    \"data\": {\n\t\t        \"user\": {\n\t\t            \"id\": 21,\n\t\t            \"gender\": \"1\",\n\t\t            \"nickname\": \"张三\",\n\t\t            \"head\": \"http://124.71.38.2:9000/find/img/head/head.png\",\n\t\t            \"bg\": \"http://124.71.38.2:9000/find/img/background/bg.png\",\n\t\t            \"autograph\": \"新人小生，初来乍到，请多关照。\"\n\t\t        }\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"登录成功。\",\n\t\t    \"data\": {\n\t\t        \"user\": {\n\t\t            \"id\": 21,\n\t\t            \"gender\": \"1\",\n\t\t            \"nickname\": \"张三\",\n\t\t            \"head\": \"http://8.135.36.45:8000/find/img/head/head.png\",\n\t\t            \"bg\": \"http://8.135.36.45:8000/find/img/background/bg.png\",\n\t\t            \"autograph\": \"新人小生，初来乍到，请多关照。\"\n\t\t        }\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -5947,13 +5947,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/login"
+        "url": "http://8.135.36.45:8084/find/user/login"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://124.71.38.2:8084/find/user/{id}/report-categories",
+    "url": "http://8.135.36.45:8084/find/user/{id}/report-categories",
     "title": "获取用户举报类型接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5973,7 +5973,7 @@
       "examples": [
         {
           "title": "请求示例 查看用户举报类型",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://124.71.38.2:8084/find/user/1/report-categories",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/report-categories",
           "type": "json"
         }
       ]
@@ -6113,13 +6113,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/{id}/report-categories"
+        "url": "http://8.135.36.45:8084/find/user/{id}/report-categories"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://124.71.38.2:8084/find/user/{id}/blacklist?pageNum={pageNum}&pageSize={pageSize}",
+    "url": "http://8.135.36.45:8084/find/user/{id}/blacklist?pageNum={pageNum}&pageSize={pageSize}",
     "title": "获取用户黑名单列表接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -6153,7 +6153,7 @@
       "examples": [
         {
           "title": "请求示例 查看用户举报类型",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://124.71.38.2:8084/find/user/1/blacklist?pageNum=1&pageSize=10",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/blacklist?pageNum=1&pageSize=10",
           "type": "json"
         }
       ]
@@ -6239,7 +6239,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"获取用户黑名单列表成功。\",\n\t\t    \"data\": {\n\t\t        \"totalPage\": 2,\n\t\t        \"list\": [\n\t\t            {\n\t\t                \"id\": 12,\n\t\t                \"nickname\": \"陆蕙兰\",\n\t\t                \"head\": \"http://192.168.31.30:9000/find/img/head/12.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:25:27\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 11,\n\t\t                \"nickname\": \"商梓珊\",\n\t\t                \"head\": \"http://192.168.31.30:9000/find/img/head/11.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:51\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 10,\n\t\t                \"nickname\": \"赫飞雨\",\n\t\t                \"head\": \"http://192.168.31.30:9000/find/img/head/10.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:47\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 9,\n\t\t                \"nickname\": \"寒烟\",\n\t\t                \"head\": \"http://192.168.31.30:9000/find/img/head/09.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:42\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 7,\n\t\t                \"nickname\": \"勾高朗\",\n\t\t                \"head\": \"http://192.168.31.30:9000/find/img/head/07.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:30\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 6,\n\t\t                \"nickname\": \"慕蕊\",\n\t\t                \"head\": \"http://192.168.31.30:9000/find/img/head/06.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:24\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 5,\n\t\t                \"nickname\": \"庾音韵\",\n\t\t                \"head\": \"http://192.168.31.30:9000/find/img/head/05.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:19\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 4,\n\t\t                \"nickname\": \"覃星宇\",\n\t\t                \"head\": \"http://192.168.31.30:9000/find/img/head/04.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:14\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 3,\n\t\t                \"nickname\": \"致命德毒药\",\n\t\t                \"head\": \"http://192.168.31.30:9000/find/img/head/03.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:08\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 2,\n\t\t                \"nickname\": \"千柳\",\n\t\t                \"head\": \"http://192.168.31.30:9000/find/img/head/02.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:02\"\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"获取用户黑名单列表成功。\",\n\t\t    \"data\": {\n\t\t        \"totalPage\": 2,\n\t\t        \"list\": [\n\t\t            {\n\t\t                \"id\": 12,\n\t\t                \"nickname\": \"陆蕙兰\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/12.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:25:27\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 11,\n\t\t                \"nickname\": \"商梓珊\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/11.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:51\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 10,\n\t\t                \"nickname\": \"赫飞雨\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/10.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:47\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 9,\n\t\t                \"nickname\": \"寒烟\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/09.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:42\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 7,\n\t\t                \"nickname\": \"勾高朗\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/07.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:30\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 6,\n\t\t                \"nickname\": \"慕蕊\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/06.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:24\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 5,\n\t\t                \"nickname\": \"庾音韵\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/05.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:19\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 4,\n\t\t                \"nickname\": \"覃星宇\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/04.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:14\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 3,\n\t\t                \"nickname\": \"致命德毒药\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/03.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:08\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 2,\n\t\t                \"nickname\": \"千柳\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/02.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:02\"\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -6314,13 +6314,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/user/{id}/blacklist?pageNum={pageNum}&pageSize={pageSize}"
+        "url": "http://8.135.36.45:8084/find/user/{id}/blacklist?pageNum={pageNum}&pageSize={pageSize}"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://124.71.38.2:8084/find/v1/order/{id}/mobile/create.do",
+    "url": "http://8.135.36.45:8084/find/order/{id}/mobile/create",
     "title": "创建预支付订单接口",
     "version": "1.0.0",
     "group": "订单模块API",
@@ -6361,12 +6361,12 @@
       "examples": [
         {
           "title": "请求示例01（微信支付）",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST http://124.71.38.2:8086/find/v1/order/1/mobile/create.do -H \"Content-Type:application/json;charset=utf-8\" -d '{\"pid\":1, \"mode\":0, \"ip\":\"127.0.0.1\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST http://8.135.36.45:8084/find/order/1/mobile/create -H \"Content-Type:application/json;charset=utf-8\" -d '{\"pid\":1, \"mode\":0, \"ip\":\"127.0.0.1\"}'",
           "type": "json"
         },
         {
           "title": "请求示例02（支付宝支付）",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST http://124.71.38.2:8086/find/v1/order/1/mobile/create.do -H \"Content-Type:application/json;charset=utf-8\" -d '{\"pid\":1, \"mode\":1, \"ip\":\"127.0.0.1\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST http://8.135.36.45:8084/find/order/1/mobile/create -H \"Content-Type:application/json;charset=utf-8\" -d '{\"pid\":1, \"mode\":1, \"ip\":\"127.0.0.1\"}'",
           "type": "json"
         }
       ]
@@ -6618,13 +6618,13 @@
     "groupTitle": "订单模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8084/find/v1/order/{id}/mobile/create.do"
+        "url": "http://8.135.36.45:8084/find/order/{id}/mobile/create"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://124.71.38.2:8086/find/v1/order/{id}/product/list.do",
+    "url": "http://8.135.36.45:8084/find/order/{id}/product/list",
     "title": "获取充值商品列表接口",
     "version": "1.0.0",
     "group": "订单模块API",
@@ -6644,7 +6644,7 @@
       "examples": [
         {
           "title": "请求示例03（手机号码和客户端IP登录）",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET http://124.71.38.2:8086/find/v1/order/1/product/list.do",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET http://8.135.36.45:8084/find/order/1/product/list",
           "type": "json"
         }
       ]
@@ -6730,7 +6730,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTPS/1.1 200 OK\n{\n\"code\": 0,\n\"msg\": \"查询充值会员时长套餐产品列表成功\",\n\"status\": 200,\n\"data\": {\n\"list\": [\n{\n\"desc\": \"60元/月\",\n\"icon\": \"http://124.71.38.2:9000/find/img/app/product/01.png\",\n\"name\": \"2个月\",\n\"pid\": 1,\n\"price\": 120.00\n},\n{\n\"desc\": \"50元/月\",\n\"icon\": \"http://124.71.38.2:9000/find/img/app/product/02.png\",\n\"name\": \"3个月\",\n\"pid\": 2,\n\"price\": 180.00\n},\n{\n\"desc\": \"41.3元/月\",\n\"icon\": \"http://124.71.38.2:9000/find/img/app/product/03.png\",\n\"name\": \"6个月\",\n\"pid\": 3,\n\"price\": 248.00\n},\n{\n\"desc\": \"33元/月\",\n\"icon\": \"http://124.71.38.2:9000/find/img/app/product/04.png\",\n\"name\": \"12个月\",\n\"pid\": 4,\n\"price\": 369.00\n}\n]\n}\n}",
+          "content": "HTTPS/1.1 200 OK\n{\n\"code\": 0,\n\"msg\": \"查询充值会员时长套餐产品列表成功\",\n\"status\": 200,\n\"data\": {\n\"list\": [\n{\n\"desc\": \"60元/月\",\n\"icon\": \"http://8.135.36.45:8000/find/img/app/product/01.png\",\n\"name\": \"2个月\",\n\"pid\": 1,\n\"price\": 120.00\n},\n{\n\"desc\": \"50元/月\",\n\"icon\": \"http://8.135.36.45:8000/find/img/app/product/02.png\",\n\"name\": \"3个月\",\n\"pid\": 2,\n\"price\": 180.00\n},\n{\n\"desc\": \"41.3元/月\",\n\"icon\": \"http://8.135.36.45:8000/find/img/app/product/03.png\",\n\"name\": \"6个月\",\n\"pid\": 3,\n\"price\": 248.00\n},\n{\n\"desc\": \"33元/月\",\n\"icon\": \"http://8.135.36.45:8000/find/img/app/product/04.png\",\n\"name\": \"12个月\",\n\"pid\": 4,\n\"price\": 369.00\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -6835,7 +6835,7 @@
     "groupTitle": "订单模块API",
     "sampleRequest": [
       {
-        "url": "http://124.71.38.2:8086/find/v1/order/{id}/product/list.do"
+        "url": "http://8.135.36.45:8084/find/order/{id}/product/list"
       }
     ]
   }

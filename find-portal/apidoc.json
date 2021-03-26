@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "觅鹿项目接口文档",
   "title": "觅鹿项目",
-  "url": "http://w168428j19.51mypc.cn",
-  "sampleUrl": "http://w168428j19.51mypc.cn",
+  "url": "http://8.135.36.45:8084",
+  "sampleUrl": "http://8.135.36.45:8084",
   "header": {
     "title": "觅鹿项目Header",
     "filename": "header.md"

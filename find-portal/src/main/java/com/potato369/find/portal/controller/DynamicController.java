@@ -41,7 +41,7 @@ public class DynamicController {
     // 用户发布动态内容包括文字，图片，语音
 
     /**
-     * @api {post} http://124.71.38.2:8084/find/dynamic/{id}/release 发布动态内容接口
+     * @api {post} http://8.135.36.45:8084/find/dynamic/{id}/release 发布动态内容接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 发布动态内容
@@ -61,7 +61,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {string} [content] 动态内容
      * @apiParamExample {json} 请求示例01（发布图片有具体发布定位地址）
      * HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
-     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release
+     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release
      * -d '{
      * "imei": "895568564457954422",
      * "attacheInfoDataType": "1",
@@ -96,7 +96,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例02（发布图片有客户端IP）
      * HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
-     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release
+     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release
      * -d '{
      * "imei": "895568564457954422",
      * "attacheInfoDataType": "1",
@@ -129,7 +129,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例03（发布语音有客户端IP）
      * HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
-     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release
+     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release
      * -d '{
      * "imei": "895568564457954422",
      * "attacheInfoDataType": "2",
@@ -159,7 +159,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例04（发布纯文字有客户端IP）
      * HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
-     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://124.71.38.2:8084/find/dynamic/3/release
+     * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release
      * -d '{
      * "imei": "895568564457954422",
      * "attacheInfoDataType": "0",
@@ -244,7 +244,7 @@ public class DynamicController {
     }
 
     /**
-     * @api {post} http://124.71.38.2:8084/find/dynamic/{id}/updateLocation 更新动态地址定位接口
+     * @api {post} http://8.135.36.45:8084/find/dynamic/{id}/updateLocation 更新动态地址定位接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 更新动态地址定位
@@ -255,7 +255,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {string} [city] 定位（城市）
      * @apiParamExample {json} 请求示例01（有客户端IP）
      * HTTP/1.1 OK
-     * curl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/updateLocation -d '{"ip":"183.14.133.239"}'
+     * curl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation -d '{"ip":"183.14.133.239"}'
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -272,7 +272,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例02（有定位（国家）、（省份）、（城市））
      * HTTP/1.1 OK
-     * curl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/updateLocation -d '{"country": "中国", "province": "广东", "city": "深圳"}'
+     * curl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation -d '{"country": "中国", "province": "广东", "city": "深圳"}'
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -290,7 +290,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例03（有客户端IP，定位（国家）、（省份）、（城市））
      * HTTP/1.1 OK
-     * curl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/updateLocation
+     * curl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation
      * -d '{
      * "ip": "183.14.133.239",
      * "country": "中国",
@@ -304,7 +304,7 @@ public class DynamicController {
      * @apiSuccess (200) {boolean} [CHANGED] 是否发生更改，true->是，false->否
      * @apiSuccessExample {json} 200响应示例03（有客户端IP，发布定位地址（国）、（省）、（市））
      * HTTP/1.1 200 OK
-     * curl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/updateLocation
+     * curl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation
      * @apiErrorExample {json} 403错误 （客户端IP，定位（国家）、（省份）、（城市）都为空）
      * HTTP/1.1 400 400响应
      * {
@@ -354,7 +354,7 @@ public class DynamicController {
     }
 
     /**
-     * @api {post} http://124.71.38.2:8084/find/dynamic/{id}/checkLocation 检查定位地址是否更改接口
+     * @api {post} http://8.135.36.45:8084/find/dynamic/{id}/checkLocation 检查定位地址是否更改接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 检查定位地址是否更改
@@ -365,7 +365,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {string} [city] 发布动态定位（市）
      * @apiParamExample {json} 请求示例01（有客户端IP）
      * HTTP/1.1 OK
-     * curl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/checkLocation -d '{"ip":"183.14.133.239"}'
+     * curl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation -d '{"ip":"183.14.133.239"}'
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -383,7 +383,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例02（有发布定位地址（国）、省、市）
      * HTTP/1.1 OK
-     * curl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/checkLocation -d '{"country": "中国", "province": "广东", "city": "深圳"}'
+     * curl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation -d '{"country": "中国", "province": "广东", "city": "深圳"}'
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -401,7 +401,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例03（有客户端IP，发布定位地址（国）、（省）、（市））
      * HTTP/1.1 OK
-     * curl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/checkLocation
+     * curl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation
      * -d '{
      * "ip": "183.14.133.239",
      * "country": "中国",
@@ -415,7 +415,7 @@ public class DynamicController {
      * @apiSuccess (200) {boolean} [CHANGED] 是否发生更改，true->是，false->否
      * @apiSuccessExample {json} 200响应示例03（有客户端IP，发布定位地址（国）、（省）、（市））
      * HTTP/1.1 200 OK
-     * curl -v -X POST -H 'application/json;charset=utf-8' http://124.71.38.2:8084/find/dynamic/1/checkLocation -d '{}'
+     * curl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation -d '{}'
      * @apiErrorExample {json} 403错误 （客户端IP，发布定位地址（国）、（省）、（市）都不传）
      * HTTP/1.1 400 400响应
      * {
@@ -460,7 +460,7 @@ public class DynamicController {
     }
 
     /**
-     * @api {put} http://124.71.38.2:8084/find/dynamic/{id}/delete 删除动态内容接口
+     * @api {put} http://8.135.36.45:8084/find/dynamic/{id}/delete 删除动态内容接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 删除动态内容
@@ -468,7 +468,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {long} dynamicInfoId 动态内容id
      * @apiParamExample {json} 请求示例01（是自己发布的动态内容， 删除成功）
      * HTTP/1.1 OK
-     * curl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/delete?dynamicInfoId=85
+     * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/delete?dynamicInfoId=85
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -486,7 +486,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例02（非自己发布的动态内容， 删除失败）
      * HTTP/1.1 OK
-     * curl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/delete?dynamicInfoId=86
+     * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/delete?dynamicInfoId=86
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -544,7 +544,7 @@ public class DynamicController {
 
 
     /**
-     * @api {put} http://124.71.38.2:8084/find/dynamic/{id}/application 申请加微信接口
+     * @api {put} http://8.135.36.45:8084/find/dynamic/{id}/application 申请加微信接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 申请加微信
@@ -553,7 +553,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {string{..255}} [message] 发送的消息
      * @apiParamExample {json} 请求示例01（第1次申请加微信）
      * HTTP/1.1 OK
-     * curl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信，请发送微信号码过来
+     * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信，请发送微信号码过来
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -571,7 +571,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例02（第6次申请加微信）
      * HTTP/1.1 OK
-     * curl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信16
+     * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信16
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -623,7 +623,7 @@ public class DynamicController {
     }
 
     /**
-     * @api {put} http://124.71.38.2:8084/find/dynamic/{id}/likes 点赞或取消点赞接口
+     * @api {put} http://8.135.36.45:8084/find/dynamic/{id}/likes 点赞或取消点赞接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 点赞或取消点赞
@@ -632,7 +632,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {string{"0", "1"}} type 类型，0->取消点赞，1->点赞
      * @apiParamExample {json} 请求示例01（取消点赞，点赞记录不存在）
      * HTTP/1.1 OK
-     * curl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0
+     * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -650,7 +650,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例02（取消点赞，点赞记录存在）
      * HTTP/1.1 OK
-     * curl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0
+     * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -668,7 +668,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例03（点赞，点赞记录不存在）
      * HTTP/1.1 OK
-     * curl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/likes?dynamicInfoId=86&type=1
+     * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=1
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -720,7 +720,7 @@ public class DynamicController {
     }
 
     /**
-     * @api {put} http://124.71.38.2:8084/find/dynamic/{id}/share 分享动态内容接口
+     * @api {put} http://8.135.36.45:8084/find/dynamic/{id}/share 分享动态内容接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 分享内容动态
@@ -729,7 +729,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {string={"0", "1", "2", "3", "4"}} mode 分享方式：0->微信好友，1->QQ好友，2->微信朋友圈，3->QQ空间，4->微信收藏
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT http://124.71.38.2:8084/find/dynamic/70/share?dynamicInfoId=86&mode=0
+     * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/share?dynamicInfoId=86&mode=0
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -781,7 +781,7 @@ public class DynamicController {
     }
 
     /**
-     * @api {get} http://124.71.38.2:8084/find/dynamic/{id}/list 觅鹿主界面动态内容列表接口
+     * @api {get} http://8.135.36.45:8084/find/dynamic/{id}/list 觅鹿主界面动态内容列表接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 觅鹿主界面动态内容列表
@@ -790,7 +790,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {int} [pageSize] 每页条数，默认：每页20条
      * @apiParamExample {json} 请求示例01
      * HTTP/1.1 OK
-     * curl -v -X PUT http://124.71.38.2:8084/find/dynamic/73/list?pageNum=1&pageSize=20
+     * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/73/list?pageNum=1&pageSize=20
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -821,7 +821,7 @@ public class DynamicController {
 		        "list":[
 		            {
 		                "userId":71,
-		                "headUrl":"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
+		                "headUrl":"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
 		                "nickname":"杨贵妃",
 		                "publishTime":"2021-02-01 14:35:23",
 		                "dynamicInfoId":86,
@@ -833,7 +833,7 @@ public class DynamicController {
 		                "applicationStatus":true,
 		                "dataType":"1",
 		                "attacheFileUrlList":[
-		                    "http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
+		                    "http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
 		                ]
 		            }
 		        ]
@@ -875,7 +875,7 @@ public class DynamicController {
     }
 
     /**
-     * @api {get} http://124.71.38.2:8084/find/dynamic/{id}/screen 筛选动态内容列表接口
+     * @api {get} http://8.135.36.45:8084/find/dynamic/{id}/screen 筛选动态内容列表接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 筛选动态内容列表
@@ -891,7 +891,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {list} [cityList] 城市列表，例如：深圳市, 广州市, 成都市, 攀枝花市
      * @apiParamExample {json} 请求示例01
      * HTTP/1.1 OK
-     * curl -v -X GET http://124.71.38.2:8084/find/dynamic/71/screen?pageNum=1&pageSize=20&gender=0&minAge=16&maxAge=39&constellation=巨蟹座&dataType=0&provinceList=广东省,广西省,湖南省&cityList=深圳市,广州市,南宁市,长沙市
+     * curl -v -X GET http://8.135.36.45:8084/find/dynamic/71/screen?pageNum=1&pageSize=20&gender=0&minAge=16&maxAge=39&constellation=巨蟹座&dataType=0&provinceList=广东省,广西省,湖南省&cityList=深圳市,广州市,南宁市,长沙市
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -922,7 +922,7 @@ public class DynamicController {
 		        "list":[
 		            {
 		                "userId":71,
-		                "headUrl":"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
+		                "headUrl":"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
 		                "nickname":"杨贵妃",
 		                "publishTime":"2021-02-01 14:35:23",
 		                "dynamicInfoId":86,
@@ -934,7 +934,7 @@ public class DynamicController {
 		                "applicationStatus":true,
 		                "dataType":"1",
 		                "attacheFileUrlList":[
-		                    "http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
+		                    "http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
 		                ]
 		            }
 		        ]
@@ -983,7 +983,7 @@ public class DynamicController {
     }
 
     /**
-     * @api {get} http://124.71.38.2:8084/find/dynamic/{id}/mylist 获取自己的动态内容列表接口
+     * @api {get} http://8.135.36.45:8084/find/dynamic/{id}/mylist 获取自己的动态内容列表接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 获取自己的动态内容列表
@@ -992,7 +992,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {int} [pageSize] 每页条数，默认：每页20条
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT http://124.71.38.2:8084/find/dynamic/71/mylist?pageNum=1&pageSize=20
+     * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/71/mylist?pageNum=1&pageSize=20
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -1023,7 +1023,7 @@ public class DynamicController {
 		        "list":[
 		            {
 		                "userId":71,
-		                "headUrl":"http://124.71.38.2:9000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
+		                "headUrl":"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
 		                "nickname":"杨贵妃",
 		                "publishTime":"2021-02-01 14:35:23",
 		                "dynamicInfoId":86,
@@ -1035,7 +1035,7 @@ public class DynamicController {
 		                "applicationStatus":false,
 		                "dataType":"0",
 		                "attacheFileUrlList":[
-		                    "http://124.71.38.2:9000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
+		                    "http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
 		                ]
 		            }
 		        ]
