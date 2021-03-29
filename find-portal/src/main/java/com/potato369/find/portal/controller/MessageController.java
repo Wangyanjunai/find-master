@@ -55,9 +55,10 @@ public class MessageController {
      * @apiSuccess (200) {string} [head] 最新点赞者用户头像
      * @apiSuccess (200) {string} [content] 最新点赞消息内容
      * @apiSuccess (200) {int} [count] 未读点赞消息总条数
-     * @apiSuccess (200) {long} [totalCount] 未读申请加微信消息总条数
+     * @apiSuccess (200) {long} [totalCount] 申请加微信消息总条数
      * @apiSuccess (200) {int} [totalPage] 申请加微信消息总页数
      * @apiSuccess (200) {object[]} [list] 申请加微信消息数据
+     * @apiSuccess (200) {long} [messageId] 申请加微信消息记录id
      * @apiSuccess (200) {long} [userId] 申请加微信发送者用户id
      * @apiSuccess (200) {string} [head] 申请加微信发送者用户头像
      * @apiSuccess (200) {string} [nickname] 申请加微信发送者用户昵称
@@ -78,6 +79,7 @@ public class MessageController {
 		        "totalPage":1,
 		        "list":[
 		            {
+		                "messageId": 7,
 		                "userId":60,
 		                "head":"http://8.135.36.45:8000/find/img/head/60/01.png",
 		                "nickname":"尘埃",
@@ -85,6 +87,7 @@ public class MessageController {
 		                "count":5
 		            },
 		            {
+		                "messageId": 2,
 		                "userId":62,
 		                "head":"http://8.135.36.45:8000/find/img/head/62/02.png",
 		                "nickname":"蓝梧桐",
@@ -92,6 +95,7 @@ public class MessageController {
 		                "count":5
 		            },
 		            {
+		                "messageId": 3,
 		                "userId":61,
 		                "head":"http://8.135.36.45:8000/find/img/head/61/01.png",
 		                "nickname":"长安",
@@ -99,6 +103,7 @@ public class MessageController {
 		                "count":6
 		            },
 		            {
+		                "messageId": 4,
 		                "userId":71,
 		                "head":"http://8.135.36.45:8000/find/img/head/71/07.png",
 		                "nickname":"弦雨晴",
@@ -106,6 +111,7 @@ public class MessageController {
 		                "count":6
 		            },
 		            {
+		                "messageId": 5,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "nickname":"阿萌",
@@ -130,7 +136,7 @@ public class MessageController {
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
-      {
+      { 
       	"status": 404,
       	"code": 200,
       	"msg": "接口未注册！"
@@ -682,5 +688,70 @@ public class MessageController {
     public CommonResult<Map<String, Object>> updateAll(
     		@PathVariable(name = "id") @ApiParam(name = "id", value = "消息接收者用户id", required = true, example = "1") Long recipientUserId) {
     	return this.messageFeignClient.allRead(recipientUserId);
+    }
+    
+    
+    /**
+     * @api {delete} http://8.135.36.45:8084/find/message/{id}/delete 删除消息记录接口
+     * @apiVersion 1.0.0
+     * @apiGroup 消息模块API
+     * @apiName 删除消息记录
+     * @apiParam (接口请求参数) {long} id 消息接收者用户id
+     * @apiParam (接口请求参数) {long} messageId 消息记录id
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl -v -X PUT "http://8.135.36.45:8084/find/message/60/delete?messageId=28" -H "accept: application/json"
+     * @apiSuccess (200) {long{0-500}} code 信息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {object} [data] 标记已读状态数据
+     * @apiSuccess (200) {string} [DELETE] OK->删除消息记录成功，ERROR->删除消息记录失败
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+        {
+        "status": 200,
+        "code": 0,
+        "msg": "标记已读成功。",
+        "data": {
+                "DELETE": "OK"
+            }
+        }
+     * @apiError (403) {int{0-65535}} status 响应状态码
+     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {String} msg 说明
+     * @apiErrorExample {json} 403错误
+     * HTTP/1.1 403 403响应
+      {
+        "status": 403,
+        "code": 199,
+        "msg": "未找到用户信息！"
+      }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+      {
+        "status": 404,
+        "code": 200,
+        "msg": "接口未注册！"
+      }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+      {
+        "status": 500,
+        "code": 205,
+        "msg": "服务器未响应！"
+      }
+     */    
+    @PutMapping(value = "/{id}/delete")
+    @ApiOperation(value = "删除消息记录接口", notes = "删除消息记录接口")
+    public CommonResult<Map<String, Object>> delete(
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "消息接收者用户id", required = true, example = "1") Long recipientUserId,
+            @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId) {
+        return this.messageFeignClient.allRead(recipientUserId);
     }
 }

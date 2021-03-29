@@ -69,4 +69,11 @@ public interface MessageService {
 	 * @param recipientUserId 消息接收者用户id
 	 */
 	CommonResult<Map<String, Object>> allRead(Long recipientUserId);
+	
+	/**
+     * 删除申请加微信消息记录
+     * @param recipientUserId 消息接收者用户id
+     * @param messageId 消息记录id
+     */
+	CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId);
 }

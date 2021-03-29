@@ -22,6 +22,11 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MessageInfoVO {
 
+    //申请加微信消息记录id
+    @JSONField(name = "messageId")
+    @JsonProperty(value = "messageId")
+    private Long messageId;
+  
     //申请加微信消息发送者用户id
     @JSONField(name = "userId")
     @JsonProperty(value = "userId")

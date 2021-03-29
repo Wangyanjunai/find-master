@@ -172,7 +172,6 @@
 			AND	me.`send_user_id`<![CDATA[=]]>user.`id`
 			AND me.`reserve_column01`<![CDATA[!=]]>'likes'
 			AND me.`recipient_user_id`<![CDATA[=]]>#{userId, jdbcType=BIGINT}
-			AND me.`status`<![CDATA[=]]>'0'
 		ORDER BY
 			me.`create_time` DESC, me.`update_time` DESC
     </select>
@@ -198,35 +197,34 @@
 			AND dynamic.id<![CDATA[=]]>attache.dynamic_info_by 
 			AND me.`reserve_column01`<![CDATA[=]]>'likes' 
 			AND me.`recipient_user_id`<![CDATA[=]]>#{userId, jdbcType=BIGINT}
-			AND me.`status`<![CDATA[=]]>'0'
 			AND record.`status`<![CDATA[=]]>'0' 
 		ORDER BY
 			me.`create_time` DESC,
 			me.`update_time` DESC
     </select>
     <select id="selectApplicationMessageRecordByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		SELECT
-			`id`,
-			`send_user_id`,
-			`recipient_user_id`,
-			`content`,
-			`send_mode`,
-			`status`,
-			`create_time` 
-		FROM
-			`message` 
-		WHERE
-			`reserve_column01`<![CDATA[=]]>'applications' 
-			AND `recipient_user_id`<![CDATA[=]]>#{userId, jdbcType=BIGINT}
-		GROUP BY
-			`send_user_id`
-		ORDER BY
-			`create_time` DESC    	
+			SELECT
+				`id`,
+				`send_user_id`,
+				`recipient_user_id`,
+				`content`,
+				`send_mode`,
+				`status`,
+				`create_time` 
+			FROM
+				`message` 
+			WHERE
+				`reserve_column01`<![CDATA[=]]>'applications' 
+				AND `recipient_user_id`<![CDATA[=]]>#{userId, jdbcType=BIGINT}
+			GROUP BY
+				`send_user_id`
+			ORDER BY
+				`create_time` DESC    	
     </select>
     
     <select id="selectMessageRecordCount" parameterType="java.lang.Long" resultType="java.lang.Long">
 		SELECT
-			COUNT( 1 ) 
+			COUNT(1)
 		FROM
 			(
 			SELECT
@@ -321,6 +319,19 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
+    <delete id="delectApplicationMessageRecordByUserId" parameterType="java.lang.Long">
+      DELETE
+	      FROM
+	        `message`
+	      WHERE
+	        `reserve_column01`<![CDATA[=]]>'applications' 
+	        AND `recipient_user_id`<![CDATA[=]]>#{userId, jdbcType=BIGINT}
+	        AND `id`<![CDATA[=]]>#{messageId, jdbcType=BIGINT}
+	      GROUP BY
+	        `send_user_id`
+	      ORDER BY
+	        `create_time` DESC      
+    </delete>   
     <insert id="insert" parameterType="com.potato369.find.mbg.model.Message">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
@@ -411,7 +422,7 @@
         </trim>
     </insert>
     <select id="countByExample" parameterType="com.potato369.find.mbg.model.MessageExample" resultType="java.lang.Long">
-        select count(*) from message
+        select count(1) from message
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -564,28 +575,28 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateApplicationMessage" parameterType="java.lang.Long">
-		UPDATE message
-			SET `status` = '1',
-			update_time  = NOW()
-		WHERE
-			`reserve_column01`<![CDATA[!=]]>'likes'
-			AND `send_user_id`<![CDATA[=]]>#{sendUserId, jdbcType=BIGINT}
-			AND `recipient_user_id`<![CDATA[=]]>#{recipientUserId, jdbcType=BIGINT}
+			UPDATE message
+				SET `status` = '1',
+				update_time  = NOW()
+			WHERE
+				`reserve_column01`<![CDATA[!=]]>'likes'
+				AND `send_user_id`<![CDATA[=]]>#{sendUserId, jdbcType=BIGINT}
+				AND `recipient_user_id`<![CDATA[=]]>#{recipientUserId, jdbcType=BIGINT}
     </update>
     <update id="updateLikesMessage" parameterType="java.lang.Long">
-		UPDATE message
-			SET `status` = '1',
-			update_time  = NOW()
-		WHERE
-			`reserve_column01`<![CDATA[=]]>'likes'
-			AND `send_user_id`<![CDATA[=]]>#{sendUserId, jdbcType=BIGINT}
-			AND `recipient_user_id`<![CDATA[=]]>#{recipientUserId, jdbcType=BIGINT}
-    </update>  
-    <update id="updateAllByUserId" parameterType="java.lang.Long">
-		UPDATE message
-			SET `status` = '1',
-			update_time  = NOW()
-		WHERE
-			`recipient_user_id`<![CDATA[=]]>#{recipientUserId, jdbcType=BIGINT}
+			UPDATE message
+				SET `status` = '1',
+				update_time  = NOW()
+			WHERE
+				`reserve_column01`<![CDATA[=]]>'likes'
+				AND `send_user_id`<![CDATA[=]]>#{sendUserId, jdbcType=BIGINT}
+				AND `recipient_user_id`<![CDATA[=]]>#{recipientUserId, jdbcType=BIGINT}
+	    </update>  
+	    <update id="updateAllByUserId" parameterType="java.lang.Long">
+			UPDATE message
+				SET `status` = '1',
+				update_time  = NOW()
+			WHERE
+				`recipient_user_id`<![CDATA[=]]>#{recipientUserId, jdbcType=BIGINT}
     </update>
 </mapper>

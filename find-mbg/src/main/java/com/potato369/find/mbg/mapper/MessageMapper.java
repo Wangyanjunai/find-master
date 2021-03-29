@@ -15,6 +15,8 @@ public interface MessageMapper {
     int deleteByExample(MessageExample example);
 
     int deleteByPrimaryKey(Long id);
+    
+    int delectApplicationMessageRecordByUserId(@Param("userId") Long userId, @Param("messageId") Long messageId);
 
     int insert(Message record);
 

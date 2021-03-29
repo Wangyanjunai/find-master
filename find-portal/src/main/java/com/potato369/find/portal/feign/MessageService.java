@@ -3,6 +3,7 @@ package com.potato369.find.portal.feign;
 import java.util.Map;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,4 +43,8 @@ public interface MessageService {
     
     @PutMapping(value = "/find/v1/message/{id}/updateAll.do")
     CommonResult<Map<String, Object>> allRead(@PathVariable(name = "id") Long recipientUserId);
+    
+    @DeleteMapping(value = "/find/v1/message/{id}/delete.do")
+    CommonResult<Map<String, Object>> delete(@PathVariable(name = "id") Long recipientUserId,
+                                             @RequestParam(name = "messageId") Long messageId);
 }

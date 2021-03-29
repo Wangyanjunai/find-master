@@ -175,6 +175,7 @@ public class MessageServiceImpl implements MessageService {
 		if (messages != null && !messages.isEmpty()) {
 			for (Message message : messages) {
 				MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
+				messageInfoVO.setMessageId(message.getId());
 				User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
 				if (user != null) {
 					messageInfoVO.setUserId(user.getId());
@@ -297,4 +298,28 @@ public class MessageServiceImpl implements MessageService {
 		data.put(key, value);
 		return CommonResult.success(data, msg);
 	}
+
+  
+  /**
+   * <pre>
+   * 描述该方法的实现功能：删除申请加微信消息记录
+   * @see com.potato369.find.message.service.MessageService#delete(java.lang.Long, java.lang.Long)
+   * </pre>
+   */
+  	
+  @Override
+  @Transactional(readOnly = false)
+  public CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId) {
+    Map<String, Object> data = new ConcurrentHashMap<>();
+    String key = "DELETE";
+    String value = "ERROR";
+    String msg = "删除消息记录失败。";
+    int count = this.messageMapperWriter.delectApplicationMessageRecordByUserId(recipientUserId, messageId);
+    if(count > 0) {
+      value = "OK";
+      msg = "删除消息记录成功。";
+    }
+    data.put(key, value);
+    return CommonResult.success(data, msg);
+  }
 }

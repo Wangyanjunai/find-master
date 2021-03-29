@@ -45,4 +45,18 @@ public class MessageServiceFeignFallback implements MessageService {
 		log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
 	}
+
+  
+  /**
+   * <pre>
+   * 描述该方法的实现功能：
+   * @see com.potato369.find.portal.feign.MessageService#delete(java.lang.Long, java.lang.Long)
+   * </pre>
+   */
+  	
+  @Override
+  public CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId) {
+    log.error("进入了熔断器方法！！！");
+    return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+  }
 }
