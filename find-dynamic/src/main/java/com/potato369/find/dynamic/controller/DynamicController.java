@@ -754,34 +754,34 @@ public class DynamicController {
             }
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
             if (dynamicInfo == null) {
-                return CommonResult.success(data, "申请加微信出错，动态内容不存在。");
+            	return CommonResult.failed(data, ResultCode.DYNAMIC_IS_NOT_EXIST);
             }
-            Long publishUserId = dynamicInfo.getUserId();
+            Long publishUserId = dynamicInfo.getUserId();//动态内容拥有者或者发动态的用户id
             User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);
             if (publishUser == null) {
-            	return CommonResult.failed("点赞当前动态内容出错，发布者用户信息不存在。");
+            	return CommonResult.failed(data, ResultCode.PUBLISH_USER_IS_NOT_EXIST);
 			}
             if (publishUserId.equals(userId)) {
-            	return CommonResult.failed("点赞当前动态内容出错，不能申请加自己微信。");
+            	return CommonResult.failed(data, ResultCode.PUBLISH_USER_IS_VALID);
 			}
             ApplicationSetting applicationSetting = this.applicationSettingService.findApplication();
             int times = 0;
             if (applicationSetting != null) {
                 times = applicationSetting.getTimes();
             }
-            User user = this.userMapperReader.selectByPrimaryKey(userId);
-            if (user == null) {
-                return CommonResult.success(data, "申请加微信出错，用户信息不存在。");
+            User recipientUser = this.userMapperReader.selectByPrimaryKey(userId);
+            if (recipientUser == null) {
+                return CommonResult.failed(data, ResultCode.RECIPIENT_USER_IS_NOT_EXIST);
             }
-            if (UserGradeEnum.VIP0.getCode().toString().equals(user.getGrade())) {
-                int timesResult = this.applicationRecordService.findApplicationRecordCountByUserId(userId);
-                if (timesResult >= times) {
-                    return CommonResult.success(data, "申请加微信出错，今天申请加微信次数超限，明天再试。");
-                }
-            }
-            //TODO 是否需要判断一天只能申请加不同的人的微信一次，加同一个人的微信一天只能发送一次，对方没有回复是不能继续发送的。
+            //TODO 是否需要判断一天只能申请加同一个人的微信一次，加不同的人的微信按照设置，对方没有回复是不能继续发送的。
             DynamicInfo dynamicInfo2 = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
             dynamicInfo2.getUserId();
+            if (UserGradeEnum.VIP0.getGrade().equals(publishUser.getGrade())) {
+                int timesResult = this.applicationRecordService.findApplicationRecordCountByUserId(userId);
+                if (timesResult >= times) {
+                    return CommonResult.failed(data, ResultCode.TIMES_OVERRUN);
+                }
+            }
             ApplicationRecord applicationRecord = new ApplicationRecord();
             applicationRecord.setDynamicInfoId(dynamicInfoId);
             applicationRecord.setUserId(userId);

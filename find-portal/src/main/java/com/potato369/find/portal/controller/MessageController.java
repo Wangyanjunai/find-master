@@ -3,6 +3,7 @@ package com.potato369.find.portal.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 //import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -179,6 +180,7 @@ public class MessageController {
      * @apiSuccess (200) {int} [totalPage] 点赞消息总页数
      * @apiSuccess (200) {object[]} [list] 点赞消息数据
      * @apiSuccess (200) {long} [userId] 点赞者用户id
+     * @apiSuccess (200) {long} [messageId] 点赞消息记录id
      * @apiSuccess (200) {string} [head] 点赞者用户头像
      * @apiSuccess (200) {string} [content] 点赞者发送消息内容
      * @apiSuccess (200) {string} [attacheType] 点赞的动态内容类型，0->图片，1->语音
@@ -194,6 +196,7 @@ public class MessageController {
 		        "totalPage":2,
 		        "list":[
 		            {
+		            	"messageId":90,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -203,6 +206,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":89,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -212,6 +216,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":88,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -222,6 +227,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":87,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -233,6 +239,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":86,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -244,6 +251,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":85,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -253,6 +261,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":84,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -262,6 +271,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":83,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -271,6 +281,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":82,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -281,6 +292,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":81,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -292,6 +304,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":80,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -303,6 +316,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":79,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -312,6 +326,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":78,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态51出门熏人",
@@ -321,6 +336,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":77,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态51出门熏人",
@@ -330,6 +346,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":76,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态51出门熏人",
@@ -340,6 +357,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":75,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态51出门熏人",
@@ -351,6 +369,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":74,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态51出门熏人",
@@ -362,6 +381,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":73,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态51出门熏人",
@@ -371,6 +391,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":72,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态摩天轮旋转",
@@ -380,6 +401,7 @@ public class MessageController {
 		                ]
 		            },
 		            {
+		            	"messageId":71,
 		                "userId":70,
 		                "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
 		                "content":"阿萌赞了你的动态摩天轮旋转",
@@ -692,10 +714,10 @@ public class MessageController {
     
     
     /**
-     * @api {delete} http://8.135.36.45:8084/find/message/{id}/delete 删除消息记录接口
+     * @api {delete} http://8.135.36.45:8084/find/message/{id}/delete 删除申请加微信消息记录接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
-     * @apiName 删除消息记录
+     * @apiName 删除申请加微信消息记录
      * @apiParam (接口请求参数) {long} id 消息接收者用户id
      * @apiParam (接口请求参数) {long} messageId 消息记录id
      * @apiParamExample {json} 请求示例
@@ -704,7 +726,7 @@ public class MessageController {
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 标记已读状态数据
+     * @apiSuccess (200) {object} [data] 删除消息状态数据
      * @apiSuccess (200) {string} [DELETE] OK->删除消息记录成功，ERROR->删除消息记录失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
@@ -747,11 +769,75 @@ public class MessageController {
         "msg": "服务器未响应！"
       }
      */    
-    @PutMapping(value = "/{id}/delete")
+    @DeleteMapping(value = "/{id}/delete")
     @ApiOperation(value = "删除消息记录接口", notes = "删除消息记录接口")
-    public CommonResult<Map<String, Object>> delete(
+    public CommonResult<Map<String, Object>> deleteApplications(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "消息接收者用户id", required = true, example = "1") Long recipientUserId,
             @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId) {
-        return this.messageFeignClient.allRead(recipientUserId);
+        return this.messageFeignClient.delete(recipientUserId, messageId);
+    }
+    
+    /**
+     * @api {delete} http://8.135.36.45:8084/find/message/{id}/deleteLikes 删除点赞消息记录接口
+     * @apiVersion 1.0.0
+     * @apiGroup 消息模块API
+     * @apiName 删除点赞消息记录
+     * @apiParam (接口请求参数) {long} id 消息接收者用户id
+     * @apiParam (接口请求参数) {long} messageId 消息记录id
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl -v -X PUT "http://8.135.36.45:8084/find/message/60/deleteLikes?messageId=28" -H "accept: application/json"
+     * @apiSuccess (200) {long{0-500}} code 信息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {object} [data] 删除消息状态数据
+     * @apiSuccess (200) {string} [DELETE] OK->删除消息记录成功，ERROR->删除消息记录失败
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+        {
+        "status": 200,
+        "code": 0,
+        "msg": "标记已读成功。",
+        "data": {
+                "DELETE": "OK"
+            }
+        }
+     * @apiError (403) {int{0-65535}} status 响应状态码
+     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {String} msg 说明
+     * @apiErrorExample {json} 403错误
+     * HTTP/1.1 403 403响应
+      {
+        "status": 403,
+        "code": 199,
+        "msg": "未找到用户信息！"
+      }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+      {
+        "status": 404,
+        "code": 200,
+        "msg": "接口未注册！"
+      }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+      {
+        "status": 500,
+        "code": 205,
+        "msg": "服务器未响应！"
+      }
+     */    
+    @DeleteMapping(value = "/{id}/deleteLikes")
+    @ApiOperation(value = "删除点赞消息记录接口", notes = "删除点赞消息记录接口")
+    public CommonResult<Map<String, Object>> deleteLikes(
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "消息接收者用户id", required = true, example = "1") Long recipientUserId,
+            @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId) {
+        return this.messageFeignClient.deleteLikes(recipientUserId, messageId);
     }
 }

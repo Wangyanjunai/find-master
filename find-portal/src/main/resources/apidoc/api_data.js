@@ -3253,6 +3253,13 @@ define({ "api": [
           },
           {
             "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "messageId",
+            "description": "<p>点赞消息记录id</p>"
+          },
+          {
+            "group": "200",
             "type": "string",
             "optional": true,
             "field": "head",
@@ -3284,7 +3291,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"返回数据成功\",\n\t\t    \"data\":{\n\t\t        \"totalCount\":30,\n\t\t        \"totalPage\":2,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"返回数据成功\",\n\t\t    \"data\":{\n\t\t        \"totalCount\":30,\n\t\t        \"totalPage\":2,\n\t\t        \"list\":[\n\t\t            {\n\t\t            \t\"messageId\":90,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":89,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":88,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":87,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":86,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":85,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":84,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":83,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":82,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":81,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":80,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":79,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":78,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":77,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":76,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":75,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":74,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":73,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":72,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":71,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
           "type": "json"
         }
       ]
@@ -3395,11 +3402,200 @@ define({ "api": [
   },
   {
     "type": "delete",
-    "url": "http://8.135.36.45:8084/find/message/{id}/delete",
-    "title": "删除消息记录接口",
+    "url": "http://8.135.36.45:8084/find/message/{id}/deleteLikes",
+    "title": "删除点赞消息记录接口",
     "version": "1.0.0",
     "group": "消息模块API",
-    "name": "删除消息记录",
+    "name": "删除点赞消息记录",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id",
+            "description": "<p>消息接收者用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "messageId",
+            "description": "<p>消息记录id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://8.135.36.45:8084/find/message/60/deleteLikes?messageId=28\" -H \"accept: application/json\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>删除消息状态数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "DELETE",
+            "description": "<p>OK-&gt;删除消息记录成功，ERROR-&gt;删除消息记录失败</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "HTTP/1.1 200 OK\n        {\n        \"status\": 200,\n        \"code\": 0,\n        \"msg\": \"标记已读成功。\",\n        \"data\": {\n                \"DELETE\": \"OK\"\n            }\n        }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n      {\n        \"status\": 403,\n        \"code\": 199,\n        \"msg\": \"未找到用户信息！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n      {\n        \"status\": 404,\n        \"code\": 200,\n        \"msg\": \"接口未注册！\"\n      }",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n      {\n        \"status\": 500,\n        \"code\": 205,\n        \"msg\": \"服务器未响应！\"\n      }",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/MessageController.java",
+    "groupTitle": "消息模块API",
+    "sampleRequest": [
+      {
+        "url": "http://8.135.36.45:8084/find/message/{id}/deleteLikes"
+      }
+    ]
+  },
+  {
+    "type": "delete",
+    "url": "http://8.135.36.45:8084/find/message/{id}/delete",
+    "title": "删除申请加微信消息记录接口",
+    "version": "1.0.0",
+    "group": "消息模块API",
+    "name": "删除申请加微信消息记录",
     "parameter": {
       "fields": {
         "接口请求参数": [
@@ -3459,7 +3655,7 @@ define({ "api": [
             "type": "object",
             "optional": true,
             "field": "data",
-            "description": "<p>标记已读状态数据</p>"
+            "description": "<p>删除消息状态数据</p>"
           },
           {
             "group": "200",

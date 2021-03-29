@@ -344,5 +344,33 @@ WHERE
 WHERE
 	a.`status` = '0' 
 ORDER BY
-	a.`create_time` DESC;	
+	a.`create_time` DESC;
+	
+	
+SELECT
+	count( 1 ) 
+FROM
+	(
+SELECT
+	`user_id` 
+FROM
+	`dynamic_info` 
+WHERE
+	`id` IN (
+SELECT
+	`dynamic_info_id` 
+FROM
+	`application_record` 
+WHERE
+	`create_time` >= STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' ) 
+	AND `create_time` <= DATE_ADD( DATE_ADD( STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' ), INTERVAL 1 DAY ), INTERVAL - 1 SECOND ) 
+GROUP BY
+	`dynamic_info_id`
+	) 
+GROUP BY
+	`user_id` 
+	) AS a 
+WHERE
+	a.`user_id` = 8;	
+	
 	

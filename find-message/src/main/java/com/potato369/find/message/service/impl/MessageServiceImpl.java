@@ -130,6 +130,7 @@ public class MessageServiceImpl implements MessageService {
 		List<LikesMessageRecord> likesMessageRecordList = listPageInfo.getList();
 		for (LikesMessageRecord likesMessageRecord : likesMessageRecordList) {
 			LikesInfoVO likesInfoVO = LikesInfoVO.builder().build();
+			likesInfoVO.setMessageId(likesMessageRecord.getMessageId());
 			likesInfoVO.setUserId(likesMessageRecord.getUserId());
 			likesInfoVO.setHead(
 					  StrUtil.trimToNull(this.projectUrlProps.getResDomain())
@@ -321,5 +322,32 @@ public class MessageServiceImpl implements MessageService {
     }
     data.put(key, value);
     return CommonResult.success(data, msg);
+  }
+
+  
+  /**
+   * <pre>
+   * 描述该方法的实现功能：
+   * @see com.potato369.find.message.service.MessageService#deleteLikes(java.lang.Long, java.lang.Long)
+   * </pre>
+   */
+  	
+  @Override
+  public CommonResult<Map<String, Object>> deleteLikes(Long recipientUserId, Long messageId) {
+	  	Map<String, Object> data = new ConcurrentHashMap<>();
+	    String key = "DELETE";
+	    String value = "ERROR";
+	    String msg = "删除消息记录失败。";
+	    MessageExample example = new MessageExample();
+	    example.setDistinct(true);
+	    example.createCriteria().andRecipientUserIdEqualTo(recipientUserId).andIdEqualTo(messageId).andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage());
+	    example.setOrderByClause("create_time DESC");
+	    int count = this.messageMapperWriter.deleteByExample(example);
+	    if(count > 0) {
+	        value = "OK";
+	        msg = "删除消息记录成功。";
+	      }
+	    data.put(key, value);
+	    return CommonResult.success(data, msg);
   }
 }

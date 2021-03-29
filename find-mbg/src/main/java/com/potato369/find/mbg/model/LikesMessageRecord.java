@@ -7,6 +7,11 @@ import io.swagger.annotations.ApiModelProperty;
 //用户点赞记录
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LikesMessageRecord {
+	
+    //点赞消息记录id
+	@ApiModelProperty(value = "点赞消息记录id")
+	private Long messageId;
+	
 	//点赞用户id
 	@ApiModelProperty(value = "点赞用户id")
 	private Long userId;
@@ -27,7 +32,15 @@ public class LikesMessageRecord {
 	@ApiModelProperty(value = "点赞的动态内容附件文件名称")
 	private String attacheFilename;
 
-	public Long getUserId() {
+	public Long getMessageId() {
+    return messageId;
+  }
+
+  public void setMessageId(Long messageId) {
+    this.messageId = messageId;
+  }
+
+  public Long getUserId() {
 		return userId;
 	}
 

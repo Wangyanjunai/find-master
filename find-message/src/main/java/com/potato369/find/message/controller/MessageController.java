@@ -115,9 +115,22 @@ public class MessageController {
      */
     @ApiOperation(value = "删除申请加微信消息记录接口", notes = "删除申请加微信消息记录接口")
     @DeleteMapping(value = "/{id}/delete.do")
-    public CommonResult<Map<String, Object>> delete(
+    public CommonResult<Map<String, Object>> deleteApplications(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "消息收者用户id", required = true, example = "1") Long recipientUserId,
             @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId){
         return this.messageService.delete(recipientUserId, messageId);
+    }
+    
+    /**
+     * 删除点赞消息记录接口
+     * @param recipientUserId 消息收者用户id
+     * @param messageId 消息记录id
+     */
+    @ApiOperation(value = "删除点赞消息记录接口", notes = "删除点赞消息记录接口")
+    @DeleteMapping(value = "/{id}/deleteLikes.do")
+    public CommonResult<Map<String, Object>> deleteLikes(
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "消息收者用户id", required = true, example = "1") Long recipientUserId,
+            @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId){
+        return this.messageService.deleteLikes(recipientUserId, messageId);
     }
 }

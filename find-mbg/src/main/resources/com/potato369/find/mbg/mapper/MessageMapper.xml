@@ -29,11 +29,12 @@
         <result column="nick_name" jdbcType="VARCHAR" property="sendUserNickname"/>
     </resultMap>
     <resultMap type="com.potato369.find.mbg.model.LikesMessageRecord" id="LikesMessageRecordMap">
+      <result column="message_id" jdbcType="BIGINT" property="messageId"/>
     	<result column="id" jdbcType="BIGINT" property="userId"/>
-        <result column="head_icon" jdbcType="VARCHAR" property="headIcon"/>
+      <result column="head_icon" jdbcType="VARCHAR" property="headIcon"/>
     	<result column="content" jdbcType="VARCHAR" property="likesContent"/>
-        <result column="attache_type" jdbcType="CHAR" property="attacheType"/>
-        <result column="file_name" jdbcType="VARCHAR" property="attacheFilename"/>
+      <result column="attache_type" jdbcType="CHAR" property="attacheType"/>
+      <result column="file_name" jdbcType="VARCHAR" property="attacheFilename"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -178,11 +179,12 @@
     <select id="selectLikesMessageRecordByUserId" parameterType="java.lang.Long" resultMap="LikesMessageRecordMap">
 		SELECT
 			DISTINCT
+			me.`id` AS `message_id`
 			user.`id`,
 			user.`head_icon`,
 			me.`content`,
 			dynamic.`attache_type`,
-			attache.`file_name` 
+			attache.`file_name`
 		FROM
 			`message` me,
 			`user` user,
@@ -324,7 +326,7 @@
 	      FROM
 	        `message`
 	      WHERE
-	        `reserve_column01`<![CDATA[=]]>'applications' 
+	        `reserve_column01`<![CDATA[!=]]>'likes'
 	        AND `recipient_user_id`<![CDATA[=]]>#{userId, jdbcType=BIGINT}
 	        AND `id`<![CDATA[=]]>#{messageId, jdbcType=BIGINT}
 	      GROUP BY

@@ -76,4 +76,22 @@ public interface MessageService {
      * @param messageId 消息记录id
      */
 	CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId);
+
+  /**
+   * <pre>
+   * deleteLikes方法的作用：
+   * 描述方法适用条件：
+   * 描述方法的执行流程：
+   * 描述方法的使用方法：
+   * 描述方法的注意事项：
+   *
+   * @author admin
+   * @param recipientUserId
+   * @param messageId
+   * @return
+   * @since JDK 1.6
+   * </pre>
+   */
+  	
+  CommonResult<Map<String, Object>> deleteLikes(Long recipientUserId, Long messageId);
 }

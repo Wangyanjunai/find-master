@@ -36,6 +36,16 @@ public enum ResultCode implements IErrorCode {
     PRODUCT_IS_NOT_EXIST(423, "充值会员套餐时长信息不存在"),
 
     FAILED(500, "返回数据失败"),
+    
+    DYNAMIC_IS_NOT_EXIST(600, "申请加微信出错，动态内容不存在。"),
+    
+    PUBLISH_USER_IS_NOT_EXIST(601, "申请加微信出错，发布者用户信息不存在。"),
+    
+    PUBLISH_USER_IS_VALID(602, "申请加微信出错，不能申请加自己微信。"),
+    
+    RECIPIENT_USER_IS_NOT_EXIST(603, "申请加微信出错，接收者用户信息不存在。"),
+    
+    TIMES_OVERRUN(604, "申请加微信出错，今天申请加微信次数超限，请明天再试。"),
 
     ;
     private int code;

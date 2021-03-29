@@ -22,7 +22,12 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LikesInfoVO {
 
-	//点赞的用户id
+	//点赞消息记录id
+    @JSONField(name = "messageId")
+    @JsonProperty(value = "messageId")
+    private Long messageId;
+    
+    //点赞的用户id
     @JSONField(name = "userId")
     @JsonProperty(value = "userId")
     private Long userId;
