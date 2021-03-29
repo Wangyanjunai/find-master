@@ -69,7 +69,7 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
     @Override
     @Transactional(readOnly = true)
     public Integer findApplicationRecordCountByUserId(Long userId) {
-        return applicationRecordMapperReader.selectCountDateByUserId(userId);
+        return applicationRecordMapperReader.selectCountDataByUserId(userId);
     }
 
     /**

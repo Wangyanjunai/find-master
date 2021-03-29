@@ -47,6 +47,8 @@ public enum ResultCode implements IErrorCode {
     
     TIMES_OVERRUN(604, "申请加微信出错，今天申请加微信次数超限，请明天再试。"),
 
+    COUNT_OVERRUN(605, "申请加微信出错，今天已经申请加过微信，请明天再试。"),
+
     ;
     private int code;
 

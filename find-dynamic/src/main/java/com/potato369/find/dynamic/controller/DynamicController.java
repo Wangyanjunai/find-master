@@ -52,13 +52,15 @@ public class DynamicController {
     private DynamicMapper dynamicMapperWriter;
 
     private BlacklistRecordMapper blacklistRecordMapperReader;
-    
+
     private ShareRecordMapper shareRecordMapperWriter;
-    
+
     private OperateRecordMapper operateRecordMapperWriter;
-    
+
     private JiGuangPushService jiGuangPushService;
-    
+
+    private ApplicationRecordMapper applicationRecordMapperReader;
+
     @Autowired
     public void setDynamicService(DynamicService dynamicService) {
         this.dynamicService = dynamicService;
@@ -111,20 +113,25 @@ public class DynamicController {
 
     @Autowired
     public void setShareRecordMapperWriter(ShareRecordMapper shareRecordMapperWriter) {
-		this.shareRecordMapperWriter = shareRecordMapperWriter;
-	}
+        this.shareRecordMapperWriter = shareRecordMapperWriter;
+    }
 
     @Autowired
     public void setOperateRecordMapperWriter(OperateRecordMapper operateRecordMapperWriter) {
-		this.operateRecordMapperWriter = operateRecordMapperWriter;
-	}
-    
-    @Autowired
-	public void setJiGuangPushService(JiGuangPushService jiGuangPushService) {
-		this.jiGuangPushService = jiGuangPushService;
-	}
+        this.operateRecordMapperWriter = operateRecordMapperWriter;
+    }
 
-	// 用户发布动态附件（包括图片和语音）
+    @Autowired
+    public void setJiGuangPushService(JiGuangPushService jiGuangPushService) {
+        this.jiGuangPushService = jiGuangPushService;
+    }
+
+    @Autowired
+    public void setApplicationRecordMapperReader(ApplicationRecordMapper applicationRecordMapperReader) {
+        this.applicationRecordMapperReader = applicationRecordMapperReader;
+    }
+
+    // 用户发布动态附件（包括图片和语音）
     @PostMapping(value = "/{id}/release.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, Object>> releaseDynamicFiles(
             @PathVariable(name = "id", required = true) Long userIdLong,// 用户id
@@ -247,7 +254,7 @@ public class DynamicController {
         }
     }
 
-	//检测用户发布动态定位是否发生改变
+    //检测用户发布动态定位是否发生改变
     @PostMapping(value = "/{id}/checkLocation.do")
     public CommonResult<Map<String, Object>> checkLocation(@PathVariable(name = "id") Long userIdLong, @RequestBody LocationDTO locationDTO) {
         Map<String, Object> data = new HashMap<>();
@@ -441,7 +448,7 @@ public class DynamicController {
 
     // 筛选发布动态内容信息列表
     @GetMapping(value = "/{id}/screen.do")
-    public CommonResult<Map<String, Object>> screen (
+    public CommonResult<Map<String, Object>> screen(
             @PathVariable(name = "id", required = true) Long userId, // 用户id
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum, // 当前页数，默认：当前第1页
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize, // 每页条数，默认：每页20条
@@ -456,51 +463,51 @@ public class DynamicController {
             if (log.isDebugEnabled()) {
                 log.debug("开始筛选发布动态内容信息列表");
             }
-            
+
             // 1、校验用户id参数，根据用户id查询用户信息是否存在
             User user = this.userMapperReader.selectByPrimaryKey(userId);
             if (user == null) {
                 return CommonResult.validateFailed("用户id参数校验不通过，用户信息不存在。");
             }
-          
+
             // 2、校验性别参数，性别参数可选值，0->女生，1->男生
             if (StrUtil.isNotEmpty(gender)) {
                 if (!(UserGenderEnum.Female.getCode().toString().equals(gender) || UserGenderEnum.Male.getCode().toString().equals(gender) || UserGenderEnum.ALL.getCode().toString().equals(gender))) {
                     return CommonResult.validateFailed("性别参数校验不通过，性别参数值非法。");
                 }
             }
-            
+
             // 3、 校验年龄最小值范围参数，是否大于等于16岁
             if (minAge < 0 || minAge < this.dynamicDefaultAgeProps.getMinRangeAge()) {
-            	return CommonResult.validateFailed("年龄最小值范围参数校验不通过，最小值为16岁。");
-			}
-            
+                return CommonResult.validateFailed("年龄最小值范围参数校验不通过，最小值为16岁。");
+            }
+
             // 4、 校验年龄最大值范围参数，是否小于等于150岁
             if (maxAge > this.dynamicDefaultAgeProps.getMaxRangeAge()) {
                 return CommonResult.validateFailed("年龄最大值范围参数校验不通过，最大值为150岁。");
             }
-            
+
             // 5、 校验星座数组参数，星座值是否在十二星座中选择
             ConstellationConstant constellationConstant = new ConstellationConstant();
             if (constellations != null && constellations.size() > 0) {
-            	for (int i = 0; i < constellations.size(); i++) {
-            		if (!constellationConstant.getConstellationList().contains(constellations.get(i))) {
-                		return CommonResult.validateFailed("星座参数校验不通过，星座值非法。，星座值：{}" + constellations.get(i));
-                	}
-				}
-			}
+                for (int i = 0; i < constellations.size(); i++) {
+                    if (!constellationConstant.getConstellationList().contains(constellations.get(i))) {
+                        return CommonResult.validateFailed("星座参数校验不通过，星座值非法。，星座值：{}" + constellations.get(i));
+                    }
+                }
+            }
             // 6、校验附件类型参数，附件文件类型，0->全部，1->图片或图片+文字，2->语音或语音+文字
             if (StrUtil.isNotEmpty(dataType)) {
-            	if ("0".equals(dataType)) {
-            		dataType = null; //null 全部
-				}
-            	if ("1".equals(dataType)) {
-            		dataType = "0";	// 0->只有图片
-				}
-            	if ("2".equals(dataType)) {
-            		dataType = "1";	// 1->只有语音
-				}
-			}
+                if ("0".equals(dataType)) {
+                    dataType = null; //null 全部
+                }
+                if ("1".equals(dataType)) {
+                    dataType = "0";    // 0->只有图片
+                }
+                if ("2".equals(dataType)) {
+                    dataType = "1";    // 1->只有语音
+                }
+            }
             DynamicInfoParam dynamicInfoParam = new DynamicInfoParam();
 
             // 如果前端传过来的筛选条件为空，则按照默认筛选条件筛选，
@@ -513,9 +520,9 @@ public class DynamicController {
                     gender = UserGenderEnum.Female.getGender();
                 }
             } else if (StrUtil.isNotEmpty(gender) && UserGenderEnum.ALL.getCode().toString().equals(gender)) {
-                gender= null;
+                gender = null;
             }
-            
+
             // 设置性别筛选条件
             dynamicInfoParam.setGender(gender);
             // dynamicLocationDTO.setGender(gender);
@@ -535,25 +542,25 @@ public class DynamicController {
                 dynamicInfoParam.setMaxAge(null);
             }
             dynamicInfoParam.setMaxAge(DateUtil.fomatDate(DateUtil.getBeforeYearByAge(maxAge)));
-            
+
 //            log.info("minAge={}, maxAge={}", minAge, maxAge);
 
             //（普通用户+VIP用户）默认条件四：设置发布时间配置
             // int timeAfterHour = this.dynamicDefaultAgeProps.getTimeRangeAfterHour(); // 发布时间配置（小时）
             // dynamicInfoParam.setAfterTimeHour(timeAfterHour);
-            
+
             // 态发布时定位（国家、省份，城市），如果为空，则按照用户注册时的定位筛选
             List<String> countryList = new ArrayList<>();
-        	countryList.add("中国");
+            countryList.add("中国");
 
             if (provinceList == null) {
-            	provinceList = new ArrayList<>();
-			}
-            
+                provinceList = new ArrayList<>();
+            }
+
             if (cityList == null) {
-            	cityList = new ArrayList<>();
-			}
-            
+                cityList = new ArrayList<>();
+            }
+
             //默认条件三：按照定位地址列表进行筛选， 如果前端传输过来的参数或者省份，城市地址定位列表为空，则获取用户注册时候填写的信息
             String ip = user.getIp(); // 用户注册时获取的客户端IP
             String country = user.getCountry(); // 国家
@@ -570,11 +577,11 @@ public class DynamicController {
                 }
             }
             if (provinceList.isEmpty() && cityList.isEmpty()) {
-            	countryList.add(country);
+                countryList.add(country);
                 provinceList.add(province);
                 cityList.add(city);
             }
-            
+
             // 设置默认筛选条件国家
             dynamicInfoParam.setCountryLocations(CopyUtil.removeStringDuplicate(countryList));
             // 设置默认筛选条件省份
@@ -588,15 +595,15 @@ public class DynamicController {
             dynamicInfoParam.setDataType(dataType);
             //设置筛选条件：星座列表
             if (constellations != null && constellations.size() > 0) {
-            	dynamicInfoParam.setConstellations(constellations);
-			}
+                dynamicInfoParam.setConstellations(constellations);
+            }
             // 获取当前用户的黑名单用户列表
             BlacklistRecordExample example = new BlacklistRecordExample();
             example.setDistinct(true);
             example.setOrderByClause("id DESC, update_time DESC, create_time DESC");
             example.createCriteria().andOwnerUserIdEqualTo(userId);
             List<BlacklistRecord> blacklistRecordList = this.blacklistRecordMapperReader.selectByExample(example).stream().filter((BlacklistRecord b) -> (b.getStatus() % 2) != 0).collect(Collectors.toList());
-            
+
             List<Long> blackUserIdList = blacklistRecordList.stream().map(BlacklistRecord::getBlackUserId).collect(Collectors.toList());
             // 1、将“黑名单列表”加入筛选条件
 //            dynamicLocationDTO.setList(blackUserIdList);
@@ -626,9 +633,9 @@ public class DynamicController {
 
     // 用户分享动态
     @PutMapping(value = "/{id}/share.do")
-    public CommonResult<Map<String, Object>> shareDynamic(@PathVariable(name = "id", required = true) Long userId, 
-    													  @RequestParam(name = "dynamicInfoId", required = true) Long dynamicInfoId,
-    													  @RequestParam(name = "mode", required = true) String shareMode) {
+    public CommonResult<Map<String, Object>> shareDynamic(@PathVariable(name = "id", required = true) Long userId,
+                                                          @RequestParam(name = "dynamicInfoId", required = true) Long dynamicInfoId,
+                                                          @RequestParam(name = "mode", required = true) String shareMode) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         try {
             if (log.isDebugEnabled()) {
@@ -643,11 +650,11 @@ public class DynamicController {
             shareRecord.setMode(shareMode);
             shareRecord.setUserId(userId);
             int shareResult = shareRecordMapperWriter.insertSelective(shareRecord);
-            
+
             OperateRecord operateRecord = new OperateRecord();
             operateRecord.setType(OperateRecordTypeEnum.shareDynamic.getCode());
             operateRecord.setUserId(userId);
-            
+
             int shares = dynamicInfo.getShares() + 1;
             dynamicInfo.setShares(shares);
             dynamicInfo.setUpdateTime(new Date());
@@ -696,8 +703,8 @@ public class DynamicController {
             Long publishUserId = dynamicInfo.getUserId();
             User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);
             if (publishUser == null) {
-            	return CommonResult.success(data, "点赞当前动态内容出错，发布者用户信息不存在。");
-			}
+                return CommonResult.success(data, "点赞当前动态内容出错，发布者用户信息不存在。");
+            }
             LikeRecord likeRecord = this.likeRecordService.findByUserIdAndDynamicInfoId(userId, dynamicInfoId);
             // 取消点赞
             if (LikeStatusEnum.NO.getType().equals(type)) {
@@ -713,17 +720,17 @@ public class DynamicController {
             // 开始点赞
             if (LikeStatusEnum.YES.getType().equals(type)) {
                 if (likeRecord == null) {
-                	String content = user.getNickName() + "赞了你的动态" + dynamicInfo.getContent();//消息内容
+                    String content = user.getNickName() + "赞了你的动态" + dynamicInfo.getContent();//消息内容
                     int result = this.likeRecordService.createByUserIdAndDynamicInfoId(content, userId, dynamicInfo);
                     if (result > 0) {
                         data.put("LIKED", "OK");
                         String title = "互动消息";//消息标题
                         Map<String, String> extras = new HashMap<>();
                         PushBean pushBean = new PushBean();
-                		pushBean.setAlert(content);
-                		pushBean.setTitle(title);
-                		pushBean.setExtras(extras);
-                		this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
+                        pushBean.setAlert(content);
+                        pushBean.setTitle(title);
+                        pushBean.setExtras(extras);
+                        this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
                         return CommonResult.success(data, "创建点赞，点赞成功。");
                     }
                 } else {
@@ -754,16 +761,20 @@ public class DynamicController {
             }
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
             if (dynamicInfo == null) {
-            	return CommonResult.failed(data, ResultCode.DYNAMIC_IS_NOT_EXIST);
+                return CommonResult.failed(data, ResultCode.DYNAMIC_IS_NOT_EXIST);
             }
             Long publishUserId = dynamicInfo.getUserId();//动态内容拥有者或者发动态的用户id
-            User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);
+            User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);//动态内容拥有者
             if (publishUser == null) {
-            	return CommonResult.failed(data, ResultCode.PUBLISH_USER_IS_NOT_EXIST);
-			}
+                return CommonResult.failed(data, ResultCode.PUBLISH_USER_IS_NOT_EXIST);
+            }
             if (publishUserId.equals(userId)) {
-            	return CommonResult.failed(data, ResultCode.PUBLISH_USER_IS_VALID);
-			}
+                return CommonResult.failed(data, ResultCode.PUBLISH_USER_IS_VALID);
+            }
+            int count = this.applicationRecordMapperReader.countByRecipientUserId(userId);
+            if (count > 0) {
+                return CommonResult.failed(data, ResultCode.COUNT_OVERRUN);
+            }
             ApplicationSetting applicationSetting = this.applicationSettingService.findApplication();
             int times = 0;
             if (applicationSetting != null) {
@@ -799,10 +810,10 @@ public class DynamicController {
                 String title = user2.getNickName();//消息标题
                 Map<String, String> extras = new HashMap<>();
                 PushBean pushBean = new PushBean();
-        		pushBean.setAlert(message);
-        		pushBean.setTitle(title);
-        		pushBean.setExtras(extras);
-        		this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
+                pushBean.setAlert(message);
+                pushBean.setTitle(title);
+                pushBean.setExtras(extras);
+                this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
             } else {
                 data.put("APPLICATION", "ERROR");
                 msg = "申请加微信失败。";
@@ -857,7 +868,7 @@ public class DynamicController {
             }
         }
     }
-    
+
     // 分页获取用户自己发布的所有动态内容列表
     @GetMapping(value = "/{id}/mylist.do")
     public CommonResult<Map<String, Object>> mylist(@PathVariable(name = "id", required = true) Long userId,

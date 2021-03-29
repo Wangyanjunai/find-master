@@ -2,8 +2,9 @@ package com.potato369.find.mbg.mapper;
 
 import com.potato369.find.mbg.model.ApplicationRecord;
 import com.potato369.find.mbg.model.ApplicationRecordExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ApplicationRecordMapper {
     long countByExample(ApplicationRecordExample example);
@@ -20,7 +21,9 @@ public interface ApplicationRecordMapper {
 
     ApplicationRecord selectByPrimaryKey(Long id);
 
-    int selectCountDateByUserId(@Param("userId") Long userId);
+    int selectCountDataByUserId(@Param("userId") Long userId);
+
+    int countByRecipientUserId(@Param("userId") Long userId);
 
     int updateByExampleSelective(@Param("record") ApplicationRecord record, @Param("example") ApplicationRecordExample example);
 
