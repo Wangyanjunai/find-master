@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.potato369.find</groupId>
-	<artifactId>find-master</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<name>觅鹿陌生人社交主配微服务父模块项目</name>
-	<packaging>pom</packaging>
-	<description>Find master project for Spring Boot.</description>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.potato369.find</groupId>
+    <artifactId>find-master</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>觅鹿陌生人社交主配微服务父模块项目</name>
+    <packaging>pom</packaging>
+    <description>Find master project for Spring Boot.</description>
 
-	<modules>
-		<module>find-common</module>    <!-- 工具类及通用代码模块-->
-		<module>find-mbg</module>       <!-- MyBatisGenerator生成的数据库操作代码模块-->
-		<module>find-user</module>      <!-- 移动端觅鹿陌生人社交用户微服务-->
-		<module>find-order</module>     <!-- 移动端觅鹿陌生人社交动态微服务-->
-		<module>find-dynamic</module>   <!-- 移动端觅鹿陌生人社交动态微服务-->
-		<module>find-message</module>   <!-- 移动端觅鹿陌生人社交消息微服务-->
-		<module>find-portal</module>    <!-- 移动端觅鹿陌生人社交系统微服务-->
-		<module>find-log</module>		<!-- 移动端觅鹿陌生人社交日志微服务-->
-		<module>find-admin</module>     <!-- 后台管理系统服务-->
-		<module>find-config</module>    <!-- 配置中心系统服务-->
-	</modules>
+    <modules>
+        <module>find-common</module>    <!-- 工具类及通用代码模块-->
+        <module>find-mbg</module>       <!-- MyBatisGenerator生成的数据库操作代码模块-->
+        <module>find-user</module>      <!-- 移动端觅鹿陌生人社交用户微服务-->
+        <module>find-order</module>     <!-- 移动端觅鹿陌生人社交动态微服务-->
+        <module>find-dynamic</module>   <!-- 移动端觅鹿陌生人社交动态微服务-->
+        <module>find-message</module>   <!-- 移动端觅鹿陌生人社交消息微服务-->
+        <module>find-portal</module>    <!-- 移动端觅鹿陌生人社交系统微服务-->
+        <module>find-log</module>       <!-- 移动端觅鹿陌生人社交日志微服务-->
+        <module>find-admin</module>     <!-- 后台管理系统服务-->
+        <module>find-config</module>    <!-- 配置中心系统服务-->
+    </modules>
 
-	<properties>
-		<jpush-client.version>3.4.8</jpush-client.version>
-		<logstash-logback.version>4.8</logstash-logback.version>
-		<dom4j.version>1.4</dom4j.version>
-		<jfinal.version>4.9.02</jfinal.version>
-		<fastjson.version>1.2.25</fastjson.version>
-		<guava.version>28.0-jre</guava.version>
-		<mybatis-generator.version>1.3.7</mybatis-generator.version>
-		<poi.version>4.1.0</poi.version>
-		<alipay-sdk-java.version>3.7.110.ALL</alipay-sdk-java.version>
-		<log4j.version>1.2.17</log4j.version>
-		<druid.version>1.1.10</druid.version>
-		<mysql.version>8.0.21</mysql.version>
-		<weixin-group.version>3.4.0</weixin-group.version>
-		<pagehelper-starter.version>1.2.10</pagehelper-starter.version>
-		<pagehelper.version>5.1.8</pagehelper.version>
-		<druid.version>1.1.10</druid.version>
-		<hutool.version>5.4.7</hutool.version>
-		<swagger2.version>2.9.2</swagger2.version>
-		<logstash-logback.version>4.8</logstash-logback.version>
-		<jjwt.version>0.9.0</jjwt.version>
-		<pagehelper-starter.version>1.2.10</pagehelper-starter.version>
-		<pagehelper.version>5.1.8</pagehelper.version>
-		<mybatis.version>3.4.6</mybatis.version>
-		<docker.maven.plugin.version>1.1.0</docker.maven.plugin.version>
-		<docker.image.prefix>nacos-cloud-find</docker.image.prefix>
-		<find-common.version>1.0-SNAPSHOT</find-common.version>
-		<find-mbg.version>1.0-SNAPSHOT</find-mbg.version>
-		<java.version>1.8</java.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<project.build.locales>zh_CN</project.build.locales>
-		<spring-boot.version>2.1.6.RELEASE</spring-boot.version>
-		<spring-data-commons.version>2.1.6.RELEASE</spring-data-commons.version>
-		<spring-cloud-alibaba.version>2.1.1.RELEASE</spring-cloud-alibaba.version>
-		<spring-cloud.version>Greenwich.SR2</spring-cloud.version>
-		<skipTests>true</skipTests>
-	</properties>
+    <properties>
+        <jpush-client.version>3.4.8</jpush-client.version>
+        <logstash-logback.version>4.8</logstash-logback.version>
+        <dom4j.version>1.4</dom4j.version>
+        <jfinal.version>4.9.02</jfinal.version>
+        <fastjson.version>1.2.25</fastjson.version>
+        <guava.version>28.0-jre</guava.version>
+        <mybatis-generator.version>1.3.7</mybatis-generator.version>
+        <poi.version>4.1.0</poi.version>
+        <alipay-sdk-java.version>3.7.110.ALL</alipay-sdk-java.version>
+        <log4j.version>1.2.17</log4j.version>
+        <druid.version>1.1.10</druid.version>
+        <mysql.version>8.0.21</mysql.version>
+        <weixin-group.version>3.4.0</weixin-group.version>
+        <pagehelper-starter.version>1.2.10</pagehelper-starter.version>
+        <pagehelper.version>5.1.8</pagehelper.version>
+        <druid.version>1.1.10</druid.version>
+        <hutool.version>5.4.7</hutool.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <logstash-logback.version>4.8</logstash-logback.version>
+        <jjwt.version>0.9.0</jjwt.version>
+        <pagehelper-starter.version>1.2.10</pagehelper-starter.version>
+        <pagehelper.version>5.1.8</pagehelper.version>
+        <mybatis.version>3.4.6</mybatis.version>
+        <docker.maven.plugin.version>1.1.0</docker.maven.plugin.version>
+        <docker.image.prefix>nacos-cloud-find</docker.image.prefix>
+        <find-common.version>1.0-SNAPSHOT</find-common.version>
+        <find-mbg.version>1.0-SNAPSHOT</find-mbg.version>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.locales>zh_CN</project.build.locales>
+        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
+        <spring-data-commons.version>2.1.6.RELEASE</spring-data-commons.version>
+        <spring-cloud-alibaba.version>2.1.1.RELEASE</spring-cloud-alibaba.version>
+        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
+        <skipTests>true</skipTests>
+    </properties>
 
-	<dependencyManagement>
-		<dependencies>
-		    <!-- SpringBoot 依赖配置 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- SpringBoot 依赖配置 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -75,204 +75,204 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-			<!-- Spring Cloud 依赖配置 -->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<!-- Spring Cloud Alibaba依赖配置 -->
-			<dependency>
-				<groupId>com.alibaba.cloud</groupId>
-				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
-				<version>${spring-cloud-alibaba.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>fastjson</artifactId>
-				<version>${fastjson.version}</version>
-			</dependency>
-			<!--Mysql数据库驱动 -->
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql.version}</version>
-			</dependency>
-			<!-- 集成druid连接池 -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid-spring-boot-starter</artifactId>
-				<version>${druid.version}</version>
-			</dependency>
-			<!-- find通用模块 -->
-			<dependency>
-				<groupId>com.potato369.find</groupId>
-				<artifactId>find-common</artifactId>
-				<version>${find-common.version}</version>
-			</dependency>
-			<!-- find中MBG生成模块 -->
-			<dependency>
-				<groupId>com.potato369.find</groupId>
-				<artifactId>find-mbg</artifactId>
-				<version>${find-mbg.version}</version>
-			</dependency>
-			<!-- MyBatis -->
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis</artifactId>
-				<version>${mybatis.version}</version>
-			</dependency>
-			<!-- MyBatis分页插件starter -->
-			<dependency>
-				<groupId>com.github.pagehelper</groupId>
-				<artifactId>pagehelper-spring-boot-starter</artifactId>
-				<version>${pagehelper-starter.version}</version>
-			</dependency>
-			<!-- MyBatis分页插件 -->
-			<dependency>
-				<groupId>com.github.pagehelper</groupId>
-				<artifactId>pagehelper</artifactId>
-				<version>${pagehelper.version}</version>
-			</dependency>
-			<!-- Hutool Java工具包 -->
-			<dependency>
-				<groupId>cn.hutool</groupId>
-				<artifactId>hutool-all</artifactId>
-				<version>${hutool.version}</version>
-			</dependency>
-			<!-- Swagger-UI API文档生产工具 -->
-			<dependency>
-				<groupId>io.springfox</groupId>
-				<artifactId>springfox-swagger2</artifactId>
-				<version>${swagger2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.springfox</groupId>
-				<artifactId>springfox-swagger-ui</artifactId>
-				<version>${swagger2.version}</version>
-			</dependency>
-			<!--SpringData工具包 -->
-			<dependency>
-				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-commons</artifactId>
-				<version>${spring-data-commons.version}</version>
-			</dependency>
-			<!-- JWT(Json Web Token)登录支持 -->
-			<dependency>
-				<groupId>io.jsonwebtoken</groupId>
-				<artifactId>jjwt</artifactId>
-				<version>${jjwt.version}</version>
-			</dependency>
-			<!-- 集成apache poi -->
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi-ooxml</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi-ooxml-schemas</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi-excelant</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi-scratchpad</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi-examples</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>dom4j</groupId>
-				<artifactId>dom4j</artifactId>
-				<version>${dom4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.binarywang</groupId>
-				<artifactId>wx-java-pay-starter</artifactId>
-				<version>${weixin-group.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.alipay.sdk</groupId>
-				<artifactId>alipay-sdk-java</artifactId>
-				<version>${alipay-sdk-java.version}</version>
-			</dependency>
-			<!-- MyBatis 生成器 -->
-			<dependency>
-				<groupId>org.mybatis.generator</groupId>
-				<artifactId>mybatis-generator-core</artifactId>
-				<version>${mybatis-generator.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>${guava.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.jfinal</groupId>
-				<artifactId>jfinal</artifactId>
-				<version>${jfinal.version}</version>
-			</dependency>
-			<!-- 极光推送依赖 -->
-			<dependency>
-		   		<groupId>cn.jpush.api</groupId>
-		   		<artifactId>jpush-client</artifactId>
-		   		<version>${jpush-client.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+            <!-- Spring Cloud 依赖配置 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Spring Cloud Alibaba依赖配置 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!--Mysql数据库驱动 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!-- 集成druid连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- find通用模块 -->
+            <dependency>
+                <groupId>com.potato369.find</groupId>
+                <artifactId>find-common</artifactId>
+                <version>${find-common.version}</version>
+            </dependency>
+            <!-- find中MBG生成模块 -->
+            <dependency>
+                <groupId>com.potato369.find</groupId>
+                <artifactId>find-mbg</artifactId>
+                <version>${find-mbg.version}</version>
+            </dependency>
+            <!-- MyBatis -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!-- MyBatis分页插件starter -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-starter.version}</version>
+            </dependency>
+            <!-- MyBatis分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+            <!-- Hutool Java工具包 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!-- Swagger-UI API文档生产工具 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <!--SpringData工具包 -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>${spring-data-commons.version}</version>
+            </dependency>
+            <!-- JWT(Json Web Token)登录支持 -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!-- 集成apache poi -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-schemas</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-excelant</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-scratchpad</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-examples</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${dom4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>wx-java-pay-starter</artifactId>
+                <version>${weixin-group.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alipay.sdk</groupId>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>${alipay-sdk-java.version}</version>
+            </dependency>
+            <!-- MyBatis 生成器 -->
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>${mybatis-generator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jfinal</groupId>
+                <artifactId>jfinal</artifactId>
+                <version>${jfinal.version}</version>
+            </dependency>
+            <!-- 极光推送依赖 -->
+            <dependency>
+                <groupId>cn.jpush.api</groupId>
+                <artifactId>jpush-client</artifactId>
+                <version>${jpush-client.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-	<repositories>
-		<!--阿里云仓库 -->
-		<repository>
-			<id>aliyun</id>
-			<name>aliyun-maven</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://maven.aliyun.com/repository/spring</url>
-		</repository>
-		<repository>
-			<id>central</id>
-			<name>maven-central</name>
-			<url>http://central.maven.org/maven2/</url>
-		</repository>
-	</repositories>
+    <repositories>
+        <!--阿里云仓库 -->
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun-maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://maven.aliyun.com/repository/spring</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <name>maven-central</name>
+            <url>http://central.maven.org/maven2/</url>
+        </repository>
+    </repositories>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>public</id>
-			<name>aliyun nexus</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>		
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

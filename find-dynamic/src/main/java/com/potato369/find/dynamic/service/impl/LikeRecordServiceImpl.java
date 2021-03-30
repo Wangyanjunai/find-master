@@ -1,7 +1,6 @@
 package com.potato369.find.dynamic.service.impl;
 
-import com.potato369.find.common.enums.MessageSendModeEnum;
-import com.potato369.find.common.enums.MessageTypeEnum;
+import com.potato369.find.common.enums.*;
 import com.potato369.find.dynamic.service.LikeRecordService;
 import com.potato369.find.mbg.mapper.DynamicInfoMapper;
 import com.potato369.find.mbg.mapper.LikeRecordMapper;
@@ -38,13 +37,13 @@ public class LikeRecordServiceImpl implements LikeRecordService {
     private LikeRecordMapper likeRecordMapperReader;
 
     private LikeRecordMapper likeRecordMapperWriter;
-    
+
     private UserMapper userMapperReader;
 
     private DynamicInfoMapper dynamicInfoMapperWriter;
-    
+
     private MessageMapper messageMapperWriter;
-    
+
     @Autowired
     public void setLikeRecordMapperReader(LikeRecordMapper likeRecordMapperReader) {
         this.likeRecordMapperReader = likeRecordMapperReader;
@@ -57,18 +56,18 @@ public class LikeRecordServiceImpl implements LikeRecordService {
 
     @Autowired
     public void setUserMapperReader(UserMapper userMapperReader) {
-		this.userMapperReader = userMapperReader;
-	}
+        this.userMapperReader = userMapperReader;
+    }
 
-	@Autowired
+    @Autowired
     public void setDynamicInfoMapperWriter(DynamicInfoMapper dynamicInfoMapperWriter) {
         this.dynamicInfoMapperWriter = dynamicInfoMapperWriter;
     }
-    
+
     @Autowired
-	public void setMessageMapperWriter(MessageMapper messageMapperWriter) {
-		this.messageMapperWriter = messageMapperWriter;
-	}
+    public void setMessageMapperWriter(MessageMapper messageMapperWriter) {
+        this.messageMapperWriter = messageMapperWriter;
+    }
 
     /**
      * 根据用户id和动态内容id查询用户对该条动态内容的点赞记录
@@ -125,29 +124,31 @@ public class LikeRecordServiceImpl implements LikeRecordService {
     @Override
     @Transactional(readOnly = false)
     public int createByUserIdAndDynamicInfoId(String content, Long userId, DynamicInfo dynamicInfo) {
-    	int a = 0, b = 0, c = 0;
+        int a = 0, b = 0, c = 0;
         if (dynamicInfo != null) {
             int likes = dynamicInfo.getLikes();
             dynamicInfo.setLikes(likes + 1);
             dynamicInfo.setUpdateTime(new Date());
             a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
-            
+
             LikeRecord likeRecord = new LikeRecord();
             likeRecord.setUserId(userId);
             likeRecord.setDynamicInfoId(dynamicInfo.getId());
             b = this.likeRecordMapperWriter.insertSelective(likeRecord);
-            
+
             Long recipientUserId = dynamicInfo.getUserId();
-            Long sendUserId = userId;
-            User user = this.userMapperReader.selectByPrimaryKey(sendUserId);
+            User user = this.userMapperReader.selectByPrimaryKey(userId);
             assert user != null;
-            
+
             Message messageRecord = new Message();
             messageRecord.setContent(content);//消息内容
             messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
             messageRecord.setRecipientUserId(recipientUserId);//发送者id
-            messageRecord.setSendUserId(sendUserId);//接收者id
+            messageRecord.setSendUserId(userId);//接收者id
+            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//已读还是未读
             messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型
+            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送还是回复
+            messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
             c = this.messageMapperWriter.insertSelective(messageRecord);
         }
         return a + b + c;

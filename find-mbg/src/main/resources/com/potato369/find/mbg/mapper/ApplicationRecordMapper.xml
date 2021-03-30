@@ -97,13 +97,13 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
     <select id="selectCountDataByUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT
-        	COUNT(1)
-        FROM
-        	`application_record`
-        WHERE `user_id`=#{userId,jdbcType=BIGINT}
-        AND `create_time`<![CDATA[>=]]>STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
-        AND `create_time`<![CDATA[<=]]>DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY), INTERVAL -1 SECOND)
+        SELECT COUNT(1)
+        FROM `application_record`
+        WHERE `user_id` = #{userId,jdbcType=BIGINT}
+          AND `create_time`<![CDATA[ >=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
+          AND `create_time`<![CDATA[ <=]]>
+              DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY),
+                       INTERVAL -1 SECOND)
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
@@ -187,31 +187,22 @@
         </if>
     </select>
     <select id="countByRecipientUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT
-            count( 1 )
-        FROM
-        (
-            SELECT
-                `user_id`
-            FROM
-                `dynamic_info`
-            WHERE
-                `id` IN (
-                SELECT
-                    `dynamic_info_id`
-                FROM
-                    `application_record`
-                WHERE
-                    `create_time`<![CDATA[>=]]> STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' )
-                    AND `create_time`<![CDATA[<=]]>DATE_ADD( DATE_ADD( STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' ), INTERVAL 1 DAY ), INTERVAL - 1 SECOND )
-                    GROUP BY
-                    `dynamic_info_id`
-            )
-            GROUP BY
-            `user_id`
-        ) AS a
-        WHERE
-        a.`user_id` = #{userId,jdbcType=BIGINT};
+        SELECT COUNT(1)
+        FROM (
+                 SELECT `user_id`
+                 FROM `dynamic_info`
+                 WHERE `id` IN (
+                     SELECT `dynamic_info_id`
+                     FROM `application_record`
+                     WHERE `create_time`<![CDATA[ >=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
+                       AND `create_time`<![CDATA[ <=]]> DATE_ADD(
+                             DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY),
+                             INTERVAL - 1 SECOND)
+                     GROUP BY `dynamic_info_id`
+                 )
+                 GROUP BY `user_id`
+             ) AS a
+        WHERE a.`user_id` = #{userId,jdbcType=BIGINT};
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update application_record

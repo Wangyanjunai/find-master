@@ -2507,7 +2507,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t\"status\": 200,\n\t\t\"code\": 0,\n\t\t\"msg\": \"标记已读成功。\",\n\t\t\"data\": {\n\t\t\t\t\"UPDATE\": \"OK\"\n\t\t\t}\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"标记已读成功。\",\n\"data\": {\n\"UPDATE\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -2593,17 +2593,17 @@ define({ "api": [
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\"status\": 403,\n      \t\"code\": 199,\n      \t\"msg\": \"未找到用户信息！\"\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      {\n      \t\"status\": 404,\n      \t\"code\": 200,\n      \t\"msg\": \"接口未注册！\"\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n      \t\"status\": 500,\n      \t\"code\": 205,\n      \t\"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]
@@ -2780,7 +2780,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t\"status\": 200,\n\t\t\"code\": 0,\n\t\t\"msg\": \"返回数据成功\",\n\t\t\"data\": {\n\t\t\t\"totalCount\": 5,\n\t\t\t\"totalPage\": 1,\n\t\t\t\"list\": [\n\t\t\t\t{\n\t\t\t\t\t\"sendUserId\": 60,\n\t\t\t\t\t\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t\t\t\t\"sendUserNickname\": \"尘埃\",\n\t\t\t\t\t\"recipientUserId\": 29,\n\t\t\t\t\t\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\t\t\t\t\t\"recipientUserNickname\": \"深兰\",\n\t\t\t\t\t\"sendDateTime\": \"2021年03月16日 11:13:04\",\n\t\t\t\t\t\"content\": \"需要加您的微信?\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"sendUserId\": 60,\n\t\t\t\t\t\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t\t\t\t\"sendUserNickname\": \"尘埃\",\n\t\t\t\t\t\"recipientUserId\": 29,\n\t\t\t\t\t\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\t\t\t\t\t\"recipientUserNickname\": \"深兰\",\n\t\t\t\t\t\"sendDateTime\": \"2021年03月16日 11:12:55\",\n\t\t\t\t\t\"content\": \"需要加您的微信?\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"sendUserId\": 60,\n\t\t\t\t\t\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t\t\t\t\"sendUserNickname\": \"尘埃\",\n\t\t\t\t\t\"recipientUserId\": 29,\n\t\t\t\t\t\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\t\t\t\t\t\"recipientUserNickname\": \"深兰\",\n\t\t\t\t\t\"sendDateTime\": \"2021年03月16日 11:12:48\",\n\t\t\t\t\t\"content\": \"需要加您的微信?\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"sendUserId\": 60,\n\t\t\t\t\t\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t\t\t\t\"sendUserNickname\": \"尘埃\",\n\t\t\t\t\t\"recipientUserId\": 29,\n\t\t\t\t\t\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\t\t\t\t\t\"recipientUserNickname\": \"深兰\",\n\t\t\t\t\t\"sendDateTime\": \"2021年03月16日 11:12:29\",\n\t\t\t\t\t\"content\": \"需要加您的微信?\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"sendUserId\": 60,\n\t\t\t\t\t\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t\t\t\t\"sendUserNickname\": \"尘埃\",\n\t\t\t\t\t\"recipientUserId\": 29,\n\t\t\t\t\t\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\t\t\t\t\t\"recipientUserNickname\": \"深兰\",\n\t\t\t\t\t\"sendDateTime\": \"2021年03月16日 10:55:39\",\n\t\t\t\t\t\"content\": \"需要加您的微信?\"\n\t\t\t\t}\n\t\t\t  ]\n\t\t\t}\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功\",\n\"data\": {\n\"totalCount\": 5,\n\"totalPage\": 1,\n\"list\": [\n{\n\"sendUserId\": 60,\n\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\"sendUserNickname\": \"尘埃\",\n\"recipientUserId\": 29,\n\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\"recipientUserNickname\": \"深兰\",\n\"sendDateTime\": \"2021年03月16日 11:13:04\",\n\"content\": \"需要加您的微信?\"\n},\n{\n\"sendUserId\": 60,\n\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\"sendUserNickname\": \"尘埃\",\n\"recipientUserId\": 29,\n\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\"recipientUserNickname\": \"深兰\",\n\"sendDateTime\": \"2021年03月16日 11:12:55\",\n\"content\": \"需要加您的微信?\"\n},\n{\n\"sendUserId\": 60,\n\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\"sendUserNickname\": \"尘埃\",\n\"recipientUserId\": 29,\n\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\"recipientUserNickname\": \"深兰\",\n\"sendDateTime\": \"2021年03月16日 11:12:48\",\n\"content\": \"需要加您的微信?\"\n},\n{\n\"sendUserId\": 60,\n\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\"sendUserNickname\": \"尘埃\",\n\"recipientUserId\": 29,\n\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\"recipientUserNickname\": \"深兰\",\n\"sendDateTime\": \"2021年03月16日 11:12:29\",\n\"content\": \"需要加您的微信?\"\n},\n{\n\"sendUserId\": 60,\n\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\"sendUserNickname\": \"尘埃\",\n\"recipientUserId\": 29,\n\"recipientUserHead\": \"http://8.135.36.45:8000/find/img/head/29/014.png\",\n\"recipientUserNickname\": \"深兰\",\n\"sendDateTime\": \"2021年03月16日 10:55:39\",\n\"content\": \"需要加您的微信?\"\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -2866,17 +2866,17 @@ define({ "api": [
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\"status\": 403,\n      \t\"code\": 199,\n      \t\"msg\": \"未找到用户信息！\"\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      {\n      \t\"status\": 404,\n      \t\"code\": 200,\n      \t\"msg\": \"接口未注册！\"\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n      \t\"status\": 500,\n      \t\"code\": 205,\n      \t\"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]
@@ -2904,7 +2904,7 @@ define({ "api": [
             "type": "long",
             "optional": false,
             "field": "id",
-            "description": "<p>消息接收者用户id</p>"
+            "description": "<p>接收者用户id</p>"
           },
           {
             "group": "接口请求参数",
@@ -2969,14 +2969,7 @@ define({ "api": [
             "type": "object",
             "optional": true,
             "field": "likes",
-            "description": "<p>点赞消息数据</p>"
-          },
-          {
-            "group": "200",
-            "type": "string",
-            "optional": true,
-            "field": "head",
-            "description": "<p>最新点赞者用户头像</p>"
+            "description": "<p>最新点赞消息</p>"
           },
           {
             "group": "200",
@@ -2990,7 +2983,7 @@ define({ "api": [
             "type": "int",
             "optional": true,
             "field": "count",
-            "description": "<p>未读点赞消息总条数</p>"
+            "description": "<p>未读点赞消息总数量</p>"
           },
           {
             "group": "200",
@@ -3031,6 +3024,13 @@ define({ "api": [
             "group": "200",
             "type": "string",
             "optional": true,
+            "field": "head",
+            "description": "<p>申请加微信发送者用户头像</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
             "field": "nickname",
             "description": "<p>申请加微信发送者用户昵称</p>"
           }
@@ -3039,7 +3039,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"返回数据成功\",\n\t\t    \"data\":{\n\t\t        \"likes\":{\n\t\t            \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t            \"count\":5\n\t\t        },\n\t\t        \"totalCount\":5,\n\t\t        \"totalPage\":1,\n\t\t        \"list\":[\n\t\t            {\n\t\t                \"messageId\": 7,\n\t\t                \"userId\":60,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\t\t                \"nickname\":\"尘埃\",\n\t\t                \"content\":\"需要加您的微信?\",\n\t\t                \"count\":5\n\t\t            },\n\t\t            {\n\t\t                \"messageId\": 2,\n\t\t                \"userId\":62,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/62/02.png\",\n\t\t                \"nickname\":\"蓝梧桐\",\n\t\t                \"content\":\"需要加您的微信?\",\n\t\t                \"count\":5\n\t\t            },\n\t\t            {\n\t\t                \"messageId\": 3,\n\t\t                \"userId\":61,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/61/01.png\",\n\t\t                \"nickname\":\"长安\",\n\t\t                \"content\":\"需要加您的微信?\",\n\t\t                \"count\":6\n\t\t            },\n\t\t            {\n\t\t                \"messageId\": 4,\n\t\t                \"userId\":71,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/71/07.png\",\n\t\t                \"nickname\":\"弦雨晴\",\n\t\t                \"content\":\"需要加您的微信?\",\n\t\t                \"count\":6\n\t\t            },\n\t\t            {\n\t\t                \"messageId\": 5,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"nickname\":\"阿萌\",\n\t\t                \"content\":\"需要加您的微信?\",\n\t\t                \"count\":1\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"likes\":{\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"count\":5\n},\n\"totalCount\":5,\n\"totalPage\":1,\n\"list\":[\n{\n\"messageId\": 7,\n\"userId\":60,\n\"head\":\"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\"nickname\":\"尘埃\",\n\"content\":\"需要加您的微信?\",\n\"count\":5\n},\n{\n\"messageId\": 2,\n\"userId\":62,\n\"head\":\"http://8.135.36.45:8000/find/img/head/62/02.png\",\n\"nickname\":\"蓝梧桐\",\n\"content\":\"需要加您的微信?\",\n\"count\":5\n},\n{\n\"messageId\": 3,\n\"userId\":61,\n\"head\":\"http://8.135.36.45:8000/find/img/head/61/01.png\",\n\"nickname\":\"长安\",\n\"content\":\"需要加您的微信?\",\n\"count\":6\n},\n{\n\"messageId\": 4,\n\"userId\":71,\n\"head\":\"http://8.135.36.45:8000/find/img/head/71/07.png\",\n\"nickname\":\"弦雨晴\",\n\"content\":\"需要加您的微信?\",\n\"count\":6\n},\n{\n\"messageId\": 5,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"nickname\":\"阿萌\",\n\"content\":\"需要加您的微信?\",\n\"count\":1\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -3125,17 +3125,17 @@ define({ "api": [
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\"status\": 403,\n      \t\"code\": 199,\n      \t\"msg\": \"未找到用户信息！\"\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      { \n      \t\"status\": 404,\n      \t\"code\": 200,\n      \t\"msg\": \"接口未注册！\"\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n      \t\"status\": 500,\n      \t\"code\": 205,\n      \t\"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]
@@ -3291,7 +3291,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\":200,\n\t\t    \"code\":0,\n\t\t    \"msg\":\"返回数据成功\",\n\t\t    \"data\":{\n\t\t        \"totalCount\":30,\n\t\t        \"totalPage\":2,\n\t\t        \"list\":[\n\t\t            {\n\t\t            \t\"messageId\":90,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":89,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":88,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":87,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":86,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":85,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":84,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":83,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":82,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":81,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":80,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":79,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":78,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":77,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":76,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":75,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":74,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":73,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态51出门熏人\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":72,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n\t\t                ]\n\t\t            },\n\t\t            {\n\t\t            \t\"messageId\":71,\n\t\t                \"userId\":70,\n\t\t                \"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\t\t                \"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\t\t                \"attacheType\":\"0\",\n\t\t                \"filenameList\":[\n\t\t                    \"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n\t\t                ]\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"totalCount\":30,\n\"totalPage\":2,\n\"list\":[\n{\n\"messageId\":90,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":89,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":88,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":87,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":86,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":85,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":84,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":83,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":82,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":81,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":80,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":79,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":78,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":77,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":76,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200502/07.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":75,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200503/03.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200503/05.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":74,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200505/12.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200505/13.png\",\n\"http://8.135.36.45:8000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":73,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":72,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":71,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://8.135.36.45:8000/find/res/images/29/20200427/014.png\"\n]\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -3377,17 +3377,17 @@ define({ "api": [
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\"status\": 403,\n      \t\"code\": 199,\n      \t\"msg\": \"未找到用户信息！\"\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      {\n      \t\"status\": 404,\n      \t\"code\": 200,\n      \t\"msg\": \"接口未注册！\"\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n      \t\"status\": 500,\n      \t\"code\": 205,\n      \t\"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]
@@ -3480,7 +3480,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n        {\n        \"status\": 200,\n        \"code\": 0,\n        \"msg\": \"标记已读成功。\",\n        \"data\": {\n                \"DELETE\": \"OK\"\n            }\n        }",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"标记已读成功。\",\n\"data\": {\n\"DELETE\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -3566,17 +3566,17 @@ define({ "api": [
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n        \"status\": 403,\n        \"code\": 199,\n        \"msg\": \"未找到用户信息！\"\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      {\n        \"status\": 404,\n        \"code\": 200,\n        \"msg\": \"接口未注册！\"\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n        \"status\": 500,\n        \"code\": 205,\n        \"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]
@@ -3669,7 +3669,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n        {\n        \"status\": 200,\n        \"code\": 0,\n        \"msg\": \"标记已读成功。\",\n        \"data\": {\n                \"DELETE\": \"OK\"\n            }\n        }",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"标记已读成功。\",\n\"data\": {\n\"DELETE\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -3755,17 +3755,17 @@ define({ "api": [
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n        \"status\": 403,\n        \"code\": 199,\n        \"msg\": \"未找到用户信息！\"\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      {\n        \"status\": 404,\n        \"code\": 200,\n        \"msg\": \"接口未注册！\"\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n        \"status\": 500,\n        \"code\": 205,\n        \"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]
@@ -3793,19 +3793,26 @@ define({ "api": [
             "type": "long",
             "optional": false,
             "field": "id1",
-            "description": "<p>消息发送者用户id</p>"
+            "description": "<p>发送者用户id</p>"
           },
           {
             "group": "接口请求参数",
             "type": "long",
             "optional": false,
             "field": "id2",
-            "description": "<p>消息接收者用户id</p>"
+            "description": "<p>接收者用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": true,
+            "field": "messageId",
+            "description": "<p>消息id</p>"
           },
           {
             "group": "接口请求参数",
             "type": "string",
-            "optional": false,
+            "optional": true,
             "field": "content",
             "description": "<p>消息内容</p>"
           }
@@ -3813,8 +3820,13 @@ define({ "api": [
       },
       "examples": [
         {
-          "title": "请求示例",
+          "title": "请求示例 发送消息",
           "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/29/send?content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+          "type": "json"
+        },
+        {
+          "title": "请求示例 回复消息",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/29/send?messageId=2&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -3865,7 +3877,12 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t\"status\": 200,\n\t\t\"code\": 0,\n\t\t\"msg\": \"发送消息成功。\",\n\t\t\"data\": {\n\t\t\t\t\"SEND\": \"OK\"\n\t\t\t}\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"发送消息成功。\",\n\"data\": {\n\"SEND\": \"OK\"\n}\n}",
+          "type": "json"
+        },
+        {
+          "title": "200响应示例",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"发送消息成功。\",\n\"data\": {\n\"SEND\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -3951,17 +3968,17 @@ define({ "api": [
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\"status\": 403,\n      \t\"code\": 199,\n      \t\"msg\": \"未找到用户信息！\"\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      {\n      \t\"status\": 404,\n      \t\"code\": 200,\n      \t\"msg\": \"接口未注册！\"\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n      \t\"status\": 500,\n      \t\"code\": 205,\n      \t\"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]

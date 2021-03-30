@@ -2,6 +2,7 @@ package com.potato369.find.portal.feign;
 
 import java.util.Map;
 
+import io.swagger.annotations.ApiParam;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,28 +28,29 @@ public interface MessageService {
 
     @GetMapping(value = "/find/v1/message/{id}/likes.do")
     CommonResult<MessageVO2> likes(@PathVariable(name = "id") Long userId,
-                                       @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
-                                       @RequestParam(name = "pageSize", required = false, defaultValue = "20") Integer pageSize);
-    
+                                   @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
+                                   @RequestParam(name = "pageSize", required = false, defaultValue = "20") Integer pageSize);
+
     @GetMapping(value = "/find/v1/message/{id1}/{id2}/messages.do")
     CommonResult<MessageVO3> messages(@PathVariable(name = "id1") Long sendUserId,
-    							      @PathVariable(name = "id2") Long recipientUserId,
+                                      @PathVariable(name = "id2") Long recipientUserId,
                                       @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                       @RequestParam(name = "pageSize", required = false, defaultValue = "20") Integer pageSize);
-    
+
     @PostMapping(value = "/find/v1/message/{id1}/{id2}/send.do")
     CommonResult<Map<String, Object>> send(@PathVariable(name = "id1") Long sendUserId,
-    							      @PathVariable(name = "id2") Long recipientUserId,
-                                      @RequestParam(name = "content") String content);
-    
+                                           @PathVariable(name = "id2") Long recipientUserId,
+                                           @RequestParam(name = "messageId", required = false) Long messageId,
+                                           @RequestParam(name = "content", required = false) String content);
+
     @PutMapping(value = "/find/v1/message/{id}/updateAll.do")
     CommonResult<Map<String, Object>> allRead(@PathVariable(name = "id") Long recipientUserId);
-    
+
     @DeleteMapping(value = "/find/v1/message/{id}/delete.do")
     CommonResult<Map<String, Object>> delete(@PathVariable(name = "id") Long recipientUserId,
                                              @RequestParam(name = "messageId") Long messageId);
-    
+
     @DeleteMapping(value = "/find/v1/message/{id}/deleteLikes.do")
     CommonResult<Map<String, Object>> deleteLikes(@PathVariable(name = "id") Long recipientUserId,
-                                             	  @RequestParam(name = "messageId") Long messageId);
+                                                  @RequestParam(name = "messageId") Long messageId);
 }

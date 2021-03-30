@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
  * <pre>
  * @PackageName com.potato369.find.common.enums
  * @EnumName MessageStatusEnum
- * @Desc 消息状态枚举
+ * @Desc 消息状态是否删除枚举
  * @WebSite https://www.potato369.com
  * @Author Jack
  * @Date 2021/3/15 11:16
@@ -19,11 +19,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public enum MessageStatusEnum implements CodeEnum<Integer> {
+public enum MessageStatus2Enum implements CodeEnum<Integer> {
 
-    UNREAD(0, "0", "未读"),
+    NO(0, "0", "否"),
 
-    READ(1, "1", "已读"),
+    YES(1, "1", "是"),
     ;
 
     private Integer code;

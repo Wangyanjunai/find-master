@@ -16,45 +16,45 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class MessageServiceFeignFallback implements MessageService {
 
-	@Override
-	public CommonResult<MessageVO> all(Long userId, Integer pageNum, Integer pageSize) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<MessageVO> all(Long userId, Integer pageNum, Integer pageSize) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<MessageVO2> likes(Long userId, Integer pageNum, Integer pageSize) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<MessageVO2> likes(Long userId, Integer pageNum, Integer pageSize) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<MessageVO3> messages(Long sendUserId, Long recipientUserId, Integer pageNum, Integer pageSize) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<MessageVO3> messages(Long sendUserId, Long recipientUserId, Integer pageNum, Integer pageSize) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> send(Long sendUserId, Long recipientUserId, String content) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> send(Long sendUserId, Long recipientUserId, Long messageId, String content) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> allRead(Long recipientUserId) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> allRead(Long recipientUserId) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> deleteLikes(Long recipientUserId, Long messageId) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> deleteLikes(Long recipientUserId, Long messageId) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 }

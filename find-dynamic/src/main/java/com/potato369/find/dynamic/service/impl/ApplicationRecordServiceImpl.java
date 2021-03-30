@@ -1,8 +1,7 @@
 package com.potato369.find.dynamic.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.potato369.find.common.enums.MessageSendModeEnum;
-import com.potato369.find.common.enums.MessageTypeEnum;
+import com.potato369.find.common.enums.*;
 import com.potato369.find.dynamic.service.ApplicationRecordService;
 import com.potato369.find.mbg.mapper.ApplicationRecordMapper;
 import com.potato369.find.mbg.mapper.DynamicInfoMapper;
@@ -37,7 +36,7 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
     private ApplicationRecordMapper applicationRecordMapperWriter;
 
     private MessageMapper messageMapperWriter;
-    
+
     private DynamicInfoMapper dynamicInfoMapperWriter;
 
     @Autowired
@@ -57,10 +56,10 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
 
     @Autowired
     public void setDynamicInfoMapperWriter(DynamicInfoMapper dynamicInfoMapperWriter) {
-		this.dynamicInfoMapperWriter = dynamicInfoMapperWriter;
-	}
+        this.dynamicInfoMapperWriter = dynamicInfoMapperWriter;
+    }
 
-	/**
+    /**
      * 根据用户id查询用户当天的申请加微信次数
      *
      * @param userId 用户id
@@ -81,18 +80,19 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
     @Override
     @Transactional(readOnly = false)
     public Integer saveApplicationRecord(DynamicInfo dynamicInfo, ApplicationRecord applicationRecord, String message) {
-    	int a = 0, b = 0, c = 0;
+        int a = 0, b = 0, c = 0;
         if (StrUtil.isNotEmpty(message) && dynamicInfo != null && applicationRecord != null) {
             Long sendUserId = applicationRecord.getUserId();
             Long recipientUserId = dynamicInfo.getUserId();
-            String sendMode = MessageSendModeEnum.ACTIVE.getStatus();
-            String content = message;
             Message messageRecord = new Message();
-            messageRecord.setSendMode(sendMode);
+            messageRecord.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
             messageRecord.setSendUserId(sendUserId);
             messageRecord.setRecipientUserId(recipientUserId);
-            messageRecord.setContent(content);
+            messageRecord.setContent(message);
+            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());
             messageRecord.setReserveColumn01(MessageTypeEnum.Applications.getMessage());
+            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());
+            messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
             dynamicInfo.setApplications(dynamicInfo.getApplications() + 1);
             dynamicInfo.setUpdateTime(new Date());
             a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);

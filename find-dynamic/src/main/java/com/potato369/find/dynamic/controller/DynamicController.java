@@ -61,6 +61,8 @@ public class DynamicController {
 
     private ApplicationRecordMapper applicationRecordMapperReader;
 
+    private MessageMapper messageMapperReader;
+
     @Autowired
     public void setDynamicService(DynamicService dynamicService) {
         this.dynamicService = dynamicService;
@@ -129,6 +131,11 @@ public class DynamicController {
     @Autowired
     public void setApplicationRecordMapperReader(ApplicationRecordMapper applicationRecordMapperReader) {
         this.applicationRecordMapperReader = applicationRecordMapperReader;
+    }
+
+    @Autowired
+    public void setMessageMapperReader(MessageMapper messageMapperReader) {
+        this.messageMapperReader = messageMapperReader;
     }
 
     // 用户发布动态附件（包括图片和语音）
@@ -764,29 +771,33 @@ public class DynamicController {
                 return CommonResult.failed(data, ResultCode.DYNAMIC_IS_NOT_EXIST);
             }
             Long publishUserId = dynamicInfo.getUserId();//动态内容拥有者或者发动态的用户id
-            User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);//动态内容拥有者
-            if (publishUser == null) {
-                return CommonResult.failed(data, ResultCode.PUBLISH_USER_IS_NOT_EXIST);
-            }
+            // 需要判断是否是在申请加自己微信
             if (publishUserId.equals(userId)) {
                 return CommonResult.failed(data, ResultCode.PUBLISH_USER_IS_VALID);
             }
-            int count = this.applicationRecordMapperReader.countByRecipientUserId(userId);
-            if (count > 0) {
-                return CommonResult.failed(data, ResultCode.COUNT_OVERRUN);
-            }
-            ApplicationSetting applicationSetting = this.applicationSettingService.findApplication();
-            int times = 0;
-            if (applicationSetting != null) {
-                times = applicationSetting.getTimes();
+            User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);//动态内容拥有者
+            if (publishUser == null) {
+                return CommonResult.failed(data, ResultCode.PUBLISH_USER_IS_NOT_EXIST);
             }
             User recipientUser = this.userMapperReader.selectByPrimaryKey(userId);
             if (recipientUser == null) {
                 return CommonResult.failed(data, ResultCode.RECIPIENT_USER_IS_NOT_EXIST);
             }
-            //TODO 是否需要判断一天只能申请加同一个人的微信一次，加不同的人的微信按照设置，对方没有回复是不能继续发送的。
-            DynamicInfo dynamicInfo2 = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
-            dynamicInfo2.getUserId();
+            // 需要判断一天只能申请加同一个人的微信一次，加不同的人的微信按照设置，对方没有回复是不能继续发送的。
+            int count = this.applicationRecordMapperReader.countByRecipientUserId(userId);
+            if (count > 0) {
+                return CommonResult.failed(data, ResultCode.COUNT_OVERRUN);
+            }
+            int count2 = this.messageMapperReader.countByUserId(userId, publishUserId);
+            if (count2 > 0) {
+                return CommonResult.failed(data, ResultCode.NO_REPLY_OVERRUN);
+            }
+            // VIP用户加不同人微信次数看配置，VIP用户没有限制
+            ApplicationSetting applicationSetting = this.applicationSettingService.findApplication();
+            int times = 0;
+            if (applicationSetting != null) {
+                times = applicationSetting.getTimes();
+            }
             if (UserGradeEnum.VIP0.getGrade().equals(publishUser.getGrade())) {
                 int timesResult = this.applicationRecordService.findApplicationRecordCountByUserId(userId);
                 if (timesResult >= times) {
@@ -800,7 +811,7 @@ public class DynamicController {
                 message = "申请加微信，麻烦通过下。";
             }
             int rowResult = this.applicationRecordService.saveApplicationRecord(dynamicInfo, applicationRecord, message);
-            String msg = "";
+            String msg;
             if (rowResult > 0) {
                 data.put("APPLICATION", "OK");
                 msg = "申请加微信成功。";

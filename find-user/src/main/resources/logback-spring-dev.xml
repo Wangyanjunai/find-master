@@ -106,16 +106,16 @@
         </rollingPolicy>
     </appender>
 
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"></logger>
-    
-    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="TRACE"></logger>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="TRACE"/>
 
     <root level="info">
-        <appender-ref ref="consoleLog"></appender-ref>
-        <appender-ref ref="fileDebugLog"></appender-ref>
-        <appender-ref ref="fileInfoLog"></appender-ref>
-        <appender-ref ref="fileWarnLog"></appender-ref>
-        <appender-ref ref="fileErrorLog"></appender-ref>
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileDebugLog"/>
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="fileWarnLog"/>
+        <appender-ref ref="fileErrorLog"/>
     </root>
 
 </configuration>
