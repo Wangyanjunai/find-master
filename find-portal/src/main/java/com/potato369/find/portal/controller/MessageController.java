@@ -734,15 +734,15 @@ public class MessageController {
 
 
     /**
-     * @api {delete} http://8.135.36.45:8084/find/message/{id}/delete 删除申请加微信消息记录接口
+     * @api {delete} http://8.135.36.45:8084/find/message/{id1}/delete 删除申请加微信消息记录接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 删除申请加微信消息记录
-     * @apiParam (接口请求参数) {long} id 消息接收者用户id
-     * @apiParam (接口请求参数) {long} messageId 消息记录id
+     * @apiParam (接口请求参数) {long} id1 消息接收者用户id
+     * @apiParam (接口请求参数) {long} id2 消息发送者用户id
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://8.135.36.45:8084/find/message/60/delete?messageId=28" -H "accept: application/json"
+     * curl -v -X PUT "http://8.135.36.45:8084/find/message/60/delete?id2=28" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -753,7 +753,7 @@ public class MessageController {
      * {
      * "status": 200,
      * "code": 0,
-     * "msg": "标记已读成功。",
+     * "msg": "删除消息记录成功。",
      * "data": {
      * "DELETE": "OK"
      * }
@@ -789,12 +789,12 @@ public class MessageController {
      * "msg": "服务器未响应！"
      * }
      */
-    @DeleteMapping(value = "/{id}/delete")
+    @DeleteMapping(value = "/{id1}/delete")
     @ApiOperation(value = "删除申请加微信消息记录接口", notes = "删除申请加微信消息记录接口")
     public CommonResult<Map<String, Object>> deleteApplications(
-            @PathVariable(name = "id") @ApiParam(name = "id", value = "消息接收者用户id", required = true, example = "1") Long recipientUserId,
-            @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId) {
-        return this.messageFeignClient.delete(recipientUserId, messageId);
+            @PathVariable(name = "id1") @ApiParam(name = "id1", value = "消息接收者用户id", required = true, example = "1") Long recipientUserId,
+            @RequestParam(name = "id2") @ApiParam(name = "id2", value = "消息发送者用户id", required = true, example = "2") Long sendUserId) {
+        return this.messageFeignClient.delete(recipientUserId, sendUserId);
     }
 
     /**

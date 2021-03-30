@@ -339,12 +339,12 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional
-    public CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId) {
+    public CommonResult<Map<String, Object>> delete(Long recipientUserId, Long sendUserId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String key = "DELETE";
         String value = "ERROR";
         String msg = "删除消息记录失败。";
-        int count = this.messageMapperWriter.delectApplicationMessageRecordByUserId(recipientUserId, messageId);
+        int count = this.messageMapperWriter.delectApplicationMessageRecordByUserId(recipientUserId, sendUserId);
         if (count > 0) {
             value = "OK";
             msg = "删除消息记录成功。";

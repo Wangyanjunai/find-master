@@ -45,9 +45,9 @@ public interface MessageService {
     @PutMapping(value = "/find/v1/message/{id}/updateAll.do")
     CommonResult<Map<String, Object>> allRead(@PathVariable(name = "id") Long recipientUserId);
 
-    @DeleteMapping(value = "/find/v1/message/{id}/delete.do")
-    CommonResult<Map<String, Object>> delete(@PathVariable(name = "id") Long recipientUserId,
-                                             @RequestParam(name = "messageId") Long messageId);
+    @DeleteMapping(value = "/find/v1/message/{id1}/delete.do")
+    CommonResult<Map<String, Object>> delete(@PathVariable(name = "id1") Long recipientUserId,
+                                             @RequestParam(name = "id2") Long sendUserId);
 
     @DeleteMapping(value = "/find/v1/message/{id}/deleteLikes.do")
     CommonResult<Map<String, Object>> deleteLikes(@PathVariable(name = "id") Long recipientUserId,

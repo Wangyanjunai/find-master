@@ -313,8 +313,8 @@
         UPDATE `message`
         SET `reserve_column03` = '1'
         WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
-          AND `recipient_user_id`<![CDATA[ =]]> #{userId, jdbcType=BIGINT}
-          AND `id`<![CDATA[ =]]> #{messageId, jdbcType=BIGINT}
+          AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT} OR `send_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+          AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT} OR `recipient_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="com.potato369.find.mbg.model.Message">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">

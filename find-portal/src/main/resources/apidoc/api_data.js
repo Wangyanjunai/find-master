@@ -3591,7 +3591,7 @@ define({ "api": [
   },
   {
     "type": "delete",
-    "url": "http://8.135.36.45:8084/find/message/{id}/delete",
+    "url": "http://8.135.36.45:8084/find/message/{id1}/delete",
     "title": "删除申请加微信消息记录接口",
     "version": "1.0.0",
     "group": "消息模块API",
@@ -3603,22 +3603,22 @@ define({ "api": [
             "group": "接口请求参数",
             "type": "long",
             "optional": false,
-            "field": "id",
+            "field": "id1",
             "description": "<p>消息接收者用户id</p>"
           },
           {
             "group": "接口请求参数",
             "type": "long",
             "optional": false,
-            "field": "messageId",
-            "description": "<p>消息记录id</p>"
+            "field": "id2",
+            "description": "<p>消息发送者用户id</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://8.135.36.45:8084/find/message/60/delete?messageId=28\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://8.135.36.45:8084/find/message/60/delete?id2=28\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -3669,7 +3669,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"标记已读成功。\",\n\"data\": {\n\"DELETE\": \"OK\"\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"删除消息记录成功。\",\n\"data\": {\n\"DELETE\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -3774,7 +3774,7 @@ define({ "api": [
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/message/{id}/delete"
+        "url": "http://8.135.36.45:8084/find/message/{id1}/delete"
       }
     ]
   },
