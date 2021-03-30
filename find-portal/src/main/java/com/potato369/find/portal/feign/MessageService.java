@@ -2,7 +2,6 @@ package com.potato369.find.portal.feign;
 
 import java.util.Map;
 
-import io.swagger.annotations.ApiParam;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
