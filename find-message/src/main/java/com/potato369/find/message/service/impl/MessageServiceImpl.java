@@ -2,6 +2,7 @@ package com.potato369.find.message.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -369,19 +370,16 @@ public class MessageServiceImpl implements MessageService {
         String value = "ERROR";
         String msg = "删除消息记录失败。";
         Message message = this.messageMapperReader.selectByPrimaryKey(messageId);
-        MessageExample example = new MessageExample();
-        example.setDistinct(true);
-        example.createCriteria()
-                .andRecipientUserIdEqualTo(recipientUserId)
-                .andIdEqualTo(messageId)
-                .andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage())
-                .andReserveColumn03EqualTo(MessageStatus2Enum.YES.getStatus());
-        example.setOrderByClause("create_time DESC");
-        int count = this.messageMapperWriter.updateByExampleSelective(message, example);
-        if (count > 0) {
-            value = "OK";
-            msg = "删除消息记录成功。";
-        }
+        if (message != null) {
+        	message.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
+        	message.setUpdateTime(new Date());
+        	message.setRecipientUserId(recipientUserId);
+        	int count = this.messageMapperWriter.updateByPrimaryKeySelective(message);
+        	if (count > 0) {
+        		value = "OK";
+        		msg = "删除消息记录成功。";
+        	}
+		}
         data.put(key, value);
         return CommonResult.success(data, msg);
     }
