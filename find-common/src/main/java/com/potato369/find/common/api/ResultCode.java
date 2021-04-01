@@ -51,6 +51,12 @@ public enum ResultCode implements IErrorCode {
 
     NO_REPLY_OVERRUN(606, "申请加微信出错，对方未回复，请等待对方回复再试。"),
 
+    LIKES_USER_IS_NOT_EXIST(630, "点赞当前动态内容出错，用户信息不存在。"),
+
+    LIKES_DYNAMIC_INFO_IS_NOT_EXIST(631, "点赞当前动态内容出错，动态内容不存在。"),
+
+    LIKES_RECORD_IS_NOT_EXIST(632, "取消/点赞，点赞记录不存在。"),
+
     ;
     private int code;
 

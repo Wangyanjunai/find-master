@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
  * <pre>
  * @PackageName com.potato369.find.common.enums
  * @EnumName LikesStatusEnum
- * @Desc 枚举类实现的功能点描述
+ * @Desc 点赞状态枚举类实现的功能点描述
  * @WebSite https://www.potato369.com
  * @Author Jack
  * @Date 2021/2/1 00:16
@@ -21,9 +21,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum LikeStatusEnum implements CodeEnum<Integer> {
 
-    NO(0, "0", "取消点赞"),
+    NO(0, "0", "取消"),
 
-    YES(1, "1", "开始点赞"),
+    YES(1, "1", "点赞"),
     ;
 
     private Integer code;

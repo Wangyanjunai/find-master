@@ -20,7 +20,7 @@
     <resultMap type="com.potato369.find.mbg.model.LikesRecord" id="LikesRecordMap">
         <result column="likes_user_id" jdbcType="BIGINT" property="likesUserId"/>
         <result column="likes_create_time" jdbcType="TIMESTAMP" property="likesCreateTime"/>
-        <result column="dyinfo_id" jdbcType="BIGINT" property="dynamicInfoId"/>
+        <result column="dynamic_info_id" jdbcType="BIGINT" property="dynamicInfoId"/>
     </resultMap>
     <resultMap type="com.potato369.find.mbg.model.NotLikesMessageRecord" id="UnLikesRecordMap">
         <result column="content" jdbcType="VARCHAR" property="messageContent"/>
@@ -145,7 +145,7 @@
     <select id="selectLikesRecordByUserId" parameterType="java.lang.Long" resultMap="LikesRecordMap">
         select DISTINCT lr.`user_id`     as `likes_user_id`,
                         lr.`create_time` as `likes_create_time`,
-                        di.`id`          as `dyinfo_id`
+                        di.`id`          as `dynamic_info_id`
         from `like_record` lr,
              `dynamic_info` di,
              `user` ur
@@ -181,35 +181,31 @@
         ORDER BY me.`create_time` DESC
     </select>
     <select id="selectLikesMessageRecordByUserId" parameterType="java.lang.Long" resultMap="LikesMessageRecordMap">
-		SELECT DISTINCT
-			me.`id` AS `message_id`,
-			u.`id` AS `id`,
-			u.`head_icon` AS `head_icon`,
-			me.`content` AS `content`,
-			dynamic_info.`attache_type` AS `attache_type`,
-			attache_info.`file_name` AS `file_name` 
-		FROM
-			`like_record` AS record,
-			`user` AS u,
-			`dynamic_info` AS dynamic_info,
-			`attache_info` AS attache_info,
-			`message` AS me 
-		WHERE
-			record.`user_id` = u.`id` 
-			AND dynamic_info.`id` = record.`dynamic_info_id` 
-			AND attache_info.`dynamic_info_by` = dynamic_info.`id` 
-			AND me.`send_user_id` = u.`id` 
-			AND me.`recipient_user_id` = dynamic_info.`user_id` 
-			AND me.send_user_id = record.`user_id` 
-			AND me.`reserve_column01` = 'likes' 
-			AND me.`reserve_column03` = '0' 
-			AND record.`status` = '0' 
-			AND dynamic_info.user_id = #{userId, jdbcType=BIGINT}
-		GROUP BY
-			u.`id`,
-			me.`id`			 
-		ORDER BY
-			me.`create_time` DESC
+        SELECT DISTINCT me.`id`                     AS `message_id`,
+                        u.`id`                      AS `id`,
+                        u.`head_icon`               AS `head_icon`,
+                        me.`content`                AS `content`,
+                        dynamic_info.`attache_type` AS `attache_type`,
+                        attache_info.`file_name`    AS `file_name`
+        FROM `like_record` AS record,
+             `user` AS u,
+             `dynamic_info` AS dynamic_info,
+             `attache_info` AS attache_info,
+             `message` AS me
+        WHERE record.`user_id` = u.`id`
+          AND dynamic_info.`id` = record.`dynamic_info_id`
+          AND attache_info.`dynamic_info_by` = dynamic_info.`id`
+          AND me.`send_user_id` = u.`id`
+          AND me.`recipient_user_id` = dynamic_info.`user_id`
+          AND me.send_user_id = record.`user_id`
+          AND me.`reserve_column01` = 'likes'
+          AND me.`reserve_column03` = '0'
+          AND record.`status` = '0'
+          AND dynamic_info.user_id = #{userId, jdbcType=BIGINT}
+        GROUP BY u.`id`,
+                 me.`id`,
+                 me.`create_time`
+        ORDER BY me.`create_time` DESC
     </select>
     <select id="selectApplicationMessageRecordByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT `id`,
@@ -220,10 +216,10 @@
                `status`,
                `create_time`
         FROM `message`
-        WHERE `reserve_column01` = 'applications'
+        WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
           AND `recipient_user_id` = #{userId, jdbcType=BIGINT}
           AND `reserve_column03` = '0'
-        GROUP BY `send_user_id`
+        GROUP BY `send_user_id`, `create_time`
         ORDER BY `create_time` DESC
     </select>
 
@@ -238,7 +234,7 @@
                         `status`,
                         `create_time`
                  FROM `message`
-                 WHERE `reserve_column01`<![CDATA[ =]]> 'applications'
+                 WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
                    AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
                    AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
                  UNION
@@ -250,7 +246,7 @@
                         `status`,
                         `create_time`
                  FROM `message`
-                 WHERE `reserve_column01`<![CDATA[ =]]> 'applications'
+                 WHERE `reserve_column01`<![CDATA[ =]]> 'likes'
                    AND `send_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
                    AND `recipient_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
              ) AS a
@@ -318,13 +314,15 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <delete id="delectApplicationMessageRecordByUserId" parameterType="java.lang.Long">
+    <update id="deleteApplicationMessageRecordByUserId" parameterType="java.lang.Long">
         UPDATE `message`
         SET `reserve_column03` = '1'
         WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
-          AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT} OR `send_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
-          AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT} OR `recipient_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
-    </delete>
+            AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+           OR `send_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+            AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
+           OR `recipient_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
+    </update>
     <insert id="insert" parameterType="com.potato369.find.mbg.model.Message">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()

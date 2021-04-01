@@ -345,7 +345,7 @@ public class MessageServiceImpl implements MessageService {
         String key = "DELETE";
         String value = "ERROR";
         String msg = "删除消息记录失败。";
-        int count = this.messageMapperWriter.delectApplicationMessageRecordByUserId(recipientUserId, sendUserId);
+        int count = this.messageMapperWriter.deleteApplicationMessageRecordByUserId(recipientUserId, sendUserId);
         if (count > 0) {
             value = "OK";
             msg = "删除消息记录成功。";
@@ -371,15 +371,15 @@ public class MessageServiceImpl implements MessageService {
         String msg = "删除消息记录失败。";
         Message message = this.messageMapperReader.selectByPrimaryKey(messageId);
         if (message != null) {
-        	message.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
-        	message.setUpdateTime(new Date());
-        	message.setRecipientUserId(recipientUserId);
-        	int count = this.messageMapperWriter.updateByPrimaryKeySelective(message);
-        	if (count > 0) {
-        		value = "OK";
-        		msg = "删除消息记录成功。";
-        	}
-		}
+            message.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
+            message.setUpdateTime(new Date());
+            message.setRecipientUserId(recipientUserId);
+            int count = this.messageMapperWriter.updateByPrimaryKeySelective(message);
+            if (count > 0) {
+                value = "OK";
+                msg = "删除消息记录成功。";
+            }
+        }
         data.put(key, value);
         return CommonResult.success(data, msg);
     }

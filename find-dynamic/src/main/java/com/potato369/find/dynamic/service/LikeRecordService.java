@@ -38,10 +38,18 @@ public interface LikeRecordService {
     /**
      * 根据用户id和动态内容id点赞用户对该条动态内容
      *
-     * @param content	  消息内容
+     * @param content     消息内容
      * @param userId      用户id
      * @param dynamicInfo 动态内容
      * @return 点赞记录条数
      */
-    int createByUserIdAndDynamicInfoId(String content, Long userId, DynamicInfo dynamicInfo);
+    int createByUserIdAndDynamicInfoId(String content, Long userId, DynamicInfo dynamicInfo, LikeRecord likeRecord);
+
+    /**
+     * 更新动态内容点赞记录状态
+     *
+     * @param likeRecord
+     * @return
+     */
+    int update(LikeRecord likeRecord);
 }

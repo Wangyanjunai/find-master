@@ -3,6 +3,7 @@ package com.potato369.find.dynamic.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.potato369.find.common.enums.AttacheInfoDataTypeEnum;
+import com.potato369.find.common.enums.LikeStatusEnum;
 import com.potato369.find.common.enums.PublicStatusEnum;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.vo.DynamicInfoVO;
@@ -49,13 +50,13 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
     private DynamicInfoMapper dynamicInfoMapperReader;
 
     private DynamicInfoMapper dynamicInfoMapperWriter;
-    
+
     private ApplicationRecordMapper applicationRecordMapperReader;
 
     private LikeRecordMapper likeRecordMapperReader;
-    
+
     private ProjectUrlProps projectUrlProps;
-    
+
     @Autowired
     public void setDynamicInfoMapperReader(DynamicInfoMapper dynamicInfoMapperReader) {
         this.dynamicInfoMapperReader = dynamicInfoMapperReader;
@@ -68,20 +69,20 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
 
     @Autowired
     public void setApplicationRecordMapperReader(ApplicationRecordMapper applicationRecordMapperReader) {
-		this.applicationRecordMapperReader = applicationRecordMapperReader;
-	}
+        this.applicationRecordMapperReader = applicationRecordMapperReader;
+    }
 
     @Autowired
-	public void setLikeRecordMapperReader(LikeRecordMapper likeRecordMapperReader) {
-		this.likeRecordMapperReader = likeRecordMapperReader;
-	}
+    public void setLikeRecordMapperReader(LikeRecordMapper likeRecordMapperReader) {
+        this.likeRecordMapperReader = likeRecordMapperReader;
+    }
 
     @Autowired
-	public void setProjectUrlProps(ProjectUrlProps projectUrlProps) {
-		this.projectUrlProps = projectUrlProps;
-	}
+    public void setProjectUrlProps(ProjectUrlProps projectUrlProps) {
+        this.projectUrlProps = projectUrlProps;
+    }
 
-	/**
+    /**
      * 根据动态内容id获取动态内容信息
      *
      * @param id 动态内容id
@@ -111,11 +112,11 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
      * @param userId 用户id
      * @return 动态内容数据
      */
-	@Override
-	@Transactional(readOnly = true)
-	public Map<String, Object> getMyDynamicInfoDataList(Long userId, Integer pageNum, Integer pageSize) {
-		Map<String, Object> data = new ConcurrentHashMap<>();
-		final PageInfo<DynamicInfoData> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectMyDynamicInfoData(userId));
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> getMyDynamicInfoDataList(Long userId, Integer pageNum, Integer pageSize) {
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        final PageInfo<DynamicInfoData> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectMyDynamicInfoData(userId));
         data.put("totalPage", listPageInfo.getPages());
         List<DynamicInfoData> list = listPageInfo.getList();
         List<DynamicInfoVO> list2 = new ArrayList<>();
@@ -123,14 +124,14 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
             for (DynamicInfoData dynamicInfoData : list) {
                 DynamicInfoVO dynamicInfoVO = DynamicInfoVO.builder().build();
                 if (StrUtil.isNotEmpty(dynamicInfoData.getHeadIcon())) {
-                	dynamicInfoData.setHeadIcon(
-                			  StrUtil.trimToNull(this.projectUrlProps.getResDomain()
-                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
-                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                            + dynamicInfoData.getUserId()
-                            + "/"
-                            + dynamicInfoData.getHeadIcon());
-				}
+                    dynamicInfoData.setHeadIcon(
+                            StrUtil.trimToNull(this.projectUrlProps.getResDomain()
+                                    + StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
+                                    + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                                    + dynamicInfoData.getUserId()
+                                    + "/"
+                                    + dynamicInfoData.getHeadIcon());
+                }
                 dynamicInfoData.setPublishTime(DateUtil.fomateDate(dynamicInfoData.getCreateTime(), DateUtil.sdfTimeFmt));
                 BeanUtils.copyProperties(dynamicInfoData, dynamicInfoVO);
 
@@ -150,7 +151,19 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
                 likeRecordExample.setOrderByClause("create_time DESC, id DESC");
                 likeRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId);
                 List<LikeRecord> likeRecordList = this.likeRecordMapperReader.selectByExample(likeRecordExample);
-                dynamicInfoVO.setLikeStatus(likeRecordList != null && !likeRecordList.isEmpty());
+                if (likeRecordList != null && !likeRecordList.isEmpty()) {
+                    LikeRecord likeRecord = likeRecordList.get(0);
+                    if (likeRecord != null) {
+                        if (likeRecord.getStatus().equals(LikeStatusEnum.YES.getType())) {
+                            dynamicInfoVO.setLikeStatus(true);
+                        }
+                        if (likeRecord.getStatus().equals(LikeStatusEnum.NO.getType())) {
+                            dynamicInfoVO.setLikeStatus(false);
+                        }
+                    }
+                } else {
+                    dynamicInfoVO.setLikeStatus(false);
+                }
 
                 if (PublicStatusEnum.NOPublic.getCode().toString().equals(dynamicInfoData.getPublishStatus())) {
                     dynamicInfoVO.setAddress(null);
@@ -184,6 +197,6 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
             }
         }
         data.put("list", list2);
-		return data;
-	}
+        return data;
+    }
 }

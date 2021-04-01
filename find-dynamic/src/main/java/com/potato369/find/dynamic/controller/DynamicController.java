@@ -700,48 +700,48 @@ public class DynamicController {
                 log.debug("开始点赞当前动态内容");
             }
             User user = this.userMapperReader.selectByPrimaryKey(userId);
+            log.info("user={}", user);
             if (user == null) {
-                return CommonResult.success(data, "点赞当前动态内容出错，用户信息不存在。");
+                return CommonResult.failed(data, ResultCode.LIKES_USER_IS_NOT_EXIST);
             }
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
+            log.info("dynamicInfo={}", dynamicInfo);
             if (dynamicInfo == null) {
-                return CommonResult.success(data, "点赞当前动态内容出错，动态内容不存在。");
+                return CommonResult.failed(data, ResultCode.LIKES_DYNAMIC_INFO_IS_NOT_EXIST);
             }
             Long publishUserId = dynamicInfo.getUserId();
             User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);
             if (publishUser == null) {
-                return CommonResult.success(data, "点赞当前动态内容出错，发布者用户信息不存在。");
+                return CommonResult.failed(data, ResultCode.LIKES_USER_IS_NOT_EXIST);
             }
             LikeRecord likeRecord = this.likeRecordService.findByUserIdAndDynamicInfoId(userId, dynamicInfoId);
             // 取消点赞
             if (LikeStatusEnum.NO.getType().equals(type)) {
                 if (likeRecord == null) {
-                    return CommonResult.success(data, "取消点赞，点赞记录信息不存在。");
+                    return CommonResult.failed(data, ResultCode.LIKES_RECORD_IS_NOT_EXIST);
                 }
-                int result = this.likeRecordService.deleteByUserIdAndDynamicInfoId(userId, dynamicInfo);
+                likeRecord.setStatus(LikeStatusEnum.NO.getType());
+                likeRecord.setUpdateTime(new Date());
+                int result = this.likeRecordService.update(likeRecord);
                 if (result > 0) {
                     data.put("LIKED", "OK");
-                    return CommonResult.success(data, "取消点赞，取消成功。");
+                    return CommonResult.success(data, "取消点赞成功。");
                 }
             }
-            // 开始点赞
+            // 点赞
             if (LikeStatusEnum.YES.getType().equals(type)) {
-                if (likeRecord == null) {
-                    String content = user.getNickName() + "赞了你的动态" + dynamicInfo.getContent();//消息内容
-                    int result = this.likeRecordService.createByUserIdAndDynamicInfoId(content, userId, dynamicInfo);
-                    if (result > 0) {
-                        data.put("LIKED", "OK");
-                        String title = "互动消息";//消息标题
-                        Map<String, String> extras = new HashMap<>();
-                        PushBean pushBean = new PushBean();
-                        pushBean.setAlert(content);
-                        pushBean.setTitle(title);
-                        pushBean.setExtras(extras);
-                        this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
-                        return CommonResult.success(data, "创建点赞，点赞成功。");
-                    }
-                } else {
-                    return CommonResult.success(data, "创建点赞，点赞失败，点赞记录不存在。");
+                String content = user.getNickName() + "赞了你的动态" + dynamicInfo.getContent();//消息内容
+                int result = this.likeRecordService.createByUserIdAndDynamicInfoId(content, userId, dynamicInfo, likeRecord);
+                if (result > 0) {
+                    data.put("LIKED", "OK");
+                    String title = "互动消息";//消息标题
+                    Map<String, String> extras = new HashMap<>();
+                    PushBean pushBean = new PushBean();
+                    pushBean.setAlert(content);
+                    pushBean.setTitle(title);
+                    pushBean.setExtras(extras);
+                    this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
+                    return CommonResult.success(data, "点赞成功。");
                 }
             }
         } catch (Exception e) {

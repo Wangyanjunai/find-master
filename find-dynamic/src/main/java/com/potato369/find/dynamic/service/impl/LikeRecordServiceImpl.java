@@ -12,6 +12,7 @@ import com.potato369.find.mbg.model.LikeRecordExample;
 import com.potato369.find.mbg.model.Message;
 import com.potato369.find.mbg.model.User;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,7 @@ import java.util.List;
  * </pre>
  */
 @Service
+@Slf4j
 public class LikeRecordServiceImpl implements LikeRecordService {
 
     private LikeRecordMapper likeRecordMapperReader;
@@ -98,7 +100,7 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      * @return 点赞记录条数
      */
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public int deleteByUserIdAndDynamicInfoId(Long userId, DynamicInfo dynamicInfo) {
         if (dynamicInfo != null) {
             int likes = dynamicInfo.getLikes();
@@ -108,9 +110,10 @@ public class LikeRecordServiceImpl implements LikeRecordService {
         }
         LikeRecordExample likeRecordExample = new LikeRecordExample();
         likeRecordExample.setDistinct(true);
-        likeRecordExample.setOrderByClause("create_time DESC, id DESC");
         assert dynamicInfo != null;
-        likeRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfo.getId());
+        likeRecordExample.createCriteria()
+                .andUserIdEqualTo(userId)
+                .andDynamicInfoIdEqualTo(dynamicInfo.getId());
         return this.likeRecordMapperWriter.deleteByExample(likeRecordExample);
     }
 
@@ -122,23 +125,28 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      * @return 点赞记录条数
      */
     @Override
-    @Transactional(readOnly = false)
-    public int createByUserIdAndDynamicInfoId(String content, Long userId, DynamicInfo dynamicInfo) {
+    @Transactional
+    public int createByUserIdAndDynamicInfoId(String content, Long userId, DynamicInfo dynamicInfo, LikeRecord likeRecord) {
         int a = 0, b = 0, c = 0;
         if (dynamicInfo != null) {
             int likes = dynamicInfo.getLikes();
             dynamicInfo.setLikes(likes + 1);
             dynamicInfo.setUpdateTime(new Date());
             a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
-
-            LikeRecord likeRecord = new LikeRecord();
-            likeRecord.setUserId(userId);
-            likeRecord.setDynamicInfoId(dynamicInfo.getId());
-            b = this.likeRecordMapperWriter.insertSelective(likeRecord);
+            if (likeRecord == null) {
+                likeRecord = new LikeRecord();
+                likeRecord.setDynamicInfoId(dynamicInfo.getId());
+                likeRecord.setUserId(userId);
+                likeRecord.setStatus(LikeStatusEnum.YES.getType());
+                b = this.likeRecordMapperWriter.insertSelective(likeRecord);
+            } else {
+                likeRecord.setStatus(LikeStatusEnum.YES.getType());
+                likeRecord.setUpdateTime(new Date());
+                b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
+            }
 
             Long recipientUserId = dynamicInfo.getUserId();
             User user = this.userMapperReader.selectByPrimaryKey(userId);
-            assert user != null;
 
             Message messageRecord = new Message();
             messageRecord.setContent(content);//消息内容
@@ -150,7 +158,20 @@ public class LikeRecordServiceImpl implements LikeRecordService {
             messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送还是回复
             messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
             c = this.messageMapperWriter.insertSelective(messageRecord);
+
         }
         return a + b + c;
+    }
+
+    /**
+     * 更新动态内容点赞记录状态
+     *
+     * @param likeRecord
+     * @return
+     */
+    @Override
+    @Transactional
+    public int update(LikeRecord likeRecord) {
+        return this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
     }
 }

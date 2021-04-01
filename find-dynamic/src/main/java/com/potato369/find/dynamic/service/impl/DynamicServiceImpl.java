@@ -15,10 +15,7 @@ import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.constants.MunicipalityConstant;
 import com.potato369.find.common.dto.DynamicDTO;
 import com.potato369.find.common.dto.LocationDTO;
-import com.potato369.find.common.enums.AttacheInfoDataTypeEnum;
-import com.potato369.find.common.enums.OperateRecordStatusEnum;
-import com.potato369.find.common.enums.OperateRecordTypeEnum;
-import com.potato369.find.common.enums.PublicStatusEnum;
+import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.CopyUtil;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.utils.ErrorMessageUtil;
@@ -64,7 +61,7 @@ public class DynamicServiceImpl implements DynamicService {
     private ApplicationRecordMapper applicationRecordMapperReader;
 
     private LikeRecordMapper likeRecordMapperReader;
-    
+
     private BaiduProps baiduProps;
 
     private ProjectUrlProps projectUrlProps;
@@ -114,7 +111,7 @@ public class DynamicServiceImpl implements DynamicService {
         this.likeRecordMapperReader = likeRecordMapperReader;
     }
 
-	@Autowired
+    @Autowired
     public void setBaiduProps(BaiduProps baiduProps) {
         this.baiduProps = baiduProps;
     }
@@ -360,13 +357,13 @@ public class DynamicServiceImpl implements DynamicService {
                                 dynamicDTOTmp.setProvince(addr[1] + "省");
                                 dynamicDTOTmp.setCity(addr[2] + "市");
                                 if (dynamicDTOTmp != null && StrUtil.isNotEmpty(dynamicDTOTmp.getCity())) {
-                                	MunicipalityConstant contant = new MunicipalityConstant();
-                                	List<String> municipalityList = contant.getMunicipalityList();
-                                	if (municipalityList.contains(dynamicDTOTmp.getCity())) {
-                                		dynamicDTOTmp.setProvince(addr[1] + "市");
+                                    MunicipalityConstant contant = new MunicipalityConstant();
+                                    List<String> municipalityList = contant.getMunicipalityList();
+                                    if (municipalityList.contains(dynamicDTOTmp.getCity())) {
+                                        dynamicDTOTmp.setProvince(addr[1] + "市");
                                         dynamicDTOTmp.setCity(addr[2] + "市");
-									}
-								}
+                                    }
+                                }
                             }
                         }
                     }
@@ -500,7 +497,19 @@ public class DynamicServiceImpl implements DynamicService {
                 likeRecordExample.setOrderByClause("create_time DESC, id DESC");
                 likeRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId);
                 List<LikeRecord> likeRecordList = this.likeRecordMapperReader.selectByExample(likeRecordExample);
-                dynamicInfoVO.setLikeStatus(likeRecordList != null && !likeRecordList.isEmpty());
+                if (likeRecordList != null && !likeRecordList.isEmpty()) {
+                    LikeRecord likeRecord = likeRecordList.get(0);
+                    if (likeRecord != null) {
+                        if (likeRecord.getStatus().equals(LikeStatusEnum.YES.getType())) {
+                            dynamicInfoVO.setLikeStatus(true);
+                        }
+                        if (likeRecord.getStatus().equals(LikeStatusEnum.NO.getType())) {
+                            dynamicInfoVO.setLikeStatus(false);
+                        }
+                    }
+                } else {
+                    dynamicInfoVO.setLikeStatus(false);
+                }
 
                 if (PublicStatusEnum.NOPublic.getCode().toString().equals(dynamicInfoData.getPublishStatus())) {
                     dynamicInfoVO.setAddress(null);
