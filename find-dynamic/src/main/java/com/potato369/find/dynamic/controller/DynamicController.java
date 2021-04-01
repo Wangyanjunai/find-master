@@ -700,12 +700,10 @@ public class DynamicController {
                 log.debug("开始点赞当前动态内容");
             }
             User user = this.userMapperReader.selectByPrimaryKey(userId);
-            log.info("user={}", user);
             if (user == null) {
                 return CommonResult.failed(data, ResultCode.LIKES_USER_IS_NOT_EXIST);
             }
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
-            log.info("dynamicInfo={}", dynamicInfo);
             if (dynamicInfo == null) {
                 return CommonResult.failed(data, ResultCode.LIKES_DYNAMIC_INFO_IS_NOT_EXIST);
             }
@@ -722,7 +720,7 @@ public class DynamicController {
                 }
                 likeRecord.setStatus(LikeStatusEnum.NO.getType());
                 likeRecord.setUpdateTime(new Date());
-                int result = this.likeRecordService.update(likeRecord);
+                int result = this.likeRecordService.update(likeRecord, dynamicInfo);
                 if (result > 0) {
                     data.put("LIKED", "OK");
                     return CommonResult.success(data, "取消点赞成功。");

@@ -10,8 +10,6 @@ import com.potato369.find.mbg.model.DynamicInfo;
 import com.potato369.find.mbg.model.LikeRecord;
 import com.potato369.find.mbg.model.LikeRecordExample;
 import com.potato369.find.mbg.model.Message;
-import com.potato369.find.mbg.model.User;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,15 +142,12 @@ public class LikeRecordServiceImpl implements LikeRecordService {
                 likeRecord.setUpdateTime(new Date());
                 b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
             }
-
             Long recipientUserId = dynamicInfo.getUserId();
-            User user = this.userMapperReader.selectByPrimaryKey(userId);
-
             Message messageRecord = new Message();
             messageRecord.setContent(content);//消息内容
             messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
-            messageRecord.setRecipientUserId(recipientUserId);//发送者id
-            messageRecord.setSendUserId(userId);//接收者id
+            messageRecord.setRecipientUserId(recipientUserId);//接收者用户id
+            messageRecord.setSendUserId(userId);//发送者用户id
             messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//已读还是未读
             messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型
             messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送还是回复
@@ -166,12 +161,17 @@ public class LikeRecordServiceImpl implements LikeRecordService {
     /**
      * 更新动态内容点赞记录状态
      *
-     * @param likeRecord
-     * @return
+     * @param likeRecord  点赞记录
+     * @param dynamicInfo 动态内容
+     * @return int
      */
     @Override
     @Transactional
-    public int update(LikeRecord likeRecord) {
-        return this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
+    public int update(LikeRecord likeRecord, DynamicInfo dynamicInfo) {
+        dynamicInfo.setLikes(dynamicInfo.getLikes() - 1);
+        dynamicInfo.setUpdateTime(new Date());
+        int a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
+        int b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
+        return a + b;
     }
 }

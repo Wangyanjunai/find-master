@@ -48,8 +48,9 @@ public interface LikeRecordService {
     /**
      * 更新动态内容点赞记录状态
      *
-     * @param likeRecord
-     * @return
+     * @param likeRecord  点赞记录
+     * @param dynamicInfo 动态内容
+     * @return int
      */
-    int update(LikeRecord likeRecord);
+    int update(LikeRecord likeRecord, DynamicInfo dynamicInfo);
 }
