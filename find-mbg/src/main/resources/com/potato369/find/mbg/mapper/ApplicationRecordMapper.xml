@@ -187,22 +187,16 @@
         </if>
     </select>
     <select id="countByRecipientUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT COUNT(1)
+        SELECT COUNT(a.`user_id`)
         FROM (
                  SELECT `user_id`
                  FROM `dynamic_info`
                  WHERE `id` IN (
                      SELECT `dynamic_info_id`
                      FROM `application_record`
-                     WHERE `create_time`<![CDATA[ >=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
-                       AND `create_time`<![CDATA[ <=]]> DATE_ADD(
-                             DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY),
-                             INTERVAL - 1 SECOND)
-                     GROUP BY `dynamic_info_id`
-                 )
-                 GROUP BY `user_id`
-             ) AS a
-        WHERE a.`user_id` = #{userId,jdbcType=BIGINT};
+                     WHERE `create_time` <![CDATA[ >=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
+                       AND `create_time` <![CDATA[ <=]]> DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY), INTERVAL- 1 SECOND)
+                       AND `user_id` = #{userId,jdbcType=BIGINT})) AS a
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update application_record

@@ -777,7 +777,7 @@ public class DynamicController {
             if (publishUser == null) {
                 return CommonResult.failed(data, ResultCode.PUBLISH_USER_IS_NOT_EXIST);
             }
-            User recipientUser = this.userMapperReader.selectByPrimaryKey(userId);
+            User recipientUser = this.userMapperReader.selectByPrimaryKey(userId);//申请加微信者
             if (recipientUser == null) {
                 return CommonResult.failed(data, ResultCode.RECIPIENT_USER_IS_NOT_EXIST);
             }

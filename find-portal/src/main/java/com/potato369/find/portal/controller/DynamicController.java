@@ -7,11 +7,8 @@ import com.potato369.find.common.enums.OperateRecordTypeEnum;
 import com.potato369.find.mbg.model.OperateRecord;
 import com.potato369.find.portal.feign.DynamicService;
 import com.potato369.find.portal.feign.UserLogService;
-
 import io.swagger.annotations.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -343,7 +340,7 @@ public class DynamicController {
     @ApiResponses(@ApiResponse(code = 200, message = "更新动态定位地址成功", response = CommonResult.class))
     @PostMapping(value = "/{id}/updateLocation")
     public CommonResult<Map<String, Object>> updateLocation(
-            @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1")Long userId,
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
             @RequestBody @ApiParam("定位实体对象") LocationDTO locationDTO) {
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
@@ -548,7 +545,7 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 申请加微信
-     * @apiParam (接口请求参数) {long} id 用户id，说明：普通用户每天只允许申请最多5次添加微信，VIP用户申请加微信次数没有限制
+     * @apiParam (接口请求参数) {long} id 申请者用户id，说明：普通用户每天只允许申请最多5次添加微信，VIP用户申请加微信次数没有限制
      * @apiParam (接口请求参数) {long} dynamicInfoId 动态内容id
      * @apiParam (接口请求参数) {string{..255}} [message] 发送的消息
      * @apiParamExample {json} 请求示例01（第1次申请加微信）
@@ -812,33 +809,33 @@ public class DynamicController {
      * @apiSuccess (200) {string[]} [attacheFileUrlList] 附件文件地址列表
      * @apiSuccessExample {json} 200响应示例01
      * HTTP/1.1 200 OK
-		{
-		    "status":200,
-		    "code":0,
-		    "msg":"获取觅鹿界面发布的动态内容信息列表成功",
-		    "data":{
-		        "totalPage":1,
-		        "list":[
-		            {
-		                "userId":71,
-		                "headUrl":"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
-		                "nickname":"杨贵妃",
-		                "publishTime":"2021-02-01 14:35:23",
-		                "dynamicInfoId":86,
-		                "content":"刚刚注册，请多关照小妹子！！",
-		                "address":"广西省南宁市",
-		                "likes":0,
-		                "likeStatus":false,
-		                "applications":5,
-		                "applicationStatus":true,
-		                "dataType":"1",
-		                "attacheFileUrlList":[
-		                    "http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
-		                ]
-		            }
-		        ]
-		    }
-		}
+     * {
+     * "status":200,
+     * "code":0,
+     * "msg":"获取觅鹿界面发布的动态内容信息列表成功",
+     * "data":{
+     * "totalPage":1,
+     * "list":[
+     * {
+     * "userId":71,
+     * "headUrl":"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
+     * "nickname":"杨贵妃",
+     * "publishTime":"2021-02-01 14:35:23",
+     * "dynamicInfoId":86,
+     * "content":"刚刚注册，请多关照小妹子！！",
+     * "address":"广西省南宁市",
+     * "likes":0,
+     * "likeStatus":false,
+     * "applications":5,
+     * "applicationStatus":true,
+     * "dataType":"1",
+     * "attacheFileUrlList":[
+     * "http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
+     * ]
+     * }
+     * ]
+     * }
+     * }
      * @apiError (404) {int{0-65535}} timestamp 响应时间戳
      * @apiError (404) {long{0-500}} status 消息码
      * @apiError (404) {String} error 错误说明
@@ -913,33 +910,33 @@ public class DynamicController {
      * @apiSuccess (200) {list} [attacheFileUrlList] 附件文件地址列表
      * @apiSuccessExample {json} 200响应示例01
      * HTTP/1.1 200 OK
-		{
-		    "status":200,
-		    "code":0,
-		    "msg":"获取觅鹿界面发布的动态内容信息列表成功",
-		    "data":{
-		        "totalPage":1,
-		        "list":[
-		            {
-		                "userId":71,
-		                "headUrl":"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
-		                "nickname":"杨贵妃",
-		                "publishTime":"2021-02-01 14:35:23",
-		                "dynamicInfoId":86,
-		                "content":"刚刚注册，请多关照小妹子！！",
-		                "address":"广西省南宁市",
-		                "likes":0,
-		                "likeStatus":false,
-		                "applications":5,
-		                "applicationStatus":true,
-		                "dataType":"1",
-		                "attacheFileUrlList":[
-		                    "http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
-		                ]
-		            }
-		        ]
-		    }
-		}
+     * {
+     * "status":200,
+     * "code":0,
+     * "msg":"获取觅鹿界面发布的动态内容信息列表成功",
+     * "data":{
+     * "totalPage":1,
+     * "list":[
+     * {
+     * "userId":71,
+     * "headUrl":"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
+     * "nickname":"杨贵妃",
+     * "publishTime":"2021-02-01 14:35:23",
+     * "dynamicInfoId":86,
+     * "content":"刚刚注册，请多关照小妹子！！",
+     * "address":"广西省南宁市",
+     * "likes":0,
+     * "likeStatus":false,
+     * "applications":5,
+     * "applicationStatus":true,
+     * "dataType":"1",
+     * "attacheFileUrlList":[
+     * "http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
+     * ]
+     * }
+     * ]
+     * }
+     * }
      * @apiError (404) {int{0-65535}} timestamp 响应时间戳
      * @apiError (404) {long{0-500}} status 消息码
      * @apiError (404) {String} error 错误说明
@@ -1014,33 +1011,33 @@ public class DynamicController {
      * @apiSuccess (200) {list} [attacheFileUrlList] 附件文件地址列表
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
-		{
-		    "status":200,
-		    "code":0,
-		    "msg":"分页获取用户自己发布的所有动态内容列表成功。",
-		    "data":{
-		        "totalPage":1,
-		        "list":[
-		            {
-		                "userId":71,
-		                "headUrl":"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
-		                "nickname":"杨贵妃",
-		                "publishTime":"2021-02-01 14:35:23",
-		                "dynamicInfoId":86,
-		                "content":"刚刚注册，请多关照小妹子！！",
-		                "address":"广西省南宁市",
-		                "likes":0,
-		                "likeStatus":false,
-		                "applications":5,
-		                "applicationStatus":false,
-		                "dataType":"0",
-		                "attacheFileUrlList":[
-		                    "http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
-		                ]
-		            }
-		        ]
-		    }
-		}
+     * {
+     * "status":200,
+     * "code":0,
+     * "msg":"分页获取用户自己发布的所有动态内容列表成功。",
+     * "data":{
+     * "totalPage":1,
+     * "list":[
+     * {
+     * "userId":71,
+     * "headUrl":"http://8.135.36.45:8000/find/img/head/71/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg",
+     * "nickname":"杨贵妃",
+     * "publishTime":"2021-02-01 14:35:23",
+     * "dynamicInfoId":86,
+     * "content":"刚刚注册，请多关照小妹子！！",
+     * "address":"广西省南宁市",
+     * "likes":0,
+     * "likeStatus":false,
+     * "applications":5,
+     * "applicationStatus":false,
+     * "dataType":"0",
+     * "attacheFileUrlList":[
+     * "http://8.135.36.45:8000/find/res/images/71/20210201/1612161322850/3cc0c052-e6ab-4b9a-b904-b4a577bd3413.jpg"
+     * ]
+     * }
+     * ]
+     * }
+     * }
      * @apiError (404) {int{0-65535}} timestamp 响应时间戳
      * @apiError (404) {long{0-500}} status 消息码
      * @apiError (404) {String} error 错误说明
