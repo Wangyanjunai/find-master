@@ -23,7 +23,13 @@ public interface ApplicationRecordMapper {
 
     int selectCountDataByUserId(@Param("userId") Long userId);
 
-    int countByRecipientUserId(@Param("userId") Long userId);
+    /**
+     * 查询申请加微信者当天申请加被申请加微信者次数
+     * @param applicantUserId 申请加微信者用户id
+     * @param applicantsUserId 被申请加微信者用户id
+     * @return
+     */
+    int countByUserId(@Param("applicantUserId") Long applicantUserId, @Param("applicantsUserId") Long applicantsUserId);
 
     int updateByExampleSelective(@Param("record") ApplicationRecord record, @Param("example") ApplicationRecordExample example);
 

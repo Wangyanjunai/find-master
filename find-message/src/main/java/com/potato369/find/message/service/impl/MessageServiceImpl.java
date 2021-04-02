@@ -383,4 +383,16 @@ public class MessageServiceImpl implements MessageService {
         data.put(key, value);
         return CommonResult.success(data, msg);
     }
+
+	@Override
+	@Transactional
+	public CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type) {
+		if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
+			
+		}
+		if (MessageType3Enum.REFUSE.getCodeStr().equals(type)) {
+			
+		}
+		return null;
+	}
 }

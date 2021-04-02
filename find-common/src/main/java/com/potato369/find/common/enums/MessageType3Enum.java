@@ -4,25 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+// 回复申请加微信消息类型枚举
 @AllArgsConstructor
 @Getter
 @NoArgsConstructor
-public enum MessageTypeEnum implements CodeEnum<Object> {
+public enum MessageType3Enum implements CodeEnum<Object> {
 
     /**
-     * 点赞消息
+     * 拒绝
      */
-    Likes(0, "0", "likes"),
+	REFUSE(0, "0", "refuse"),
 
     /**
-     * 申请加微信消息
+     * 同意
      */
-    Applications(1, "1", "applications"),
-    
-    /**
-     * 普通消息
-     */
-    Commons(2, "2", "commons"),
+	AGREE(1, "1", "agree"),
     ;
 
     private Integer code;

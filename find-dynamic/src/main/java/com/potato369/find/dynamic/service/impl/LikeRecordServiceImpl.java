@@ -5,12 +5,10 @@ import com.potato369.find.dynamic.service.LikeRecordService;
 import com.potato369.find.mbg.mapper.DynamicInfoMapper;
 import com.potato369.find.mbg.mapper.LikeRecordMapper;
 import com.potato369.find.mbg.mapper.MessageMapper;
-import com.potato369.find.mbg.mapper.UserMapper;
 import com.potato369.find.mbg.model.DynamicInfo;
 import com.potato369.find.mbg.model.LikeRecord;
 import com.potato369.find.mbg.model.LikeRecordExample;
 import com.potato369.find.mbg.model.Message;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,14 +29,11 @@ import java.util.List;
  * </pre>
  */
 @Service
-@Slf4j
 public class LikeRecordServiceImpl implements LikeRecordService {
 
     private LikeRecordMapper likeRecordMapperReader;
 
     private LikeRecordMapper likeRecordMapperWriter;
-
-    private UserMapper userMapperReader;
 
     private DynamicInfoMapper dynamicInfoMapperWriter;
 
@@ -52,11 +47,6 @@ public class LikeRecordServiceImpl implements LikeRecordService {
     @Autowired
     public void setLikeRecordMapperWriter(LikeRecordMapper likeRecordMapperWriter) {
         this.likeRecordMapperWriter = likeRecordMapperWriter;
-    }
-
-    @Autowired
-    public void setUserMapperReader(UserMapper userMapperReader) {
-        this.userMapperReader = userMapperReader;
     }
 
     @Autowired

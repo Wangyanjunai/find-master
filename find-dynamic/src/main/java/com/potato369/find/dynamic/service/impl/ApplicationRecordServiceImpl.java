@@ -78,23 +78,25 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
      * @return 保存记录条数
      */
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public Integer saveApplicationRecord(DynamicInfo dynamicInfo, ApplicationRecord applicationRecord, String message) {
         int a = 0, b = 0, c = 0;
         if (StrUtil.isNotEmpty(message) && dynamicInfo != null && applicationRecord != null) {
-            Long sendUserId = applicationRecord.getUserId();
-            Long recipientUserId = dynamicInfo.getUserId();
-            Message messageRecord = new Message();
-            messageRecord.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
-            messageRecord.setSendUserId(sendUserId);
-            messageRecord.setRecipientUserId(recipientUserId);
-            messageRecord.setContent(message);
-            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());
-            messageRecord.setReserveColumn01(MessageTypeEnum.Applications.getMessage());
-            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());
-            messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
-            dynamicInfo.setApplications(dynamicInfo.getApplications() + 1);
-            dynamicInfo.setUpdateTime(new Date());
+            Long sendUserId = applicationRecord.getUserId();//申请加微信者用户id
+            Long recipientUserId = dynamicInfo.getUserId();//被申请加微信者用户id
+            
+            Message messageRecord = new Message();//消息记录
+            messageRecord.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());//消息发送方式，用户主动
+            messageRecord.setSendUserId(sendUserId);//消息发送者用户id
+            messageRecord.setRecipientUserId(recipientUserId);//消息接收者用户id
+            messageRecord.setContent(message);//消息内容
+            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//消息状态，未读
+            messageRecord.setReserveColumn01(MessageTypeEnum.Applications.getMessage());//消息类型，申请加微信
+            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//消息发送还是回复类型
+            messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//消息是否删除
+            
+            dynamicInfo.setApplications(dynamicInfo.getApplications() + 1);//动态内容信息申请加微信数量+1
+            dynamicInfo.setUpdateTime(new Date());//动态内容信息更新时间
             a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
             b = this.messageMapperWriter.insertSelective(messageRecord);
             c = this.applicationRecordMapperWriter.insertSelective(applicationRecord);

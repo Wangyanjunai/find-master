@@ -43,7 +43,7 @@ public interface MessageMapper {
 
     List<Message> selectMessageRecord(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 
-    int countByUserId(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
+    int countByUserId(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId, @Param("messageId") Long messageId);
 
     int updateByExampleSelective(@Param("record") Message record, @Param("example") MessageExample example);
 

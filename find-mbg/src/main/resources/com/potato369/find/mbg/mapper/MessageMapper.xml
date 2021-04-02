@@ -295,12 +295,12 @@
     <select id="countByUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
         select count(1)
         from `message`
-        where `send_user_id` = #{sendUserId,jdbcType=BIGINT}
-          and `recipient_user_id` = #{recipientUserId,jdbcType=BIGINT}
+        where `send_user_id` = #{sendUserId, jdbcType=BIGINT}
+          and `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
           and `reserve_column01` = 'applications'
           and `reserve_column02` = '1'
           and `send_mode` = '0'
-          and `reserve_column04` is not null
+          and `reserve_column04` = #{messageId, jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

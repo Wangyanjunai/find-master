@@ -103,4 +103,13 @@ public interface MessageService {
      */
 
     CommonResult<Map<String, Object>> deleteLikes(Long recipientUserId, Long messageId);
+
+    /**
+     * 被申请者回复申请者申请加微信消息记录
+     * @param applicantsUserId 被申请者用户id
+     * @param messageId 回复的消息id
+     * @param type 回复类型，0->拒绝，1->同意
+     * @return
+     */
+    CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type);
 }

@@ -37,19 +37,20 @@ public enum ResultCode implements IErrorCode {
 
     FAILED(500, "返回数据失败"),
 
-    DYNAMIC_IS_NOT_EXIST(600, "申请加微信出错，动态内容不存在。"),
+    APPLICANT_USER_IS_NOT_EXIST(600, "申请加微信者用户信息不存在。"),
+    
+    DYNAMIC_IS_NOT_EXIST(601, "被申请加微信者动态内容信息不存在。"),
 
-    PUBLISH_USER_IS_NOT_EXIST(601, "申请加微信出错，发布者用户信息不存在。"),
+    APPLICANTS_USER_IS_NOT_EXIST(602, "被申请加微信者用户信息不存在。"),
 
-    PUBLISH_USER_IS_VALID(602, "申请加微信出错，不能申请加自己微信。"),
+    APPLICANTS_USER_IS_VALID(603, "申请加微信者不能申请加自己微信。"),
 
-    RECIPIENT_USER_IS_NOT_EXIST(603, "申请加微信出错，接收者用户信息不存在。"),
+    TIMES_OVERRUN(604, "今天申请加微信次数超限，请明天再试。"),
 
-    TIMES_OVERRUN(604, "申请加微信出错，今天申请加微信次数超限，请明天再试。"),
+    COUNT_OVERRUN(605, "今天已经申请加过微信，请明天再试。"),
 
-    COUNT_OVERRUN(605, "申请加微信出错，今天已经申请加过微信，请明天再试。"),
-
-    NO_REPLY_OVERRUN(606, "申请加微信出错，对方未回复，请等待对方回复再试。"),
+    NO_REPLY_OVERRUN(606, "对方未回复，请等待对方回复再试。"),
+    
 
     LIKES_USER_IS_NOT_EXIST(630, "点赞当前动态内容出错，用户信息不存在。"),
 
