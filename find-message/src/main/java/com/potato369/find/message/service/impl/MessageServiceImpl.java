@@ -1,41 +1,25 @@
 package com.potato369.find.message.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import cn.hutool.core.util.StrUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.common.api.ResultCode;
 import com.potato369.find.common.enums.*;
+import com.potato369.find.common.utils.DateUtil;
+import com.potato369.find.common.vo.*;
+import com.potato369.find.mbg.mapper.MessageMapper;
+import com.potato369.find.mbg.mapper.UserMapper;
+import com.potato369.find.mbg.model.*;
+import com.potato369.find.message.config.bean.PushBean;
+import com.potato369.find.message.config.props.ProjectUrlProps;
+import com.potato369.find.message.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.common.utils.DateUtil;
-import com.potato369.find.common.vo.LikesInfoVO;
-import com.potato369.find.common.vo.LikesMessageVO;
-import com.potato369.find.common.vo.MessageInfoVO;
-import com.potato369.find.common.vo.MessageInfoVO2;
-import com.potato369.find.common.vo.MessageVO;
-import com.potato369.find.common.vo.MessageVO2;
-import com.potato369.find.common.vo.MessageVO3;
-import com.potato369.find.mbg.mapper.MessageMapper;
-import com.potato369.find.mbg.mapper.UserMapper;
-import com.potato369.find.mbg.model.LikesMessageRecord;
-import com.potato369.find.mbg.model.Message;
-import com.potato369.find.mbg.model.MessageExample;
-import com.potato369.find.mbg.model.NotLikesMessageRecord;
-import com.potato369.find.mbg.model.User;
-import com.potato369.find.message.config.bean.PushBean;
-import com.potato369.find.message.config.props.ProjectUrlProps;
-import com.potato369.find.message.service.MessageService;
-
-import cn.hutool.core.util.StrUtil;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -384,15 +368,28 @@ public class MessageServiceImpl implements MessageService {
         return CommonResult.success(data, msg);
     }
 
-	@Override
-	@Transactional
-	public CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type) {
-		if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
-			
-		}
-		if (MessageType3Enum.REFUSE.getCodeStr().equals(type)) {
-			
-		}
-		return null;
-	}
+    @Override
+    @Transactional
+    public CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type, String content) {
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        String key = "REPLY";
+        String value = "ERROR";
+        User applicantsUser = this.userMapperReader.selectByPrimaryKey(applicantsUserId);
+        if (applicantsUser == null) {
+            data.put(key, value);
+            return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
+        }
+        Message messageRecord = this.messageMapperReader.selectByPrimaryKey(messageId);
+        if (messageRecord == null) {
+            data.put(key, value);
+            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_IS_NOT_EXIST);
+        }
+        if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
+
+        }
+        if (MessageType3Enum.REFUSE.getCodeStr().equals(type)) {
+
+        }
+        return null;
+    }
 }

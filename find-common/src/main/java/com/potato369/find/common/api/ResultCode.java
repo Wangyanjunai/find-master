@@ -58,6 +58,8 @@ public enum ResultCode implements IErrorCode {
 
     LIKES_RECORD_IS_NOT_EXIST(632, "取消/点赞，点赞记录不存在。"),
 
+    REPLY_MESSAGE_IS_NOT_EXIST(650, "回复的消息不存在"),
+
     ;
     private int code;
 

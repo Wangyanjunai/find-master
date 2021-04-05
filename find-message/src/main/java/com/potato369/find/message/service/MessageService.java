@@ -1,12 +1,12 @@
 package com.potato369.find.message.service;
 
-import java.util.Map;
-
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.vo.LikesMessageVO;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.common.vo.MessageVO3;
+
+import java.util.Map;
 
 /**
  * 消息服务
@@ -106,10 +106,11 @@ public interface MessageService {
 
     /**
      * 被申请者回复申请者申请加微信消息记录
+     *
      * @param applicantsUserId 被申请者用户id
-     * @param messageId 回复的消息id
-     * @param type 回复类型，0->拒绝，1->同意
-     * @return
+     * @param messageId        回复的消息id
+     * @param type             回复类型，0->拒绝，1->同意
+     * @param content          回复的消息内容
      */
-    CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type);
+    CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type, String content);
 }

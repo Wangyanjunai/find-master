@@ -1,26 +1,17 @@
 package com.potato369.find.message.controller;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.common.vo.MessageVO3;
 import com.potato369.find.message.service.MessageService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Api(value = "消息模块消息管理控制器类", consumes = "消息模块消息管理控制器类")
 @RestController
@@ -141,21 +132,21 @@ public class MessageController {
             @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId) {
         return this.messageService.deleteLikes(recipientUserId, messageId);
     }
-    
+
     /**
      * 被申请者回复申请者申请加微信消息记录接口
      *
      * @param applicantsUserId 被申请加微信者用户id
-     * @param messageId 回复的消息id
-     * @param type 回复类型，0->拒绝，1->同意
-     * @param content 回复的消息内容
+     * @param messageId        回复的消息id
+     * @param type             回复类型，0->拒绝，1->同意
+     * @param content          回复的消息内容
      */
     @ApiOperation(value = "被申请者回复申请者申请加微信消息记录接口", notes = "被申请者回复申请者申请加微信消息记录接口")
     @PutMapping(value = "/{id}/reply.do")
     public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") @ApiParam(name = "id", value = "被申请加微信者用户id", required = true, example = "1") Long applicantsUserId,
-    											   @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "回复的消息id", required = true, example = "2") Long messageId,
-    											   @RequestParam(name = "type") @ApiParam(name = "id", value = "回复类型，0->拒绝，1->同意", required = true, example = "0") String type,
-    											   @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "回复的消息内容", example = "非常抱歉，我不想加你！") String content) {
-		return this.messageService.replyApplications(applicantsUserId, messageId, type);
-	}
+                                                   @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "回复的消息id", required = true, example = "2") Long messageId,
+                                                   @RequestParam(name = "type") @ApiParam(name = "id", value = "回复类型，0->拒绝，1->同意", required = true, example = "0") String type,
+                                                   @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "回复的消息内容", example = "非常抱歉，我不想加你！") String content) {
+        return this.messageService.replyApplications(applicantsUserId, messageId, type, content);
+    }
 }

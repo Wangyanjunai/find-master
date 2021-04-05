@@ -755,9 +755,10 @@ public class DynamicController {
 
     /**
      * 用户申请加微信
+     *
      * @param applicantUserId 申请加微信者的用户id
-     * @param dynamicInfoId 被申请加微信者的动态内容信息id
-     * @param message 申请加微信发送的消息
+     * @param dynamicInfoId   被申请加微信者的动态内容信息id
+     * @param message         申请加微信发送的消息
      * @return
      */
     @PutMapping(value = "/{id}/application.do")
@@ -782,7 +783,7 @@ public class DynamicController {
             }
             //被申请者用户id
             Long applicantsUserId = dynamicInfo.getUserId();
-            
+
             //需要判断是否是在申请加自己微信
             if (applicantsUserId.equals(applicantUserId)) {
                 return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_VALID);
@@ -792,7 +793,7 @@ public class DynamicController {
             if (applicantsUser == null) {
                 return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
             }
-            
+
             // 获取申请加微信者申请加被申请加微信者微信记录条数 
             int count = this.applicationRecordMapperReader.countByUserId(applicantUserId, applicantsUserId);
             if (count > 0) {
