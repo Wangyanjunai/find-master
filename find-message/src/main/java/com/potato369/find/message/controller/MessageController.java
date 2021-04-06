@@ -88,8 +88,8 @@ public class MessageController {
     public CommonResult<Map<String, Object>> send(
             @PathVariable(name = "id1") @ApiParam(name = "id1", value = "发送者用户id", required = true, example = "1") Long sendUserId,
             @PathVariable(name = "id2") @ApiParam(name = "id2", value = "接收者用户id", required = true, example = "2") Long recipientUserId,
-            @RequestParam(name = "messageId", required = false) @ApiParam(name = "messageId", value = "消息id", example = "3") Long messageId,
-            @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "消息内容", example = "可以申请加你的微信吗？") String content) {
+            @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息id", required = true, example = "3") Long messageId,
+            @RequestParam(name = "content") @ApiParam(name = "content", value = "消息内容", required = true, example = "可以聊聊吗？") String content) {
         return this.messageService.sendMessageAndPush(sendUserId, recipientUserId, messageId, content);
     }
 
@@ -146,7 +146,8 @@ public class MessageController {
     public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") @ApiParam(name = "id", value = "被申请加微信者用户id", required = true, example = "1") Long applicantsUserId,
                                                    @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "回复的消息id", required = true, example = "2") Long messageId,
                                                    @RequestParam(name = "type") @ApiParam(name = "id", value = "回复类型，0->拒绝，1->同意", required = true, example = "0") String type,
-                                                   @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "回复的消息内容", example = "非常抱歉，我不想加你！") String content) {
-        return this.messageService.replyApplications(applicantsUserId, messageId, type, content);
+                                                   @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "回复的消息内容", example = "非常抱歉，我不想加你！") String content,
+                                                   @RequestParam(name = "weChatId", required = false) @ApiParam(name = "weChatId", value = "回复的微信Id", example = "wx123456789") String weChatId) {
+        return this.messageService.replyApplications(applicantsUserId, messageId, type, content, weChatId);
     }
 }

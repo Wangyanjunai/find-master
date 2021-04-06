@@ -251,7 +251,7 @@
                    AND `recipient_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
              ) AS a
         WHERE a.`status`<![CDATA[ =]]> '0'
-        ORDER BY a.`create_time` DESC
+        ORDER BY a.`id` ASC, a.`create_time` ASC
     </select>
 
     <select id="selectMessageRecord" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -289,7 +289,7 @@
                    AND `send_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
                    AND `recipient_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
              ) AS a
-        ORDER BY a.`create_time` DESC
+        ORDER BY a.`id` ASC, a.`create_time` ASC
     </select>
 
     <select id="countByUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">

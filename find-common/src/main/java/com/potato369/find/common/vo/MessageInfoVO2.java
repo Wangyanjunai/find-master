@@ -20,6 +20,11 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MessageInfoVO2 {
 
+	// 消息记录id
+	@JSONField(name = "messageId")
+	@JsonProperty(value = "messageId")
+	private Long messageId;
+		
 	// 消息发送者用户id
 	@JSONField(name = "sendUserId")
 	@JsonProperty(value = "sendUserId")
@@ -34,21 +39,6 @@ public class MessageInfoVO2 {
 	@JSONField(name = "sendUserNickname")
 	@JsonProperty(value = "sendUserNickname")
 	private String sendUserNickname;
-
-	// 消息发送者用户id
-	@JSONField(name = "recipientUserId")
-	@JsonProperty(value = "recipientUserId")
-	private Long recipientUserId;
-
-	// 消息发送者用户头像
-	@JSONField(name = "recipientUserHeadIcon")
-	@JsonProperty(value = "recipientUserHead")
-	private String recipientUserHeadIcon;
-
-	// 消息发送者用户昵称
-	@JSONField(name = "recipientUserNickname")
-	@JsonProperty(value = "recipientUserNickname")
-	private String recipientUserNickname;
 
 	// 消息发送时间
 	@JSONField(name = "sendDateTime")
