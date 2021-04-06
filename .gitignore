@@ -1,6 +1,7 @@
 # Maven #
 target/
 log/
+catalina_*/
 
 # IDEA #
 .idea/
