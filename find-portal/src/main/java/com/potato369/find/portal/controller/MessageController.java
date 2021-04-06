@@ -464,85 +464,65 @@ public class MessageController {
      * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X GET "http://8.135.36.45:8084/find/message/60/29/messages?pageNum=1&pageSize=20" -H "accept: application/json"
+     * curl -v -X GET "http://8.135.36.45:8084/find/message/138/139/messages?pageNum=1&pageSize=20" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {object} [data] 消息历史记录数据
-     * @apiSuccess (200) {long} [totalCount] 消息历史记录总条数
-     * @apiSuccess (200) {int} [totalPage] 消息历史记录总页数
-     * @apiSuccess (200) {object[]} [list] 消息历史记录数据列表
+     * @apiSuccess (200) {long} [totalCount] 消息记录总条数
+     * @apiSuccess (200) {int} [totalPage] 消息记录总页数
+     * @apiSuccess (200) {object[]} [list] 消息记录数据列表
+     * @apiSuccess (200) {long} [messageId] 消息记录id
      * @apiSuccess (200) {long} [sendUserId] 消息发送者用户id
      * @apiSuccess (200) {string} [sendUserHead] 消息发送者用户头像
      * @apiSuccess (200) {string} [sendUserNickname] 消息发送者用户昵称
-     * @apiSuccess (200) {long} [recipientUserId] 消息发送者用户id
-     * @apiSuccess (200) {string} [recipientUserHead] 消息发送者用户头像
-     * @apiSuccess (200) {string} [recipientUserNickname] 消息发送者用户昵称
      * @apiSuccess (200) {string} [sendDateTime] 消息发送时间
      * @apiSuccess (200) {string} [content] 消息内容
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "返回数据成功",
-     * "data": {
-     * "totalCount": 5,
-     * "totalPage": 1,
-     * "list": [
-     * {
-     * "sendUserId": 60,
-     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
-     * "sendUserNickname": "尘埃",
-     * "recipientUserId": 29,
-     * "recipientUserHead": "http://8.135.36.45:8000/find/img/head/29/014.png",
-     * "recipientUserNickname": "深兰",
-     * "sendDateTime": "2021年03月16日 11:13:04",
-     * "content": "需要加您的微信?"
-     * },
-     * {
-     * "sendUserId": 60,
-     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
-     * "sendUserNickname": "尘埃",
-     * "recipientUserId": 29,
-     * "recipientUserHead": "http://8.135.36.45:8000/find/img/head/29/014.png",
-     * "recipientUserNickname": "深兰",
-     * "sendDateTime": "2021年03月16日 11:12:55",
-     * "content": "需要加您的微信?"
-     * },
-     * {
-     * "sendUserId": 60,
-     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
-     * "sendUserNickname": "尘埃",
-     * "recipientUserId": 29,
-     * "recipientUserHead": "http://8.135.36.45:8000/find/img/head/29/014.png",
-     * "recipientUserNickname": "深兰",
-     * "sendDateTime": "2021年03月16日 11:12:48",
-     * "content": "需要加您的微信?"
-     * },
-     * {
-     * "sendUserId": 60,
-     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
-     * "sendUserNickname": "尘埃",
-     * "recipientUserId": 29,
-     * "recipientUserHead": "http://8.135.36.45:8000/find/img/head/29/014.png",
-     * "recipientUserNickname": "深兰",
-     * "sendDateTime": "2021年03月16日 11:12:29",
-     * "content": "需要加您的微信?"
-     * },
-     * {
-     * "sendUserId": 60,
-     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/60/01.png",
-     * "sendUserNickname": "尘埃",
-     * "recipientUserId": 29,
-     * "recipientUserHead": "http://8.135.36.45:8000/find/img/head/29/014.png",
-     * "recipientUserNickname": "深兰",
-     * "sendDateTime": "2021年03月16日 10:55:39",
-     * "content": "需要加您的微信?"
-     * }
-     * ]
-     * }
-     * }
+		{
+		    "status": 200,
+		    "code": 0,
+		    "msg": "返回数据成功。",
+		    "data": {
+		        "totalCount": 4,
+		        "totalPage": 1,
+		        "list": [
+		            {
+		                "messageId": 8,
+		                "sendUserId": 139,
+		                "sendUserHead": "http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
+		                "sendUserNickname": "9527",
+		                "sendDateTime": "2021年04月06日 11:50:30",
+		                "content": "申请加您的微信，麻烦通过一下，谢谢！"
+		            },
+		            {
+		                "messageId": 9,
+		                "sendUserId": 138,
+		                "sendUserHead": "http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg",
+		                "sendUserNickname": "阿珂",
+		                "sendDateTime": "2021年04月06日 11:52:00",
+		                "content": "我同意。好的，我的微信号是：wx123123212"
+		            },
+		            {
+		                "messageId": 18,
+		                "sendUserId": 139,
+		                "sendUserHead": "http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
+		                "sendUserNickname": "9527",
+		                "sendDateTime": "2021年04月06日 15:24:43",
+		                "content": "添加微信聊聊"
+		            },
+		            {
+		                "messageId": 32,
+		                "sendUserId": 138,
+		                "sendUserHead": "http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg",
+		                "sendUserNickname": "阿珂",
+		                "sendDateTime": "2021年04月06日 18:16:09",
+		                "content": "好啊"
+		            }
+		        ]
+		    }
+		}
      * @apiError (403) {int{0-65535}} status 响应状态码
      * @apiError (403) {long{0-500}} code 消息码
      * @apiError (403) {String} msg 说明
@@ -665,8 +645,8 @@ public class MessageController {
     public CommonResult<Map<String, Object>> send(
             @PathVariable(name = "id1") @ApiParam(name = "id1", value = "消息发送者用户id", required = true, example = "1") Long sendUserId,
             @PathVariable(name = "id2") @ApiParam(name = "id2", value = "消息接收者用户id", required = true, example = "2") Long recipientUserId,
-            @RequestParam(name = "messageId", required = false) @ApiParam(name = "messageId", value = "消息id", example = "3") Long messageId,
-            @RequestParam(name = "content", required = false, defaultValue = "可以申请加你的微信吗？") @ApiParam(name = "content", value = "消息内容", example = "可以申请加你的微信吗？") String content) {
+            @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息id", required = true, example = "3") Long messageId,
+            @RequestParam(name = "content") @ApiParam(name = "content", value = "消息内容", required = true, example = "可以申请加你的微信吗？") String content) {
         return this.messageFeignClient.send(sendUserId, recipientUserId, messageId, content);
     }
 
@@ -859,5 +839,90 @@ public class MessageController {
             @PathVariable(name = "id") @ApiParam(name = "id", value = "消息接收者用户id", required = true, example = "1") Long recipientUserId,
             @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId) {
         return this.messageFeignClient.deleteLikes(recipientUserId, messageId);
+    }
+
+    /**
+     * @api {post} http://8.135.36.45:8084/find/message/{id}/reply 被申请者回复申请者申请加微信消息记录接口
+     * @apiVersion 1.0.0
+     * @apiGroup 消息模块API
+     * @apiName 被申请者回复申请者申请加微信消息记录
+     * @apiParam (接口请求参数) {long} id 发送者用户id
+     * @apiParam (接口请求参数) {long} [messageId] 回复的消息id
+     * @apiParam (接口请求参数) {string} [content] 消息内容
+     * @apiParamExample {json} 请求示例 发送消息
+     * HTTP/1.1 OK
+     * curl -v -X POST "http://8.135.36.45:8084/find/message/60/29/send?content=可以申请加你的微信吗？" -H "accept: application/json"
+     * @apiSuccess (200) {long{0-500}} code 信息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {object} [data] 发送状态数据
+     * @apiSuccess (200) {string} [SEND] OK->发送成功，ERROR->发送失败
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "发送消息成功。",
+     * "data": {
+     * "SEND": "OK"
+     * }
+     * }
+     * @apiParamExample {json} 请求示例 回复消息
+     * HTTP/1.1 OK
+     * curl -v -X POST "http://8.135.36.45:8084/find/message/60/29/send?messageId=2&content=可以申请加你的微信吗？" -H "accept: application/json"
+     * @apiSuccess (200) {long{0-500}} code 信息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {object} [data] 发送状态数据
+     * @apiSuccess (200) {string} [SEND] OK->发送成功，ERROR->发送失败
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "发送消息成功。",
+     * "data": {
+     * "SEND": "OK"
+     * }
+     * }
+     * @apiError (403) {int{0-65535}} status 响应状态码
+     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {String} msg 说明
+     * @apiErrorExample {json} 403错误
+     * HTTP/1.1 403 403响应
+     * {
+     * "status": 403,
+     * "code": 199,
+     * "msg": "未找到用户信息！"
+     * }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册！"
+     * }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！"
+     * }
+     */    
+    @ApiOperation(value = "被申请者回复申请者申请加微信消息记录接口", notes = "被申请者回复申请者申请加微信消息记录接口")
+    @PutMapping(value = "/{id}/reply")
+    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") @ApiParam(name = "id", value = "被申请加微信者用户id", required = true, example = "1") Long applicantsUserId,
+                                                   @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "回复的消息id", required = true, example = "2") Long messageId,
+                                                   @RequestParam(name = "type") @ApiParam(name = "type", value = "回复类型，0->拒绝，1->同意", required = true, example = "0") String type,
+                                                   @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "回复的消息内容", example = "非常抱歉，我不想加你！") String content,
+                                                   @RequestParam(name = "weChatId", required = false) @ApiParam(name = "weChatId", value = "回复的微信Id", example = "wx123456789") String weChatId) {
+        return this.messageFeignClient.reply(applicantsUserId, messageId, type, content, weChatId);
     }
 }

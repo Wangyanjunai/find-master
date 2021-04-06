@@ -39,8 +39,8 @@ public interface MessageService {
     @PostMapping(value = "/find/v1/message/{id1}/{id2}/send.do")
     CommonResult<Map<String, Object>> send(@PathVariable(name = "id1") Long sendUserId,
                                            @PathVariable(name = "id2") Long recipientUserId,
-                                           @RequestParam(name = "messageId", required = false) Long messageId,
-                                           @RequestParam(name = "content", required = false) String content);
+                                           @RequestParam(name = "messageId") Long messageId,
+                                           @RequestParam(name = "content") String content);
 
     @PutMapping(value = "/find/v1/message/{id}/updateAll.do")
     CommonResult<Map<String, Object>> allRead(@PathVariable(name = "id") Long recipientUserId);
@@ -52,4 +52,11 @@ public interface MessageService {
     @DeleteMapping(value = "/find/v1/message/{id}/deleteLikes.do")
     CommonResult<Map<String, Object>> deleteLikes(@PathVariable(name = "id") Long recipientUserId,
                                                   @RequestParam(name = "messageId") Long messageId);
+    
+    @PutMapping(value = "/{id}/reply.do")
+    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") Long applicantsUserId,
+                                                   @RequestParam(name = "messageId") Long messageId,
+                                                   @RequestParam(name = "type") String type,
+                                                   @RequestParam(name = "content", required = false) String content,
+                                                   @RequestParam(name = "weChatId", required = false) String weChatId);
 }

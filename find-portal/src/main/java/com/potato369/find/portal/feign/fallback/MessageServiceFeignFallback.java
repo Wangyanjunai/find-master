@@ -57,4 +57,11 @@ public class MessageServiceFeignFallback implements MessageService {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }
+
+	@Override
+	public CommonResult<Map<String, Object>> reply(Long applicantsUserId, Long messageId, String type, String content,
+			String weChatId) {
+		log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+	}
 }
