@@ -87,8 +87,8 @@ public class MessageServiceImpl implements MessageService {
             Message message = messageList.get(0);
             likesMessageVO.setContent(message.getContent());
         } else {
-        	likesMessageVO.setContent(null);
-		}
+            likesMessageVO.setContent(null);
+        }
         return likesMessageVO;
     }
 
@@ -143,11 +143,11 @@ public class MessageServiceImpl implements MessageService {
                             + likesMessageRecord.getHeadIcon());
             likesInfoVO.setAttacheType(likesMessageRecord.getAttacheType());
             if (LikeStatusEnum.YES.getType().equals(likesMessageRecord.getStatus())) {
-            	likesInfoVO.setContent(likesMessageRecord.getNickname() + "点赞了你的动态" + likesMessageRecord.getLikesContent());
-			}
+                likesInfoVO.setContent(likesMessageRecord.getNickname() + "点赞了你的动态" + likesMessageRecord.getLikesContent());
+            }
             if (LikeStatusEnum.NO.getType().equals(likesMessageRecord.getStatus())) {
-            	likesInfoVO.setContent(likesMessageRecord.getNickname() + "取消点赞你的动态" + likesMessageRecord.getLikesContent());
-			}
+                likesInfoVO.setContent(likesMessageRecord.getNickname() + "取消点赞你的动态" + likesMessageRecord.getLikesContent());
+            }
             String[] fileNameList01 = StrUtil.split(likesMessageRecord.getAttacheFilename(), "||");
             List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
             List<String> fileNameList03 = new ArrayList<>();
@@ -268,8 +268,8 @@ public class MessageServiceImpl implements MessageService {
         List<Message> messageList = this.messageMapperReader.selectByExample(messageExample);
         if (messageList != null && !messageList.isEmpty()) {
             return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_IS_VALID);
-		}
-        
+        }
+
         Message messageRecord = new Message();
         messageRecord.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
         messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());
@@ -404,9 +404,9 @@ public class MessageServiceImpl implements MessageService {
         messageExample.createCriteria().andReserveColumn04EqualTo(String.valueOf(messageRecord.getId()));
         List<Message> messageList = this.messageMapperReader.selectByExample(messageExample);
         if (messageList != null && !messageList.isEmpty()) {
-        	data.put(key, value);
+            data.put(key, value);
             return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_IS_VALID);
-		}
+        }
         //判断申请加微信者用户信息是否存在，或者回复消息发送者用户信息是否存在
         Long sendUserId = messageRecord.getSendUserId();
         User sendUser = this.userMapperReader.selectByPrimaryKey(sendUserId);
@@ -415,6 +415,7 @@ public class MessageServiceImpl implements MessageService {
             return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_EXIST);
         }
         //如果是同意申请加微信
+        String weixinId = applicantsUser.getWeixinId();//数据库获取到的被申请人的微信号
         if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
             if (StrUtil.isNotEmpty(weChatId)) {
                 if (StrUtil.isEmpty(content)) {
@@ -423,19 +424,18 @@ public class MessageServiceImpl implements MessageService {
                     content = content + "。好的，我的微信号是：" + weChatId;
                 }
             } else {
-                String weixinId = applicantsUser.getWeixinId();//数据库获取到的被申请人的微信号
                 if (StrUtil.isNotEmpty(weixinId)) {
                     if (StrUtil.isEmpty(content)) {
                         content = "好的，我的微信号是：" + weixinId;
                     } else {
                         content = content + "。好的，我的微信号是：" + weixinId;
                     }
-                    if (!weixinId.equals(weChatId)) {
-                        applicantsUser.setWeixinId(weChatId);
-                        applicantsUser.setUpdateTime(new Date());
-                        this.userMapperWriter.updateByPrimaryKeySelective(applicantsUser);
-                    }
                 }
+            }
+            if (StrUtil.isNotEmpty(weixinId) && !weixinId.equals(weChatId)) {
+                applicantsUser.setWeixinId(weChatId);
+                applicantsUser.setUpdateTime(new Date());
+                this.userMapperWriter.updateByPrimaryKeySelective(applicantsUser);
             }
         }
         //如果是拒绝申请加微信
