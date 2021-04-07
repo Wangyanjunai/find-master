@@ -46,7 +46,7 @@ public interface MessageService {
     @DeleteMapping(value = "/find/v1/message/{id}/deleteLikes.do")
     CommonResult<Map<String, Object>> deleteLikes(@PathVariable(name = "id") Long recipientUserId,
                                                   @RequestParam(name = "messageId") Long messageId);
-    
+
     @PutMapping(value = "/find/v1/message/{id}/reply.do")
     public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") Long applicantsUserId,
                                                    @RequestParam(name = "messageId") Long messageId,
