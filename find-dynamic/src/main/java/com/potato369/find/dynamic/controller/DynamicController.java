@@ -817,7 +817,7 @@ public class DynamicController {
                 if (messageList != null && !messageList.isEmpty()) {
                     Message messageTemp = messageList.get(0);
                     if (messageTemp != null) {
-                        int count2 = this.messageMapperReader.countByUserId(applicantUserId, applicantsUserId, messageTemp.getId());
+                        int count2 = this.messageMapperReader.countByUserId(applicantsUserId, applicantUserId, messageTemp.getId());
                         if (count2 <= 0) {
                             return CommonResult.failed(data, ResultCode.NO_REPLY_OVERRUN);
                         }

@@ -842,49 +842,51 @@ public class MessageController {
     }
 
     /**
-     * @api {post} http://8.135.36.45:8084/find/message/{id}/reply 被申请者回复申请者申请加微信消息记录接口
+     * @api {post} http://8.135.36.45:8084/find/message/{id}/reply 回复申请加微信聊天消息接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
-     * @apiName 被申请者回复申请者申请加微信消息记录
-     * @apiParam (接口请求参数) {long} id 发送者用户id
-     * @apiParam (接口请求参数) {long} [messageId] 回复的消息id
-     * @apiParam (接口请求参数) {string} [content] 消息内容
-     * @apiParamExample {json} 请求示例 发送消息
+     * @apiName 回复申请加微信聊天消息
+     * @apiParam (接口请求参数) {long} id 回复被申请加微信用户id
+     * @apiParam (接口请求参数) {long} messageId 回复的消息id
+     * @apiParam (接口请求参数) {string={"0", "1"}} type 回复类型，0->拒绝，1->同意
+     * @apiParam (接口请求参数) {string} [content] 回复的消息内容
+     * @apiParam (接口请求参数) {string} [weChatId] 回复的微信id
+     * @apiParamExample {json} 请求示例 回复申请加微信消息（拒绝）
      * HTTP/1.1 OK
-     * curl -v -X POST "http://8.135.36.45:8084/find/message/60/29/send?content=可以申请加你的微信吗？" -H "accept: application/json"
+     * curl -v -X POST "http://8.135.36.45:8084/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 发送状态数据
-     * @apiSuccess (200) {string} [SEND] OK->发送成功，ERROR->发送失败
+     * @apiSuccess (200) {object} [data] 回复消息状态数据
+     * @apiSuccess (200) {string} [REPLY] OK->回复成功，ERROR->回复失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "发送消息成功。",
-     * "data": {
-     * "SEND": "OK"
-     * }
-     * }
-     * @apiParamExample {json} 请求示例 回复消息
+		{
+		    "status": 200,
+		    "code": 0,
+		    "msg": "返回数据成功。",
+		    "data": {
+		        "REPLY": "OK"
+		    }
+		}
+     * @apiParamExample {json} 请求示例 回复申请加微信消息（同意）
      * HTTP/1.1 OK
-     * curl -v -X POST "http://8.135.36.45:8084/find/message/60/29/send?messageId=2&content=可以申请加你的微信吗？" -H "accept: application/json"
+     * curl -v -X POST "http://8.135.36.45:8084/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 发送状态数据
-     * @apiSuccess (200) {string} [SEND] OK->发送成功，ERROR->发送失败
+     * @apiSuccess (200) {object} [data] 回复消息状态数据
+     * @apiSuccess (200) {string} [REPLY] OK->回复成功，ERROR->回复失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "发送消息成功。",
-     * "data": {
-     * "SEND": "OK"
-     * }
-     * }
+		{
+		    "status": 200,
+		    "code": 0,
+		    "msg": "返回数据成功。",
+		    "data": {
+		        "REPLY": "OK"
+		    }
+		}
      * @apiError (403) {int{0-65535}} status 响应状态码
      * @apiError (403) {long{0-500}} code 消息码
      * @apiError (403) {String} msg 说明
@@ -916,7 +918,7 @@ public class MessageController {
      * "msg": "服务器未响应！"
      * }
      */    
-    @ApiOperation(value = "被申请者回复申请者申请加微信消息记录接口", notes = "被申请者回复申请者申请加微信消息记录接口")
+    @ApiOperation(value = "回复申请加微信聊天消息接口", notes = "回复申请加微信聊天消息接口")
     @PutMapping(value = "/{id}/reply")
     public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") @ApiParam(name = "id", value = "被申请加微信者用户id", required = true, example = "1") Long applicantsUserId,
                                                    @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "回复的消息id", required = true, example = "2") Long messageId,

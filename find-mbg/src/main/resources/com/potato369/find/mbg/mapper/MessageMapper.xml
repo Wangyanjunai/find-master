@@ -312,7 +312,7 @@
           and `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
           and `reserve_column01` = 'applications'
           and `reserve_column02` = '1'
-          and `send_mode` = '0'
+          and `send_mode` = '1'
           and `reserve_column04` = #{messageId, jdbcType=BIGINT}
     </select>
 
