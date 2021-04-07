@@ -1,11 +1,10 @@
 package com.potato369.find.message.schedule.model;
 
-import com.potato369.find.message.FastTests;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.schedule.model.SchedulePayload;
 import cn.jpush.api.schedule.model.TriggerPayload;
-
 import com.google.gson.JsonObject;
+import com.potato369.find.message.FastTests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

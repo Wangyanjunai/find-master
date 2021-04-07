@@ -2,8 +2,6 @@ package com.potato369.find.message.push;
 
 import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
-import com.potato369.find.message.BaseTest;
-
 import cn.jpush.api.push.GroupPushClient;
 import cn.jpush.api.push.GroupPushResult;
 import cn.jpush.api.push.PushResult;
@@ -13,6 +11,7 @@ import cn.jpush.api.push.model.audience.Audience;
 import cn.jpush.api.push.model.notification.AndroidNotification;
 import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
+import com.potato369.find.message.BaseTest;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

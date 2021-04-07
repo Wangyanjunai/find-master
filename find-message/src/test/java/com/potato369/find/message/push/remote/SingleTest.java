@@ -1,15 +1,14 @@
 package com.potato369.find.message.push.remote;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 import cn.jpush.api.push.PushResult;
 import cn.jpush.api.push.model.Message;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
 import cn.jpush.api.push.model.notification.Notification;
+import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 public class SingleTest extends BaseRemotePushTest {
     

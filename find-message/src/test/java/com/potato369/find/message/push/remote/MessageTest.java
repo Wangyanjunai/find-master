@@ -1,16 +1,15 @@
 package com.potato369.find.message.push.remote;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import com.potato369.find.message.SlowTests;
 import cn.jpush.api.push.PushResult;
 import cn.jpush.api.push.model.Message;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
+import com.potato369.find.message.SlowTests;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import static org.junit.Assert.assertTrue;
 
 @Category(SlowTests.class)
 public class MessageTest extends BaseRemotePushTest {

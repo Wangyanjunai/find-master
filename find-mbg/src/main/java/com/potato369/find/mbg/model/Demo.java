@@ -1,8 +1,8 @@
 package com.potato369.find.mbg.model;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Demo implements Serializable {

@@ -1,22 +1,19 @@
 package com.potato369.find.message.push.model;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
+import cn.jiguang.common.ServiceHelper;
+import cn.jpush.api.push.model.Options;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
-import cn.jiguang.common.ServiceHelper;
-import cn.jpush.api.push.model.Options;
-
 import com.potato369.find.message.FastTests;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @Category(FastTests.class)
 public class OptionsTest {

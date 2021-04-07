@@ -1,12 +1,12 @@
 package com.potato369.find.common.utils;
 
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+
 import java.beans.FeatureDescriptor;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
-
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 
 public class CopyUtil {
 	

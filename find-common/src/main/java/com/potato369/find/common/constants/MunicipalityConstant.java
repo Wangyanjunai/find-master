@@ -1,11 +1,11 @@
 package com.potato369.find.common.constants;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Data

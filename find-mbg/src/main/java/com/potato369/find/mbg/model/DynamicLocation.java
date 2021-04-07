@@ -1,11 +1,10 @@
 package com.potato369.find.mbg.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 @AllArgsConstructor
 @Builder

@@ -1,10 +1,9 @@
 package com.potato369.find.mbg.model;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Date;
 
 //用户点赞记录
 @JsonInclude(JsonInclude.Include.NON_NULL)

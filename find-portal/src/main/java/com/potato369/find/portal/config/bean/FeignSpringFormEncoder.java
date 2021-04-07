@@ -1,13 +1,5 @@
 package com.potato369.find.portal.config.bean;
 
-import static feign.form.ContentType.MULTIPART;
-import static java.util.Collections.singletonMap;
-
-import java.lang.reflect.Type;
-import java.util.Map;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import feign.RequestTemplate;
 import feign.codec.EncodeException;
 import feign.codec.Encoder;
@@ -16,6 +8,13 @@ import feign.form.MultipartFormContentProcessor;
 import feign.form.spring.SpringManyMultipartFilesWriter;
 import feign.form.spring.SpringSingleMultipartFileWriter;
 import lombok.val;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.lang.reflect.Type;
+import java.util.Map;
+
+import static feign.form.ContentType.MULTIPART;
+import static java.util.Collections.singletonMap;
 // 参考1：https://blog.csdn.net/qq_37119911/article/details/106520571
 // 参考2：https://blog.csdn.net/ytzzh0726/article/details/79467843?dist_request_id=&depth_1-
 public class FeignSpringFormEncoder extends FormEncoder {

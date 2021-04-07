@@ -1,8 +1,8 @@
 package com.potato369.find.admin.utils;
 
-import java.io.Serializable;
-
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+
+import java.io.Serializable;
 
 public class ExcelBean implements Serializable {
 	private static final long serialVersionUID = -17750044345405754L;

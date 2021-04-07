@@ -1,18 +1,11 @@
 package com.potato369.find.common.dto;
 
-import javax.validation.constraints.NotNull;
-
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import io.swagger.annotations.ApiModelProperty;
-//用户黑名单数据传输类
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder

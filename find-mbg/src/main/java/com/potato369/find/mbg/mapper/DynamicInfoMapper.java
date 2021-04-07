@@ -3,11 +3,10 @@ package com.potato369.find.mbg.mapper;
 import com.potato369.find.mbg.model.DynamicInfo;
 import com.potato369.find.mbg.model.DynamicInfoData;
 import com.potato369.find.mbg.model.DynamicInfoExample;
-
-import java.util.List;
-
 import com.potato369.find.mbg.model.DynamicInfoParam;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface DynamicInfoMapper {
 

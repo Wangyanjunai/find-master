@@ -1,15 +1,13 @@
 package com.potato369.find.admin.dao;
 
+import com.potato369.find.mbg.model.DynamicInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import com.potato369.find.mbg.model.DynamicInfo;
-
-import lombok.extern.slf4j.Slf4j;
 
 //DynamicInfo，动态内容dao
 @Slf4j

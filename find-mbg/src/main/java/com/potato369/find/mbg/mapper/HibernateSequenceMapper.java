@@ -2,8 +2,9 @@ package com.potato369.find.mbg.mapper;
 
 import com.potato369.find.mbg.model.HibernateSequence;
 import com.potato369.find.mbg.model.HibernateSequenceExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface HibernateSequenceMapper {
     long countByExample(HibernateSequenceExample example);

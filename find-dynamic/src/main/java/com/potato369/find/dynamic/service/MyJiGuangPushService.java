@@ -1,8 +1,7 @@
 package com.potato369.find.dynamic.service;
 
-import com.potato369.find.dynamic.config.bean.PushBean;
-
 import cn.jpush.api.push.model.PushPayload;
+import com.potato369.find.dynamic.config.bean.PushBean;
 
 /**
  * 极光推送

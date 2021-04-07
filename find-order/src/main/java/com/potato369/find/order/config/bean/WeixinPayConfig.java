@@ -1,12 +1,6 @@
 package com.potato369.find.order.config.bean;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
+import cn.hutool.core.util.StrUtil;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -15,8 +9,12 @@ import com.potato369.find.common.enums.StatusEnum;
 import com.potato369.find.mbg.mapper.WeixinConfigMapper;
 import com.potato369.find.mbg.model.WeixinConfig;
 import com.potato369.find.mbg.model.WeixinConfigExample;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import cn.hutool.core.util.StrUtil;
+import java.util.List;
 
 @Configuration
 @ConditionalOnClass(WxPayService.class)

@@ -1,27 +1,22 @@
 package com.potato369.find.message.push.mock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.IOException;
-import java.net.URL;
-
-import org.junit.After;
-import org.junit.Test;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-import com.squareup.okhttp.mockwebserver.SocketPolicy;
-
 import cn.jiguang.common.connection.IHttpClient;
 import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
 import cn.jpush.api.push.PushClient;
 import cn.jpush.api.push.model.PushPayload;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.squareup.okhttp.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.SocketPolicy;
+import org.junit.After;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.net.URL;
+
+import static org.junit.Assert.*;
 
 /**
  * Record: MockResponse.throttleBody will delay response body, but sometimes has no effect.

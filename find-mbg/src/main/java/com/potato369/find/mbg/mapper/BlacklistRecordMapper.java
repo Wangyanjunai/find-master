@@ -2,8 +2,9 @@ package com.potato369.find.mbg.mapper;
 
 import com.potato369.find.mbg.model.BlacklistRecord;
 import com.potato369.find.mbg.model.BlacklistRecordExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface BlacklistRecordMapper {
     long countByExample(BlacklistRecordExample example);

@@ -1,16 +1,16 @@
 package com.potato369.find.mbg.model;
 
-import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.potato369.find.common.utils.EnumUtil;
 import com.potato369.find.common.enums.OrderStatusEnum;
 import com.potato369.find.common.enums.PayModeEnum;
 import com.potato369.find.common.enums.PayStatusEnum;
+import com.potato369.find.common.utils.EnumUtil;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderMaster implements Serializable {

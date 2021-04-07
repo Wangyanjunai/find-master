@@ -1,20 +1,14 @@
 package com.potato369.find.portal.feign;
 
-import java.util.Map;
-
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.common.vo.MessageVO3;
 import com.potato369.find.portal.feign.fallback.MessageServiceFeignFallback;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 //消息中心微服务调用feignClient
 @FeignClient(name = "message-service", fallback = MessageServiceFeignFallback.class)

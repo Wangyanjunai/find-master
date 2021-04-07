@@ -1,16 +1,14 @@
 package com.potato369.find.message.push.remote;
 
-import java.io.IOException;
-
+import cn.jpush.api.push.PushClient;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.potato369.find.message.BaseTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
-import com.potato369.find.message.BaseTest;
-import cn.jpush.api.push.PushClient;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import java.io.IOException;
 
 public abstract class BaseRemotePushTest extends BaseTest {
     

@@ -1,18 +1,15 @@
 package com.potato369.find.message.push.model.notification;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import com.potato369.find.message.FastTests;
-
 import cn.jpush.api.push.model.notification.AndroidNotification;
 import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
 import cn.jpush.api.push.model.notification.WinphoneNotification;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.potato369.find.message.FastTests;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 @Category(FastTests.class)
 public class NotificationTest {

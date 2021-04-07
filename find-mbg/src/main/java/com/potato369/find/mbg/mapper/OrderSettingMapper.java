@@ -2,8 +2,9 @@ package com.potato369.find.mbg.mapper;
 
 import com.potato369.find.mbg.model.OrderSetting;
 import com.potato369.find.mbg.model.OrderSettingExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OrderSettingMapper {
     long countByExample(OrderSettingExample example);

@@ -1,16 +1,15 @@
 package com.potato369.find.portal.feign;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.LocationDTO;
 import com.potato369.find.portal.config.FeignMultipartSupportConfig;
 import com.potato369.find.portal.feign.fallback.DynamicServiceFeignFallback;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
 
 @FeignClient(name = "dynamic-service", fallback = DynamicServiceFeignFallback.class, configuration = FeignMultipartSupportConfig.class)
 public interface DynamicService {

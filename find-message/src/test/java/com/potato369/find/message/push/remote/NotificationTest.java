@@ -1,7 +1,6 @@
 package com.potato369.find.message.push.remote;
 
 import cn.jiguang.common.resp.APIRequestException;
-import com.potato369.find.message.SlowTests;
 import cn.jpush.api.image.ImageClient;
 import cn.jpush.api.image.model.ImageType;
 import cn.jpush.api.image.model.ImageUploadResult;
@@ -13,10 +12,10 @@ import cn.jpush.api.push.model.audience.Audience;
 import cn.jpush.api.push.model.notification.AndroidNotification;
 import cn.jpush.api.push.model.notification.IosAlert;
 import cn.jpush.api.push.model.notification.Notification;
-import lombok.extern.slf4j.Slf4j;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.potato369.find.message.SlowTests;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 

@@ -1,14 +1,12 @@
 package com.potato369.find.message.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.potato369.find.message.config.bean.PushBean;
 import com.potato369.find.message.config.props.JiGuangConfig;
 import com.potato369.find.message.service.JiGuangPushService;
 import com.potato369.find.message.service.MyJiGuangPushService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;

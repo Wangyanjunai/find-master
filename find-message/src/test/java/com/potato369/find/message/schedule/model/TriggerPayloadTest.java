@@ -1,17 +1,14 @@
 package com.potato369.find.message.schedule.model;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
+import cn.jiguang.common.TimeUnit;
+import cn.jpush.api.schedule.model.TriggerPayload;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
-import cn.jiguang.common.TimeUnit;
-import cn.jpush.api.schedule.model.TriggerPayload;
-
 import com.potato369.find.message.FastTests;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 /**
  * TriggerPayload Tester.

@@ -1,14 +1,9 @@
 package com.potato369.find.mbg.mapper;
 
-import com.potato369.find.mbg.model.LikesMessageRecord;
-import com.potato369.find.mbg.model.LikesRecord;
-import com.potato369.find.mbg.model.Message;
-import com.potato369.find.mbg.model.MessageExample;
-import com.potato369.find.mbg.model.NotLikesMessageRecord;
+import com.potato369.find.mbg.model.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface MessageMapper {
     long countByExample(MessageExample example);

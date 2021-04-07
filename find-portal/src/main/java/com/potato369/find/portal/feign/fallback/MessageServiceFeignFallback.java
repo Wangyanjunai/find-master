@@ -1,16 +1,14 @@
 package com.potato369.find.portal.feign.fallback;
 
-import java.util.Map;
-
-import org.springframework.stereotype.Component;
-
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.common.vo.MessageVO3;
 import com.potato369.find.portal.feign.MessageService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 @Slf4j
 @Component

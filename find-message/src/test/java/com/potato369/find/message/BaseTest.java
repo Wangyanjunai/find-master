@@ -1,8 +1,7 @@
 package com.potato369.find.message;
 
-import org.junit.Before;
-
 import cn.jpush.api.JPushClient;
+import org.junit.Before;
 
 public abstract class BaseTest {
 

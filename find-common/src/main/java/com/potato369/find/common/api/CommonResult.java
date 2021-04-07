@@ -2,7 +2,6 @@ package com.potato369.find.common.api;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;

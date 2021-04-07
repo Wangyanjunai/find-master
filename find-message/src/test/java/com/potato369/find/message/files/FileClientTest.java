@@ -2,12 +2,12 @@ package com.potato369.find.message.files;
 
 import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
-import com.potato369.find.message.BaseTest;
 import cn.jpush.api.file.FileClient;
 import cn.jpush.api.file.model.FileModel;
 import cn.jpush.api.file.model.FileModelPage;
 import cn.jpush.api.file.model.FileType;
 import cn.jpush.api.file.model.FileUploadResult;
+import com.potato369.find.message.BaseTest;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

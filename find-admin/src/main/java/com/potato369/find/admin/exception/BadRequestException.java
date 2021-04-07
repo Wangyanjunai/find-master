@@ -1,10 +1,9 @@
 package com.potato369.find.admin.exception;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import lombok.Getter;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Getter
 public class BadRequestException extends RuntimeException{

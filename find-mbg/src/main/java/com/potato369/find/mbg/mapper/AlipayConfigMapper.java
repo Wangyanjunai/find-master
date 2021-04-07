@@ -2,8 +2,9 @@ package com.potato369.find.mbg.mapper;
 
 import com.potato369.find.mbg.model.AlipayConfig;
 import com.potato369.find.mbg.model.AlipayConfigExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AlipayConfigMapper {
     long countByExample(AlipayConfigExample example);

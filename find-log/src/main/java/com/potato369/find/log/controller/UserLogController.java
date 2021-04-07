@@ -3,16 +3,14 @@ package com.potato369.find.log.controller;
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.enums.OperateRecordStatusEnum;
 import com.potato369.find.log.service.UserLogService;
-import com.potato369.find.mbg.model.*;
-
+import com.potato369.find.mbg.model.OperateRecord;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 @Api(value = "日志模块用户管理控制器类")
 @Slf4j

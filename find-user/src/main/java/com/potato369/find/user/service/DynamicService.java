@@ -1,18 +1,13 @@
 package com.potato369.find.user.service;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.DynamicDTO;
 import com.potato369.find.common.dto.LocationDTO;
-import com.potato369.find.mbg.model.Dynamic;
-import com.potato369.find.mbg.model.DynamicInfo;
-import com.potato369.find.mbg.model.DynamicInfoData;
-import com.potato369.find.mbg.model.DynamicInfoParam;
-import com.potato369.find.mbg.model.User;
+import com.potato369.find.mbg.model.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
 
 public interface DynamicService {
 

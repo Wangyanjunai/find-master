@@ -1,15 +1,5 @@
 package com.potato369.find.portal.feign.fallback;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.validation.Valid;
-
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.BlacklistDTO;
 import com.potato369.find.common.dto.ReportInfoDTO;
@@ -17,8 +7,15 @@ import com.potato369.find.common.dto.UpdateUserDTO;
 import com.potato369.find.common.vo.ReportCategoryVO;
 import com.potato369.find.common.vo.UserVO2;
 import com.potato369.find.portal.feign.UserService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component

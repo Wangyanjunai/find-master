@@ -1,6 +1,7 @@
 package com.potato369.find.dynamic.config.bean;
 
 import lombok.Data;
+
 import java.util.Map;
 
 // 推送实体类

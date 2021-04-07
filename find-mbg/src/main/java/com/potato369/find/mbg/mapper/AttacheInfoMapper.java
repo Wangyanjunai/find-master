@@ -2,8 +2,9 @@ package com.potato369.find.mbg.mapper;
 
 import com.potato369.find.mbg.model.AttacheInfo;
 import com.potato369.find.mbg.model.AttacheInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AttacheInfoMapper {
     long countByExample(AttacheInfoExample example);

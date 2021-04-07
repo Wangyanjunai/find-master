@@ -2,10 +2,10 @@ package com.potato369.find.mbg.mapper;
 
 import com.potato369.find.mbg.model.Dynamic;
 import com.potato369.find.mbg.model.DynamicExample;
-import java.util.List;
-
 import com.potato369.find.mbg.model.DynamicLocation;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface DynamicMapper {
     long countByExample(DynamicExample example);

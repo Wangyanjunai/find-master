@@ -2,8 +2,9 @@ package com.potato369.find.mbg.mapper;
 
 import com.potato369.find.mbg.model.OperateRecord;
 import com.potato369.find.mbg.model.OperateRecordExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OperateRecordMapper {
     long countByExample(OperateRecordExample example);

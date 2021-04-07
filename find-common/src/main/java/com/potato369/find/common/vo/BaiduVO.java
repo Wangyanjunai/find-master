@@ -3,7 +3,6 @@ package com.potato369.find.common.vo;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.*;
 
 /**

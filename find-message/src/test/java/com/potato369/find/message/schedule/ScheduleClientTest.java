@@ -1,19 +1,18 @@
 package com.potato369.find.message.schedule;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
 import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
-import com.potato369.find.message.BaseTest;
-import com.potato369.find.message.SlowTests;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.schedule.ScheduleClient;
 import cn.jpush.api.schedule.ScheduleListResult;
 import cn.jpush.api.schedule.ScheduleResult;
 import cn.jpush.api.schedule.model.SchedulePayload;
 import cn.jpush.api.schedule.model.TriggerPayload;
+import com.potato369.find.message.BaseTest;
+import com.potato369.find.message.SlowTests;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

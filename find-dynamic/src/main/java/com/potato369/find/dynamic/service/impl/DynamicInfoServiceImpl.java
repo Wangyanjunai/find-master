@@ -1,5 +1,6 @@
 package com.potato369.find.dynamic.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.potato369.find.common.enums.AttacheInfoDataTypeEnum;
@@ -12,25 +13,17 @@ import com.potato369.find.dynamic.service.DynamicInfoService;
 import com.potato369.find.mbg.mapper.ApplicationRecordMapper;
 import com.potato369.find.mbg.mapper.DynamicInfoMapper;
 import com.potato369.find.mbg.mapper.LikeRecordMapper;
-import com.potato369.find.mbg.model.ApplicationRecord;
-import com.potato369.find.mbg.model.ApplicationRecordExample;
-import com.potato369.find.mbg.model.DynamicInfo;
-import com.potato369.find.mbg.model.DynamicInfoData;
-import com.potato369.find.mbg.model.LikeRecord;
-import com.potato369.find.mbg.model.LikeRecordExample;
-
-import cn.hutool.core.util.StrUtil;
+import com.potato369.find.mbg.model.*;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <pre>

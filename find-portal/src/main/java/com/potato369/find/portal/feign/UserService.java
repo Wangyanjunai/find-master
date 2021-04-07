@@ -8,7 +8,6 @@ import com.potato369.find.common.vo.ReportCategoryVO;
 import com.potato369.find.common.vo.UserVO2;
 import com.potato369.find.portal.config.FeignMultipartSupportConfig;
 import com.potato369.find.portal.feign.fallback.UserServiceFeignFallback;
-
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

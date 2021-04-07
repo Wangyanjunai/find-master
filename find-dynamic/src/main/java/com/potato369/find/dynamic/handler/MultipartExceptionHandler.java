@@ -1,13 +1,11 @@
 package com.potato369.find.dynamic.handler;
 
+import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.common.api.ResultCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MultipartException;
-
-import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.common.api.ResultCode;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 设置一个@ControllerAdvice用来监控Multipart上传的文件大小是否受限，当出现此异常时在前端页面给出提示。

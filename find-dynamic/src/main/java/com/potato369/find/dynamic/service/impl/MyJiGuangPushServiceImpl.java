@@ -10,13 +10,12 @@ import cn.jpush.api.push.model.notification.AndroidNotification;
 import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
 import cn.jpush.api.push.model.notification.WinphoneNotification;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.potato369.find.dynamic.config.bean.PushBean;
 import com.potato369.find.dynamic.config.props.JiGuangConfig;
 import com.potato369.find.dynamic.service.MyJiGuangPushService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * 极光推送 封装第三方api相关

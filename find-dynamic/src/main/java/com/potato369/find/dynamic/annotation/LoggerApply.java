@@ -1,8 +1,7 @@
 package com.potato369.find.dynamic.annotation;
 
-import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author: Lingye

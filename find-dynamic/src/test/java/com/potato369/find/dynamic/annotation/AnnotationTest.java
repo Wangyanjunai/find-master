@@ -1,12 +1,11 @@
 package com.potato369.find.dynamic.annotation;
 
+import com.potato369.find.dynamic.DynamicServiceApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.potato369.find.dynamic.DynamicServiceApplication;
 
 //参考：https://www.cnblogs.com/lingyejun/p/9941350.html 
 @RunWith(SpringRunner.class)

@@ -13,15 +13,10 @@ package com.potato369.find.dynamic.utils;
  * </pre>
  */
 
+import lombok.*;
+
 import java.util.List;
 import java.util.Map;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @Builder

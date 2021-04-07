@@ -17,6 +17,7 @@ import cn.jpush.api.report.ReceivedsResult;
 import cn.jpush.api.report.ReceivedsResult.Received;
 import cn.jpush.api.report.UsersResult;
 import lombok.extern.slf4j.Slf4j;
+
 import java.util.HashMap;
 import java.util.Map;
 

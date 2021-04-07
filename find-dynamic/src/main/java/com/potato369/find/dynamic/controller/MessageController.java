@@ -1,15 +1,14 @@
 package com.potato369.find.dynamic.controller;
 
-import java.util.Map;
-
+import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.dynamic.feign.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.dynamic.feign.MessageService;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/dynamic")

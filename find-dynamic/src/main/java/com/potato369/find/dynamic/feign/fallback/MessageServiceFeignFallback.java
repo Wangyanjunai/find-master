@@ -1,14 +1,12 @@
 package com.potato369.find.dynamic.feign.fallback;
 
-import java.util.Map;
-
+import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.dynamic.feign.MessageService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.dynamic.feign.MessageService;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.Map;
 
 @Slf4j
 @Component

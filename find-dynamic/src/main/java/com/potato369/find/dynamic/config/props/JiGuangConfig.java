@@ -1,11 +1,12 @@
 package com.potato369.find.dynamic.config.props;
 //极光配置类
+
 import cn.jpush.api.JPushClient;
 import lombok.Data;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+
 import javax.annotation.PostConstruct;
 
 @Data

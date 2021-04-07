@@ -1,7 +1,6 @@
 package com.potato369.find.log.dao;
 
 import com.potato369.find.mbg.model.User;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

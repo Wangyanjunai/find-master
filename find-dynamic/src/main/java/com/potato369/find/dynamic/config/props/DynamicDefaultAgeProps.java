@@ -1,15 +1,8 @@
 package com.potato369.find.dynamic.config.props;
 
+import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
-//动态筛选默认年龄范围
 import org.springframework.stereotype.Component;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @Builder

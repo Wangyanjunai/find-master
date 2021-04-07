@@ -1,18 +1,16 @@
 package com.potato369.find.portal.feign;
 
-import java.util.Map;
-
-import javax.validation.Valid;
-
+import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.common.dto.OrderDTO;
+import com.potato369.find.portal.feign.fallback.OrderServiceFeignFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.common.dto.OrderDTO;
-import com.potato369.find.portal.feign.fallback.OrderServiceFeignFallback;
+import javax.validation.Valid;
+import java.util.Map;
 
 //订单中心微服务调用feignClient
 @FeignClient(name = "order-service", fallback = OrderServiceFeignFallback.class)

@@ -1,15 +1,12 @@
 package com.potato369.find.message.push.model.notification;
 
+import cn.jpush.api.push.model.notification.AndroidNotification;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.potato369.find.message.FastTests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
-import com.potato369.find.message.FastTests;
-
-import cn.jpush.api.push.model.notification.AndroidNotification;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 import java.util.HashMap;
 import java.util.Map;

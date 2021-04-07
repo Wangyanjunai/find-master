@@ -1,9 +1,7 @@
 package com.potato369.find.admin.dao;
 
 import com.potato369.find.mbg.model.User;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

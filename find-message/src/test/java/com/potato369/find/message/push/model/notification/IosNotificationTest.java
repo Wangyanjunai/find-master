@@ -1,12 +1,10 @@
 package com.potato369.find.message.push.model.notification;
 
-import com.potato369.find.message.FastTests;
-
 import cn.jpush.api.push.model.notification.IosNotification;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.potato369.find.message.FastTests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

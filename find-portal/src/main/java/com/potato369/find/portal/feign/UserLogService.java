@@ -1,15 +1,14 @@
 package com.potato369.find.portal.feign;
 
-import java.util.Map;
-
+import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.mbg.model.OperateRecord;
+import com.potato369.find.portal.feign.fallback.UserLogServiceFeignFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.mbg.model.OperateRecord;
-import com.potato369.find.portal.feign.fallback.UserLogServiceFeignFallback;
+import java.util.Map;
 
 //调用记录用户操作日志openFeignClient
 @FeignClient(name = "log-service", fallback = UserLogServiceFeignFallback.class)

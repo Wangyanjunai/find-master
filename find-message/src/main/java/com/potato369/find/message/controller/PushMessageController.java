@@ -1,21 +1,19 @@
 package com.potato369.find.message.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.message.config.bean.PushBean;
+import com.potato369.find.message.service.JiGuangPushService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.message.config.bean.PushBean;
-import com.potato369.find.message.service.JiGuangPushService;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
-import lombok.extern.slf4j.Slf4j;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Api(value = "消息模块消息推送控制器类", consumes = "消息模块消息推送控制器类")

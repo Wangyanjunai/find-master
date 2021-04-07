@@ -9,12 +9,11 @@ import com.potato369.find.mbg.mapper.MessageMapper;
 import com.potato369.find.mbg.model.ApplicationRecord;
 import com.potato369.find.mbg.model.DynamicInfo;
 import com.potato369.find.mbg.model.Message;
-
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 /**
  * <pre>

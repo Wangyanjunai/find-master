@@ -1,14 +1,12 @@
 package com.potato369.find.dynamic.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.potato369.find.dynamic.config.bean.PushBean;
 import com.potato369.find.dynamic.config.props.JiGuangConfig;
 import com.potato369.find.dynamic.service.JiGuangPushService;
 import com.potato369.find.dynamic.service.MyJiGuangPushService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;

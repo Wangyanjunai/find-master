@@ -1,20 +1,17 @@
 package com.potato369.find.message.push.model;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import cn.jiguang.common.DeviceType;
 import cn.jpush.api.push.model.Platform;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.potato369.find.message.FastTests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-
-import com.potato369.find.message.FastTests;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @Category(FastTests.class)
 public class PlatformTesst {

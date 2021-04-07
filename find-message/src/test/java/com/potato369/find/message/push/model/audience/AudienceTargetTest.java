@@ -1,16 +1,13 @@
 package com.potato369.find.message.push.model.audience;
 
+import cn.jpush.api.push.model.audience.AudienceTarget;
+import cn.jpush.api.push.model.audience.AudienceType;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonPrimitive;
+import com.potato369.find.message.FastTests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
-import com.potato369.find.message.FastTests;
-
-import cn.jpush.api.push.model.audience.AudienceTarget;
-import cn.jpush.api.push.model.audience.AudienceType;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonPrimitive;
 
 @Category(FastTests.class)
 public class AudienceTargetTest {

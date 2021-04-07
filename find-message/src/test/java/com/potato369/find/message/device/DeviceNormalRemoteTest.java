@@ -1,16 +1,5 @@
 package com.potato369.find.message.device;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
 import cn.jiguang.common.resp.BooleanResult;
@@ -19,10 +8,17 @@ import cn.jpush.api.device.AliasDeviceListResult;
 import cn.jpush.api.device.OnlineStatus;
 import cn.jpush.api.device.TagAliasResult;
 import cn.jpush.api.device.TagListResult;
-
 import com.potato369.find.message.BaseTest;
 import com.potato369.find.message.JUnitOrderedRunner;
 import com.potato369.find.message.TestOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import static org.junit.Assert.*;
 
 @RunWith(JUnitOrderedRunner.class)
 public class DeviceNormalRemoteTest extends BaseTest {

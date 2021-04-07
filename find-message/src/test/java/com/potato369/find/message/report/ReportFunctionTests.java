@@ -1,7 +1,6 @@
 package com.potato369.find.message.report;
 
-import static org.junit.Assert.assertTrue;
-
+import cn.jiguang.common.TimeUnit;
 import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
 import cn.jpush.api.report.MessageStatus;
@@ -9,16 +8,16 @@ import cn.jpush.api.report.MessagesResult;
 import cn.jpush.api.report.ReceivedsResult;
 import cn.jpush.api.report.UsersResult;
 import cn.jpush.api.report.model.CheckMessagePayload;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import cn.jiguang.common.TimeUnit;
 import com.potato369.find.message.BaseTest;
 import com.potato369.find.message.SlowTests;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+
+import static org.junit.Assert.assertTrue;
 
 @Category(SlowTests.class)
 public class ReportFunctionTests extends BaseTest {

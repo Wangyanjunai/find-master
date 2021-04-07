@@ -1,12 +1,6 @@
 package com.potato369.find.message.push.remote;
 
-import static org.junit.Assert.assertTrue;
-
 import cn.jiguang.common.resp.APIRequestException;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import com.potato369.find.message.SlowTests;
 import cn.jpush.api.push.PushResult;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
@@ -15,7 +9,12 @@ import cn.jpush.api.push.model.notification.AndroidNotification;
 import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
 import cn.jpush.api.push.model.notification.WinphoneNotification;
+import com.potato369.find.message.SlowTests;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import static org.junit.Assert.assertTrue;
 
 @Category(SlowTests.class)
 @Slf4j

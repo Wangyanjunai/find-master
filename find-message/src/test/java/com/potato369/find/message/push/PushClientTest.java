@@ -1,11 +1,11 @@
 package com.potato369.find.message.push;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import cn.jiguang.common.ClientConfig;
 import cn.jiguang.common.ServiceHelper;
+import cn.jiguang.common.connection.HttpProxy;
 import cn.jiguang.common.connection.NettyHttpClient;
+import cn.jiguang.common.resp.APIConnectionException;
+import cn.jiguang.common.resp.APIRequestException;
 import cn.jiguang.common.resp.DefaultResult;
 import cn.jiguang.common.resp.ResponseWrapper;
 import cn.jpush.api.JPushClient;
@@ -14,21 +14,19 @@ import cn.jpush.api.push.PushClient;
 import cn.jpush.api.push.PushResult;
 import cn.jpush.api.push.model.Options;
 import cn.jpush.api.push.model.Platform;
+import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
-import cn.jpush.api.push.model.notification.*;
+import cn.jpush.api.push.model.notification.Notification;
+import com.potato369.find.message.BaseTest;
 import io.netty.handler.codec.http.HttpMethod;
 import lombok.extern.slf4j.Slf4j;
-
 import org.junit.Test;
-
-import cn.jiguang.common.connection.HttpProxy;
-import cn.jiguang.common.resp.APIConnectionException;
-import cn.jiguang.common.resp.APIRequestException;
-import com.potato369.find.message.BaseTest;
-import cn.jpush.api.push.model.PushPayload;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @Slf4j
 public class PushClientTest extends BaseTest {

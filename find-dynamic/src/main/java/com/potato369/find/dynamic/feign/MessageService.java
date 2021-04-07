@@ -1,13 +1,12 @@
 package com.potato369.find.dynamic.feign;
 
-import java.util.Map;
-
+import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.dynamic.feign.fallback.MessageServiceFeignFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.dynamic.feign.fallback.MessageServiceFeignFallback;
+import java.util.Map;
 
 @FeignClient(name = "message-service", fallback = MessageServiceFeignFallback.class)
 public interface MessageService {

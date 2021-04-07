@@ -1,8 +1,7 @@
 package com.potato369.find.message.service;
 
-import com.potato369.find.message.config.bean.PushBean;
-
 import cn.jpush.api.push.model.PushPayload;
+import com.potato369.find.message.config.bean.PushBean;
 
 /**
  * 极光推送

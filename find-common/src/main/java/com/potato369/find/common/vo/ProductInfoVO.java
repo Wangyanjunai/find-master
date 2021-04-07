@@ -1,19 +1,13 @@
 package com.potato369.find.common.vo;
 
-import java.math.BigDecimal;
-
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.potato369.find.common.utils.DataSerializerUtil;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import java.math.BigDecimal;
 
 @Data
 @Builder

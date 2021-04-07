@@ -1,18 +1,16 @@
 package com.potato369.find.portal.feign.fallback;
 
-import java.util.List;
-import java.util.Map;
-
+import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.common.dto.LocationDTO;
+import com.potato369.find.portal.feign.DynamicService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.common.dto.LocationDTO;
-import com.potato369.find.portal.feign.DynamicService;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component

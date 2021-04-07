@@ -2,8 +2,9 @@ package com.potato369.find.mbg.mapper;
 
 import com.potato369.find.mbg.model.WeixinConfig;
 import com.potato369.find.mbg.model.WeixinConfigExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface WeixinConfigMapper {
     long countByExample(WeixinConfigExample example);
