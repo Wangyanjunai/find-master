@@ -71,43 +71,31 @@ public class MessageServiceImpl implements MessageService {
     @Transactional(readOnly = true)
     public LikesMessageVO selectLikesMessage(Long userId) {
         //查询未读点赞消息总条数
+        LikesMessageVO likesMessageVO = LikesMessageVO.builder().build();
+        likesMessageVO.setCount(this.messageMapperReader.countUnreadLikesByUserId(userId));
+        //查询最后一条点赞消息记录
         MessageExample messageExample = new MessageExample();
         messageExample.setDistinct(true);
         messageExample.setOrderByClause("create_time DESC");
         messageExample.createCriteria()
                 .andRecipientUserIdEqualTo(userId)
-                .andStatusEqualTo(MessageStatusEnum.UNREAD.getStatus())//未读
+                .andStatusEqualTo(MessageStatusEnum.UNREAD.getStatus())//点赞未读状态
                 .andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage())//点赞消息
-                .andReserveColumn02EqualTo(MessageType2Enum.SEND.getCodeStr())//发送还是回复，发送
                 .andReserveColumn03EqualTo(MessageStatus2Enum.NO.getStatus());//是否删除，没有删除
-        List<Message> messages = this.messageMapperReader.selectByExample(messageExample);
-        LikesMessageVO likesMessageVO = new LikesMessageVO();
-        if (messages != null && !messages.isEmpty()) {
-            likesMessageVO.setCount(messages.size());
-        } else {
-            likesMessageVO.setCount(0);
-        }
-        //查询最后一条点赞消息记录
-        MessageExample messageExample2 = new MessageExample();
-        messageExample2.setDistinct(true);
-        messageExample2.setOrderByClause("create_time DESC");
-        messageExample2.createCriteria()
-                .andRecipientUserIdEqualTo(userId)
-                .andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage())//点赞消息
-                .andReserveColumn02EqualTo(MessageType2Enum.SEND.getCodeStr())//发送还是回复，发送
-                .andReserveColumn03EqualTo(MessageStatus2Enum.NO.getStatus());//是否删除，没有删除
-        List<Message> messages2 = this.messageMapperReader.selectByExampleWithBLOBs(messageExample2);
-        if (messages2 != null && !messages2.isEmpty()) {
-            Message message = messages2.get(0);
+        List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
+        if (messageList != null && !messageList.isEmpty()) {
+            Message message = messageList.get(0);
             likesMessageVO.setContent(message.getContent());
-        }
+        } else {
+        	likesMessageVO.setContent(null);
+		}
         return likesMessageVO;
     }
 
     @Override
     @Transactional(readOnly = true)
     public MessageVO selectNotLikesMessage(Long userId, Integer pageNum, Integer pageSize) {
-        MessageVO messageVO = new MessageVO();
+        MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
         final PageInfo<NotLikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectUnLikesRecordByUserId(userId));
         messageVO.setTotalCount(listPageInfo.getTotal());//未读申请加微信总数量
@@ -154,7 +142,12 @@ public class MessageServiceImpl implements MessageService {
                             + "/"
                             + likesMessageRecord.getHeadIcon());
             likesInfoVO.setAttacheType(likesMessageRecord.getAttacheType());
-            likesInfoVO.setContent(likesMessageRecord.getLikesContent());
+            if (LikeStatusEnum.YES.getType().equals(likesMessageRecord.getStatus())) {
+            	likesInfoVO.setContent(likesMessageRecord.getNickname() + "点赞了你的动态" + likesMessageRecord.getLikesContent());
+			}
+            if (LikeStatusEnum.NO.getType().equals(likesMessageRecord.getStatus())) {
+            	likesInfoVO.setContent(likesMessageRecord.getNickname() + "取消点赞你的动态" + likesMessageRecord.getLikesContent());
+			}
             String[] fileNameList01 = StrUtil.split(likesMessageRecord.getAttacheFilename(), "||");
             List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
             List<String> fileNameList03 = new ArrayList<>();

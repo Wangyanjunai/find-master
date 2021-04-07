@@ -182,7 +182,7 @@ public class DynamicController {
                     return CommonResult.validateFailed("发布动态内容不能为空。");
                 }
                 this.dynamicService.save(dynamicDTO);
-                Map<String, Object> result = new HashMap<>();
+                Map<String, Object> result = new ConcurrentHashMap<>();
                 result.put("RELEASED", "OK");
                 return CommonResult.success(result, "发布动态内容成功。");
             }
@@ -264,7 +264,7 @@ public class DynamicController {
     //检测用户发布动态定位是否发生改变
     @PostMapping(value = "/{id}/checkLocation.do")
     public CommonResult<Map<String, Object>> checkLocation(@PathVariable(name = "id") Long userIdLong, @RequestBody LocationDTO locationDTO) {
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new ConcurrentHashMap<>();
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始检查");
@@ -296,7 +296,7 @@ public class DynamicController {
     //更新用户发布动态定位
     @PostMapping(value = "/{id}/updateLocation.do")
     public CommonResult<Map<String, Object>> updateLocation(@PathVariable(name = "id") Long userIdLong, @RequestBody LocationDTO locationDTO) {
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new ConcurrentHashMap<>();
         String b = "ERROR";
         try {
             if (log.isDebugEnabled()) {
@@ -720,20 +720,28 @@ public class DynamicController {
                 }
                 likeRecord.setStatus(LikeStatusEnum.NO.getType());
                 likeRecord.setUpdateTime(new Date());
-                int result = this.likeRecordService.update(likeRecord, dynamicInfo);
+                String content = user.getNickName() + "取消点赞你的动态" + dynamicInfo.getContent();//消息内容
+                int result = this.likeRecordService.update(likeRecord, dynamicInfo, content);
                 if (result > 0) {
+                	String title = "互动消息";//消息标题
+                    Map<String, String> extras = new ConcurrentHashMap<>();
+                    PushBean pushBean = new PushBean();
+                    pushBean.setAlert(content);
+                    pushBean.setTitle(title);
+                    pushBean.setExtras(extras);
+                    this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
                     data.put("LIKED", "OK");
                     return CommonResult.success(data, "取消点赞成功。");
                 }
             }
             // 点赞
             if (LikeStatusEnum.YES.getType().equals(type)) {
-                String content = user.getNickName() + "赞了你的动态" + dynamicInfo.getContent();//消息内容
+                String content = user.getNickName() + "点赞你的动态" + dynamicInfo.getContent();//消息内容
                 int result = this.likeRecordService.createByUserIdAndDynamicInfoId(content, userId, dynamicInfo, likeRecord);
                 if (result > 0) {
                     data.put("LIKED", "OK");
                     String title = "互动消息";//消息标题
-                    Map<String, String> extras = new HashMap<>();
+                    Map<String, String> extras = new ConcurrentHashMap<>();
                     PushBean pushBean = new PushBean();
                     pushBean.setAlert(content);
                     pushBean.setTitle(title);
@@ -794,7 +802,7 @@ public class DynamicController {
                 return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
             }
 
-            // 获取申请加微信者申请加被申请加微信者微信记录条数 
+            // 获取申请加微信者申请加被申请加微信者微信记录条数
             int count = this.applicationRecordMapperReader.countByUserId(applicantUserId, applicantsUserId);
             if (count > 0) {
                 // 如果被申请加微信者未回复申请加微信者发送的消息，则不允许继续申请加被申请人微信
@@ -841,7 +849,7 @@ public class DynamicController {
                 data.put("APPLICATION", "OK");
                 msg = "申请加微信成功。";
                 String title = applicantUser.getNickName();//消息标题
-                Map<String, String> extras = new HashMap<>();
+                Map<String, String> extras = new ConcurrentHashMap<>();
                 PushBean pushBean = new PushBean();
                 pushBean.setAlert(message);
                 pushBean.setTitle(title);
