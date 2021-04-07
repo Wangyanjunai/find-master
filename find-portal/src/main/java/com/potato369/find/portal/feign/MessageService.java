@@ -53,7 +53,7 @@ public interface MessageService {
     CommonResult<Map<String, Object>> deleteLikes(@PathVariable(name = "id") Long recipientUserId,
                                                   @RequestParam(name = "messageId") Long messageId);
     
-    @PutMapping(value = "/{id}/reply.do")
+    @PutMapping(value = "/find/v1/message/{id}/reply.do")
     public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") Long applicantsUserId,
                                                    @RequestParam(name = "messageId") Long messageId,
                                                    @RequestParam(name = "type") String type,
