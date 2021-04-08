@@ -1165,13 +1165,13 @@
             "size": "\"0\", \"1\"",
             "optional": false,
             "field": "type",
-            "description": "<p>类型，0-&gt;取消点赞，1-&gt;点赞</p>"
+            "description": "<p>类型，0-&gt;取消，1-&gt;点赞</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "请求示例01（取消点赞，点赞记录不存在）",
+          "title": "请求示例01（取消，点赞记录不存在）",
           "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0",
           "type": "json"
         },
@@ -1232,12 +1232,12 @@
       },
       "examples": [
         {
-          "title": "200响应示例01（取消点赞，点赞记录不存在）",
+          "title": "200响应示例01（取消，点赞记录不存在）",
           "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"取消点赞，点赞记录信息不存在。\",\n\"data\": {\n\"LIKED\": \"ERROR\"\n}\n}",
           "type": "json"
         },
         {
-          "title": "200 响应示例02（取消点赞，点赞记录存在）",
+          "title": "200 响应示例02（取消，点赞记录存在）",
           "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"取消点赞，取消成功。\",\n\"data\": {\n\"LIKED\": \"OK\"\n}\n}",
           "type": "json"
         },
@@ -3791,9 +3791,9 @@
           {
             "group": "接口请求参数",
             "type": "long",
-            "optional": true,
+            "optional": false,
             "field": "messageId",
-            "description": "<p>消息id</p>"
+            "description": "<p>回复的消息id</p>"
           },
           {
             "group": "接口请求参数",

@@ -558,7 +558,7 @@ public class MessageController {
      * @apiName 发送消息
      * @apiParam (接口请求参数) {long} id1 发送者用户id
      * @apiParam (接口请求参数) {long} id2 接收者用户id
-     * @apiParam (接口请求参数) {long} [messageId] 消息id
+     * @apiParam (接口请求参数) {long} messageId 回复的消息id
      * @apiParam (接口请求参数) {string} [content] 消息内容
      * @apiParamExample {json} 请求示例 发送消息
      * HTTP/1.1 OK
