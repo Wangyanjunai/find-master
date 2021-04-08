@@ -3807,7 +3807,7 @@
       "examples": [
         {
           "title": "请求示例 发送消息",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/29/send?content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/29/send?messageId=25&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
           "type": "json"
         },
         {
