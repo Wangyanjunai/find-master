@@ -327,15 +327,6 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <update id="deleteApplicationMessageRecordByUserId" parameterType="java.lang.Long">
-        UPDATE `message`
-        SET `reserve_column03` = '1'
-        WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
-            AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
-           OR `send_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
-            AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
-           OR `recipient_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
-    </update>
     <insert id="insert" parameterType="com.potato369.find.mbg.model.Message">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
@@ -431,6 +422,13 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
+    <update id="deleteApplicationMessageRecordByUserId" parameterType="java.lang.Long">
+        UPDATE `message`
+        SET `reserve_column03` = '1'
+        WHERE `reserve_column01`<![CDATA[ =]]> 'applications'
+            AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+            AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
+    </update>    
     <update id="updateByExampleSelective" parameterType="map">
         update message
         <set>
@@ -476,36 +474,36 @@
         </if>
     </update>
     <update id="updateByExampleWithBLOBs" parameterType="map">
-        update message
-        set id = #{record.id,jdbcType=BIGINT},
-        send_user_id = #{record.sendUserId,jdbcType=BIGINT},
-        recipient_user_id = #{record.recipientUserId,jdbcType=BIGINT},
-        send_mode = #{record.sendMode,jdbcType=CHAR},
-        status = #{record.status,jdbcType=CHAR},
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-        reserve_column01 = #{record.reserveColumn01,jdbcType=VARCHAR},
-        reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
-        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
-        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
-        content = #{record.content,jdbcType=LONGVARCHAR}
+        update `message`
+        set `id` = #{record.id,jdbcType=BIGINT},
+        `send_user_id` = #{record.sendUserId,jdbcType=BIGINT},
+        `recipient_user_id` = #{record.recipientUserId,jdbcType=BIGINT},
+        `send_mode` = #{record.sendMode,jdbcType=CHAR},
+        `status` = #{record.status,jdbcType=CHAR},
+        `create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+        `update_time` = #{record.updateTime,jdbcType=TIMESTAMP},
+        `reserve_column01` = #{record.reserveColumn01,jdbcType=VARCHAR},
+        `reserve_column02` = #{record.reserveColumn02,jdbcType=VARCHAR},
+        `reserve_column03` = #{record.reserveColumn03,jdbcType=VARCHAR},
+        `reserve_column04` = #{record.reserveColumn04,jdbcType=VARCHAR},
+        `content` = #{record.content,jdbcType=LONGVARCHAR}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
     <update id="updateByExample" parameterType="map">
-        update message
-        set id = #{record.id,jdbcType=BIGINT},
-        send_user_id = #{record.sendUserId,jdbcType=BIGINT},
-        recipient_user_id = #{record.recipientUserId,jdbcType=BIGINT},
-        send_mode = #{record.sendMode,jdbcType=CHAR},
-        status = #{record.status,jdbcType=CHAR},
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-        reserve_column01 = #{record.reserveColumn01,jdbcType=VARCHAR},
-        reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
-        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
-        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR}
+        update `message`
+        set `id` = #{record.id,jdbcType=BIGINT},
+        `send_user_id` = #{record.sendUserId,jdbcType=BIGINT},
+        `recipient_user_id` = #{record.recipientUserId,jdbcType=BIGINT},
+        `send_mode` = #{record.sendMode,jdbcType=CHAR},
+        `status` = #{record.status,jdbcType=CHAR},
+        `create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+        `update_time` = #{record.updateTime,jdbcType=TIMESTAMP},
+        `reserve_column01` = #{record.reserveColumn01,jdbcType=VARCHAR},
+        `reserve_column02` = #{record.reserveColumn02,jdbcType=VARCHAR},
+        `reserve_column03` = #{record.reserveColumn03,jdbcType=VARCHAR},
+        `reserve_column04` = #{record.reserveColumn04,jdbcType=VARCHAR}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -580,24 +578,24 @@
     </update>
     <update id="updateApplicationMessage" parameterType="java.lang.Long">
         UPDATE message
-        SET `status`    = '1',
-            update_time = NOW()
+        SET `status` = '1',
+            `update_time` = NOW()
         WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
           AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
           AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
     </update>
     <update id="updateLikesMessage" parameterType="java.lang.Long">
         UPDATE message
-        SET `status`    = '1',
-            update_time = NOW()
+        SET `status` = '1',
+            `update_time` = NOW()
         WHERE `reserve_column01`<![CDATA[ =]]> 'likes'
           AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
           AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
     </update>
     <update id="updateAllByUserId" parameterType="java.lang.Long">
         UPDATE message
-        SET `status`    = '1',
-            update_time = NOW()
-        WHERE `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+        SET `status`= '1',
+            `update_time` = NOW()
+        WHERE `recipient_user_id` <![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
     </update>
 </mapper>
