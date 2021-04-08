@@ -29,6 +29,7 @@
         <result column="nick_name" jdbcType="VARCHAR" property="sendUserNickname"/>
     </resultMap>
     <resultMap type="com.potato369.find.mbg.model.LikesMessageRecord" id="LikesMessageRecordMap">
+        <result column="message_id" jdbcType="BIGINT" property="messageId" />
         <result column="status" jdbcType="CHAR" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
@@ -185,6 +186,7 @@
     </select>
     <select id="selectLikesMessageRecordByUserId" parameterType="java.lang.Long" resultMap="LikesMessageRecordMap">       
 		SELECT
+		    like_record.`id` AS `message_id`,
 			like_record.`status`,
 			like_record.`update_time`,
 			like_record.`create_time`,

@@ -626,8 +626,8 @@ public class DynamicController {
      * @apiName 点赞或取消点赞
      * @apiParam (接口请求参数) {long} id 用户id
      * @apiParam (接口请求参数) {long} dynamicInfoId 动态内容id
-     * @apiParam (接口请求参数) {string{"0", "1"}} type 类型，0->取消点赞，1->点赞
-     * @apiParamExample {json} 请求示例01（取消点赞，点赞记录不存在）
+     * @apiParam (接口请求参数) {string{"0", "1"}} type 类型，0->取消，1->点赞
+     * @apiParamExample {json} 请求示例01（取消，点赞记录不存在）
      * HTTP/1.1 OK
      * curl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -635,7 +635,7 @@ public class DynamicController {
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {object} [data] 数据
      * @apiSuccess (200) {string} [LIKED] 点赞或取消点赞状态，OK->成功，ERROR->失败
-     * @apiSuccessExample {json} 200响应示例01（取消点赞，点赞记录不存在）
+     * @apiSuccessExample {json} 200响应示例01（取消，点赞记录不存在）
      * HTTP/1.1 200 OK
      * {
      * "status": 200,
@@ -653,7 +653,7 @@ public class DynamicController {
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {object} [data] 数据
      * @apiSuccess (200) {string} [LIKED] 点赞或取消点赞状态，OK->成功，ERROR->失败
-     * @apiSuccessExample {json} 200 响应示例02（取消点赞，点赞记录存在）
+     * @apiSuccessExample {json} 200 响应示例02（取消，点赞记录存在）
      * HTTP/1.1 200 OK
      * {
      * "status": 200,

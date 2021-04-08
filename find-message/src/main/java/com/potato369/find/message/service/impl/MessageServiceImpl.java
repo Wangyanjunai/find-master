@@ -8,6 +8,7 @@ import com.potato369.find.common.api.ResultCode;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.vo.*;
+import com.potato369.find.mbg.mapper.LikeRecordMapper;
 import com.potato369.find.mbg.mapper.MessageMapper;
 import com.potato369.find.mbg.mapper.UserMapper;
 import com.potato369.find.mbg.model.*;
@@ -37,6 +38,10 @@ public class MessageServiceImpl implements MessageService {
 
     private JiGuangPushService jiGuangPushService;
 
+    private LikeRecordMapper likeRecordMapperReader;
+
+    private LikeRecordMapper likeRecordMapperWriter;
+
     @Autowired
     public void setMessageMapperReader(MessageMapper messageMapperReader) {
         this.messageMapperReader = messageMapperReader;
@@ -65,6 +70,16 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     public void setJiGuangPushService(JiGuangPushServiceImpl jiGuangPushService) {
         this.jiGuangPushService = jiGuangPushService;
+    }
+
+    @Autowired
+    public void setLikeRecordMapperReader(LikeRecordMapper likeRecordMapperReader) {
+        this.likeRecordMapperReader = likeRecordMapperReader;
+    }
+
+    @Autowired
+    public void setLikeRecordMapperWriter(LikeRecordMapper likeRecordMapperWriter) {
+        this.likeRecordMapperWriter = likeRecordMapperWriter;
     }
 
     @Override
@@ -360,12 +375,9 @@ public class MessageServiceImpl implements MessageService {
         String key = "DELETE";
         String value = "ERROR";
         String msg = "删除消息记录失败。";
-        Message message = this.messageMapperReader.selectByPrimaryKey(messageId);
-        if (message != null) {
-            message.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
-            message.setUpdateTime(new Date());
-            message.setRecipientUserId(recipientUserId);
-            int count = this.messageMapperWriter.updateByPrimaryKeySelective(message);
+        LikeRecord likeRecord = this.likeRecordMapperReader.selectByPrimaryKey(messageId);
+        if (likeRecord != null) {
+            int count = this.likeRecordMapperWriter.deleteByPrimaryKey(messageId);
             if (count > 0) {
                 value = "OK";
                 msg = "删除消息记录成功。";
