@@ -97,7 +97,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
     <select id="selectCountDataByUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT COUNT(1)
+        SELECT COUNT(0)
         	FROM `application_record`
         		WHERE `user_id` = #{userId,jdbcType=BIGINT}
           			AND `create_time`<![CDATA[ >=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
@@ -186,7 +186,7 @@
     </select>
     <select id="countByUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
 		SELECT
-			COUNT(1)
+			COUNT(0)
 		FROM
 			`application_record`
 		WHERE

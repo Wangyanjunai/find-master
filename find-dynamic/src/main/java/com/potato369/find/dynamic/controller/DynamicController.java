@@ -827,13 +827,13 @@ public class DynamicController {
                     }
                 }
             }
-            // 非VIP用户加不同人微信次数看配置，VIP用户没有限制
+            // 非VIP用户加不同人微信次数看配置，目前配置是没人每天只能申请添加微信5次，VIP用户没有限制
             ApplicationSetting applicationSetting = this.applicationSettingService.findApplication();
             int times = 0;
             if (applicationSetting != null) {
                 times = applicationSetting.getTimes();
             }
-            if (UserGradeEnum.VIP0.getGrade().equals(applicantsUser.getGrade())) {
+            if (UserGradeEnum.VIP0.getGrade().equals(applicantUser.getGrade())) {
                 int timesResult = this.applicationRecordService.findApplicationRecordCountByUserId(applicantUserId);
                 if (timesResult >= times) {
                     return CommonResult.failed(data, ResultCode.TIMES_OVERRUN);
