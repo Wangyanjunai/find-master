@@ -882,10 +882,10 @@ public class DynamicController {
      * @apiParam (接口请求参数) {string={"0", "1", "2"}} [gender] 性别，0->女生，1->男生，2->全部，默认：如果用户注册选择是0->男生，则筛选值：1->女生，反之，如果用户注册选择是1->女生，则筛选值为：0->男生
      * @apiParam (接口请求参数) {int} [minAge] 年龄范围（最小值），默认：16
      * @apiParam (接口请求参数) {int} [maxAge] 年龄范围（最大值），默认：35
-     * @apiParam (接口请求参数) {list={"水瓶座","双鱼座","白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座"}} [constellation] 星座列表，默认：null，不限->不传此参数，全部->不传此参数
+     * @apiParam (接口请求参数) {string[]={"水瓶座","双鱼座","白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座"}} [constellation] 星座列表，默认：null，不限->不传此参数，全部->不传此参数
      * @apiParam (接口请求参数) {string={"0","1","2"}} [dataType] 附件类型，默认：0->全部，1->图片或者图片+文字，2->语音或者语音+文字
-     * @apiParam (接口请求参数) {list} [provinceList] 省份列表，例如：广东省, 四川省
-     * @apiParam (接口请求参数) {list} [cityList] 城市列表，例如：深圳市, 广州市, 成都市, 攀枝花市
+     * @apiParam (接口请求参数) {string[]} [provinceList] 省份列表，例如：广东省, 四川省
+     * @apiParam (接口请求参数) {string[]} [cityList] 城市列表，例如：深圳市, 广州市, 成都市, 攀枝花市
      * @apiParamExample {json} 请求示例01
      * HTTP/1.1 OK
      * curl -v -X GET http://8.135.36.45:8084/find/dynamic/71/screen?pageNum=1&pageSize=20&gender=0&minAge=16&maxAge=39&constellation=巨蟹座,水瓶座&dataType=0&provinceList=广东省,广西省,湖南省&cityList=深圳市,广州市,南宁市,长沙市

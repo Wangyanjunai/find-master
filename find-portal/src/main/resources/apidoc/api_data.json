@@ -1586,7 +1586,7 @@
           },
           {
             "group": "接口请求参数",
-            "type": "list",
+            "type": "string[]",
             "allowedValues": [
               "{\"水瓶座\"",
               "\"双鱼座\"",
@@ -1619,14 +1619,14 @@
           },
           {
             "group": "接口请求参数",
-            "type": "list",
+            "type": "string[]",
             "optional": true,
             "field": "provinceList",
             "description": "<p>省份列表，例如：广东省, 四川省</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "list",
+            "type": "string[]",
             "optional": true,
             "field": "cityList",
             "description": "<p>城市列表，例如：深圳市, 广州市, 成都市, 攀枝花市</p>"
