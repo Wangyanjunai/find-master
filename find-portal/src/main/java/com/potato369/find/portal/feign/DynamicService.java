@@ -68,7 +68,7 @@ public interface DynamicService {
             @RequestParam(name = "gender", required = false) String gender, // 性别，0->女生，1->男生
             @RequestParam(name = "minAge", required = false, defaultValue = "16") int minAge, // 年龄范围（最小值），默认：16岁
             @RequestParam(name = "maxAge", required = false, defaultValue = "35") int maxAge, // 年龄范围（最大值），默认：35岁
-            @RequestParam(name = "constellations", required = false) List<String> constellations, // 星座
+            @RequestParam(name = "constellation", required = false) List<String> constellations, // 星座
             @RequestParam(name = "dataType", required = false) String dataType, // 附件类型，默认：1，图片或者图片+文字；0->文字，1->图片或者图片+文字，2->语音或者语音+文字
             @RequestParam(name = "provinceList", required = false) List<String> provinceList, // 发布动态定位（省份列表）
             @RequestParam(name = "cityList", required = false) List<String> cityList);
