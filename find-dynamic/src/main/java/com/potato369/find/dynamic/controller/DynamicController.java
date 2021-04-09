@@ -502,7 +502,7 @@ public class DynamicController {
             if (constellations != null && constellations.size() > 0) {
                 for (int i = 0; i < constellations.size(); i++) {
                     if (!constellationConstant.getConstellationList().contains(constellations.get(i))) {
-                        return CommonResult.validateFailed("星座参数校验不通过，星座值非法。，星座值：{}" + constellations.get(i));
+                        return CommonResult.validateFailed("星座参数校验不通过，星座值：" + constellations.get(i) + "非法！");
                     }
                 }
             }
@@ -726,7 +726,7 @@ public class DynamicController {
                 String content = user.getNickName() + "取消点赞你的动态" + dynamicInfo.getContent();//消息内容
                 int result = this.likeRecordService.update(likeRecord, dynamicInfo, content);
                 if (result > 0) {
-                	String title = "互动消息";//消息标题
+                    String title = "互动消息";//消息标题
                     Map<String, String> extras = new ConcurrentHashMap<>();
                     PushBean pushBean = new PushBean();
                     pushBean.setAlert(content);
