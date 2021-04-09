@@ -1603,7 +1603,7 @@
             ],
             "optional": true,
             "field": "constellation",
-            "description": "<p>星座列表，默认：不限</p>"
+            "description": "<p>星座列表，默认：null，不限-&gt;不传此参数，全部-&gt;不传此参数</p>"
           },
           {
             "group": "接口请求参数",
@@ -1636,7 +1636,7 @@
       "examples": [
         {
           "title": "请求示例01",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET http://8.135.36.45:8084/find/dynamic/71/screen?pageNum=1&pageSize=20&gender=0&minAge=16&maxAge=39&constellation=巨蟹座&dataType=0&provinceList=广东省,广西省,湖南省&cityList=深圳市,广州市,南宁市,长沙市",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET http://8.135.36.45:8084/find/dynamic/71/screen?pageNum=1&pageSize=20&gender=0&minAge=16&maxAge=39&constellation=巨蟹座,水瓶座&dataType=0&provinceList=广东省,广西省,湖南省&cityList=深圳市,广州市,南宁市,长沙市",
           "type": "json"
         }
       ]
