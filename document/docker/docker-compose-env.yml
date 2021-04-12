@@ -20,6 +20,7 @@ services:
     volumes:
       - /mydata/nginx/conf:/etc/nginx #配置文件挂载
       - /mydata/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
+      - /data/Resources:/data/Resources #数据文件挂载
       - /mydata/nginx/log:/var/log/nginx #日志文件挂载
     ports:
       - 80:80
