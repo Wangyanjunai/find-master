@@ -1,17 +1,17 @@
 /*
-Navicat MySQL Data Transfer
+ Navicat Premium Data Transfer
 
-Source Server         : localhost-find
-Source Server Version : 50732
-Source Host           : localhost:3306
-Source Database       : find_dev_test01
+ Source Server         : huaweiClouds01-find
+ Source Server Type    : MySQL
+ Source Server Version : 50732
+ Source Host           : potato369.com:31306
+ Source Schema         : find_dev_test01
 
-Target Server Type    : MYSQL
-Target Server Version : 50732
-File Encoding         : 65001
+ Target Server Type    : MySQL
+ Target Server Version : 50732
+ File Encoding         : 65001
 
-Date: 2020-12-07 16:13:04
-开启ssl双向认证：https://www.cnblogs.com/ccgood/archive/2004/01/13/13034426.html
+ Date: 12/04/2021 15:11:17
 */
 
 SET NAMES utf8mb4;
@@ -72,7 +72,19 @@ CREATE TABLE `application_record`  (
   INDEX `n_idx_user_id`(`user_id`) USING BTREE,
   INDEX `n_idx_dynamic_info_id`(`dynamic_info_id`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申请加微信记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申请加微信记录表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of application_record
+-- ----------------------------
+INSERT INTO `application_record` VALUES (20, 138, 620, '2021-03-31 17:57:47', NULL, NULL, NULL, NULL);
+INSERT INTO `application_record` VALUES (21, 138, 617, '2021-04-01 15:35:12', NULL, NULL, NULL, NULL);
+INSERT INTO `application_record` VALUES (22, 147, 667, '2021-04-04 04:49:27', NULL, NULL, NULL, NULL);
+INSERT INTO `application_record` VALUES (23, 147, 668, '2021-04-04 04:49:43', NULL, NULL, NULL, NULL);
+INSERT INTO `application_record` VALUES (24, 147, 666, '2021-04-04 04:49:55', NULL, NULL, NULL, NULL);
+INSERT INTO `application_record` VALUES (25, 147, 661, '2021-04-04 04:50:20', NULL, NULL, NULL, NULL);
+INSERT INTO `application_record` VALUES (26, 147, 679, '2021-04-06 15:11:39', '138', NULL, NULL, NULL);
+INSERT INTO `application_record` VALUES (27, 138, 661, '2021-04-07 17:43:51', '139', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for application_setting
@@ -93,7 +105,12 @@ CREATE TABLE `application_setting`  (
   INDEX `n_idx_status`(`status`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申请加微信次数设置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申请加微信次数设置表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of application_setting
+-- ----------------------------
+INSERT INTO `application_setting` VALUES (2, 5, '1', '2021-03-16 10:32:11', '2021-03-16 10:32:11', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for attache_info
@@ -118,7 +135,7 @@ CREATE TABLE `attache_info`  (
   INDEX `n_idx_data_type`(`data_type`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3507 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3579 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of attache_info
@@ -739,6 +756,78 @@ INSERT INTO `attache_info` VALUES (3503, '1', 617, '136/20210310/1615347606043/d
 INSERT INTO `attache_info` VALUES (3504, '1', 618, '138/20210310/1615377763889/181757bd-8680-4ea5-92cb-f662a4ca29f7.jpeg', '0', '2021-03-10 20:02:43', '2021-03-10 20:02:43', NULL, NULL, NULL, NULL);
 INSERT INTO `attache_info` VALUES (3505, '1', 619, '138/20210310/1615377828618/d687c5b7-b9c0-4e73-b872-363c7496a8d2.jpeg', '0', '2021-03-10 20:03:48', '2021-03-10 20:03:48', NULL, NULL, NULL, NULL);
 INSERT INTO `attache_info` VALUES (3506, '1', 620, '144/20210310/1615378150059/40ab5a01-de81-4e88-8f80-ff4d110142ec.jpg||144/20210310/1615378150059/77acf396-1fcf-48a6-aed3-5f7b335568d3.jpg', '0', '2021-03-10 20:09:10', '2021-03-10 20:09:10', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3507, '1', 621, '138/20210311/1615444528883/bd111b94-3b6d-412b-b533-cacec0c04a49.jpeg', '0', '2021-03-11 14:35:28', '2021-03-11 14:35:28', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3508, '1', 622, '138/20210312/1615546562118/2d29fd12-4c5b-4e65-86b0-e47a710253fd.jpeg', '0', '2021-03-12 18:56:02', '2021-03-12 18:56:02', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3509, '1', 623, '138/20210312/1615558934505/8f905b57-b350-49e5-9169-8eebdc24e4bf.jpeg', '0', '2021-03-12 22:22:14', '2021-03-12 22:22:14', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3510, '1', 624, '138/20210312/1615558956164/a02b8b53-387a-4461-8bfe-e8b09eb25fd5.jpeg', '0', '2021-03-12 22:22:36', '2021-03-12 22:22:36', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3511, '1', 625, '138/20210314/1615720441910/53385852-2000-4016-912e-bd271d1df9f6.jpeg', '0', '2021-03-14 19:14:01', '2021-03-14 19:14:01', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3512, '1', 626, '138/20210315/1615770768250/83f266e2-fa62-41b8-abf9-ec47963f4095.jpeg', '0', '2021-03-15 09:12:48', '2021-03-15 09:12:48', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3513, '1', 627, '138/20210315/1615795412800/7a68e0ff-a488-4f4a-a100-58bba93fed0a.jpeg', '0', '2021-03-15 16:03:32', '2021-03-15 16:03:32', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3514, '1', 628, '138/20210317/1615981448911/d338074b-d7a9-4963-9ccf-3cc4de3a9485.jpeg', '0', '2021-03-17 19:44:08', '2021-03-17 19:44:08', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3515, '1', 629, '147/20210320/1616237004730/98a03483-2fea-40cd-994a-f7522db50d66.jpeg', '0', '2021-03-20 18:43:24', '2021-03-20 18:43:24', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3516, '1', 630, '138/20210321/1616327595977/0a85d9a9-ba0a-4944-95f3-0689a1fb82a8.jpeg', '0', '2021-03-21 19:53:16', '2021-03-21 19:53:16', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3517, '1', 631, '138/20210321/1616327659852/099f152f-5d0b-47b1-8532-08b5e0f5bf59.jpeg', '0', '2021-03-21 19:54:19', '2021-03-21 19:54:19', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3518, '1', 632, '138/20210322/1616422771021/40c3eecb-4ef9-4622-9f15-88127ce7fb8a.jpeg', '0', '2021-03-22 22:19:31', '2021-03-22 22:19:31', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3519, '1', 633, '138/20210323/1616510143637/e0040f56-f3cf-440b-b988-a44578abdfbd.jpeg', '0', '2021-03-23 22:35:43', '2021-03-23 22:35:43', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3520, '1', 634, '138/20210325/1616660454179/b821393e-f0f4-46a3-abf5-f287e11bab34.jpeg', '0', '2021-03-25 16:20:54', '2021-03-25 16:20:54', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3521, '1', 635, '144/20210325/1616682737204/afcfd2b8-2e82-4e7a-a16b-426a9fcd8cb7.jpg', '0', '2021-03-25 22:32:17', '2021-03-25 22:32:17', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3522, '1', 636, '138/20210326/1616725627527/3bd3fcf9-55a6-47bc-9771-7f2742ba4d52.jpeg', '0', '2021-03-26 10:27:07', '2021-03-26 10:27:07', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3523, '1', 637, '138/20210326/1616758759626/147d4406-9096-40ed-b720-cbf23cbee2c8.jpeg', '0', '2021-03-26 19:39:19', '2021-03-26 19:39:19', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3524, '1', 638, '138/20210326/1616759118256/06a6cd4f-41e3-4a8a-b852-cc70d6a343e2.jpeg', '0', '2021-03-26 19:45:18', '2021-03-26 19:45:18', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3525, '1', 639, '138/20210327/1616806681660/93029342-1f31-48c4-817c-63e05a75fb41.jpeg', '0', '2021-03-27 08:58:01', '2021-03-27 08:58:01', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3526, '1', 640, '138/20210328/1616931448747/7cd013ef-2ebf-4be7-b5dd-8f84a372e390.jpeg', '0', '2021-03-28 19:37:28', '2021-03-28 19:37:28', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3527, '1', 641, '138/20210328/1616931448834/c50dea77-eac6-4d56-96b1-104a0c98d690.jpeg', '0', '2021-03-28 19:37:28', '2021-03-28 19:37:28', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3528, '1', 642, '138/20210328/1616931465570/bfbe75bc-4ab5-4984-ab08-a8f492b718f1.jpeg', '0', '2021-03-28 19:37:45', '2021-03-28 19:37:45', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3529, '1', 643, '138/20210330/1617093425812/eaf5eca4-99e5-462d-b31f-c33cac5000b8.jpeg', '0', '2021-03-30 16:37:05', '2021-03-30 16:37:05', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3530, '1', 644, '144/20210330/1617106945829/aee822d2-ee9c-4fff-8597-464e15906c2c.jpg', '0', '2021-03-30 20:22:25', '2021-03-30 20:22:25', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3531, '1', 645, '144/20210331/1617175579910/f6cfdcb0-3e94-4201-9423-3566eff6b7f5.jpeg', '0', '2021-03-31 15:26:19', '2021-03-31 15:26:19', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3532, '1', 646, '144/20210331/1617175580013/a6404f4f-846e-414c-9ac9-09e8bdf23045.jpeg', '0', '2021-03-31 15:26:20', '2021-03-31 15:26:20', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3533, '1', 647, '141/20210331/1617175801494/445d4996-8872-41c4-b1ac-e5e0b5899524.png', '0', '2021-03-31 15:30:01', '2021-03-31 15:30:01', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3534, '1', 648, '144/20210331/1617175859511/b99c7a95-59d6-4780-8310-3462181b4c4f.jpeg', '0', '2021-03-31 15:30:59', '2021-03-31 15:30:59', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3535, '1', 649, '144/20210331/1617175958506/88afb745-172f-487b-9712-f9f33747119d.jpeg', '0', '2021-03-31 15:32:38', '2021-03-31 15:32:38', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3536, '1', 650, '144/20210331/1617176015267/1b0909a3-697a-4c53-91cf-9b7146360181.jpeg', '0', '2021-03-31 15:33:35', '2021-03-31 15:33:35', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3537, '1', 651, '144/20210331/1617176015395/71b9fdaf-dd61-413c-b6d3-e7cea0b7d905.jpeg', '0', '2021-03-31 15:33:35', '2021-03-31 15:33:35', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3538, '1', 652, '144/20210331/1617176041174/f53b5070-ba5e-4d8d-8b15-b6d6f73a50c8.jpeg', '0', '2021-03-31 15:34:01', '2021-03-31 15:34:01', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3539, '1', 653, '144/20210331/1617176041285/0956f1b1-201b-4288-9c4d-c898814b0533.jpeg', '0', '2021-03-31 15:34:01', '2021-03-31 15:34:01', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3540, '1', 654, '141/20210331/1617176063821/89e70bd6-a7a7-463a-ac0b-56446db6d0db.png', '0', '2021-03-31 15:34:23', '2021-03-31 15:34:23', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3541, '1', 655, '141/20210331/1617176064039/0b12166a-18d4-4451-9000-43942257e89e.png', '0', '2021-03-31 15:34:24', '2021-03-31 15:34:24', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3542, '1', 656, '144/20210331/1617176107913/b7eb7189-346c-44e1-8fb4-41d84b44b2c4.jpeg', '0', '2021-03-31 15:35:07', '2021-03-31 15:35:07', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3543, '1', 657, '144/20210331/1617176108009/9212a7c2-535e-44cc-9f4b-bd53e44b01e3.jpeg', '0', '2021-03-31 15:35:08', '2021-03-31 15:35:08', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3544, '1', 658, '144/20210331/1617176204339/a76d12a2-d430-4155-9a79-a5f6485b0544.jpeg', '0', '2021-03-31 15:36:44', '2021-03-31 15:36:44', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3545, '1', 659, '144/20210331/1617176204466/bbdfdece-081d-4eaf-81d1-79855d6d39bc.jpeg', '0', '2021-03-31 15:36:44', '2021-03-31 15:36:44', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3546, '1', 660, '147/20210331/1617177546655/f865313f-ad85-4b45-a636-40f3c46cbc83.jpeg', '0', '2021-03-31 15:59:06', '2021-03-31 15:59:06', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3547, '1', 661, '139/20210331/1617177636261/9943de20-6b35-4296-a68a-4424bae7c7ea.jpg', '0', '2021-03-31 16:00:36', '2021-03-31 16:00:36', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3548, '1', 662, '147/20210331/1617177720174/d5013ba1-7d46-499c-a5c7-e3242a4f7a50.jpeg', '0', '2021-03-31 16:02:00', '2021-03-31 16:02:00', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3549, '1', 663, '141/20210331/1617178521783/ea55a4d5-c50e-4b15-8e65-ee681e5b2f60.png', '0', '2021-03-31 16:15:21', '2021-03-31 16:15:21', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3550, '1', 664, '147/20210331/1617178806074/528d36a6-9a33-4a1d-977e-b93be6eda20f.jpeg', '0', '2021-03-31 16:20:06', '2021-03-31 16:20:06', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3551, '1', 665, '147/20210331/1617178972536/c8dfa166-9208-462d-ac48-77167b944f3c.jpeg', '0', '2021-03-31 16:22:52', '2021-03-31 16:22:52', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3552, '1', 666, '138/20210401/1617258167541/ac45c323-f302-486e-abcd-290213554992.jpg', '0', '2021-04-01 14:22:47', '2021-04-01 14:22:47', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3553, '1', 667, '138/20210403/1617441414228/b0c0fbe2-e425-4bff-9a90-a2c805bd11cf.jpg', '0', '2021-04-03 17:16:54', '2021-04-03 17:16:54', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3554, '1', 668, '138/20210403/1617445813564/d502eaf1-c35b-429f-a562-d8319e98907d.jpg', '0', '2021-04-03 18:30:13', '2021-04-03 18:30:13', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3555, '1', 669, '138/20210404/1617493297695/271daa6b-8ecc-4d85-8c26-b08769650dda.jpg', '0', '2021-04-04 07:41:37', '2021-04-04 07:41:37', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3556, '1', 670, '138/20210404/1617502631813/f113416d-16f5-45cf-bded-be08114df850.jpg', '0', '2021-04-04 10:17:11', '2021-04-04 10:17:11', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3557, '1', 671, '138/20210404/1617506268063/d500509a-431a-4613-a6e6-f283ea638f29.jpg', '0', '2021-04-04 11:17:48', '2021-04-04 11:17:48', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3558, '1', 672, '138/20210404/1617528642666/e5a9aa55-e1f0-408c-b73e-94ad8341422f.jpg', '0', '2021-04-04 17:30:42', '2021-04-04 17:30:42', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3559, '1', 673, '138/20210404/1617539657011/b491863e-bd47-41ce-b6ff-ea7ab953644a.jpg', '0', '2021-04-04 20:34:17', '2021-04-04 20:34:17', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3560, '1', 674, '138/20210404/1617543752495/7c93f0ad-4cf5-4f83-88a2-edf4d856656e.jpg', '0', '2021-04-04 21:42:32', '2021-04-04 21:42:32', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3561, '1', 675, '138/20210405/1617585491752/09d522b3-9d7c-4046-9e8a-9b02eba508df.jpg', '0', '2021-04-05 09:18:11', '2021-04-05 09:18:11', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3562, '1', 676, '138/20210405/1617587616129/5e9a13d9-606f-4452-995a-996b0e135db3.jpg', '0', '2021-04-05 09:53:36', '2021-04-05 09:53:36', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3563, '1', 677, '138/20210405/1617598369883/bc340a19-26f6-4f68-860f-0f0c48f698bd.jpg', '0', '2021-04-05 12:52:49', '2021-04-05 12:52:49', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3564, '1', 678, '138/20210405/1617603665684/1ef5bb06-fef6-49eb-80c4-61ff38323937.jpg', '0', '2021-04-05 14:21:05', '2021-04-05 14:21:05', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3565, '1', 679, '138/20210405/1617604232669/fa68923f-3b64-4492-9c4e-409ed86b013e.jpg', '0', '2021-04-05 14:30:32', '2021-04-05 14:30:32', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3566, '1', 680, '138/20210405/1617613517593/640bc20b-712a-41a1-b50e-184688b4b743.jpg', '0', '2021-04-05 17:05:17', '2021-04-05 17:05:17', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3567, '1', 681, '138/20210406/1617672869933/750bb377-d24e-4c05-9d99-d4d66f855f30.jpg', '0', '2021-04-06 09:34:29', '2021-04-06 09:34:29', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3568, '1', 682, '138/20210407/1617783520706/2f363ffe-454d-4789-a725-c5c42734c549.jpg', '0', '2021-04-07 16:18:40', '2021-04-07 16:18:40', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3569, '1', 683, '138/20210407/1617788345163/47071b5d-e933-4485-9882-21c7c4f3b212.jpg', '0', '2021-04-07 17:39:05', '2021-04-07 17:39:05', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3570, '1', 684, '138/20210407/1617806223442/39c4e01e-a572-4f67-b347-45634762ba33.jpg', '0', '2021-04-07 22:37:03', '2021-04-07 22:37:03', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3571, '1', 685, '138/20210408/1617852684622/fc75eefe-41d9-4657-8cbe-d18fcec6535f.jpg', '0', '2021-04-08 11:31:24', '2021-04-08 11:31:24', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3572, '1', 686, '138/20210408/1617861162035/70de84e7-4d86-4b8a-9289-e10073fea5b2.jpg', '0', '2021-04-08 13:52:42', '2021-04-08 13:52:42', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3573, '1', 687, '138/20210408/1617880496704/747cda89-1d37-4ca0-a7db-edb14130deec.jpg', '0', '2021-04-08 19:14:56', '2021-04-08 19:14:56', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3574, '1', 688, '138/20210409/1617938490252/7dfaaf2a-130e-4979-a8cf-be1cc15abe38.jpg', '0', '2021-04-09 11:21:30', '2021-04-09 11:21:30', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3575, '1', 689, '138/20210409/1617972036000/bb723c3c-88ce-44a2-a4a8-69c3626a67eb.jpg', '0', '2021-04-09 20:40:36', '2021-04-09 20:40:36', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3576, '1', 690, '138/20210410/1618023839769/20fe4527-aa75-4b5b-9859-9aa018236e9f.jpg', '0', '2021-04-10 11:03:59', '2021-04-10 11:03:59', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3577, '1', 691, '139/20210410/1618024690657/e611eb81-bcd8-4917-8fb2-d7c6c20b77cd.jpg', '0', '2021-04-10 11:18:10', '2021-04-10 11:18:10', NULL, NULL, NULL, NULL);
+INSERT INTO `attache_info` VALUES (3578, '1', 692, '138/20210411/1618096619022/28c09f39-4e1c-4d01-85b1-6dd867a0e3fc.jpg', '0', '2021-04-11 07:16:59', '2021-04-11 07:16:59', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for blacklist_record
@@ -809,7 +898,7 @@ CREATE TABLE `dynamic`  (
   INDEX `n_idx_other`(`other`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 575 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动态信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 576 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动态信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamic
@@ -1379,14 +1468,15 @@ INSERT INTO `dynamic` VALUES (563, 135, '杨六', '87952562515231', '华为P40',
 INSERT INTO `dynamic` VALUES (564, 136, '杨八', '87952562515232', 'vivo  V2002A', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-06 15:58:33', '2021-02-10 11:21:16', NULL, NULL, NULL, NULL);
 INSERT INTO `dynamic` VALUES (565, 136, '杨八', '87952562515232', 'vivo  V2002A', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-09 19:30:04', '2021-02-10 11:21:16', NULL, NULL, NULL, NULL);
 INSERT INTO `dynamic` VALUES (566, 137, 'jack', NULL, 'OPPO  PDNM00', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-10 16:47:31', '2021-02-13 20:40:52', NULL, NULL, NULL, NULL);
-INSERT INTO `dynamic` VALUES (567, 138, '阿珂', NULL, 'vivo  V2002A', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-10 20:38:06', '2021-02-10 20:38:06', NULL, NULL, NULL, NULL);
-INSERT INTO `dynamic` VALUES (568, 139, '9527', NULL, 'Redmi  M2004J7AC', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-18 13:12:47', '2021-02-18 13:12:47', NULL, NULL, NULL, NULL);
+INSERT INTO `dynamic` VALUES (567, 138, '阿妩', NULL, 'vivo  V2002A', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-10 20:38:06', '2021-02-10 20:38:06', NULL, NULL, NULL, NULL);
+INSERT INTO `dynamic` VALUES (568, 139, '9527', NULL, 'vivo  V2002A', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-18 13:12:47', '2021-02-18 13:12:47', NULL, NULL, NULL, NULL);
 INSERT INTO `dynamic` VALUES (569, 140, '凝噎新紫', NULL, 'HONOR  JSN-AL00a', 'Android', '8.1.0', '4G', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-18 23:22:09', '2021-02-19 10:20:12', NULL, NULL, NULL, NULL);
 INSERT INTO `dynamic` VALUES (570, 141, 'good', '355757541672040', 'huawei  VOG-AL10', 'Android', '5.1.1', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-19 09:36:28', '2021-02-19 10:20:14', NULL, NULL, NULL, NULL);
 INSERT INTO `dynamic` VALUES (571, 142, 'qqq', NULL, 'Redmi  M2004J7AC', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-19 10:54:55', '2021-02-19 10:54:55', NULL, NULL, NULL, NULL);
 INSERT INTO `dynamic` VALUES (572, 143, 'www', NULL, 'Redmi  M2004J7AC', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-02-19 14:02:17', '2021-02-19 14:02:17', NULL, NULL, NULL, NULL);
-INSERT INTO `dynamic` VALUES (573, 144, '季婉', '358555039386536', 'LW  M1006', 'Android', '9.0', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-03-06 18:14:04', '2021-03-06 18:14:04', NULL, NULL, NULL, NULL);
+INSERT INTO `dynamic` VALUES (573, 144, '季婉', '358555039386536', 'vivo  V2002A', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-03-06 18:14:04', '2021-03-06 18:14:04', NULL, NULL, NULL, NULL);
 INSERT INTO `dynamic` VALUES (574, 145, '咿呀呀', NULL, 'Redmi  M2004J7AC', 'Android', '10', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-03-08 10:39:13', '2021-03-08 10:39:13', NULL, NULL, NULL, NULL);
+INSERT INTO `dynamic` VALUES (575, 147, '花花世界', NULL, 'OPPO  PDNM00', 'Android', '11', 'wifi', '中国', '广东省', '深圳市', NULL, NULL, '2021-03-20 18:43:24', '2021-03-20 18:43:24', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for dynamic_info
@@ -1421,7 +1511,7 @@ CREATE TABLE `dynamic_info`  (
   INDEX `n_idx_attache_number`(`attache_number`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 621 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '动态内容表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 693 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '动态内容表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamic_info
@@ -1490,7 +1580,7 @@ INSERT INTO `dynamic_info` VALUES (62, 21, 62, '期望未来男友是一个足�
 INSERT INTO `dynamic_info` VALUES (63, 22, 63, '你好呀，陌生人', '0', '1', 377, 45, 0, '0', 1, '2020-07-05 06:05:36', '2021-02-19 14:50:05', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (64, 22, 64, '所谓浪漫，大概就是没有后来吧', '0', '1', 623, 142, 0, '0', 1, '2020-07-11 15:01:38', '2021-02-19 14:50:05', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (65, 23, 65, '初来乍到,请多关照', '0', '1', 457, 69, 0, '0', 1, '2020-09-28 09:32:10', '2021-03-01 10:19:34', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (66, 23, 66, '出来散散心', '0', '1', 115, 22, 0, '0', 3, '2020-10-01 06:52:51', '2021-02-19 14:50:05', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (66, 23, 66, '出来散散心', '0', '1', 115, 23, 0, '0', 3, '2020-10-01 06:52:51', '2021-03-16 17:40:54', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (67, 23, 67, '早知道男朋友这么难找，当初他绿我的时候就该假装不知道', '0', '1', 631, 236, 0, '0', 2, '2020-10-12 11:13:46', '2021-02-19 14:50:05', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (68, 24, 68, '初来乍到,请多关照', '0', '1', 149, 26, 0, '0', 1, '2020-06-11 10:50:38', '2021-02-19 14:50:05', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (69, 24, 69, '我比较喜欢直男，不喜欢被叫小姐姐', '0', '1', 728, 39, 0, '0', 2, '2020-06-15 10:55:37', '2021-02-19 14:50:05', NULL, NULL, NULL);
@@ -1830,7 +1920,7 @@ INSERT INTO `dynamic_info` VALUES (402, 105, 402, '今天跑民政局结婚，�
 INSERT INTO `dynamic_info` VALUES (403, 105, 403, '一转眼，就成了故事', '0', '1', 637, 116, 0, '0', 1, '2020-10-16 05:45:56', '2021-02-19 14:50:05', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (404, 105, 404, '从此不恋爱', '0', '1', 118, 32, 0, '0', 2, '2020-10-26 14:20:34', '2021-02-19 14:50:05', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (405, 106, 405, '初来乍到,请多关照', '0', '1', 848, 40, 0, '0', 1, '2020-12-15 15:25:21', '2021-03-10 16:49:05', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (406, 106, 406, '嘘', '0', '1', 581, 60, 0, '0', 2, '2020-12-19 05:24:21', '2021-03-10 16:34:07', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (406, 106, 406, '嘘', '0', '1', 582, 60, 0, '0', 2, '2020-12-19 05:24:21', '2021-03-25 16:29:46', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (407, 106, 407, '没有文案', '0', '1', 849, 191, 0, '0', 2, '2020-12-24 05:29:01', '2021-02-19 14:50:05', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (408, 106, 408, '除了我一直是3岁，其他地方都有很大变化', '0', '1', 154, 20, 0, '0', 1, '2020-12-27 05:34:43', '2021-02-19 14:50:05', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (409, 107, 409, '初来乍到,请多关照', '0', '1', 262, 37, 0, '0', 1, '2020-10-08 10:34:32', '2021-02-19 14:50:05', NULL, NULL, NULL);
@@ -2019,28 +2109,100 @@ INSERT INTO `dynamic_info` VALUES (595, 138, 567, '我的动态，分享给别�
 INSERT INTO `dynamic_info` VALUES (596, 138, 567, '今天天气不错，每天都这样就好了。', '1', '1', 0, 0, 0, '0', 4, '2021-02-17 09:32:00', '2021-03-01 09:36:23', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (597, 138, 567, '斗罗大陆', '1', '1', 0, 0, 0, '1', 1, '2021-02-17 11:37:06', '2021-03-01 09:36:19', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (598, 138, 567, '住手。', '1', '1', 0, 0, 0, '1', 1, '2021-02-17 14:27:57', '2021-03-01 09:36:17', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (599, 139, 568, '新人来到，多多关照，谢谢！', '0', '1', 1, 0, 0, '0', 1, '2021-02-18 13:12:47', '2021-03-10 16:48:16', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (599, 139, 568, '新人来到，多多关照，谢谢！', '0', '1', 1, 0, 0, '0', 1, '2021-02-18 13:12:47', '2021-03-25 16:51:56', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (600, 138, 567, '觉醒年代', '1', '1', 0, 0, 0, '1', 1, '2021-02-18 20:10:48', '2021-03-01 09:36:14', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (601, 140, 569, '新人来到，多多关照，谢谢！', '0', '1', 0, 0, 0, '0', 1, '2021-02-18 23:22:09', '2021-02-19 14:50:05', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (602, 141, 570, '新人来到', '0', '1', 0, 0, 0, '0', 1, '2021-02-19 09:36:28', '2021-02-19 14:50:05', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (602, 141, 570, '新人来到', '0', '1', 1, 0, 0, '0', 1, '2021-02-19 09:36:28', '2021-03-31 11:12:14', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (603, 139, 568, 'aaa', '1', '1', 0, 0, 0, '1', 1, '2021-02-19 10:03:06', '2021-02-19 10:45:35', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (604, 138, 567, '哈哈', '1', '1', 1, 0, 0, '0', 1, '2021-02-19 10:25:47', '2021-03-01 09:36:11', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (605, 142, 571, '新人来到，多多关照，谢谢！', '0', '1', 0, 0, 0, '0', 1, '2021-02-19 10:54:55', '2021-02-19 14:50:05', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (606, 142, 571, '。', '0', '1', 2, 0, 0, '0', 1, '2021-02-19 12:14:11', '2021-03-10 16:29:50', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (605, 142, 571, '新人来到，多多关照，谢谢！', '0', '1', 1, 0, 0, '0', 1, '2021-02-19 10:54:55', '2021-03-15 21:42:45', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (606, 142, 571, '。', '0', '1', 2, 1, 0, '0', 1, '2021-02-19 12:14:11', '2021-03-16 11:16:01', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (607, 138, 567, '好的', '1', '1', 0, 0, 0, '0', 4, '2021-02-19 12:14:29', '2021-03-01 09:36:08', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (608, 143, 572, 'eeeee', '0', '1', 1, 0, 0, '0', 1, '2021-02-19 14:02:17', '2021-02-23 18:02:05', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (609, 137, 566, '有无聊可以约的不', '0', '1', 1, 0, 0, '0', 1, '2021-02-26 14:34:10', '2021-03-10 16:28:50', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (609, 137, 566, '有无聊可以约的不', '0', '1', 1, 1, 0, '0', 1, '2021-02-26 14:34:10', '2021-03-16 11:15:43', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (610, 144, 573, '大家好呀，一起来聊天社交吧！', '1', '0', 0, 0, 0, '0', 1, '2021-03-06 18:14:04', '2021-03-06 18:15:19', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (611, 145, 574, '新人来到，多多关照，谢谢！', '0', '0', 1, 0, 0, '0', 1, '2021-03-08 10:39:13', '2021-03-08 12:39:46', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (612, 145, 574, '🤔🤔🤔', '0', '0', 0, 0, 0, '0', 1, '2021-03-08 16:17:21', '2021-03-08 16:17:21', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (612, 145, 574, '🤔🤔🤔', '0', '0', 0, 1, 0, '0', 1, '2021-03-08 16:17:21', '2021-03-16 17:40:36', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (613, 144, 573, '哈哈', '1', '0', 0, 0, 0, '0', 1, '2021-03-09 21:21:59', '2021-03-10 20:08:01', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (614, 136, 564, '哈哈', '0', '1', 0, 0, 0, '0', 3, '2021-03-09 21:24:04', '2021-03-09 21:24:04', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (615, 136, 564, '测试发布', '0', '1', 0, 0, 0, '0', 2, '2021-03-10 11:35:18', '2021-03-10 11:35:18', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (616, 136, 564, '测试发布', '0', '1', 0, 0, 0, '0', 2, '2021-03-10 11:35:19', '2021-03-10 11:35:19', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (617, 136, 564, '测试', '0', '1', 0, 0, 0, '0', 2, '2021-03-10 11:40:06', '2021-03-10 11:40:06', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (617, 136, 564, '测试', '0', '1', 0, 2, 0, '0', 2, '2021-03-10 11:40:06', '2021-04-01 15:35:12', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (618, 138, 567, '测试一下', '0', '1', 0, 0, 0, '0', 1, '2021-03-10 20:02:43', '2021-03-10 20:02:43', NULL, NULL, NULL);
 INSERT INTO `dynamic_info` VALUES (619, 138, 567, '测试', '0', '1', 0, 0, 0, '0', 1, '2021-03-10 20:03:48', '2021-03-10 20:03:48', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (620, 144, 573, '测试', '0', '1', 1, 0, 0, '0', 2, '2021-03-10 20:09:10', '2021-03-10 20:10:10', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (620, 144, 573, '测试', '0', '1', 1, 2, 0, '0', 2, '2021-03-10 20:09:10', '2021-03-31 17:57:47', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (621, 138, 567, '测试', '0', '1', 0, 0, 0, '0', 1, '2021-03-11 14:35:28', '2021-03-11 14:35:28', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (622, 138, 567, '测试', '0', '1', 0, 0, 0, '0', 1, '2021-03-12 18:56:02', '2021-03-12 18:56:02', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (623, 138, 567, '测试', '0', '0', 0, 0, 0, '0', 1, '2021-03-12 22:22:14', '2021-03-12 22:22:14', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (624, 138, 567, '测试', '0', '1', 1, 0, 0, '0', 1, '2021-03-12 22:22:36', '2021-03-15 11:14:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (625, 138, 567, '测试', '0', '1', 1, 0, 0, '0', 1, '2021-03-14 19:14:01', '2021-03-15 14:09:39', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (626, 138, 567, '测试', '0', '1', 0, 1, 0, '0', 1, '2021-03-15 09:12:48', '2021-03-16 17:39:49', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (627, 138, 567, '测试', '0', '1', 0, 1, 0, '0', 1, '2021-03-15 16:03:32', '2021-03-16 09:46:37', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (628, 138, 567, '测试正常', '0', '1', 0, 0, 0, '0', 1, '2021-03-17 19:44:08', '2021-03-17 19:44:08', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (629, 147, 575, '新人来到，多多关照，谢谢！', '0', '0', 1, 0, 0, '0', 1, '2021-03-20 18:43:24', '2021-03-24 09:58:28', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (630, 138, 567, '测试', '0', '0', 0, 0, 0, '0', 1, '2021-03-21 19:53:15', '2021-03-21 19:53:15', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (631, 138, 567, '测试结果', '0', '1', 1, 0, 0, '0', 1, '2021-03-21 19:54:19', '2021-03-31 14:40:53', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (632, 138, 567, '测试', '0', '1', 0, 0, 0, '0', 1, '2021-03-22 22:19:30', '2021-03-22 22:19:30', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (633, 138, 567, '测试', '0', '1', 2, 0, 0, '0', 1, '2021-03-23 22:35:43', '2021-03-25 12:07:55', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (634, 138, 567, '测试', '0', '1', 2, 0, 0, '0', 1, '2021-03-25 16:20:54', '2021-03-31 14:40:49', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (635, 144, 573, '测试', '1', '0', 0, 0, 0, '0', 1, '2021-03-25 22:32:17', '2021-03-31 15:27:14', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (636, 138, 567, '安排', '0', '1', 1, 0, 0, '0', 1, '2021-03-26 10:27:07', '2021-03-31 16:34:37', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (637, 138, 567, '安排', '0', '1', 0, 0, 0, '0', 1, '2021-03-26 19:39:19', '2021-03-26 19:39:19', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (638, 138, 567, '安排好了', '0', '1', 0, 0, 0, '0', 1, '2021-03-26 19:45:18', '2021-03-26 19:45:18', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (639, 138, 567, '天气不错', '0', '1', 0, 0, 0, '0', 1, '2021-03-27 08:58:01', '2021-03-27 08:58:01', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (640, 138, 567, '测试安排', '0', '1', 0, 0, 0, '0', 1, '2021-03-28 19:37:28', '2021-03-28 19:37:28', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (641, 138, 567, '测试安排', '0', '1', 2, 0, 0, '0', 1, '2021-03-28 19:37:28', '2021-03-31 16:25:23', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (642, 138, 567, '测试一下', '0', '1', 2, 0, 0, '0', 1, '2021-03-28 19:37:45', '2021-03-31 15:51:39', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (643, 138, 567, '测试', '0', '1', 4, 1, 0, '0', 1, '2021-03-30 16:37:05', '2021-03-31 14:58:54', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (644, 144, 573, '测试', '0', '1', 4, 0, 0, '0', 1, '2021-03-30 20:22:25', '2021-03-31 15:21:48', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (645, 144, 573, '测试一下', '1', '1', 0, 0, 0, '0', 1, '2021-03-31 15:26:19', '2021-03-31 15:26:35', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (646, 144, 573, '测试一下', '1', '1', 0, 0, 0, '0', 1, '2021-03-31 15:26:20', '2021-03-31 15:26:31', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (647, 141, 570, '测试', '1', '0', 0, 0, 0, '0', 1, '2021-03-31 15:30:01', '2021-03-31 16:16:18', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (648, 144, 573, '测试', '0', '0', 0, 0, 0, '0', 1, '2021-03-31 15:30:59', '2021-03-31 15:30:59', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (649, 144, 573, '测试', '0', '1', 0, 0, 0, '0', 1, '2021-03-31 15:32:38', '2021-03-31 15:32:38', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (650, 144, 573, '打算', '0', '1', 0, 0, 0, '0', 1, '2021-03-31 15:33:35', '2021-03-31 15:33:35', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (651, 144, 573, '打算', '0', '1', 0, 0, 0, '0', 1, '2021-03-31 15:33:35', '2021-03-31 15:33:35', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (652, 144, 573, '呃呃呃', '0', '1', 0, 0, 0, '0', 1, '2021-03-31 15:34:01', '2021-03-31 15:34:01', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (653, 144, 573, '呃呃呃', '0', '1', 1, 0, 0, '0', 1, '2021-03-31 15:34:01', '2021-03-31 15:50:45', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (654, 141, 570, '测试', '1', '0', 0, 0, 0, '0', 1, '2021-03-31 15:34:23', '2021-03-31 16:16:14', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (655, 141, 570, '测试', '1', '0', 0, 0, 0, '0', 1, '2021-03-31 15:34:24', '2021-03-31 16:16:11', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (656, 144, 573, '二哥', '0', '1', 1, 0, 0, '0', 1, '2021-03-31 15:35:07', '2021-04-01 18:11:48', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (657, 144, 573, '二哥', '0', '1', 0, 0, 0, '0', 1, '2021-03-31 15:35:07', '2021-03-31 15:35:07', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (658, 144, 573, '测试', '0', '1', 1, 0, 0, '0', 1, '2021-03-31 15:36:44', '2021-04-01 18:11:17', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (659, 144, 573, '测试', '0', '1', 2, 0, 0, '0', 1, '2021-03-31 15:36:44', '2021-04-04 04:50:43', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (660, 147, 575, '阿尔巴', '0', '1', 2, 0, 0, '0', 1, '2021-03-31 15:59:06', '2021-04-04 04:50:40', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (661, 139, 568, '测试跑跑', '0', '1', 1, 2, 0, '0', 1, '2021-03-31 16:00:36', '2021-04-07 17:43:51', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (662, 147, 575, '测试', '0', '1', 1, 0, 0, '0', 1, '2021-03-31 16:02:00', '2021-03-31 16:02:30', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (663, 141, 570, 'help UNINE！！', '0', '0', 0, 0, 0, '0', 1, '2021-03-31 16:15:21', '2021-03-31 16:15:21', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (664, 147, 575, '测试', '1', '1', 1, 0, 0, '0', 1, '2021-03-31 16:20:06', '2021-03-31 16:23:05', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (665, 147, 575, '测试', '0', '1', 1, 0, 0, '0', 1, '2021-03-31 16:22:52', '2021-03-31 16:23:18', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (666, 138, 567, '安排', '0', '1', 1, 1, 0, '0', 1, '2021-04-01 14:22:47', '2021-04-04 04:49:56', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (667, 138, 567, '1', '0', '1', 1, 1, 0, '0', 1, '2021-04-03 17:16:54', '2021-04-04 04:49:28', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (668, 138, 567, '2', '0', '1', 2, 1, 0, '0', 1, '2021-04-03 18:30:13', '2021-04-07 16:16:11', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (669, 138, 567, '3', '0', '1', 0, 0, 0, '0', 1, '2021-04-04 07:41:37', '2021-04-04 07:41:37', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (670, 138, 567, '4', '0', '1', 0, 0, 0, '0', 1, '2021-04-04 10:17:11', '2021-04-04 10:17:11', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (671, 138, 567, '5', '0', '1', 0, 0, 0, '0', 1, '2021-04-04 11:17:48', '2021-04-04 11:17:48', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (672, 138, 567, '6', '0', '1', 0, 0, 0, '0', 1, '2021-04-04 17:30:42', '2021-04-04 17:30:42', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (673, 138, 567, '7', '0', '1', 0, 0, 0, '0', 1, '2021-04-04 20:34:16', '2021-04-04 20:34:16', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (674, 138, 567, '8', '0', '1', 0, 0, 0, '0', 1, '2021-04-04 21:42:32', '2021-04-04 21:42:32', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (675, 138, 567, '9', '0', '1', 0, 0, 0, '0', 1, '2021-04-05 09:18:11', '2021-04-05 09:18:11', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (676, 138, 567, '10', '0', '1', 0, 0, 0, '0', 1, '2021-04-05 09:53:36', '2021-04-05 09:53:36', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (677, 138, 567, '11', '0', '1', 0, 0, 0, '0', 1, '2021-04-05 12:52:49', '2021-04-05 12:52:49', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (678, 138, 567, '12', '0', '1', 0, 0, 0, '0', 1, '2021-04-05 14:21:05', '2021-04-05 14:21:05', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (679, 138, 567, '13', '0', '1', 0, 1, 0, '0', 1, '2021-04-05 14:30:32', '2021-04-06 15:11:40', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (680, 138, 567, ' 14', '0', '1', 0, 0, 0, '0', 1, '2021-04-05 17:05:17', '2021-04-05 17:05:17', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (681, 138, 567, '15', '0', '1', 2, 0, 0, '0', 1, '2021-04-06 09:34:29', '2021-04-07 20:27:58', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (682, 138, 567, '16', '0', '1', 2, 0, 0, '0', 1, '2021-04-07 16:18:40', '2021-04-07 20:27:53', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (683, 138, 567, '17', '0', '1', 1, 0, 0, '0', 1, '2021-04-07 17:39:05', '2021-04-07 20:27:48', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (684, 138, 567, '18', '0', '1', 0, 0, 0, '0', 1, '2021-04-07 22:37:03', '2021-04-07 22:37:03', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (685, 138, 567, '19', '0', '1', 0, 0, 0, '0', 1, '2021-04-08 11:31:24', '2021-04-08 11:31:24', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (686, 138, 567, '20', '0', '1', 0, 0, 0, '0', 1, '2021-04-08 13:52:42', '2021-04-08 13:52:42', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (687, 138, 567, '21', '0', '1', 0, 0, 0, '0', 1, '2021-04-08 19:14:56', '2021-04-08 19:14:56', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (688, 138, 567, '22', '0', '1', 1, 0, 0, '0', 1, '2021-04-09 11:21:30', '2021-04-10 11:18:28', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (689, 138, 567, '23', '0', '1', 1, 0, 0, '0', 1, '2021-04-09 20:40:35', '2021-04-10 11:18:24', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (690, 138, 567, '24', '0', '1', 1, 0, 0, '0', 1, '2021-04-10 11:03:59', '2021-04-10 11:18:19', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (691, 139, 568, '1', '0', '1', 0, 0, 0, '0', 1, '2021-04-10 11:18:10', '2021-04-10 11:18:10', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (692, 138, 567, '25', '0', '1', 0, 0, 0, '0', 1, '2021-04-11 07:16:59', '2021-04-11 07:16:59', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for hibernate_sequence
@@ -2071,7 +2233,12 @@ CREATE TABLE `is_debug`  (
   INDEX `n_idx_price`(`price`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '支付调测表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '支付调测表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of is_debug
+-- ----------------------------
+INSERT INTO `is_debug` VALUES (1, '1', 1, 0.01, '2021-03-18 23:48:32', '2021-03-18 23:48:32', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for like_record
@@ -2081,7 +2248,7 @@ CREATE TABLE `like_record`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
   `user_id` bigint(20) NOT NULL COMMENT '点赞者id',
   `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
-  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，0->点赞；1->取消，默认：0->点赞',
+  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '状态，0->取消；1->点赞，默认：1->点赞',
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
@@ -2094,57 +2261,39 @@ CREATE TABLE `like_record`  (
   INDEX `n_idx_status`(`status`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 84 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '点赞记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 142 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '点赞记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of like_record
 -- ----------------------------
-INSERT INTO `like_record` VALUES (3, 136, 51, '0', '2021-02-09 19:56:12', '2021-02-09 19:56:12', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (4, 136, 50, '0', '2021-02-09 19:56:15', '2021-02-09 19:56:15', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (5, 138, 586, '0', '2021-02-13 16:56:32', '2021-02-13 16:56:32', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (6, 138, 585, '0', '2021-02-13 16:56:35', '2021-02-13 16:56:35', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (7, 138, 584, '0', '2021-02-13 16:56:39', '2021-02-13 16:56:39', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (8, 138, 583, '0', '2021-02-13 16:56:41', '2021-02-13 16:56:41', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (9, 138, 582, '0', '2021-02-13 16:56:45', '2021-02-13 16:56:45', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (10, 138, 581, '0', '2021-02-13 16:56:48', '2021-02-13 16:56:48', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (11, 138, 580, '0', '2021-02-13 16:56:51', '2021-02-13 16:56:51', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (12, 138, 579, '0', '2021-02-13 16:56:53', '2021-02-13 16:56:53', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (13, 138, 578, '0', '2021-02-13 16:56:55', '2021-02-13 16:56:55', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (14, 138, 577, '0', '2021-02-13 16:56:57', '2021-02-13 16:56:57', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (16, 138, 576, '0', '2021-02-13 16:57:03', '2021-02-13 16:57:03', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (17, 138, 575, '0', '2021-02-13 16:57:04', '2021-02-13 16:57:04', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (18, 138, 574, '0', '2021-02-13 16:57:14', '2021-02-13 16:57:14', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (19, 138, 573, '0', '2021-02-13 16:57:16', '2021-02-13 16:57:16', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (20, 138, 570, '0', '2021-02-13 16:57:33', '2021-02-13 16:57:33', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (21, 138, 587, '0', '2021-02-14 07:47:46', '2021-02-14 07:47:46', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (22, 138, 588, '0', '2021-02-14 12:06:14', '2021-02-14 12:06:14', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (23, 138, 593, '0', '2021-02-16 18:07:14', '2021-02-16 18:07:14', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (24, 138, 592, '0', '2021-02-16 18:07:18', '2021-02-16 18:07:18', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (25, 138, 591, '0', '2021-02-16 18:07:20', '2021-02-16 18:07:20', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (26, 138, 590, '0', '2021-02-16 18:07:22', '2021-02-16 18:07:22', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (27, 138, 589, '0', '2021-02-16 18:07:25', '2021-02-16 18:07:25', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (28, 138, 595, '0', '2021-02-17 09:16:22', '2021-02-17 09:16:22', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (29, 138, 594, '0', '2021-02-17 09:16:24', '2021-02-17 09:16:24', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (30, 139, 44, '0', '2021-02-19 10:39:52', '2021-02-19 10:39:52', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (31, 139, 5, '0', '2021-02-19 10:39:54', '2021-02-19 10:39:54', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (32, 139, 57, '0', '2021-02-19 10:39:58', '2021-02-19 10:39:58', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (39, 142, 591, '0', '2021-02-19 11:21:43', '2021-02-19 11:21:43', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (40, 142, 591, '0', '2021-02-19 11:21:43', '2021-02-19 11:21:43', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (43, 142, 604, '0', '2021-02-19 11:29:16', '2021-02-19 11:29:16', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (53, 141, 579, '0', '2021-02-20 11:29:48', '2021-02-20 11:29:48', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (55, 141, 578, '0', '2021-02-20 11:29:56', '2021-02-20 11:29:56', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (57, 140, 606, '0', '2021-02-22 11:20:54', '2021-02-22 11:20:54', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (58, 138, 608, '0', '2021-02-22 14:15:54', '2021-02-22 14:15:54', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (61, 141, 65, '0', '2021-03-01 10:19:34', '2021-03-01 10:19:34', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (62, 141, 59, '0', '2021-03-01 10:19:37', '2021-03-01 10:19:37', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (63, 136, 611, '0', '2021-03-08 12:39:46', '2021-03-08 12:39:46', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (65, 136, 575, '0', '2021-03-09 11:29:00', '2021-03-09 11:29:00', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (78, 138, 609, '0', '2021-03-10 16:28:50', '2021-03-10 16:28:50', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (79, 138, 606, '0', '2021-03-10 16:29:50', '2021-03-10 16:29:50', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (80, 138, 406, '0', '2021-03-10 16:34:07', '2021-03-10 16:34:07', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (81, 138, 599, '0', '2021-03-10 16:48:15', '2021-03-10 16:48:15', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (82, 138, 405, '0', '2021-03-10 16:49:05', '2021-03-10 16:49:05', NULL, NULL, NULL, NULL);
-INSERT INTO `like_record` VALUES (83, 138, 620, '0', '2021-03-10 20:10:09', '2021-03-10 20:10:09', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (111, 138, 644, '1', '2021-03-31 14:44:14', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (113, 138, 643, '1', '2021-03-31 14:58:53', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (114, 144, 644, '1', '2021-03-31 15:21:47', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (115, 144, 642, '1', '2021-03-31 15:22:18', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (116, 139, 653, '1', '2021-03-31 15:50:45', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (117, 139, 642, '1', '2021-03-31 15:51:38', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (118, 139, 660, '1', '2021-03-31 15:59:28', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (119, 147, 661, '1', '2021-03-31 16:01:09', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (120, 139, 662, '1', '2021-03-31 16:02:29', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (121, 139, 664, '1', '2021-03-31 16:20:17', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (122, 139, 665, '1', '2021-03-31 16:23:17', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (123, 139, 641, '1', '2021-03-31 16:25:22', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (124, 139, 636, '1', '2021-03-31 16:34:36', '2021-04-01 17:37:49', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (125, 144, 666, '1', '2021-04-01 18:02:50', '2021-04-01 18:02:50', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (126, 144, 658, '1', '2021-04-01 18:11:17', '2021-04-01 18:11:17', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (127, 144, 659, '1', '2021-04-01 18:11:46', '2021-04-01 18:11:46', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (128, 144, 656, '1', '2021-04-01 18:11:48', '2021-04-01 18:11:48', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (129, 147, 668, '1', '2021-04-04 04:49:04', '2021-04-04 04:49:07', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (130, 147, 667, '1', '2021-04-04 04:49:09', '2021-04-04 04:49:09', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (131, 147, 660, '1', '2021-04-04 04:50:39', '2021-04-04 04:50:39', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (132, 147, 659, '1', '2021-04-04 04:50:42', '2021-04-04 04:50:42', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (133, 138, 668, '1', '2021-04-07 16:16:10', '2021-04-07 16:16:10', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (134, 138, 681, '1', '2021-04-07 16:16:27', '2021-04-07 16:18:04', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (135, 138, 682, '1', '2021-04-07 16:18:52', '2021-04-07 16:18:52', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (136, 139, 683, '1', '2021-04-07 20:27:48', '2021-04-07 20:27:48', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (139, 139, 690, '1', '2021-04-10 11:18:19', '2021-04-10 11:18:19', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (140, 139, 689, '1', '2021-04-10 11:18:23', '2021-04-10 11:18:23', NULL, NULL, NULL, NULL);
+INSERT INTO `like_record` VALUES (141, 139, 688, '1', '2021-04-10 11:18:27', '2021-04-10 11:18:27', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for message
@@ -2159,29 +2308,66 @@ CREATE TABLE `message`  (
   `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，0->未读；1->已读，默认：0->未读',
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消息类型，likes->点赞，applications->申请加微信，commons->普通消息',
+  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02，消息发送或者回复，0->发送，1->回复',
+  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03，是否删除，0->否,1-删除，默认：0',
+  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04，消息id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `n_idx_send_user_id`(`send_user_id`) USING BTREE,
   INDEX `n_idx_recipient_user_id`(`recipient_user_id`) USING BTREE,
   INDEX `n_idx_send_mode`(`send_mode`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '消息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '消息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of message
 -- ----------------------------
-INSERT INTO `message` VALUES (11, 136, 138, '杨八赞了你的动态大家好，小妹这厢有礼。', '0', '0', '2021-03-09 11:28:58', '2021-03-09 11:28:58', NULL, NULL, NULL, NULL);
-INSERT INTO `message` VALUES (12, 136, 138, '杨八赞了你的动态大家好，小妹这厢有礼。', '0', '0', '2021-03-09 11:29:00', '2021-03-09 11:29:00', NULL, NULL, NULL, NULL);
-INSERT INTO `message` VALUES (13, 138, 137, '阿珂赞了你的动态有无聊可以约的不', '0', '0', '2021-03-10 16:28:50', '2021-03-10 16:28:50', NULL, NULL, NULL, NULL);
-INSERT INTO `message` VALUES (14, 138, 142, '阿珂赞了你的动态。', '0', '0', '2021-03-10 16:29:50', '2021-03-10 16:29:50', NULL, NULL, NULL, NULL);
-INSERT INTO `message` VALUES (15, 138, 106, '阿珂赞了你的动态嘘', '0', '0', '2021-03-10 16:34:07', '2021-03-10 16:34:07', NULL, NULL, NULL, NULL);
-INSERT INTO `message` VALUES (16, 138, 139, '阿珂赞了你的动态新人来到，多多关照，谢谢！', '0', '0', '2021-03-10 16:48:15', '2021-03-10 16:48:15', NULL, NULL, NULL, NULL);
-INSERT INTO `message` VALUES (17, 138, 106, '阿珂赞了你的动态初来乍到,请多关照', '0', '0', '2021-03-10 16:49:05', '2021-03-10 16:49:05', NULL, NULL, NULL, NULL);
-INSERT INTO `message` VALUES (18, 138, 144, '阿珂赞了你的动态测试', '0', '0', '2021-03-10 20:10:09', '2021-03-10 20:10:09', NULL, NULL, NULL, NULL);
+INSERT INTO `message` VALUES (55, 138, 144, '阿妩赞了你的动态测试', '0', '1', '2021-03-31 14:44:15', '2021-04-01 18:11:55', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (56, 138, 138, '阿妩赞了你的动态测试', '0', '1', '2021-03-31 14:58:50', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (57, 138, 138, '阿妩赞了你的动态测试', '0', '1', '2021-03-31 14:58:54', '2021-04-12 13:48:18', 'likes', '0', '1', NULL);
+INSERT INTO `message` VALUES (58, 144, 144, '季婉赞了你的动态测试', '0', '1', '2021-03-31 15:21:47', '2021-04-01 18:11:55', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (59, 144, 138, '季婉赞了你的动态测试一下', '0', '1', '2021-03-31 15:22:18', '2021-04-12 13:48:18', 'likes', '0', '1', NULL);
+INSERT INTO `message` VALUES (60, 139, 144, '9527赞了你的动态呃呃呃', '0', '1', '2021-03-31 15:50:45', '2021-03-31 18:01:16', 'likes', '0', '1', NULL);
+INSERT INTO `message` VALUES (61, 139, 138, '9527赞了你的动态测试一下', '0', '1', '2021-03-31 15:51:38', '2021-04-12 13:48:18', 'likes', '0', '1', NULL);
+INSERT INTO `message` VALUES (62, 139, 147, '9527赞了你的动态阿尔巴', '0', '1', '2021-03-31 15:59:28', '2021-04-06 15:50:32', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (63, 147, 139, '花花世界赞了你的动态测试跑跑', '0', '1', '2021-03-31 16:01:09', '2021-04-10 11:17:58', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (64, 139, 147, '9527赞了你的动态测试', '0', '1', '2021-03-31 16:02:29', '2021-04-06 15:50:32', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (65, 139, 147, '9527赞了你的动态测试', '0', '1', '2021-03-31 16:20:17', '2021-04-06 15:50:32', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (66, 139, 147, '9527赞了你的动态测试', '0', '1', '2021-03-31 16:23:17', '2021-04-06 15:50:32', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (67, 139, 138, '9527赞了你的动态测试安排', '0', '1', '2021-03-31 16:25:22', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (68, 139, 138, '9527赞了你的动态安排', '0', '1', '2021-03-31 16:34:36', '2021-04-12 13:48:18', 'likes', '0', '1', NULL);
+INSERT INTO `message` VALUES (69, 138, 144, '你好，可以加微信吗？', '1', '0', '2021-03-31 17:57:47', '2021-03-31 18:29:53', 'applications', '0', '1', NULL);
+INSERT INTO `message` VALUES (70, 138, 136, '可以加微信吗？', '1', '0', '2021-04-01 15:35:12', '2021-04-01 15:35:12', 'applications', '0', '0', NULL);
+INSERT INTO `message` VALUES (71, 144, 138, '季婉赞了你的动态安排', '0', '1', '2021-04-01 18:02:50', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (72, 144, 144, '季婉赞了你的动态测试', '0', '1', '2021-04-01 18:11:17', '2021-04-01 18:11:55', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (73, 144, 144, '季婉赞了你的动态测试', '0', '1', '2021-04-01 18:11:46', '2021-04-01 18:11:55', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (74, 144, 144, '季婉赞了你的动态二哥', '0', '1', '2021-04-01 18:11:48', '2021-04-01 18:11:55', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (75, 147, 138, '花花世界赞了你的动态2', '0', '1', '2021-04-04 04:49:05', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (76, 147, 138, '花花世界赞了你的动态2', '0', '1', '2021-04-04 04:49:07', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (77, 147, 138, '花花世界赞了你的动态1', '0', '1', '2021-04-04 04:49:09', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (78, 147, 138, '猜', '1', '1', '2021-04-04 04:49:27', '2021-04-06 20:16:22', 'applications', '0', '0', NULL);
+INSERT INTO `message` VALUES (79, 147, 138, '啊', '1', '1', '2021-04-04 04:49:43', '2021-04-06 20:16:22', 'applications', '0', '0', NULL);
+INSERT INTO `message` VALUES (80, 147, 138, '阿', '1', '1', '2021-04-04 04:49:55', '2021-04-06 20:16:22', 'applications', '0', '0', NULL);
+INSERT INTO `message` VALUES (81, 147, 139, '恶', '1', '0', '2021-04-04 04:50:20', '2021-04-04 04:50:20', 'applications', '0', '0', NULL);
+INSERT INTO `message` VALUES (82, 147, 147, '花花世界赞了你的动态阿尔巴', '0', '1', '2021-04-04 04:50:39', '2021-04-06 15:50:32', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (83, 147, 144, '花花世界赞了你的动态测试', '0', '0', '2021-04-04 04:50:42', '2021-04-04 04:50:42', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (84, 147, 138, '可以吗', '1', '1', '2021-04-06 15:11:39', '2021-04-06 20:16:22', 'applications', '0', '0', NULL);
+INSERT INTO `message` VALUES (85, 138, 138, '阿妩点赞你的动态2', '0', '1', '2021-04-07 16:16:10', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (86, 138, 138, '阿妩点赞你的动态15', '0', '1', '2021-04-07 16:16:27', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (87, 138, 138, '阿妩取消点赞你的动态15', '0', '1', '2021-04-07 16:17:35', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (88, 138, 138, '阿妩点赞你的动态15', '0', '1', '2021-04-07 16:17:36', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (89, 138, 138, '阿妩取消点赞你的动态15', '0', '1', '2021-04-07 16:17:47', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (90, 138, 138, '阿妩点赞你的动态15', '0', '1', '2021-04-07 16:18:03', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (91, 138, 138, '阿妩点赞你的动态16', '0', '1', '2021-04-07 16:18:52', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (92, 138, 139, '申请加您的微信，麻烦通过一下，谢谢！', '1', '1', '2021-04-07 17:43:51', '2021-04-07 23:26:41', 'applications', '0', '0', NULL);
+INSERT INTO `message` VALUES (93, 139, 138, '我乐意。好的，我的微信号是：wx406151651a', '1', '1', '2021-04-07 20:02:18', '2021-04-07 23:06:43', 'applications', '1', '0', '92');
+INSERT INTO `message` VALUES (94, 139, 138, '9527点赞你的动态17', '0', '1', '2021-04-07 20:27:48', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (95, 139, 138, '9527点赞你的动态16', '0', '1', '2021-04-07 20:27:53', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (96, 139, 138, '9527点赞你的动态15', '0', '1', '2021-04-07 20:27:57', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (97, 139, 138, '9527点赞你的动态24', '0', '1', '2021-04-10 11:18:19', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (98, 139, 138, '9527点赞你的动态23', '0', '1', '2021-04-10 11:18:23', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
+INSERT INTO `message` VALUES (99, 139, 138, '9527点赞你的动态22', '0', '1', '2021-04-10 11:18:27', '2021-04-12 13:48:18', 'likes', '0', '0', NULL);
 
 -- ----------------------------
 -- Table structure for operate_record
@@ -2199,7 +2385,7 @@ CREATE TABLE `operate_record`  (
   `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
   `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 337 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户操作记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 482 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户操作记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of operate_record
@@ -2333,6 +2519,151 @@ INSERT INTO `operate_record` VALUES (333, 144, '1', 1, '2021-03-10 20:08:00', '2
 INSERT INTO `operate_record` VALUES (334, 144, '1', 0, '2021-03-10 20:09:09', '2021-03-10 20:09:09', NULL, NULL, NULL, NULL);
 INSERT INTO `operate_record` VALUES (335, 138, '1', 10, '2021-03-11 09:12:33', '2021-03-11 09:12:33', '', '', '', '');
 INSERT INTO `operate_record` VALUES (336, 141, '1', 9, '2021-03-11 10:16:31', '2021-03-11 10:16:31', '', '', '', '');
+INSERT INTO `operate_record` VALUES (337, 138, '1', 0, '2021-03-11 14:35:28', '2021-03-11 14:35:28', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (338, 146, '1', 9, '2021-03-12 15:08:11', '2021-03-12 15:08:11', '', '', '', '');
+INSERT INTO `operate_record` VALUES (339, 146, '1', 9, '2021-03-12 15:08:51', '2021-03-12 15:08:51', '', '', '', '');
+INSERT INTO `operate_record` VALUES (340, 146, '1', 9, '2021-03-12 15:10:22', '2021-03-12 15:10:22', '', '', '', '');
+INSERT INTO `operate_record` VALUES (341, 138, '1', 0, '2021-03-12 18:56:01', '2021-03-12 18:56:01', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (342, 138, '1', 0, '2021-03-12 22:22:14', '2021-03-12 22:22:14', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (343, 138, '1', 0, '2021-03-12 22:22:36', '2021-03-12 22:22:36', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (344, 138, '1', 0, '2021-03-14 19:14:01', '2021-03-14 19:14:01', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (345, 138, '1', 0, '2021-03-15 09:12:48', '2021-03-15 09:12:48', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (346, 141, '1', 9, '2021-03-15 14:14:19', '2021-03-15 14:14:19', '', '', '', '');
+INSERT INTO `operate_record` VALUES (347, 138, '1', 0, '2021-03-15 16:03:32', '2021-03-15 16:03:32', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (348, 141, '1', 9, '2021-03-16 11:07:01', '2021-03-16 11:07:01', '', '', '', '');
+INSERT INTO `operate_record` VALUES (349, 138, '1', 9, '2021-03-16 11:11:03', '2021-03-16 11:11:03', '', '', '', '');
+INSERT INTO `operate_record` VALUES (350, 138, '1', 9, '2021-03-16 11:11:03', '2021-03-16 11:11:03', '', '', '', '');
+INSERT INTO `operate_record` VALUES (351, 138, '1', 9, '2021-03-16 11:11:03', '2021-03-16 11:11:03', '', '', '', '');
+INSERT INTO `operate_record` VALUES (352, 138, '1', 9, '2021-03-16 11:11:03', '2021-03-16 11:11:03', '', '', '', '');
+INSERT INTO `operate_record` VALUES (353, 138, '1', 9, '2021-03-16 11:11:03', '2021-03-16 11:11:03', '', '', '', '');
+INSERT INTO `operate_record` VALUES (354, 138, '1', 9, '2021-03-16 11:11:19', '2021-03-16 11:11:19', '', '', '', '');
+INSERT INTO `operate_record` VALUES (355, 141, '1', 9, '2021-03-16 16:30:42', '2021-03-16 16:30:42', '', '', '', '');
+INSERT INTO `operate_record` VALUES (356, 138, '1', 9, '2021-03-17 19:43:33', '2021-03-17 19:43:33', '', '', '', '');
+INSERT INTO `operate_record` VALUES (357, 138, '1', 0, '2021-03-17 19:44:08', '2021-03-17 19:44:08', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (358, 138, '1', 12, '2021-03-19 17:36:53', '2021-03-19 17:36:53', '', '', '', '');
+INSERT INTO `operate_record` VALUES (359, 147, '1', 9, '2021-03-20 18:43:26', '2021-03-20 18:43:26', '', '', '', '');
+INSERT INTO `operate_record` VALUES (360, 138, '1', 0, '2021-03-21 19:53:15', '2021-03-21 19:53:15', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (361, 138, '1', 0, '2021-03-21 19:54:19', '2021-03-21 19:54:19', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (362, 138, '1', 0, '2021-03-22 22:19:30', '2021-03-22 22:19:30', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (363, 138, '1', 10, '2021-03-23 11:42:56', '2021-03-23 11:42:56', '', '', '', '');
+INSERT INTO `operate_record` VALUES (364, 138, '1', 9, '2021-03-23 11:44:21', '2021-03-23 11:44:21', '', '', '', '');
+INSERT INTO `operate_record` VALUES (365, 138, '1', 0, '2021-03-23 22:35:43', '2021-03-23 22:35:43', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (366, 138, '1', 9, '2021-03-24 09:57:58', '2021-03-24 09:57:58', '', '', '', '');
+INSERT INTO `operate_record` VALUES (367, 138, '1', 9, '2021-03-24 14:44:28', '2021-03-24 14:44:28', '', '', '', '');
+INSERT INTO `operate_record` VALUES (368, 138, '1', 9, '2021-03-25 11:23:55', '2021-03-25 11:23:55', '', '', '', '');
+INSERT INTO `operate_record` VALUES (369, 138, '1', 9, '2021-03-25 11:37:10', '2021-03-25 11:37:10', '', '', '', '');
+INSERT INTO `operate_record` VALUES (370, 138, '1', 9, '2021-03-25 11:44:13', '2021-03-25 11:44:13', '', '', '', '');
+INSERT INTO `operate_record` VALUES (371, 138, '1', 9, '2021-03-25 11:52:06', '2021-03-25 11:52:06', '', '', '', '');
+INSERT INTO `operate_record` VALUES (372, 139, '1', 9, '2021-03-25 11:55:48', '2021-03-25 11:55:48', '', '', '', '');
+INSERT INTO `operate_record` VALUES (373, 139, '1', 9, '2021-03-25 15:34:29', '2021-03-25 15:34:29', '', '', '', '');
+INSERT INTO `operate_record` VALUES (374, 138, '1', 0, '2021-03-25 16:20:53', '2021-03-25 16:20:53', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (375, 144, '1', 9, '2021-03-25 20:57:17', '2021-03-25 20:57:17', '', '', '', '');
+INSERT INTO `operate_record` VALUES (376, 144, '1', 0, '2021-03-25 22:32:17', '2021-03-25 22:32:17', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (377, 138, '1', 0, '2021-03-26 10:27:07', '2021-03-26 10:27:07', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (378, 138, '1', 0, '2021-03-26 19:39:19', '2021-03-26 19:39:19', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (379, 138, '1', 0, '2021-03-26 19:45:18', '2021-03-26 19:45:18', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (380, 138, '1', 0, '2021-03-27 08:58:01', '2021-03-27 08:58:01', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (381, 138, '1', 0, '2021-03-28 19:37:28', '2021-03-28 19:37:28', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (382, 138, '1', 0, '2021-03-28 19:37:28', '2021-03-28 19:37:28', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (383, 138, '1', 0, '2021-03-28 19:37:45', '2021-03-28 19:37:45', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (384, 138, '1', 9, '2021-03-29 15:13:33', '2021-03-29 15:13:33', '', '', '', '');
+INSERT INTO `operate_record` VALUES (385, 138, '1', 9, '2021-03-29 16:38:36', '2021-03-29 16:38:36', '', '', '', '');
+INSERT INTO `operate_record` VALUES (386, 138, '1', 0, '2021-03-30 16:37:05', '2021-03-30 16:37:05', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (387, 138, '1', 10, '2021-03-30 16:37:53', '2021-03-30 16:37:53', '', '', '', '');
+INSERT INTO `operate_record` VALUES (388, 144, '1', 0, '2021-03-30 20:22:25', '2021-03-30 20:22:25', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (389, 138, '1', 9, '2021-03-30 22:40:34', '2021-03-30 22:40:34', '', '', '', '');
+INSERT INTO `operate_record` VALUES (390, 138, '1', 9, '2021-03-31 10:39:29', '2021-03-31 10:39:29', '', '', '', '');
+INSERT INTO `operate_record` VALUES (391, 138, '1', 9, '2021-03-31 14:43:58', '2021-03-31 14:43:58', '', '', '', '');
+INSERT INTO `operate_record` VALUES (392, 144, '1', 9, '2021-03-31 15:00:27', '2021-03-31 15:00:27', '', '', '', '');
+INSERT INTO `operate_record` VALUES (393, 144, '1', 9, '2021-03-31 15:20:25', '2021-03-31 15:20:25', '', '', '', '');
+INSERT INTO `operate_record` VALUES (394, 138, '1', 9, '2021-03-31 15:22:37', '2021-03-31 15:22:37', '', '', '', '');
+INSERT INTO `operate_record` VALUES (395, 144, '1', 9, '2021-03-31 15:25:57', '2021-03-31 15:25:57', '', '', '', '');
+INSERT INTO `operate_record` VALUES (396, 144, '1', 0, '2021-03-31 15:26:19', '2021-03-31 15:26:19', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (397, 144, '1', 0, '2021-03-31 15:26:19', '2021-03-31 15:26:19', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (398, 144, '1', 1, '2021-03-31 15:26:30', '2021-03-31 15:26:30', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (399, 144, '1', 1, '2021-03-31 15:26:34', '2021-03-31 15:26:34', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (400, 144, '1', 1, '2021-03-31 15:27:14', '2021-03-31 15:27:14', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (401, 141, '1', 0, '2021-03-31 15:30:01', '2021-03-31 15:30:01', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (402, 144, '1', 0, '2021-03-31 15:30:59', '2021-03-31 15:30:59', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (403, 144, '1', 0, '2021-03-31 15:32:38', '2021-03-31 15:32:38', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (404, 144, '1', 0, '2021-03-31 15:33:35', '2021-03-31 15:33:35', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (405, 144, '1', 0, '2021-03-31 15:33:35', '2021-03-31 15:33:35', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (406, 144, '1', 0, '2021-03-31 15:34:01', '2021-03-31 15:34:01', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (407, 144, '1', 0, '2021-03-31 15:34:01', '2021-03-31 15:34:01', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (408, 141, '1', 0, '2021-03-31 15:34:23', '2021-03-31 15:34:23', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (409, 141, '1', 0, '2021-03-31 15:34:23', '2021-03-31 15:34:23', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (410, 144, '1', 0, '2021-03-31 15:35:07', '2021-03-31 15:35:07', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (411, 144, '1', 0, '2021-03-31 15:35:07', '2021-03-31 15:35:07', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (412, 144, '1', 0, '2021-03-31 15:36:44', '2021-03-31 15:36:44', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (413, 144, '1', 0, '2021-03-31 15:36:44', '2021-03-31 15:36:44', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (414, 138, '1', 9, '2021-03-31 15:39:50', '2021-03-31 15:39:50', '', '', '', '');
+INSERT INTO `operate_record` VALUES (415, 138, '1', 9, '2021-03-31 15:51:00', '2021-03-31 15:51:00', '', '', '', '');
+INSERT INTO `operate_record` VALUES (416, 147, '1', 0, '2021-03-31 15:59:06', '2021-03-31 15:59:06', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (417, 139, '1', 0, '2021-03-31 16:00:36', '2021-03-31 16:00:36', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (418, 147, '1', 0, '2021-03-31 16:01:59', '2021-03-31 16:01:59', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (419, 147, '1', 9, '2021-03-31 16:14:51', '2021-03-31 16:14:51', '', '', '', '');
+INSERT INTO `operate_record` VALUES (420, 141, '1', 0, '2021-03-31 16:15:21', '2021-03-31 16:15:21', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (421, 141, '1', 1, '2021-03-31 16:16:10', '2021-03-31 16:16:10', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (422, 141, '1', 1, '2021-03-31 16:16:14', '2021-03-31 16:16:14', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (423, 141, '1', 1, '2021-03-31 16:16:17', '2021-03-31 16:16:17', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (424, 147, '1', 0, '2021-03-31 16:20:05', '2021-03-31 16:20:05', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (425, 147, '1', 0, '2021-03-31 16:22:52', '2021-03-31 16:22:52', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (426, 147, '1', 1, '2021-03-31 16:23:05', '2021-03-31 16:23:05', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (427, 138, '1', 9, '2021-03-31 16:27:03', '2021-03-31 16:27:03', '', '', '', '');
+INSERT INTO `operate_record` VALUES (428, 138, '1', 9, '2021-03-31 16:33:32', '2021-03-31 16:33:32', '', '', '', '');
+INSERT INTO `operate_record` VALUES (429, 138, '1', 9, '2021-03-31 16:39:31', '2021-03-31 16:39:31', '', '', '', '');
+INSERT INTO `operate_record` VALUES (430, 144, '1', 9, '2021-03-31 16:44:44', '2021-03-31 16:44:44', '', '', '', '');
+INSERT INTO `operate_record` VALUES (431, 144, '1', 9, '2021-03-31 16:45:58', '2021-03-31 16:45:58', '', '', '', '');
+INSERT INTO `operate_record` VALUES (432, 144, '1', 13, '2021-03-31 16:46:33', '2021-03-31 16:46:33', '', '', '', '');
+INSERT INTO `operate_record` VALUES (433, 138, '1', 9, '2021-03-31 16:47:53', '2021-03-31 16:47:53', '', '', '', '');
+INSERT INTO `operate_record` VALUES (434, 144, '1', 9, '2021-03-31 17:39:01', '2021-03-31 17:39:01', '', '', '', '');
+INSERT INTO `operate_record` VALUES (435, 138, '1', 9, '2021-03-31 17:42:41', '2021-03-31 17:42:41', '', '', '', '');
+INSERT INTO `operate_record` VALUES (436, 144, '1', 9, '2021-03-31 17:58:15', '2021-03-31 17:58:15', '', '', '', '');
+INSERT INTO `operate_record` VALUES (437, 144, '1', 9, '2021-03-31 17:58:16', '2021-03-31 17:58:16', '', '', '', '');
+INSERT INTO `operate_record` VALUES (438, 138, '1', 9, '2021-03-31 18:25:41', '2021-03-31 18:25:41', '', '', '', '');
+INSERT INTO `operate_record` VALUES (439, 144, '1', 9, '2021-03-31 18:26:36', '2021-03-31 18:26:36', '', '', '', '');
+INSERT INTO `operate_record` VALUES (440, 144, '1', 9, '2021-03-31 19:39:49', '2021-03-31 19:39:49', '', '', '', '');
+INSERT INTO `operate_record` VALUES (441, 138, '1', 9, '2021-04-01 14:22:18', '2021-04-01 14:22:18', '', '', '', '');
+INSERT INTO `operate_record` VALUES (442, 138, '1', 0, '2021-04-01 14:22:47', '2021-04-01 14:22:47', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (443, 144, '1', 9, '2021-04-01 15:35:33', '2021-04-01 15:35:33', '', '', '', '');
+INSERT INTO `operate_record` VALUES (444, 138, '1', 9, '2021-04-01 19:12:16', '2021-04-01 19:12:16', '', '', '', '');
+INSERT INTO `operate_record` VALUES (445, 139, '1', 9, '2021-04-01 20:02:40', '2021-04-01 20:02:40', '', '', '', '');
+INSERT INTO `operate_record` VALUES (446, 138, '1', 9, '2021-04-01 20:03:16', '2021-04-01 20:03:16', '', '', '', '');
+INSERT INTO `operate_record` VALUES (447, 138, '1', 0, '2021-04-03 17:16:53', '2021-04-03 17:16:53', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (448, 138, '1', 0, '2021-04-03 18:30:13', '2021-04-03 18:30:13', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (449, 138, '1', 0, '2021-04-04 07:41:37', '2021-04-04 07:41:37', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (450, 138, '1', 0, '2021-04-04 10:17:11', '2021-04-04 10:17:11', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (451, 138, '1', 0, '2021-04-04 11:17:47', '2021-04-04 11:17:47', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (452, 138, '1', 0, '2021-04-04 17:30:42', '2021-04-04 17:30:42', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (453, 138, '1', 0, '2021-04-04 20:34:16', '2021-04-04 20:34:16', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (454, 138, '1', 0, '2021-04-04 21:42:32', '2021-04-04 21:42:32', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (455, 138, '1', 0, '2021-04-05 09:18:11', '2021-04-05 09:18:11', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (456, 138, '1', 0, '2021-04-05 09:53:35', '2021-04-05 09:53:35', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (457, 138, '1', 0, '2021-04-05 12:52:49', '2021-04-05 12:52:49', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (458, 138, '1', 0, '2021-04-05 14:21:05', '2021-04-05 14:21:05', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (459, 138, '1', 0, '2021-04-05 14:30:32', '2021-04-05 14:30:32', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (460, 138, '1', 0, '2021-04-05 17:05:17', '2021-04-05 17:05:17', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (461, 138, '1', 0, '2021-04-06 09:34:29', '2021-04-06 09:34:29', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (462, 138, '1', 0, '2021-04-07 16:18:40', '2021-04-07 16:18:40', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (463, 138, '1', 0, '2021-04-07 17:39:04', '2021-04-07 17:39:04', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (464, 139, '1', 9, '2021-04-07 20:27:33', '2021-04-07 20:27:33', '', '', '', '');
+INSERT INTO `operate_record` VALUES (465, 138, '1', 9, '2021-04-07 20:28:21', '2021-04-07 20:28:21', '', '', '', '');
+INSERT INTO `operate_record` VALUES (466, 138, '1', 0, '2021-04-07 22:37:02', '2021-04-07 22:37:02', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (467, 138, '1', 0, '2021-04-08 11:31:24', '2021-04-08 11:31:24', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (468, 138, '1', 0, '2021-04-08 13:52:41', '2021-04-08 13:52:41', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (469, 138, '1', 0, '2021-04-08 19:14:56', '2021-04-08 19:14:56', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (470, 138, '1', 9, '2021-04-09 10:41:19', '2021-04-09 10:41:19', '', '', '', '');
+INSERT INTO `operate_record` VALUES (471, 138, '1', 0, '2021-04-09 11:21:29', '2021-04-09 11:21:29', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (472, 138, '1', 12, '2021-04-09 11:42:23', '2021-04-09 11:42:23', '', '', '', '');
+INSERT INTO `operate_record` VALUES (473, 138, '1', 0, '2021-04-09 20:40:35', '2021-04-09 20:40:35', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (474, 138, '1', 0, '2021-04-10 11:03:59', '2021-04-10 11:03:59', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (475, 139, '1', 9, '2021-04-10 11:17:50', '2021-04-10 11:17:50', '', '', '', '');
+INSERT INTO `operate_record` VALUES (476, 139, '1', 0, '2021-04-10 11:18:10', '2021-04-10 11:18:10', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (477, 138, '1', 9, '2021-04-10 11:18:46', '2021-04-10 11:18:46', '', '', '', '');
+INSERT INTO `operate_record` VALUES (478, 138, '1', 0, '2021-04-11 07:16:58', '2021-04-11 07:16:58', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (479, 139, '1', 9, '2021-04-12 10:08:50', '2021-04-12 10:08:50', '', '', '', '');
+INSERT INTO `operate_record` VALUES (480, 139, '1', 9, '2021-04-12 10:17:35', '2021-04-12 10:17:35', '', '', '', '');
+INSERT INTO `operate_record` VALUES (481, 138, '1', 9, '2021-04-12 13:47:28', '2021-04-12 13:47:28', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for order_detail
@@ -2361,7 +2692,17 @@ CREATE TABLE `order_detail`  (
   INDEX `n_idx_product_quantity`(`product_quantity`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单详情表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单详情表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order_detail
+-- ----------------------------
+INSERT INTO `order_detail` VALUES (1, '4d5bd31636614af685542151d1abaf06', '202103190001153119b6e641bde234c1', 2, 1, '3个月', 0.01, 1, '2021-03-19 00:01:15', '2021-03-19 00:01:15', NULL, NULL, NULL);
+INSERT INTO `order_detail` VALUES (2, '37b4c531117f4146bcd7065262e2c7d9', '202103190001474487ef2af96668d426', 2, 1, '3个月', 0.01, 1, '2021-03-19 00:01:47', '2021-03-19 00:01:47', NULL, NULL, NULL);
+INSERT INTO `order_detail` VALUES (3, '754f1152a8b748fa90d323612ccf31a6', '202103190002272942e00711d753d467', 3, 135, '6个月', 248.00, 1, '2021-03-19 00:02:27', '2021-03-19 00:02:27', NULL, NULL, NULL);
+INSERT INTO `order_detail` VALUES (4, '5c501e3dbc1548bcbdc54940a7acbfa0', '2021031910472606578f590b6e767454', 2, 1, '3个月', 0.01, 1, '2021-03-19 10:47:26', '2021-03-19 10:47:26', NULL, NULL, NULL);
+INSERT INTO `order_detail` VALUES (5, '4b7a666b9b2542d294b0cb2084ca28ad', '20210319104748567d884ac5bb71d498', 2, 1, '3个月', 0.01, 1, '2021-03-19 10:47:48', '2021-03-19 10:47:48', NULL, NULL, NULL);
+INSERT INTO `order_detail` VALUES (6, '2c530b9bdeff4b2fb636ae38d894c2e3', '2021031910482618572c4a9ccab6a44f', 3, 1, '6个月', 0.01, 1, '2021-03-19 10:48:26', '2021-03-19 10:48:26', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for order_master
@@ -2403,7 +2744,17 @@ CREATE TABLE `order_master`  (
   INDEX `n_idx_pay_time`(`pay_time`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order_master
+-- ----------------------------
+INSERT INTO `order_master` VALUES (1, '202103190001153119b6e641bde234c1', 1, NULL, 2, '墨落', '18800000001', '121.35.180.118', '充值3个月VIP', 0.01, '0', '0', '0', NULL, '2021-03-19 00:01:15', '2021-03-19 00:01:15', NULL, NULL, NULL);
+INSERT INTO `order_master` VALUES (2, '202103190001474487ef2af96668d426', 1, NULL, 2, '墨落', '18800000001', '121.35.180.118', '充值3个月VIP', 0.01, '0', '0', '1', NULL, '2021-03-19 00:01:47', '2021-03-19 00:01:47', NULL, NULL, NULL);
+INSERT INTO `order_master` VALUES (3, '202103190002272942e00711d753d467', 135, NULL, 3, '杨六', '13825869856', '121.35.180.118', '充值6个月VIP', 248.00, '0', '0', '0', NULL, '2021-03-19 00:02:27', '2021-03-19 00:02:27', NULL, NULL, NULL);
+INSERT INTO `order_master` VALUES (4, '2021031910472606578f590b6e767454', 1, NULL, 2, '墨落', '18800000001', '183.14.30.129', '充值3个月VIP', 0.01, '0', '0', '0', NULL, '2021-03-19 10:47:26', '2021-03-19 10:47:26', NULL, NULL, NULL);
+INSERT INTO `order_master` VALUES (5, '20210319104748567d884ac5bb71d498', 1, NULL, 2, '墨落', '18800000001', '183.14.30.129', '充值3个月VIP', 0.01, '0', '0', '1', NULL, '2021-03-19 10:47:48', '2021-03-19 10:47:48', NULL, NULL, NULL);
+INSERT INTO `order_master` VALUES (6, '2021031910482618572c4a9ccab6a44f', 1, NULL, 3, '墨落', '18800000001', '183.14.30.129', '充值6个月VIP', 0.01, '0', '0', '0', NULL, '2021-03-19 10:48:26', '2021-03-19 10:48:26', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for order_setting
@@ -2615,7 +2966,7 @@ CREATE TABLE `user`  (
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE,
   INDEX `u_idx_weixin_id`(`weixin_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 146 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 148 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
@@ -2757,14 +3108,16 @@ INSERT INTO `user` VALUES (134, '18800000134', '0', '1', '祝福我开心第一�
 INSERT INTO `user` VALUES (135, '13825869856', '0', '0', '杨六', 'wxnaza12345680', '87952562515231', 'HuaWei P40', 'Android', '10', '4G', '1', '1960', '12', '06', '射手座', 'd5caf6b6-0ad2-4644-9f2a-6566ca488c76.jpg', '中国', '广东省', '深圳市', NULL, NULL, 'HUAWEI', '183.14.29.243', '0', '刚刚使用，请多关照小妹子！！', NULL, NULL, '2021-02-06 15:57:24', '2021-03-10 15:02:33', NULL, '1507bfd3f76139cd43a', NULL);
 INSERT INTO `user` VALUES (136, '13825869858', '0', '0', '杨八', 'wxnaza12345681', '87952562515232', 'HuaWei P40', 'Android', '10', '4G', '0', '1991', '04', '10', '白羊座', '0ac80433-21db-4267-81a1-86fb0f91f051.jpeg', '中国', '广东省', '深圳市', NULL, NULL, 'HUAWEI', '61.141.253.37', '0', '刚刚使用，请多关照！！', NULL, NULL, '2021-02-06 15:58:33', '2021-03-10 15:02:33', '037630d9-d3e4-4792-92df-a28a3acba7bc.jpeg', '13065ffa4ead6656765', NULL);
 INSERT INTO `user` VALUES (137, '13823145059', '0', '0', 'jack', NULL, NULL, 'OPPO  PDNM00', 'Android', '10', 'wifi', '1', '1998', '02', '10', '水瓶座', '34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg', '中国', '广东省', '深圳市', NULL, NULL, 'Vivo', '183.14.135.120', '0', '新人来到，多多关照，谢谢！', NULL, NULL, '2021-02-10 16:47:31', '2021-03-10 15:02:33', NULL, '1507bfd3f76139cd43a', NULL);
-INSERT INTO `user` VALUES (138, '18138812072', '0', '0', '阿珂', '18138812072', NULL, 'vivo  V2002A', 'Android', '10', 'wifi', '0', '1988', '07', '21', '巨蟹座', '990bf136-42f7-4a87-80f1-8cf464c433c2.jpeg', '中国', '广东省', '深圳市', NULL, NULL, 'Baidu', '183.14.132.195', '0', '大家好，小妹这厢有礼。', NULL, NULL, '2021-02-10 20:38:06', '2021-03-11 09:12:34', '80e9bc70-95c6-4c41-81d6-050fb3505a2f.jpeg', '13065ffa4ead6656765', NULL);
-INSERT INTO `user` VALUES (139, '13500000000', '0', '0', '9527', 'qqq', NULL, 'Redmi  M2004J7AC', 'Android', '10', 'wifi', '1', '1999', '01', '01', '摩羯座', 'e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg', '中国', '广东省', '深圳市', NULL, NULL, 'Vivo', '183.14.29.9', '0', '新人来到，多多关照，谢谢！', NULL, NULL, '2021-02-18 13:12:47', '2021-03-10 15:02:33', '25bae450-cb01-4c51-8afb-9596abdae62e.jpeg', '1507bfd3f76139cd43a', NULL);
+INSERT INTO `user` VALUES (138, '18138812072', '0', '0', '阿妩', 'wx406181651', NULL, 'vivo  V2002A', 'Android', '10', 'wifi', '0', '1988', '07', '21', '巨蟹座', '31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg', '中国', '广东省', '深圳市', NULL, NULL, 'Baidu', '183.14.31.210', '0', '大家好，小妹这厢有礼。', NULL, NULL, '2021-02-10 20:38:06', '2021-04-12 13:48:48', '80e9bc70-95c6-4c41-81d6-050fb3505a2f.jpeg', '1507bfd3f713e441524', NULL);
+INSERT INTO `user` VALUES (139, '13500000000', '0', '0', '9527', 'qqq', NULL, 'Redmi  M2004J7AC', 'Android', '10', 'wifi', '1', '1999', '01', '01', '摩羯座', 'e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg', '中国', '广东省', '深圳市', NULL, NULL, 'Vivo', '183.14.31.210', '0', '新人来到，多多关照，谢谢！', NULL, NULL, '2021-02-18 13:12:47', '2021-04-12 10:17:36', '25bae450-cb01-4c51-8afb-9596abdae62e.jpeg', '100d85590993d7b0586', NULL);
 INSERT INTO `user` VALUES (140, '18300009756', '0', '0', '凝噎新紫', 'wu62860', NULL, 'HONOR  JSN-AL00a', 'Android', '8.1.0', '4G', '0', '1990', '12', '28', '摩羯座', '0c99dc02-188b-426e-a46d-5e951743dedf.jpg', '中国', '广东省', '深圳市', NULL, NULL, 'Vivo', '183.14.135.120', '0', '新人来到，多多关照，谢谢！', NULL, NULL, '2021-02-18 23:22:09', '2021-03-10 15:02:33', NULL, '13065ffa4ead6656765', NULL);
-INSERT INTO `user` VALUES (141, '18652708231', '0', '0', 'good', NULL, '355757541672040', 'huawei  VOG-AL10', 'Android', '5.1.1', 'wifi', '1', '2002', '02', '19', '双鱼座', 'cd118c01-db49-43f9-a857-07bf53ee2918.png', '中国', '广东省', '深圳市', NULL, NULL, 'Baidu', '183.14.132.195', '0', '新人来到', NULL, NULL, '2021-02-19 09:36:28', '2021-03-11 10:16:30', '0bcba39d-0899-404d-9254-c888914b5901.png', '1507bfd3f76139cd43a', NULL);
+INSERT INTO `user` VALUES (141, '18652708231', '0', '0', 'good', NULL, '355757541672040', 'huawei  VOG-AL10', 'Android', '5.1.1', 'wifi', '1', '2002', '02', '19', '双鱼座', 'cd118c01-db49-43f9-a857-07bf53ee2918.png', '中国', '广东省', '深圳市', NULL, NULL, 'Baidu', '183.14.135.40', '0', '新人来到', NULL, NULL, '2021-02-19 09:36:28', '2021-04-12 13:42:27', '0bcba39d-0899-404d-9254-c888914b5901.png', '18071adc03a5f091ab8', NULL);
 INSERT INTO `user` VALUES (142, '13500000001', '0', '0', 'qqq', NULL, NULL, 'Redmi  M2004J7AC', 'Android', '10', 'wifi', '1', '2005', '01', '13', '摩羯座', '331e380a-73da-4592-9bd6-6c79f539c4e4.jpeg', '中国', '广东省', '深圳市', NULL, NULL, 'Vivo', '183.14.29.26', '0', '新人来到，多多关照，谢谢！', NULL, NULL, '2021-02-19 10:54:55', '2021-03-10 15:02:33', NULL, '13065ffa4ead6656765', NULL);
 INSERT INTO `user` VALUES (143, '13500000002', '0', '0', 'www', 'qqqqq', NULL, 'Redmi  M2004J7AC', 'Android', '10', 'wifi', '0', '1996', '02', '19', '双鱼座', 'f683b170-6aa1-4cec-99c9-25baeecb74a1.jpeg', '中国', '广东省', '深圳市', NULL, NULL, 'Vivo', '183.14.29.26', '0', 'eeeee', NULL, NULL, '2021-02-19 14:02:16', '2021-03-10 15:02:33', NULL, '1507bfd3f76139cd43a', NULL);
-INSERT INTO `user` VALUES (144, '17788753181', '0', '0', '季婉', 'wx1806951616', '358555039386536', 'LW  M1006', 'Android', '9.0', 'wifi', '0', '1996', '05', '08', '金牛座', 'f59d68d2-96f2-486f-b976-e3805cf6c53b.jpeg', '中国', '广东省', '深圳市', NULL, NULL, 'Huawei', '119.123.196.64', '0', '大家好呀，一起来聊天社交吧！', NULL, NULL, '2021-03-06 18:14:04', '2021-03-10 20:06:24', NULL, '13065ffa4ead6656765', NULL);
+INSERT INTO `user` VALUES (144, '17788753181', '0', '0', '季婉', 'wx1806951616', '358555039386536', 'LW  M1006', 'Android', '9.0', 'wifi', '0', '1996', '05', '08', '金牛座', 'f59d68d2-96f2-486f-b976-e3805cf6c53b.jpeg', '中国', '广东省', '深圳市', NULL, NULL, 'Huawei', '119.123.196.12', '0', '大家好呀，一起来聊天社交吧！', NULL, NULL, '2021-03-06 18:14:04', '2021-04-01 18:07:30', '1eefc0c6-2a0c-45d2-8cbb-f4b1607ba807.jpg', '1507bfd3f713e441524', NULL);
 INSERT INTO `user` VALUES (145, '13500000009', '0', '0', '咿呀呀', NULL, NULL, 'Redmi  M2004J7AC', 'Android', '10', 'wifi', '0', '2000', '01', '01', '摩羯座', 'c4c8c81d-321a-4d28-8c6f-571ca6bb3f80.jpg', '中国', '广东省', '深圳市', NULL, NULL, 'Huawei', '183.14.132.195', '0', '新人来到，多多关照，谢谢！', NULL, NULL, '2021-03-08 10:39:13', '2021-03-10 15:02:33', '73a812b3-fac1-43af-8dd7-c4100d11a97e.jpg', '1507bfd3f76139cd43a', NULL);
+INSERT INTO `user` VALUES (146, '18138812236', '0', '0', '尹明艳', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, '68d93b51-fee5-413a-b600-3597f1a1197c.jpg', '中国', '广东省', '深圳市', NULL, NULL, NULL, '183.14.29.9', '0', '这位靓妹/靓仔还未填写签名。', NULL, NULL, '2021-03-12 15:08:09', '2021-03-30 17:49:25', NULL, '1507bfd3f76139cd43a', NULL);
+INSERT INTO `user` VALUES (147, '13410670319', '0', '0', '花花世界', NULL, NULL, 'OPPO  PDNM00', 'Android', '11', 'wifi', '1', '1990', '01', '01', '摩羯座', '98a03483-2fea-40cd-994a-f7522db50d66.jpeg', '中国', '广东省', '深圳市', NULL, NULL, 'Huawei', '183.14.31.225', '0', '新人来到，多多关照，谢谢！', NULL, NULL, '2021-03-20 18:43:24', '2021-04-12 10:16:14', NULL, '190e35f7e0ebafe03a4', NULL);
 
 -- ----------------------------
 -- Table structure for weixin_config
