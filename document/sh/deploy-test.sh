@@ -20,17 +20,10 @@ cd ~/jar/ || exit
 systemctl stop firewalld.service && systemctl disable firewalld.service
 systemctl stop iptables.service && systemctl disable iptables.service
 iptables -F
-iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
 iptables -I INPUT -p tcp --dport 8081 -j ACCEPT
-iptables -I INPUT -p tcp --dport 8082 -j ACCEPT
-iptables -I INPUT -p tcp --dport 8083 -j ACCEPT
 iptables -I INPUT -p tcp --dport 8084 -j ACCEPT
-iptables -I INPUT -p tcp --dport 8085 -j ACCEPT
-iptables -I INPUT -p tcp --dport 8086 -j ACCEPT
-iptables -I INPUT -p tcp --dport 8087 -j ACCEPT
-iptables -I INPUT -p tcp --dport 8088 -j ACCEPT
+iptables -I INPUT -p tcp --dport 8848 -j ACCEPT
 iptables -I INPUT -p tcp --dport 9000 -j ACCEPT
-iptables -I INPUT -p tcp --dport 8000 -j ACCEPT
 nohup java -jar -server -Xmx64m -Xss8m -Xms1m -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC -Dcom.alibaba.nacos.client.naming.ctimeout=5000 -Dspring.profiles.active=test -Dserver.port=8081 find-user-8081.jar > find-user-8081.log 2>&1 &
 nohup java -jar -server -Xmx64m -Xss8m -Xms1m -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC -Dcom.alibaba.nacos.client.naming.ctimeout=5000 -Dspring.profiles.active=test -Dserver.port=8082 find-message-8082.jar > find-message-8082.log 2>&1 &
 nohup java -jar -server -Xmx64m -Xss8m -Xms1m -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC -Dcom.alibaba.nacos.client.naming.ctimeout=5000 -Dspring.profiles.active=test -Dserver.port=8083 find-dynamic-8083.jar > find-dynamic-8083.log 2>&1 &
