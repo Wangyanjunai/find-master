@@ -726,13 +726,13 @@ public class DynamicController {
                 String content = user.getNickName() + "取消点赞你的动态" + dynamicInfo.getContent();//消息内容
                 int result = this.likeRecordService.update(likeRecord, dynamicInfo, content);
                 if (result > 0) {
-                    String title = "互动消息";//消息标题
-                    Map<String, String> extras = new ConcurrentHashMap<>();
-                    PushBean pushBean = new PushBean();
-                    pushBean.setAlert(content);
-                    pushBean.setTitle(title);
-                    pushBean.setExtras(extras);
-                    this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
+                    //String title = "互动消息";//消息标题
+                    //Map<String, String> extras = new ConcurrentHashMap<>();
+                    //PushBean pushBean = new PushBean();
+                    //pushBean.setAlert(content);
+                    //pushBean.setTitle(title);
+                    //pushBean.setExtras(extras);
+                    //this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
                     data.put("LIKED", "OK");
                     return CommonResult.success(data, "取消点赞成功。");
                 }

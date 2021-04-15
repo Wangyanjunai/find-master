@@ -14,12 +14,12 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LikesMessageVO {
     //最新一条点赞消息内容
-    @JSONField(name = "content")
-    @JsonProperty(value = "content")
+    @JSONField(name = "content1")
+    @JsonProperty(value = "content1")
     private String content;
     
     //未读点赞消息总条数
-    @JSONField(name = "count")
-    @JsonProperty(value = "count")
+    @JSONField(name = "count1")
+    @JsonProperty(value = "count1")
     private Integer count;
 }

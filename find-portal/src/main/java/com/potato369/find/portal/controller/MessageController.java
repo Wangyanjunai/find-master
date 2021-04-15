@@ -26,7 +26,7 @@ public class MessageController {
 
     /**
      * @api {get} http://8.135.36.45:8084/find/message/{id}/all 分页获取消息界面点赞和申请加微信消息列表接口
-     * @apiVersion 1.0.0
+     * @apiVersion 1.0.0 
      * @apiGroup 消息模块API
      * @apiName 分页获取消息界面点赞和申请加微信消息列表
      * @apiParam (接口请求参数) {long} id 接收者用户id
@@ -40,8 +40,8 @@ public class MessageController {
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {object} [data] 消息数据
      * @apiSuccess (200) {object} [likes] 最新点赞消息
-     * @apiSuccess (200) {string} [content] 最新点赞消息内容
-     * @apiSuccess (200) {int} [count] 未读点赞消息总数量
+     * @apiSuccess (200) {string} [content1] 最新点赞消息内容
+     * @apiSuccess (200) {int} [count1] 未读点赞消息总数量
      * @apiSuccess (200) {long} [totalCount] 申请加微信消息总条数
      * @apiSuccess (200) {int} [totalPage] 申请加微信消息总页数
      * @apiSuccess (200) {object[]} [list] 申请加微信消息数据
@@ -49,8 +49,8 @@ public class MessageController {
      * @apiSuccess (200) {long} [userId] 申请加微信发送者用户id
      * @apiSuccess (200) {string} [head] 申请加微信发送者用户头像
      * @apiSuccess (200) {string} [nickname] 申请加微信发送者用户昵称
-     * @apiSuccess (200) {string} [content] 申请加微信发送消息内容
-     * @apiSuccess (200) {long} [count] 申请加微信未读消息数量
+     * @apiSuccess (200) {string} [content2] 申请加微信发送消息内容
+     * @apiSuccess (200) {long} [count2] 申请加微信未读消息数量
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -59,8 +59,8 @@ public class MessageController {
      * "msg":"返回数据成功",
      * "data":{
      * "likes":{
-     * "content":"阿萌赞了你的动态差点就掉下去了！",
-     * "count":5
+     * "content1":"阿萌赞了你的动态差点就掉下去了！",
+     * "count1":5
      * },
      * "totalCount":5,
      * "totalPage":1,
@@ -70,40 +70,40 @@ public class MessageController {
      * "userId":60,
      * "head":"http://8.135.36.45:8000/find/img/head/60/01.png",
      * "nickname":"尘埃",
-     * "content":"需要加您的微信?",
-     * "count":5
+     * "content2":"需要加您的微信?",
+     * "count2":5
      * },
      * {
      * "messageId": 2,
      * "userId":62,
      * "head":"http://8.135.36.45:8000/find/img/head/62/02.png",
      * "nickname":"蓝梧桐",
-     * "content":"需要加您的微信?",
-     * "count":5
+     * "content2":"需要加您的微信?",
+     * "count2":5
      * },
      * {
      * "messageId": 3,
      * "userId":61,
      * "head":"http://8.135.36.45:8000/find/img/head/61/01.png",
      * "nickname":"长安",
-     * "content":"需要加您的微信?",
-     * "count":6
+     * "content2":"需要加您的微信?",
+     * "count2":6
      * },
      * {
      * "messageId": 4,
      * "userId":71,
      * "head":"http://8.135.36.45:8000/find/img/head/71/07.png",
      * "nickname":"弦雨晴",
-     * "content":"需要加您的微信?",
-     * "count":6
+     * "content2":"需要加您的微信?",
+     * "count2":6
      * },
      * {
      * "messageId": 5,
      * "userId":70,
      * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
      * "nickname":"阿萌",
-     * "content":"需要加您的微信?",
-     * "count":1
+     * "content2":"需要加您的微信?",
+     * "count2":1
      * }
      * ]
      * }
@@ -829,7 +829,7 @@ public class MessageController {
     }
 
     /**
-     * @api {post} http://8.135.36.45:8084/find/message/{id}/reply 回复申请加微信聊天消息接口
+     * @api {put} http://8.135.36.45:8084/find/message/{id}/reply 回复申请加微信聊天消息接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 回复申请加微信聊天消息
@@ -840,7 +840,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {string} [weChatId] 回复的微信id
      * @apiParamExample {json} 请求示例 回复申请加微信消息（拒绝）
      * HTTP/1.1 OK
-     * curl -v -X POST "http://8.135.36.45:8084/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！" -H "accept: application/json"
+     * curl -v -X PUT "http://8.135.36.45:8084/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -858,7 +858,7 @@ public class MessageController {
 		}
      * @apiParamExample {json} 请求示例 回复申请加微信消息（同意）
      * HTTP/1.1 OK
-     * curl -v -X POST "http://8.135.36.45:8084/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a" -H "accept: application/json"
+     * curl -v -X PUT "http://8.135.36.45:8084/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码

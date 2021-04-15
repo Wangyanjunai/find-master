@@ -37,8 +37,8 @@ public class MessageInfoVO {
     private String nickname;
 
     //申请加微信消息发送者发送的消息内容
-    @JSONField(name = "content")
-    @JsonProperty(value = "content")
+    @JSONField(name = "content2")
+    @JsonProperty(value = "content2")
     private String content;
     
     //申请加微信消息发送者发送的消息时间
@@ -47,7 +47,7 @@ public class MessageInfoVO {
     private Date createTime;
     
     //申请加微信消息发送者发送消息未读条数
-    @JSONField(name = "count")
-    @JsonProperty(value = "count")
+    @JSONField(name = "count2")
+    @JsonProperty(value = "count2")
     private Long count;
 }
