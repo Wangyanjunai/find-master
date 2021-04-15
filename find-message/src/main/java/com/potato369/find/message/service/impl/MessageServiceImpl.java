@@ -160,9 +160,6 @@ public class MessageServiceImpl implements MessageService {
             if (LikeStatusEnum.YES.getType().equals(likesMessageRecord.getStatus())) {
                 likesInfoVO.setContent(likesMessageRecord.getNickname() + "点赞了你的动态" + likesMessageRecord.getLikesContent());
             }
-            if (LikeStatusEnum.NO.getType().equals(likesMessageRecord.getStatus())) {
-                likesInfoVO.setContent(likesMessageRecord.getNickname() + "取消点赞你的动态" + likesMessageRecord.getLikesContent());
-            }
             String[] fileNameList01 = StrUtil.split(likesMessageRecord.getAttacheFilename(), "||");
             List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
             List<String> fileNameList03 = new ArrayList<>();
