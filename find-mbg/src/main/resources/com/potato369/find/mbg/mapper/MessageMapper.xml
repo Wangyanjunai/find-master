@@ -206,6 +206,7 @@
 			AND like_record.`dynamic_info_id` = dynamic_info.`id` 
 			AND dynamic_info.`id` = attache_info.`dynamic_info_by`
 			AND dynamic_info.`user_id` = #{userId, jdbcType=BIGINT}
+			AND like_record.`status` = '1'
 		ORDER BY 
 			like_record.`update_time` DESC, like_record.`create_time` DESC
     </select>
