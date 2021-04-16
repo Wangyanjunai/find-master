@@ -26,7 +26,7 @@ public class MessageController {
 
     /**
      * @api {get} http://8.135.36.45:8084/find/message/{id}/all 分页获取消息界面点赞和申请加微信消息列表接口
-     * @apiVersion 1.0.0 
+     * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取消息界面点赞和申请加微信消息列表
      * @apiParam (接口请求参数) {long} id 接收者用户id
@@ -40,8 +40,8 @@ public class MessageController {
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {object} [data] 消息数据
      * @apiSuccess (200) {object} [likes] 最新点赞消息
-     * @apiSuccess (200) {string} [content1] 最新点赞消息内容
-     * @apiSuccess (200) {int} [count1] 未读点赞消息总数量
+     * @apiSuccess (200) {string} [content1] 最新一条未读点赞消息内容
+     * @apiSuccess (200) {int} [count1] 未读点赞消息数量
      * @apiSuccess (200) {long} [totalCount] 申请加微信消息总条数
      * @apiSuccess (200) {int} [totalPage] 申请加微信消息总页数
      * @apiSuccess (200) {object[]} [list] 申请加微信消息数据
@@ -163,7 +163,7 @@ public class MessageController {
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {object} [data] 消息数据
-     * @apiSuccess (200) {long} [totalCount] 未读点赞消息总条数
+     * @apiSuccess (200) {long} [totalCount] 点赞消息总条数
      * @apiSuccess (200) {int} [totalPage] 点赞消息总页数
      * @apiSuccess (200) {object[]} [list] 点赞消息数据
      * @apiSuccess (200) {long} [userId] 点赞者用户id
@@ -467,49 +467,49 @@ public class MessageController {
      * @apiSuccess (200) {string} [content] 消息内容
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
-		{
-		    "status": 200,
-		    "code": 0,
-		    "msg": "返回数据成功。",
-		    "data": {
-		        "totalCount": 4,
-		        "totalPage": 1,
-		        "list": [
-		            {
-		                "messageId": 8,
-		                "sendUserId": 139,
-		                "sendUserHead": "http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
-		                "sendUserNickname": "9527",
-		                "sendDateTime": "2021年04月06日 11:50:30",
-		                "content": "申请加您的微信，麻烦通过一下，谢谢！"
-		            },
-		            {
-		                "messageId": 9,
-		                "sendUserId": 138,
-		                "sendUserHead": "http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg",
-		                "sendUserNickname": "阿珂",
-		                "sendDateTime": "2021年04月06日 11:52:00",
-		                "content": "我同意。好的，我的微信号是：wx123123212"
-		            },
-		            {
-		                "messageId": 18,
-		                "sendUserId": 139,
-		                "sendUserHead": "http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
-		                "sendUserNickname": "9527",
-		                "sendDateTime": "2021年04月06日 15:24:43",
-		                "content": "添加微信聊聊"
-		            },
-		            {
-		                "messageId": 32,
-		                "sendUserId": 138,
-		                "sendUserHead": "http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg",
-		                "sendUserNickname": "阿珂",
-		                "sendDateTime": "2021年04月06日 18:16:09",
-		                "content": "好啊"
-		            }
-		        ]
-		    }
-		}
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "totalCount": 4,
+     * "totalPage": 1,
+     * "list": [
+     * {
+     * "messageId": 8,
+     * "sendUserId": 139,
+     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
+     * "sendUserNickname": "9527",
+     * "sendDateTime": "2021年04月06日 11:50:30",
+     * "content": "申请加您的微信，麻烦通过一下，谢谢！"
+     * },
+     * {
+     * "messageId": 9,
+     * "sendUserId": 138,
+     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg",
+     * "sendUserNickname": "阿珂",
+     * "sendDateTime": "2021年04月06日 11:52:00",
+     * "content": "我同意。好的，我的微信号是：wx123123212"
+     * },
+     * {
+     * "messageId": 18,
+     * "sendUserId": 139,
+     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
+     * "sendUserNickname": "9527",
+     * "sendDateTime": "2021年04月06日 15:24:43",
+     * "content": "添加微信聊聊"
+     * },
+     * {
+     * "messageId": 32,
+     * "sendUserId": 138,
+     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg",
+     * "sendUserNickname": "阿珂",
+     * "sendDateTime": "2021年04月06日 18:16:09",
+     * "content": "好啊"
+     * }
+     * ]
+     * }
+     * }
      * @apiError (403) {int{0-65535}} status 响应状态码
      * @apiError (403) {long{0-500}} code 消息码
      * @apiError (403) {String} msg 说明
@@ -848,14 +848,14 @@ public class MessageController {
      * @apiSuccess (200) {string} [REPLY] OK->回复成功，ERROR->回复失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
-		{
-		    "status": 200,
-		    "code": 0,
-		    "msg": "返回数据成功。",
-		    "data": {
-		        "REPLY": "OK"
-		    }
-		}
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "REPLY": "OK"
+     * }
+     * }
      * @apiParamExample {json} 请求示例 回复申请加微信消息（同意）
      * HTTP/1.1 OK
      * curl -v -X PUT "http://8.135.36.45:8084/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a" -H "accept: application/json"
@@ -866,14 +866,14 @@ public class MessageController {
      * @apiSuccess (200) {string} [REPLY] OK->回复成功，ERROR->回复失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
-		{
-		    "status": 200,
-		    "code": 0,
-		    "msg": "返回数据成功。",
-		    "data": {
-		        "REPLY": "OK"
-		    }
-		}
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "REPLY": "OK"
+     * }
+     * }
      * @apiError (403) {int{0-65535}} status 响应状态码
      * @apiError (403) {long{0-500}} code 消息码
      * @apiError (403) {String} msg 说明
@@ -904,7 +904,7 @@ public class MessageController {
      * "code": 205,
      * "msg": "服务器未响应！"
      * }
-     */    
+     */
     @ApiOperation(value = "回复申请加微信聊天消息接口", notes = "回复申请加微信聊天消息接口")
     @PutMapping(value = "/{id}/reply")
     public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") @ApiParam(name = "id", value = "被申请加微信者用户id", required = true, example = "1") Long applicantsUserId,

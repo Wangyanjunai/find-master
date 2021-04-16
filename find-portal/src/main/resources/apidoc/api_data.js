@@ -2766,7 +2766,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"返回数据成功。\",\n\t\t    \"data\": {\n\t\t        \"totalCount\": 4,\n\t\t        \"totalPage\": 1,\n\t\t        \"list\": [\n\t\t            {\n\t\t                \"messageId\": 8,\n\t\t                \"sendUserId\": 139,\n\t\t                \"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg\",\n\t\t                \"sendUserNickname\": \"9527\",\n\t\t                \"sendDateTime\": \"2021年04月06日 11:50:30\",\n\t\t                \"content\": \"申请加您的微信，麻烦通过一下，谢谢！\"\n\t\t            },\n\t\t            {\n\t\t                \"messageId\": 9,\n\t\t                \"sendUserId\": 138,\n\t\t                \"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg\",\n\t\t                \"sendUserNickname\": \"阿珂\",\n\t\t                \"sendDateTime\": \"2021年04月06日 11:52:00\",\n\t\t                \"content\": \"我同意。好的，我的微信号是：wx123123212\"\n\t\t            },\n\t\t            {\n\t\t                \"messageId\": 18,\n\t\t                \"sendUserId\": 139,\n\t\t                \"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg\",\n\t\t                \"sendUserNickname\": \"9527\",\n\t\t                \"sendDateTime\": \"2021年04月06日 15:24:43\",\n\t\t                \"content\": \"添加微信聊聊\"\n\t\t            },\n\t\t            {\n\t\t                \"messageId\": 32,\n\t\t                \"sendUserId\": 138,\n\t\t                \"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg\",\n\t\t                \"sendUserNickname\": \"阿珂\",\n\t\t                \"sendDateTime\": \"2021年04月06日 18:16:09\",\n\t\t                \"content\": \"好啊\"\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"totalCount\": 4,\n\"totalPage\": 1,\n\"list\": [\n{\n\"messageId\": 8,\n\"sendUserId\": 139,\n\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg\",\n\"sendUserNickname\": \"9527\",\n\"sendDateTime\": \"2021年04月06日 11:50:30\",\n\"content\": \"申请加您的微信，麻烦通过一下，谢谢！\"\n},\n{\n\"messageId\": 9,\n\"sendUserId\": 138,\n\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg\",\n\"sendUserNickname\": \"阿珂\",\n\"sendDateTime\": \"2021年04月06日 11:52:00\",\n\"content\": \"我同意。好的，我的微信号是：wx123123212\"\n},\n{\n\"messageId\": 18,\n\"sendUserId\": 139,\n\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg\",\n\"sendUserNickname\": \"9527\",\n\"sendDateTime\": \"2021年04月06日 15:24:43\",\n\"content\": \"添加微信聊聊\"\n},\n{\n\"messageId\": 32,\n\"sendUserId\": 138,\n\"sendUserHead\": \"http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg\",\n\"sendUserNickname\": \"阿珂\",\n\"sendDateTime\": \"2021年04月06日 18:16:09\",\n\"content\": \"好啊\"\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -2962,14 +2962,14 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "content1",
-            "description": "<p>最新点赞消息内容</p>"
+            "description": "<p>最新一条未读点赞消息内容</p>"
           },
           {
             "group": "200",
             "type": "int",
             "optional": true,
             "field": "count1",
-            "description": "<p>未读点赞消息总数量</p>"
+            "description": "<p>未读点赞消息数量</p>"
           },
           {
             "group": "200",
@@ -3228,7 +3228,7 @@ define({ "api": [
             "type": "long",
             "optional": true,
             "field": "totalCount",
-            "description": "<p>未读点赞消息总条数</p>"
+            "description": "<p>点赞消息总条数</p>"
           },
           {
             "group": "200",
@@ -4101,12 +4101,12 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"返回数据成功。\",\n\t\t    \"data\": {\n\t\t        \"REPLY\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"REPLY\": \"OK\"\n}\n}",
           "type": "json"
         },
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"返回数据成功。\",\n\t\t    \"data\": {\n\t\t        \"REPLY\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"REPLY\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
