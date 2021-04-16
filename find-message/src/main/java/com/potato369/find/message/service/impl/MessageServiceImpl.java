@@ -89,21 +89,30 @@ public class MessageServiceImpl implements MessageService {
         LikesMessageVO likesMessageVO = LikesMessageVO.builder().build();
         likesMessageVO.setCount(this.messageMapperReader.countUnreadLikesByUserId(userId));
         //查询最后一条点赞消息记录
-        MessageExample messageExample = new MessageExample();
-        messageExample.setDistinct(true);
-        messageExample.setOrderByClause("create_time DESC");
-        messageExample.createCriteria()
-                .andRecipientUserIdEqualTo(userId)
-                .andStatusEqualTo(MessageStatusEnum.UNREAD.getStatus())//点赞未读状态
-                .andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage())//点赞消息
-                .andReserveColumn03EqualTo(MessageStatus2Enum.NO.getStatus());//是否删除，没有删除
-        List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
-        if (messageList != null && !messageList.isEmpty()) {
-            Message message = messageList.get(0);
-            likesMessageVO.setContent(message.getContent());
-        } else {
-            likesMessageVO.setContent(null);
-        }
+//        MessageExample messageExample = new MessageExample();
+//        messageExample.setDistinct(true);
+//        messageExample.setOrderByClause("create_time DESC");
+//        messageExample.createCriteria()
+//                .andRecipientUserIdEqualTo(userId)
+//                .andStatusEqualTo(MessageStatusEnum.UNREAD.getStatus())//点赞未读状态
+//                .andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage())//点赞消息
+//                .andReserveColumn03EqualTo(MessageStatus2Enum.NO.getStatus());//是否删除，没有删除
+//        List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
+//        if (messageList != null && !messageList.isEmpty()) {
+//            Message message = messageList.get(0);
+//            likesMessageVO.setContent(message.getContent());
+//        } else {
+//            likesMessageVO.setContent(null);
+//        }
+        List<LikesMessageRecord> likesMessageRecordList = this.messageMapperReader.selectLikesMessageRecordByUserId(userId);
+        if (likesMessageRecordList != null && !likesMessageRecordList.isEmpty()) {
+        	LikesMessageRecord likesMessageRecord = likesMessageRecordList.get(0);
+        	if (LikeStatusEnum.YES.getType().equals(likesMessageRecord.getStatus())) {
+        		likesMessageVO.setContent(likesMessageRecord.getNickname() + "点赞了你的动态" + likesMessageRecord.getLikesContent());
+            } else {
+            	likesMessageVO.setContent(null);
+			}
+		}
         return likesMessageVO;
     }
 
@@ -159,7 +168,9 @@ public class MessageServiceImpl implements MessageService {
             likesInfoVO.setAttacheType(likesMessageRecord.getAttacheType());
             if (LikeStatusEnum.YES.getType().equals(likesMessageRecord.getStatus())) {
                 likesInfoVO.setContent(likesMessageRecord.getNickname() + "点赞了你的动态" + likesMessageRecord.getLikesContent());
-            }
+            } else {
+            	likesInfoVO.setContent(null);
+			}
             String[] fileNameList01 = StrUtil.split(likesMessageRecord.getAttacheFilename(), "||");
             List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
             List<String> fileNameList03 = new ArrayList<>();
