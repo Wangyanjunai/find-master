@@ -85,34 +85,21 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional(readOnly = true)
     public LikesMessageVO selectLikesMessage(Long userId) {
-        //查询未读点赞消息总条数
+        //查询未读点赞消息
         LikesMessageVO likesMessageVO = LikesMessageVO.builder().build();
-        likesMessageVO.setCount(this.messageMapperReader.countUnreadLikesByUserId(userId));
+        final PageInfo<Message> messagePageInfo = PageHelper.startPage(1, 20).doSelectPageInfo(() -> this.messageMapperReader.selectUnReadLikesMessageRecord(userId));
         //查询最后一条点赞消息记录
-//        MessageExample messageExample = new MessageExample();
-//        messageExample.setDistinct(true);
-//        messageExample.setOrderByClause("create_time DESC");
-//        messageExample.createCriteria()
-//                .andRecipientUserIdEqualTo(userId)
-//                .andStatusEqualTo(MessageStatusEnum.UNREAD.getStatus())//点赞未读状态
-//                .andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage())//点赞消息
-//                .andReserveColumn03EqualTo(MessageStatus2Enum.NO.getStatus());//是否删除，没有删除
-//        List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
-//        if (messageList != null && !messageList.isEmpty()) {
-//            Message message = messageList.get(0);
-//            likesMessageVO.setContent(message.getContent());
-//        } else {
-//            likesMessageVO.setContent(null);
-//        }
-        List<LikesMessageRecord> likesMessageRecordList = this.messageMapperReader.selectLikesMessageRecordByUserId(userId);
-        if (likesMessageRecordList != null && !likesMessageRecordList.isEmpty()) {
-        	LikesMessageRecord likesMessageRecord = likesMessageRecordList.get(0);
-        	if (LikeStatusEnum.YES.getType().equals(likesMessageRecord.getStatus())) {
-        		likesMessageVO.setContent(likesMessageRecord.getNickname() + "点赞了你的动态" + likesMessageRecord.getLikesContent());
-            } else {
-            	likesMessageVO.setContent(null);
-			}
-		}
+        List<Message> messageList;
+        if (messagePageInfo.getTotal() > 0) {
+            likesMessageVO.setCount(messagePageInfo.getTotal());
+            messageList = messagePageInfo.getList();
+            if (!messageList.isEmpty()) {
+                likesMessageVO.setContent(messageList.get(0).getContent());
+            }
+        } else {
+            likesMessageVO.setCount(0L);
+            likesMessageVO.setContent(null);
+        }
         return likesMessageVO;
     }
 
@@ -166,11 +153,7 @@ public class MessageServiceImpl implements MessageService {
                             + "/"
                             + likesMessageRecord.getHeadIcon());
             likesInfoVO.setAttacheType(likesMessageRecord.getAttacheType());
-            if (LikeStatusEnum.YES.getType().equals(likesMessageRecord.getStatus())) {
-                likesInfoVO.setContent(likesMessageRecord.getNickname() + "点赞了你的动态" + likesMessageRecord.getLikesContent());
-            } else {
-            	likesInfoVO.setContent(null);
-			}
+            likesInfoVO.setContent(likesMessageRecord.getLikesContent());
             String[] fileNameList01 = StrUtil.split(likesMessageRecord.getAttacheFilename(), "||");
             List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
             List<String> fileNameList03 = new ArrayList<>();
@@ -383,9 +366,11 @@ public class MessageServiceImpl implements MessageService {
         String key = "DELETE";
         String value = "ERROR";
         String msg = "删除消息记录失败。";
-        LikeRecord likeRecord = this.likeRecordMapperReader.selectByPrimaryKey(messageId);
-        if (likeRecord != null) {
-            int count = this.likeRecordMapperWriter.deleteByPrimaryKey(messageId);
+        Message messageRecord = this.messageMapperReader.selectByPrimaryKey(messageId);
+        if (messageRecord != null) {
+            messageRecord.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
+            messageRecord.setUpdateTime(new Date());
+            int count = this.messageMapperWriter.updateByPrimaryKeySelective(messageRecord);
             if (count > 0) {
                 value = "OK";
                 msg = "删除消息记录成功。";

@@ -720,7 +720,7 @@ public class DynamicController {
             }
             //点赞记录信息
             LikeRecord likeRecord = this.likeRecordService.findByUserIdAndDynamicInfoId(userId, dynamicInfoId);
-            // 取消点赞
+            //取消点赞
             if (LikeStatusEnum.NO.getType().equals(type)) {
                 if (likeRecord == null) {
                     return CommonResult.failed(data, ResultCode.LIKES_RECORD_IS_NOT_EXIST);
@@ -735,18 +735,16 @@ public class DynamicController {
                     return CommonResult.success(data, "取消点赞成功。");
                 }
             }
-            // 点赞
+            //点赞
             if (LikeStatusEnum.YES.getType().equals(type)) {
                 String content = user.getNickName() + "点赞你的动态" + dynamicInfo.getContent();//消息内容
                 int result = this.likeRecordService.createByUserIdAndDynamicInfoId(content, userId, dynamicInfo, likeRecord);
                 if (result > 0) {
                     data.put("LIKED", "OK");
                     String title = "互动消息";//消息标题
-                    Map<String, String> extras = new ConcurrentHashMap<>();
                     PushBean pushBean = new PushBean();
                     pushBean.setAlert(content);
                     pushBean.setTitle(title);
-                    pushBean.setExtras(extras);
                     this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
                     return CommonResult.success(data, "点赞成功。");
                 }

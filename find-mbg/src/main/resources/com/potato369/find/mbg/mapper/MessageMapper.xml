@@ -29,7 +29,7 @@
         <result column="nick_name" jdbcType="VARCHAR" property="sendUserNickname"/>
     </resultMap>
     <resultMap type="com.potato369.find.mbg.model.LikesMessageRecord" id="LikesMessageRecordMap">
-        <result column="message_id" jdbcType="BIGINT" property="messageId" />
+        <result column="message_id" jdbcType="BIGINT" property="messageId"/>
         <result column="status" jdbcType="CHAR" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
@@ -184,31 +184,34 @@
           AND me.`recipient_user_id` = #{userId, jdbcType=BIGINT}
         ORDER BY me.`create_time` DESC
     </select>
-    <select id="selectLikesMessageRecordByUserId" parameterType="java.lang.Long" resultMap="LikesMessageRecordMap">       
-		SELECT
-		    like_record.`id` AS `message_id`,
-			like_record.`status`,
-			like_record.`update_time`,
-			like_record.`create_time`,
-			user.`id`,
-			user.`nick_name`,
-			user.`head_icon`,
-			dynamic_info.`content`,
-			attache_info.`data_type` AS `attache_type`,
-			attache_info.`file_name`
-		FROM
-			`like_record`,
-			`user`,
-			`dynamic_info`,
-			`attache_info` 
-		WHERE
-			like_record.`user_id` = user.`id` 
-			AND like_record.`dynamic_info_id` = dynamic_info.`id` 
-			AND dynamic_info.`id` = attache_info.`dynamic_info_by`
-			AND dynamic_info.`user_id` = #{userId, jdbcType=BIGINT}
-			AND like_record.`status` = '1'
-		ORDER BY 
-			like_record.`update_time` DESC, like_record.`create_time` DESC
+    <select id="selectLikesMessageRecordByUserId" parameterType="java.lang.Long" resultMap="LikesMessageRecordMap">
+        SELECT like_record.`status`,
+               like_record.`update_time`,
+               like_record.`create_time`,
+               message.`id`             AS `message_id`,
+               message.`content`,
+               user.`id`,
+               user.`nick_name`,
+               user.`head_icon`,
+               attache_info.`data_type` AS `attache_type`,
+               attache_info.`file_name`
+        FROM `like_record` AS like_record,
+             `message` AS message,
+             `user` AS user,
+             `dynamic_info` AS dynamic_info,
+             `attache_info` AS attache_info
+        WHERE like_record.`id` = message.`reserve_column04`
+          AND like_record.`user_id` = user.`id`
+          AND like_record.`dynamic_info_id` = dynamic_info.`id`
+          AND dynamic_info.`id` = attache_info.`dynamic_info_by`
+          AND dynamic_info.`user_id` = #{userId, jdbcType=BIGINT}
+          AND like_record.`status` = '1'
+          AND message.`recipient_user_id` = #{userId, jdbcType=BIGINT}
+          AND message.`reserve_column01` = 'likes'
+          AND message.reserve_column02 = '0'
+          AND message.`reserve_column03` = '0'
+        ORDER BY like_record.`update_time` DESC,
+                 like_record.`create_time` DESC
     </select>
     <select id="selectApplicationMessageRecordByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT `id`,
@@ -294,18 +297,15 @@
              ) AS a
         ORDER BY a.`id` ASC, a.`create_time` ASC
     </select>
-    
+
     <!-- 查询用户未读点赞条数 -->
     <select id="countUnreadLikesByUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
-		SELECT
-			COUNT( 0 ) 
-		FROM
-			message
-		WHERE
-			`recipient_user_id` = #{recipientUserId, jdbcType=BIGINT} 
-			AND `reserve_column01` = 'likes' 
-			AND `status` = '0' 
-			AND reserve_column03 = '0'   	
+        SELECT COUNT(0)
+        FROM message
+        WHERE `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
+          AND `reserve_column01` = 'likes'
+          AND `status` = '0'
+          AND reserve_column03 = '0'
     </select>
 
     <select id="countByUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
@@ -317,6 +317,23 @@
           and `reserve_column02` = '1'
           and `send_mode` = '1'
           and `reserve_column04` = #{messageId, jdbcType=BIGINT}
+    </select>
+    <select id="selectUnReadLikesMessageRecord" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        SELECT message.`send_user_id`,
+               message.`send_mode`,
+               message.`status`,
+               message.`content`
+        FROM `like_record` like_record,
+             `message` message
+        WHERE like_record.`id` = message.`reserve_column04`
+          AND like_record.`status` = '1'
+          AND message.`status` = '0'
+          AND message.`recipient_user_id` = #{userId, jdbcType=BIGINT}
+          AND message.`reserve_column01` = 'likes'
+          AND message.reserve_column02 = '0'
+          AND message.`reserve_column03` = '0'
+        ORDER BY like_record.`create_time` DESC,
+                 like_record.`update_time` DESC
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -429,9 +446,9 @@
         UPDATE `message`
         SET `reserve_column03` = '1'
         WHERE `reserve_column01`<![CDATA[ =]]> 'applications'
-            AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
-            AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
-    </update>    
+          AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+          AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
+    </update>
     <update id="updateByExampleSelective" parameterType="map">
         update message
         <set>
@@ -581,7 +598,7 @@
     </update>
     <update id="updateApplicationMessage" parameterType="java.lang.Long">
         UPDATE message
-        SET `status` = '1',
+        SET `status`      = '1',
             `update_time` = NOW()
         WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
           AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
@@ -589,7 +606,7 @@
     </update>
     <update id="updateLikesMessage" parameterType="java.lang.Long">
         UPDATE message
-        SET `status` = '1',
+        SET `status`      = '1',
             `update_time` = NOW()
         WHERE `reserve_column01`<![CDATA[ =]]> 'likes'
           AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}

@@ -132,14 +132,15 @@ public class LikeRecordServiceImpl implements LikeRecordService {
                 likeRecord.setUpdateTime(new Date());
                 b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
             }
+            //消息记录
             Message messageRecord = new Message();
             messageRecord.setContent(content);//消息内容
             messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
             messageRecord.setRecipientUserId(dynamicInfo.getUserId());//接收者用户id
             messageRecord.setSendUserId(userId);//发送者用户id
-            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//已读还是未读
-            messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型
-            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送还是回复
+            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//未读
+            messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型，点赞->likes
+            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
             messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
             messageRecord.setReserveColumn04(String.valueOf(likeRecord.getId()));//点赞记录id
             c = this.messageMapperWriter.insertSelective(messageRecord);
