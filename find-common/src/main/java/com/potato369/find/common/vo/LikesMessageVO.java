@@ -13,7 +13,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LikesMessageVO {
-    //最新一条点赞消息内容
+	
+    //最新一条未读点赞消息内容
     @JSONField(name = "content1")
     @JsonProperty(value = "content1")
     private String content;

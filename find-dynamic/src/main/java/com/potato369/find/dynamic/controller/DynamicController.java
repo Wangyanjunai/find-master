@@ -702,19 +702,23 @@ public class DynamicController {
             if (log.isDebugEnabled()) {
                 log.debug("开始点赞当前动态内容");
             }
+            //点赞者用户信息
             User user = this.userMapperReader.selectByPrimaryKey(userId);
             if (user == null) {
                 return CommonResult.failed(data, ResultCode.LIKES_USER_IS_NOT_EXIST);
             }
+            //被点赞的动态内容信息
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
             if (dynamicInfo == null) {
                 return CommonResult.failed(data, ResultCode.LIKES_DYNAMIC_INFO_IS_NOT_EXIST);
             }
+            //被点赞者用户信息
             Long publishUserId = dynamicInfo.getUserId();
             User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);
             if (publishUser == null) {
                 return CommonResult.failed(data, ResultCode.LIKES_USER_IS_NOT_EXIST);
             }
+            //点赞记录信息
             LikeRecord likeRecord = this.likeRecordService.findByUserIdAndDynamicInfoId(userId, dynamicInfoId);
             // 取消点赞
             if (LikeStatusEnum.NO.getType().equals(type)) {
@@ -723,16 +727,10 @@ public class DynamicController {
                 }
                 likeRecord.setStatus(LikeStatusEnum.NO.getType());
                 likeRecord.setUpdateTime(new Date());
-                String content = user.getNickName() + "取消点赞你的动态" + dynamicInfo.getContent();//消息内容
-                int result = this.likeRecordService.update(likeRecord, dynamicInfo, content);
+                dynamicInfo.setLikes(dynamicInfo.getLikes() - 1);
+                dynamicInfo.setUpdateTime(new Date());
+                int result = this.likeRecordService.update(likeRecord, dynamicInfo);
                 if (result > 0) {
-                    //String title = "互动消息";//消息标题
-                    //Map<String, String> extras = new ConcurrentHashMap<>();
-                    //PushBean pushBean = new PushBean();
-                    //pushBean.setAlert(content);
-                    //pushBean.setTitle(title);
-                    //pushBean.setExtras(extras);
-                    //this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
                     data.put("LIKED", "OK");
                     return CommonResult.success(data, "取消点赞成功。");
                 }
