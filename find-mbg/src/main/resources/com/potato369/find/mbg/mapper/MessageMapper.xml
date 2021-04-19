@@ -241,8 +241,8 @@
                         `create_time`
                  FROM `message`
                  WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
-                   AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
-                   AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+                   AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
+                   AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
                  UNION
                  SELECT `id`,
                         `send_user_id`,
@@ -253,10 +253,10 @@
                         `create_time`
                  FROM `message`
                  WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
-                   AND `send_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
-                   AND `recipient_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
+                   AND `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
+                   AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
              ) AS a
-        WHERE a.`status`<![CDATA[ =]]> '0'
+        WHERE a.`status` = '0'
         ORDER BY a.`id` ASC, a.`create_time` ASC
     </select>
 
@@ -279,8 +279,8 @@
                  FROM `message`
                  WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
                    AND `reserve_column03` = '0'
-                   AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
-                   AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+                   AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
+                   AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
                  UNION
                  SELECT `id`,
                         `send_user_id`,
@@ -292,8 +292,8 @@
                  FROM `message`
                  WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
                    AND `reserve_column03` = '0'
-                   AND `send_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
-                   AND `recipient_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
+                   AND `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
+                   AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
              ) AS a
         ORDER BY a.`id` ASC, a.`create_time` ASC
     </select>
