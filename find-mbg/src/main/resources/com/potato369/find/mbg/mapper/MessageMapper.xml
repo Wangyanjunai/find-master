@@ -597,25 +597,25 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateApplicationMessage" parameterType="java.lang.Long">
-        UPDATE message
+        UPDATE `message`
         SET `status`      = '1',
             `update_time` = NOW()
         WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
-          AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
-          AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+          AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
+          AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
     </update>
     <update id="updateLikesMessage" parameterType="java.lang.Long">
-        UPDATE message
+        UPDATE `message`
         SET `status`      = '1',
             `update_time` = NOW()
-        WHERE `reserve_column01`<![CDATA[ =]]> 'likes'
-          AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
-          AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+        WHERE `reserve_column01` = 'likes'
+          AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
+          AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
     </update>
     <update id="updateAllByUserId" parameterType="java.lang.Long">
-        UPDATE message
-        SET `status`= '1',
+        UPDATE `message`
+        SET `status`      = '1',
             `update_time` = NOW()
-        WHERE `recipient_user_id` <![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
+        WHERE `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
     </update>
 </mapper>
