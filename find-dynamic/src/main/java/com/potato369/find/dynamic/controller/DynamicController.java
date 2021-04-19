@@ -14,6 +14,7 @@ import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.utils.FileTypeUtil;
 import com.potato369.find.dynamic.config.bean.PushBean;
 import com.potato369.find.dynamic.config.props.DynamicDefaultAgeProps;
+import com.potato369.find.dynamic.feign.UserLogService;
 import com.potato369.find.dynamic.service.*;
 import com.potato369.find.mbg.mapper.*;
 import com.potato369.find.mbg.model.*;
@@ -65,6 +66,8 @@ public class DynamicController {
     private ApplicationRecordMapper applicationRecordMapperReader;
 
     private MessageMapper messageMapperReader;
+
+    private UserLogService userLogOpenFeign;
 
     @Autowired
     public void setDynamicService(DynamicService dynamicService) {
@@ -141,6 +144,11 @@ public class DynamicController {
         this.messageMapperReader = messageMapperReader;
     }
 
+    @Autowired
+    public void setUserLogOpenFeign(UserLogService userLogOpenFeign) {
+        this.userLogOpenFeign = userLogOpenFeign;
+    }
+
     // 用户发布动态附件（包括图片和语音）
     @PostMapping(value = "/{id}/release.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, Object>> releaseDynamicFiles(
@@ -162,6 +170,11 @@ public class DynamicController {
             if (log.isDebugEnabled()) {
                 log.debug("开始发布动态内容");
             }
+            OperateRecord operateRecord = new OperateRecord();
+            operateRecord.setUserId(userIdLong);
+            operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
+            operateRecord.setType(OperateRecordTypeEnum.ReleaseDynamic.getCode());
+
             DynamicDTO dynamicDTO = new DynamicDTO();
             dynamicDTO.setUserId(userIdLong);
             dynamicDTO.setImei(imei);
@@ -187,17 +200,38 @@ public class DynamicController {
                 this.dynamicService.save(dynamicDTO);
                 Map<String, Object> result = new ConcurrentHashMap<>();
                 result.put("RELEASED", "OK");
+                operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
+                try {
+                    this.userLogOpenFeign.record(userIdLong, operateRecord);
+                } catch (Exception e) {
+                    log.error("记录用户操作记录失败", e);
+                }
                 return CommonResult.success(result, "发布动态内容成功。");
             }
             if (AttacheInfoDataTypeEnum.Image.getCode().toString().equals(attacheInfoDataType)) {
                 if (files.length == 0) {
+                    try {
+                        this.userLogOpenFeign.record(userIdLong, operateRecord);
+                    } catch (Exception e) {
+                        log.error("记录用户操作记录失败", e);
+                    }
                     return CommonResult.failed("发布动态内容图片资源文件不能为空。");
                 }
                 if (files.length > 4) {
+                    try {
+                        this.userLogOpenFeign.record(userIdLong, operateRecord);
+                    } catch (Exception e) {
+                        log.error("记录用户操作记录失败", e);
+                    }
                     return CommonResult.failed("一次发布动态内容图片资源文件不能大于4张包括4张。");
                 }
                 //判断图片资源文件类型是否正确
                 for (MultipartFile multipartFile : files) {
+                    try {
+                        this.userLogOpenFeign.record(userIdLong, operateRecord);
+                    } catch (Exception e) {
+                        log.error("记录用户操作记录失败", e);
+                    }
                     if (!FileTypeUtil.isImageType(multipartFile.getContentType(), multipartFile.getOriginalFilename())) {
                         return CommonResult.failed("发布动态内容图片资源文件类型不正确。");
                     }
@@ -205,14 +239,29 @@ public class DynamicController {
             }
             if (AttacheInfoDataTypeEnum.Audio.getCode().toString().equals(attacheInfoDataType)) {
                 if (files.length == 0) {
+                    try {
+                        this.userLogOpenFeign.record(userIdLong, operateRecord);
+                    } catch (Exception e) {
+                        log.error("记录用户操作记录失败", e);
+                    }
                     return CommonResult.failed("发布动态内容语音资源文件不能为空。");
                 }
                 if (files.length > 1) {
+                    try {
+                        this.userLogOpenFeign.record(userIdLong, operateRecord);
+                    } catch (Exception e) {
+                        log.error("记录用户操作记录失败", e);
+                    }
                     return CommonResult.failed("一次发布动态内容语音资源文件不能大于1个包括1个。");
                 }
                 //判断图片资源文件类型是否正确
                 for (MultipartFile multipartFile : files) {
                     if (!FileTypeUtil.isAudioType(multipartFile.getContentType(), multipartFile.getOriginalFilename())) {
+                        try {
+                            this.userLogOpenFeign.record(userIdLong, operateRecord);
+                        } catch (Exception e) {
+                            log.error("记录用户操作记录失败", e);
+                        }
                         return CommonResult.failed("发布动态内容语音资源文件类型不正确。");
                     }
                 }
@@ -252,6 +301,11 @@ public class DynamicController {
                         dynamicDTO.setCity("深圳市");
                     }
                 }
+            }
+            try {
+                this.userLogOpenFeign.record(userIdLong, operateRecord);
+            } catch (Exception e) {
+                log.error("记录用户操作记录失败", e);
             }
             return this.dynamicService.update(dynamicDTO, files, "发布动态内容成功。");
         } catch (Exception e) {
