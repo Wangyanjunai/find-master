@@ -2997,26 +2997,33 @@ define({ "api": [
             "type": "long",
             "optional": true,
             "field": "messageId",
-            "description": "<p>申请加微信消息记录id</p>"
+              "description": "<p>申请加微信消息记录id</p>"
           },
-          {
-            "group": "200",
-            "type": "long",
-            "optional": true,
-            "field": "userId",
-            "description": "<p>申请加微信发送者用户id</p>"
-          },
-          {
-            "group": "200",
-            "type": "string",
-            "optional": true,
-            "field": "head",
-            "description": "<p>申请加微信发送者用户头像</p>"
-          },
-          {
-            "group": "200",
-            "type": "string",
-            "optional": true,
+            {
+                "group": "200",
+                "type": "long",
+                "optional": true,
+                "field": "userId",
+                "description": "<p>申请加微信发送者用户id</p>"
+            },
+            {
+                "group": "200",
+                "type": "long",
+                "optional": true,
+                "field": "userId2",
+                "description": "<p>申请加微信接收者用户id</p>"
+            },
+            {
+                "group": "200",
+                "type": "string",
+                "optional": true,
+                "field": "head",
+                "description": "<p>申请加微信发送者用户头像</p>"
+            },
+            {
+                "group": "200",
+                "type": "string",
+                "optional": true,
             "field": "nickname",
             "description": "<p>申请加微信发送者用户昵称</p>"
           },

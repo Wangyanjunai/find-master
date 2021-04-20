@@ -211,6 +211,7 @@ public class MessageServiceImpl implements MessageService {
                         messageInfoVO.setNickname(user.getNickName());
                     }
                     messageInfoVO.setContent(message2.getContent());
+                    messageInfoVO.setUserId2(message2.getRecipientUserId());
                     Long count = this.messageMapperReader.selectMessageRecordCount(message2.getSendUserId(), message2.getRecipientUserId());
                     messageInfoVO.setCount(count);
                 } else {
@@ -228,6 +229,7 @@ public class MessageServiceImpl implements MessageService {
                         messageInfoVO.setNickname(user.getNickName());
                     }
                     messageInfoVO.setContent(message.getContent());
+                    messageInfoVO.setUserId2(message.getRecipientUserId());
                     Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
                     messageInfoVO.setCount(count);
                 }

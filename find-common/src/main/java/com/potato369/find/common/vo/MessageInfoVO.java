@@ -20,11 +20,16 @@ public class MessageInfoVO {
     @JSONField(name = "messageId")
     @JsonProperty(value = "messageId")
     private Long messageId;
-  
+
     //申请加微信消息发送者用户id
     @JSONField(name = "userId")
     @JsonProperty(value = "userId")
     private Long userId;
+
+    //申请加微信消息接收者用户id
+    @JSONField(name = "userId2")
+    @JsonProperty(value = "userId2")
+    private Long userId2;
 
     //申请加微信消息发送者用户头像
     @JSONField(name = "head")
@@ -40,12 +45,12 @@ public class MessageInfoVO {
     @JSONField(name = "content2")
     @JsonProperty(value = "content2")
     private String content;
-    
+
     //申请加微信消息发送者发送的消息时间
     @JSONField(name = "createTime")
     @JsonProperty(value = "createTime")
     private Date createTime;
-    
+
     //申请加微信消息发送者发送消息未读条数
     @JSONField(name = "count2")
     @JsonProperty(value = "count2")

@@ -47,6 +47,7 @@ public class MessageController {
      * @apiSuccess (200) {object[]} [list] 申请加微信消息数据
      * @apiSuccess (200) {long} [messageId] 申请加微信消息记录id
      * @apiSuccess (200) {long} [userId] 申请加微信发送者用户id
+     * @apiSuccess (200) {long} [userId2] 申请加微信接收者用户id
      * @apiSuccess (200) {string} [head] 申请加微信发送者用户头像
      * @apiSuccess (200) {string} [nickname] 申请加微信发送者用户昵称
      * @apiSuccess (200) {string} [content2] 申请加微信发送消息内容
@@ -559,7 +560,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {long} id1 发送者用户id
      * @apiParam (接口请求参数) {long} id2 接收者用户id
      * @apiParam (接口请求参数) {long} messageId 回复的消息id
-     * @apiParam (接口请求参数) {string} [content] 消息内容
+     * @apiParam (接口请求参数) {string} content 消息内容
      * @apiParamExample {json} 请求示例 发送消息
      * HTTP/1.1 OK
      * curl -v -X POST "http://8.135.36.45:8084/find/message/60/29/send?messageId=25&content=可以申请加你的微信吗？" -H "accept: application/json"
@@ -633,7 +634,7 @@ public class MessageController {
             @PathVariable(name = "id1") @ApiParam(name = "id1", value = "消息发送者用户id", required = true, example = "1") Long sendUserId,
             @PathVariable(name = "id2") @ApiParam(name = "id2", value = "消息接收者用户id", required = true, example = "2") Long recipientUserId,
             @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息id", required = true, example = "3") Long messageId,
-            @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "消息内容", example = "可以申请加你的微信吗？") String content) {
+            @RequestParam(name = "content") @ApiParam(name = "content", value = "消息内容", required = true, example = "可以聊聊吗？") String content) {
         return this.messageFeignClient.send(sendUserId, recipientUserId, messageId, content);
     }
 
