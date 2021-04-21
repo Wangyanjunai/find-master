@@ -247,7 +247,7 @@ public class MessageServiceImpl implements MessageService {
                     messageInfoVO2s.add(messageInfoVO2);
                 }
                 this.messageMapperWriter.updateApplicationMessage(sendUserId, recipientUserId);
-                this.messageMapperWriter.updateApplicationMessage2(sendUserId, recipientUserId);
+                //this.messageMapperWriter.updateApplicationMessage2(sendUserId, recipientUserId);
             }
         }
         messageVO3.setMessageInfoVO2s(messageInfoVO2s);
