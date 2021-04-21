@@ -2989,29 +2989,22 @@ define({ "api": [
             "group": "200",
             "type": "object[]",
             "optional": true,
-            "field": "list",
-            "description": "<p>申请加微信消息数据</p>"
+              "field": "list",
+              "description": "<p>申请加微信消息数据</p>"
           },
-          {
-            "group": "200",
-            "type": "long",
-            "optional": true,
-            "field": "messageId",
-              "description": "<p>申请加微信消息记录id</p>"
-          },
+            {
+                "group": "200",
+                "type": "long",
+                "optional": true,
+                "field": "messageId",
+                "description": "<p>申请加微信消息记录id</p>"
+            },
             {
                 "group": "200",
                 "type": "long",
                 "optional": true,
                 "field": "userId",
                 "description": "<p>申请加微信发送者用户id</p>"
-            },
-            {
-                "group": "200",
-                "type": "long",
-                "optional": true,
-                "field": "userId2",
-                "description": "<p>申请加微信接收者用户id</p>"
             },
             {
                 "group": "200",
@@ -3024,16 +3017,16 @@ define({ "api": [
                 "group": "200",
                 "type": "string",
                 "optional": true,
-            "field": "nickname",
-            "description": "<p>申请加微信发送者用户昵称</p>"
-          },
-          {
-            "group": "200",
-            "type": "string",
-            "optional": true,
-            "field": "content2",
-            "description": "<p>申请加微信发送消息内容</p>"
-          },
+                "field": "nickname",
+                "description": "<p>申请加微信发送者用户昵称</p>"
+            },
+            {
+                "group": "200",
+                "type": "string",
+                "optional": true,
+                "field": "content2",
+                "description": "<p>申请加微信发送消息内容</p>"
+            },
           {
             "group": "200",
             "type": "long",
@@ -3816,13 +3809,13 @@ define({ "api": [
             "field": "messageId",
             "description": "<p>回复的消息id</p>"
           },
-          {
-            "group": "接口请求参数",
-            "type": "string",
-            "optional": true,
-            "field": "content",
-            "description": "<p>消息内容</p>"
-          }
+            {
+                "group": "接口请求参数",
+                "type": "string",
+                "optional": false,
+                "field": "content",
+                "description": "<p>消息内容</p>"
+            }
         ]
       },
       "examples": [

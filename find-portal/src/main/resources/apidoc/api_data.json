@@ -3008,13 +3008,6 @@
           },
           {
             "group": "200",
-            "type": "long",
-            "optional": true,
-            "field": "userId2",
-            "description": "<p>申请加微信接收者用户id</p>"
-          },
-          {
-            "group": "200",
             "type": "string",
             "optional": true,
             "field": "head",
@@ -3819,7 +3812,7 @@
           {
             "group": "接口请求参数",
             "type": "string",
-            "optional": true,
+            "optional": false,
             "field": "content",
             "description": "<p>消息内容</p>"
           }

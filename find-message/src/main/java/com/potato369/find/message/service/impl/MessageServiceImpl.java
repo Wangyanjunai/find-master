@@ -189,6 +189,19 @@ public class MessageServiceImpl implements MessageService {
         if (messages != null && !messages.isEmpty()) {
             for (Message message : messages) {
                 MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
+                messageInfoVO.setMessageId(message.getId());
+                User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+                if (user != null) {
+                    messageInfoVO.setUserId(user.getId());
+                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                            + user.getId()
+                            + "/"
+                            + user.getHeadIcon());
+                    messageInfoVO.setNickname(user.getNickName());
+                }
+                messageInfoVO.setContent(message.getContent());
                 Long messageId = message.getId();
                 MessageExample messageExample = new MessageExample();
                 messageExample.setOrderByClause("create_time DESC, update_time DESC");
@@ -197,42 +210,10 @@ public class MessageServiceImpl implements MessageService {
                 List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
                 if (messageList != null && !messageList.isEmpty()) {
                     Message message2 = messageList.get(0);
-                    messageInfoVO.setMessageId(message2.getId());
-                    User user = this.userMapperReader.selectByPrimaryKey(message2.getSendUserId());
-                    if (user != null) {
-                        messageInfoVO.setUserId(user.getId());
-                        messageInfoVO.setHead(
-                                StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                                        + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                                        + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                                        + user.getId()
-                                        + "/"
-                                        + user.getHeadIcon());
-                        messageInfoVO.setNickname(user.getNickName());
-                    }
                     messageInfoVO.setContent(message2.getContent());
-                    messageInfoVO.setUserId2(message2.getRecipientUserId());
-                    Long count = this.messageMapperReader.selectMessageRecordCount(message2.getSendUserId(), message2.getRecipientUserId());
-                    messageInfoVO.setCount(count);
-                } else {
-                    messageInfoVO.setMessageId(message.getId());
-                    User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
-                    if (user != null) {
-                        messageInfoVO.setUserId(user.getId());
-                        messageInfoVO.setHead(
-                                StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                                        + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                                        + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                                        + user.getId()
-                                        + "/"
-                                        + user.getHeadIcon());
-                        messageInfoVO.setNickname(user.getNickName());
-                    }
-                    messageInfoVO.setContent(message.getContent());
-                    messageInfoVO.setUserId2(message.getRecipientUserId());
-                    Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
-                    messageInfoVO.setCount(count);
                 }
+                Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
+                messageInfoVO.setCount(count);
                 messageInfoVOs.add(messageInfoVO);
             }
         }

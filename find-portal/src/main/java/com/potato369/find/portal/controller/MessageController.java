@@ -47,7 +47,6 @@ public class MessageController {
      * @apiSuccess (200) {object[]} [list] 申请加微信消息数据
      * @apiSuccess (200) {long} [messageId] 申请加微信消息记录id
      * @apiSuccess (200) {long} [userId] 申请加微信发送者用户id
-     * @apiSuccess (200) {long} [userId2] 申请加微信接收者用户id
      * @apiSuccess (200) {string} [head] 申请加微信发送者用户头像
      * @apiSuccess (200) {string} [nickname] 申请加微信发送者用户昵称
      * @apiSuccess (200) {string} [content2] 申请加微信发送消息内容
