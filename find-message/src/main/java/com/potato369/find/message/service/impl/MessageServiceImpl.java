@@ -193,20 +193,20 @@ public class MessageServiceImpl implements MessageService {
                 if (messageList != null && !messageList.isEmpty()) {
                     Message message1 = messageList.get(0);
                     messageInfoVO.setMessageId(message1.getId());
-                    User user = this.userMapperReader.selectByPrimaryKey(message1.getSendUserId());
-                    if (user != null) {
-                        messageInfoVO.setUserId(user.getId());
-                        messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                                + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                                + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                                + user.getId()
-                                + "/"
-                                + user.getHeadIcon());
-                        messageInfoVO.setNickname(user.getNickName());
-                    }
                     messageInfoVO.setContent(message1.getContent());
-                    Long count = this.messageMapperReader.selectMessageRecordCount(message1.getSendUserId(), message1.getRecipientUserId());
+                    Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
                     messageInfoVO.setCount(count);
+                }
+                User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+                if (user != null) {
+                    messageInfoVO.setUserId(user.getId());
+                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                            + user.getId()
+                            + "/"
+                            + user.getHeadIcon());
+                    messageInfoVO.setNickname(user.getNickName());
                 }
                 messageInfoVOs.add(messageInfoVO);
             }
