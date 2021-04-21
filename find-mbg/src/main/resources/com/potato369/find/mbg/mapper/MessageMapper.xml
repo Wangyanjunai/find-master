@@ -230,10 +230,12 @@
         ORDER BY `create_time` DESC
     </select>
     <select id="selectApplicationMessageRecordByUserId2" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-        SELECT a.`content`,
+        SELECT a.`id`,
+               a.`content`,
                a.create_time
         FROM (
-                 SELECT `content`,
+                 SELECT `id`,
+                        `content`,
                         `create_time`
                  FROM `message`
                  WHERE `send_user_id` = #{sendUserId, jdbcType=BIGINT}
@@ -241,7 +243,8 @@
                    AND `reserve_column01` <![CDATA[ !=]]> 'likes'
                    AND `reserve_column03` = '0'
                  UNION ALL
-                 SELECT `content`,
+                 SELECT `id`
+                            `content`,
                         `create_time`
                  FROM `message`
                  WHERE `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
@@ -249,7 +252,7 @@
                    AND `reserve_column01` <![CDATA[ !=]]> 'likes'
                    AND `reserve_column03` = '0'
              ) AS a
-        ORDER BY a.`create_time` DESC
+        ORDER BY a.`create_time` DESC, a.`id` DESC
     </select>
 
     <select id="selectMessageRecordCount" parameterType="java.lang.Long" resultType="java.lang.Long">
