@@ -243,8 +243,8 @@
                    AND `reserve_column01` <![CDATA[ !=]]> 'likes'
                    AND `reserve_column03` = '0'
                  UNION ALL
-                 SELECT `id`
-                            `content`,
+                 SELECT `id`,
+                        `content`,
                         `create_time`
                  FROM `message`
                  WHERE `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
