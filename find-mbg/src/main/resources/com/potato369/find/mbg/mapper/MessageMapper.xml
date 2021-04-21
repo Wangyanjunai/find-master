@@ -225,25 +225,44 @@
         WHERE `reserve_column01` <![CDATA[ !=]]> 'likes'
           AND `recipient_user_id` = #{userId, jdbcType=BIGINT}
           AND `reserve_column03` = '0'
-        GROUP BY `send_user_id`, `create_time`
+        GROUP BY `send_user_id`,
+                 `recipient_user_id`
         ORDER BY `create_time` DESC
+    </select>
+    <select id="selectApplicationMessageRecordByUserId2" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        SELECT a.`content`,
+               a.create_time
+        FROM (
+                 SELECT `content`,
+                        `create_time`
+                 FROM `message`
+                 WHERE `send_user_id` = #{sendUserId, jdbcType=BIGINT}
+                   AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
+                   AND `reserve_column01` <![CDATA[ !=]]> 'likes'
+                   AND `reserve_column03` = '0'
+                 UNION ALL
+                 SELECT `content`,
+                        `create_time`
+                 FROM `message`
+                 WHERE `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
+                   AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
+                   AND `reserve_column01` <![CDATA[ !=]]> 'likes'
+                   AND `reserve_column03` = '0'
+             ) AS a
+        ORDER BY a.`create_time` DESC
     </select>
 
     <select id="selectMessageRecordCount" parameterType="java.lang.Long" resultType="java.lang.Long">
         SELECT COUNT(0)
         FROM (
                  SELECT `id`,
-                        `send_user_id`,
-                        `recipient_user_id`,
-                        `content`,
-                        `send_mode`,
                         `status`,
                         `create_time`
                  FROM `message`
                  WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
                    AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
-                 UNION
+                 UNION ALL
                  SELECT `id`,
                         `send_user_id`,
                         `recipient_user_id`,
@@ -281,7 +300,7 @@
                    AND `reserve_column03` = '0'
                    AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
-                 UNION
+                 UNION ALL
                  SELECT `id`,
                         `send_user_id`,
                         `recipient_user_id`,

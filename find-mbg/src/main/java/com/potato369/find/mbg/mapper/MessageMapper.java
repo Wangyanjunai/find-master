@@ -34,6 +34,8 @@ public interface MessageMapper {
 
     List<Message> selectApplicationMessageRecordByUserId(@Param("userId") Long userId);
 
+    List<Message> selectApplicationMessageRecordByUserId2(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
+
     List<Message> selectUnReadLikesMessageRecord(@Param("userId") Long userId);
 
     long selectMessageRecordCount(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
@@ -59,9 +61,10 @@ public interface MessageMapper {
     int updateLikesMessage(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 
     int updateAllByUserId(@Param("recipientUserId") Long recipientUserId);
-    
+
     /**
      * 查询用户未读点赞条数
+     *
      * @param recipientUserId
      * @return
      */

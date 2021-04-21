@@ -201,16 +201,10 @@ public class MessageServiceImpl implements MessageService {
                             + user.getHeadIcon());
                     messageInfoVO.setNickname(user.getNickName());
                 }
-                messageInfoVO.setContent(message.getContent());
-                Long messageId = message.getId();
-                MessageExample messageExample = new MessageExample();
-                messageExample.setOrderByClause("create_time DESC, update_time DESC");
-                messageExample.createCriteria().andReserveColumn02EqualTo(MessageType2Enum.REPLY.getCodeStr())
-                        .andReserveColumn04EqualTo(String.valueOf(messageId));
-                List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
+                List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
                 if (messageList != null && !messageList.isEmpty()) {
-                    Message message2 = messageList.get(0);
-                    messageInfoVO.setContent(message2.getContent());
+                    Message message1 = messageList.get(0);
+                    messageInfoVO.setContent(message1.getContent());
                 }
                 Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
                 messageInfoVO.setCount(count);
