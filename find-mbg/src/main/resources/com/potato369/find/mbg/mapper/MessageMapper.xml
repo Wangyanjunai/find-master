@@ -256,6 +256,10 @@
         SELECT COUNT(0)
         FROM (
                  SELECT `id`,
+                        `send_user_id`,
+                        `recipient_user_id`,
+                        `content`,
+                        `send_mode`,
                         `status`,
                         `create_time`
                  FROM `message`
