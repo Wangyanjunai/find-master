@@ -23,6 +23,7 @@ public class Test01 {
 
     public static void main(String[] args) {
         String a = reverse("Hello World!123");
+        System.out.println(a);
         System.out.println(m(1));
     }
 }

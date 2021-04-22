@@ -51,6 +51,10 @@ public class MessageController {
      * @apiSuccess (200) {string} [nickname] 申请加微信发送者用户昵称
      * @apiSuccess (200) {string} [content2] 申请加微信发送消息内容
      * @apiSuccess (200) {long} [count2] 申请加微信未读消息数量
+     * @apiSuccess (200) {string} [createTime] 消息发送时间
+     * @apiSuccess (200) {string} [type] 消息类型，0->普通消息，1->申请加微信消息
+     * @apiSuccess (200) {int} [flag] 是否展示复制微信，0->否，1->是
+     * @apiSuccess (200) {string} [weixinId] 微信号
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -71,7 +75,10 @@ public class MessageController {
      * "head":"http://8.135.36.45:8000/find/img/head/60/01.png",
      * "nickname":"尘埃",
      * "content2":"需要加您的微信?",
-     * "count2":5
+     * "count2":5,
+     *	"createTime": "2021年04月22日 16:40:40",
+     * "type":1,
+     * "flag":0
      * },
      * {
      * "messageId": 2,
@@ -79,7 +86,10 @@ public class MessageController {
      * "head":"http://8.135.36.45:8000/find/img/head/62/02.png",
      * "nickname":"蓝梧桐",
      * "content2":"需要加您的微信?",
-     * "count2":5
+     * "count2":5,
+     *	"createTime": "2021年04月22日 16:40:40",
+     * "type":1,
+     * "flag":0
      * },
      * {
      * "messageId": 3,
@@ -88,6 +98,9 @@ public class MessageController {
      * "nickname":"长安",
      * "content2":"需要加您的微信?",
      * "count2":6
+     *	"createTime": "2021年04月22日 16:40:40",
+     * "type":1,
+     * "flag":0
      * },
      * {
      * "messageId": 4,
@@ -96,6 +109,9 @@ public class MessageController {
      * "nickname":"弦雨晴",
      * "content2":"需要加您的微信?",
      * "count2":6
+     *	"createTime": "2021年04月22日 16:40:40",
+     * "type":1,
+     * "flag":0
      * },
      * {
      * "messageId": 5,
@@ -103,8 +119,23 @@ public class MessageController {
      * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
      * "nickname":"阿萌",
      * "content2":"需要加您的微信?",
+     *	"createTime": "2021年04月22日 16:40:40",
      * "count2":1
-     * }
+     * "type":1,
+     * "flag":0
+     * },
+     	{
+            "messageId": 86,
+            "userId": 137,
+            "head": "http://8.135.36.45:8000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg",
+            "nickname": "jack",
+            "content2": "已同意添加微信，我的微信号是：",
+            "createTime": "2021年04月22日 16:40:40",
+            "count2": 2,
+            "type": "1",
+            "flag": 1,
+            "weixinId": "wxnaza12345681"
+       	}
      * ]
      * }
      * }

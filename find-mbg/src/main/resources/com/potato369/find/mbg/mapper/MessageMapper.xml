@@ -230,11 +230,15 @@
     <select id="selectApplicationMessageRecordByUserId2" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         SELECT a.`id`,
                a.`content`,
-               a.create_time
+               a.create_time,
+               a.`reserve_column01`,
+               a.`reserve_column02`
         FROM (
                  SELECT `id`,
                         `content`,
-                        `create_time`
+                        `create_time`,
+                        `reserve_column01`,
+                        `reserve_column02`
                  FROM `message`
                  WHERE `send_user_id` = #{sendUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
@@ -243,7 +247,9 @@
                  UNION ALL
                  SELECT `id`,
                         `content`,
-                        `create_time`
+                        `create_time`,
+                        `reserve_column01`,
+                        `reserve_column02`
                  FROM `message`
                  WHERE `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}

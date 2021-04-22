@@ -2989,57 +2989,85 @@ define({ "api": [
             "group": "200",
             "type": "object[]",
             "optional": true,
-              "field": "list",
-              "description": "<p>申请加微信消息数据</p>"
+            "field": "list",
+            "description": "<p>申请加微信消息数据</p>"
           },
-            {
-                "group": "200",
-                "type": "long",
-                "optional": true,
-                "field": "messageId",
-                "description": "<p>申请加微信消息记录id</p>"
-            },
-            {
-                "group": "200",
-                "type": "long",
-                "optional": true,
-                "field": "userId",
-                "description": "<p>申请加微信发送者用户id</p>"
-            },
-            {
-                "group": "200",
-                "type": "string",
-                "optional": true,
-                "field": "head",
-                "description": "<p>申请加微信发送者用户头像</p>"
-            },
-            {
-                "group": "200",
-                "type": "string",
-                "optional": true,
-                "field": "nickname",
-                "description": "<p>申请加微信发送者用户昵称</p>"
-            },
-            {
-                "group": "200",
-                "type": "string",
-                "optional": true,
-                "field": "content2",
-                "description": "<p>申请加微信发送消息内容</p>"
-            },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "messageId",
+            "description": "<p>申请加微信消息记录id</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "userId",
+            "description": "<p>申请加微信发送者用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "head",
+            "description": "<p>申请加微信发送者用户头像</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "nickname",
+            "description": "<p>申请加微信发送者用户昵称</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "content2",
+            "description": "<p>申请加微信发送消息内容</p>"
+          },
           {
             "group": "200",
             "type": "long",
             "optional": true,
             "field": "count2",
             "description": "<p>申请加微信未读消息数量</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "createTime",
+            "description": "<p>消息发送时间</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "type",
+            "description": "<p>消息类型，0-&gt;普通消息，1-&gt;申请加微信消息</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "optional": true,
+            "field": "flag",
+            "description": "<p>是否展示复制微信，0-&gt;否，1-&gt;是</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "weixinId",
+            "description": "<p>微信号</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"likes\":{\n\"content1\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"count1\":5\n},\n\"totalCount\":5,\n\"totalPage\":1,\n\"list\":[\n{\n\"messageId\": 7,\n\"userId\":60,\n\"head\":\"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\"nickname\":\"尘埃\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5\n},\n{\n\"messageId\": 2,\n\"userId\":62,\n\"head\":\"http://8.135.36.45:8000/find/img/head/62/02.png\",\n\"nickname\":\"蓝梧桐\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5\n},\n{\n\"messageId\": 3,\n\"userId\":61,\n\"head\":\"http://8.135.36.45:8000/find/img/head/61/01.png\",\n\"nickname\":\"长安\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n},\n{\n\"messageId\": 4,\n\"userId\":71,\n\"head\":\"http://8.135.36.45:8000/find/img/head/71/07.png\",\n\"nickname\":\"弦雨晴\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n},\n{\n\"messageId\": 5,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"nickname\":\"阿萌\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":1\n}\n]\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"likes\":{\n\"content1\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"count1\":5\n},\n\"totalCount\":5,\n\"totalPage\":1,\n\"list\":[\n{\n\"messageId\": 7,\n\"userId\":60,\n\"head\":\"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\"nickname\":\"尘埃\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\t\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 2,\n\"userId\":62,\n\"head\":\"http://8.135.36.45:8000/find/img/head/62/02.png\",\n\"nickname\":\"蓝梧桐\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\t\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 3,\n\"userId\":61,\n\"head\":\"http://8.135.36.45:8000/find/img/head/61/01.png\",\n\"nickname\":\"长安\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\t\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 4,\n\"userId\":71,\n\"head\":\"http://8.135.36.45:8000/find/img/head/71/07.png\",\n\"nickname\":\"弦雨晴\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\t\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 5,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"nickname\":\"阿萌\",\n\"content2\":\"需要加您的微信?\",\n\t\"createTime\": \"2021年04月22日 16:40:40\",\n\"count2\":1\n\"type\":1,\n\"flag\":0\n},\n     \t{\n            \"messageId\": 86,\n            \"userId\": 137,\n            \"head\": \"http://8.135.36.45:8000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg\",\n            \"nickname\": \"jack\",\n            \"content2\": \"已同意添加微信，我的微信号是：\",\n            \"createTime\": \"2021年04月22日 16:40:40\",\n            \"count2\": 2,\n            \"type\": \"1\",\n            \"flag\": 1,\n            \"weixinId\": \"wxnaza12345681\"\n       \t}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -3809,13 +3837,13 @@ define({ "api": [
             "field": "messageId",
             "description": "<p>回复的消息id</p>"
           },
-            {
-                "group": "接口请求参数",
-                "type": "string",
-                "optional": false,
-                "field": "content",
-                "description": "<p>消息内容</p>"
-            }
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": false,
+            "field": "content",
+            "description": "<p>消息内容</p>"
+          }
         ]
       },
       "examples": [

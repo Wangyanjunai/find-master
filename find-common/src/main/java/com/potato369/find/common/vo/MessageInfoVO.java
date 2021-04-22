@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.util.Date;
-
 @Data
 @Builder
 @ToString
@@ -36,7 +34,7 @@ public class MessageInfoVO {
     @JsonProperty(value = "nickname")
     private String nickname;
 
-    //申请加微信消息发送者发送的消息内容
+    //最新一条消息内容
     @JSONField(name = "content2")
     @JsonProperty(value = "content2")
     private String content;
@@ -44,10 +42,25 @@ public class MessageInfoVO {
     //申请加微信消息发送者发送的消息时间
     @JSONField(name = "createTime")
     @JsonProperty(value = "createTime")
-    private Date createTime;
+    private String createTime;
 
     //申请加微信消息发送者发送消息未读条数
     @JSONField(name = "count2")
     @JsonProperty(value = "count2")
     private Long count;
+    
+    //消息类型，0->普通消息，1->申请加微信消息
+    @JSONField(name = "type")
+    @JsonProperty(value = "type")
+    private String type;
+    
+    //是否展示复制微信，0->否，1->是
+    @JSONField(name = "flag")
+    @JsonProperty(value = "flag")
+    private Integer flag;
+    
+    //微信id
+    @JSONField(name = "weixinId")
+    @JsonProperty(value = "weixinId")
+    private String weixinId;
 }

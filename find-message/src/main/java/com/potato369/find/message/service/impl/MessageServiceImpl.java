@@ -8,7 +8,6 @@ import com.potato369.find.common.api.ResultCode;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.vo.*;
-import com.potato369.find.mbg.mapper.LikeRecordMapper;
 import com.potato369.find.mbg.mapper.MessageMapper;
 import com.potato369.find.mbg.mapper.UserMapper;
 import com.potato369.find.mbg.model.*;
@@ -38,10 +37,6 @@ public class MessageServiceImpl implements MessageService {
 
     private JiGuangPushService jiGuangPushService;
 
-    private LikeRecordMapper likeRecordMapperReader;
-
-    private LikeRecordMapper likeRecordMapperWriter;
-
     @Autowired
     public void setMessageMapperReader(MessageMapper messageMapperReader) {
         this.messageMapperReader = messageMapperReader;
@@ -70,16 +65,6 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     public void setJiGuangPushService(JiGuangPushServiceImpl jiGuangPushService) {
         this.jiGuangPushService = jiGuangPushService;
-    }
-
-    @Autowired
-    public void setLikeRecordMapperReader(LikeRecordMapper likeRecordMapperReader) {
-        this.likeRecordMapperReader = likeRecordMapperReader;
-    }
-
-    @Autowired
-    public void setLikeRecordMapperWriter(LikeRecordMapper likeRecordMapperWriter) {
-        this.likeRecordMapperWriter = likeRecordMapperWriter;
     }
 
     @Override
@@ -193,8 +178,23 @@ public class MessageServiceImpl implements MessageService {
                 if (messageList != null && !messageList.isEmpty()) {
                     Message message1 = messageList.get(0);
                     messageInfoVO.setMessageId(message1.getId());
-                    messageInfoVO.setContent(message1.getContent());
-//                    messageInfoVO.setCreateTime(message1.getCreateTime());
+                    if (MessageType2Enum.REPLY.getCodeStr().equals(message1.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
+                    	messageInfoVO.setFlag(1);
+                    	String contentString = message1.getContent();
+                    	String[] strings = StrUtil.split(contentString, "|");
+                    	messageInfoVO.setContent(strings[0]);
+                    	messageInfoVO.setWeixinId(strings[1]);
+					} else {
+						messageInfoVO.setFlag(0);
+						messageInfoVO.setContent(message1.getContent());
+					}
+                    if (MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
+                    	messageInfoVO.setType("1");
+					}
+                    if (MessageTypeEnum.Commons.getMessage().equals(message1.getReserveColumn01())) {
+                    	messageInfoVO.setType("0");
+					}
+                    messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
                     Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
                     messageInfoVO.setCount(count);
                 }
@@ -247,8 +247,9 @@ public class MessageServiceImpl implements MessageService {
                     messageInfoVO2.setContent(message.getContent());
                     messageInfoVO2s.add(messageInfoVO2);
                 }
-                this.messageMapperWriter.updateApplicationMessage(sendUserId, recipientUserId);
-                this.messageMapperWriter.updateApplicationMessage2(sendUserId, recipientUserId);
+                if (message.getRecipientUserId().equals(recipientUserId) && message.getSendUserId().equals(sendUserId)) {
+                    this.messageMapperWriter.updateApplicationMessage(sendUserId, recipientUserId);
+                }
             }
         }
         messageVO3.setMessageInfoVO2s(messageInfoVO2s);
@@ -429,16 +430,16 @@ public class MessageServiceImpl implements MessageService {
         if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
             if (StrUtil.isNotEmpty(weChatId)) {
                 if (StrUtil.isEmpty(content)) {
-                    content = "好的，我的微信号是：" + weChatId;
+                    content = "已同意添加微信，我的微信号是：|" + weChatId;
                 } else {
-                    content = content + "。好的，我的微信号是：" + weChatId;
+                    content = content + "已同意添加微信，我的微信号是：|" + weChatId;
                 }
             } else {
                 if (StrUtil.isNotEmpty(weixinId)) {
                     if (StrUtil.isEmpty(content)) {
-                        content = "好的，我的微信号是：" + weixinId;
+                        content = "已同意添加微信，我的微信号是：|" + weixinId;
                     } else {
-                        content = content + "。好的，我的微信号是：" + weixinId;
+                        content = content + "已同意添加微信，我的微信号是：|" + weixinId;
                     }
                 }
             }
@@ -467,10 +468,8 @@ public class MessageServiceImpl implements MessageService {
         this.messageMapperWriter.insertSelective(message);
         String title = applicantsUser.getNickName();//消息标题
         PushBean pushBean = new PushBean();
-        Map<String, String> extras = new HashMap<>();
         pushBean.setAlert(content);
         pushBean.setTitle(title);
-        pushBean.setExtras(extras);
         this.jiGuangPushService.pushAndroid(pushBean, sendUser.getReserveColumn03());
         value = "OK";
         data.put(key, value);

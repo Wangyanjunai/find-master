@@ -43,10 +43,6 @@ public class Commodity {
         this.commoditySales = commoditySales;
     }
 
-    public static void main(String[] args) {
-        commodityList.stream().sorted(Comparator.comparing(Commodity::getCommoditySales).reversed()).limit(3).collect(Collectors.toList()).stream().forEach(System.out::println);
-    }
-
     public String getCommodityName() {
         return commodityName;
     }
@@ -78,6 +74,10 @@ public class Commodity {
                 ", commodityPrice=" + commodityPrice +
                 ", commoditySales=" + commoditySales +
                 '}';
+    }
+    
+    public static void main(String[] args) {
+        commodityList.stream().sorted(Comparator.comparing(Commodity::getCommoditySales).reversed()).limit(3).collect(Collectors.toList()).stream().forEach(System.out::println);
     }
 }
 
