@@ -194,7 +194,7 @@ public class MessageServiceImpl implements MessageService {
                     Message message1 = messageList.get(0);
                     messageInfoVO.setMessageId(message1.getId());
                     messageInfoVO.setContent(message1.getContent());
-                    messageInfoVO.setCreateTime(message1.getCreateTime());
+//                    messageInfoVO.setCreateTime(message1.getCreateTime());
                     Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
                     messageInfoVO.setCount(count);
                 }
