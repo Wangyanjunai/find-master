@@ -257,7 +257,7 @@ public class MessageServiceImpl implements MessageService {
                 if (message.getSendUserId().equals(sendUserId) && message.getRecipientUserId().equals(recipientUserId)) {
                     message.setUpdateTime(new Date());
                     message.setStatus(MessageStatusEnum.READ.getStatus());
-                    this.messageMapperWriter.updateByPrimaryKey(message);
+                    this.messageMapperWriter.updateByPrimaryKeySelective(message);
                 }
             }
         }
