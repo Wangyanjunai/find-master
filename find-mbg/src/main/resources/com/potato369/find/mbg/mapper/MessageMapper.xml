@@ -626,14 +626,6 @@
           AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
           AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
     </update>
-    <update id="updateApplicationMessage2" parameterType="java.lang.Long">
-        UPDATE `message`
-        SET `status`      = '1',
-            `update_time` = NOW()
-        WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
-          AND `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
-          AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
-    </update>
     <update id="updateLikesMessage" parameterType="java.lang.Long">
         UPDATE `message`
         SET `status`      = '1',
