@@ -254,9 +254,9 @@ public class MessageServiceImpl implements MessageService {
                     messageInfoVO2.setContent(message.getContent());
                     messageInfoVO2s.add(messageInfoVO2);
                 }
-                message.setUpdateTime(new Date());
-                message.setStatus(MessageStatusEnum.READ.getStatus());
                 if (message.getSendUserId().equals(sendUserId) && message.getRecipientUserId().equals(recipientUserId)) {
+                    message.setUpdateTime(new Date());
+                    message.setStatus(MessageStatusEnum.READ.getStatus());
                     this.messageMapperWriter.updateByPrimaryKey(message);
                 }
             }
