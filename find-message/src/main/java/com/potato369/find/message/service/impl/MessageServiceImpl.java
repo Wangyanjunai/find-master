@@ -173,6 +173,7 @@ public class MessageServiceImpl implements MessageService {
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         if (messages != null && !messages.isEmpty()) {
             for (Message message : messages) {
+            	User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
                 MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
                 List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
                 if (messageList != null && !messageList.isEmpty()) {
@@ -181,9 +182,16 @@ public class MessageServiceImpl implements MessageService {
                     if (MessageType2Enum.REPLY.getCodeStr().equals(message1.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
                     	messageInfoVO.setFlag(1);
                     	String contentString = message1.getContent();
-                    	String[] strings = StrUtil.split(contentString, "|");
-                    	messageInfoVO.setContent(strings[0]);
-                    	messageInfoVO.setWeixinId(strings[1]);
+                    	if (StrUtil.contains(contentString, "|")) {
+                    		String[] strings = StrUtil.split(contentString, "|");
+                        	messageInfoVO.setContent(strings[0]);
+                        	messageInfoVO.setWeixinId(strings[1]);
+						} else {
+							messageInfoVO.setContent(contentString);
+							if (user != null) {
+								messageInfoVO.setWeixinId(user.getWeixinId());
+							}
+						}
 					} else {
 						messageInfoVO.setFlag(0);
 						messageInfoVO.setContent(message1.getContent());
@@ -198,7 +206,6 @@ public class MessageServiceImpl implements MessageService {
                     Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
                     messageInfoVO.setCount(count);
                 }
-                User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
                 if (user != null) {
                     messageInfoVO.setUserId(user.getId());
                     messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
