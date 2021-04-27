@@ -214,27 +214,52 @@
                  like_record.`create_time` DESC
     </select>
     <select id="selectApplicationMessageRecordByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT `id`,
-               `send_user_id`,
-               `recipient_user_id`,
-               `content`,
-               `send_mode`,
-               `status`,
-               `create_time`
-        FROM `message`
-        WHERE `reserve_column01` <![CDATA[ !=]]> 'likes'
-          AND `recipient_user_id` = #{userId, jdbcType=BIGINT}
-          AND `reserve_column03` = '0'
-        GROUP BY `send_user_id`
+        SELECT a.`id`,
+               a.`send_user_id`,
+               a.`recipient_user_id`,
+               a.`send_mode`,
+               a.`status`,
+               a.`create_time`
+        FROM (
+                 SELECT `id`,
+                        `send_user_id`,
+                        `recipient_user_id`,
+                        `send_mode`,
+                        `status`,
+                        `create_time`
+                 FROM `message`
+                 WHERE `reserve_column01` <![CDATA[ !=]]> 'likes'
+                   AND `recipient_user_id` = #{userId, jdbcType=BIGINT}
+                   AND `reserve_column03` = '0'
+                 UNION ALL
+                 SELECT `id`,
+                        `send_user_id`,
+                        `recipient_user_id`,
+                        `send_mode`,
+                        `status`,
+                        `create_time`
+                 FROM `message`
+                 WHERE `reserve_column01` <![CDATA[ !=]]> 'likes'
+                   AND `send_user_id` = #{userId, jdbcType=BIGINT}
+                   AND `reserve_column03` = '0'
+             ) AS a
+        GROUP BY a.`recipient_user_id`,
+                 a.`send_user_id`
+        ORDER BY a.`create_time` DESC,
+                 a.`id` DESC
     </select>
     <select id="selectApplicationMessageRecordByUserId2" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         SELECT a.`id`,
+               a.`recipient_user_id`,
+               a.`send_user_id`,
                a.`content`,
                a.create_time,
                a.`reserve_column01`,
                a.`reserve_column02`
         FROM (
                  SELECT `id`,
+                        `recipient_user_id`,
+                        `send_user_id`,
                         `content`,
                         `create_time`,
                         `reserve_column01`,
@@ -246,6 +271,8 @@
                    AND `reserve_column03` = '0'
                  UNION ALL
                  SELECT `id`,
+                        `recipient_user_id`,
+                        `send_user_id`,
                         `content`,
                         `create_time`,
                         `reserve_column01`,
@@ -256,7 +283,8 @@
                    AND `reserve_column01` <![CDATA[ !=]]> 'likes'
                    AND `reserve_column03` = '0'
              ) AS a
-        ORDER BY a.`create_time` DESC
+        GROUP BY a.`recipient_user_id`, a.`send_user_id`
+        ORDER BY a.`create_time` DESC, a.`id` DESC
     </select>
 
     <select id="selectMessageRecordCount" parameterType="java.lang.Long" resultType="java.lang.Long">
