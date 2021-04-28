@@ -291,23 +291,23 @@
         SELECT COUNT(0)
         FROM (
                  SELECT `id`,
-                        `status`,
-                        `create_time`
+                        `send_user_id`,
+                        `status`
                  FROM `message`
                  WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
                    AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
                  UNION ALL
                  SELECT `id`,
-                        `status`,
-                        `create_time`
+                        `send_user_id`,
+                        `status`
                  FROM `message`
                  WHERE `reserve_column01`<![CDATA[ !=]]> 'likes'
                    AND `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
              ) AS a
         WHERE a.`status` = '0'
-        ORDER BY a.`id`, a.`create_time`
+          AND a.`send_user_id` <![CDATA[ !=]]> #{sendUserId, jdbcType=BIGINT}
     </select>
 
     <select id="selectMessageRecord" parameterType="java.lang.Long" resultMap="BaseResultMap">

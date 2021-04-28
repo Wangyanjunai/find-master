@@ -253,7 +253,11 @@ public class MessageServiceImpl implements MessageService {
                                     + sendUser.getId()
                                     + "/"
                                     + sendUser.getHeadIcon());
-                    messageInfoVO2.setContent(message.getContent());
+                    String content = message.getContent();
+                    if (StrUtil.isNotEmpty(content) && StrUtil.contains(content, "|")) {
+                        content = StrUtil.removeAll(content, "|");
+                    }
+                    messageInfoVO2.setContent(content);
                     messageInfoVO2s.add(messageInfoVO2);
                 }
                 if (message.getSendUserId().equals(sendUserId) && message.getRecipientUserId().equals(recipientUserId)) {
