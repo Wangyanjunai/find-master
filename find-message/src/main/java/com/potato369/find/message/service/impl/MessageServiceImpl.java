@@ -175,17 +175,18 @@ public class MessageServiceImpl implements MessageService {
         if (messages != null && !messages.isEmpty()) {
         	Long count = 0L;
             for (Message message : messages) {
-                User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+                User user1 = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
                 MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
-                if (user != null) {
-                    messageInfoVO.setUserId(user.getId());
+                messageInfoVO.setUserId(message.getSendUserId());
+                messageInfoVO.setUserId2(message.getRecipientUserId());
+                if (user1 != null) {
                     messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
                             + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
                             + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                            + user.getId()
+                            + user1.getId()
                             + "/"
-                            + user.getHeadIcon());
-                    messageInfoVO.setNickname(user.getNickName());
+                            + user1.getHeadIcon());
+                    messageInfoVO.setNickname(user1.getNickName());
                 }
                 List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
                 if (messageList != null && !messageList.isEmpty()) {
@@ -200,8 +201,8 @@ public class MessageServiceImpl implements MessageService {
                             messageInfoVO.setWeixinId(strings[1]);
                         } else {
                             messageInfoVO.setContent(contentString);
-                            if (user != null) {
-                                messageInfoVO.setWeixinId(user.getWeixinId());
+                            if (user1 != null) {
+                                messageInfoVO.setWeixinId(user1.getWeixinId());
                             }
                         }
                     } else {
