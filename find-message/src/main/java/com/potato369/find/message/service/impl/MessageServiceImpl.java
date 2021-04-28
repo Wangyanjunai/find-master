@@ -175,19 +175,23 @@ public class MessageServiceImpl implements MessageService {
         if (messages != null && !messages.isEmpty()) {
         	Long count = 0L;
             for (Message message : messages) {
+                User user1 = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+                User user2 = this.userMapperReader.selectByPrimaryKey(message.getRecipientUserId());
                 MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
                 messageInfoVO.setUserId(message.getSendUserId());
-                messageInfoVO.setUserId2(message.getRecipientUserId());
-                User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
-                if (user != null) {
-                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                            + user.getId()
-                            + "/"
-                            + user.getHeadIcon());
-                    messageInfoVO.setNickname(user.getNickName());
-                }
+                if (message.getSendUserId().equals(userId) && user2 != null) {
+                	messageInfoVO.setUserId(user2.getId());
+				} else {
+					if (user1 != null) {
+	                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+	                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+	                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+	                            + user1.getId()
+	                            + "/"
+	                            + user1.getHeadIcon());
+	                    messageInfoVO.setNickname(user1.getNickName());
+	                }
+				}
                 List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
                 if (messageList != null && !messageList.isEmpty()) {
                     Message message1 = messageList.get(0);
@@ -201,8 +205,8 @@ public class MessageServiceImpl implements MessageService {
                             messageInfoVO.setWeixinId(strings[1]);
                         } else {
                             messageInfoVO.setContent(contentString);
-                            if (user != null) {
-                                messageInfoVO.setWeixinId(user.getWeixinId());
+                            if (user1 != null) {
+                                messageInfoVO.setWeixinId(user1.getWeixinId());
                             }
                         }
                     } else {

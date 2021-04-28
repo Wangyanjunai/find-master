@@ -23,11 +23,6 @@ public class MessageInfoVO {
     @JSONField(name = "userId")
     @JsonProperty(value = "userId")
     private Long userId;
-    
-    //申请加微信消息接收者用户id
-    @JSONField(name = "userId2")
-    @JsonProperty(value = "userId2")
-    private Long userId2;
 
     //申请加微信消息发送者用户头像
     @JSONField(name = "head")
