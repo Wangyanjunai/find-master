@@ -176,18 +176,29 @@ public class MessageServiceImpl implements MessageService {
         	Long count = 0L;
             for (Message message : messages) {
                 User user1 = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+                User user2 = this.userMapperReader.selectByPrimaryKey(message.getRecipientUserId());
                 MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
                 messageInfoVO.setUserId(message.getSendUserId());
                 messageInfoVO.setUserId2(message.getRecipientUserId());
-                if (user1 != null) {
-                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                if (message.getSendUserId().equals(userId) && user2 != null) {
+                	messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
                             + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
                             + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                            + user1.getId()
+                            + user2.getId()
                             + "/"
-                            + user1.getHeadIcon());
-                    messageInfoVO.setNickname(user1.getNickName());
-                }
+                            + user2.getHeadIcon());
+                    messageInfoVO.setNickname(user2.getNickName());
+				} else {
+					if (user1 != null) {
+	                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+	                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+	                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+	                            + user1.getId()
+	                            + "/"
+	                            + user1.getHeadIcon());
+	                    messageInfoVO.setNickname(user1.getNickName());
+	                }
+				}
                 List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
                 if (messageList != null && !messageList.isEmpty()) {
                     Message message1 = messageList.get(0);
