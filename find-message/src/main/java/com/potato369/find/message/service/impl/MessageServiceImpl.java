@@ -1,6 +1,7 @@
 package com.potato369.find.message.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.potato369.find.common.api.CommonResult;
@@ -172,9 +173,20 @@ public class MessageServiceImpl implements MessageService {
         List<Message> messages = listPageInfo.getList();
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         if (messages != null && !messages.isEmpty()) {
+        	Long count = 0L;
             for (Message message : messages) {
                 User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
                 MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
+                if (user != null) {
+                    messageInfoVO.setUserId(user.getId());
+                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                            + user.getId()
+                            + "/"
+                            + user.getHeadIcon());
+                    messageInfoVO.setNickname(user.getNickName());
+                }
                 List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
                 if (messageList != null && !messageList.isEmpty()) {
                     Message message1 = messageList.get(0);
@@ -203,21 +215,19 @@ public class MessageServiceImpl implements MessageService {
                         messageInfoVO.setType("0");
                     }
                     messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                    Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
+                    List<Message> messageList2 = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
+                    for (Message message2 : messageList2) {
+						if (message2.getRecipientUserId().equals(userId)) {
+							count ++;
+						} else {
+							count = 0L;
+						}
+					}
                     messageInfoVO.setCount(count);
-                }
-                if (user != null) {
-                    messageInfoVO.setUserId(user.getId());
-                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                            + user.getId()
-                            + "/"
-                            + user.getHeadIcon());
-                    messageInfoVO.setNickname(user.getNickName());
                 }
                 messageInfoVOs.add(messageInfoVO);
             }
+            count = 0L;
         }
         messageVO.setMessageInfoVOs(messageInfoVOs);
         messageVO.setTotalCount(listPageInfo.getTotal());
