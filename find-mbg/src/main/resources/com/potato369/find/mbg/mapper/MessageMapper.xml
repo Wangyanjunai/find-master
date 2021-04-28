@@ -307,7 +307,7 @@
                    AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
              ) AS a
         WHERE a.`status` = '0'
-          AND a.`send_user_id` <![CDATA[ !=]]> #{sendUserId, jdbcType=BIGINT}
+          AND a.`send_user_id` <![CDATA[ !=]]> #{recipientUserId, jdbcType=BIGINT}
     </select>
 
     <select id="selectMessageRecord" parameterType="java.lang.Long" resultMap="BaseResultMap">
