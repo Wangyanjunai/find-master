@@ -173,52 +173,50 @@ public class MessageServiceImpl implements MessageService {
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         if (messages != null && !messages.isEmpty()) {
             for (Message message : messages) {
-                if (!message.getSendUserId().equals(userId)) {
-                    User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
-                    MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
-                    List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
-                    if (messageList != null && !messageList.isEmpty()) {
-                        Message message1 = messageList.get(0);
-                        messageInfoVO.setMessageId(message1.getId());
-                        if (MessageType2Enum.REPLY.getCodeStr().equals(message1.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
-                            messageInfoVO.setFlag(1);
-                            String contentString = message1.getContent();
-                            if (StrUtil.contains(contentString, "|")) {
-                                String[] strings = StrUtil.split(contentString, "|");
-                                messageInfoVO.setContent(strings[0]);
-                                messageInfoVO.setWeixinId(strings[1]);
-                            } else {
-                                messageInfoVO.setContent(contentString);
-                                if (user != null) {
-                                    messageInfoVO.setWeixinId(user.getWeixinId());
-                                }
-                            }
+                User user = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+                MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
+                List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
+                if (messageList != null && !messageList.isEmpty()) {
+                    Message message1 = messageList.get(0);
+                    messageInfoVO.setMessageId(message1.getId());
+                    if (MessageType2Enum.REPLY.getCodeStr().equals(message1.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
+                        messageInfoVO.setFlag(1);
+                        String contentString = message1.getContent();
+                        if (StrUtil.contains(contentString, "|")) {
+                            String[] strings = StrUtil.split(contentString, "|");
+                            messageInfoVO.setContent(strings[0]);
+                            messageInfoVO.setWeixinId(strings[1]);
                         } else {
-                            messageInfoVO.setFlag(0);
-                            messageInfoVO.setContent(message1.getContent());
+                            messageInfoVO.setContent(contentString);
+                            if (user != null) {
+                                messageInfoVO.setWeixinId(user.getWeixinId());
+                            }
                         }
-                        if (MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
-                            messageInfoVO.setType("1");
-                        }
-                        if (MessageTypeEnum.Commons.getMessage().equals(message1.getReserveColumn01())) {
-                            messageInfoVO.setType("0");
-                        }
-                        messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                        Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
-                        messageInfoVO.setCount(count);
+                    } else {
+                        messageInfoVO.setFlag(0);
+                        messageInfoVO.setContent(message1.getContent());
                     }
-                    if (user != null) {
-                        messageInfoVO.setUserId(user.getId());
-                        messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                                + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                                + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                                + user.getId()
-                                + "/"
-                                + user.getHeadIcon());
-                        messageInfoVO.setNickname(user.getNickName());
+                    if (MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
+                        messageInfoVO.setType("1");
                     }
-                    messageInfoVOs.add(messageInfoVO);
+                    if (MessageTypeEnum.Commons.getMessage().equals(message1.getReserveColumn01())) {
+                        messageInfoVO.setType("0");
+                    }
+                    messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
+                    Long count = this.messageMapperReader.selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
+                    messageInfoVO.setCount(count);
                 }
+                if (user != null) {
+                    messageInfoVO.setUserId(user.getId());
+                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                            + user.getId()
+                            + "/"
+                            + user.getHeadIcon());
+                    messageInfoVO.setNickname(user.getNickName());
+                }
+                messageInfoVOs.add(messageInfoVO);
             }
         }
         messageVO.setMessageInfoVOs(messageInfoVOs);
