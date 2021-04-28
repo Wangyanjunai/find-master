@@ -181,17 +181,16 @@ public class MessageServiceImpl implements MessageService {
                 messageInfoVO.setUserId(message.getSendUserId());
                 if (message.getSendUserId().equals(userId) && user2 != null) {
                 	messageInfoVO.setUserId(user2.getId());
-				} else {
-					if (user1 != null) {
-	                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-	                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-	                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-	                            + user1.getId()
-	                            + "/"
-	                            + user1.getHeadIcon());
-	                    messageInfoVO.setNickname(user1.getNickName());
-	                }
 				}
+                if (user1 != null) {
+                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                            + user1.getId()
+                            + "/"
+                            + user1.getHeadIcon());
+                    messageInfoVO.setNickname(user1.getNickName());
+                }
                 List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
                 if (messageList != null && !messageList.isEmpty()) {
                     Message message1 = messageList.get(0);
