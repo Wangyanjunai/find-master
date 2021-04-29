@@ -7,6 +7,7 @@ import com.potato369.find.common.vo.MessageVO3;
 import com.potato369.find.portal.feign.MessageService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Map;
 @Api(value = "message-controller", tags = "消息模块Restful API")
 @RestController
 @RequestMapping("/message")
-//@Profile({"dev", "dev2", "test", "prod"})
+@Profile({"dev", "dev2", "test"})
 public class MessageController {
 
     private MessageService messageFeignClient;
