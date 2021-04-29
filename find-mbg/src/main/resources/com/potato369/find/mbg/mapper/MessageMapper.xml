@@ -214,45 +214,15 @@
                  like_record.`create_time` DESC
     </select>
     <select id="selectApplicationMessageRecordByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT b.`id`,
-               b.`send_user_id`,
-               b.`recipient_user_id`,
-               b.`send_mode`,
-               b.`status`,
-               b.`create_time`
-        FROM (SELECT a.`id`,
-                     a.`send_user_id`,
-                     a.`recipient_user_id`,
-                     a.`send_mode`,
-                     a.`status`,
-                     a.`create_time`
-              FROM (
-                       SELECT `id`,
-                              `send_user_id`,
-                              `recipient_user_id`,
-                              `send_mode`,
-                              `status`,
-                              `create_time`
-                       FROM `message`
-                       WHERE `reserve_column01` <![CDATA[ !=]]> 'likes'
-                         AND `recipient_user_id` = #{userId, jdbcType=BIGINT}
-                         AND `reserve_column03` = '0'
-                       UNION ALL
-                       SELECT `id`,
-                              `send_user_id`,
-                              `recipient_user_id`,
-                              `send_mode`,
-                              `status`,
-                              `create_time`
-                       FROM `message`
-                       WHERE `reserve_column01` <![CDATA[ !=]]> 'likes'
-                         AND `send_user_id` = #{userId, jdbcType=BIGINT}
-                         AND `reserve_column03` = '0'
-                   ) AS a
-              GROUP BY a.`send_user_id`,  a.`recipient_user_id`
-              ORDER BY a.`create_time` DESC, a.`id` DESC) AS b
-        GROUP BY b.`send_user_id`, b.`recipient_user_id`, b.`create_time` 
-        ORDER BY b.`create_time` DESC, b.`id` DESC
+        SELECT `id`,
+               `send_user_id`,
+               `recipient_user_id`,
+               `create_time`
+        FROM `message`
+        WHERE `reserve_column01` <![CDATA[ !=]]> 'likes'
+          AND `recipient_user_id` = #{userId, jdbcType=BIGINT}
+          AND `reserve_column03` = '0'
+        GROUP BY `recipient_user_id`
     </select>
     <select id="selectApplicationMessageRecordByUserId2" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         SELECT a.`id`,
