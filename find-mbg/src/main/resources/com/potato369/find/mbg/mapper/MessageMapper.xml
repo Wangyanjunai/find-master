@@ -275,6 +275,19 @@
                    AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
                    AND `reserve_column01` <![CDATA[ !=]]> 'likes'
                    AND `reserve_column03` = '0'
+                 UNION ALL
+                 SELECT `id`,
+                        `recipient_user_id`,
+                        `send_user_id`,
+                        `content`,
+                        `create_time`,
+                        `reserve_column01`,
+                        `reserve_column02`
+                 FROM `message`
+                 WHERE `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
+                   AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
+                   AND `reserve_column01` <![CDATA[ !=]]> 'likes'
+                   AND `reserve_column03` = '0'
              ) AS a
         GROUP BY a.`send_user_id`
         ORDER BY a.`create_time` DESC, a.`id` DESC
