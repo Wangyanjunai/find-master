@@ -209,7 +209,13 @@ public class MessageServiceImpl implements MessageService {
                         if (StrUtil.contains(contentString, "|")) {
                             String[] strings = StrUtil.split(contentString, "|");
                             messageInfoVO.setContent(strings[0]);
-                            messageInfoVO.setWeixinId(strings[1]);
+                            if (StrUtil.isEmpty(strings[1])) {
+                                if (user1 != null) {
+                                    messageInfoVO.setWeixinId(user1.getWeixinId());
+                                }
+                            } else {
+                                messageInfoVO.setWeixinId(strings[1]);
+                            }
                         } else {
                             messageInfoVO.setContent(contentString);
                             if (user1 != null) {
