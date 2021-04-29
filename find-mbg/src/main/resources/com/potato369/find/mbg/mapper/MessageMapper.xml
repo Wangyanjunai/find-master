@@ -224,17 +224,6 @@
           AND `reserve_column03` = '0'
         GROUP BY `recipient_user_id`
     </select>
-    <select id="selectApplicationMessageRecordByUserId1" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT `id`,
-               `send_user_id`,
-               `recipient_user_id`,
-               `create_time`
-        FROM `message`
-        WHERE `reserve_column01` <![CDATA[ !=]]> 'likes'
-          AND `send_user_id` = #{userId, jdbcType=BIGINT}
-          AND `reserve_column03` = '0'
-        GROUP BY `send_user_id`
-    </select>
     <select id="selectApplicationMessageRecordByUserId2" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         SELECT a.`id`,
                a.`recipient_user_id`,
