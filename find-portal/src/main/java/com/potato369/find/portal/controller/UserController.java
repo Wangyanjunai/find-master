@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +23,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-@Profile({"dev", "dev2", "test"})
+//@Profile({"dev", "dev2", "test", "prod"})
 public class UserController {
 	
 	private UserService userFeignClient;
