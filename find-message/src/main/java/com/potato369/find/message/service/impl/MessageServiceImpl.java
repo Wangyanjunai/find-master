@@ -175,22 +175,36 @@ public class MessageServiceImpl implements MessageService {
         if (messages != null && !messages.isEmpty()) {
         	Long count = 0L;
             for (Message message : messages) {
-                User user1 = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
-                User user2 = this.userMapperReader.selectByPrimaryKey(message.getRecipientUserId());
                 MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
-                messageInfoVO.setUserId(message.getSendUserId());
-                if (message.getSendUserId().equals(userId) && user2 != null) {
-                	messageInfoVO.setUserId(user2.getId());
+                //消息发送者
+                User user1 = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+                //消息接收者
+                User user2 = this.userMapperReader.selectByPrimaryKey(message.getRecipientUserId());
+                if (message.getSendUserId().equals(userId)) {
+                	if (user2 != null) {
+                		//消息接收者用户id
+		                messageInfoVO.setUserId(user2.getId());
+	                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+	                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+	                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+	                            + user2.getId()
+	                            + "/"
+	                            + user2.getHeadIcon());
+	                    messageInfoVO.setNickname(user2.getNickName());
+					}
+				} else {
+					if (user1 != null) {
+						//消息发送者用户id
+		                messageInfoVO.setUserId(user1.getId());
+	                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+	                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+	                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+	                            + user1.getId()
+	                            + "/"
+	                            + user1.getHeadIcon());
+	                    messageInfoVO.setNickname(user1.getNickName());
+	                }
 				}
-                if (user1 != null) {
-                    messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                            + user1.getId()
-                            + "/"
-                            + user1.getHeadIcon());
-                    messageInfoVO.setNickname(user1.getNickName());
-                }
                 List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
                 if (messageList != null && !messageList.isEmpty()) {
                     Message message1 = messageList.get(0);
