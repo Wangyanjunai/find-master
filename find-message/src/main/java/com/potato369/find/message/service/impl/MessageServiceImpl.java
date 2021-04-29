@@ -465,14 +465,14 @@ public class MessageServiceImpl implements MessageService {
                 if (StrUtil.isEmpty(content)) {
                     content = "已同意添加微信，我的微信号是：|" + weChatId;
                 } else {
-                    content = content + "|" + weChatId;
+                    content = content + "|";
                 }
             } else {
                 if (StrUtil.isNotEmpty(weixinId)) {
                     if (StrUtil.isEmpty(content)) {
                         content = "已同意添加微信，我的微信号是：|" + weixinId;
                     } else {
-                        content = content + "|" + weixinId;
+                        content = content + "|";
                     }
                 }
             }
