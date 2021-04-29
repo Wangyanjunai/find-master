@@ -166,20 +166,11 @@ public class MessageServiceImpl implements MessageService {
     public MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
-        final PageInfo<Message> listPageInfo;
-        PageInfo<Message> listPageInfo1;
-        final PageInfo<Message> listPageInfo01 = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectApplicationMessageRecordByUserId(userId));
-        listPageInfo1 = listPageInfo01;
-        List<Message> messages = listPageInfo01.getList();
-        if (messages != null && messages.isEmpty()) {
-            final PageInfo<Message> listPageInfo02 = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectApplicationMessageRecordByUserId1(userId));
-            messages = listPageInfo02.getList();
-            listPageInfo1 = listPageInfo02;
-        }
-        listPageInfo = listPageInfo1;
+        final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectApplicationMessageRecordByUserId(userId));
+        List<Message> messages = listPageInfo.getList();
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         if (messages != null && !messages.isEmpty()) {
-            Long count = 0L;
+            long count = 0L;
             for (Message message : messages) {
                 MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
                 // 消息发送者
