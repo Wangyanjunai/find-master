@@ -17,7 +17,6 @@ public interface MessageService {
      * 根据用户id查询某个用户最新一条被点赞的消息记录
      *
      * @param userId 消息接收者用户id
-     * @return
      */
     LikesMessageVO selectLikesMessage(Long userId);
 
@@ -27,7 +26,6 @@ public interface MessageService {
      * @param userId   消息接收者用户id
      * @param pageNum  当前页码
      * @param pageSize 每页数量
-     * @return
      */
     MessageVO selectNotLikesMessage(Long userId, Integer pageNum, Integer pageSize);
 
@@ -37,7 +35,6 @@ public interface MessageService {
      * @param userId   消息接收者用户id
      * @param pageNum  当前页码
      * @param pageSize 每页数量
-     * @return
      */
     MessageVO2 selectLikesMessage(Long userId, Integer pageNum, Integer pageSize);
 
@@ -47,7 +44,6 @@ public interface MessageService {
      * @param userId   消息接收者用户id
      * @param pageNum  当前页码
      * @param pageSize 每页数量
-     * @return
      */
     MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize);
 
@@ -64,8 +60,8 @@ public interface MessageService {
     /**
      * 发送消息
      *
-     * @param sendUserId      发送者用户id
-     * @param recipientUserId 接收者用户id
+     * @param sendUserId      消息发送者用户id
+     * @param recipientUserId 消息接收者用户id
      * @param messageId       消息id
      * @param content         消息内容
      */
@@ -87,19 +83,8 @@ public interface MessageService {
     CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId);
 
     /**
-     * <pre>
-     * deleteLikes方法的作用：
-     * 描述方法适用条件：
-     * 描述方法的执行流程：
-     * 描述方法的使用方法：
-     * 描述方法的注意事项：
-     *
-     * @author admin
-     * @param recipientUserId
-     * @param messageId
-     * @return
-     * @since JDK 1.6
-     * </pre>
+     * @param recipientUserId 消息接收者用户id
+     * @param messageId       消息id
      */
 
     CommonResult<Map<String, Object>> deleteLikes(Long recipientUserId, Long messageId);
@@ -107,11 +92,12 @@ public interface MessageService {
     /**
      * 被申请者回复申请者申请加微信消息记录
      *
-     * @param applicantsUserId 被申请者用户id
+     * @param applicantsUserId 被申请加微信者用户id
+     * @param applicantUserId  申请加微信者用户id
      * @param messageId        回复的消息id
      * @param type             回复类型，0->拒绝，1->同意
      * @param content          回复的消息内容
      * @param weChatId         回复的微信id
      */
-    CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type, String content, String weChatId);
+    CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long applicantUserId, Long messageId, String type, String content, String weChatId);
 }

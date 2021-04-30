@@ -34,8 +34,6 @@ public interface MessageMapper {
 
     List<Message> selectApplicationMessageRecordByUserId(@Param("userId") Long userId);
 
-    List<Message> selectApplicationMessageRecordByUserId1(@Param("userId") Long userId);
-
     List<Message> selectApplicationMessageRecordByUserId2(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 
     List<Message> selectUnReadLikesMessageRecord(@Param("userId") Long userId);
@@ -45,6 +43,8 @@ public interface MessageMapper {
     List<Message> selectMessageRecord(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 
     int countByUserId(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId, @Param("messageId") Long messageId);
+
+    long countByUserId2(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId, @Param("userId") Long userId);
 
     int updateByExampleSelective(@Param("record") Message record, @Param("example") MessageExample example);
 

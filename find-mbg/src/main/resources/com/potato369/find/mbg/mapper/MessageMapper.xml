@@ -263,6 +263,25 @@
         ORDER BY a.`create_time` DESC, a.`id` DESC
     </select>
 
+    <select id="countByUserId2" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select (select count(0)
+                from `message`
+                where `send_user_id` = #{sendUserId, jdbcType=BIGINT}
+                  and recipient_user_id = #{recipientUserId, jdbcType=BIGINT}
+                  and `reserve_column01` <![CDATA[ !=]]> 'likes'
+                  and `reserve_column03` = '0'
+                  and `status` = '0'
+                  and `send_user_id` <![CDATA[ !=]]> #{userId, jdbcType=BIGINT}) +
+               (select count(0)
+                from message
+                where `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
+                  and `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
+                  and `reserve_column01` <![CDATA[ !=]]> 'likes'
+                  and `reserve_column03` = '0'
+                  and `status` = '0'
+                  and `send_user_id` <![CDATA[ !=]]> #{userId, jdbcType=BIGINT}) as count
+    </select>
+
     <select id="selectMessageRecordCount" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT a.`id`,
                a.`send_user_id`,

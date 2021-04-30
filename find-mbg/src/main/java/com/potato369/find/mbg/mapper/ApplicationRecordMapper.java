@@ -21,11 +21,14 @@ public interface ApplicationRecordMapper {
 
     ApplicationRecord selectByPrimaryKey(Long id);
 
+    List<ApplicationRecord> selectByUserId(@Param("userId") Long userId);
+
     int selectCountDataByUserId(@Param("userId") Long userId);
 
     /**
      * 查询申请加微信者当天申请加被申请加微信者次数
-     * @param applicantUserId 申请加微信者用户id
+     *
+     * @param applicantUserId  申请加微信者用户id
      * @param applicantsUserId 被申请加微信者用户id
      * @return
      */

@@ -8,6 +8,7 @@ import com.potato369.find.common.api.ResultCode;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.vo.*;
+import com.potato369.find.mbg.mapper.ApplicationRecordMapper;
 import com.potato369.find.mbg.mapper.MessageMapper;
 import com.potato369.find.mbg.mapper.UserMapper;
 import com.potato369.find.mbg.model.*;
@@ -33,6 +34,8 @@ public class MessageServiceImpl implements MessageService {
 
     private UserMapper userMapperWriter;
 
+    private ApplicationRecordMapper applicationRecordMapperReader;
+
     private ProjectUrlProps projectUrlProps;
 
     private JiGuangPushService jiGuangPushService;
@@ -55,6 +58,11 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     public void setUserMapperWriter(UserMapper userMapperWriter) {
         this.userMapperWriter = userMapperWriter;
+    }
+
+    @Autowired
+    public void setApplicationRecordMapperReader(ApplicationRecordMapper applicationRecordMapperReader) {
+        this.applicationRecordMapperReader = applicationRecordMapperReader;
     }
 
     @Autowired
@@ -166,44 +174,29 @@ public class MessageServiceImpl implements MessageService {
     public MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
-        final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectApplicationMessageRecordByUserId(userId));
-        List<Message> messages = listPageInfo.getList();
+        final PageInfo<ApplicationRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
+                .doSelectPageInfo(() -> this.applicationRecordMapperReader.selectByUserId(userId));
+        List<ApplicationRecord> applicationRecordList = listPageInfo.getList();
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
-        if (messages != null && !messages.isEmpty()) {
-            long count = 0L;
-            for (Message message : messages) {
+        if (applicationRecordList != null && !applicationRecordList.isEmpty()) {
+            for (ApplicationRecord applicationRecord : applicationRecordList) {
+                long sendUserId = applicationRecord.getUserId();
+                long recipientUserId = Long.parseLong(applicationRecord.getReserveColumn01());
                 MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
                 // 消息发送者
-                User user1 = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+                User user1 = this.userMapperReader.selectByPrimaryKey(sendUserId);
                 // 消息接收者
-                User user2 = this.userMapperReader.selectByPrimaryKey(message.getRecipientUserId());
-                if (message.getSendUserId().equals(userId)) {
-                    if (user2 != null) {
-                        // 消息接收者用户id
-                        messageInfoVO.setUserId(user2.getId());
-                        messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                                + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                                + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) + user2.getId() + "/"
-                                + user2.getHeadIcon());
-                        messageInfoVO.setNickname(user2.getNickName());
-                    }
+                User user2 = this.userMapperReader.selectByPrimaryKey(recipientUserId);
+                if (sendUserId == userId) {
+                    getUserInfo(user2, messageInfoVO);
                 } else {
-                    if (user1 != null) {
-                        // 消息发送者用户id
-                        messageInfoVO.setUserId(user1.getId());
-                        messageInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                                + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                                + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) + user1.getId() + "/"
-                                + user1.getHeadIcon());
-                        messageInfoVO.setNickname(user1.getNickName());
-                    }
+                    getUserInfo(user1, messageInfoVO);
                 }
-                List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(message.getSendUserId(), message.getRecipientUserId());
+                List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(sendUserId, recipientUserId);
                 if (messageList != null && !messageList.isEmpty()) {
                     Message message1 = messageList.get(0);
                     messageInfoVO.setMessageId(message1.getId());
-                    if (MessageType2Enum.REPLY.getCodeStr().equals(message1.getReserveColumn02())
-                            && MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
+                    if (MessageType2Enum.REPLY.getCodeStr().equals(message1.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
                         messageInfoVO.setFlag(1);
                         String contentString = message1.getContent();
                         if (StrUtil.contains(contentString, "|")) {
@@ -232,26 +225,29 @@ public class MessageServiceImpl implements MessageService {
                     if (MessageTypeEnum.Commons.getMessage().equals(message1.getReserveColumn01())) {
                         messageInfoVO.setType("0");
                     }
-                    messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                    List<Message> messageList2 = this.messageMapperReader
-                            .selectMessageRecordCount(message.getSendUserId(), message.getRecipientUserId());
-                    for (Message message2 : messageList2) {
-                        if (message2.getRecipientUserId().equals(userId)) {
-                            count++;
-                        } else {
-                            count = 0L;
-                        }
-                    }
-                    messageInfoVO.setCount(count);
+                    messageInfoVO.setCreateTime(DateUtil.fomateDate(applicationRecord.getCreateTime(), DateUtil.sdfTimeCNFmt));
+                    messageInfoVO.setCount(this.messageMapperReader.countByUserId2(sendUserId, recipientUserId, userId));
                 }
                 messageInfoVOs.add(messageInfoVO);
             }
-            count = 0L;
         }
         messageVO.setMessageInfoVOs(messageInfoVOs);
         messageVO.setTotalCount(listPageInfo.getTotal());
         messageVO.setTotalPage(listPageInfo.getPages());
         return messageVO;
+    }
+
+    private void getUserInfo(User user, MessageInfoVO messageInfoVO) {
+        if (user != null) {
+            messageInfoVO.setUserId(user.getId());
+            messageInfoVO.setHead(
+                    StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                            + user.getId() + "/"
+                            + user.getHeadIcon());
+            messageInfoVO.setNickname(user.getNickName());
+        }
     }
 
     @Override
@@ -285,8 +281,7 @@ public class MessageServiceImpl implements MessageService {
                     messageInfoVO2.setContent(content);
                     messageInfoVO2s.add(messageInfoVO2);
                 }
-                if (message.getSendUserId().equals(sendUserId)
-                        && message.getRecipientUserId().equals(recipientUserId)) {
+                if (message.getSendUserId().equals(sendUserId) && message.getRecipientUserId().equals(recipientUserId)) {
                     message.setUpdateTime(new Date());
                     message.setStatus(MessageStatusEnum.READ.getStatus());
                     this.messageMapperWriter.updateByPrimaryKeySelective(message);
@@ -353,11 +348,10 @@ public class MessageServiceImpl implements MessageService {
             pushBean.setTitle(title);
             pushBean.setExtras(extras);
             this.jiGuangPushService.pushAndroid(pushBean, recipientUser.getReserveColumn03());
-            return CommonResult.success(data, msg);
         } else {
             msg = "发送消息失败。";
-            return CommonResult.failed(data, ResultCode.FAILED);
         }
+        return CommonResult.success(data, msg);
     }
 
     @Override
@@ -426,8 +420,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional
-    public CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type,
-                                                               String content, String weChatId) {
+    public CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long applicantUserId, Long messageId, String type, String content, String weChatId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String key = "REPLY";
         String value = "ERROR";
@@ -437,32 +430,11 @@ public class MessageServiceImpl implements MessageService {
             data.put(key, value);
             return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
         }
-        // 判断回复的消息记录是否存在
-        Message messageRecord = this.messageMapperReader.selectByPrimaryKey(messageId);
-        if (messageRecord == null) {
-            data.put(key, value);
-            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_IS_NOT_EXIST);
-        }
-        // 判断回复的消息记录是否被删除状态
-        if (MessageStatus2Enum.YES.getStatus().equals(messageRecord.getReserveColumn03())) {
-            data.put(key, value);
-            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_STATUS2_IS_VALID);
-        }
-        // 判断这条消息记录是否已经回复了
-        MessageExample messageExample = new MessageExample();
-        messageExample.setOrderByClause("id ASC, create_time ASC");
-        messageExample.createCriteria().andReserveColumn04EqualTo(String.valueOf(messageRecord.getId()));
-        List<Message> messageList = this.messageMapperReader.selectByExample(messageExample);
-        if (messageList != null && !messageList.isEmpty()) {
-            data.put(key, value);
-            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_IS_VALID);
-        }
         // 判断申请加微信者用户信息是否存在，或者回复消息发送者用户信息是否存在
-        Long sendUserId = messageRecord.getSendUserId();
-        User sendUser = this.userMapperReader.selectByPrimaryKey(sendUserId);
-        if (sendUser == null) {
+        User applicantUser = this.userMapperReader.selectByPrimaryKey(applicantUserId);
+        if (applicantUser == null) {
             data.put(key, value);
-            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_EXIST);
+            return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
         }
         // 如果是同意申请加微信
         String weixinId = applicantsUser.getWeixinId();// 数据库获取到的被申请人的微信号
@@ -471,14 +443,23 @@ public class MessageServiceImpl implements MessageService {
                 if (StrUtil.isEmpty(content)) {
                     content = "已同意添加微信，我的微信号是：|" + weChatId;
                 } else {
-                    content = content + "|";
+                    if (content.contains(weChatId)) {
+                        content = content + "|";
+                    } else {
+                        content = content + "|" + weChatId;
+                    }
+
                 }
             } else {
                 if (StrUtil.isNotEmpty(weixinId)) {
                     if (StrUtil.isEmpty(content)) {
                         content = "已同意添加微信，我的微信号是：|" + weixinId;
                     } else {
-                        content = content + "|";
+                        if (content.contains(weixinId)) {
+                            content = content + "|";
+                        } else {
+                            content = content + "|" + weChatId;
+                        }
                     }
                 }
             }
@@ -495,8 +476,8 @@ public class MessageServiceImpl implements MessageService {
             }
         }
         Message message = new Message();
-        message.setSendUserId(messageRecord.getRecipientUserId());
-        message.setRecipientUserId(messageRecord.getSendUserId());
+        message.setSendUserId(applicantsUserId);
+        message.setRecipientUserId(applicantUserId);
         message.setContent(content);
         message.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
         message.setStatus(MessageStatusEnum.UNREAD.getStatus());
@@ -509,7 +490,7 @@ public class MessageServiceImpl implements MessageService {
         PushBean pushBean = new PushBean();
         pushBean.setAlert(content);
         pushBean.setTitle(title);
-        this.jiGuangPushService.pushAndroid(pushBean, sendUser.getReserveColumn03());
+        this.jiGuangPushService.pushAndroid(pushBean, applicantUser.getReserveColumn03());
         value = "OK";
         data.put(key, value);
         return CommonResult.success(data, ResultCode.SUCCESS.getMessage());
