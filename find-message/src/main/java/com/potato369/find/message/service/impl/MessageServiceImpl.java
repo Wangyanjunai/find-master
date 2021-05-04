@@ -180,12 +180,12 @@ public class MessageServiceImpl implements MessageService {
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         if (applicationRecordList != null && !applicationRecordList.isEmpty()) {
             for (ApplicationRecord applicationRecord : applicationRecordList) {
-                long sendUserId = applicationRecord.getUserId();
-                long recipientUserId = Long.parseLong(applicationRecord.getReserveColumn01());
+                long sendUserId = applicationRecord.getUserId();//申请加微信者
+                long recipientUserId = Long.parseLong(applicationRecord.getReserveColumn01());//被申请加微信者
                 MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
-                // 消息发送者
+                // 消息发送者（申请加微信者）
                 User user1 = this.userMapperReader.selectByPrimaryKey(sendUserId);
-                // 消息接收者
+                // 消息接收者（被申请加微信者）
                 User user2 = this.userMapperReader.selectByPrimaryKey(recipientUserId);
                 if (sendUserId == userId) {
                     getUserInfo(user2, messageInfoVO);
@@ -420,7 +420,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional
-    public CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long applicantUserId, Long messageId, String type, String content, String weChatId) {
+    public CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type, String content, String weChatId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String key = "REPLY";
         String value = "ERROR";
@@ -430,7 +430,17 @@ public class MessageServiceImpl implements MessageService {
             data.put(key, value);
             return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
         }
+        //申请加微信消息记录
+        Message messageOld = this.messageMapperReader.selectByPrimaryKey(messageId);
+        if (messageOld == null) {
+            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_IS_NOT_EXIST);
+        }
+        if (!messageOld.getRecipientUserId().equals(applicantsUserId)) {
+            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_VALID);
+        }
+
         // 判断申请加微信者用户信息是否存在，或者回复消息发送者用户信息是否存在
+        Long applicantUserId = messageOld.getSendUserId();
         User applicantUser = this.userMapperReader.selectByPrimaryKey(applicantUserId);
         if (applicantUser == null) {
             data.put(key, value);
@@ -448,7 +458,6 @@ public class MessageServiceImpl implements MessageService {
                     } else {
                         content = content + "|" + weChatId;
                     }
-
                 }
             } else {
                 if (StrUtil.isNotEmpty(weixinId)) {

@@ -72,6 +72,8 @@ public enum ResultCode implements IErrorCode {
     REPLY_MESSAGE_WEIXIN_ID_IS_EMPTY(653, "回复同意消息微信Id为空。"),
 
     REPLY_MESSAGE_USER_IS_NOT_EXIST(654, "申请加微信者用户信息不存在。"),
+
+    REPLY_MESSAGE_USER_IS_NOT_VALID(655, "回复申请加微信者用户信息非法。"),
     ;
 
     private int code;

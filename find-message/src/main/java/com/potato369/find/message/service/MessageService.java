@@ -93,11 +93,10 @@ public interface MessageService {
      * 被申请者回复申请者申请加微信消息记录
      *
      * @param applicantsUserId 被申请加微信者用户id
-     * @param applicantUserId  申请加微信者用户id
      * @param messageId        回复的消息id
      * @param type             回复类型，0->拒绝，1->同意
      * @param content          回复的消息内容
      * @param weChatId         回复的微信id
      */
-    CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long applicantUserId, Long messageId, String type, String content, String weChatId);
+    CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type, String content, String weChatId);
 }

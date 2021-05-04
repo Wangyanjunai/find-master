@@ -137,19 +137,17 @@ public class MessageController {
      * 被申请者回复申请者申请加微信消息记录接口
      *
      * @param applicantsUserId 被申请加微信者用户id
-     * @param applicantUserId  申请加微信者用户id
      * @param messageId        回复的消息id
      * @param type             回复类型，0->拒绝，1->同意
      * @param content          回复的消息内容
      */
     @ApiOperation(value = "被申请者回复申请者申请加微信消息记录接口", notes = "被申请者回复申请者申请加微信消息记录接口")
-    @PutMapping(value = "/{id1}/{id2}/reply.do")
-    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id1") @ApiParam(name = "id1", value = "被申请加微信者用户id", required = true, example = "1") Long applicantsUserId,
-                                                   @PathVariable(name = "id2") @ApiParam(name = "id2", value = "申请加微信者用户id", required = true, example = "1") Long applicantUserId,
+    @PutMapping(value = "/{id}/reply.do")
+    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") @ApiParam(name = "id", value = "被申请加微信者用户id", required = true, example = "1") Long applicantsUserId,
                                                    @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "回复的消息id", required = true, example = "0") Long messageId,
                                                    @RequestParam(name = "type") @ApiParam(name = "type", value = "回复类型，0->拒绝，1->同意", required = true, example = "0") String type,
                                                    @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "回复的消息内容", example = "非常抱歉，我不想加你！") String content,
                                                    @RequestParam(name = "weChatId", required = false) @ApiParam(name = "weChatId", value = "回复的微信Id", example = "wx123456789") String weChatId) {
-        return this.messageService.replyApplications(applicantsUserId, applicantUserId, messageId, type, content, weChatId);
+        return this.messageService.replyApplications(applicantsUserId, messageId, type, content, weChatId);
     }
 }
