@@ -30,9 +30,8 @@ public interface MessageService {
                                       @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                       @RequestParam(name = "pageSize", required = false, defaultValue = "20") Integer pageSize);
 
-    @PostMapping(value = "/find/v1/message/{id1}/{id2}/send.do")
-    CommonResult<Map<String, Object>> send(@PathVariable(name = "id1") Long sendUserId,
-                                           @PathVariable(name = "id2") Long recipientUserId,
+    @PostMapping(value = "/find/v1/message/{id}/send.do")
+    CommonResult<Map<String, Object>> send(@PathVariable(name = "id") Long sendUserId,
                                            @RequestParam(name = "messageId") Long messageId,
                                            @RequestParam(name = "content") String content);
 

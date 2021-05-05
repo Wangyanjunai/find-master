@@ -583,17 +583,16 @@ public class MessageController {
     }
 
     /**
-     * @api {post} http://8.135.36.45:8084/find/message/{id1}/{id2}/send 发送消息接口
+     * @api {post} http://8.135.36.45:8084/find/message/{id}/send 发送消息接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 发送消息
      * @apiParam (接口请求参数) {long} id1 发送者用户id
-     * @apiParam (接口请求参数) {long} id2 接收者用户id
      * @apiParam (接口请求参数) {long} messageId 回复的消息id
      * @apiParam (接口请求参数) {string} content 消息内容
      * @apiParamExample {json} 请求示例 发送消息
      * HTTP/1.1 OK
-     * curl -v -X POST "http://8.135.36.45:8084/find/message/60/29/send?messageId=25&content=可以申请加你的微信吗？" -H "accept: application/json"
+     * curl -v -X POST "http://8.135.36.45:8084/find/message/60/send?messageId=25&content=可以申请加你的微信吗？" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -611,7 +610,7 @@ public class MessageController {
      * }
      * @apiParamExample {json} 请求示例 回复消息
      * HTTP/1.1 OK
-     * curl -v -X POST "http://8.135.36.45:8084/find/message/60/29/send?messageId=2&content=可以申请加你的微信吗？" -H "accept: application/json"
+     * curl -v -X POST "http://8.135.36.45:8084/find/message/29/send?messageId=2&content=可以申请加你的微信吗？" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -658,14 +657,13 @@ public class MessageController {
      * "msg": "服务器未响应！"
      * }
      */
-    @PostMapping(value = "/{id1}/{id2}/send")
+    @PostMapping(value = "/{id}/send")
     @ApiOperation(value = "发送消息接口", notes = "发送消息接口")
     public CommonResult<Map<String, Object>> send(
-            @PathVariable(name = "id1") @ApiParam(name = "id1", value = "消息发送者用户id", required = true, example = "1") Long sendUserId,
-            @PathVariable(name = "id2") @ApiParam(name = "id2", value = "消息接收者用户id", required = true, example = "2") Long recipientUserId,
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "消息发送者用户id", required = true, example = "1") Long sendUserId,
             @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息id", required = true, example = "3") Long messageId,
             @RequestParam(name = "content") @ApiParam(name = "content", value = "消息内容", required = true, example = "可以聊聊吗？") String content) {
-        return this.messageFeignClient.send(sendUserId, recipientUserId, messageId, content);
+        return this.messageFeignClient.send(sendUserId, messageId, content);
     }
 
     /**

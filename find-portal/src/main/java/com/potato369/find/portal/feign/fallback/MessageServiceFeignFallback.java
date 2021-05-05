@@ -33,7 +33,7 @@ public class MessageServiceFeignFallback implements MessageService {
     }
 
     @Override
-    public CommonResult<Map<String, Object>> send(Long sendUserId, Long recipientUserId, Long messageId, String content) {
+    public CommonResult<Map<String, Object>> send(Long sendUserId, Long messageId, String content) {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }

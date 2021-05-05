@@ -58,14 +58,14 @@ public class MessageController {
     }
 
     /**
-     * 发送的消息记录
+     * 消息记录
      *
-     * @param sendUserId      消息发送者用户id
-     * @param recipientUserId 消息收者用户id
+     * @param sendUserId      发送者用户id
+     * @param recipientUserId 接收者用户id
      * @param pageNum         当前页码，默认：1
      * @param pageSize        每页数量，默认：20
      */
-    @ApiOperation(value = "发送的消息记录接口", notes = "发送的消息记录接口")
+    @ApiOperation(value = "消息记录接口", notes = "消息记录接口")
     @GetMapping(value = "/{id1}/{id2}/messages.do")
     public CommonResult<MessageVO3> messages(
             @PathVariable(name = "id1") @ApiParam(name = "id1", value = "消息发送者用户id", required = true, example = "1") Long sendUserId,
@@ -78,25 +78,23 @@ public class MessageController {
     /**
      * 发送消息
      *
-     * @param sendUserId      发送者用户id
-     * @param recipientUserId 收者用户id
-     * @param messageId       消息id
-     * @param content         消息内容
+     * @param sendUserId 发送者用户id
+     * @param messageId  消息id
+     * @param content    消息内容
      */
     @ApiOperation(value = "发送消息接口", notes = "发送消息接口")
-    @PostMapping(value = "/{id1}/{id2}/send.do")
+    @PostMapping(value = "/{id}/send.do")
     public CommonResult<Map<String, Object>> send(
-            @PathVariable(name = "id1") @ApiParam(name = "id1", value = "发送者用户id", required = true, example = "1") Long sendUserId,
-            @PathVariable(name = "id2") @ApiParam(name = "id2", value = "接收者用户id", required = true, example = "2") Long recipientUserId,
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "发送者用户id", required = true, example = "1") Long sendUserId,
             @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息id", required = true, example = "3") Long messageId,
             @RequestParam(name = "content") @ApiParam(name = "content", value = "消息内容", required = true, example = "可以聊聊吗？") String content) {
-        return this.messageService.sendMessageAndPush(sendUserId, recipientUserId, messageId, content);
+        return this.messageService.sendMessageAndPush(sendUserId, messageId, content);
     }
 
     /**
      * 标记全部消息已读
      *
-     * @param recipientUserId 消息收者用户id
+     * @param recipientUserId 收者用户id
      */
     @ApiOperation(value = "标记全部消息已读接口", notes = "标记全部消息已读接口")
     @PutMapping(value = "/{id}/updateAll.do")

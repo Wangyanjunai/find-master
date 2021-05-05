@@ -296,8 +296,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional
-    public CommonResult<Map<String, Object>> sendMessageAndPush(Long sendUserId, Long recipientUserId, Long messageId,
-                                                                String content) {
+    public CommonResult<Map<String, Object>> sendMessageAndPush(Long sendUserId, Long messageId, String content) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("SEND", "ERROR");
         String msg;
@@ -310,7 +309,7 @@ public class MessageServiceImpl implements MessageService {
         if (MessageStatus2Enum.YES.getStatus().equals(messageRecord2.getReserveColumn03())) {
             return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_STATUS2_IS_VALID);
         }
-        // 判断这条消息记录是否已经回复了
+        // 判断这条消息记录是否已经被回复了
         MessageExample messageExample = new MessageExample();
         messageExample.setOrderByClause("id ASC, create_time ASC");
         messageExample.createCriteria().andReserveColumn04EqualTo(String.valueOf(messageRecord2.getId()));
@@ -318,25 +317,25 @@ public class MessageServiceImpl implements MessageService {
         if (messageList != null && !messageList.isEmpty()) {
             return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_IS_VALID);
         }
-
+        User sendUser = this.userMapperReader.selectByPrimaryKey(sendUserId);
+        if (sendUser == null) {
+            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_EXIST);
+        }
+        User recipientUser = this.userMapperReader.selectByPrimaryKey(messageRecord2.getRecipientUserId());
+        if (recipientUser == null) {
+            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_EXIST);
+        }
         Message messageRecord = new Message();
         messageRecord.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
         messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());
         messageRecord.setSendUserId(sendUserId);
-        messageRecord.setRecipientUserId(recipientUserId);
+        messageRecord.setRecipientUserId(messageRecord.getRecipientUserId());
         messageRecord.setContent(content);
         messageRecord.setReserveColumn01(MessageTypeEnum.Commons.getMessage());
         messageRecord.setReserveColumn02(MessageType2Enum.REPLY.getCodeStr());
         messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
         messageRecord.setReserveColumn04(String.valueOf(messageId));
-        User sendUser = this.userMapperReader.selectByPrimaryKey(sendUserId);
-        if (sendUser == null) {
-            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_EXIST);
-        }
-        User recipientUser = this.userMapperReader.selectByPrimaryKey(recipientUserId);
-        if (recipientUser == null) {
-            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_EXIST);
-        }
+
         int b = this.messageMapperWriter.insertSelective(messageRecord);
         if (b > 0) {
             data.put("SEND", "OK");
