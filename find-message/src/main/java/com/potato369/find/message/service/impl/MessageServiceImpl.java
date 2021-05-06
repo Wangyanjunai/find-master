@@ -327,14 +327,17 @@ public class MessageServiceImpl implements MessageService {
         if (recipientUser == null) {
             return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_EXIST);
         }
+        long recipientUserId = 0L;
         if (recipientUser.getId().equals(sendUser.getId())) {
-            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_IS_OWNER);
+            recipientUserId = messageRecord2.getSendUserId();
+        } else {
+            recipientUserId = messageRecord2.getRecipientUserId();
         }
         Message messageRecord = new Message();
         messageRecord.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
         messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());
         messageRecord.setSendUserId(sendUserId);
-        messageRecord.setRecipientUserId(recipientUser.getId());
+        messageRecord.setRecipientUserId(recipientUserId);
         messageRecord.setContent(content);
         messageRecord.setReserveColumn01(MessageTypeEnum.Commons.getMessage());
         messageRecord.setReserveColumn02(MessageType2Enum.REPLY.getCodeStr());
