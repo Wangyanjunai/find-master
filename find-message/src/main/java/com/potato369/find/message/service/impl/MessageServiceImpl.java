@@ -337,7 +337,6 @@ public class MessageServiceImpl implements MessageService {
         messageRecord.setReserveColumn02(MessageType2Enum.REPLY.getCodeStr());
         messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
         messageRecord.setReserveColumn04(String.valueOf(messageId));
-
         int b = this.messageMapperWriter.insertSelective(messageRecord);
         if (b > 0) {
             data.put("SEND", "OK");
@@ -494,7 +493,7 @@ public class MessageServiceImpl implements MessageService {
         message.setReserveColumn01(MessageTypeEnum.Applications.getMessage());
         message.setReserveColumn02(MessageType2Enum.REPLY.getCodeStr());
         message.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
-        message.setReserveColumn04(String.valueOf(messageId));
+        message.setReserveColumn04(String.valueOf(0));
         this.messageMapperWriter.insertSelective(message);
         String title = applicantsUser.getNickName();// 消息标题
         PushBean pushBean = new PushBean();
