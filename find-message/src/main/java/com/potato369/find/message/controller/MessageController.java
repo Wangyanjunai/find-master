@@ -44,7 +44,7 @@ public class MessageController {
     /**
      * 被点赞的动态内容消息记录
      *
-     * @param userId   用户id
+     * @param userId   被点赞的动态所属的用户id
      * @param pageNum  当前页码，默认：1
      * @param pageSize 每页数量，默认：20
      */

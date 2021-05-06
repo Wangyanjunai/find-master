@@ -496,7 +496,7 @@
         SET `reserve_column03` = '1'
         WHERE `reserve_column01`<![CDATA[ =]]> 'applications'
           AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
-          AND `send_user_id`<![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
+          AND `id`<![CDATA[ =]]> #{messageId, jdbcType=BIGINT}
     </update>
     <update id="updateByExampleSelective" parameterType="map">
         update message

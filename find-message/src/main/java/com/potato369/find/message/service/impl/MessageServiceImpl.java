@@ -16,6 +16,7 @@ import com.potato369.find.message.config.bean.PushBean;
 import com.potato369.find.message.config.props.ProjectUrlProps;
 import com.potato369.find.message.service.JiGuangPushService;
 import com.potato369.find.message.service.MessageService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
+@Slf4j
 public class MessageServiceImpl implements MessageService {
 
     private MessageMapper messageMapperReader;
@@ -377,12 +379,12 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional
-    public CommonResult<Map<String, Object>> delete(Long recipientUserId, Long sendUserId) {
+    public CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String key = "DELETE";
         String value = "ERROR";
         String msg = "删除消息记录失败。";
-        int count = this.messageMapperWriter.deleteApplicationMessageRecordByUserId(recipientUserId, sendUserId);
+        int count = this.messageMapperWriter.deleteApplicationMessageRecordByUserId(recipientUserId, messageId);
         if (count > 0) {
             value = "OK";
             msg = "删除消息记录成功。";

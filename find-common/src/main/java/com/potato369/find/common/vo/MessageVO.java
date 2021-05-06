@@ -38,7 +38,7 @@ public class MessageVO {
     private Integer totalPage;
 
     /**
-     * 未读申请加微信消息数据
+     * 最新未读消息数据
      */
     @JSONField(name = "list")
     @JsonProperty(value = "list")
