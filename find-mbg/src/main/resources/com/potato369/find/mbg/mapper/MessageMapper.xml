@@ -259,7 +259,7 @@
                    AND `reserve_column01` <![CDATA[ !=]]> 'likes'
                    AND `reserve_column03` = '0'
              ) AS a
-        GROUP BY a.`send_user_id`
+        GROUP BY a.`send_user_id`, a.`create_time`, a.`id`
         ORDER BY a.`create_time` DESC, a.`id` DESC
     </select>
 
