@@ -894,7 +894,7 @@ public class DynamicController {
             applicationRecord.setUserId(applicantUserId);//申请加微信者用户id
             applicationRecord.setReserveColumn01(String.valueOf(applicantsUserId));//被申请加微信者用户id
             if (StrUtil.isEmpty(message)) {
-                message = "你好呀";
+                message = "申请加您的微信，麻烦通过一下，谢谢！";
             }
             int rowResult = this.applicationRecordService.saveApplicationRecord(dynamicInfo, applicationRecord, message);
             String msg;
