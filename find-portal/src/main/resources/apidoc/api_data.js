@@ -3807,29 +3807,22 @@ define({ "api": [
     ]
   },
   {
-    "type": "post",
-    "url": "http://8.135.36.45:8084/find/message/{id1}/{id2}/send",
-    "title": "发送消息接口",
-    "version": "1.0.0",
-    "group": "消息模块API",
-    "name": "发送消息",
-    "parameter": {
-      "fields": {
-        "接口请求参数": [
-          {
-            "group": "接口请求参数",
-            "type": "long",
-            "optional": false,
-            "field": "id1",
-            "description": "<p>发送者用户id</p>"
-          },
-          {
-            "group": "接口请求参数",
-            "type": "long",
-            "optional": false,
-            "field": "id2",
-            "description": "<p>接收者用户id</p>"
-          },
+      "type": "post",
+      "url": "http://8.135.36.45:8084/find/message/{id}/send",
+      "title": "发送消息接口",
+      "version": "1.0.0",
+      "group": "消息模块API",
+      "name": "发送消息",
+      "parameter": {
+          "fields": {
+              "接口请求参数": [
+                  {
+                      "group": "接口请求参数",
+                      "type": "long",
+                      "optional": false,
+                      "field": "id",
+                      "description": "<p>发送者用户id</p>"
+                  },
           {
             "group": "接口请求参数",
             "type": "long",
@@ -3847,16 +3840,16 @@ define({ "api": [
         ]
       },
       "examples": [
-        {
-          "title": "请求示例 发送消息",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/29/send?messageId=25&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
-          "type": "json"
-        },
-        {
-          "title": "请求示例 回复消息",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/29/send?messageId=2&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
-          "type": "json"
-        }
+          {
+              "title": "请求示例 发送消息",
+              "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/send?messageId=25&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+              "type": "json"
+          },
+          {
+              "title": "请求示例 回复消息",
+              "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/29/send?messageId=2&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+              "type": "json"
+          }
       ]
     },
     "success": {
@@ -4015,7 +4008,7 @@ define({ "api": [
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/message/{id1}/{id2}/send"
+          "url": "http://8.135.36.45:8084/find/message/{id}/send"
       }
     ]
   },
