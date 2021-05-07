@@ -344,7 +344,7 @@ public class MessageServiceImpl implements MessageService {
         messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
         messageRecord.setReserveColumn04(String.valueOf(messageId));
         int b = this.messageMapperWriter.insertSelective(messageRecord);
-        if (b > 0 && !sendUserId.equals(recipientUserId)) {
+        if (b > 0) {
             data.put("SEND", "OK");
             msg = "发送消息成功。";
             String title = sendUser.getNickName();// 消息标题
@@ -353,7 +353,7 @@ public class MessageServiceImpl implements MessageService {
             pushBean.setAlert(content);
             pushBean.setTitle(title);
             pushBean.setExtras(extras);
-            this.jiGuangPushService.pushAndroid(pushBean, recipientUser.getReserveColumn03());
+            this.jiGuangPushService.pushAndroid(pushBean, sendUser.getReserveColumn03());
         } else {
             msg = "发送消息失败。";
         }
