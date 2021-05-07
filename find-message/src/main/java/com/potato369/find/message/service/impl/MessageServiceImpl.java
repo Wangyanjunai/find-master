@@ -232,8 +232,8 @@ public class MessageServiceImpl implements MessageService {
                 messageInfoVOs.add(messageInfoVO);
             }
         }
-		messageInfoVOs = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
-        messageVO.setMessageInfoVOs(messageInfoVOs);
+        List<MessageInfoVO> messageInfoVOs2 = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
+        messageVO.setMessageInfoVOs(messageInfoVOs2);
         messageVO.setTotalCount(listPageInfo.getTotal());
         messageVO.setTotalPage(listPageInfo.getPages());
         return messageVO;
