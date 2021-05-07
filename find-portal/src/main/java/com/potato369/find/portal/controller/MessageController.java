@@ -76,7 +76,7 @@ public class MessageController {
      * "nickname":"尘埃",
      * "content2":"需要加您的微信?",
      * "count2":5,
-     *	"createTime": "2021年04月22日 16:40:40",
+     * "createTime": "2021年04月22日 16:40:40",
      * "type":1,
      * "flag":0
      * },
@@ -87,7 +87,7 @@ public class MessageController {
      * "nickname":"蓝梧桐",
      * "content2":"需要加您的微信?",
      * "count2":5,
-     *	"createTime": "2021年04月22日 16:40:40",
+     * "createTime": "2021年04月22日 16:40:40",
      * "type":1,
      * "flag":0
      * },
@@ -98,7 +98,7 @@ public class MessageController {
      * "nickname":"长安",
      * "content2":"需要加您的微信?",
      * "count2":6
-     *	"createTime": "2021年04月22日 16:40:40",
+     * "createTime": "2021年04月22日 16:40:40",
      * "type":1,
      * "flag":0
      * },
@@ -109,7 +109,7 @@ public class MessageController {
      * "nickname":"弦雨晴",
      * "content2":"需要加您的微信?",
      * "count2":6
-     *	"createTime": "2021年04月22日 16:40:40",
+     * "createTime": "2021年04月22日 16:40:40",
      * "type":1,
      * "flag":0
      * },
@@ -119,23 +119,23 @@ public class MessageController {
      * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
      * "nickname":"阿萌",
      * "content2":"需要加您的微信?",
-     *	"createTime": "2021年04月22日 16:40:40",
+     * "createTime": "2021年04月22日 16:40:40",
      * "count2":1
      * "type":1,
      * "flag":0
      * },
-     	{
-            "messageId": 86,
-            "userId": 137,
-            "head": "http://8.135.36.45:8000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg",
-            "nickname": "jack",
-            "content2": "已同意添加微信，我的微信号是：",
-            "createTime": "2021年04月22日 16:40:40",
-            "count2": 2,
-            "type": "1",
-            "flag": 1,
-            "weixinId": "wxnaza12345681"
-       	}
+     * {
+     * "messageId": 86,
+     * "userId": 137,
+     * "head": "http://8.135.36.45:8000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg",
+     * "nickname": "jack",
+     * "content2": "已同意添加微信，我的微信号是：",
+     * "createTime": "2021年04月22日 16:40:40",
+     * "count2": 2,
+     * "type": "1",
+     * "flag": 1,
+     * "weixinId": "wxnaza12345681"
+     * }
      * ]
      * }
      * }
@@ -858,15 +858,15 @@ public class MessageController {
     }
 
     /**
-     * @api {put} http://8.135.36.45:8084/find/message/{id}/reply 回复申请加微信聊天消息接口
+     * @api {put} http://8.135.36.45:8084/find/message/{id}/reply 回复申请加微信消息记录接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
-     * @apiName 回复申请加微信聊天消息
-     * @apiParam (接口请求参数) {long} id 回复被申请加微信用户id
-     * @apiParam (接口请求参数) {long} messageId 回复的消息id
-     * @apiParam (接口请求参数) {string={"0", "1"}} type 回复类型，0->拒绝，1->同意
-     * @apiParam (接口请求参数) {string} [content] 回复的消息内容
-     * @apiParam (接口请求参数) {string} [weChatId] 回复的微信id
+     * @apiName 回复申请加微信消息记录
+     * @apiParam (接口请求参数) {long} id 用户id
+     * @apiParam (接口请求参数) {long} messageId 消息id
+     * @apiParam (接口请求参数) {string={"0", "1"}} type 类型，0->拒绝，1->同意
+     * @apiParam (接口请求参数) {string} [content] 消息内容
+     * @apiParam (接口请求参数) {string} [weChatId] 微信id
      * @apiParamExample {json} 请求示例 回复申请加微信消息（拒绝）
      * HTTP/1.1 OK
      * curl -v -X PUT "http://8.135.36.45:8084/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！" -H "accept: application/json"
@@ -934,9 +934,9 @@ public class MessageController {
      * "msg": "服务器未响应！"
      * }
      */
-    @ApiOperation(value = "回复申请加微信聊天消息接口", notes = "回复申请加微信聊天消息接口")
+    @ApiOperation(value = "回复申请加微信消息记录接口", notes = "回复申请加微信消息记录接口")
     @PutMapping(value = "/{id}/reply")
-    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") @ApiParam(name = "id", value = "被申请加微信者用户id", required = true, example = "1") Long applicantsUserId,
+    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long applicantsUserId,
                                                    @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "回复的消息id", required = true, example = "2") Long messageId,
                                                    @RequestParam(name = "type") @ApiParam(name = "type", value = "回复类型，0->拒绝，1->同意", required = true, example = "0") String type,
                                                    @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "回复的消息内容", example = "非常抱歉，我不想加你！") String content,

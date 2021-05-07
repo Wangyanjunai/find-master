@@ -76,6 +76,8 @@ public enum ResultCode implements IErrorCode {
     REPLY_MESSAGE_USER_IS_NOT_VALID(655, "回复申请加微信者用户信息非法。"),
 
     REPLY_MESSAGE_IS_OWNER(656, "不能给自己回复消息。"),
+
+    REPLY_APPLICATIONS_MESSAGE_IS_VALID(657, "不能自己回复自己加别人的微信的申请。"),
     ;
 
     private int code;
