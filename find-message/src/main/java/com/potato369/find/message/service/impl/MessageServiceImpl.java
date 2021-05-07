@@ -333,6 +333,10 @@ public class MessageServiceImpl implements MessageService {
         } else {
             recipientUserId = messageRecord2.getRecipientUserId();
         }
+        User recipientUser1 = this.userMapperReader.selectByPrimaryKey(recipientUserId);
+        if (recipientUser1 == null) {
+            return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_EXIST);
+        }
         Message messageRecord = new Message();
         messageRecord.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
         messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());
@@ -353,7 +357,7 @@ public class MessageServiceImpl implements MessageService {
             pushBean.setAlert(content);
             pushBean.setTitle(title);
             pushBean.setExtras(extras);
-            this.jiGuangPushService.pushAndroid(pushBean, sendUser.getReserveColumn03());
+            this.jiGuangPushService.pushAndroid(pushBean, recipientUser1.getReserveColumn03());
         } else {
             msg = "发送消息失败。";
         }
