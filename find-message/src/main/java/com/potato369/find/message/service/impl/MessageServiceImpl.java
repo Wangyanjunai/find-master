@@ -225,7 +225,7 @@ public class MessageServiceImpl implements MessageService {
                     if (MessageTypeEnum.Commons.getMessage().equals(message1.getReserveColumn01())) {
                         messageInfoVO.setType("0");
                     }
-                    messageInfoVO.setCreateTime(DateUtil.fomateDate(applicationRecord.getCreateTime(), DateUtil.sdfTimeCNFmt));
+                    messageInfoVO.setCreateTime(DateUtil.fomateDate(message1.getCreateTime(), DateUtil.sdfTimeCNFmt));
                     messageInfoVO.setCount(this.messageMapperReader.countByUserId2(sendUserId, recipientUserId, userId));
                 }
                 messageInfoVOs.add(messageInfoVO);
