@@ -118,7 +118,6 @@
         from `application_record`
         where `reserve_column01` = #{userId,jdbcType=BIGINT}
         group by `user_id`
-        order by `create_time` DESC
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
