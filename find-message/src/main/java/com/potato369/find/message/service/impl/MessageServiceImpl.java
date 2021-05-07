@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -231,6 +232,7 @@ public class MessageServiceImpl implements MessageService {
                 messageInfoVOs.add(messageInfoVO);
             }
         }
+		messageInfoVOs = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
         messageVO.setMessageInfoVOs(messageInfoVOs);
         messageVO.setTotalCount(listPageInfo.getTotal());
         messageVO.setTotalPage(listPageInfo.getPages());
