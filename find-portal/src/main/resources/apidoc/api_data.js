@@ -3067,7 +3067,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"likes\":{\n\"content1\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"count1\":5\n},\n\"totalCount\":5,\n\"totalPage\":1,\n\"list\":[\n{\n\"messageId\": 7,\n\"userId\":60,\n\"head\":\"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\"nickname\":\"尘埃\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\t\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 2,\n\"userId\":62,\n\"head\":\"http://8.135.36.45:8000/find/img/head/62/02.png\",\n\"nickname\":\"蓝梧桐\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\t\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 3,\n\"userId\":61,\n\"head\":\"http://8.135.36.45:8000/find/img/head/61/01.png\",\n\"nickname\":\"长安\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\t\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 4,\n\"userId\":71,\n\"head\":\"http://8.135.36.45:8000/find/img/head/71/07.png\",\n\"nickname\":\"弦雨晴\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\t\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 5,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"nickname\":\"阿萌\",\n\"content2\":\"需要加您的微信?\",\n\t\"createTime\": \"2021年04月22日 16:40:40\",\n\"count2\":1\n\"type\":1,\n\"flag\":0\n},\n     \t{\n            \"messageId\": 86,\n            \"userId\": 137,\n            \"head\": \"http://8.135.36.45:8000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg\",\n            \"nickname\": \"jack\",\n            \"content2\": \"已同意添加微信，我的微信号是：\",\n            \"createTime\": \"2021年04月22日 16:40:40\",\n            \"count2\": 2,\n            \"type\": \"1\",\n            \"flag\": 1,\n            \"weixinId\": \"wxnaza12345681\"\n       \t}\n]\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"likes\":{\n\"content1\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"count1\":5\n},\n\"totalCount\":5,\n\"totalPage\":1,\n\"list\":[\n{\n\"messageId\": 7,\n\"userId\":60,\n\"head\":\"http://8.135.36.45:8000/find/img/head/60/01.png\",\n\"nickname\":\"尘埃\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 2,\n\"userId\":62,\n\"head\":\"http://8.135.36.45:8000/find/img/head/62/02.png\",\n\"nickname\":\"蓝梧桐\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 3,\n\"userId\":61,\n\"head\":\"http://8.135.36.45:8000/find/img/head/61/01.png\",\n\"nickname\":\"长安\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 4,\n\"userId\":71,\n\"head\":\"http://8.135.36.45:8000/find/img/head/71/07.png\",\n\"nickname\":\"弦雨晴\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 5,\n\"userId\":70,\n\"head\":\"http://8.135.36.45:8000/find/img/head/70/03.png\",\n\"nickname\":\"阿萌\",\n\"content2\":\"需要加您的微信?\",\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"count2\":1\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 86,\n\"userId\": 137,\n\"head\": \"http://8.135.36.45:8000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg\",\n\"nickname\": \"jack\",\n\"content2\": \"已同意添加微信，我的微信号是：\",\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"count2\": 2,\n\"type\": \"1\",\n\"flag\": 1,\n\"weixinId\": \"wxnaza12345681\"\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -3807,22 +3807,22 @@ define({ "api": [
     ]
   },
   {
-      "type": "post",
-      "url": "http://8.135.36.45:8084/find/message/{id}/send",
-      "title": "发送消息接口",
-      "version": "1.0.0",
-      "group": "消息模块API",
-      "name": "发送消息",
-      "parameter": {
-          "fields": {
-              "接口请求参数": [
-                  {
-                      "group": "接口请求参数",
-                      "type": "long",
-                      "optional": false,
-                      "field": "id",
-                      "description": "<p>发送者用户id</p>"
-                  },
+    "type": "post",
+    "url": "http://8.135.36.45:8084/find/message/{id}/send",
+    "title": "发送消息接口",
+    "version": "1.0.0",
+    "group": "消息模块API",
+    "name": "发送消息",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id",
+            "description": "<p>发送者用户id</p>"
+          },
           {
             "group": "接口请求参数",
             "type": "long",
@@ -3840,16 +3840,16 @@ define({ "api": [
         ]
       },
       "examples": [
-          {
-              "title": "请求示例 发送消息",
-              "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/send?messageId=25&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
-              "type": "json"
-          },
-          {
-              "title": "请求示例 回复消息",
-              "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/29/send?messageId=2&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
-              "type": "json"
-          }
+        {
+          "title": "请求示例 发送消息",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/send?messageId=25&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+          "type": "json"
+        },
+        {
+          "title": "请求示例 回复消息",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/29/send?messageId=2&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+          "type": "json"
+        }
       ]
     },
     "success": {
@@ -4008,17 +4008,17 @@ define({ "api": [
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-          "url": "http://8.135.36.45:8084/find/message/{id}/send"
+        "url": "http://8.135.36.45:8084/find/message/{id}/send"
       }
     ]
   },
   {
     "type": "put",
     "url": "http://8.135.36.45:8084/find/message/{id}/reply",
-    "title": "回复申请加微信聊天消息接口",
+    "title": "回复申请加微信消息记录接口",
     "version": "1.0.0",
     "group": "消息模块API",
-    "name": "回复申请加微信聊天消息",
+    "name": "回复申请加微信消息记录",
     "parameter": {
       "fields": {
         "接口请求参数": [
@@ -4027,14 +4027,14 @@ define({ "api": [
             "type": "long",
             "optional": false,
             "field": "id",
-            "description": "<p>回复被申请加微信用户id</p>"
+            "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
             "type": "long",
             "optional": false,
             "field": "messageId",
-            "description": "<p>回复的消息id</p>"
+            "description": "<p>消息id</p>"
           },
           {
             "group": "接口请求参数",
@@ -4045,21 +4045,21 @@ define({ "api": [
             ],
             "optional": false,
             "field": "type",
-            "description": "<p>回复类型，0-&gt;拒绝，1-&gt;同意</p>"
+            "description": "<p>类型，0-&gt;拒绝，1-&gt;同意</p>"
           },
           {
             "group": "接口请求参数",
             "type": "string",
             "optional": true,
             "field": "content",
-            "description": "<p>回复的消息内容</p>"
+            "description": "<p>消息内容</p>"
           },
           {
             "group": "接口请求参数",
             "type": "string",
             "optional": true,
             "field": "weChatId",
-            "description": "<p>回复的微信id</p>"
+            "description": "<p>微信id</p>"
           }
         ]
       },
