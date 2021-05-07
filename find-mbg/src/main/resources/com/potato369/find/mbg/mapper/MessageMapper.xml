@@ -260,7 +260,7 @@
                    AND `reserve_column03` = '0'
              ) AS a
         GROUP BY a.`send_user_id`, a.`create_time`, a.`id`
-        ORDER BY a.`create_time` DESC, a.`id` DESC
+        ORDER BY a.`id` DESC, a.`create_time` DESC
     </select>
 
     <select id="countByUserId2" parameterType="java.lang.Long" resultType="java.lang.Long">
