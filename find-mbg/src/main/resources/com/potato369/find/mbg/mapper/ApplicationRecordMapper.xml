@@ -106,19 +106,25 @@
                        INTERVAL -1 SECOND)
     </select>
     <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+	SELECT
+		a.`user_id`,
+		a.`reserve_column01`,
+		a.`create_time` 
+	FROM
+		(        
         SELECT `user_id`,
                `reserve_column01`,
                `create_time`
         FROM `application_record`
-        where `user_id` = #{userId,jdbcType=BIGINT}
+        WHERE `user_id` = #{userId,jdbcType=BIGINT}
         UNION ALL
         SELECT `user_id`,
                `reserve_column01`,
                `create_time`
         FROM `application_record`
         WHERE `reserve_column01` = #{userId,jdbcType=BIGINT}
-        GROUP BY `user_id`, `create_time`
-        ORDER BY `create_time` DESC
+        ) AS a
+        GROUP BY a.`user_id`
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete

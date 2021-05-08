@@ -866,7 +866,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {long} messageId 消息id
      * @apiParam (接口请求参数) {string={"0", "1"}} type 类型，0->拒绝，1->同意
      * @apiParam (接口请求参数) {string} [content] 消息内容
-     * @apiParam (接口请求参数) {string} [weChatId] 微信id
+     * @apiParam (接口请求参数) {string} [weChatId] 微信号
      * @apiParamExample {json} 请求示例 回复申请加微信消息（拒绝）
      * HTTP/1.1 OK
      * curl -v -X PUT "http://8.135.36.45:8084/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！" -H "accept: application/json"
@@ -936,11 +936,11 @@ public class MessageController {
      */
     @ApiOperation(value = "回复申请加微信消息记录接口", notes = "回复申请加微信消息记录接口")
     @PutMapping(value = "/{id}/reply")
-    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long applicantsUserId,
-                                                   @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "回复的消息id", required = true, example = "2") Long messageId,
-                                                   @RequestParam(name = "type") @ApiParam(name = "type", value = "回复类型，0->拒绝，1->同意", required = true, example = "0") String type,
-                                                   @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "回复的消息内容", example = "非常抱歉，我不想加你！") String content,
-                                                   @RequestParam(name = "weChatId", required = false) @ApiParam(name = "weChatId", value = "回复的微信Id", example = "wx123456789") String weChatId) {
-        return this.messageFeignClient.reply(applicantsUserId, messageId, type, content, weChatId);
+    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
+                                                   @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息id", required = true, example = "2") Long messageId,
+                                                   @RequestParam(name = "type") @ApiParam(name = "type", value = "类型，0->拒绝，1->同意", required = true, example = "0") String type,
+                                                   @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "消息内容", example = "非常抱歉，我不想加你！") String content,
+                                                   @RequestParam(name = "weChatId", required = false) @ApiParam(name = "weChatId", value = "微信号", example = "wx123456789") String weChatId) {
+        return this.messageFeignClient.reply(userId, messageId, type, content, weChatId);
     }
 }

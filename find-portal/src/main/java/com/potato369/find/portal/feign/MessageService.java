@@ -47,7 +47,7 @@ public interface MessageService {
                                                   @RequestParam(name = "messageId") Long messageId);
 
     @PutMapping(value = "/find/v1/message/{id}/reply.do")
-    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") Long applicantsUserId,
+    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") Long userId,
                                                    @RequestParam(name = "messageId") Long messageId,
                                                    @RequestParam(name = "type") String type,
                                                    @RequestParam(name = "content", required = false) String content,
