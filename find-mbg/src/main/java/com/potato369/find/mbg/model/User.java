@@ -74,6 +74,12 @@ public class User implements Serializable {
     @ApiModelProperty(value = "其它地址")
     private String other;
 
+    @ApiModelProperty(value = "经度")
+    private Double longitude;
+
+    @ApiModelProperty(value = "纬度")
+    private Double latitude;
+
     @ApiModelProperty(value = "平台")
     private String platform;
 
@@ -101,11 +107,41 @@ public class User implements Serializable {
     @ApiModelProperty(value = "背景图片")
     private String backgroundIcon;
 
-    @ApiModelProperty(value = "预留字段03")
+    @ApiModelProperty(value = "极光推送唯一设备的标识")
     private String reserveColumn03;
 
     @ApiModelProperty(value = "预留字段04")
     private String reserveColumn04;
+
+    @ApiModelProperty(value = "职业编号")
+    private Long professionId;
+
+    @ApiModelProperty(value = "标签1编号，对应标签表id")
+    private Long tag1;
+
+    @ApiModelProperty(value = "标签2编号，对应标签表id")
+    private Long tag2;
+
+    @ApiModelProperty(value = "标签3编号，对应标签表id")
+    private Long tag3;
+
+    @ApiModelProperty(value = "标签4编号，对应标签表id")
+    private Long tag4;
+
+    @ApiModelProperty(value = "标签5编号，对应标签表id")
+    private Long tag5;
+
+    @ApiModelProperty(value = "预留字段05")
+    private String reserveColumn05;
+
+    @ApiModelProperty(value = "预留字段06")
+    private String reserveColumn06;
+
+    @ApiModelProperty(value = "预留字段07")
+    private String reserveColumn07;
+
+    @ApiModelProperty(value = "预留字段08")
+    private String reserveColumn08;
 
     private static final long serialVersionUID = 1L;
 
@@ -285,6 +321,22 @@ public class User implements Serializable {
         this.other = other;
     }
 
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
     public String getPlatform() {
         return platform;
     }
@@ -373,6 +425,86 @@ public class User implements Serializable {
         this.reserveColumn04 = reserveColumn04;
     }
 
+    public Long getProfessionId() {
+        return professionId;
+    }
+
+    public void setProfessionId(Long professionId) {
+        this.professionId = professionId;
+    }
+
+    public Long getTag1() {
+        return tag1;
+    }
+
+    public void setTag1(Long tag1) {
+        this.tag1 = tag1;
+    }
+
+    public Long getTag2() {
+        return tag2;
+    }
+
+    public void setTag2(Long tag2) {
+        this.tag2 = tag2;
+    }
+
+    public Long getTag3() {
+        return tag3;
+    }
+
+    public void setTag3(Long tag3) {
+        this.tag3 = tag3;
+    }
+
+    public Long getTag4() {
+        return tag4;
+    }
+
+    public void setTag4(Long tag4) {
+        this.tag4 = tag4;
+    }
+
+    public Long getTag5() {
+        return tag5;
+    }
+
+    public void setTag5(Long tag5) {
+        this.tag5 = tag5;
+    }
+
+    public String getReserveColumn05() {
+        return reserveColumn05;
+    }
+
+    public void setReserveColumn05(String reserveColumn05) {
+        this.reserveColumn05 = reserveColumn05;
+    }
+
+    public String getReserveColumn06() {
+        return reserveColumn06;
+    }
+
+    public void setReserveColumn06(String reserveColumn06) {
+        this.reserveColumn06 = reserveColumn06;
+    }
+
+    public String getReserveColumn07() {
+        return reserveColumn07;
+    }
+
+    public void setReserveColumn07(String reserveColumn07) {
+        this.reserveColumn07 = reserveColumn07;
+    }
+
+    public String getReserveColumn08() {
+        return reserveColumn08;
+    }
+
+    public void setReserveColumn08(String reserveColumn08) {
+        this.reserveColumn08 = reserveColumn08;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -401,6 +533,8 @@ public class User implements Serializable {
         sb.append(", city=").append(city);
         sb.append(", district=").append(district);
         sb.append(", other=").append(other);
+        sb.append(", longitude=").append(longitude);
+        sb.append(", latitude=").append(latitude);
         sb.append(", platform=").append(platform);
         sb.append(", ip=").append(ip);
         sb.append(", grade=").append(grade);
@@ -412,6 +546,16 @@ public class User implements Serializable {
         sb.append(", backgroundIcon=").append(backgroundIcon);
         sb.append(", reserveColumn03=").append(reserveColumn03);
         sb.append(", reserveColumn04=").append(reserveColumn04);
+        sb.append(", professionId=").append(professionId);
+        sb.append(", tag1=").append(tag1);
+        sb.append(", tag2=").append(tag2);
+        sb.append(", tag3=").append(tag3);
+        sb.append(", tag4=").append(tag4);
+        sb.append(", tag5=").append(tag5);
+        sb.append(", reserveColumn05=").append(reserveColumn05);
+        sb.append(", reserveColumn06=").append(reserveColumn06);
+        sb.append(", reserveColumn07=").append(reserveColumn07);
+        sb.append(", reserveColumn08=").append(reserveColumn08);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -28,13 +28,13 @@
         </jdbcConnection>
 
         <javaModelGenerator targetPackage="com.potato369.find.mbg.model"
-                            targetProject="D://Users/wangyanjun/workspace/prod2/find-master/find-mbg/src/main/java"/>
+                            targetProject="D://Users/wangyanjun/workspace/prod/find-master/find-mbg/src/main/java"/>
 
         <sqlMapGenerator targetPackage="com.potato369.find.mbg.mapper"
-                         targetProject="D://Users/wangyanjun/workspace/prod2/find-master/find-mbg/src/main/resources"/>
+                         targetProject="D://Users/wangyanjun/workspace/prod/find-master/find-mbg/src/main/resources"/>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.potato369.find.mbg.mapper"
-                             targetProject="D://Users/wangyanjun/workspace/prod2/find-master/find-mbg/src/main/java"/>
+                             targetProject="D://Users/wangyanjun/workspace/prod/find-master/find-mbg/src/main/java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="%">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>

@@ -94,4 +94,8 @@ public interface UserService {
 	// 远程调用拉入推出用户黑名单列表接口
 	@PostMapping(value = "/find/v1/user/{id}/pushblacklist.do")
 	CommonResult<Map<String, String>> pushBlackList(@PathVariable(name = "id") Long userId, @RequestBody @Valid BlacklistDTO blacklistDTO);
+	
+	// 远程调用行业和职业列表接口
+	@GetMapping(value = "/find/v1/user/professions.do")
+	CommonResult<Map<String, List<String>>> professionList();
 }

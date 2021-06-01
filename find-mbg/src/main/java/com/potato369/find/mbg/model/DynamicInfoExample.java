@@ -434,6 +434,146 @@ public class DynamicInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsTopicIsNull() {
+            addCriterion("is_topic is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicIsNotNull() {
+            addCriterion("is_topic is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicEqualTo(String value) {
+            addCriterion("is_topic =", value, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicNotEqualTo(String value) {
+            addCriterion("is_topic <>", value, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicGreaterThan(String value) {
+            addCriterion("is_topic >", value, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicGreaterThanOrEqualTo(String value) {
+            addCriterion("is_topic >=", value, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicLessThan(String value) {
+            addCriterion("is_topic <", value, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicLessThanOrEqualTo(String value) {
+            addCriterion("is_topic <=", value, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicLike(String value) {
+            addCriterion("is_topic like", value, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicNotLike(String value) {
+            addCriterion("is_topic not like", value, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicIn(List<String> values) {
+            addCriterion("is_topic in", values, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicNotIn(List<String> values) {
+            addCriterion("is_topic not in", values, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicBetween(String value1, String value2) {
+            addCriterion("is_topic between", value1, value2, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopicNotBetween(String value1, String value2) {
+            addCriterion("is_topic not between", value1, value2, "isTopic");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleIsNull() {
+            addCriterion("topic_title is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleIsNotNull() {
+            addCriterion("topic_title is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleEqualTo(String value) {
+            addCriterion("topic_title =", value, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleNotEqualTo(String value) {
+            addCriterion("topic_title <>", value, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleGreaterThan(String value) {
+            addCriterion("topic_title >", value, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("topic_title >=", value, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleLessThan(String value) {
+            addCriterion("topic_title <", value, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleLessThanOrEqualTo(String value) {
+            addCriterion("topic_title <=", value, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleLike(String value) {
+            addCriterion("topic_title like", value, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleNotLike(String value) {
+            addCriterion("topic_title not like", value, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleIn(List<String> values) {
+            addCriterion("topic_title in", values, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleNotIn(List<String> values) {
+            addCriterion("topic_title not in", values, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleBetween(String value1, String value2) {
+            addCriterion("topic_title between", value1, value2, "topicTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicTitleNotBetween(String value1, String value2) {
+            addCriterion("topic_title not between", value1, value2, "topicTitle");
+            return (Criteria) this;
+        }
+        
         public Criteria andLikesIsNull() {
             addCriterion("likes is null");
             return (Criteria) this;
@@ -493,6 +633,66 @@ public class DynamicInfoExample {
             addCriterion("likes not between", value1, value2, "likes");
             return (Criteria) this;
         }
+        
+        public Criteria andCommentsIsNull() {
+            addCriterion("comments is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsIsNotNull() {
+            addCriterion("comments is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsEqualTo(Integer value) {
+            addCriterion("comments =", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsNotEqualTo(Integer value) {
+            addCriterion("comments <>", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsGreaterThan(Integer value) {
+            addCriterion("comments >", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsGreaterThanOrEqualTo(Integer value) {
+            addCriterion("comments >=", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsLessThan(Integer value) {
+            addCriterion("comments <", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsLessThanOrEqualTo(Integer value) {
+            addCriterion("comments <=", value, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsIn(List<Integer> values) {
+            addCriterion("comments in", values, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsNotIn(List<Integer> values) {
+            addCriterion("comments not in", values, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsBetween(Integer value1, Integer value2) {
+            addCriterion("comments between", value1, value2, "comments");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentsNotBetween(Integer value1, Integer value2) {
+            addCriterion("comments not between", value1, value2, "comments");
+            return (Criteria) this;
+        }        
 
         public Criteria andApplicationsIsNull() {
             addCriterion("applications is null");

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.potato369.find.mbg.mapper.ProfessionsMapper">
+  <resultMap id="BaseResultMap" type="com.potato369.find.mbg.model.Professions">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="industry_id" jdbcType="BIGINT" property="industryId" />
+    <result column="delete_status" jdbcType="CHAR" property="deleteStatus" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="deleted_time" jdbcType="TIMESTAMP" property="deletedTime" />
+    <result column="reserve_column01" jdbcType="VARCHAR" property="reserveColumn01" />
+    <result column="reserve_column02" jdbcType="VARCHAR" property="reserveColumn02" />
+    <result column="reserve_column03" jdbcType="VARCHAR" property="reserveColumn03" />
+    <result column="reserve_column04" jdbcType="VARCHAR" property="reserveColumn04" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, industry_id, delete_status, created_time, updated_time, deleted_time, reserve_column01, 
+    reserve_column02, reserve_column03, reserve_column04
+  </sql>
+  <select id="selectByExample" parameterType="com.potato369.find.mbg.model.ProfessionsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from professions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from professions
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from professions
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.potato369.find.mbg.model.ProfessionsExample">
+    delete from professions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.potato369.find.mbg.model.Professions">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into professions (name, industry_id, delete_status, 
+      created_time, updated_time, deleted_time, 
+      reserve_column01, reserve_column02, reserve_column03, 
+      reserve_column04)
+    values (#{name,jdbcType=VARCHAR}, #{industryId,jdbcType=BIGINT}, #{deleteStatus,jdbcType=CHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{deletedTime,jdbcType=TIMESTAMP}, 
+      #{reserveColumn01,jdbcType=VARCHAR}, #{reserveColumn02,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR}, 
+      #{reserveColumn04,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.potato369.find.mbg.model.Professions">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into professions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="industryId != null">
+        industry_id,
+      </if>
+      <if test="deleteStatus != null">
+        delete_status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="deletedTime != null">
+        deleted_time,
+      </if>
+      <if test="reserveColumn01 != null">
+        reserve_column01,
+      </if>
+      <if test="reserveColumn02 != null">
+        reserve_column02,
+      </if>
+      <if test="reserveColumn03 != null">
+        reserve_column03,
+      </if>
+      <if test="reserveColumn04 != null">
+        reserve_column04,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="industryId != null">
+        #{industryId,jdbcType=BIGINT},
+      </if>
+      <if test="deleteStatus != null">
+        #{deleteStatus,jdbcType=CHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedTime != null">
+        #{deletedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reserveColumn01 != null">
+        #{reserveColumn01,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveColumn02 != null">
+        #{reserveColumn02,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveColumn03 != null">
+        #{reserveColumn03,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveColumn04 != null">
+        #{reserveColumn04,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.potato369.find.mbg.model.ProfessionsExample" resultType="java.lang.Long">
+    select count(*) from professions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update professions
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryId != null">
+        industry_id = #{record.industryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.deleteStatus != null">
+        delete_status = #{record.deleteStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.createdTime != null">
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedTime != null">
+        updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletedTime != null">
+        deleted_time = #{record.deletedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reserveColumn01 != null">
+        reserve_column01 = #{record.reserveColumn01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserveColumn02 != null">
+        reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserveColumn03 != null">
+        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserveColumn04 != null">
+        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update professions
+    set id = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      industry_id = #{record.industryId,jdbcType=BIGINT},
+      delete_status = #{record.deleteStatus,jdbcType=CHAR},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      deleted_time = #{record.deletedTime,jdbcType=TIMESTAMP},
+      reserve_column01 = #{record.reserveColumn01,jdbcType=VARCHAR},
+      reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+      reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+      reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.potato369.find.mbg.model.Professions">
+    update professions
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="industryId != null">
+        industry_id = #{industryId,jdbcType=BIGINT},
+      </if>
+      <if test="deleteStatus != null">
+        delete_status = #{deleteStatus,jdbcType=CHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedTime != null">
+        deleted_time = #{deletedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reserveColumn01 != null">
+        reserve_column01 = #{reserveColumn01,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveColumn02 != null">
+        reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveColumn03 != null">
+        reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveColumn04 != null">
+        reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.potato369.find.mbg.model.Professions">
+    update professions
+    set name = #{name,jdbcType=VARCHAR},
+      industry_id = #{industryId,jdbcType=BIGINT},
+      delete_status = #{deleteStatus,jdbcType=CHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      deleted_time = #{deletedTime,jdbcType=TIMESTAMP},
+      reserve_column01 = #{reserveColumn01,jdbcType=VARCHAR},
+      reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+      reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+      reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

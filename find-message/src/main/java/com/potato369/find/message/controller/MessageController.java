@@ -134,10 +134,10 @@ public class MessageController {
     /**
      * 回复申请加微信消息记录接口
      *
-     * @param userId 		   用户id
-     * @param messageId        消息id
-     * @param type             类型，0->拒绝，1->同意
-     * @param content          消息内容
+     * @param userId 	用户id
+     * @param messageId 消息id
+     * @param type      类型，0->拒绝，1->同意
+     * @param content   消息内容
      */
     @ApiOperation(value = "回复申请加微信消息记录接口", notes = "回复申请加微信消息记录接口")
     @PutMapping(value = "/{id}/reply.do")

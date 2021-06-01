@@ -47,6 +47,12 @@ public class Dynamic implements Serializable {
     @ApiModelProperty(value = "其它地址")
     private String other;
 
+    @ApiModelProperty(value = "经度")
+    private Double longitude;
+
+    @ApiModelProperty(value = "纬度")
+    private Double latitude;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
@@ -171,6 +177,22 @@ public class Dynamic implements Serializable {
         this.other = other;
     }
 
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -238,6 +260,8 @@ public class Dynamic implements Serializable {
         sb.append(", city=").append(city);
         sb.append(", district=").append(district);
         sb.append(", other=").append(other);
+        sb.append(", longitude=").append(longitude);
+        sb.append(", latitude=").append(latitude);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", reserveColumn01=").append(reserveColumn01);
