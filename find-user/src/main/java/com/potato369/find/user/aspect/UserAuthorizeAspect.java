@@ -29,7 +29,11 @@ public class UserAuthorizeAspect {
 		this.userMapperReader = userMapperReader;
 	}
 	
-	@Pointcut("execution(public * com.potato369.find.user.controller.UserController.*(..)) && !execution(public * com.potato369.find.user.controller.UserController.*register(..)) && !execution(public * com.potato369.find.user.controller.UserController.*login(..))")
+	@Pointcut("execution(public * com.potato369.find.user.controller.*Controller.*(..))"
+			+ "&& !execution(public * com.potato369.find.user.controller.UserController.*register(..))"
+			+ "&& !execution(public * com.potato369.find.user.controller.UserController.*login(..))"
+			+ "&& !execution(public * com.potato369.find.user.controller.TagController.*list(..))"
+			+ "&& !execution(public * com.potato369.find.user.controller.ProfessionController.*list(..))")
 	public void verify() {
 	}
 	
