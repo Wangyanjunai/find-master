@@ -59,4 +59,14 @@ public class LocationDTO extends AbstractDTO {
     @JsonProperty(value = "other")
     @JSONField(name = "other")
     private String other;
+
+    @ApiModelProperty(value = "经度")
+    @JSONField(name = "longitude")
+    @JsonProperty(value = "longitude")
+    private Double longitude;
+
+    @ApiModelProperty(value = "纬度")
+    @JSONField(name = "latitude")
+    @JsonProperty(value = "latitude")
+    private Double latitude;
 }

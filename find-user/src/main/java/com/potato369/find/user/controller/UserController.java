@@ -6,13 +6,11 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.api.ResultCode;
 import com.potato369.find.common.constants.ConstellationConstant;
-import com.potato369.find.common.constants.MunicipalityConstant;
 import com.potato369.find.common.dto.*;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.*;
@@ -20,6 +18,7 @@ import com.potato369.find.common.vo.BlackUserVO;
 import com.potato369.find.common.vo.ReportCategoryVO;
 import com.potato369.find.common.vo.UserVO;
 import com.potato369.find.common.vo.UserVO2;
+import com.potato369.find.common.vo.result.baidu.JsonRootBean;
 import com.potato369.find.mbg.mapper.*;
 import com.potato369.find.mbg.model.*;
 import com.potato369.find.user.config.props.BaiduProps;
@@ -44,6 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Api(value = "用户模块用户管理控制器类")
@@ -163,42 +163,42 @@ public class UserController {
     public void setProjectUrlProps(ProjectUrlProps projectUrlProps) {
         this.projectUrlProps = projectUrlProps;
     }
-    
+
     //上报或者更新极光推送唯一设备的标识接口
     @ApiOperation(value = "上报或者更新极光推送唯一设备的标识接口", notes = "上报或者更新极光推送唯一设备的标识接口", response = CommonResult.class)
     @PutMapping(value = "/{id}/uploadRegId.do")
     public CommonResult<Map<String, Object>> uploadRegId(@PathVariable(name = "id", required = true) Long id,//id：用户id
                                                          @RequestParam(name = "regId", required = true) String regId) {//regId：极光推送唯一设备的标识
-    	Map<String, Object> result = new HashMap<>();
-    	String data = "UPLOADREGID";
-    	String message = "FAILED";
-    	try {
-			if (log.isDebugEnabled()) {
-				log.debug("开始上报或者更新极光推送唯一设备的标识");
-			}
-			User user = this.userDaoUseJdbcTemplate.getById(id);
-			if (user == null) {
+        Map<String, Object> result = new HashMap<>();
+        String data = "UPLOADREGID";
+        String message = "FAILED";
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始上报或者更新极光推送唯一设备的标识");
+            }
+            User user = this.userDaoUseJdbcTemplate.getById(id);
+            if (user == null) {
                 result.put(data, message);
                 return CommonResult.failed(result, ResultCode.USER_IS_NOT_EXIST);
             }
-			String regIdOld = user.getReserveColumn03();
-			if (StrUtil.isNotEmpty(regId) && !regId.equals(regIdOld)) {
-				user.setReserveColumn03(regId);
-				user.setUpdateTime(new Date());
-				int row = this.userMapperWrite.updateByPrimaryKeySelective(user);
-				if (row > 0) {
-					message = "OK";
-				}
-			}
-		} catch (Exception e) {
-			log.error("上报或者更新极光推送唯一设备的标识出现错误", e);
-		} finally {
-			if (log.isDebugEnabled()) {
-				log.debug("结束上报或者更新极光推送唯一设备的标识");
-			}
-		}
-    	result.put(data, message);
-    	return CommonResult.success(result);
+            String regIdOld = user.getReserveColumn03();
+            if (StrUtil.isNotEmpty(regId) && !regId.equals(regIdOld)) {
+                user.setReserveColumn03(regId);
+                user.setUpdateTime(new Date());
+                int row = this.userMapperWrite.updateByPrimaryKeySelective(user);
+                if (row > 0) {
+                    message = "OK";
+                }
+            }
+        } catch (Exception e) {
+            log.error("上报或者更新极光推送唯一设备的标识出现错误", e);
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束上报或者更新极光推送唯一设备的标识");
+            }
+        }
+        result.put(data, message);
+        return CommonResult.success(result);
     }
 
     //上传或者修改头像小图接口
@@ -235,10 +235,10 @@ public class UserController {
                     + user1.getId();
             if (headIconFile01 != null && !headIconFile01.isEmpty()) {
                 if (!FileTypeUtil.isImageType(headIconFile01.getContentType(), headIconFile01.getOriginalFilename())) {
-                	try {
+                    try {
                         this.userLogOpenFeign.record(id, operateRecord);
                     } catch (Exception e) {
-                    	log.error("记录用户操作记录失败", e);
+                        log.error("记录用户操作记录失败", e);
                     }
                     return CommonResult.validateFailed("上传头像文件类型不符合要求。");
                 }
@@ -281,7 +281,7 @@ public class UserController {
             try {
                 this.userLogOpenFeign.record(id, operateRecord);
             } catch (Exception e) {
-            	log.error("记录用户操作记录失败", e);
+                log.error("记录用户操作记录失败", e);
             }
         } catch (Exception e) {
             log.error("上传头像小图到Nginx服务器失败", e);
@@ -327,10 +327,10 @@ public class UserController {
                     + user1.getId();
             if (backgroundIconFile02 != null && !backgroundIconFile02.isEmpty()) {
                 if (!FileTypeUtil.isImageType(backgroundIconFile02.getContentType(), backgroundIconFile02.getOriginalFilename())) {
-                	try {
+                    try {
                         this.userLogOpenFeign.record(id, operateRecord);
                     } catch (Exception e) {
-                    	log.error("记录用户操作记录失败", e);
+                        log.error("记录用户操作记录失败", e);
                     }
                     return CommonResult.validateFailed("上传背景图片文件类型不符合要求。");
                 }
@@ -397,7 +397,7 @@ public class UserController {
             @RequestParam(name = "nickname", required = false) String nickname, // nickname：昵称
             @RequestParam(name = "weixinId", required = false) String weixinId, // weixinId：微信号码
             @RequestParam(name = "imei", required = false) String imei, // imei：设备串码
-            @RequestParam(name = "model", required = false) String model, // model：设备型号 
+            @RequestParam(name = "model", required = false) String model, // model：设备型号
             @RequestParam(name = "sysName", required = false) String sysName, // sysName：系统名称
             @RequestParam(name = "sysCode", required = false) String sysCode, // sysCode：系统版本
             @RequestParam(name = "networkMode", required = false) String networkMode, // networkMode：网络方式
@@ -408,6 +408,14 @@ public class UserController {
             @RequestParam(name = "country", required = false) String country, // country：国家
             @RequestParam(name = "province", required = false) String province, // province：省份
             @RequestParam(name = "city", required = false) String city, // city：城市
+            @RequestParam(name = "longitude", required = false) String longitude, // longitude：经度
+            @RequestParam(name = "latitude", required = false) String latitude, // latitude：纬度
+            @RequestParam(name = "professionId", required = false) long professionId, // professionId：职业编号
+            @RequestParam(name = "tag1", required = false) long tag1, // tag1：标签1
+            @RequestParam(name = "tag2", required = false) long tag2, // tag2：标签2
+            @RequestParam(name = "tag3", required = false) long tag3, // tag3：标签3
+            @RequestParam(name = "tag4", required = false) long tag4, // tag4：标签4
+            @RequestParam(name = "tag5", required = false) long tag5, // tag5：标签5
             @RequestParam(name = "autograph", required = false) String autograph, // autograph：签名/动态内容
             @RequestPart(value = "head", required = false) MultipartFile head) { // head：头像图片文件
         UserDTO user = UserDTO.builder().build();
@@ -429,11 +437,20 @@ public class UserController {
         user.setCountry(country);
         user.setProvince(province);
         user.setCity(city);
+        user.setLatitude(Double.parseDouble(latitude));
+        user.setLongitude(Double.parseDouble(longitude));
+        user.setProfessionId(professionId);
+        user.setTag1(tag1);
+        user.setTag2(tag2);
+        user.setTag3(tag3);
+        user.setTag4(tag4);
+        user.setTag5(tag5);
+        user.setAutograph(autograph);
         if (log.isDebugEnabled()) {
             log.debug("开始注册");
             log.debug("前端传输过来的用户信息user={}", user);
         }
-        Map<String, UserVO2> map = new HashMap<>();
+        Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
         String message = "注册失败。";
         OperateRecord operateRecord = new OperateRecord();
@@ -441,46 +458,61 @@ public class UserController {
         operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
         operateRecord.setUserId(0L);
         try {
-        	log.info("phone={}, ip={}, gender={}, platform={}, nickname={}, weixinId={}, imei={}, model={}, sysName={}, sysCode={}, networkMode={}, year={}, month={}, date={}, constellation={}, country={}, province={}, city={}, autograph={}, head={}", phone, ip, gender, platform, nickname, weixinId, imei, model, sysName, sysCode, networkMode, year, month, date, constellation, country, province, city, autograph, head);
+            if (log.isDebugEnabled()) {
+                log.debug("phone={}, ip={}, gender={}, platform={}, " +
+                                "nickname={}, weixinId={}, imei={}, model={}, " +
+                                "sysName={}, sysCode={}, networkMode={}, year={}, " +
+                                "month={}, date={}, constellation={}, country={}, " +
+                                "province={}, city={}, longitude={}, latitude={}, " +
+                                "professionId={}, tag1={}, tag2={}, tag3={}, " +
+                                "tag4={}, tag5={}, autograph={}, head={}",
+                        phone, ip, gender, platform,
+                        nickname, weixinId, imei, model,
+                        sysName, sysCode, networkMode, year,
+                        month, date, constellation, country,
+                        province, city, longitude, latitude,
+                        professionId, tag1, tag2, tag3,
+                        tag4, tag5, autograph, head);
+            }
             if (StrUtil.isEmpty(phone)) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码不能为空。");
             }
             if (!RegexUtil.isMathPhone(phone)) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码格式不正确。");
             }
             if (StrUtil.isAllEmpty(ip, country, province, city)) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市）参数校验失败，客户端IP，定位（国家、省份、城市）不能同时为空。");
             }
             if (StrUtil.isNotEmpty(ip) && !RegexUtil.isMathIp(ip)) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.validateFailed("客户端IP参数校验失败，客户端IP格式不正确。");
             }
             if (StrUtil.isNotEmpty(constellation)) {
                 ConstellationConstant ConstellationConstant = new ConstellationConstant();
                 if (!ConstellationConstant.getConstellationList().contains(constellation)) {
-                	try {
+                    try {
                         this.userLogOpenFeign.record(0L, operateRecord);
                     } catch (Exception e) {
-                    	log.error("记录用户操作记录失败", e);
+                        log.error("记录用户操作记录失败", e);
                     }
                     return CommonResult.validateFailed("星座参数校验不通过，星座值非法。");
                 }
@@ -494,11 +526,12 @@ public class UserController {
                     nickname = new RandomNickNameUtil().randomName();
                 }
                 user1.setNickName(nickname);
-                if (StrUtil.isAllNotEmpty(ip, country, province, city)) {
-                    user1.setIp(ip);
+                if (StrUtil.isAllNotEmpty(country, province, city, longitude, latitude)) {
                     user1.setCountry(country);
                     user1.setProvince(province);
                     user1.setCity(city);
+                    user1.setLongitude(Double.parseDouble(longitude));
+                    user1.setLatitude(Double.parseDouble(latitude));
                 } else {
                     // 根据IP调用百度定位获取地址
                     if (StrUtil.isNotEmpty(ip)) {
@@ -507,11 +540,10 @@ public class UserController {
                         user1.setCountry(locationDTO.getCountry());
                         user1.setProvince(locationDTO.getProvince());
                         user1.setCity(locationDTO.getCity());
-                    }
-                    if (StrUtil.isAllNotEmpty(country, city)) {
-                        user1.setCountry(country);
-                        user1.setProvince(province);
-                        user1.setCity(city);
+                        user1.setDistrict(locationDTO.getDistrict());
+                        user1.setOther(locationDTO.getOther());
+                        user1.setLongitude(locationDTO.getLongitude());
+                        user1.setLatitude(locationDTO.getLatitude());
                     }
                 }
                 user1.setGender(gender);
@@ -531,6 +563,12 @@ public class UserController {
                         user1.setAutograph(autograph);
                     }
                 }
+                user1.setProfessionId(professionId);
+                user1.setTag1(tag1);
+                user1.setTag2(tag2);
+                user1.setTag1(tag3);
+                user1.setTag4(tag4);
+                user1.setTag5(tag5);
                 // 头像图片上传服务器
                 int result = this.userMapperWrite.insertSelective(user1);
                 // 头像图片存储本地路径
@@ -542,10 +580,10 @@ public class UserController {
                 String newHeadIconFileName = null;
                 if (head != null && !head.isEmpty()) {
                     if (!FileTypeUtil.isImageType(head.getContentType(), head.getOriginalFilename())) {
-                    	try {
+                        try {
                             this.userLogOpenFeign.record(0L, operateRecord);
                         } catch (Exception e) {
-                        	log.error("记录用户操作记录失败", e);
+                            log.error("记录用户操作记录失败", e);
                         }
                         return CommonResult.validateFailed("上传头像文件类型不符合要求。");
                     }
@@ -600,19 +638,19 @@ public class UserController {
                     operateRecord.setUserId(user1.getId());
                     if (head != null && !head.isEmpty()) {
                         if (!FileTypeUtil.isImageType(head.getContentType(), head.getOriginalFilename())) {
-                        	try {
+                            try {
                                 this.userLogOpenFeign.record(0L, operateRecord);
                             } catch (Exception e) {
-                            	log.error("记录用户操作记录失败", e);
+                                log.error("记录用户操作记录失败", e);
                             }
                             return CommonResult.validateFailed("上传发布动态图片文件类型不符合要求。");
                         }
                         this.userService.uploadHeadIcon1(user1, autograph, fileString1 + newHeadIconFileName, operateRecord);
                     } else {
-                    	try {
+                        try {
                             this.userLogOpenFeign.record(0L, operateRecord);
                         } catch (Exception e) {
-                        	log.error("记录用户操作记录失败", e);
+                            log.error("记录用户操作记录失败", e);
                         }
                         return CommonResult.validateFailed("上传发布动态图片文件不能为空。");
                     }
@@ -668,7 +706,7 @@ public class UserController {
             }
         }
     }
-    
+
     //登录接口
     @ApiOperation(value = "登录接口", notes = "登录接口", response = CommonResult.class)
     @PutMapping(value = "/login.do")
@@ -696,36 +734,36 @@ public class UserController {
         operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
         operateRecord.setUserId(0L);
         try {
-        	log.info("phone={}, ip={}, country={}, province={}, city={}", phone, ip, country, province, city);
+            log.info("phone={}, ip={}, country={}, province={}, city={}", phone, ip, country, province, city);
             if (StrUtil.isEmpty(phone)) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码不能为空。");
             }
             if (!RegexUtil.isMathPhone(phone)) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码格式不正确。");
             }
             if (StrUtil.isAllEmpty(ip, country, province, city)) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市）参数校验失败，客户端IP，定位（国家、省份、城市）不能同时为空。");
             }
             if (StrUtil.isNotEmpty(ip) && !RegexUtil.isMathIp(ip)) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.validateFailed("客户端IP参数校验失败，客户端IP格式不正确。");
             }
@@ -835,7 +873,7 @@ public class UserController {
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     this.userLogOpenFeign.record(id, operateRecord);
                 } catch (Exception e2) {
-                	log.error("记录用户操作记录失败", e2);
+                    log.error("记录用户操作记录失败", e2);
                 }
             }
             data.put("UPDATE", "OK");
@@ -977,10 +1015,10 @@ public class UserController {
             operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
             operateRecord.setUserId(userId);
             if (bindingResult.hasErrors()) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(userId, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.failed(HttpStatus.NOT_ACCEPTABLE.value(), ErrorMessageUtil.messageBuild(bindingResult.getAllErrors()));
             }
@@ -988,10 +1026,10 @@ public class UserController {
             Long categoryId = reportInfoDTO.getCategoryId();                //举报类目id
             ReportCategory reportCategory = this.reportCategoryDaoUseJdbcTemplate.getById(categoryId);
             if (reportCategory == null) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(userId, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.failed("举报类目信息不存在，记录用户举报内容失败。");
             }
@@ -1001,22 +1039,22 @@ public class UserController {
             String reportContent = reportInfoDTO.getReportContent();        //举报填写的内容
             User reportUser = this.userDaoUseJdbcTemplate.getById(userIdLong);
             if (reportUser == null) {
-            	try {
+                try {
                     this.userLogOpenFeign.record(userIdLong, operateRecord);
                 } catch (Exception e) {
-                	log.error("记录用户操作记录失败", e);
+                    log.error("记录用户操作记录失败", e);
                 }
                 return CommonResult.failed("举报用户不存在，记录用户举报内容失败。");
             }
-            
+
             ReportInfo reportInfo = new ReportInfo();
             if (ReportTypeEnum.User.getCode().toString().equals(reportType)) {
                 //自己不能举报自己
                 if (userIdLong.equals(reportUserId)) {
-                	try {
+                    try {
                         this.userLogOpenFeign.record(userId, operateRecord);
                     } catch (Exception e) {
-                    	log.error("记录用户操作记录失败", e);
+                        log.error("记录用户操作记录失败", e);
                     }
                     return CommonResult.failed("你不能举报自己，记录用户举报内容失败。");
                 }
@@ -1025,10 +1063,10 @@ public class UserController {
                 //根据举报的用户id，判断用户信息是否存在
                 User beingReportUser = this.userDaoUseJdbcTemplate.getById(reportUserId);
                 if (beingReportUser == null) {
-                	try {
+                    try {
                         this.userLogOpenFeign.record(userIdLong, operateRecord);
                     } catch (Exception e) {
-                    	log.error("记录用户操作记录失败", e);
+                        log.error("记录用户操作记录失败", e);
                     }
                     return CommonResult.failed("被举报用户不存在，记录用户举报内容失败。");
                 }
@@ -1040,10 +1078,10 @@ public class UserController {
                 if (dynamicInfoList != null && !dynamicInfoList.isEmpty() && dynamicInfoList.size() > 0) {
                     List<Long> dynamicInfoIdList = dynamicInfoList.stream().map(e -> e.getId()).collect(Collectors.toList());
                     if (dynamicInfoIdList.contains(reportUserId)) {
-                    	try {
+                        try {
                             this.userLogOpenFeign.record(userIdLong, operateRecord);
                         } catch (Exception e) {
-                        	log.error("记录用户操作记录失败", e);
+                            log.error("记录用户操作记录失败", e);
                         }
                         return CommonResult.failed("你不能举报自己发布的动态内容，记录用户举报内容失败。");
                     }
@@ -1051,10 +1089,10 @@ public class UserController {
                 //根据被举报的动态内容id，判断举报内容是否存在
                 DynamicInfo dynamicInfo = this.dynamicInfoDaoUseJdbcTemplate.getById(reportUserId);
                 if (dynamicInfo == null) {
-                	try {
+                    try {
                         this.userLogOpenFeign.record(userIdLong, operateRecord);
                     } catch (Exception e) {
-                    	log.error("记录用户操作记录失败", e);
+                        log.error("记录用户操作记录失败", e);
                     }
                     return CommonResult.failed("被举报动态内容不存在，记录用户举报内容失败。");
                 }
@@ -1062,10 +1100,10 @@ public class UserController {
                 Long dynamicId = dynamicInfo.getDynamic_id();
                 Dynamic dynamic = this.dynamicDaoUseJdbcTemplate.getById(dynamicId);
                 if (dynamic == null) {
-                	try {
+                    try {
                         this.userLogOpenFeign.record(userIdLong, operateRecord);
                     } catch (Exception e) {
-                    	log.error("记录用户操作记录失败", e);
+                        log.error("记录用户操作记录失败", e);
                     }
                     return CommonResult.failed("被举报动态信息不存在，记录用户举报内容失败。");
                 }
@@ -1084,7 +1122,7 @@ public class UserController {
             try {
                 this.userLogOpenFeign.record(userIdLong, operateRecord);
             } catch (Exception e2) {
-            	log.error("记录用户操作记录失败", e2);
+                log.error("记录用户操作记录失败", e2);
             }
             data.put("REPORTED", "OK");
             return CommonResult.success(data, "记录用户举报内容成功。");
@@ -1314,50 +1352,39 @@ public class UserController {
     public LocationDTO getLocation(String country, String province, String city, String ip) {
         // 根据ip调用百度定位获取地址
         LocationDTO locationDTO = new LocationDTO();
+        locationDTO.setIp(ip);
+        locationDTO.setCountry(country);
         if (StrUtil.isAllEmpty(country, province, city)) {
             if (StrUtil.isNotEmpty(ip)) {
                 Map<String, Object> params = new HashMap<>();
-                params.put("ak", StrUtil.trimToNull(this.baiduProps.getAk()));
+                params.put("ak", StrUtil.trimToEmpty(this.baiduProps.getAk()));
                 params.put("ip", ip);
-                String urlString = new StringBuffer()
-                        .append(StrUtil.trimToNull(this.baiduProps.getUrl()))
-                        .toString();
-                String result = null;
-                locationDTO.setIp(ip);
-                locationDTO.setCountry(country);
+                String urlString = StrUtil.trimToEmpty(this.baiduProps.getUrl());
                 try {
-                    result = HttpRequest.get(urlString)
-                            .header(Header.USER_AGENT, "Hutool http")
+                    String result = HttpRequest.get(urlString)
+                            .header(Header.USER_AGENT, "Tools http")
                             .charset(CharsetUtil.CHARSET_UTF_8)
                             .form(params)
                             .timeout(5000)
                             .execute()
                             .body();
-                    JSONObject jsonbody = null;
+                    JsonRootBean jsonRootBean = null;
                     if (StrUtil.isNotEmpty(result)) {
                         if (result == null) {
                             log.error("调用百度普通IP定位接口失败");
                         } else {
-                            jsonbody = JSON.parseObject(result);
+                            jsonRootBean = JSON.parseObject(result, JsonRootBean.class);
                         }
                     }
-                    if (jsonbody != null) {
-                        if (jsonbody.getIntValue("status") == 0) {
-                            String address = jsonbody.getString("address");
-                            String[] addr = StrUtil.split(address, "|");
-                            if (addr != null && addr.length > 0) {
-                                locationDTO.setCountry("中国");
-                                locationDTO.setProvince(addr[1] + "省");
-                                locationDTO.setCity(addr[2] + "市");
-                                if (StrUtil.isNotEmpty(locationDTO.getCity())) {
-                                	MunicipalityConstant contant = new MunicipalityConstant();
-                                	List<String> municipalityList = contant.getMunicipalityList();
-                                	if (municipalityList.contains(locationDTO.getCity())) {
-                                		locationDTO.setProvince(addr[1] + "市");
-                                		locationDTO.setCity(addr[2] + "市");
-									}
-								}
-                            }
+                    if (jsonRootBean != null) {
+                        if (jsonRootBean.getStatus() == 0) {
+                            locationDTO.setCountry("中国");
+                            locationDTO.setProvince(jsonRootBean.getContent().getAddressDetail().getProvince());
+                            locationDTO.setCity(jsonRootBean.getContent().getAddressDetail().getCity());
+                            locationDTO.setDistrict(jsonRootBean.getContent().getAddressDetail().getDistrict());
+                            locationDTO.setOther(jsonRootBean.getContent().getAddressDetail().getStreet());
+                            locationDTO.setLongitude(Double.parseDouble(jsonRootBean.getContent().getPoint().getX()));
+                            locationDTO.setLatitude(Double.parseDouble(jsonRootBean.getContent().getPoint().getY()));
                         }
                     }
                 } catch (Exception e) {

@@ -20,7 +20,7 @@ public class UserDTO extends AbstractDTO {
      * phone：手机号码
      * </pre>
      */
-	@ApiModelProperty(value = "手机号码")
+    @ApiModelProperty(value = "手机号码")
     @JSONField(name = "phone")
     @JsonProperty(value = "phone")
     @NotEmpty(message = "手机号码不能为空")
@@ -31,7 +31,7 @@ public class UserDTO extends AbstractDTO {
      * ip：客户端IP
      * </pre>
      */
-	@ApiModelProperty(value = "客户端IP")
+    @ApiModelProperty(value = "客户端IP")
     @JSONField(name = "ip")
     @JsonProperty(value = "ip")
     @NotEmpty(message = "客户端IP不能为空")
@@ -42,7 +42,7 @@ public class UserDTO extends AbstractDTO {
      * gender：性别
      * </pre>
      */
-	@ApiModelProperty(value = "性别")
+    @ApiModelProperty(value = "性别")
     @JSONField(name = "gender")
     @JsonProperty(value = "gender")
     private String gender;
@@ -52,7 +52,7 @@ public class UserDTO extends AbstractDTO {
      * platform：平台
      * </pre>
      */
-	@ApiModelProperty(value = "平台")
+    @ApiModelProperty(value = "平台")
     @JSONField(name = "platform")
     @JsonProperty(value = "platform")
     private String platform;
@@ -62,7 +62,7 @@ public class UserDTO extends AbstractDTO {
      * nickname：昵称
      * </pre>
      */
-	@ApiModelProperty(value = "昵称")
+    @ApiModelProperty(value = "昵称")
     @JSONField(name = "nickname")
     @JsonProperty(value = "nickname")
     private String nickname;
@@ -72,7 +72,7 @@ public class UserDTO extends AbstractDTO {
      * weixinId：微信号
      * </pre>
      */
-	@ApiModelProperty(value = "微信号")
+    @ApiModelProperty(value = "微信号")
     @JSONField(name = "weixinId")
     @JsonProperty(value = "weixinId")
     private String weixinId;
@@ -82,7 +82,7 @@ public class UserDTO extends AbstractDTO {
      * imei：设备串码
      * </pre>
      */
-	@ApiModelProperty(value = "设备串码")
+    @ApiModelProperty(value = "设备串码")
     @JSONField(name = "imei")
     @JsonProperty(value = "imei")
     private String imei;
@@ -92,7 +92,7 @@ public class UserDTO extends AbstractDTO {
      * model：设备型号
      * </pre>
      */
-	@ApiModelProperty(value = "设备型号")
+    @ApiModelProperty(value = "设备型号")
     @JSONField(name = "model")
     @JsonProperty(value = "model")
     private String model;
@@ -102,7 +102,7 @@ public class UserDTO extends AbstractDTO {
      * sysName：系统名称
      * </pre>
      */
-	@ApiModelProperty(value = "系统名称")
+    @ApiModelProperty(value = "系统名称")
     @JSONField(name = "sysName")
     @JsonProperty(value = "sysName")
     private String sysName;
@@ -112,7 +112,7 @@ public class UserDTO extends AbstractDTO {
      * sysCode：系统版本
      * </pre>
      */
-	@ApiModelProperty(value = "系统版本")
+    @ApiModelProperty(value = "系统版本")
     @JSONField(name = "sysCode")
     @JsonProperty(value = "sysCode")
     private String sysCode;
@@ -122,7 +122,7 @@ public class UserDTO extends AbstractDTO {
      * networkMode：网络方式
      * </pre>
      */
-	@ApiModelProperty(value = "网络方式")
+    @ApiModelProperty(value = "网络方式")
     @JSONField(name = "networkMode")
     @JsonProperty(value = "networkMode")
     private String networkMode;
@@ -132,7 +132,7 @@ public class UserDTO extends AbstractDTO {
      * year：出生年代
      * </pre>
      */
-	@ApiModelProperty(value = "出生年代")
+    @ApiModelProperty(value = "出生年代")
     @JSONField(name = "year")
     @JsonProperty(value = "year")
     private String year;
@@ -142,7 +142,7 @@ public class UserDTO extends AbstractDTO {
      * month：出生月份
      * </pre>
      */
-	@ApiModelProperty(value = "出生月份")
+    @ApiModelProperty(value = "出生月份")
     @JSONField(name = "month")
     @JsonProperty(value = "month")
     private String month;
@@ -152,7 +152,7 @@ public class UserDTO extends AbstractDTO {
      * date：出生日期
      * </pre>
      */
-	@ApiModelProperty(value = "出生日期")
+    @ApiModelProperty(value = "出生日期")
     @JSONField(name = "date")
     @JsonProperty(value = "date")
     private String date;
@@ -162,7 +162,7 @@ public class UserDTO extends AbstractDTO {
      * constellation：星座
      * </pre>
      */
-	@ApiModelProperty(value = "星座")
+    @ApiModelProperty(value = "星座")
     @JSONField(name = "constellation")
     @JsonProperty(value = "constellation")
     private String constellation;
@@ -172,7 +172,7 @@ public class UserDTO extends AbstractDTO {
      * country：国
      * </pre>
      */
-	@ApiModelProperty(value = "国")
+    @ApiModelProperty(value = "国")
     @JSONField(name = "country")
     @JsonProperty(value = "country")
     private String country;
@@ -182,7 +182,7 @@ public class UserDTO extends AbstractDTO {
      * province：省
      * </pre>
      */
-	@ApiModelProperty(value = "省")
+    @ApiModelProperty(value = "省")
     @JSONField(name = "province")
     @JsonProperty(value = "province")
     private String province;
@@ -192,17 +192,98 @@ public class UserDTO extends AbstractDTO {
      * city：市
      * </pre>
      */
-	@ApiModelProperty(value = "市")
+    @ApiModelProperty(value = "市")
     @JSONField(name = "city")
     @JsonProperty(value = "city")
     private String city;
 
     /**
      * <pre>
+     * double：经度
+     * </pre>
+     */
+    @ApiModelProperty(value = "经度")
+    @JSONField(name = "longitude")
+    @JsonProperty(value = "longitude")
+    private Double longitude;
+
+    /**
+     * <pre>
+     * latitude：纬度
+     * </pre>
+     */
+    @ApiModelProperty(value = "纬度")
+    @JSONField(name = "latitude")
+    @JsonProperty(value = "latitude")
+    private Double latitude;
+
+    /**
+     * <pre>
+     * professionId：职业编号
+     * </pre>
+     */
+    @ApiModelProperty(value = "职业编号")
+    @JSONField(name = "professionId")
+    @JsonProperty(value = "professionId")
+    private Long professionId;
+
+    /**
+     * <pre>
+     * tag1：标签1
+     * </pre>
+     */
+    @ApiModelProperty(value = "标签1")
+    @JSONField(name = "tag1")
+    @JsonProperty(value = "tag1")
+    private Long tag1;
+
+    /**
+     * <pre>
+     * tag2：标签2
+     * </pre>
+     */
+    @ApiModelProperty(value = "标签2")
+    @JSONField(name = "tag2")
+    @JsonProperty(value = "tag2")
+    private Long tag2;
+
+    /**
+     * <pre>
+     * tag3：标签3
+     * </pre>
+     */
+    @ApiModelProperty(value = "标签3")
+    @JSONField(name = "tag3")
+    @JsonProperty(value = "tag3")
+    private Long tag3;
+
+    /**
+     * <pre>
+     * tag4：标签4
+     * </pre>
+     */
+    @ApiModelProperty(value = "标签4")
+    @JSONField(name = "tag4")
+    @JsonProperty(value = "tag4")
+    private Long tag4;
+
+
+    /**
+     * <pre>
+     * tag5：标签5
+     * </pre>
+     */
+    @ApiModelProperty(value = "标签5")
+    @JSONField(name = "tag5")
+    @JsonProperty(value = "tag5")
+    private Long tag5;
+
+    /**
+     * <pre>
      * autograph：签名
      * </pre>
      */
-	@ApiModelProperty(value = "签名")
+    @ApiModelProperty(value = "签名")
     @JSONField(name = "autograph")
     @JsonProperty(value = "autograph")
     private String autograph;
