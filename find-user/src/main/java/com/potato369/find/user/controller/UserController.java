@@ -572,14 +572,12 @@ public class UserController {
                             .append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes()))
                             .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
                             .append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
-                    fileString1 = new StringBuilder()
-                            .append(user.getId())
-                            .append("/")
-                            .append(DateUtil.getDays())
-                            .append("/")
-                            .append(System.currentTimeMillis())
-                            .append("/")
-                            .toString();
+                    fileString1 = user.getId() +
+                            "/" +
+                            DateUtil.getDays() +
+                            "/" +
+                            System.currentTimeMillis() +
+                            "/";
                     // 附件文件存放路径
                     String fileString = filePath.append(fileString1).toString();
 
@@ -610,7 +608,7 @@ public class UserController {
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     operateRecord.setUserId(user.getId());
                     if (head != null && !head.isEmpty()) {
-                        if (!FileTypeUtil.isImageType(head.getContentType(), head.getOriginalFilename())) {
+                        if (!FileTypeUtil.isImageType(head.getContentType(), Objects.requireNonNull(head.getOriginalFilename()))) {
                             try {
                                 this.userLogOpenFeign.record(0L, operateRecord);
                             } catch (Exception e) {
@@ -631,18 +629,47 @@ public class UserController {
                 }
             } else {
                 //更新用户定位或者ip
-                LocationDTO locationDTO = this.getLocation(country, province, city, ip);
-                if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(locationDTO.getIp())) {
-                    user.setIp(locationDTO.getIp());
-                }
-                if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(locationDTO.getCountry())) {
-                    user.setCountry(locationDTO.getCountry());
-                }
-                if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(locationDTO.getProvince())) {
-                    user.setProvince(locationDTO.getProvince());
-                }
-                if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(locationDTO.getCity())) {
-                    user.setCity(locationDTO.getCity());
+                if (StrUtil.isAllEmpty(country, province, city, longitude, latitude)) {
+                    if (StrUtil.isNotEmpty(ip)) {
+                        LocationDTO locationDTO = this.getLocation(country, province, city, ip);
+                        if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(locationDTO.getIp())) {
+                            user.setIp(locationDTO.getIp());
+                        }
+                        if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(locationDTO.getCountry())) {
+                            user.setCountry(locationDTO.getCountry());
+                        }
+                        if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(locationDTO.getProvince())) {
+                            user.setProvince(locationDTO.getProvince());
+                        }
+                        if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(locationDTO.getCity())) {
+                            user.setCity(locationDTO.getCity());
+                        }
+                        if (user.getLongitude().equals(locationDTO.getLongitude())) {
+                            user.setLongitude(locationDTO.getLongitude());
+                        }
+                        if (user.getLatitude().equals(locationDTO.getLatitude())) {
+                            user.setLatitude(locationDTO.getLatitude());
+                        }
+                    }
+                } else {
+                    if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(ip)) {
+                        user.setIp(ip);
+                    }
+                    if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(country)) {
+                        user.setCountry(country);
+                    }
+                    if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(province)) {
+                        user.setProvince(province);
+                    }
+                    if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(city)) {
+                        user.setCity(city);
+                    }
+                    if (user.getLongitude().equals(Double.parseDouble(longitude))) {
+                        user.setLongitude(Double.parseDouble(longitude));
+                    }
+                    if (user.getLatitude().equals(Double.parseDouble(latitude))) {
+                        user.setLatitude(Double.parseDouble(latitude));
+                    }
                 }
                 user.setUpdateTime(new Date());
                 this.userMapperWrite.updateByPrimaryKeySelective(user);
@@ -1047,7 +1074,7 @@ public class UserController {
                 dynamicInfoExample.setOrderByClause("id DESC, create_time DESC, update_time DESC");
                 dynamicInfoExample.createCriteria().andUserIdEqualTo(userId);
                 List<DynamicInfo> dynamicInfoList = this.dynamicInfoMapperRead.selectByExample(dynamicInfoExample);
-                if (dynamicInfoList != null && !dynamicInfoList.isEmpty()) {
+                if (dynamicInfoList != null && !dynamicInfoList.isEmpty() && dynamicInfoList.size() > 0) {
                     List<Long> dynamicInfoIdList = dynamicInfoList.stream().map(DynamicInfo::getId).collect(Collectors.toList());
                     if (dynamicInfoIdList.contains(reportUserId)) {
                         try {
