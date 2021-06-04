@@ -2,18 +2,18 @@
 -- Table structure for user
 -- ----------------------------
 ALTER TABLE `user`
-ADD COLUMN `longitude` double(12, 6) NULL DEFAULT NULL COMMENT '经度' AFTER `other`,
-ADD COLUMN `latitude` double(12, 6) NULL DEFAULT NULL  COMMENT '纬度' AFTER `longitude`,
-ADD COLUMN `profession_id` bigint(20) NOT NULL DEFAULT 1 COMMENT '职业编号' AFTER `reserve_column04`,
-ADD COLUMN `tag1` bigint(20) NULL DEFAULT NULL COMMENT '标签1编号，对应标签表id' AFTER `profession_id`,
-ADD COLUMN `tag2` bigint(20) NULL DEFAULT NULL COMMENT '标签2编号，对应标签表id' AFTER `tag1`,
-ADD COLUMN `tag3` bigint(20) NULL DEFAULT NULL COMMENT '标签3编号，对应标签表id' AFTER `tag2`,
-ADD COLUMN `tag4` bigint(20) NULL DEFAULT NULL COMMENT '标签4编号，对应标签表id' AFTER `tag3`,
-ADD COLUMN `tag5` bigint(20) NULL DEFAULT NULL COMMENT '标签5编号，对应标签表id' AFTER `tag4`,
-ADD COLUMN `reserve_column05` varchar(256) NULL DEFAULT NULL COMMENT '预留字段05' AFTER `tag5`,
-ADD COLUMN `reserve_column06` varchar(256) NULL DEFAULT NULL COMMENT '预留字段06' AFTER `reserve_column05`,
-ADD COLUMN `reserve_column07` varchar(256) NULL DEFAULT NULL COMMENT '预留字段07' AFTER `reserve_column06`,
-ADD COLUMN `reserve_column08` varchar(256) NULL DEFAULT NULL COMMENT '预留字段08' AFTER `reserve_column07`;
+    ADD COLUMN `longitude`        double(20, 6) NULL     DEFAULT NULL COMMENT '经度' AFTER `other`,
+    ADD COLUMN `latitude`         double(20, 6) NULL     DEFAULT NULL COMMENT '纬度' AFTER `longitude`,
+    ADD COLUMN `profession_id`    bigint(20)    NOT NULL DEFAULT 1 COMMENT '职业编号' AFTER `reserve_column04`,
+    ADD COLUMN `tag1`             bigint(20)    NULL     DEFAULT NULL COMMENT '标签1编号，对应标签表id' AFTER `profession_id`,
+    ADD COLUMN `tag2`             bigint(20)    NULL     DEFAULT NULL COMMENT '标签2编号，对应标签表id' AFTER `tag1`,
+    ADD COLUMN `tag3`             bigint(20)    NULL     DEFAULT NULL COMMENT '标签3编号，对应标签表id' AFTER `tag2`,
+    ADD COLUMN `tag4`             bigint(20)    NULL     DEFAULT NULL COMMENT '标签4编号，对应标签表id' AFTER `tag3`,
+    ADD COLUMN `tag5`             bigint(20)    NULL     DEFAULT NULL COMMENT '标签5编号，对应标签表id' AFTER `tag4`,
+    ADD COLUMN `reserve_column05` varchar(256)  NULL     DEFAULT NULL COMMENT '预留字段05' AFTER `tag5`,
+    ADD COLUMN `reserve_column06` varchar(256)  NULL     DEFAULT NULL COMMENT '预留字段06' AFTER `reserve_column05`,
+    ADD COLUMN `reserve_column07` varchar(256)  NULL     DEFAULT NULL COMMENT '预留字段07' AFTER `reserve_column06`,
+    ADD COLUMN `reserve_column08` varchar(256)  NULL     DEFAULT NULL COMMENT '预留字段08' AFTER `reserve_column07`;
 -- ----------------------------
 -- Records of user
 -- ----------------------------
@@ -228,15 +228,26 @@ CREATE TABLE `tag`  (
 -- Records of tag
 -- ----------------------------
 INSERT INTO `tag` VALUES (1, '颜值', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tag` VALUES (2, '吃货', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tag` VALUES (3, '篮球', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tag` VALUES (4, '学习', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tag` VALUES (5, '二次元', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tag` VALUES (6, '音乐', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tag` VALUES (7, '旅游', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tag` VALUES (8, '足球', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tag` VALUES (9, '游戏', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tag` VALUES (10, '影视', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tag`
+VALUES (2, '吃货', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tag`
+VALUES (3, '篮球', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tag`
+VALUES (4, '学习', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tag`
+VALUES (5, '二次元', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tag`
+VALUES (6, '音乐', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tag`
+VALUES (7, '旅游', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tag`
+VALUES (8, '足球', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tag`
+VALUES (9, '游戏', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tag`
+VALUES (10, '影视', '0', '2021-05-28 10:54:28', '2021-05-28 10:54:28', NULL, NULL, NULL, NULL, NULL);
 
-select * from `user`;
+select *
+from `user`
+where `id` = 149;
 select * from `tag`;

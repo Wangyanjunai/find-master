@@ -4,8 +4,8 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 120.24.27.86:8848
-        namespace: bb0e196a-546f-48b8-af0f-ae445d63c0cd
+        server-addr: 192.168.31.30:8848
+        namespace: 174f115e-55dd-486a-90e8-a96fe1a63965
   datasource:
     druid:
       username: find                                          #数据库连接用户名

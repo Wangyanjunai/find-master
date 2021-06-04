@@ -39,7 +39,7 @@ public class DistanceUtil {
 	}
 
 	public static void main(String[] args) {
-		double d = DistanceUtil.getDistance(116.308479, 39.983171, 116.353454, 39.996059);
+		double d = DistanceUtil.getDistance(-116.308479, 3.983171, -116.353454, -1.996059);
 		System.out.println(d);
 	}
 }

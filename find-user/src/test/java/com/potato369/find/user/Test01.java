@@ -9,6 +9,7 @@ import com.potato369.find.common.dto.LocationDTO;
 import com.potato369.find.common.vo.result.baidu.JsonRootBean;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Slf4j
@@ -21,6 +22,10 @@ public class Test01 {
         System.out.println("列表中最小的数：" + stats.getMin());
         System.out.println("所有数之和：" + stats.getSum());
         System.out.println("平均数：" + stats.getAverage());
+        double f = 111231.5585523625;
+        BigDecimal b = new BigDecimal(f);
+        double f1 = b.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+        log.info("f1={}", f1);
         String ip = "183.14.30.158";
         LocationDTO locationDTO = new LocationDTO();
         locationDTO.setIp(ip);
@@ -28,7 +33,7 @@ public class Test01 {
         if (StrUtil.isNotEmpty(ip)) {
             Map<String, Object> params = new HashMap<>();
             params.put("ak", "OvTyDm7rLM2soYix1D0tZKEs4SL0GlAx");
-            params.put("ip", ip);
+//            params.put("ip", ip);
             String urlString = StrUtil.trimToEmpty("https://api.map.baidu.com/location/ip");
             String result;
             try {
@@ -42,27 +47,13 @@ public class Test01 {
                 log.info("result={}", result);
                 JsonRootBean jsonRootBean = JSON.parseObject(result, JsonRootBean.class);
                 log.info("JsonRootBean={}", jsonRootBean);
-//                if (jsonb != null) {
-//                    if (jsonb.getIntValue("status") == 0) {
-//                        String address = jsonb.getString("address");
-//                        String content = jsonb.getString("content");
-//                        String[] adder = StrUtil.split(address, "|");
-//                        if (adder != null && adder.length > 0) {
-//                            locationDTO.setCountry("中国");
-//                            locationDTO.setProvince(adder[1] + "省");
-//                            locationDTO.setCity(adder[2] + "市");
-//                            if (StrUtil.isNotEmpty(locationDTO.getCity())) {
-//                                MunicipalityConstant constant = new MunicipalityConstant();
-//                                List<String> municipalityList = constant.getMunicipalityList();
-//                                if (municipalityList.contains(locationDTO.getCity())) {
-//                                    locationDTO.setProvince(adder[1] + "市");
-//                                    locationDTO.setCity(adder[2] + "市");
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                log.info("locationDTO={}", locationDTO);
+                double x = Double.parseDouble(jsonRootBean.getContent().getPoint().getX()) / 100000;
+                BigDecimal x1 = new BigDecimal(x);
+                double x11 = x1.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+                double y = Double.parseDouble(jsonRootBean.getContent().getPoint().getY()) / 100000;
+                BigDecimal y1 = new BigDecimal(y);
+                double y11 = y1.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+                log.info("x11={}, y11={}", x11, y11);
             } catch (Exception e) {
                 log.error("调用百度普通IP定位接口失败", e);
             }

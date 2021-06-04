@@ -34,7 +34,7 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class DynamicServiceImpl implements DynamicService{
+public class DynamicServiceImpl implements DynamicService {
 
     private UserMapper userMapperReader;
 
@@ -137,32 +137,32 @@ public class DynamicServiceImpl implements DynamicService{
                 locationDTO.setProvince(province2);
                 locationDTO.setCity(city2);
                 if (StrUtil.isAllEmpty(locationDTO.getCountry(), locationDTO.getProvince(), locationDTO.getCity())) {
-                	DynamicDTO dynamicDTO2 = this.getLocation(locationDTO, user);
-                	dynamicDTO.setCountry(dynamicDTO2.getCountry());
-                	dynamicDTO.setProvince(dynamicDTO2.getProvince());
-                	dynamicDTO.setCity(dynamicDTO2.getCity());
-				}
+                    DynamicDTO dynamicDTO2 = this.getLocation(locationDTO, user);
+                    dynamicDTO.setCountry(dynamicDTO2.getCountry());
+                    dynamicDTO.setProvince(dynamicDTO2.getProvince());
+                    dynamicDTO.setCity(dynamicDTO2.getCity());
+                }
             }
             Dynamic dynamic = this.getDynamicByUserId(dynamicDTO.getUserId());
             int result1;
             if (dynamic != null) {
-            	String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
-	            BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
-	            dynamic.setNickName(nickname1);
-	            dynamic.setUserId(userIdLong);
-	            result1 = this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
-			} else {
-				dynamic = new Dynamic();
-				String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
-	            BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
-	            dynamic.setNickName(nickname1);
-	            dynamic.setUserId(userIdLong);
-	            result1 = this.dynamicMapperWriter.insertSelective(dynamic);
-			}
+                String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
+                BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
+                dynamic.setNickName(nickname1);
+                dynamic.setUserId(userIdLong);
+                result1 = this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
+            } else {
+                dynamic = new Dynamic();
+                String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
+                BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
+                dynamic.setNickName(nickname1);
+                dynamic.setUserId(userIdLong);
+                result1 = this.dynamicMapperWriter.insertSelective(dynamic);
+            }
             if (result1 > 0) {
                 Long dynamicId = dynamic.getId();
                 DynamicInfo dynamicInfo = new DynamicInfo();
-                dynamicInfo.setDynamic_id(dynamicId);
+                dynamicInfo.setDynamicId(dynamicId);
                 dynamicInfo.setUserId(userIdLong);
                 String publicStatus = dynamicDTO.getPublicStatus();
                 dynamicInfo.setContent(dynamicDTO.getContent());
@@ -198,94 +198,94 @@ public class DynamicServiceImpl implements DynamicService{
     @Override
     @Transactional(readOnly = false)
     public CommonResult<Map<String, Object>> update(User user, DynamicDTO dynamicDTO, MultipartFile[] files, String message) throws Exception {
-		// 附件文件数据类型
-    	String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
+        // 附件文件数据类型
+        String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
 
-		// 用户id
-		Long userIdLong = dynamicDTO.getUserId();
-		
-		// 动态信息
-		Dynamic dynamic = null;
-		// 根据用户id，发布定位地址（国），省份，城市获取设备动态信息
-		if (dynamicDTO != null) {
-			dynamic = this.findDynamicByUserId(userIdLong, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
-		}
-		if (dynamic != null) {
-			String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
-			BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
-			this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
-		} else {
-			dynamic = new Dynamic();
-			String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
-			BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
-			dynamic.setNickName(user.getNickName());
-			dynamic.setUserId(user.getId());
-			this.dynamicMapperWriter.insertSelective(dynamic);
-		}
-		// 动态内容信息
-		DynamicInfo dynamicInfo = new DynamicInfo();
-		dynamicInfo.setAttacheType(attacheInfoDataType);
-		dynamicInfo.setAttacheNumber(files.length);
-		dynamicInfo.setDynamic_id(dynamic.getId());
-		dynamicInfo.setContent(dynamicDTO.getContent());
-		dynamicInfo.setPublicStatus(dynamicDTO.getPublicStatus());
-		dynamicInfo.setUserId(userIdLong);
-		// 将动态信息入库
-		this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
-		
-		AttacheInfo attacheInfo = new AttacheInfo();
-		attacheInfo.setDynamicInfoBy(dynamicInfo.getId());// 动态内容id
-		attacheInfo.setDataType(attacheInfoDataType); // 附件类型
-		List<File> files2 = new ArrayList<>();
-		StringBuilder filePath = new StringBuilder()
-				.append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes()))
-				.append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
-		if (AttacheInfoDataTypeEnum.Image.getCode().toString().equals(attacheInfoDataType)) {
-			filePath.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
-			for (MultipartFile multipartFile : files) {
-				if (!FileTypeUtil.isImageType(multipartFile.getContentType(), multipartFile.getOriginalFilename())) {
-					return CommonResult.validateFailed("上传图片资源文件类型不符合要求。");
-				}
-			}
-		}
-		if (AttacheInfoDataTypeEnum.Audio.getCode().toString().equals(attacheInfoDataType)) {
-			filePath.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
-			for (MultipartFile multipartFile : files) {
-				if (!FileTypeUtil.isAudioType(multipartFile.getContentType(), multipartFile.getOriginalFilename())) {
-					return CommonResult.validateFailed("上传语音资源文件类型不符合要求。");
-				}
-			}
-		}
-		String fileString1 = new StringBuilder().append(userIdLong)
-				.append("/")
-				.append(DateUtil.getDays())
-				.append("/")
-				.append(System.currentTimeMillis())
-				.append("/").toString();
-		// 附件文件存放路径
-		String fileString = filePath.append(fileString1).toString();
-		
-		for (MultipartFile multipartFile : files) {
-			String oldFileName = multipartFile.getOriginalFilename();
-			String newFileName = null;
-			if (oldFileName != null) {
+        // 用户id
+        Long userIdLong = dynamicDTO.getUserId();
+
+        // 动态信息
+        Dynamic dynamic = null;
+        // 根据用户id，发布定位地址（国），省份，城市获取设备动态信息
+        if (dynamicDTO != null) {
+            dynamic = this.findDynamicByUserId(userIdLong, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
+        }
+        if (dynamic != null) {
+            String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
+            BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
+            this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
+        } else {
+            dynamic = new Dynamic();
+            String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
+            BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
+            dynamic.setNickName(user.getNickName());
+            dynamic.setUserId(user.getId());
+            this.dynamicMapperWriter.insertSelective(dynamic);
+        }
+        // 动态内容信息
+        DynamicInfo dynamicInfo = new DynamicInfo();
+        dynamicInfo.setAttacheType(attacheInfoDataType);
+        dynamicInfo.setAttacheNumber(files.length);
+        dynamicInfo.setDynamicId(dynamic.getId());
+        dynamicInfo.setContent(dynamicDTO.getContent());
+        dynamicInfo.setPublicStatus(dynamicDTO.getPublicStatus());
+        dynamicInfo.setUserId(userIdLong);
+        // 将动态信息入库
+        this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
+
+        AttacheInfo attacheInfo = new AttacheInfo();
+        attacheInfo.setDynamicInfoBy(dynamicInfo.getId());// 动态内容id
+        attacheInfo.setDataType(attacheInfoDataType); // 附件类型
+        List<File> files2 = new ArrayList<>();
+        StringBuilder filePath = new StringBuilder()
+                .append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes()))
+                .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+        if (AttacheInfoDataTypeEnum.Image.getCode().toString().equals(attacheInfoDataType)) {
+            filePath.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+            for (MultipartFile multipartFile : files) {
+                if (!FileTypeUtil.isImageType(multipartFile.getContentType(), multipartFile.getOriginalFilename())) {
+                    return CommonResult.validateFailed("上传图片资源文件类型不符合要求。");
+                }
+            }
+        }
+        if (AttacheInfoDataTypeEnum.Audio.getCode().toString().equals(attacheInfoDataType)) {
+            filePath.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
+            for (MultipartFile multipartFile : files) {
+                if (!FileTypeUtil.isAudioType(multipartFile.getContentType(), multipartFile.getOriginalFilename())) {
+                    return CommonResult.validateFailed("上传语音资源文件类型不符合要求。");
+                }
+            }
+        }
+        String fileString1 = new StringBuilder().append(userIdLong)
+                .append("/")
+                .append(DateUtil.getDays())
+                .append("/")
+                .append(System.currentTimeMillis())
+                .append("/").toString();
+        // 附件文件存放路径
+        String fileString = filePath.append(fileString1).toString();
+
+        for (MultipartFile multipartFile : files) {
+            String oldFileName = multipartFile.getOriginalFilename();
+            String newFileName = null;
+            if (oldFileName != null) {
                 newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
             }
-			assert newFileName != null;
+            assert newFileName != null;
             File newHeadIconFile = new File(fileString, newFileName);
             if (!newHeadIconFile.getParentFile().exists()) {
-            	newHeadIconFile.getParentFile().mkdirs();
+                newHeadIconFile.getParentFile().mkdirs();
             }
             //发布一条动态
             multipartFile.transferTo(newHeadIconFile.getAbsoluteFile());
             files2.add(newHeadIconFile);
-		}
-		String fileNames = ErrorMessageUtil.fileNameBuild(files2, fileString1);
-		attacheInfo.setFileName(fileNames);// 附件名称
-		this.attacheInfoMapperWriter.insertSelective(attacheInfo);
-		Map<String, Object> data = new HashMap<>();
-		data.put("RELEASED", "OK");
-		return CommonResult.success(data, message);
+        }
+        String fileNames = ErrorMessageUtil.fileNameBuild(files2, fileString1);
+        attacheInfo.setFileName(fileNames);// 附件名称
+        this.attacheInfoMapperWriter.insertSelective(attacheInfo);
+        Map<String, Object> data = new HashMap<>();
+        data.put("RELEASED", "OK");
+        return CommonResult.success(data, message);
     }
 
     //获取定位地址
@@ -383,10 +383,7 @@ public class DynamicServiceImpl implements DynamicService{
             dynamicDTO.setProvince(dynamicLocation.getProvince());
             dynamicDTO.setCity(dynamicLocation.getCity());
         }
-        if (dynamicDTO.equals(dynamicDTOTmp)) {
-            return false;
-        }
-        return true;
+        return !dynamicDTO.equals(dynamicDTOTmp);
     }
 
     @Override
@@ -402,7 +399,7 @@ public class DynamicServiceImpl implements DynamicService{
             if (!dynamicInfoList.isEmpty()) {
                 DynamicInfo dynamicInfo = dynamicInfoList.get(0);
                 if (dynamicInfo != null) {
-                    Long dynamicId = dynamicInfo.getDynamic_id();
+                    Long dynamicId = dynamicInfo.getDynamicId();
                     Dynamic dynamic = this.dynamicMapperReader.selectByPrimaryKey(dynamicId);
                     if (dynamic != null) {
                         dynamic.setCountry(locationDTO.getCountry());
@@ -424,91 +421,92 @@ public class DynamicServiceImpl implements DynamicService{
         return this.dynamicInfoMapperReader.selectDynamicInfoData(dynamicInfoParam);
     }
 
-	@Override
+    @Override
     @Transactional(readOnly = true)
-	public Dynamic getDynamicByUserId(Long userId) {
-		DynamicExample example = new DynamicExample();
-		example.setDistinct(true);
-		example.setOrderByClause("id ASC, create_time DESC, update_time DESC");
-		example.createCriteria().andUserIdEqualTo(userId);
-		List<Dynamic> dynamicList = this.dynamicMapperReader.selectByExample(example);
-		Dynamic dynamic = null;
-		if (!CollectionUtils.isEmpty(dynamicList)) {
-			dynamic = dynamicList.get(0);
-		}
-		return dynamic;
-	}
-	
+    public Dynamic getDynamicByUserId(Long userId) {
+        DynamicExample example = new DynamicExample();
+        example.setDistinct(true);
+        example.setOrderByClause("id ASC, create_time DESC, update_time DESC");
+        example.createCriteria().andUserIdEqualTo(userId);
+        List<Dynamic> dynamicList = this.dynamicMapperReader.selectByExample(example);
+        Dynamic dynamic = null;
+        if (!CollectionUtils.isEmpty(dynamicList)) {
+            dynamic = dynamicList.get(0);
+        }
+        return dynamic;
+    }
+
     /**
      * 根据用户id查询动态信息
+     *
      * @param userId 用户id
      * @return 动态信息
      */
-	@Override
+    @Override
     @Transactional(readOnly = true)
-	public Dynamic findDynamicByUserId(Long userId, String country, String province, String city) {
-		DynamicExample example = new DynamicExample();
-		example.setDistinct(true);
-		example.setOrderByClause("id ASC, create_time DESC, update_time DESC");
-		if (StrUtil.isAllNotEmpty(country, province, city)) {
-			example.createCriteria().andUserIdEqualTo(userId).andCountryEqualTo(country).andProvinceEqualTo(province).andCityEqualTo(city);
-		} else {
-			example.createCriteria().andUserIdEqualTo(userId);
-		}
-		List<Dynamic> dynamicList = this.dynamicMapperReader.selectByExample(example);
-		Dynamic dynamic = null;
-		if (!CollectionUtils.isEmpty(dynamicList)) {
-			dynamic = dynamicList.get(0);
-		}
-		return dynamic;
-	}
+    public Dynamic findDynamicByUserId(Long userId, String country, String province, String city) {
+        DynamicExample example = new DynamicExample();
+        example.setDistinct(true);
+        example.setOrderByClause("id ASC, create_time DESC, update_time DESC");
+        if (StrUtil.isAllNotEmpty(country, province, city)) {
+            example.createCriteria().andUserIdEqualTo(userId).andCountryEqualTo(country).andProvinceEqualTo(province).andCityEqualTo(city);
+        } else {
+            example.createCriteria().andUserIdEqualTo(userId);
+        }
+        List<Dynamic> dynamicList = this.dynamicMapperReader.selectByExample(example);
+        Dynamic dynamic = null;
+        if (!CollectionUtils.isEmpty(dynamicList)) {
+            dynamic = dynamicList.get(0);
+        }
+        return dynamic;
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> update1(User user, DynamicDTO dynamicDTO, String fileName, String message)
-			throws Exception {
-		// 附件文件数据类型
-    	String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
+    @Override
+    public CommonResult<Map<String, Object>> update1(User user, DynamicDTO dynamicDTO, String fileName, String message)
+            throws Exception {
+        // 附件文件数据类型
+        String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
 
-		// 用户id
-		Long userIdLong = dynamicDTO.getUserId();
-		
-		// 动态信息
-		Dynamic dynamic = null;
-		// 根据用户id，发布定位地址（国），省份，城市获取设备动态信息
-		if (dynamicDTO != null) {
-			dynamic = this.findDynamicByUserId(userIdLong, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
-		}
-		if (dynamic != null) {
-			String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
-			BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
-			this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
-		} else {
-			dynamic = new Dynamic();
-			String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
-			BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
-			dynamic.setNickName(user.getNickName());
-			dynamic.setUserId(user.getId());
-			this.dynamicMapperWriter.insertSelective(dynamic);
-		}
-		// 动态内容信息
-		DynamicInfo dynamicInfo = new DynamicInfo();
-		dynamicInfo.setAttacheType(attacheInfoDataType);
-		dynamicInfo.setAttacheNumber(1);
-		dynamicInfo.setDynamic_id(dynamic.getId());
-		dynamicInfo.setContent(dynamicDTO.getContent());
-		dynamicInfo.setPublicStatus(dynamicDTO.getPublicStatus());
-		dynamicInfo.setUserId(userIdLong);
-		// 将动态信息入库
-		this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
-		
-		AttacheInfo attacheInfo = new AttacheInfo();
-		attacheInfo.setDynamicInfoBy(dynamicInfo.getId());// 动态内容id
-		attacheInfo.setDataType(attacheInfoDataType); // 附件类型
-		
-		attacheInfo.setFileName(fileName);// 附件名称
-		this.attacheInfoMapperWriter.insertSelective(attacheInfo);
-		Map<String, Object> data = new HashMap<>();
-		data.put("RELEASED", "OK");
-		return CommonResult.success(data, message);
-	}
+        // 用户id
+        Long userIdLong = dynamicDTO.getUserId();
+
+        // 动态信息
+        Dynamic dynamic = null;
+        // 根据用户id，发布定位地址（国），省份，城市获取设备动态信息
+        if (dynamicDTO != null) {
+            dynamic = this.findDynamicByUserId(userIdLong, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
+        }
+        if (dynamic != null) {
+            String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
+            BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
+            this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
+        } else {
+            dynamic = new Dynamic();
+            String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
+            BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
+            dynamic.setNickName(user.getNickName());
+            dynamic.setUserId(user.getId());
+            this.dynamicMapperWriter.insertSelective(dynamic);
+        }
+        // 动态内容信息
+        DynamicInfo dynamicInfo = new DynamicInfo();
+        dynamicInfo.setAttacheType(attacheInfoDataType);
+        dynamicInfo.setAttacheNumber(1);
+        dynamicInfo.setDynamicId(dynamic.getId());
+        dynamicInfo.setContent(dynamicDTO.getContent());
+        dynamicInfo.setPublicStatus(dynamicDTO.getPublicStatus());
+        dynamicInfo.setUserId(userIdLong);
+        // 将动态信息入库
+        this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
+
+        AttacheInfo attacheInfo = new AttacheInfo();
+        attacheInfo.setDynamicInfoBy(dynamicInfo.getId());// 动态内容id
+        attacheInfo.setDataType(attacheInfoDataType); // 附件类型
+
+        attacheInfo.setFileName(fileName);// 附件名称
+        this.attacheInfoMapperWriter.insertSelective(attacheInfo);
+        Map<String, Object> data = new HashMap<>();
+        data.put("RELEASED", "OK");
+        return CommonResult.success(data, message);
+    }
 }

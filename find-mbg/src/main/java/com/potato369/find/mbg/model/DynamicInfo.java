@@ -15,7 +15,7 @@ public class DynamicInfo implements Serializable {
     private Long userId;
 
     @ApiModelProperty(value = "动态信息id")
-    private Long dynamic_id;
+    private Long dynamicId;
 
     @ApiModelProperty(value = "动态内容状态，0->显示；1->隐藏；2->小推；3->大推，默认：0->显示")
     private String dynamicStatus;
@@ -83,12 +83,12 @@ public class DynamicInfo implements Serializable {
         this.userId = userId;
     }
 
-    public Long getDynamic_id() {
-        return dynamic_id;
+    public Long getDynamicId() {
+        return dynamicId;
     }
 
-    public void setDynamic_id(Long dynamic_id) {
-        this.dynamic_id = dynamic_id;
+    public void setDynamicId(Long dynamicId) {
+        this.dynamicId = dynamicId;
     }
 
     public String getDynamicStatus() {
@@ -227,7 +227,7 @@ public class DynamicInfo implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", userId=").append(userId);
-        sb.append(", dynamic_id=").append(dynamic_id);
+        sb.append(", dynamicId=").append(dynamicId);
         sb.append(", dynamicStatus=").append(dynamicStatus);
         sb.append(", publicStatus=").append(publicStatus);
         sb.append(", isTopic=").append(isTopic);

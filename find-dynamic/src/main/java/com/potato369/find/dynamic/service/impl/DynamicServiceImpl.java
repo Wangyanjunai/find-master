@@ -183,7 +183,7 @@ public class DynamicServiceImpl implements DynamicService {
         if (result1 > 0) {
             Long dynamicId = dynamic.getId();
             DynamicInfo dynamicInfo = new DynamicInfo();
-            dynamicInfo.setDynamic_id(dynamicId);
+            dynamicInfo.setDynamicId(dynamicId);
             dynamicInfo.setUserId(userIdLong);
             String publicStatus = dynamicDTO.getPublicStatus();
             dynamicInfo.setContent(dynamicDTO.getContent());
@@ -252,7 +252,7 @@ public class DynamicServiceImpl implements DynamicService {
         DynamicInfo dynamicInfo = new DynamicInfo();
         dynamicInfo.setAttacheType(attacheInfoDataType);
         dynamicInfo.setAttacheNumber(files.length);
-        dynamicInfo.setDynamic_id(dynamic.getId());
+        dynamicInfo.setDynamicId(dynamic.getId());
         dynamicInfo.setContent(dynamicDTO.getContent());
         dynamicInfo.setPublicStatus(dynamicDTO.getPublicStatus());
         dynamicInfo.setUserId(userIdLong);
@@ -412,22 +412,15 @@ public class DynamicServiceImpl implements DynamicService {
                     && StrUtil.isNotEmpty(dynamicDTOTmp.getProvince())
                     && StrUtil.isNotEmpty(dynamicLocation.getCity())
                     && StrUtil.isNotEmpty(dynamicDTOTmp.getCity())) {
-                if (dynamicDTOTmp.getCountry().equals(dynamicLocation.getCountry())
-                        && dynamicDTOTmp.getProvince().equals(dynamicLocation.getProvince())
-                        && dynamicDTOTmp.getCity().equals(dynamicLocation.getCity())) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return !dynamicDTOTmp.getCountry().equals(dynamicLocation.getCountry())
+                        || !dynamicDTOTmp.getProvince().equals(dynamicLocation.getProvince())
+                        || !dynamicDTOTmp.getCity().equals(dynamicLocation.getCity());
             } else {
                 return true;
             }
         } else {
-            if (dynamicDTOTmp == null && dynamicLocation == null) {
-                return false;
-            }
+            return dynamicDTOTmp != null || dynamicLocation != null;
         }
-        return true;
     }
 
     @Override
@@ -443,7 +436,7 @@ public class DynamicServiceImpl implements DynamicService {
             if (!dynamicInfoList.isEmpty()) {
                 DynamicInfo dynamicInfo = dynamicInfoList.get(0);
                 if (dynamicInfo != null) {
-                    Long dynamicId = dynamicInfo.getDynamic_id();
+                    Long dynamicId = dynamicInfo.getDynamicId();
                     Dynamic dynamic = this.dynamicMapperReader.selectByPrimaryKey(dynamicId);
                     if (dynamic != null) {
                         dynamic.setCountry(locationDTO.getCountry());

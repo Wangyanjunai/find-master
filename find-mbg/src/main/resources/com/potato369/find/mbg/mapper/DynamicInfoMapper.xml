@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.potato369.find.mbg.model.DynamicInfo">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="user_id" jdbcType="BIGINT" property="userId"/>
-        <result column="dynamic_id" jdbcType="BIGINT" property="dynamic_id"/>
+        <result column="dynamic_id" jdbcType="BIGINT" property="dynamicId"/>
         <result column="dynamic_status" jdbcType="CHAR" property="dynamicStatus"/>
         <result column="public_status" jdbcType="CHAR" property="publicStatus"/>
         <result column="is_topic" jdbcType="CHAR" property="isTopic" /><!-- 是否是话题，0->否；1->是，默认：0->否 -->
@@ -172,9 +172,10 @@
         )
         values (#{userId,jdbcType=BIGINT}, #{dynamicStatus,jdbcType=CHAR}, #{publicStatus,jdbcType=CHAR},
         #{isTopic,jdbcType=CHAR}, #{topicTitle,jdbcType=VARCHAR},
-        #{likes,jdbcType=INTEGER}, #{comments,jdbcType=INTEGER}, #{applications,jdbcType=INTEGER}, #{shares,jdbcType=INTEGER},
+        #{likes,jdbcType=INTEGER}, #{comments,jdbcType=INTEGER}, #{applications,jdbcType=INTEGER},
+        #{shares,jdbcType=INTEGER},
         #{attacheType,jdbcType=CHAR}, #{attacheNumber,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
-        #{updateTime,jdbcType=TIMESTAMP}, #{dynamic_id,jdbcType=BIGINT}, #{reserveColumn02,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP}, #{dynamicId,jdbcType=BIGINT}, #{reserveColumn02,jdbcType=VARCHAR},
         #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
         )
     </insert>
@@ -188,7 +189,7 @@
                 #{publicStatus,jdbcType=CHAR},
                 #{likes,jdbcType=INTEGER}, #{applications,jdbcType=INTEGER}, #{shares,jdbcType=INTEGER},
                 #{attacheType,jdbcType=CHAR}, #{attacheNumber,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
-                #{updateTime,jdbcType=TIMESTAMP}, #{dynamic_id,jdbcType=BIGINT}, #{reserveColumn02,jdbcType=VARCHAR},
+                #{updateTime,jdbcType=TIMESTAMP}, #{dynamicId,jdbcType=BIGINT}, #{reserveColumn02,jdbcType=VARCHAR},
                 #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR},
                 #{content,jdbcType=LONGVARCHAR})
     </insert>
