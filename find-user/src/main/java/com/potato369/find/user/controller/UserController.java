@@ -664,7 +664,7 @@ public class UserController {
             log.debug("开始登录");
             log.debug("前端传输过来的用户信息user={}", user);
         }
-        Map<String, UserVO2> map = new HashMap<>();
+        Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
         String message = "登录失败。";
         OperateRecord operateRecord = new OperateRecord();
@@ -706,6 +706,9 @@ public class UserController {
                 return CommonResult.validateFailed("客户端IP参数校验失败，客户端IP格式不正确。");
             }
             User user1 = this.userDaoUseJdbcTemplate.getByPhone(phone);
+            if (user1 == null) {
+                return CommonResult.failed("该手机号码未注册用户，请注册后再试。");
+            }
             //更新用户定位或者ip
             LocationDTO locationDTO = this.getLocation(country, province, city, ip);
             if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(locationDTO.getIp())) {
@@ -741,7 +744,7 @@ public class UserController {
             map.put("user", userVO2);
             return CommonResult.success(map, message);
         } catch (Exception e) {
-            log.error("注册出现错误", e);
+            log.error("登录出现错误", e);
             try {
                 this.operateRecordMapperWrite.insert(operateRecord);
             } catch (Exception e2) {
@@ -750,7 +753,7 @@ public class UserController {
             return CommonResult.failed(message);
         } finally {
             if (log.isDebugEnabled()) {
-                log.debug("结束注册");
+                log.debug("结束登录");
             }
         }
     }
