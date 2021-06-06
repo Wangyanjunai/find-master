@@ -33,7 +33,7 @@ public class Test01 {
         if (StrUtil.isNotEmpty(ip)) {
             Map<String, Object> params = new HashMap<>();
             params.put("ak", "OvTyDm7rLM2soYix1D0tZKEs4SL0GlAx");
-//            params.put("ip", ip);
+            params.put("ip", ip);
             String urlString = StrUtil.trimToEmpty("https://api.map.baidu.com/location/ip");
             String result;
             try {
@@ -57,6 +57,40 @@ public class Test01 {
             } catch (Exception e) {
                 log.error("调用百度普通IP定位接口失败", e);
             }
+        }
+
+        String host = "http://iploc.market.alicloudapi.com";
+        String path = "/v3/ip";
+        //String method = "GET";
+        String appcode = "5c21289ddc9749f6a105b40d24479398";
+//        Map<String, String> headers = new HashMap<>();
+        //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+//        headers.put("Authorization", "APPCODE " + appcode);
+        Map<String, Object> query = new HashMap<>();
+        query.put("ip", ip);
+        try {
+            /**
+             * 重要提示如下:
+             * HttpUtils请从
+             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java
+             * 下载
+             *
+             * 相应的依赖请参照
+             * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml
+             */
+            String result2 = HttpRequest.get(host + path)
+                    .header(Header.USER_AGENT, "Tools http")
+                    .header("Authorization", "APPCODE " + appcode)
+                    .charset(CharsetUtil.CHARSET_UTF_8)
+                    .form(query)
+                    .timeout(2000)
+                    .execute()
+                    .body();
+            log.info("result2={}", result2);
+            //获取response的body
+            //System.out.println(EntityUtils.toString(response.getEntity()));
+        } catch (Exception e) {
+            log.error("出现错误", e);
         }
     }
 }

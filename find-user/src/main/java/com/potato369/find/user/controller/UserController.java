@@ -391,62 +391,8 @@ public class UserController {
     @ApiOperation(value = "注册接口", notes = "注册接口", response = CommonResult.class)
     @PostMapping(value = "/reg.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, UserVO2>> register(
-            @RequestParam(name = "phone", required = true) String phone, // phone：手机号码
-            @RequestParam(name = "ip", required = false) String ip, // ip：客户端IP
-            @RequestParam(name = "gender", required = false) String gender, // gender：性别
-            @RequestParam(name = "platform", required = false) String platform, // platform：平台
-            @RequestParam(name = "nickname", required = false) String nickname, // nickname：昵称
-            @RequestParam(name = "weixinId", required = false) String weixinId, // weixinId：微信号码
-            @RequestParam(name = "imei", required = false) String imei, // imei：设备串码
-            @RequestParam(name = "model", required = false) String model, // model：设备型号
-            @RequestParam(name = "sysName", required = false) String sysName, // sysName：系统名称
-            @RequestParam(name = "sysCode", required = false) String sysCode, // sysCode：系统版本
-            @RequestParam(name = "networkMode", required = false) String networkMode, // networkMode：网络方式
-            @RequestParam(name = "year", required = false) String year, // year：出生年份
-            @RequestParam(name = "month", required = false) String month, // month：出生月份
-            @RequestParam(name = "date", required = false) String date, // date：出生日期
-            @RequestParam(name = "constellation", required = false) String constellation, // constellation：星座
-            @RequestParam(name = "country", required = false) String country, // country：国家
-            @RequestParam(name = "province", required = false) String province, // province：省份
-            @RequestParam(name = "city", required = false) String city, // city：城市
-            @RequestParam(name = "longitude", required = false) String longitude, // longitude：经度
-            @RequestParam(name = "latitude", required = false) String latitude, // latitude：纬度
-            @RequestParam(name = "professionId", required = false) String professionId, // professionId：职业编号
-            @RequestParam(name = "tag1", required = false) String tag1, // tag1：标签1
-            @RequestParam(name = "tag2", required = false) String tag2, // tag2：标签2
-            @RequestParam(name = "tag3", required = false) String tag3, // tag3：标签3
-            @RequestParam(name = "tag4", required = false) String tag4, // tag4：标签4
-            @RequestParam(name = "tag5", required = false) String tag5, // tag5：标签5
-            @RequestParam(name = "autograph", required = false) String autograph, // autograph：签名/动态内容
+            @Valid UserDTO userDTO,
             @RequestPart(value = "head", required = false) MultipartFile head) { // head：头像图片文件
-        UserDTO userDTO = UserDTO.builder().build();
-        if (StrUtil.isNotEmpty(phone)) userDTO.setPhone(phone);
-        if (StrUtil.isNotEmpty(ip)) userDTO.setIp(ip);
-        if (StrUtil.isNotEmpty(gender)) userDTO.setGender(gender);
-        if (StrUtil.isNotEmpty(platform)) userDTO.setPlatform(platform);
-        if (StrUtil.isNotEmpty(nickname)) userDTO.setNickname(nickname);
-        if (StrUtil.isNotEmpty(weixinId)) userDTO.setWeixinId(weixinId);
-        if (StrUtil.isNotEmpty(imei)) userDTO.setImei(imei);
-        if (StrUtil.isNotEmpty(model)) userDTO.setModel(model);
-        if (StrUtil.isNotEmpty(sysName)) userDTO.setSysName(sysName);
-        if (StrUtil.isNotEmpty(sysCode)) userDTO.setSysCode(sysCode);
-        if (StrUtil.isNotEmpty(networkMode)) userDTO.setNetworkMode(networkMode);
-        if (StrUtil.isNotEmpty(year)) userDTO.setYear(year);
-        if (StrUtil.isNotEmpty(month)) userDTO.setMonth(month);
-        if (StrUtil.isNotEmpty(date)) userDTO.setDate(date);
-        if (StrUtil.isNotEmpty(constellation)) userDTO.setConstellation(constellation);
-        if (StrUtil.isNotEmpty(country)) userDTO.setCountry(country);
-        if (StrUtil.isNotEmpty(province)) userDTO.setProvince(province);
-        if (StrUtil.isNotEmpty(city)) userDTO.setCity(city);
-        if (StrUtil.isNotEmpty(latitude)) userDTO.setLatitude(Double.parseDouble(latitude));
-        if (StrUtil.isNotEmpty(longitude)) userDTO.setLongitude(Double.parseDouble(longitude));
-        if (StrUtil.isNotEmpty(professionId)) userDTO.setProfessionId(Long.valueOf(professionId));
-        if (StrUtil.isNotEmpty(tag1)) userDTO.setTag1(Long.valueOf(tag1));
-        if (StrUtil.isNotEmpty(tag2)) userDTO.setTag2(Long.valueOf(tag2));
-        if (StrUtil.isNotEmpty(tag3)) userDTO.setTag3(Long.valueOf(tag3));
-        if (StrUtil.isNotEmpty(tag4)) userDTO.setTag4(Long.valueOf(tag4));
-        if (StrUtil.isNotEmpty(tag5)) userDTO.setTag5(Long.valueOf(tag5));
-        if (StrUtil.isNotEmpty(autograph)) userDTO.setAutograph(autograph);
         Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
         String message = "注册失败。";
@@ -459,7 +405,7 @@ public class UserController {
                 log.debug("开始注册");
                 log.debug("前端传输过来的用户信息user={}", userDTO);
             }
-            if (StrUtil.isEmpty(phone)) {
+            if (StrUtil.isEmpty(userDTO.getPhone())) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
@@ -467,7 +413,7 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码不能为空。");
             }
-            if (!RegexUtil.isMathPhone(phone)) {
+            if (!RegexUtil.isMathPhone(userDTO.getPhone())) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
@@ -475,7 +421,7 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码格式不正确。");
             }
-            if (StrUtil.isAllEmpty(ip, country, province, city, longitude, latitude)) {
+            if (StrUtil.isAllEmpty(userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), String.valueOf(userDTO.getLongitude()), String.valueOf(userDTO.getLatitude()))) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
@@ -483,7 +429,7 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市）参数校验失败，客户端IP，定位（国家、省份、城市）不能同时为空。");
             }
-            if (StrUtil.isNotEmpty(ip) && !RegexUtil.isMathIp(ip)) {
+            if (StrUtil.isNotEmpty(userDTO.getIp()) && !RegexUtil.isMathIp(userDTO.getIp())) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
@@ -491,9 +437,9 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("客户端IP参数校验失败，客户端IP格式不正确。");
             }
-            if (StrUtil.isNotEmpty(constellation)) {
+            if (StrUtil.isNotEmpty(userDTO.getConstellation())) {
                 ConstellationConstant ConstellationConstant = new ConstellationConstant();
-                if (!ConstellationConstant.getConstellationList().contains(constellation)) {
+                if (!ConstellationConstant.getConstellationList().contains(userDTO.getConstellation())) {
                     try {
                         this.userLogOpenFeign.record(0L, operateRecord);
                     } catch (Exception e) {
@@ -502,19 +448,19 @@ public class UserController {
                     return CommonResult.validateFailed("星座参数校验不通过，星座值非法。");
                 }
             }
-            User user = this.userDaoUseJdbcTemplate.getByPhone(phone);
+            User user = this.userDaoUseJdbcTemplate.getByPhone(userDTO.getPhone());
             String fileString1 = "";
             if (user == null) {
                 user = new User();
                 BeanUtils.copyProperties(userDTO, user);
+                String nickname = userDTO.getNickname();
                 if (StrUtil.isEmpty(nickname)) {
-                    nickname = new RandomNickNameUtil().randomName();
+                    user.setNickName(new RandomNickNameUtil().randomName());
                 }
-                user.setNickName(nickname);
-                if (StrUtil.isAllEmpty(country, province, city, longitude, latitude)) {
+                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), String.valueOf(userDTO.getLongitude()), String.valueOf(userDTO.getLatitude()))) {
                     // 根据IP调用百度定位获取地址
-                    if (StrUtil.isNotEmpty(ip)) {
-                        LocationDTO locationDTO = this.getLocation(country, province, city, ip);
+                    if (StrUtil.isNotEmpty(userDTO.getIp())) {
+                        LocationDTO locationDTO = this.getLocation(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getIp());
                         user.setIp(locationDTO.getIp());
                         user.setCountry(locationDTO.getCountry());
                         user.setProvince(locationDTO.getProvince());
@@ -525,21 +471,15 @@ public class UserController {
                         user.setLatitude(locationDTO.getLatitude());
                     }
                 }
-                user.setGender(gender);
+                String autograph = userDTO.getAutograph();
                 if (UserGenderEnum.Female.getCode().toString().equals(user.getGender())) {
                     if (StrUtil.isEmpty(autograph)) {
                         user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent()));
-                        autograph = StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent());
-                    } else {
-                        user.setAutograph(autograph);
                     }
                 }
                 if (UserGenderEnum.Male.getCode().toString().equals(user.getGender())) {
                     if (StrUtil.isEmpty(autograph)) {
                         user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent()));
-                        autograph = StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent());
-                    } else {
-                        user.setAutograph(autograph);
                     }
                 }
                 // 头像图片上传服务器
@@ -580,7 +520,6 @@ public class UserController {
                             "/";
                     // 附件文件存放路径
                     String fileString = filePath.append(fileString1).toString();
-
                     //发布一条动态
                     File newHeadIconFileDy = new File(fileString, newFileName);
                     try {
@@ -629,9 +568,9 @@ public class UserController {
                 }
             } else {
                 //更新用户定位或者ip
-                if (StrUtil.isAllEmpty(country, province, city, longitude, latitude)) {
-                    if (StrUtil.isNotEmpty(ip)) {
-                        LocationDTO locationDTO = this.getLocation(country, province, city, ip);
+                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), String.valueOf(userDTO.getLongitude()), String.valueOf(userDTO.getLatitude()))) {
+                    if (StrUtil.isNotEmpty(userDTO.getIp())) {
+                        LocationDTO locationDTO = this.getLocation(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getIp());
                         if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(locationDTO.getIp())) {
                             user.setIp(locationDTO.getIp());
                         }
@@ -652,28 +591,27 @@ public class UserController {
                         }
                     }
                 } else {
-                    if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(ip)) {
-                        user.setIp(ip);
+                    if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(userDTO.getIp())) {
+                        user.setIp(userDTO.getIp());
                     }
-                    if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(country)) {
-                        user.setCountry(country);
+                    if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(userDTO.getCountry())) {
+                        user.setCountry(userDTO.getCountry());
                     }
-                    if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(province)) {
-                        user.setProvince(province);
+                    if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(userDTO.getProvince())) {
+                        user.setProvince(userDTO.getProvince());
                     }
-                    if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(city)) {
-                        user.setCity(city);
+                    if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(userDTO.getCity())) {
+                        user.setCity(userDTO.getCity());
                     }
-                    if (user.getLongitude().equals(Double.parseDouble(longitude))) {
-                        user.setLongitude(Double.parseDouble(longitude));
+                    if (user.getLongitude().equals(Double.parseDouble(String.valueOf(userDTO.getLongitude())))) {
+                        user.setLongitude(Double.parseDouble(String.valueOf(userDTO.getLongitude())));
                     }
-                    if (user.getLatitude().equals(Double.parseDouble(latitude))) {
-                        user.setLatitude(Double.parseDouble(latitude));
+                    if (user.getLatitude().equals(Double.parseDouble(String.valueOf(userDTO.getLatitude())))) {
+                        user.setLatitude(Double.parseDouble(String.valueOf(userDTO.getLatitude())));
                     }
                 }
                 user.setUpdateTime(new Date());
                 this.userMapperWrite.updateByPrimaryKeySelective(user);
-                message = "登录成功。";
             }
             userVO2.setId(user.getId());
             userVO2.setNickname(user.getNickName());
