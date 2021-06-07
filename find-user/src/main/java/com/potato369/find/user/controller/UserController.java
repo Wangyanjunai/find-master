@@ -1,11 +1,7 @@
 package com.potato369.find.user.controller;
 
 import cn.hutool.core.lang.UUID;
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.Header;
-import cn.hutool.http.HttpRequest;
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.potato369.find.common.api.CommonResult;
@@ -18,10 +14,9 @@ import com.potato369.find.common.vo.BlackUserVO;
 import com.potato369.find.common.vo.ReportCategoryVO;
 import com.potato369.find.common.vo.UserVO;
 import com.potato369.find.common.vo.UserVO2;
-import com.potato369.find.common.vo.result.baidu.JsonRootBean;
 import com.potato369.find.mbg.mapper.*;
 import com.potato369.find.mbg.model.*;
-import com.potato369.find.user.config.props.BaiduProps;
+import com.potato369.find.user.config.props.AliyunProps;
 import com.potato369.find.user.config.props.ProjectUrlProps;
 import com.potato369.find.user.dao.DynamicDaoUseJdbcTemplate;
 import com.potato369.find.user.dao.DynamicInfoDaoUseJdbcTemplate;
@@ -42,7 +37,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -77,7 +71,7 @@ public class UserController {
 
     private BlacklistRecordMapper blacklistRecordMapperWrite;
 
-    private BaiduProps baiduProps;
+    private AliyunProps aliyunProps;
 
     private UserLogService userLogOpenFeign;
 
@@ -146,8 +140,8 @@ public class UserController {
     }
 
     @Autowired
-    public void setBaiduProps(BaiduProps baiduProps) {
-        this.baiduProps = baiduProps;
+    public void setAliyunProps(AliyunProps aliyunProps) {
+        this.aliyunProps = aliyunProps;
     }
 
     @Autowired
@@ -206,7 +200,7 @@ public class UserController {
     @ApiOperation(value = "上传或者修改头像小图接口", notes = "上传或者修改头像小图接口", response = CommonResult.class)
     @PutMapping(value = "/{id}/head.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, Object>> handleHeadIconUpload(@PathVariable(name = "id", required = true) Long id,
-                                                                  @RequestPart(value = "headIconFile", required = true) MultipartFile headIconFile01) {
+                                                                  @RequestPart(name = "headIconFile", required = true) MultipartFile headIconFile01) {
         if (log.isDebugEnabled()) {
             log.debug("开始上传头像小图片");
             log.debug("前端传输过来的用户id={}", id);
@@ -300,7 +294,7 @@ public class UserController {
     @PutMapping(value = "/{id}/background.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, Object>> handleBackgroundIconUpload(
             @PathVariable(name = "id", required = true) Long id,
-            @RequestPart(value = "backgroundIconFile", required = true) MultipartFile backgroundIconFile02) {
+            @RequestPart(name = "backgroundIconFile", required = true) MultipartFile backgroundIconFile02) {
         if (log.isDebugEnabled()) {
             log.debug("开始上传背景图片");
             log.debug("前端传输过来的用户id={}", id);
@@ -391,7 +385,7 @@ public class UserController {
     @ApiOperation(value = "注册接口", notes = "注册接口", response = CommonResult.class)
     @PostMapping(value = "/reg.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, UserVO2>> register(
-            @Valid UserDTO userDTO,
+            @Valid UserDTO userDTO, BindingResult bindingResult,
             @RequestPart(value = "head", required = false) MultipartFile head) { // head：头像图片文件
         Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
@@ -405,13 +399,13 @@ public class UserController {
                 log.debug("开始注册");
                 log.debug("前端传输过来的用户信息user={}", userDTO);
             }
-            if (StrUtil.isEmpty(userDTO.getPhone())) {
+            if (bindingResult.hasErrors()) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("手机号码参数校验失败，手机号码不能为空。");
+                return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
             if (!RegexUtil.isMathPhone(userDTO.getPhone())) {
                 try {
@@ -453,14 +447,24 @@ public class UserController {
             if (user == null) {
                 user = new User();
                 BeanUtils.copyProperties(userDTO, user);
-                String nickname = userDTO.getNickname();
+                String nickname = userDTO.getNickName();
                 if (StrUtil.isEmpty(nickname)) {
                     user.setNickName(new RandomNickNameUtil().randomName());
                 }
-                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), String.valueOf(userDTO.getLongitude()), String.valueOf(userDTO.getLatitude()))) {
+                Double longitude = userDTO.getLongitude();
+                String longitudeStr = "";
+                if (longitude != null) {
+                    longitudeStr = String.valueOf(longitude);
+                }
+                Double latitude = userDTO.getLatitude();
+                String latitudeStr = "";
+                if (latitude != null) {
+                    latitudeStr = String.valueOf(latitude);
+                }
+                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
                     // 根据IP调用百度定位获取地址
                     if (StrUtil.isNotEmpty(userDTO.getIp())) {
-                        LocationDTO locationDTO = this.getLocation(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getIp());
+                        LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), userDTO.getIp());
                         user.setIp(locationDTO.getIp());
                         user.setCountry(locationDTO.getCountry());
                         user.setProvince(locationDTO.getProvince());
@@ -570,7 +574,7 @@ public class UserController {
                 //更新用户定位或者ip
                 if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), String.valueOf(userDTO.getLongitude()), String.valueOf(userDTO.getLatitude()))) {
                     if (StrUtil.isNotEmpty(userDTO.getIp())) {
-                        LocationDTO locationDTO = this.getLocation(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getIp());
+                        LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToNull(this.aliyunProps.getUrl()), userDTO.getIp());
                         if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(locationDTO.getIp())) {
                             user.setIp(locationDTO.getIp());
                         }
@@ -648,18 +652,7 @@ public class UserController {
     //登录接口
     @ApiOperation(value = "登录接口", notes = "登录接口", response = CommonResult.class)
     @PutMapping(value = "/login.do")
-    public CommonResult<Map<String, UserVO2>> login(
-            @RequestParam(name = "phone", required = true) String phone, // phone：手机号码
-            @RequestParam(name = "ip", required = false) String ip, // ip：客户端IP
-            @RequestParam(name = "country", required = false) String country, // country：国家
-            @RequestParam(name = "province", required = false) String province, // province：省份
-            @RequestParam(name = "city", required = false) String city) { // city：城市
-        UserDTO user = UserDTO.builder().build();
-        user.setPhone(phone);
-        user.setIp(ip);
-        user.setCountry(country);
-        user.setProvince(province);
-        user.setCity(city);
+    public CommonResult<Map<String, UserVO2>> login(@Valid UserDTO user, BindingResult bindingResult) {
         if (log.isDebugEnabled()) {
             log.debug("开始登录");
             log.debug("前端传输过来的用户信息user={}", user);
@@ -672,16 +665,16 @@ public class UserController {
         operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
         operateRecord.setUserId(0L);
         try {
-            log.info("phone={}, ip={}, country={}, province={}, city={}", phone, ip, country, province, city);
-            if (StrUtil.isEmpty(phone)) {
+            log.info("phone={}, ip={}, country={}, province={}, city={}", user.getPhone(), user.getIp(), user.getCountry(), user.getProvince(), user.getCity());
+            if (bindingResult.hasErrors()) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("手机号码参数校验失败，手机号码不能为空。");
+                return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
-            if (!RegexUtil.isMathPhone(phone)) {
+            if (!RegexUtil.isMathPhone(user.getPhone())) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
@@ -689,7 +682,7 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码格式不正确。");
             }
-            if (StrUtil.isAllEmpty(ip, country, province, city)) {
+            if (StrUtil.isAllEmpty(user.getIp(), user.getCountry(), user.getProvince(), user.getCity())) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
@@ -697,7 +690,7 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市）参数校验失败，客户端IP，定位（国家、省份、城市）不能同时为空。");
             }
-            if (StrUtil.isNotEmpty(ip) && !RegexUtil.isMathIp(ip)) {
+            if (StrUtil.isNotEmpty(user.getIp()) && !RegexUtil.isMathIp(user.getIp())) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
@@ -705,12 +698,12 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("客户端IP参数校验失败，客户端IP格式不正确。");
             }
-            User user1 = this.userDaoUseJdbcTemplate.getByPhone(phone);
+            User user1 = this.userDaoUseJdbcTemplate.getByPhone(user.getPhone());
             if (user1 == null) {
                 return CommonResult.failed("该手机号码未注册用户，请注册后再试。");
             }
             //更新用户定位或者ip
-            LocationDTO locationDTO = this.getLocation(country, province, city, ip);
+            LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), user.getIp());
             if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(locationDTO.getIp())) {
                 user1.setIp(locationDTO.getIp());
             }
@@ -1286,56 +1279,5 @@ public class UserController {
         if (user != null && StrUtil.isNotEmpty(user.getAutograph()) && !user.getAutograph().equals(user2.getAutograph())) {//签名
             user2.setAutograph(user.getAutograph());
         }
-    }
-
-    public LocationDTO getLocation(String country, String province, String city, String ip) {
-        // 根据ip调用百度定位获取地址
-        LocationDTO locationDTO = new LocationDTO();
-        locationDTO.setIp(ip);
-        locationDTO.setCountry(country);
-        if (StrUtil.isAllEmpty(country, province, city)) {
-            if (StrUtil.isNotEmpty(ip)) {
-                Map<String, Object> params = new ConcurrentHashMap<>();
-                params.put("ak", StrUtil.trimToEmpty(this.baiduProps.getAk()));
-                params.put("ip", ip);
-                String urlString = StrUtil.trimToEmpty(this.baiduProps.getUrl());
-                try {
-                    String result = HttpRequest.get(urlString)
-                            .header(Header.USER_AGENT, "Tools http")
-                            .charset(CharsetUtil.CHARSET_UTF_8)
-                            .form(params)
-                            .timeout(5000)
-                            .execute()
-                            .body();
-                    JsonRootBean jsonRootBean = null;
-                    if (StrUtil.isNotEmpty(result)) {
-                        if (result == null) {
-                            log.error("调用百度普通IP定位接口失败");
-                        } else {
-                            jsonRootBean = JSON.parseObject(result, JsonRootBean.class);
-                        }
-                    }
-                    if (jsonRootBean != null) {
-                        if (jsonRootBean.getStatus() == 0) {
-                            locationDTO.setCountry("中国");
-                            locationDTO.setProvince(jsonRootBean.getContent().getAddressDetail().getProvince());
-                            locationDTO.setCity(jsonRootBean.getContent().getAddressDetail().getCity());
-                            locationDTO.setDistrict(jsonRootBean.getContent().getAddressDetail().getDistrict());
-                            locationDTO.setOther(jsonRootBean.getContent().getAddressDetail().getStreet());
-                            Double longitude = new BigDecimal(jsonRootBean.getContent().getPoint().getX()).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-                            Double latitude = new BigDecimal(jsonRootBean.getContent().getPoint().getY()).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-                            locationDTO.setLongitude(longitude);
-                            locationDTO.setLatitude(latitude);
-                            if (log.isDebugEnabled()) {
-                                log.debug("locationDTO={}", locationDTO);
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    log.error("调用百度普通IP定位接口失败", e);
-                }
-            }
-        }
-        return locationDTO;
     }
 }

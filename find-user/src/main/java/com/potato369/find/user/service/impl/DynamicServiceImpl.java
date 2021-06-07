@@ -486,6 +486,8 @@ public class DynamicServiceImpl implements DynamicService {
             BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
             dynamic.setNickName(user.getNickName());
             dynamic.setUserId(user.getId());
+            dynamic.setLongitude(user.getLongitude());
+            dynamic.setLatitude(user.getLatitude());
             this.dynamicMapperWriter.insertSelective(dynamic);
         }
         // 动态内容信息

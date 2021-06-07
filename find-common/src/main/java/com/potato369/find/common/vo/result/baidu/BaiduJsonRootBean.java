@@ -8,7 +8,7 @@ import lombok.*;
  * <pre>
  * @PackageName com.potato369.find.common.vo.result.baidu
  * @ClassName JsonRootBean
- * @Desc 百度普通IP定位
+ * @Desc 百度普通IP定位返回数据
  * @WebSite https://www.potato369.com
  * @Author admin
  * @Date 2021/06/03 15:07
@@ -22,7 +22,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class JsonRootBean {
+public class BaiduJsonRootBean {
     @JSONField(name = "address")
     @JsonProperty(value = "address")
     private String address;

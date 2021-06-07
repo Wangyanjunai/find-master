@@ -23,7 +23,7 @@ public class UserDTO extends AbstractDTO {
     @ApiModelProperty(value = "手机号码")
     @JSONField(name = "phone")
     @JsonProperty(value = "phone")
-    @NotEmpty(message = "手机号码不能为空")
+    @NotEmpty(message = "手机号码参数校验失败，手机号码不能为空。")
     private String phone;
 
     /**
@@ -34,7 +34,6 @@ public class UserDTO extends AbstractDTO {
     @ApiModelProperty(value = "客户端IP")
     @JSONField(name = "ip")
     @JsonProperty(value = "ip")
-    @NotEmpty(message = "客户端IP不能为空")
     private String ip;
 
     /**
@@ -65,7 +64,7 @@ public class UserDTO extends AbstractDTO {
     @ApiModelProperty(value = "昵称")
     @JSONField(name = "nickname")
     @JsonProperty(value = "nickname")
-    private String nickname;
+    private String nickName;
 
     /**
      * <pre>
