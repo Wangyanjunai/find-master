@@ -19,11 +19,23 @@ public class DynamicDaoUseJdbcTemplate {
     }
 	
 	public Dynamic getById(Long id) {
-        String sql = "select `id`, `user_id`, `nick_name`, `network_mode`, `country`, `province`, `city`, `district` from `dynamic` where `id` = ?";
+        String sql = "select `id`, `user_id`, `nick_name`, `network_mode`, `country`, `province`, `city`, `longitude`, `latitude`, `district` from `dynamic` where `id` = ?";
         RowMapper<Dynamic> mapper = new BeanPropertyRowMapper<>(Dynamic.class);
         Dynamic dynamic = null;
         try {
         	dynamic = this.jdbcTemplate.queryForObject(sql, mapper, id);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+        return dynamic;
+    }
+	
+	public Dynamic getByUserId(Long userId) {
+        String sql = "select `id`, `user_id`, `nick_name`, `network_mode`, `country`, `province`, `city`, `longitude`, `latitude`, `district` from `dynamic` where `user_id` = ?";
+        RowMapper<Dynamic> mapper = new BeanPropertyRowMapper<>(Dynamic.class);
+        Dynamic dynamic = null;
+        try {
+        	dynamic = this.jdbcTemplate.queryForObject(sql, mapper, userId);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}

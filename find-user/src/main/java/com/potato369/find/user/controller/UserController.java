@@ -52,6 +52,8 @@ public class UserController {
     private UserMapper userMapperReader;
 
     private UserDaoUseJdbcTemplate userDaoUseJdbcTemplate;
+    
+    private DynamicMapper dynamicMapperWriter; 
 
     private DynamicDaoUseJdbcTemplate dynamicDaoUseJdbcTemplate;
 
@@ -95,6 +97,11 @@ public class UserController {
     }
 
     @Autowired
+    public void setDynamicMapperWriter(DynamicMapper dynamicMapperWriter) {
+		this.dynamicMapperWriter = dynamicMapperWriter;
+	}
+
+	@Autowired
     public void setDynamicDaoUseJdbcTemplate(DynamicDaoUseJdbcTemplate dynamicDaoUseJdbcTemplate) {
         this.dynamicDaoUseJdbcTemplate = dynamicDaoUseJdbcTemplate;
     }
@@ -682,13 +689,26 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码格式不正确。");
             }
-            if (StrUtil.isAllEmpty(user.getIp(), user.getCountry(), user.getProvince(), user.getCity())) {
+            
+            Double longitude = user.getLongitude();//经度
+            String longitudeString = "";
+            if (longitude != null) {
+            	longitudeString = String.valueOf(longitude);
+			}
+            
+            Double latitude = user.getLatitude();//纬度
+            String latitudeString = "";
+            if (latitude != null) {
+            	latitudeString = String.valueOf(latitude);
+			}
+            
+            if (StrUtil.isAllEmpty(user.getIp(), user.getCountry(), user.getProvince(), user.getCity(), longitudeString, latitudeString)) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市）参数校验失败，客户端IP，定位（国家、省份、城市）不能同时为空。");
+                return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市）参数校验失败，客户端IP，定位（国家、省份、城市、经纬度）不能同时为空。");
             }
             if (StrUtil.isNotEmpty(user.getIp()) && !RegexUtil.isMathIp(user.getIp())) {
                 try {
@@ -702,22 +722,69 @@ public class UserController {
             if (user1 == null) {
                 return CommonResult.failed("该手机号码未注册用户，请注册后再试。");
             }
-            //更新用户定位或者ip
-            LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), user.getIp());
-            if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(locationDTO.getIp())) {
-                user1.setIp(locationDTO.getIp());
-            }
-            if (StrUtil.isNotEmpty(user1.getCountry()) && !user1.getCountry().equals(locationDTO.getCountry())) {
-                user1.setCountry(locationDTO.getCountry());
-            }
-            if (StrUtil.isNotEmpty(user1.getProvince()) && !user1.getProvince().equals(locationDTO.getProvince())) {
-                user1.setProvince(locationDTO.getProvince());
-            }
-            if (StrUtil.isNotEmpty(user1.getCity()) && !user1.getCity().equals(locationDTO.getCity())) {
-                user1.setCity(locationDTO.getCity());
-            }
+            if (StrUtil.isAllEmpty(user.getCountry(), user.getProvince(), user.getCity(), longitudeString, latitudeString)) {
+				if (StrUtil.isNotEmpty(user.getIp())) {
+					//更新用户定位或者ip
+		            LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), user.getIp());
+		            if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(locationDTO.getIp())) {
+		                user1.setIp(locationDTO.getIp());
+		            }
+		            if (StrUtil.isNotEmpty(user1.getCountry()) && !user1.getCountry().equals(locationDTO.getCountry())) {
+		                user1.setCountry(locationDTO.getCountry());
+		            }
+		            if (StrUtil.isNotEmpty(user1.getProvince()) && !user1.getProvince().equals(locationDTO.getProvince())) {
+		                user1.setProvince(locationDTO.getProvince());
+		            }
+		            if (StrUtil.isNotEmpty(user1.getCity()) && !user1.getCity().equals(locationDTO.getCity())) {
+		                user1.setCity(locationDTO.getCity());
+		            }
+				}
+			} else {
+				if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(user.getIp())) {
+	                user1.setIp(user.getIp());
+	            }
+	            if (StrUtil.isNotEmpty(user1.getCountry()) && !user1.getCountry().equals(user.getCountry())) {
+	                user1.setCountry(user.getCountry());
+	            }
+	            if (StrUtil.isNotEmpty(user1.getProvince()) && !user1.getProvince().equals(user.getProvince())) {
+	                user1.setProvince(user.getProvince());
+	            }
+	            if (StrUtil.isNotEmpty(user1.getCity()) && !user1.getCity().equals(user.getCity())) {
+	                user1.setCity(user.getCity());
+	            }
+	            if (!user1.getLongitude().equals(user.getLongitude())) {
+	                user1.setLongitude(user.getLongitude());
+	            }
+	            if (!user1.getLatitude().equals(user.getLatitude())) {
+	                user1.setLatitude(user.getLatitude());
+	            }
+			}
             user1.setUpdateTime(new Date());
             this.userMapperWrite.updateByPrimaryKeySelective(user1);
+            Dynamic dynamic = this.dynamicDaoUseJdbcTemplate.getByUserId(user1.getId());
+            if (dynamic != null) {
+            	if (!dynamic.getCountry().equals(user1.getCountry())) {
+            		dynamic.setCountry(user1.getCountry());
+            		dynamic.setUpdateTime(new Date());
+				}
+            	if (!dynamic.getProvince().equals(user1.getProvince())) {
+            		dynamic.setProvince(user1.getProvince());
+            		dynamic.setUpdateTime(new Date());
+				}
+            	if (!dynamic.getCity().equals(user1.getCity())) {
+            		dynamic.setCity(user1.getCity());
+            		dynamic.setUpdateTime(new Date());
+				}
+            	if (!dynamic.getLongitude().equals(user1.getLongitude())) {
+            		dynamic.setLongitude(user1.getLongitude());
+            		dynamic.setUpdateTime(new Date());
+				}
+            	if (!dynamic.getLatitude().equals(user1.getLatitude())) {
+            		dynamic.setLatitude(user1.getLatitude());
+            		dynamic.setUpdateTime(new Date());
+				}
+            	this.dynamicMapperWriter.updateByPrimaryKey(dynamic);
+			}
             message = "登录成功。";
             userVO2.setId(user1.getId());
             userVO2.setNickname(user1.getNickName());
