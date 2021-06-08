@@ -871,12 +871,12 @@ public class UserController {
     //修改或者更新用户资料接口
     @PutMapping(value = "/{id}/update.do", consumes = {"application/json;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, Object>> update(@PathVariable(name = "id", required = true) Long id,
-                                                    UpdateUserDTO user) {
+                                                    UpdateUserDTO updateUserDTO) {
         if (log.isDebugEnabled()) {
             log.debug("开始修改或者更新用户资料");
         }
         if (log.isDebugEnabled()) {
-            log.debug("前端传输过来的用户信息id={}，user={}", id, user);
+            log.debug("前端传输过来的用户信息id={}，updateUserDTO={}", id, updateUserDTO);
         }
         Map<String, Object> data = new HashMap<>();
         OperateRecord operateRecord = new OperateRecord();
@@ -884,14 +884,15 @@ public class UserController {
         operateRecord.setType(OperateRecordTypeEnum.UpdateUser.getCode());
         operateRecord.setUserId(id);
         try {
-            String tag1 = user.getTag1();
-            String tag2 = user.getTag2();
-            String tag3 = user.getTag3();
-            String tag4 = user.getTag4();
+            Long professionId = updateUserDTO.getProfessionId();
+            String tag1 = updateUserDTO.getTag1();
+            String tag2 = updateUserDTO.getTag2();
+            String tag3 = updateUserDTO.getTag3();
+            String tag4 = updateUserDTO.getTag4();
 
             User user2 = this.userDaoUseJdbcTemplate.getById(id);
-            if (user2 != null && user != null) {
-                this.copy(user, user2);
+            if (user2 != null) {
+                this.copy(updateUserDTO, user2);
                 user2.setUpdateTime(new Date());
                 this.userMapperWrite.updateByPrimaryKeySelective(user2);
                 try {
@@ -1373,10 +1374,11 @@ public class UserController {
     }
 
     /**
+     * <pre>
      * 根据标签的名称获取标签Id
-     *
-     * @param name
-     * @return
+     * @param name 标签名称
+     * @return 标签信息Id
+     * </pre>
      */
     private Long getTagIdByName(String name) {
         Long tagIdLong = null;
