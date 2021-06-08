@@ -142,6 +142,4 @@ logging:
       springframework:
         web: TRACE
         cloud:
-          netflix: TRACE      
-        
-                
+          netflix: TRACE

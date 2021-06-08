@@ -23,6 +23,7 @@ import com.potato369.find.user.dao.DynamicInfoDaoUseJdbcTemplate;
 import com.potato369.find.user.dao.ReportCategoryDaoUseJdbcTemplate;
 import com.potato369.find.user.dao.UserDaoUseJdbcTemplate;
 import com.potato369.find.user.feign.UserLogService;
+import com.potato369.find.user.service.TagService;
 import com.potato369.find.user.service.UserService;
 import com.potato369.find.user.utils.RandomNickNameUtil;
 import io.swagger.annotations.Api;
@@ -52,8 +53,8 @@ public class UserController {
     private UserMapper userMapperReader;
 
     private UserDaoUseJdbcTemplate userDaoUseJdbcTemplate;
-    
-    private DynamicMapper dynamicMapperWriter; 
+
+    private DynamicMapper dynamicMapperWriter;
 
     private DynamicDaoUseJdbcTemplate dynamicDaoUseJdbcTemplate;
 
@@ -81,6 +82,8 @@ public class UserController {
 
     private ProjectUrlProps projectUrlProps;
 
+    private TagService tagService;
+
     @Autowired
     public void setUserMapperWrite(UserMapper userMapperWrite) {
         this.userMapperWrite = userMapperWrite;
@@ -98,10 +101,10 @@ public class UserController {
 
     @Autowired
     public void setDynamicMapperWriter(DynamicMapper dynamicMapperWriter) {
-		this.dynamicMapperWriter = dynamicMapperWriter;
-	}
+        this.dynamicMapperWriter = dynamicMapperWriter;
+    }
 
-	@Autowired
+    @Autowired
     public void setDynamicDaoUseJdbcTemplate(DynamicDaoUseJdbcTemplate dynamicDaoUseJdbcTemplate) {
         this.dynamicDaoUseJdbcTemplate = dynamicDaoUseJdbcTemplate;
     }
@@ -164,6 +167,11 @@ public class UserController {
     @Autowired
     public void setProjectUrlProps(ProjectUrlProps projectUrlProps) {
         this.projectUrlProps = projectUrlProps;
+    }
+
+    @Autowired
+    public void setTagService(TagService tagService) {
+        this.tagService = tagService;
     }
 
     //上报或者更新极光推送唯一设备的标识接口
@@ -672,7 +680,7 @@ public class UserController {
         operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
         operateRecord.setUserId(0L);
         try {
-            log.info("phone={}, ip={}, country={}, province={}, city={}", user.getPhone(), user.getIp(), user.getCountry(), user.getProvince(), user.getCity());
+            log.info("phone={}, ip={}, country={}, province={}, city={}, longitude={}, latitude={}", user.getPhone(), user.getIp(), user.getCountry(), user.getProvince(), user.getCity(), user.getLongitude(), user.getLatitude());
             if (bindingResult.hasErrors()) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
@@ -689,26 +697,26 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码格式不正确。");
             }
-            
+
             Double longitude = user.getLongitude();//经度
             String longitudeString = "";
             if (longitude != null) {
-            	longitudeString = String.valueOf(longitude);
-			}
-            
+                longitudeString = String.valueOf(longitude);
+            }
+
             Double latitude = user.getLatitude();//纬度
             String latitudeString = "";
             if (latitude != null) {
-            	latitudeString = String.valueOf(latitude);
-			}
-            
+                latitudeString = String.valueOf(latitude);
+            }
+
             if (StrUtil.isAllEmpty(user.getIp(), user.getCountry(), user.getProvince(), user.getCity(), longitudeString, latitudeString)) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市）参数校验失败，客户端IP，定位（国家、省份、城市、经纬度）不能同时为空。");
+                return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市、经度、纬度）参数校验失败，客户端IP，定位（国家、省份、城市、经度、纬度）不能同时为空。");
             }
             if (StrUtil.isNotEmpty(user.getIp()) && !RegexUtil.isMathIp(user.getIp())) {
                 try {
@@ -723,68 +731,78 @@ public class UserController {
                 return CommonResult.failed("该手机号码未注册用户，请注册后再试。");
             }
             if (StrUtil.isAllEmpty(user.getCountry(), user.getProvince(), user.getCity(), longitudeString, latitudeString)) {
-				if (StrUtil.isNotEmpty(user.getIp())) {
-					//更新用户定位或者ip
-		            LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), user.getIp());
-		            if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(locationDTO.getIp())) {
-		                user1.setIp(locationDTO.getIp());
-		            }
-		            if (StrUtil.isNotEmpty(user1.getCountry()) && !user1.getCountry().equals(locationDTO.getCountry())) {
-		                user1.setCountry(locationDTO.getCountry());
-		            }
-		            if (StrUtil.isNotEmpty(user1.getProvince()) && !user1.getProvince().equals(locationDTO.getProvince())) {
-		                user1.setProvince(locationDTO.getProvince());
-		            }
-		            if (StrUtil.isNotEmpty(user1.getCity()) && !user1.getCity().equals(locationDTO.getCity())) {
-		                user1.setCity(locationDTO.getCity());
-		            }
-				}
-			} else {
-				if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(user.getIp())) {
-	                user1.setIp(user.getIp());
-	            }
-	            if (StrUtil.isNotEmpty(user1.getCountry()) && !user1.getCountry().equals(user.getCountry())) {
-	                user1.setCountry(user.getCountry());
-	            }
-	            if (StrUtil.isNotEmpty(user1.getProvince()) && !user1.getProvince().equals(user.getProvince())) {
-	                user1.setProvince(user.getProvince());
-	            }
-	            if (StrUtil.isNotEmpty(user1.getCity()) && !user1.getCity().equals(user.getCity())) {
-	                user1.setCity(user.getCity());
-	            }
-	            if (!user1.getLongitude().equals(user.getLongitude())) {
-	                user1.setLongitude(user.getLongitude());
-	            }
-	            if (!user1.getLatitude().equals(user.getLatitude())) {
-	                user1.setLatitude(user.getLatitude());
-	            }
-			}
+                if (StrUtil.isNotEmpty(user.getIp())) {
+                    //更新用户定位或者ip
+                    LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), user.getIp());
+                    if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(locationDTO.getIp())) {
+                        user1.setIp(locationDTO.getIp());
+                    }
+                    if (StrUtil.isNotEmpty(user1.getCountry()) && !user1.getCountry().equals(locationDTO.getCountry())) {
+                        user1.setCountry(locationDTO.getCountry());
+                    }
+                    if (StrUtil.isNotEmpty(user1.getProvince()) && !user1.getProvince().equals(locationDTO.getProvince())) {
+                        user1.setProvince(locationDTO.getProvince());
+                    }
+                    if (StrUtil.isNotEmpty(user1.getCity()) && !user1.getCity().equals(locationDTO.getCity())) {
+                        user1.setCity(locationDTO.getCity());
+                    }
+                    if (user1.getLongitude() == null) {
+                        user1.setLongitude(locationDTO.getLongitude());
+                    } else if (!user1.getLongitude().equals(locationDTO.getLongitude())) {
+                        user1.setLongitude(locationDTO.getLongitude());
+                    }
+                    if (user1.getLatitude() == null) {
+                        user1.setLatitude(locationDTO.getLatitude());
+                    } else if (!user1.getLatitude().equals(locationDTO.getLatitude())) {
+                        user1.setLatitude(locationDTO.getLatitude());
+                    }
+                }
+            } else {
+                if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(user.getIp())) {
+                    user1.setIp(user.getIp());
+                }
+                if (StrUtil.isNotEmpty(user1.getCountry()) && !user1.getCountry().equals(user.getCountry())) {
+                    user1.setCountry(user.getCountry());
+                }
+                if (StrUtil.isNotEmpty(user1.getProvince()) && !user1.getProvince().equals(user.getProvince())) {
+                    user1.setProvince(user.getProvince());
+                }
+                if (StrUtil.isNotEmpty(user1.getCity()) && !user1.getCity().equals(user.getCity())) {
+                    user1.setCity(user.getCity());
+                }
+                if (!user1.getLongitude().equals(user.getLongitude())) {
+                    user1.setLongitude(user.getLongitude());
+                }
+                if (!user1.getLatitude().equals(user.getLatitude())) {
+                    user1.setLatitude(user.getLatitude());
+                }
+            }
             user1.setUpdateTime(new Date());
             this.userMapperWrite.updateByPrimaryKeySelective(user1);
             Dynamic dynamic = this.dynamicDaoUseJdbcTemplate.getByUserId(user1.getId());
             if (dynamic != null) {
-            	if (!dynamic.getCountry().equals(user1.getCountry())) {
-            		dynamic.setCountry(user1.getCountry());
-            		dynamic.setUpdateTime(new Date());
-				}
-            	if (!dynamic.getProvince().equals(user1.getProvince())) {
-            		dynamic.setProvince(user1.getProvince());
-            		dynamic.setUpdateTime(new Date());
-				}
-            	if (!dynamic.getCity().equals(user1.getCity())) {
-            		dynamic.setCity(user1.getCity());
-            		dynamic.setUpdateTime(new Date());
-				}
-            	if (!dynamic.getLongitude().equals(user1.getLongitude())) {
-            		dynamic.setLongitude(user1.getLongitude());
-            		dynamic.setUpdateTime(new Date());
-				}
-            	if (!dynamic.getLatitude().equals(user1.getLatitude())) {
-            		dynamic.setLatitude(user1.getLatitude());
-            		dynamic.setUpdateTime(new Date());
-				}
-            	this.dynamicMapperWriter.updateByPrimaryKey(dynamic);
-			}
+                if (!dynamic.getCountry().equals(user1.getCountry())) {
+                    dynamic.setCountry(user1.getCountry());
+                }
+                if (!dynamic.getProvince().equals(user1.getProvince())) {
+                    dynamic.setProvince(user1.getProvince());
+                }
+                if (!dynamic.getCity().equals(user1.getCity())) {
+                    dynamic.setCity(user1.getCity());
+                }
+                if (dynamic.getLongitude() == null) {
+                    dynamic.setLongitude(user1.getLongitude());
+                } else if (!dynamic.getLongitude().equals(user1.getLongitude())) {
+                    dynamic.setLongitude(user1.getLongitude());
+                }
+                if (dynamic.getLatitude() == null) {
+                    dynamic.setLatitude(user1.getLatitude());
+                } else if (!dynamic.getLatitude().equals(user1.getLatitude())) {
+                    dynamic.setLatitude(user1.getLatitude());
+                }
+                dynamic.setUpdateTime(new Date());
+                this.dynamicMapperWriter.updateByPrimaryKey(dynamic);
+            }
             message = "登录成功。";
             userVO2.setId(user1.getId());
             userVO2.setNickname(user1.getNickName());
@@ -852,7 +870,8 @@ public class UserController {
 
     //修改或者更新用户资料接口
     @PutMapping(value = "/{id}/update.do", consumes = {"application/json;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
-    public CommonResult<Map<String, Object>> update(@PathVariable(name = "id", required = true) Long id, @RequestBody(required = false) UpdateUserDTO user) {
+    public CommonResult<Map<String, Object>> update(@PathVariable(name = "id", required = true) Long id,
+                                                    UpdateUserDTO user) {
         if (log.isDebugEnabled()) {
             log.debug("开始修改或者更新用户资料");
         }
@@ -865,6 +884,11 @@ public class UserController {
         operateRecord.setType(OperateRecordTypeEnum.UpdateUser.getCode());
         operateRecord.setUserId(id);
         try {
+            String tag1 = user.getTag1();
+            String tag2 = user.getTag2();
+            String tag3 = user.getTag3();
+            String tag4 = user.getTag4();
+
             User user2 = this.userDaoUseJdbcTemplate.getById(id);
             if (user2 != null && user != null) {
                 this.copy(user, user2);
@@ -1346,5 +1370,25 @@ public class UserController {
         if (user != null && StrUtil.isNotEmpty(user.getAutograph()) && !user.getAutograph().equals(user2.getAutograph())) {//签名
             user2.setAutograph(user.getAutograph());
         }
+    }
+
+    /**
+     * 根据标签的名称获取标签Id
+     *
+     * @param name
+     * @return
+     */
+    private Long getTagIdByName(String name) {
+        Long tagIdLong = null;
+        Tag tag = this.tagService.findTagByName(name);
+        if (tag != null) {
+            tagIdLong = tag.getId();
+        } else {
+            tag = new Tag();
+            tag.setName(name);
+            tag.setReserveColumn01(TagTypeEnum.USER.getType());
+            tagIdLong = this.tagService.saveTag(tag);
+        }
+        return tagIdLong;
     }
 }
