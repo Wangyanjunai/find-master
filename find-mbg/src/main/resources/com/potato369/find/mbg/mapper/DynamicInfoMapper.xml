@@ -7,14 +7,21 @@
         <result column="dynamic_id" jdbcType="BIGINT" property="dynamicId"/>
         <result column="dynamic_status" jdbcType="CHAR" property="dynamicStatus"/>
         <result column="public_status" jdbcType="CHAR" property="publicStatus"/>
-        <result column="is_topic" jdbcType="CHAR" property="isTopic" /><!-- 是否是话题，0->否；1->是，默认：0->否 -->
-    	<result column="topic_title" jdbcType="VARCHAR" property="topicTitle" /><!-- 话题标题 -->
+        <result column="is_topic" jdbcType="CHAR" property="isTopic"/><!-- 是否是话题，0->否；1->是，默认：0->否 -->
+        <result column="topic_title" jdbcType="VARCHAR" property="topicTitle"/><!-- 话题标题 -->
         <result column="likes" jdbcType="INTEGER" property="likes"/>
-        <result column="comments" jdbcType="INTEGER" property="comments" /><!-- 评论数 -->
+        <result column="comments" jdbcType="INTEGER" property="comments"/><!-- 评论数 -->
         <result column="applications" jdbcType="INTEGER" property="applications"/>
         <result column="shares" jdbcType="INTEGER" property="shares"/>
         <result column="attache_type" jdbcType="CHAR" property="attacheType"/>
         <result column="attache_number" jdbcType="INTEGER" property="attacheNumber"/>
+        <result column="longitude" jdbcType="DOUBLE" property="longitude"/><!--经度-->
+        <result column="latitude" jdbcType="DOUBLE" property="latitude"/><!--纬度-->
+        <result column="country" jdbcType="VARCHAR" property="country"/><!--国-->
+        <result column="province" jdbcType="VARCHAR" property="province"/><!--省-->
+        <result column="city" jdbcType="VARCHAR" property="city"/><!--市-->
+        <result column="district" jdbcType="VARCHAR" property="district"/><!--县/区-->
+        <result column="other" jdbcType="VARCHAR" property="other"/><!--其它-->
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="reserve_column02" jdbcType="VARCHAR" property="reserveColumn02"/>
@@ -101,9 +108,13 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, user_id, dynamic_id, dynamic_status, public_status, is_topic, topic_title, 
-        likes, comments, applications, shares, attache_type,
-    	attache_number, create_time, update_time, reserve_column02, reserve_column03, reserve_column04
+        id, user_id, dynamic_id, dynamic_status,
+        public_status, is_topic, topic_title, likes, 
+        comments, applications, shares, attache_type,
+    	attache_number, longitude, latitude, country, 
+    	province, city, district, other, 
+    	create_time, update_time, reserve_column02, reserve_column03,
+        reserve_column04
     </sql>
     <sql id="Blob_Column_List">
         content
@@ -163,20 +174,23 @@
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into dynamic_info (user_id, dynamic_status, public_status,
-        is_topic, topic_title,
-        likes, comments, applications, shares,
-        attache_type, attache_number, create_time,
-        update_time, dynamic_id, reserve_column02,
-        reserve_column03, reserve_column04, content
+        insert into dynamic_info (
+        user_id, dynamic_status, public_status, is_topic,
+        topic_title, likes, comments, applications,
+        shares, attache_type, attache_number, longitude,
+        latitude, country, province, city,
+        district, other, create_time, update_time,
+        dynamic_id, reserve_column02, reserve_column03, reserve_column04,
+        content
         )
-        values (#{userId,jdbcType=BIGINT}, #{dynamicStatus,jdbcType=CHAR}, #{publicStatus,jdbcType=CHAR},
-        #{isTopic,jdbcType=CHAR}, #{topicTitle,jdbcType=VARCHAR},
-        #{likes,jdbcType=INTEGER}, #{comments,jdbcType=INTEGER}, #{applications,jdbcType=INTEGER},
-        #{shares,jdbcType=INTEGER},
-        #{attacheType,jdbcType=CHAR}, #{attacheNumber,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
-        #{updateTime,jdbcType=TIMESTAMP}, #{dynamicId,jdbcType=BIGINT}, #{reserveColumn02,jdbcType=VARCHAR},
-        #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+        values (
+            #{userId,jdbcType=BIGINT}, #{dynamicStatus,jdbcType=CHAR}, #{publicStatus,jdbcType=CHAR}, #{isTopic,jdbcType=CHAR},
+            #{topicTitle,jdbcType=VARCHAR}, #{likes,jdbcType=INTEGER}, #{comments,jdbcType=INTEGER}, #{applications,jdbcType=INTEGER},
+            #{shares,jdbcType=INTEGER}, #{attacheType,jdbcType=CHAR}, #{attacheNumber,jdbcType=INTEGER}, #{longitude,jdbcType=DOUBLE},
+            #{latitude,jdbcType=DOUBLE}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+            #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+            #{dynamicId,jdbcType=BIGINT}, #{reserveColumn02,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR},
+            #{content,jdbcType=LONGVARCHAR}
         )
     </insert>
     <insert id="insertImport" parameterType="com.potato369.find.mbg.model.DynamicInfo">
@@ -193,124 +207,166 @@
                 #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR},
                 #{content,jdbcType=LONGVARCHAR})
     </insert>
-	<insert id="insertSelective" parameterType="com.potato369.find.mbg.model.DynamicInfo">
-	    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-	      SELECT LAST_INSERT_ID()
-	    </selectKey>
-	    insert into dynamic_info
-	    <trim prefix="(" suffix=")" suffixOverrides=",">
-	      <if test="userId != null">
-	        user_id,
-	      </if>
-	      <if test="dynamicId != null">
-	        dynamic_id,
-	      </if>
-	      <if test="dynamicStatus != null">
-	        dynamic_status,
-	      </if>
-	      <if test="publicStatus != null">
-	        public_status,
-	      </if>
-	      <if test="isTopic != null">
-	        is_topic,
-	      </if>
-	      <if test="topicTitle != null">
-	        topic_title,
-	      </if>
-	      <if test="likes != null">
-	        likes,
-	      </if>
-	      <if test="comments != null">
-	        comments,
-	      </if>
-	      <if test="applications != null">
-	        applications,
-	      </if>
-	      <if test="shares != null">
-	        shares,
-	      </if>
-	      <if test="attacheType != null">
-	        attache_type,
-	      </if>
-	      <if test="attacheNumber != null">
-	        attache_number,
-	      </if>
-	      <if test="createTime != null">
-	        create_time,
-	      </if>
-	      <if test="updateTime != null">
-	        update_time,
-	      </if>
-	      <if test="reserveColumn02 != null">
-	        reserve_column02,
-	      </if>
-	      <if test="reserveColumn03 != null">
-	        reserve_column03,
-	      </if>
-	      <if test="reserveColumn04 != null">
-	        reserve_column04,
-	      </if>
-	      <if test="content != null">
-	        content,
-	      </if>
-	    </trim>
-	    <trim prefix="values (" suffix=")" suffixOverrides=",">
-	      <if test="userId != null">
-	        #{userId,jdbcType=BIGINT},
-	      </if>
-	      <if test="dynamicId != null">
-	        #{dynamicId,jdbcType=BIGINT},
-	      </if>
-	      <if test="dynamicStatus != null">
-	        #{dynamicStatus,jdbcType=CHAR},
-	      </if>
-	      <if test="publicStatus != null">
-	        #{publicStatus,jdbcType=CHAR},
-	      </if>
-	      <if test="isTopic != null">
-	        #{isTopic,jdbcType=CHAR},
-	      </if>
-	      <if test="topicTitle != null">
-	        #{topicTitle,jdbcType=VARCHAR},
-	      </if>
-	      <if test="likes != null">
-	        #{likes,jdbcType=INTEGER},
-	      </if>
-	      <if test="comments != null">
-	        #{comments,jdbcType=INTEGER},
-	      </if>
-	      <if test="applications != null">
-	        #{applications,jdbcType=INTEGER},
-	      </if>
-	      <if test="shares != null">
-	        #{shares,jdbcType=INTEGER},
-	      </if>
-	      <if test="attacheType != null">
-	        #{attacheType,jdbcType=CHAR},
-	      </if>
-	      <if test="attacheNumber != null">
-	        #{attacheNumber,jdbcType=INTEGER},
-	      </if>
-	      <if test="createTime != null">
-	        #{createTime,jdbcType=TIMESTAMP},
-	      </if>
-	      <if test="updateTime != null">
-	        #{updateTime,jdbcType=TIMESTAMP},
-	      </if>
-	      <if test="reserveColumn02 != null">
-	        #{reserveColumn02,jdbcType=VARCHAR},
-	      </if>
-	      <if test="reserveColumn03 != null">
-	        #{reserveColumn03,jdbcType=VARCHAR},
-	      </if>
-	      <if test="reserveColumn04 != null">
-	        #{reserveColumn04,jdbcType=VARCHAR},
-	      </if>
-	      <if test="content != null">
-	        #{content,jdbcType=LONGVARCHAR},
-	      </if>
-	    </trim>
-	  </insert>
+    <insert id="insertSelective" parameterType="com.potato369.find.mbg.model.DynamicInfo">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into dynamic_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="dynamicId != null">
+                dynamic_id,
+            </if>
+            <if test="dynamicStatus != null">
+                dynamic_status,
+            </if>
+            <if test="publicStatus != null">
+                public_status,
+            </if>
+            <if test="isTopic != null">
+                is_topic,
+            </if>
+            <if test="topicTitle != null">
+                topic_title,
+            </if>
+            <if test="likes != null">
+                likes,
+            </if>
+            <if test="comments != null">
+                comments,
+            </if>
+            <if test="applications != null">
+                applications,
+            </if>
+            <if test="shares != null">
+                shares,
+            </if>
+            <if test="attacheType != null">
+                attache_type,
+            </if>
+            <if test="attacheNumber != null">
+                attache_number,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="country != null">
+                country,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="district != null">
+                district,
+            </if>
+            <if test="other != null">
+                other,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="reserveColumn02 != null">
+                reserve_column02,
+            </if>
+            <if test="reserveColumn03 != null">
+                reserve_column03,
+            </if>
+            <if test="reserveColumn04 != null">
+                reserve_column04,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="dynamicId != null">
+                #{dynamicId,jdbcType=BIGINT},
+            </if>
+            <if test="dynamicStatus != null">
+                #{dynamicStatus,jdbcType=CHAR},
+            </if>
+            <if test="publicStatus != null">
+                #{publicStatus,jdbcType=CHAR},
+            </if>
+            <if test="isTopic != null">
+                #{isTopic,jdbcType=CHAR},
+            </if>
+            <if test="topicTitle != null">
+                #{topicTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="likes != null">
+                #{likes,jdbcType=INTEGER},
+            </if>
+            <if test="comments != null">
+                #{comments,jdbcType=INTEGER},
+            </if>
+            <if test="applications != null">
+                #{applications,jdbcType=INTEGER},
+            </if>
+            <if test="shares != null">
+                #{shares,jdbcType=INTEGER},
+            </if>
+            <if test="attacheType != null">
+                #{attacheType,jdbcType=CHAR},
+            </if>
+            <if test="attacheNumber != null">
+                #{attacheNumber,jdbcType=INTEGER},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=DOUBLE},
+            </if>
+            <if test="country != null">
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="other != null">
+                #{other,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reserveColumn02 != null">
+                #{reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn03 != null">
+                #{reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn04 != null">
+                #{reserveColumn04,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
     <select id="countByExample" parameterType="com.potato369.find.mbg.model.DynamicInfoExample"
             resultType="java.lang.Long">
         select count(1) from dynamic_info
@@ -321,328 +377,397 @@
     <select id="selectDynamicInfoData" parameterType="com.potato369.find.mbg.model.DynamicInfoParam"
             resultMap="BaseResultMap2">
         SELECT DISTINCT
-        	ur.`id` AS `user_id`,
-        	ur.`head_icon` AS `head_icon`,
-        	ur.`nick_name` AS `nick_name`,
-        	di.`create_time` AS `create_time`,
-        	di.`id` AS `dynamic_info_id`,
-        	di.`content` AS `content`,
-        	di.`public_status` AS `public_status`,
-        	CONCAT( dy.`country`, '·' ) AS `country`,
-        	CONCAT( dy.`province`, '·' ) AS `province`,
-        	CONCAT( dy.`city`) AS `city`,
-        	di.`likes` AS `likes`,
-        	di.`applications` AS `applications`,
-        	ai.`data_type` AS `attache_file_data_type`,
-        	ai.`file_name` AS `attache_file_name_list`,
-        	di.`dynamic_status`,
-        	di.`update_time`
+        ur.`id` AS `user_id`,
+        ur.`head_icon` AS `head_icon`,
+        ur.`nick_name` AS `nick_name`,
+        di.`create_time` AS `create_time`,
+        di.`id` AS `dynamic_info_id`,
+        di.`content` AS `content`,
+        di.`public_status` AS `public_status`,
+        CONCAT( dy.`country`, '·' ) AS `country`,
+        CONCAT( dy.`province`, '·' ) AS `province`,
+        CONCAT( dy.`city`) AS `city`,
+        di.`likes` AS `likes`,
+        di.`applications` AS `applications`,
+        ai.`data_type` AS `attache_file_data_type`,
+        ai.`file_name` AS `attache_file_name_list`,
+        di.`dynamic_status`,
+        di.`update_time`
         FROM
-        	`dynamic_info` di,
-        	`dynamic` dy,
-        	`attache_info` ai,
-        	`user` ur
+        `dynamic_info` di,
+        `dynamic` dy,
+        `attache_info` ai,
+        `user` ur
         WHERE dy.`id` = di.`dynamic_id`
-        	AND di.`id` = ai.`dynamic_info_by`
-        	AND dy.`user_id` = ur.`id`
-        	AND di.`dynamic_status`<![CDATA[!=]]>'1'
-        	<if test="param != null">
-				<if test="param.gender != null">
-					AND ur.`gender`<![CDATA[=]]>#{param.gender, jdbcType=CHAR}
-				</if>
-				<if test="param.minAge != null">
-					AND STR_TO_DATE(CONCAT_WS('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s')<![CDATA[<=]]>#{param.minAge, jdbcType=TIMESTAMP}
-				</if>
-				<if test="param.maxAge != null">
-					AND STR_TO_DATE(CONCAT_WS('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s')<![CDATA[>=]]>#{param.maxAge, jdbcType=TIMESTAMP}
-				</if>
-				<if test="param.constellations != null and param.constellations.size() > 0">
-                 	AND ur.`constellation` IN (
-                 		<foreach collection="param.constellations" item="constellation" index="index" separator=",">
-                       		#{constellation}
-                 		</foreach>)
-            	</if>
-				<if test="param.blackRecordUserIdLongList != null and param.blackRecordUserIdLongList.size() > 0">
-					AND ur.`id` NOT IN (
-					<foreach collection="param.blackRecordUserIdLongList" item="uid" index="index"
-						separator=",">
-						#{uid}
-					</foreach>
-					)
-				</if>        	
-	           	<if test="param.dataType != null">
-					AND ai.`data_type`<![CDATA[=]]>#{param.dataType, jdbcType=CHAR}
-				</if>
-				<if test="param.countryLocations != null and param.countryLocations.size() > 0">
-                 	AND dy.`country` IN (
-                 		<foreach collection="param.countryLocations" item="country" index="index" separator=",">
-                       		#{country}
-                 		</foreach>)
-            	</if>
-            	<if test="param.provinceLocations != null and param.provinceLocations.size() > 0">
-                 AND dy.`province` IN ( 
-                 	<foreach collection="param.provinceLocations" item="province" index="index" separator=",">
-                       	#{province}
-                 	</foreach>)
-            	</if>
-            	<if test="param.cityLocations != null and param.cityLocations.size() > 0">
-                 	AND dy.`city` IN (
-                 		<foreach collection="param.cityLocations" item="city" index="index" separator=",">
-                       		#{city}
-                 		</foreach>)
-            	</if>
+        AND di.`id` = ai.`dynamic_info_by`
+        AND dy.`user_id` = ur.`id`
+        AND di.`dynamic_status`<![CDATA[!=]]>'1'
+        <if test="param != null">
+            <if test="param.gender != null">
+                AND ur.`gender`<![CDATA[=]]>#{param.gender, jdbcType=CHAR}
+            </if>
+            <if test="param.minAge != null">
+                AND STR_TO_DATE(CONCAT_WS('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s')<![CDATA[<=]]>
+                #{param.minAge, jdbcType=TIMESTAMP}
+            </if>
+            <if test="param.maxAge != null">
+                AND STR_TO_DATE(CONCAT_WS('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s')<![CDATA[>=]]>
+                #{param.maxAge, jdbcType=TIMESTAMP}
+            </if>
+            <if test="param.constellations != null and param.constellations.size() > 0">
+                AND ur.`constellation` IN (
+                <foreach collection="param.constellations" item="constellation" index="index" separator=",">
+                    #{constellation}
+                </foreach>)
+            </if>
+            <if test="param.blackRecordUserIdLongList != null and param.blackRecordUserIdLongList.size() > 0">
+                AND ur.`id` NOT IN (
+                <foreach collection="param.blackRecordUserIdLongList" item="uid" index="index"
+                         separator=",">
+                    #{uid}
+                </foreach>
+                )
+            </if>
+            <if test="param.dataType != null">
+                AND ai.`data_type`<![CDATA[=]]>#{param.dataType, jdbcType=CHAR}
+            </if>
+            <if test="param.countryLocations != null and param.countryLocations.size() > 0">
+                AND dy.`country` IN (
+                <foreach collection="param.countryLocations" item="country" index="index" separator=",">
+                    #{country}
+                </foreach>)
+            </if>
+            <if test="param.provinceLocations != null and param.provinceLocations.size() > 0">
+                AND dy.`province` IN (
+                <foreach collection="param.provinceLocations" item="province" index="index" separator=",">
+                    #{province}
+                </foreach>)
+            </if>
+            <if test="param.cityLocations != null and param.cityLocations.size() > 0">
+                AND dy.`city` IN (
+                <foreach collection="param.cityLocations" item="city" index="index" separator=",">
+                    #{city}
+                </foreach>)
+            </if>
         </if>
         ORDER BY di.`dynamic_status` DESC, di.`create_time` DESC, di.`update_time` DESC
     </select>
-    
+
     <select id="selectMyDynamicInfoData" parameterType="java.lang.Long" resultMap="BaseResultMap2">
-		SELECT DISTINCT
-			di.`id` AS dynamic_info_id,
-			ur.`id` AS user_id,
-			ur.`head_icon` AS head_icon,
-			ur.`nick_name` AS nick_name,
-			di.`create_time` AS create_time,
-			di.`content` AS content,
-			di.`public_status` AS public_status,
-			CONCAT( dy.`country`, '·' ) AS country,
-			CONCAT( dy.`province`, '·' ) AS province,
-			CONCAT( dy.`city` ) AS city,
-			di.`likes` AS likes,
-			di.`applications` AS applications,
-			di.`shares` AS shares,
-			ai.id AS attache_file_id,
-			ai.data_type AS attache_file_data_type,
-			ai.file_name AS attache_file_name_list,
-			di.`dynamic_status`,
-        	di.`update_time` 
-		FROM
-			`dynamic_info` di,
-			`dynamic` dy,
-			`attache_info` ai,
-			`user` ur 
-		WHERE
-			dy.`id` = di.`dynamic_id` 
-			AND di.`id` = ai.`dynamic_info_by` 
-			AND dy.`user_id` = ur.`id` 
-			AND di.`dynamic_status` <![CDATA[!=]]> '1' 
-			AND ur.`id` = #{userId, jdbcType=BIGINT}
+        SELECT DISTINCT di.`id`                    AS dynamic_info_id,
+                        ur.`id`                    AS user_id,
+                        ur.`head_icon`             AS head_icon,
+                        ur.`nick_name`             AS nick_name,
+                        di.`create_time`           AS create_time,
+                        di.`content`               AS content,
+                        di.`public_status`         AS public_status,
+                        CONCAT(dy.`country`, '·')  AS country,
+                        CONCAT(dy.`province`, '·') AS province,
+                        CONCAT(dy.`city`)          AS city,
+                        di.`likes`                 AS likes,
+                        di.`applications`          AS applications,
+                        di.`shares`                AS shares,
+                        ai.id                      AS attache_file_id,
+                        ai.data_type               AS attache_file_data_type,
+                        ai.file_name               AS attache_file_name_list,
+                        di.`dynamic_status`,
+                        di.`update_time`
+        FROM `dynamic_info` di,
+             `dynamic` dy,
+             `attache_info` ai,
+             `user` ur
+        WHERE dy.`id` = di.`dynamic_id`
+          AND di.`id` = ai.`dynamic_info_by`
+          AND dy.`user_id` = ur.`id`
+          AND di.`dynamic_status` <![CDATA[!=]]> '1'
+          AND ur.`id` = #{userId, jdbcType=BIGINT}
         ORDER BY di.`dynamic_status` DESC, di.`create_time` DESC, di.`update_time` DESC
     </select>
-	<update id="updateByExampleSelective" parameterType="map">
-	    update dynamic_info
-	    <set>
-	      <if test="record.id != null">
-	        id = #{record.id,jdbcType=BIGINT},
-	      </if>
-	      <if test="record.userId != null">
-	        user_id = #{record.userId,jdbcType=BIGINT},
-	      </if>
-	      <if test="record.dynamicId != null">
-	        dynamic_id = #{record.dynamicId,jdbcType=BIGINT},
-	      </if>
-	      <if test="record.dynamicStatus != null">
-	        dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
-	      </if>
-	      <if test="record.publicStatus != null">
-	        public_status = #{record.publicStatus,jdbcType=CHAR},
-	      </if>
-	      <if test="record.isTopic != null">
-	        is_topic = #{record.isTopic,jdbcType=CHAR},
-	      </if>
-	      <if test="record.topicTitle != null">
-	        topic_title = #{record.topicTitle,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.likes != null">
-	        likes = #{record.likes,jdbcType=INTEGER},
-	      </if>
-	      <if test="record.comments != null">
-	        comments = #{record.comments,jdbcType=INTEGER},
-	      </if>
-	      <if test="record.applications != null">
-	        applications = #{record.applications,jdbcType=INTEGER},
-	      </if>
-	      <if test="record.shares != null">
-	        shares = #{record.shares,jdbcType=INTEGER},
-	      </if>
-	      <if test="record.attacheType != null">
-	        attache_type = #{record.attacheType,jdbcType=CHAR},
-	      </if>
-	      <if test="record.attacheNumber != null">
-	        attache_number = #{record.attacheNumber,jdbcType=INTEGER},
-	      </if>
-	      <if test="record.createTime != null">
-	        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-	      </if>
-	      <if test="record.updateTime != null">
-	        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-	      </if>
-	      <if test="record.reserveColumn02 != null">
-	        reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.reserveColumn03 != null">
-	        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.reserveColumn04 != null">
-	        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.content != null">
-	        content = #{record.content,jdbcType=LONGVARCHAR},
-	      </if>
-	    </set>
-	    <if test="_parameter != null">
-	      <include refid="Update_By_Example_Where_Clause" />
-	    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update dynamic_info
-    set id = #{record.id,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=BIGINT},
-      dynamic_id = #{record.dynamicId,jdbcType=BIGINT},
-      dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
-      public_status = #{record.publicStatus,jdbcType=CHAR},
-      is_topic = #{record.isTopic,jdbcType=CHAR},
-      topic_title = #{record.topicTitle,jdbcType=VARCHAR},
-      likes = #{record.likes,jdbcType=INTEGER},
-      comments = #{record.comments,jdbcType=INTEGER},
-      applications = #{record.applications,jdbcType=INTEGER},
-      shares = #{record.shares,jdbcType=INTEGER},
-      attache_type = #{record.attacheType,jdbcType=CHAR},
-      attache_number = #{record.attacheNumber,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
-      reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
-      reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
-      content = #{record.content,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update dynamic_info
-    set id = #{record.id,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=BIGINT},
-      dynamic_id = #{record.dynamicId,jdbcType=BIGINT},
-      dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
-      public_status = #{record.publicStatus,jdbcType=CHAR},
-      is_topic = #{record.isTopic,jdbcType=CHAR},
-      topic_title = #{record.topicTitle,jdbcType=VARCHAR},
-      likes = #{record.likes,jdbcType=INTEGER},
-      comments = #{record.comments,jdbcType=INTEGER},
-      applications = #{record.applications,jdbcType=INTEGER},
-      shares = #{record.shares,jdbcType=INTEGER},
-      attache_type = #{record.attacheType,jdbcType=CHAR},
-      attache_number = #{record.attacheNumber,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
-      reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
-      reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.potato369.find.mbg.model.DynamicInfo">
-    update dynamic_info
-    <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="dynamicId != null">
-        dynamic_id = #{dynamicId,jdbcType=BIGINT},
-      </if>
-      <if test="dynamicStatus != null">
-        dynamic_status = #{dynamicStatus,jdbcType=CHAR},
-      </if>
-      <if test="publicStatus != null">
-        public_status = #{publicStatus,jdbcType=CHAR},
-      </if>
-      <if test="isTopic != null">
-        is_topic = #{isTopic,jdbcType=CHAR},
-      </if>
-      <if test="topicTitle != null">
-        topic_title = #{topicTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="likes != null">
-        likes = #{likes,jdbcType=INTEGER},
-      </if>
-      <if test="comments != null">
-        comments = #{comments,jdbcType=INTEGER},
-      </if>
-      <if test="applications != null">
-        applications = #{applications,jdbcType=INTEGER},
-      </if>
-      <if test="shares != null">
-        shares = #{shares,jdbcType=INTEGER},
-      </if>
-      <if test="attacheType != null">
-        attache_type = #{attacheType,jdbcType=CHAR},
-      </if>
-      <if test="attacheNumber != null">
-        attache_number = #{attacheNumber,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="reserveColumn02 != null">
-        reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
-      </if>
-      <if test="reserveColumn03 != null">
-        reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
-      </if>
-      <if test="reserveColumn04 != null">
-        reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.potato369.find.mbg.model.DynamicInfo">
-    update dynamic_info
-    set user_id = #{userId,jdbcType=BIGINT},
-      dynamic_id = #{dynamicId,jdbcType=BIGINT},
-      dynamic_status = #{dynamicStatus,jdbcType=CHAR},
-      public_status = #{publicStatus,jdbcType=CHAR},
-      is_topic = #{isTopic,jdbcType=CHAR},
-      topic_title = #{topicTitle,jdbcType=VARCHAR},
-      likes = #{likes,jdbcType=INTEGER},
-      comments = #{comments,jdbcType=INTEGER},
-      applications = #{applications,jdbcType=INTEGER},
-      shares = #{shares,jdbcType=INTEGER},
-      attache_type = #{attacheType,jdbcType=CHAR},
-      attache_number = #{attacheNumber,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
-      reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
-      reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.potato369.find.mbg.model.DynamicInfo">
-    update dynamic_info
-    set user_id = #{userId,jdbcType=BIGINT},
-      dynamic_id = #{dynamicId,jdbcType=BIGINT},
-      dynamic_status = #{dynamicStatus,jdbcType=CHAR},
-      public_status = #{publicStatus,jdbcType=CHAR},
-      is_topic = #{isTopic,jdbcType=CHAR},
-      topic_title = #{topicTitle,jdbcType=VARCHAR},
-      likes = #{likes,jdbcType=INTEGER},
-      comments = #{comments,jdbcType=INTEGER},
-      applications = #{applications,jdbcType=INTEGER},
-      shares = #{shares,jdbcType=INTEGER},
-      attache_type = #{attacheType,jdbcType=CHAR},
-      attache_number = #{attacheNumber,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
-      reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
-      reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <update id="updateByExampleSelective" parameterType="map">
+        update dynamic_info
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=BIGINT},
+            </if>
+            <if test="record.dynamicId != null">
+                dynamic_id = #{record.dynamicId,jdbcType=BIGINT},
+            </if>
+            <if test="record.dynamicStatus != null">
+                dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
+            </if>
+            <if test="record.publicStatus != null">
+                public_status = #{record.publicStatus,jdbcType=CHAR},
+            </if>
+            <if test="record.isTopic != null">
+                is_topic = #{record.isTopic,jdbcType=CHAR},
+            </if>
+            <if test="record.topicTitle != null">
+                topic_title = #{record.topicTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.likes != null">
+                likes = #{record.likes,jdbcType=INTEGER},
+            </if>
+            <if test="record.comments != null">
+                comments = #{record.comments,jdbcType=INTEGER},
+            </if>
+            <if test="record.applications != null">
+                applications = #{record.applications,jdbcType=INTEGER},
+            </if>
+            <if test="record.shares != null">
+                shares = #{record.shares,jdbcType=INTEGER},
+            </if>
+            <if test="record.attacheType != null">
+                attache_type = #{record.attacheType,jdbcType=CHAR},
+            </if>
+            <if test="record.attacheNumber != null">
+                attache_number = #{record.attacheNumber,jdbcType=INTEGER},
+            </if>
+            <if test="record.longitude != null">
+                longitude = #{record.longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="record.latitude != null">
+                latitude = #{record.latitude,jdbcType=DOUBLE},
+            </if>
+            <if test="record.country != null">
+                country = #{record.country,jdbcType=VARCHAR},
+            </if>
+            <if test="record.province != null">
+                province = #{record.province,jdbcType=VARCHAR},
+            </if>
+            <if test="record.city != null">
+                city = #{record.city,jdbcType=VARCHAR},
+            </if>
+            <if test="record.district != null">
+                district = #{record.district,jdbcType=VARCHAR},
+            </if>
+            <if test="record.other != null">
+                other = #{record.other,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.reserveColumn02 != null">
+                reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn03 != null">
+                reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn04 != null">
+                reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
+            </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update dynamic_info
+        set id = #{record.id,jdbcType=BIGINT},
+        user_id = #{record.userId,jdbcType=BIGINT},
+        dynamic_id = #{record.dynamicId,jdbcType=BIGINT},
+        dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
+        public_status = #{record.publicStatus,jdbcType=CHAR},
+        is_topic = #{record.isTopic,jdbcType=CHAR},
+        topic_title = #{record.topicTitle,jdbcType=VARCHAR},
+        likes = #{record.likes,jdbcType=INTEGER},
+        comments = #{record.comments,jdbcType=INTEGER},
+        applications = #{record.applications,jdbcType=INTEGER},
+        shares = #{record.shares,jdbcType=INTEGER},
+        attache_type = #{record.attacheType,jdbcType=CHAR},
+        attache_number = #{record.attacheNumber,jdbcType=INTEGER},
+        longitude = #{record.longitude,jdbcType=DOUBLE},
+        latitude = #{record.latitude,jdbcType=DOUBLE},
+        country = #{record.country,jdbcType=VARCHAR},
+        province = #{record.province,jdbcType=VARCHAR},
+        city = #{record.city,jdbcType=VARCHAR},
+        district = #{record.district,jdbcType=VARCHAR},
+        other = #{record.other,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
+        content = #{record.content,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update dynamic_info
+        set id = #{record.id,jdbcType=BIGINT},
+        user_id = #{record.userId,jdbcType=BIGINT},
+        dynamic_id = #{record.dynamicId,jdbcType=BIGINT},
+        dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
+        public_status = #{record.publicStatus,jdbcType=CHAR},
+        is_topic = #{record.isTopic,jdbcType=CHAR},
+        topic_title = #{record.topicTitle,jdbcType=VARCHAR},
+        likes = #{record.likes,jdbcType=INTEGER},
+        comments = #{record.comments,jdbcType=INTEGER},
+        applications = #{record.applications,jdbcType=INTEGER},
+        shares = #{record.shares,jdbcType=INTEGER},
+        attache_type = #{record.attacheType,jdbcType=CHAR},
+        attache_number = #{record.attacheNumber,jdbcType=INTEGER},
+        longitude = #{record.longitude,jdbcType=DOUBLE},
+        latitude = #{record.latitude,jdbcType=DOUBLE},
+        country = #{record.country,jdbcType=VARCHAR},
+        province = #{record.province,jdbcType=VARCHAR},
+        city = #{record.city,jdbcType=VARCHAR},
+        district = #{record.district,jdbcType=VARCHAR},
+        other = #{record.other,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        reserve_column02 = #{record.reserveColumn02,jdbcType=VARCHAR},
+        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.potato369.find.mbg.model.DynamicInfo">
+        update dynamic_info
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="dynamicId != null">
+                dynamic_id = #{dynamicId,jdbcType=BIGINT},
+            </if>
+            <if test="dynamicStatus != null">
+                dynamic_status = #{dynamicStatus,jdbcType=CHAR},
+            </if>
+            <if test="publicStatus != null">
+                public_status = #{publicStatus,jdbcType=CHAR},
+            </if>
+            <if test="isTopic != null">
+                is_topic = #{isTopic,jdbcType=CHAR},
+            </if>
+            <if test="topicTitle != null">
+                topic_title = #{topicTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="likes != null">
+                likes = #{likes,jdbcType=INTEGER},
+            </if>
+            <if test="comments != null">
+                comments = #{comments,jdbcType=INTEGER},
+            </if>
+            <if test="applications != null">
+                applications = #{applications,jdbcType=INTEGER},
+            </if>
+            <if test="shares != null">
+                shares = #{shares,jdbcType=INTEGER},
+            </if>
+            <if test="attacheType != null">
+                attache_type = #{attacheType,jdbcType=CHAR},
+            </if>
+            <if test="attacheNumber != null">
+                attache_number = #{attacheNumber,jdbcType=INTEGER},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=DOUBLE},
+            </if>
+            <if test="country != null">
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                district = #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="other != null">
+                other = #{other,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reserveColumn02 != null">
+                reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn03 != null">
+                reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn04 != null">
+                reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.potato369.find.mbg.model.DynamicInfo">
+        update dynamic_info
+        set user_id          = #{userId,jdbcType=BIGINT},
+            dynamic_id       = #{dynamicId,jdbcType=BIGINT},
+            dynamic_status   = #{dynamicStatus,jdbcType=CHAR},
+            public_status    = #{publicStatus,jdbcType=CHAR},
+            is_topic         = #{isTopic,jdbcType=CHAR},
+            topic_title      = #{topicTitle,jdbcType=VARCHAR},
+            likes            = #{likes,jdbcType=INTEGER},
+            comments         = #{comments,jdbcType=INTEGER},
+            applications     = #{applications,jdbcType=INTEGER},
+            shares           = #{shares,jdbcType=INTEGER},
+            attache_type     = #{attacheType,jdbcType=CHAR},
+            attache_number   = #{attacheNumber,jdbcType=INTEGER},
+            longitude        = #{longitude,jdbcType=DOUBLE},
+            latitude         = #{latitude,jdbcType=DOUBLE},
+            country          = #{country,jdbcType=VARCHAR},
+            province         = #{province,jdbcType=VARCHAR},
+            city             = #{city,jdbcType=VARCHAR},
+            district         = #{district,jdbcType=VARCHAR},
+            other            = #{other,jdbcType=VARCHAR},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            update_time      = #{updateTime,jdbcType=TIMESTAMP},
+            reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+            reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
+            content          = #{content,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.potato369.find.mbg.model.DynamicInfo">
+        update dynamic_info
+        set user_id          = #{userId,jdbcType=BIGINT},
+            dynamic_id       = #{dynamicId,jdbcType=BIGINT},
+            dynamic_status   = #{dynamicStatus,jdbcType=CHAR},
+            public_status    = #{publicStatus,jdbcType=CHAR},
+            is_topic         = #{isTopic,jdbcType=CHAR},
+            topic_title      = #{topicTitle,jdbcType=VARCHAR},
+            likes            = #{likes,jdbcType=INTEGER},
+            comments         = #{comments,jdbcType=INTEGER},
+            applications     = #{applications,jdbcType=INTEGER},
+            shares           = #{shares,jdbcType=INTEGER},
+            attache_type     = #{attacheType,jdbcType=CHAR},
+            attache_number   = #{attacheNumber,jdbcType=INTEGER},
+            longitude        = #{longitude,jdbcType=DOUBLE},
+            latitude         = #{latitude,jdbcType=DOUBLE},
+            country          = #{country,jdbcType=VARCHAR},
+            province         = #{province,jdbcType=VARCHAR},
+            city             = #{city,jdbcType=VARCHAR},
+            district         = #{district,jdbcType=VARCHAR},
+            other            = #{other,jdbcType=VARCHAR},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            update_time      = #{updateTime,jdbcType=TIMESTAMP},
+            reserve_column02 = #{reserveColumn02,jdbcType=VARCHAR},
+            reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

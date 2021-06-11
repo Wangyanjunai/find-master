@@ -8,6 +8,7 @@ import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DynamicInfo implements Serializable {
+	
     @ApiModelProperty(value = "动态内容id，主键")
     private Long id;
 
@@ -46,6 +47,27 @@ public class DynamicInfo implements Serializable {
 
     @ApiModelProperty(value = "附件数量")
     private Integer attacheNumber;
+    
+    @ApiModelProperty(value = "经度")
+    private Double longitude;
+
+    @ApiModelProperty(value = "纬度")
+    private Double latitude;
+    
+    @ApiModelProperty(value = "国")
+    private String country;
+
+    @ApiModelProperty(value = "省")
+    private String province;
+
+    @ApiModelProperty(value = "市")
+    private String city;
+
+    @ApiModelProperty(value = "区/县")
+    private String district;
+
+    @ApiModelProperty(value = "其它地址")
+    private String other;
 
     @ApiModelProperty(value = "发布时间")
     private Date createTime;
@@ -171,7 +193,63 @@ public class DynamicInfo implements Serializable {
         this.attacheNumber = attacheNumber;
     }
 
-    public Date getCreateTime() {
+    public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getOther() {
+		return other;
+	}
+
+	public void setOther(String other) {
+		this.other = other;
+	}
+
+	public Date getCreateTime() {
         return createTime;
     }
 

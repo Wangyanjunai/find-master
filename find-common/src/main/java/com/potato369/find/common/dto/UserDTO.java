@@ -64,7 +64,7 @@ public class UserDTO extends AbstractDTO {
     @ApiModelProperty(value = "昵称")
     @JSONField(name = "nickname")
     @JsonProperty(value = "nickname")
-    private String nickName;
+    private String nickname;
 
     /**
      * <pre>
@@ -195,6 +195,26 @@ public class UserDTO extends AbstractDTO {
     @JSONField(name = "city")
     @JsonProperty(value = "city")
     private String city;
+    
+    /**
+     * <pre>
+     * district：区/县
+     * </pre>
+     */
+    @ApiModelProperty(value = "区/县")
+    @JSONField(name = "district")
+    @JsonProperty(value = "district")
+    private String district;
+    
+    /**
+     * <pre>
+     * other：其它
+     * </pre>
+     */
+    @ApiModelProperty(value = "区/县")
+    @JSONField(name = "other")
+    @JsonProperty(value = "other")
+    private String other;
 
     /**
      * <pre>
@@ -228,7 +248,7 @@ public class UserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * tag1：标签1
+     * tag1：标签1编号id
      * </pre>
      */
     @ApiModelProperty(value = "标签1")
@@ -238,7 +258,7 @@ public class UserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * tag2：标签2
+     * tag2：标签2编号id
      * </pre>
      */
     @ApiModelProperty(value = "标签2")
@@ -248,7 +268,7 @@ public class UserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * tag3：标签3
+     * tag3：标签3编号id
      * </pre>
      */
     @ApiModelProperty(value = "标签3")
@@ -258,7 +278,7 @@ public class UserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * tag4：标签4
+     * tag4：标签4编号id
      * </pre>
      */
     @ApiModelProperty(value = "标签4")
@@ -269,7 +289,7 @@ public class UserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * tag5：标签5
+     * tag5：标签5编号id
      * </pre>
      */
     @ApiModelProperty(value = "标签5")

@@ -31,6 +31,21 @@ ADD COLUMN `latitude` double(12, 6) NULL DEFAULT NULL  COMMENT '纬度' AFTER `l
 -- ----------------------------
 -- Table structure for dynamic_info
 -- ----------------------------
+ALTER TABLE `dynamic_info`
+ADD COLUMN `longitude` double(12, 6) NULL DEFAULT NULL COMMENT '经度' AFTER `attache_number`,
+ADD COLUMN `latitude` double(12, 6) NULL DEFAULT NULL COMMENT '纬度' AFTER `longitude`,
+ADD COLUMN `country` varchar(16) NOT NULL DEFAULT '中国' COMMENT '国' AFTER `latitude`,
+ADD COLUMN `province` varchar(32) NULL DEFAULT NULL COMMENT '省' AFTER `country`,
+ADD COLUMN `city` varchar(32) NULL DEFAULT NULL COMMENT '市' AFTER `province`,
+ADD COLUMN `district` varchar(32) NULL DEFAULT NULL COMMENT '区/县' AFTER `city`,
+ADD COLUMN `other` varchar(64) NULL DEFAULT NULL COMMENT '其它地址' AFTER `district`;
+-- ----------------------------
+-- Records of dynamic_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for dynamic_info
+-- ----------------------------
 ALTER TABLE `dynamic_info` 
 ADD COLUMN `comments` int(11) NOT NULL DEFAULT 0 COMMENT '评论数' AFTER `likes`,
 ADD COLUMN `is_topic` enum('0', '1') NOT NULL DEFAULT '0' COMMENT '是否是话题，0->否；1->是，默认：0->否' AFTER `public_status`,
@@ -251,3 +266,5 @@ select *
 from `user`
 where `id` = 149;
 select * from `tag`;
+
+select * from `dynamic_info`;

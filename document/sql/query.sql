@@ -371,6 +371,12 @@ GROUP BY
 	`user_id` 
 	) AS a 
 WHERE
-	a.`user_id` = 8;	
+	a.`user_id` = 8;
+	
+select now() from dual;
+
+select count(1) from `user`;
+
+select * from `user` where `id` = 3;
 	
 	

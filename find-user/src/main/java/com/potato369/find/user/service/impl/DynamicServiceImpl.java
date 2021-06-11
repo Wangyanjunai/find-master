@@ -486,8 +486,6 @@ public class DynamicServiceImpl implements DynamicService {
             BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
             dynamic.setNickName(user.getNickName());
             dynamic.setUserId(user.getId());
-            dynamic.setLongitude(user.getLongitude());
-            dynamic.setLatitude(user.getLatitude());
             this.dynamicMapperWriter.insertSelective(dynamic);
         }
         // 动态内容信息
@@ -498,6 +496,13 @@ public class DynamicServiceImpl implements DynamicService {
         dynamicInfo.setContent(dynamicDTO.getContent());
         dynamicInfo.setPublicStatus(dynamicDTO.getPublicStatus());
         dynamicInfo.setUserId(userIdLong);
+        dynamicInfo.setLongitude(dynamicDTO.getLongitude());
+        dynamicInfo.setLatitude(dynamicDTO.getLatitude());
+        dynamicInfo.setCountry(dynamicDTO.getCountry());
+        dynamicInfo.setProvince(dynamicDTO.getProvince());
+        dynamicInfo.setCity(dynamicDTO.getCity());
+        dynamicInfo.setDistrict(dynamicDTO.getDistrict());
+        dynamicInfo.setOther(dynamicDTO.getOther());
         // 将动态信息入库
         this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
 

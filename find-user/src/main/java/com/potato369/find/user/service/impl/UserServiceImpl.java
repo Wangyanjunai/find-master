@@ -204,9 +204,13 @@ public class UserServiceImpl implements UserService {
                 dynamicDTO.setSysCode(user.getSysCode());
                 dynamicDTO.setNetworkMode(user.getNetworkMode());
                 dynamicDTO.setIp(user.getIp());
+                dynamicDTO.setLongitude(user.getLongitude());
+                dynamicDTO.setLatitude(user.getLatitude());
                 dynamicDTO.setCountry(user.getCountry());
                 dynamicDTO.setProvince(user.getProvince());
                 dynamicDTO.setCity(user.getCity());
+                dynamicDTO.setDistrict(user.getDistrict());
+                dynamicDTO.setOther(user.getOther());
                 dynamicDTO.setPublicStatus(PublicStatusEnum.NOPublic.getCode().toString());
                 dynamicDTO.setContent(content);
                 this.dynamicService.update1(user, dynamicDTO, multipartFileName, "发布动态内容包括上传一张或者多个动态内容资源文件成功。");

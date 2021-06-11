@@ -430,13 +430,23 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码格式不正确。");
             }
-            if (StrUtil.isAllEmpty(userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), String.valueOf(userDTO.getLongitude()), String.valueOf(userDTO.getLatitude()))) {
+            Double longitude = userDTO.getLongitude();
+            String longitudeStr = "";
+            if (longitude != null) {
+                longitudeStr = String.valueOf(longitude);
+            }
+            Double latitude = userDTO.getLatitude();
+            String latitudeStr = "";
+            if (latitude != null) {
+                latitudeStr = String.valueOf(latitude);
+            }
+            if (StrUtil.isAllEmpty(userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市）参数校验失败，客户端IP，定位（国家、省份、城市）不能同时为空。");
+                return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市、经度、纬度）参数校验失败，客户端IP，定位（国家、省份、城市、经度，纬度）不能同时为空。");
             }
             if (StrUtil.isNotEmpty(userDTO.getIp()) && !RegexUtil.isMathIp(userDTO.getIp())) {
                 try {
@@ -462,20 +472,12 @@ public class UserController {
             if (user == null) {
                 user = new User();
                 BeanUtils.copyProperties(userDTO, user);
-                String nickname = userDTO.getNickName();
+                String nickname = userDTO.getNickname();
                 if (StrUtil.isEmpty(nickname)) {
                     user.setNickName(new RandomNickNameUtil().randomName());
-                }
-                Double longitude = userDTO.getLongitude();
-                String longitudeStr = "";
-                if (longitude != null) {
-                    longitudeStr = String.valueOf(longitude);
-                }
-                Double latitude = userDTO.getLatitude();
-                String latitudeStr = "";
-                if (latitude != null) {
-                    latitudeStr = String.valueOf(latitude);
-                }
+                } else {
+                	user.setNickName(nickname);
+				}
                 if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
                     // 根据IP调用百度定位获取地址
                     if (StrUtil.isNotEmpty(userDTO.getIp())) {
@@ -491,16 +493,14 @@ public class UserController {
                     }
                 }
                 String autograph = userDTO.getAutograph();
-                if (UserGenderEnum.Female.getCode().toString().equals(user.getGender())) {
-                    if (StrUtil.isEmpty(autograph)) {
-                        user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent()));
+                if (StrUtil.isEmpty(autograph)) {
+                	if (UserGenderEnum.Female.getCode().toString().equals(user.getGender())) {
+                		user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent()));
                     }
-                }
-                if (UserGenderEnum.Male.getCode().toString().equals(user.getGender())) {
-                    if (StrUtil.isEmpty(autograph)) {
-                        user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent()));
+                    if (UserGenderEnum.Male.getCode().toString().equals(user.getGender())) {
+                    	user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent()));
                     }
-                }
+				}
                 // 头像图片上传服务器
                 int result = this.userMapperWrite.insertSelective(user);
                 // 头像图片存储本地路径
@@ -587,7 +587,7 @@ public class UserController {
                 }
             } else {
                 //更新用户定位或者ip
-                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), String.valueOf(userDTO.getLongitude()), String.valueOf(userDTO.getLatitude()))) {
+                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
                     if (StrUtil.isNotEmpty(userDTO.getIp())) {
                         LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToNull(this.aliyunProps.getUrl()), userDTO.getIp());
                         if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(locationDTO.getIp())) {
@@ -667,10 +667,10 @@ public class UserController {
     //登录接口
     @ApiOperation(value = "登录接口", notes = "登录接口", response = CommonResult.class)
     @PutMapping(value = "/login.do")
-    public CommonResult<Map<String, UserVO2>> login(@Valid UserDTO user, BindingResult bindingResult) {
+    public CommonResult<Map<String, UserVO2>> login(@Valid UserDTO userDTO, BindingResult bindingResult) {
         if (log.isDebugEnabled()) {
             log.debug("开始登录");
-            log.debug("前端传输过来的用户信息user={}", user);
+            log.debug("前端传输过来的用户信息userDTO={}", userDTO);
         }
         Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
@@ -680,7 +680,7 @@ public class UserController {
         operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
         operateRecord.setUserId(0L);
         try {
-            log.info("phone={}, ip={}, country={}, province={}, city={}, longitude={}, latitude={}", user.getPhone(), user.getIp(), user.getCountry(), user.getProvince(), user.getCity(), user.getLongitude(), user.getLatitude());
+            log.info("phone={}, ip={}, country={}, province={}, city={}, district={}, other={}, longitude={}, latitude={}", userDTO.getPhone(), userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), userDTO.getLongitude(), userDTO.getLatitude());
             if (bindingResult.hasErrors()) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
@@ -689,7 +689,7 @@ public class UserController {
                 }
                 return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
-            if (!RegexUtil.isMathPhone(user.getPhone())) {
+            if (!RegexUtil.isMathPhone(userDTO.getPhone())) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
@@ -698,27 +698,27 @@ public class UserController {
                 return CommonResult.validateFailed("手机号码参数校验失败，手机号码格式不正确。");
             }
 
-            Double longitude = user.getLongitude();//经度
+            Double longitude = userDTO.getLongitude();//经度
             String longitudeString = "";
             if (longitude != null) {
                 longitudeString = String.valueOf(longitude);
             }
 
-            Double latitude = user.getLatitude();//纬度
+            Double latitude = userDTO.getLatitude();//纬度
             String latitudeString = "";
             if (latitude != null) {
                 latitudeString = String.valueOf(latitude);
             }
 
-            if (StrUtil.isAllEmpty(user.getIp(), user.getCountry(), user.getProvince(), user.getCity(), longitudeString, latitudeString)) {
+            if (StrUtil.isAllEmpty(userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeString, latitudeString)) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市、经度、纬度）参数校验失败，客户端IP，定位（国家、省份、城市、经度、纬度）不能同时为空。");
+                return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市、区/县、其它、经度、纬度）参数校验失败，客户端IP，定位（国家、省份、城市、区/县、其它、经度、纬度）不能同时为空。");
             }
-            if (StrUtil.isNotEmpty(user.getIp()) && !RegexUtil.isMathIp(user.getIp())) {
+            if (StrUtil.isNotEmpty(userDTO.getIp()) && !RegexUtil.isMathIp(userDTO.getIp())) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
@@ -726,96 +726,114 @@ public class UserController {
                 }
                 return CommonResult.validateFailed("客户端IP参数校验失败，客户端IP格式不正确。");
             }
-            User user1 = this.userDaoUseJdbcTemplate.getByPhone(user.getPhone());
-            if (user1 == null) {
+            User user = this.userDaoUseJdbcTemplate.getByPhone(userDTO.getPhone());
+            if (user == null) {
                 return CommonResult.failed("该手机号码未注册用户，请注册后再试。");
             }
-            if (StrUtil.isAllEmpty(user.getCountry(), user.getProvince(), user.getCity(), longitudeString, latitudeString)) {
-                if (StrUtil.isNotEmpty(user.getIp())) {
+            if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeString, latitudeString)) {
+                if (StrUtil.isNotEmpty(userDTO.getIp())) {
                     //更新用户定位或者ip
-                    LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), user.getIp());
-                    if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(locationDTO.getIp())) {
-                        user1.setIp(locationDTO.getIp());
+                    LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), userDTO.getIp());
+                    if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(locationDTO.getIp())) {
+                        user.setIp(locationDTO.getIp());
                     }
-                    if (StrUtil.isNotEmpty(user1.getCountry()) && !user1.getCountry().equals(locationDTO.getCountry())) {
-                        user1.setCountry(locationDTO.getCountry());
+                    if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(locationDTO.getCountry())) {
+                        user.setCountry(locationDTO.getCountry());
                     }
-                    if (StrUtil.isNotEmpty(user1.getProvince()) && !user1.getProvince().equals(locationDTO.getProvince())) {
-                        user1.setProvince(locationDTO.getProvince());
+                    if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(locationDTO.getProvince())) {
+                        user.setProvince(locationDTO.getProvince());
                     }
-                    if (StrUtil.isNotEmpty(user1.getCity()) && !user1.getCity().equals(locationDTO.getCity())) {
-                        user1.setCity(locationDTO.getCity());
+                    if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(locationDTO.getCity())) {
+                        user.setCity(locationDTO.getCity());
                     }
-                    if (user1.getLongitude() == null) {
-                        user1.setLongitude(locationDTO.getLongitude());
-                    } else if (!user1.getLongitude().equals(locationDTO.getLongitude())) {
-                        user1.setLongitude(locationDTO.getLongitude());
+                    if (StrUtil.isNotEmpty(user.getDistrict()) && !user.getDistrict().equals(locationDTO.getDistrict())) {
+                        user.setDistrict(locationDTO.getDistrict());
                     }
-                    if (user1.getLatitude() == null) {
-                        user1.setLatitude(locationDTO.getLatitude());
-                    } else if (!user1.getLatitude().equals(locationDTO.getLatitude())) {
-                        user1.setLatitude(locationDTO.getLatitude());
+                    if (StrUtil.isNotEmpty(user.getOther()) && !user.getOther().equals(locationDTO.getOther())) {
+                        user.setOther(locationDTO.getOther());
+                    }
+                    if (user.getLongitude() == null) {
+                        user.setLongitude(locationDTO.getLongitude());
+                    } else if (!user.getLongitude().equals(locationDTO.getLongitude())) {
+                        user.setLongitude(locationDTO.getLongitude());
+                    }
+                    if (user.getLatitude() == null) {
+                        user.setLatitude(locationDTO.getLatitude());
+                    } else if (!user.getLatitude().equals(locationDTO.getLatitude())) {
+                        user.setLatitude(locationDTO.getLatitude());
                     }
                 }
             } else {
-                if (StrUtil.isNotEmpty(user1.getIp()) && !user1.getIp().equals(user.getIp())) {
-                    user1.setIp(user.getIp());
+                if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(userDTO.getIp())) {
+                    user.setIp(userDTO.getIp());
                 }
-                if (StrUtil.isNotEmpty(user1.getCountry()) && !user1.getCountry().equals(user.getCountry())) {
-                    user1.setCountry(user.getCountry());
+                if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(userDTO.getCountry())) {
+                    user.setCountry(userDTO.getCountry());
                 }
-                if (StrUtil.isNotEmpty(user1.getProvince()) && !user1.getProvince().equals(user.getProvince())) {
-                    user1.setProvince(user.getProvince());
+                if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(userDTO.getProvince())) {
+                    user.setProvince(userDTO.getProvince());
                 }
-                if (StrUtil.isNotEmpty(user1.getCity()) && !user1.getCity().equals(user.getCity())) {
-                    user1.setCity(user.getCity());
+                if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(userDTO.getCity())) {
+                    user.setCity(userDTO.getCity());
                 }
-                if (!user1.getLongitude().equals(user.getLongitude())) {
-                    user1.setLongitude(user.getLongitude());
+                if (StrUtil.isNotEmpty(user.getDistrict()) && !user.getDistrict().equals(userDTO.getDistrict())) {
+                    user.setDistrict(userDTO.getDistrict());
                 }
-                if (!user1.getLatitude().equals(user.getLatitude())) {
-                    user1.setLatitude(user.getLatitude());
+                if (StrUtil.isNotEmpty(user.getOther()) && !user.getOther().equals(userDTO.getOther())) {
+                    user.setOther(userDTO.getOther());
+                }
+                if (!user.getLongitude().equals(userDTO.getLongitude())) {
+                    user.setLongitude(userDTO.getLongitude());
+                }
+                if (!user.getLatitude().equals(userDTO.getLatitude())) {
+                    user.setLatitude(userDTO.getLatitude());
                 }
             }
-            user1.setUpdateTime(new Date());
-            this.userMapperWrite.updateByPrimaryKeySelective(user1);
-            Dynamic dynamic = this.dynamicDaoUseJdbcTemplate.getByUserId(user1.getId());
+            user.setUpdateTime(new Date());
+            this.userMapperWrite.updateByPrimaryKeySelective(user);
+            Dynamic dynamic = this.dynamicDaoUseJdbcTemplate.getByUserId(user.getId());
             if (dynamic != null) {
-                if (!dynamic.getCountry().equals(user1.getCountry())) {
-                    dynamic.setCountry(user1.getCountry());
+                if (StrUtil.isNotEmpty(dynamic.getCountry()) && !dynamic.getCountry().equals(user.getCountry())) {
+                    dynamic.setCountry(user.getCountry());
                 }
-                if (!dynamic.getProvince().equals(user1.getProvince())) {
-                    dynamic.setProvince(user1.getProvince());
+                if (StrUtil.isNotEmpty(dynamic.getProvince()) && !dynamic.getProvince().equals(user.getProvince())) {
+                    dynamic.setProvince(user.getProvince());
                 }
-                if (!dynamic.getCity().equals(user1.getCity())) {
-                    dynamic.setCity(user1.getCity());
+                if (StrUtil.isNotEmpty(dynamic.getCity()) && !dynamic.getCity().equals(user.getCity())) {
+                    dynamic.setCity(user.getCity());
+                }
+                if (StrUtil.isNotEmpty(dynamic.getDistrict()) && !dynamic.getDistrict().equals(user.getDistrict())) {
+                    dynamic.setDistrict(user.getDistrict());
+                }
+                if (StrUtil.isNotEmpty(dynamic.getOther()) && !dynamic.getOther().equals(user.getOther())) {
+                    dynamic.setOther(user.getOther());
                 }
                 if (dynamic.getLongitude() == null) {
-                    dynamic.setLongitude(user1.getLongitude());
-                } else if (!dynamic.getLongitude().equals(user1.getLongitude())) {
-                    dynamic.setLongitude(user1.getLongitude());
+                    dynamic.setLongitude(user.getLongitude());
+                } else if (!dynamic.getLongitude().equals(user.getLongitude())) {
+                    dynamic.setLongitude(user.getLongitude());
                 }
                 if (dynamic.getLatitude() == null) {
-                    dynamic.setLatitude(user1.getLatitude());
-                } else if (!dynamic.getLatitude().equals(user1.getLatitude())) {
-                    dynamic.setLatitude(user1.getLatitude());
+                    dynamic.setLatitude(user.getLatitude());
+                } else if (!dynamic.getLatitude().equals(user.getLatitude())) {
+                    dynamic.setLatitude(user.getLatitude());
                 }
                 dynamic.setUpdateTime(new Date());
                 this.dynamicMapperWriter.updateByPrimaryKey(dynamic);
             }
             message = "登录成功。";
-            userVO2.setId(user1.getId());
-            userVO2.setNickname(user1.getNickName());
-            userVO2.setAutograph(user1.getAutograph());
-            userVO2.setGender(user1.getGender());
+            userVO2.setId(user.getId());
+            userVO2.setNickname(user.getNickName());
+            userVO2.setAutograph(user.getAutograph());
+            userVO2.setGender(user.getGender());
             userVO2.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
                     StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
                     StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                    + user1.getId()
+                    + user.getId()
                     + "/"
-                    + user1.getHeadIcon());
+                    + user.getHeadIcon());
             try {
-                this.userLogOpenFeign.record(user1.getId(), operateRecord);
+                this.userLogOpenFeign.record(user.getId(), operateRecord);
             } catch (Exception e) {
                 log.error("记录用户操作记录失败", e);
             }

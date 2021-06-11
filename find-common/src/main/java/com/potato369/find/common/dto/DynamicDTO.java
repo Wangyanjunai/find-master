@@ -53,6 +53,16 @@ public class DynamicDTO extends AbstractDTO {
     @JSONField(name = "ip")
     private String ip;
 
+    @ApiModelProperty(value = "经度")
+    @JsonProperty(value = "longitude")
+    @JSONField(name = "longitude")
+    private Double longitude;
+
+    @ApiModelProperty(value = "纬度")
+    @JsonProperty(value = "latitude")
+    @JSONField(name = "latitude")
+    private Double latitude;
+
     @ApiModelProperty(value = "国")
     @JsonProperty(value = "country")
     @JSONField(name = "country")
@@ -68,6 +78,16 @@ public class DynamicDTO extends AbstractDTO {
     @JsonProperty(value = "city")
     @JSONField(name = "city")
     private String city;
+
+    @ApiModelProperty(value = "区/县")
+    @JsonProperty(value = "district")
+    @JSONField(name = "district")
+    private String district;
+
+    @ApiModelProperty(value = "其它")
+    @JsonProperty(value = "other")
+    @JSONField(name = "other")
+    private String other;
 
     @ApiModelProperty(value = "是否公开定位状态，0->未公开；1->公开，默认：0->未公开")
     @JSONField(name = "publicStatus")
