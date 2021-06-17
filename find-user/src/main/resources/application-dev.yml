@@ -4,18 +4,21 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.31.30:8848
+        server-addr: 127.0.0.1:8848
         namespace: 174f115e-55dd-486a-90e8-a96fe1a63965
   servlet:
      multipart:
-        location: D://temp//  datasource:    druid:      username: find                                          #数据库连接用户名
+        location: D://temp//
+  datasource:
+    druid:
+      username: find                                          #数据库连接用户名
       password: XueGod!@#123                                  #数据库连接密码
-      url: jdbc:mysql://localhost:3306/find_dev_test01?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true  #数据库连接URL 
+      url: jdbc:mysql://127.0.0.1:3306/find_dev_test01?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true  #数据库连接URL
       initial-size: 2                                         #数据库初始化连接大小
       min-idle: 5                                             #数据库最小连接池数量
       max-active: 20                                          #数据库最大连接池数量
 #########项目相关配置#########
-project-url:  
-  domain: http://192.168.31.30:8081         #项目网关域名前缀
-  upload-res: D:/Program/Resources          #资源文件存放nginx服务器路径
-  res-domain: http://192.168.31.30:9000     #Nginx服务器路径网关域名
+project-url:
+  domain: http://127.0.0.1:8081         #项目网关域名前缀
+  upload-res: D:/Program/Resources      #资源文件存放nginx服务器路径
+  res-domain: http://127.0.0.1:9000     #Nginx服务器路径网关域名

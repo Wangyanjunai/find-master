@@ -367,16 +367,21 @@ WHERE
 GROUP BY
 	`dynamic_info_id`
 	) 
-GROUP BY
-	`user_id` 
-	) AS a 
-WHERE
-	a.`user_id` = 8;
-	
-select now() from dual;
+GROUP BY `user_id`
+    ) AS a
+WHERE a.`user_id` = 8;
 
-select count(1) from `user`;
+select now()
+from dual;
 
-select * from `user` where `id` = 3;
+select count(1)
+from `user`;
+
+select *
+from `user`
+where `id` = 3;
+
+select *
+from `screen_setting`;
 	
 	

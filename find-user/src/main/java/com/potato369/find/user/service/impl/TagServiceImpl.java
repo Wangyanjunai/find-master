@@ -46,7 +46,11 @@ public class TagServiceImpl implements TagService {
         tagExample.setDistinct(true);
         tagExample.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus())
                 .andNameEqualTo(name);
-        return this.tagMapperReader.selectByExample(tagExample).get(0);
+        List<Tag> tagList = this.tagMapperReader.selectByExample(tagExample);
+        if (tagList != null && !tagList.isEmpty()) {
+            return tagList.get(0);
+        }
+        return null;
     }
 
     @Override
@@ -58,5 +62,14 @@ public class TagServiceImpl implements TagService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public String findTagById(Long id) {
+        Tag tag = this.tagMapperReader.selectByPrimaryKey(id);
+        if (tag != null) {
+            return tag.getName();
+        }
+        return null;
     }
 }

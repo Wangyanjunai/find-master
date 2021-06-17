@@ -29,6 +29,7 @@ public class HttpAspect {
         log.info("method={}", request.getMethod());
         //ip
         log.info("ip={}", request.getRemoteAddr());
+        assert joinPoint != null;
         //类方法
         log.info("class method={}", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
         //参数
@@ -37,11 +38,11 @@ public class HttpAspect {
 
     @After("log()")
     public void doAfter() {
-
     }
 
     @AfterReturning(returning = "object", pointcut = "log()")
     public void doAfterReturning(Object object) {
-        log.info("response={}", object.toString());
+        assert object != null;
+        log.info("response={}", object);
     }
 }

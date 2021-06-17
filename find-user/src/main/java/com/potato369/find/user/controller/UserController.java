@@ -10,10 +10,7 @@ import com.potato369.find.common.constants.ConstellationConstant;
 import com.potato369.find.common.dto.*;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.*;
-import com.potato369.find.common.vo.BlackUserVO;
-import com.potato369.find.common.vo.ReportCategoryVO;
-import com.potato369.find.common.vo.UserVO;
-import com.potato369.find.common.vo.UserVO2;
+import com.potato369.find.common.vo.*;
 import com.potato369.find.mbg.mapper.*;
 import com.potato369.find.mbg.model.*;
 import com.potato369.find.user.config.props.AliyunProps;
@@ -84,6 +81,12 @@ public class UserController {
 
     private TagService tagService;
 
+    private ProfessionsMapper professionsMapperReader;
+
+    private IndustrysMapper industrysMapperReader;
+
+    private ScreenSettingMapper screenSettingMapperReader;
+
     @Autowired
     public void setUserMapperWrite(UserMapper userMapperWrite) {
         this.userMapperWrite = userMapperWrite;
@@ -150,6 +153,11 @@ public class UserController {
     }
 
     @Autowired
+    public void setProfessionsMapperReader(ProfessionsMapper professionsMapperReader) {
+        this.professionsMapperReader = professionsMapperReader;
+    }
+
+    @Autowired
     public void setAliyunProps(AliyunProps aliyunProps) {
         this.aliyunProps = aliyunProps;
     }
@@ -172,6 +180,16 @@ public class UserController {
     @Autowired
     public void setTagService(TagService tagService) {
         this.tagService = tagService;
+    }
+
+    @Autowired
+    public void setIndustrysMapperReader(IndustrysMapper industrysMapperReader) {
+        this.industrysMapperReader = industrysMapperReader;
+    }
+
+    @Autowired
+    public void setScreenSettingMapperReader(ScreenSettingMapper screenSettingMapperReader) {
+        this.screenSettingMapperReader = screenSettingMapperReader;
     }
 
     //上报或者更新极光推送唯一设备的标识接口
@@ -476,8 +494,8 @@ public class UserController {
                 if (StrUtil.isEmpty(nickname)) {
                     user.setNickName(new RandomNickNameUtil().randomName());
                 } else {
-                	user.setNickName(nickname);
-				}
+                    user.setNickName(nickname);
+                }
                 if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
                     // 根据IP调用百度定位获取地址
                     if (StrUtil.isNotEmpty(userDTO.getIp())) {
@@ -494,13 +512,13 @@ public class UserController {
                 }
                 String autograph = userDTO.getAutograph();
                 if (StrUtil.isEmpty(autograph)) {
-                	if (UserGenderEnum.Female.getCode().toString().equals(user.getGender())) {
-                		user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent()));
+                    if (UserGenderEnum.Female.getCode().toString().equals(user.getGender())) {
+                        user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent()));
                     }
                     if (UserGenderEnum.Male.getCode().toString().equals(user.getGender())) {
-                    	user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent()));
+                        user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent()));
                     }
-				}
+                }
                 // 头像图片上传服务器
                 int result = this.userMapperWrite.insertSelective(user);
                 // 头像图片存储本地路径
@@ -889,30 +907,24 @@ public class UserController {
     //修改或者更新用户资料接口
     @PutMapping(value = "/{id}/update.do", consumes = {"application/json;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, Object>> update(@PathVariable(name = "id", required = true) Long id,
-                                                    UpdateUserDTO updateUserDTO) {
+                                                    @RequestBody UpdateUserDTO updateUserDTO) {
         if (log.isDebugEnabled()) {
             log.debug("开始修改或者更新用户资料");
         }
         if (log.isDebugEnabled()) {
             log.debug("前端传输过来的用户信息id={}，updateUserDTO={}", id, updateUserDTO);
         }
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new ConcurrentHashMap<>();
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.UpdateUser.getCode());
         operateRecord.setUserId(id);
         try {
-            Long professionId = updateUserDTO.getProfessionId();
-            String tag1 = updateUserDTO.getTag1();
-            String tag2 = updateUserDTO.getTag2();
-            String tag3 = updateUserDTO.getTag3();
-            String tag4 = updateUserDTO.getTag4();
-
-            User user2 = this.userDaoUseJdbcTemplate.getById(id);
-            if (user2 != null) {
-                this.copy(updateUserDTO, user2);
-                user2.setUpdateTime(new Date());
-                this.userMapperWrite.updateByPrimaryKeySelective(user2);
+            User user = this.userMapperReader.selectByPrimaryKey(id);
+            if (user != null) {
+                this.copy(updateUserDTO, user);
+                user.setUpdateTime(new Date());
+                this.userMapperWrite.updateByPrimaryKeySelective(user);
                 try {
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     this.userLogOpenFeign.record(id, operateRecord);
@@ -946,33 +958,37 @@ public class UserController {
         if (log.isDebugEnabled()) {
             log.debug("前端传输过来的用户信息id={}", id);
         }
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new ConcurrentHashMap<>();
         try {
-            User user2 = this.userDaoUseJdbcTemplate.getUserInfoById(id);
-            if (user2 != null) {
+            User user = this.userMapperReader.selectByPrimaryKey(id);
+            if (user != null) {
                 UserVO userVO = UserVO.builder().build();
-                BeanUtils.copyProperties(user2, userVO);
-                userVO.setGrade(user2.getGrade());
-                if (StrUtil.isNotEmpty(user2.getHeadIcon())) {
+                BeanUtils.copyProperties(user, userVO);
+                userVO.setGrade(user.getGrade());
+                if (StrUtil.isNotEmpty(user.getHeadIcon())) {
                     userVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
                             StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
                             StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) +
-                            user2.getId() +
+                            user.getId() +
                             "/" +
-                            user2.getHeadIcon());
+                            user.getHeadIcon());
                 }
-                if (StrUtil.isNotEmpty(user2.getBackgroundIcon())) {
+                if (StrUtil.isNotEmpty(user.getBackgroundIcon())) {
                     userVO.setBgIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
                             StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
                             StrUtil.trimToNull(this.projectUrlProps.getResBackgroundIcon()) +
-                            user2.getId() +
+                            user.getId() +
                             "/" +
-                            user2.getBackgroundIcon());
+                            user.getBackgroundIcon());
                 }
-                userVO.setGender(user2.getGender());
-                String birthDate = user2.getYear() + "-" + user2.getMonth() + "-" + user2.getDate();
+                userVO.setGender(user.getGender());
+                userVO.setYear(user.getYear());
+                userVO.setMonth(user.getMonth());
+                userVO.setDate(user.getDate());
+                String birthDate = user.getYear() + "-" + user.getMonth() + "-" + user.getDate();
                 Date birthDay = DateUtil.fomatDate(birthDate);
                 userVO.setAge(AgeUtil.getAge(birthDay));
+                this.setUserVO(userVO, user);
                 data.put("user", userVO);
                 return CommonResult.success(data, "查看用户个人资料成功");
             } else {
@@ -1218,12 +1234,11 @@ public class UserController {
                 if (e != null) {
                     userVO.setId(e.getId());
                     userVO.setNickName(e.getNickName());
-                    userVO.setHeadIcon(new StringBuffer()
-                            .append(StrUtil.trimToNull(this.projectUrlProps.getResDomain()))
-                            .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
-                            .append(StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()))
-                            .append(e.getId()).append("/")
-                            .append(e.getHeadIcon()).toString());
+                    userVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
+                            StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
+                            StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) +
+                            e.getId() + "/" +
+                            e.getHeadIcon());
                     userVO.setCreateTime(DateUtil.fomateDate(blacklistRecord.getCreateTime(), DateUtil.sdfTimeCNFmt));
                 }
                 userVOList.add(userVO);
@@ -1366,28 +1381,88 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{id}/look.do")
+    public CommonResult<Map<String, List<UserVO3>>> look(
+            @PathVariable(name = "id", required = true) Long id,
+            @Valid UserDTO3 userDTO, BindingResult bindingResult,
+            @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始获取鹿可模块用户数据列表");
+            }
+            log.info("前端提交过来的请求参数：id={}, userDTO={}, pageNum={}, pageSize={}", id, userDTO, pageNum, pageSize);
+            if (bindingResult.hasErrors()) {
+                return CommonResult.validateFailed(bindingResult.getFieldError().getDefaultMessage());
+            }
+            User user = this.userMapperReader.selectByPrimaryKey(id);
+            if (user == null) {
+                return CommonResult.failed("用户信息不存在");
+            }
+            String screenGender = user.getGender();//鹿可性别筛选条件
+            ScreenSettingExample example = new ScreenSettingExample();
+            example.setDistinct(true);
+            ScreenSetting screenSetting = null;
+            Integer age = 0;
+            if (UserGenderEnum.Male.getGender().equals(screenGender)) {//男生
+                example.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.LOOK_AGE_MALE.getType());
+                age = 3;//默认+3
+            }
+            if (UserGenderEnum.Female.getGender().equals(screenGender)) {//女生
+                example.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.LOOK_AGE_FEMALE.getType());
+                age = 10;//默认+10
+            }
+            List<ScreenSetting> screenSettings = this.screenSettingMapperReader.selectByExample(example);
+            if (screenSettings != null && !screenSettings.isEmpty()) {
+                screenSetting = screenSettings.get(0);
+            }
+            if (screenSetting != null) {
+                age = screenSetting.getValue();
+            }
+            String birthDate = user.getYear() + "-" + user.getMonth() + "-" + user.getDate();
+            Date birthDay = DateUtil.fomatDate(birthDate);
+            log.info("age={}, userAge={}", age, AgeUtil.getAge(birthDay));
+            Integer screenAge = age + AgeUtil.getAge(birthDay);//鹿可年龄筛选条件
+            log.info("screenGender={}, screenAge={}", screenGender, screenAge);
+        } catch (Exception e) {
+            log.error("获取鹿可模块用户数据列表出现错误", e);
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束获取鹿可模块用户数据列表");
+            }
+        }
+        return null;
+    }
+
+
     //复制需要更新的用户信息
-    private void copy(UpdateUserDTO user, User user2) {
-        if (user != null && StrUtil.isNotEmpty(user.getYear()) && !user.getYear().equals(user2.getYear())) {//出生年代
-            user2.setYear(user.getYear());
-        }
-        if (user != null && StrUtil.isNotEmpty(user.getMonth()) && !user.getMonth().equals(user2.getMonth())) {//出生月份
-            user2.setMonth(user.getMonth());
-        }
-        if (user != null && StrUtil.isNotEmpty(user.getDate()) && !user.getDate().equals(user2.getDate())) {//出生日期
-            user2.setDate(user.getDate());
-        }
-        if (user != null && StrUtil.isNotEmpty(user.getConstellation()) && !user.getConstellation().equals(user2.getConstellation())) {//星座
-            user2.setConstellation(user.getConstellation());
-        }
-        if (user != null && StrUtil.isNotEmpty(user.getNickname()) && !user.getNickname().equals(user2.getNickName())) {//昵称
-            user2.setNickName(user.getNickname());
-        }
-        if (user != null && StrUtil.isNotEmpty(user.getWeixinId()) && !user.getWeixinId().equals(user2.getWeixinId())) {//微信号
-            user2.setWeixinId(user.getWeixinId());
-        }
-        if (user != null && StrUtil.isNotEmpty(user.getAutograph()) && !user.getAutograph().equals(user2.getAutograph())) {//签名
-            user2.setAutograph(user.getAutograph());
+    private void copy(UpdateUserDTO userDTO, User user) {
+        if (userDTO != null && user != null) {
+            if (StrUtil.isNotEmpty(userDTO.getYear()) && !userDTO.getYear().equals(user.getYear())) {//出生年代
+                user.setYear(userDTO.getYear());
+            }
+            if (StrUtil.isNotEmpty(userDTO.getMonth()) && !userDTO.getMonth().equals(user.getMonth())) {//出生月份
+                user.setMonth(userDTO.getMonth());
+            }
+            if (StrUtil.isNotEmpty(userDTO.getDate()) && !userDTO.getDate().equals(user.getDate())) {//出生日期
+                user.setDate(userDTO.getDate());
+            }
+            if (StrUtil.isNotEmpty(userDTO.getConstellation()) && !userDTO.getConstellation().equals(user.getConstellation())) {//星座
+                user.setConstellation(userDTO.getConstellation());
+            }
+            if (StrUtil.isNotEmpty(userDTO.getNickname()) && !userDTO.getNickname().equals(user.getNickName())) {//昵称
+                user.setNickName(userDTO.getNickname());
+            }
+            if (StrUtil.isNotEmpty(userDTO.getWeixinId()) && !userDTO.getWeixinId().equals(user.getWeixinId())) {//微信号
+                user.setWeixinId(userDTO.getWeixinId());
+            }
+            if (StrUtil.isNotEmpty(userDTO.getAutograph()) && !userDTO.getAutograph().equals(user.getAutograph())) {//签名
+                user.setAutograph(userDTO.getAutograph());
+            }
+            if (userDTO.getProfessionId() != null && !userDTO.getProfessionId().equals(user.getProfessionId())) {//职业Id
+                user.setProfessionId(userDTO.getProfessionId());
+            }
+            this.setTags(user, userDTO);
         }
     }
 
@@ -1399,7 +1474,7 @@ public class UserController {
      * </pre>
      */
     private Long getTagIdByName(String name) {
-        Long tagIdLong = null;
+        Long tagIdLong;
         Tag tag = this.tagService.findTagByName(name);
         if (tag != null) {
             tagIdLong = tag.getId();
@@ -1410,5 +1485,67 @@ public class UserController {
             tagIdLong = this.tagService.saveTag(tag);
         }
         return tagIdLong;
+    }
+
+    /**
+     * <pre>
+     * 根据标签Id获取标签名称
+     * @param id 标签id
+     * @return 标签名称
+     * </pre>
+     */
+    private String getTagNameById(Long id) {
+        return this.tagService.findTagById(id);
+    }
+
+    private void setTags(User user, UpdateUserDTO userDTO) {
+        if (StrUtil.isNotEmpty(userDTO.getTag1())) {
+            Long tagIdLong = this.getTagIdByName(userDTO.getTag1());
+            if (!tagIdLong.equals(user.getTag1())) {
+                user.setTag1(tagIdLong);
+            }
+        }
+        if (StrUtil.isNotEmpty(userDTO.getTag2())) {
+            Long tagIdLong = this.getTagIdByName(userDTO.getTag2());
+            if (!tagIdLong.equals(user.getTag2())) {
+                user.setTag2(tagIdLong);
+            }
+        }
+        if (StrUtil.isNotEmpty(userDTO.getTag3())) {
+            Long tagIdLong = this.getTagIdByName(userDTO.getTag3());
+            if (!tagIdLong.equals(user.getTag3())) {
+                user.setTag3(tagIdLong);
+            }
+        }
+        if (StrUtil.isNotEmpty(userDTO.getTag4())) {
+            Long tagIdLong = this.getTagIdByName(userDTO.getTag4());
+            if (!tagIdLong.equals(user.getTag4())) {
+                user.setTag4(tagIdLong);
+            }
+        }
+        if (StrUtil.isNotEmpty(userDTO.getTag5())) {
+            Long tagIdLong = this.getTagIdByName(userDTO.getTag5());
+            if (!tagIdLong.equals(user.getTag5())) {
+                user.setTag5(tagIdLong);
+            }
+        }
+    }
+
+    private void setUserVO(UserVO userVO, User user) {
+        if (userVO != null && user != null) {
+            Professions professions = this.professionsMapperReader.selectByPrimaryKey(user.getProfessionId());
+            if (professions != null) {
+                userVO.setProfession(professions.getName());
+                Industrys industrys = this.industrysMapperReader.selectByPrimaryKey(professions.getIndustryId());
+                if (industrys != null) {
+                    userVO.setIndustry(industrys.getName());
+                }
+            }
+            userVO.setTag1(this.getTagNameById(user.getTag1()));
+            userVO.setTag2(this.getTagNameById(user.getTag2()));
+            userVO.setTag3(this.getTagNameById(user.getTag3()));
+            userVO.setTag4(this.getTagNameById(user.getTag4()));
+            userVO.setTag5(this.getTagNameById(user.getTag5()));
+        }
     }
 }

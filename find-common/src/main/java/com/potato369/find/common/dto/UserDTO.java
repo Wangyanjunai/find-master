@@ -218,7 +218,7 @@ public class UserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * double：经度
+     * longitude：经度
      * </pre>
      */
     @ApiModelProperty(value = "经度")

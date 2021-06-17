@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface TagService {
 
-	List<Tag> getAllUndeleteTags();
+    List<Tag> getAllUndeleteTags();
 
-	Tag findTagByName(String name);
+    Tag findTagByName(String name);
 
-	Long saveTag(Tag tag);
+    Long saveTag(Tag tag);
+
+    String findTagById(Long id);
 }

@@ -35,46 +35,46 @@ public class UserDaoUseJdbcTemplate {
         RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
         User user = null;
         try {
-			user = this.jdbcTemplate.queryForObject(sql, mapper, phone);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+            user = this.jdbcTemplate.queryForObject(sql, mapper, phone);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
         return user;
     }
-    
+
     public User getById(Long id) {
         String sql = "select `id`, `ip`, `country`, `province`, `city`, `gender`, `nick_name`, `weixin_id`, `phone`, `status`, `head_icon`, `background_icon`, `autograph` from `user` where `id` = ?";
         RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
         User user = null;
         try {
-			user = this.jdbcTemplate.queryForObject(sql, mapper, id);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+            user = this.jdbcTemplate.queryForObject(sql, mapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
         return user;
     }
-    
+
     public User getUserInfoById(Long id) {
         String sql = "select `id`, `gender`, `grade`, `year`, `month`, `date`,`nick_name`, `head_icon`, `background_icon`, `autograph` from `user` where `id` = ?";
         RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
-        User user = null;
+        User user;
         try {
-			user = this.jdbcTemplate.queryForObject(sql, mapper, id);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+            user = this.jdbcTemplate.queryForObject(sql, mapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
         return user;
     }
-    
+
     public User getweixinIdById(Long id) {
         String sql = "select `weixin_id` from `user` where `id` = ?";
         RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
         User user = null;
         try {
-			user = this.jdbcTemplate.queryForObject(sql, mapper, id);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+            user = this.jdbcTemplate.queryForObject(sql, mapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
         return user;
     }
 }
