@@ -156,15 +156,27 @@
 				</if>
 				<if test="param.list!=null and param.list.size() !=0">
 					AND u.`id` NOT IN (
-					<foreach collection="param.list" item="uid" index="index"
-						separator=",">
-						#{uid}
-					</foreach>
-					)
-				</if>
+                    <foreach collection="param.list" item="uid" index="index"
+                             separator=",">
+                        #{uid}
+                    </foreach>
+                    )
+                </if>
             </if>
         </where>
         ORDER BY u.`id` ASC
+    </select>
+    <select id="selectLookUserList" parameterType="com.potato369.find.mbg.model.LookInfoParam"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `user` ur
+        where ur.`gender` <![CDATA[=]]> #{param.gender, jdbcType=CHAR}
+        and str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[<=]]>
+        #{param.minAge, jdbcType=TIMESTAMP}
+        and str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[>=]]>
+        #{param.maxAge, jdbcType=TIMESTAMP}
+        order by ur.`create_time` desc, ur.`update_time` desc
     </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select

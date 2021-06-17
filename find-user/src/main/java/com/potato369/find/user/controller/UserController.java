@@ -10,7 +10,10 @@ import com.potato369.find.common.constants.ConstellationConstant;
 import com.potato369.find.common.dto.*;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.*;
-import com.potato369.find.common.vo.*;
+import com.potato369.find.common.vo.BlackUserVO;
+import com.potato369.find.common.vo.ReportCategoryVO;
+import com.potato369.find.common.vo.UserVO;
+import com.potato369.find.common.vo.UserVO2;
 import com.potato369.find.mbg.mapper.*;
 import com.potato369.find.mbg.model.*;
 import com.potato369.find.user.config.props.AliyunProps;
@@ -1243,20 +1246,6 @@ public class UserController {
                 }
                 userVOList.add(userVO);
             }
-//            List<User> userList = blacklistRecordList.stream().map(e -> 
-//            		this.userDaoUseJdbcTemplate.getById(e.getBlackUserId()))
-//            		.collect(Collectors.toList());
-//            List<UserVO> userVOList = userList.stream().map(e -> {
-//                UserVO userVO = new UserVO();
-//                userVO.setId(e.getId());
-//                userVO.setNickName(e.getNickName());
-//                userVO.setHeadIcon(new StringBuffer()
-//                        .append(StrUtil.trimToNull(this.projectUrlProps.getResDomain()))
-//                        .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
-//                        .append(StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()))
-//                        .append(e.getHeadIcon()).toString());
-//                return userVO;
-//            }).collect(Collectors.toList());
             data.put("totalPage", totalPage);
             data.put("list", userVOList);
             return CommonResult.success(data, "获取用户黑名单列表成功。");
@@ -1381,8 +1370,9 @@ public class UserController {
         }
     }
 
+    //鹿可模块推荐用户列表接口
     @GetMapping("/{id}/look.do")
-    public CommonResult<Map<String, List<UserVO3>>> look(
+    public CommonResult<List<User>> look(
             @PathVariable(name = "id", required = true) Long id,
             @Valid UserDTO3 userDTO, BindingResult bindingResult,
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
@@ -1392,14 +1382,14 @@ public class UserController {
                 log.debug("开始获取鹿可模块用户数据列表");
             }
             log.info("前端提交过来的请求参数：id={}, userDTO={}, pageNum={}, pageSize={}", id, userDTO, pageNum, pageSize);
-            if (bindingResult.hasErrors()) {
-                return CommonResult.validateFailed(bindingResult.getFieldError().getDefaultMessage());
+            if (bindingResult != null && bindingResult.hasErrors()) {
+                return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
             User user = this.userMapperReader.selectByPrimaryKey(id);
             if (user == null) {
                 return CommonResult.failed("用户信息不存在");
             }
-            String screenGender = user.getGender();//鹿可性别筛选条件
+            String screenGender = user.getGender();//鹿可性别筛选条件一
             ScreenSettingExample example = new ScreenSettingExample();
             example.setDistinct(true);
             ScreenSetting screenSetting = null;
@@ -1421,9 +1411,28 @@ public class UserController {
             }
             String birthDate = user.getYear() + "-" + user.getMonth() + "-" + user.getDate();
             Date birthDay = DateUtil.fomatDate(birthDate);
-            log.info("age={}, userAge={}", age, AgeUtil.getAge(birthDay));
-            Integer screenAge = age + AgeUtil.getAge(birthDay);//鹿可年龄筛选条件
-            log.info("screenGender={}, screenAge={}", screenGender, screenAge);
+            ScreenSettingExample example11 = new ScreenSettingExample();
+            example11.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.DYNAMIC_AGE_MIN.getType());
+            List<ScreenSetting> screenSettings11 = this.screenSettingMapperReader.selectByExample(example11);
+            ScreenSetting screenSetting11 = null;
+            if (screenSettings11 != null && !screenSettings11.isEmpty()) {
+                screenSetting11 = screenSettings11.get(0);
+            }
+            Integer screenAgeMin = 16;//鹿可年龄最小值筛选条件
+            if (screenSetting11 != null) {
+                screenAgeMin = screenSetting11.getValue();
+            }
+            Integer screenAgeMax = age + AgeUtil.getAge(birthDay);//鹿可年龄最大值筛选条件
+            Date min = DateUtil.fomatDate(DateUtil.getBeforeYearByAge(screenAgeMin));
+            Date max = DateUtil.fomatDate(DateUtil.getBeforeYearByAge(screenAgeMax));
+            LookInfoParam lookInfoParam = new LookInfoParam();
+            lookInfoParam.setGender(screenGender);
+            lookInfoParam.setMinAge(min);
+            lookInfoParam.setMaxAge(max);
+            log.info("screenGender={}, screenAgeMin={}, screenAgeMax={}", lookInfoParam.getGender(), DateUtil.strFormat(lookInfoParam.getMinAge(), DateUtil.sdfTimeFmt), DateUtil.strFormat(lookInfoParam.getMaxAge(), DateUtil.sdfTimeFmt));
+            List<User> userList = this.userMapperReader.selectLookUserList(lookInfoParam);
+            log.info("userList={}", userList);
+            return CommonResult.success(userList);
         } catch (Exception e) {
             log.error("获取鹿可模块用户数据列表出现错误", e);
         } finally {
