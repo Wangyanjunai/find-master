@@ -483,6 +483,21 @@
           AND ur.`id` = #{userId, jdbcType=BIGINT}
         ORDER BY di.`dynamic_status` DESC, di.`create_time` DESC, di.`update_time` DESC
     </select>
+    <select id="getFileNameByUserId" parameterType="java.lang.Long" resultType="string">
+        select ai.`file_name`
+        from `attache_info` ai
+        where ai.`dynamic_info_by` <![CDATA[=]]>
+              (select dy.`id`
+               from `dynamic_info` dy
+               where dy.`user_id` <![CDATA[=]]> #{userId, jdbcType=BIGINT}
+                 and dy.`attache_type` <![CDATA[=]]> '0'
+                 and dy.`attache_number` <![CDATA[>]]> 0
+               order by dy.`create_time` desc
+               limit 1)
+          and ai.`data_type` <![CDATA[=]]> '0'
+          and ai.`file_name` is not null
+        limit 1
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
         update dynamic_info
         <set>

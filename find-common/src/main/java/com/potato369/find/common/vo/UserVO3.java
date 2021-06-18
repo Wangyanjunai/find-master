@@ -33,7 +33,7 @@ public class UserVO3 {
      */
     @JSONField(name = "nickname")
     @JsonProperty(value = "nickname")
-    private String nickname;
+    private String nickName;
 
     /**
      * <pre>
@@ -88,6 +88,24 @@ public class UserVO3 {
     @JSONField(name = "other")
     @JsonProperty(value = "other")
     private String other;
+
+    /**
+     * <pre>
+     * @JSONField longitude：经度
+     * </pre>
+     */
+    @JSONField(name = "longitude")
+    @JsonProperty(value = "longitude")
+    private Double longitude;
+
+    /**
+     * <pre>
+     * @JSONField latitude：纬度
+     * </pre>
+     */
+    @JSONField(name = "latitude")
+    @JsonProperty(value = "latitude")
+    private Double latitude;
 
     /**
      * <pre>

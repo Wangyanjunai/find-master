@@ -10,10 +10,7 @@ import com.potato369.find.common.constants.ConstellationConstant;
 import com.potato369.find.common.dto.*;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.*;
-import com.potato369.find.common.vo.BlackUserVO;
-import com.potato369.find.common.vo.ReportCategoryVO;
-import com.potato369.find.common.vo.UserVO;
-import com.potato369.find.common.vo.UserVO2;
+import com.potato369.find.common.vo.*;
 import com.potato369.find.mbg.mapper.*;
 import com.potato369.find.mbg.model.*;
 import com.potato369.find.user.config.props.AliyunProps;
@@ -1372,16 +1369,15 @@ public class UserController {
 
     //鹿可模块推荐用户列表接口
     @GetMapping("/{id}/look.do")
-    public CommonResult<List<User>> look(
+    public CommonResult<List<UserVO3>> look(
             @PathVariable(name = "id", required = true) Long id,
             @Valid UserDTO3 userDTO, BindingResult bindingResult,
-            @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
-            @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
+            @RequestParam(name = "count", required = false, defaultValue = "10") Integer count) {
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取鹿可模块用户数据列表");
             }
-            log.info("前端提交过来的请求参数：id={}, userDTO={}, pageNum={}, pageSize={}", id, userDTO, pageNum, pageSize);
+            log.info("前端提交过来的请求参数：id={}, userDTO={}, count={}", id, userDTO, count);
             if (bindingResult != null && bindingResult.hasErrors()) {
                 return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
@@ -1422,7 +1418,7 @@ public class UserController {
             if (screenSetting11 != null) {
                 screenAgeMin = screenSetting11.getValue();
             }
-            Integer screenAgeMax = age + AgeUtil.getAge(birthDay);//鹿可年龄最大值筛选条件
+            int screenAgeMax = age + AgeUtil.getAge(birthDay);//鹿可年龄最大值筛选条件
             Date min = DateUtil.fomatDate(DateUtil.getBeforeYearByAge(screenAgeMin));
             Date max = DateUtil.fomatDate(DateUtil.getBeforeYearByAge(screenAgeMax));
             LookInfoParam lookInfoParam = new LookInfoParam();
@@ -1431,8 +1427,34 @@ public class UserController {
             lookInfoParam.setMaxAge(max);
             log.info("screenGender={}, screenAgeMin={}, screenAgeMax={}", lookInfoParam.getGender(), DateUtil.strFormat(lookInfoParam.getMinAge(), DateUtil.sdfTimeFmt), DateUtil.strFormat(lookInfoParam.getMaxAge(), DateUtil.sdfTimeFmt));
             List<User> userList = this.userMapperReader.selectLookUserList(lookInfoParam);
-            log.info("userList={}", userList);
-            return CommonResult.success(userList);
+            List<User> userList1 = new LinkedList<>();
+            List<UserVO3> userVO3List = new LinkedList<>();
+            if (userList != null && !userList.isEmpty() && userList.size() - 1 > count) {
+                int[] list = MathUtil.getRandoms(0, userList.size() - 1, count);
+                assert list != null;
+                for (int i : list) {
+                    User user1 = userList.get(i);
+                    userList1.add(user1);
+                }
+                for (User userTmp : userList1) {
+                    UserVO3 userVO3 = UserVO3.builder().build();
+                    BeanUtils.copyProperties(userTmp, userVO3);
+                    String birthDateTmp = userTmp.getYear() + "-" + userTmp.getMonth() + "-" + userTmp.getDate();
+                    Date birthDayTmp = DateUtil.fomatDate(birthDateTmp);
+                    userVO3.setAge(AgeUtil.getAge(birthDayTmp));
+                    String[] filenameTemps = StrUtil.split(this.dynamicInfoMapperRead.getFileNameByUserId(userTmp.getId()), "||");
+                    String filenameTemp;
+                    if (filenameTemps != null && filenameTemps.length > 0) {
+                        filenameTemp = filenameTemps[0];
+                    } else {
+                        filenameTemp = this.dynamicInfoMapperRead.getFileNameByUserId(userTmp.getId());
+                    }
+                    String filename = StrUtil.trimToNull(this.projectUrlProps.getResDomain()) + StrUtil.trimToNull(this.projectUrlProps.getProjectName()) + StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()) + filenameTemp;
+                    userVO3.setImg(filename);
+                    userVO3List.add(userVO3);
+                }
+            }
+            return CommonResult.success(userVO3List);
         } catch (Exception e) {
             log.error("获取鹿可模块用户数据列表出现错误", e);
         } finally {

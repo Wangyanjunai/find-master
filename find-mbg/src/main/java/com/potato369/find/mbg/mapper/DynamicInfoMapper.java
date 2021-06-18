@@ -29,8 +29,10 @@ public interface DynamicInfoMapper {
     DynamicInfo selectByPrimaryKey(Long id);
 
     List<DynamicInfoData> selectDynamicInfoData(@Param("param") DynamicInfoParam param);
-    
+
     List<DynamicInfoData> selectMyDynamicInfoData(Long userId);
+
+    String getFileNameByUserId(@Param("userId") Long userId);
 
     int updateByExampleSelective(@Param("record") DynamicInfo record, @Param("example") DynamicInfoExample example);
 
