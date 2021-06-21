@@ -31,6 +31,8 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LookInfoParam implements Serializable {
 
+    private static final long serialVersionUID = 6080249421284905175L;
+
     @ApiModelProperty(value = "鹿可性别筛选条件")
     private String gender;
 
