@@ -87,6 +87,8 @@ public class UserController {
 
     private ScreenSettingMapper screenSettingMapperReader;
 
+    private AttacheInfoMapper attacheInfoMapperReader;
+
     @Autowired
     public void setUserMapperWrite(UserMapper userMapperWrite) {
         this.userMapperWrite = userMapperWrite;
@@ -190,6 +192,11 @@ public class UserController {
     @Autowired
     public void setScreenSettingMapperReader(ScreenSettingMapper screenSettingMapperReader) {
         this.screenSettingMapperReader = screenSettingMapperReader;
+    }
+
+    @Autowired
+    public void setAttacheInfoMapperReader(AttacheInfoMapper attacheInfoMapperReader) {
+        this.attacheInfoMapperReader = attacheInfoMapperReader;
     }
 
     //上报或者更新极光推送唯一设备的标识接口
@@ -1367,7 +1374,7 @@ public class UserController {
         }
     }
 
-    //鹿可模块推荐用户列表接口
+    //鹿可模块推荐用户数据接口
     @GetMapping("/{id}/look.do")
     public CommonResult<List<UserVO3>> look(
             @PathVariable(name = "id", required = true) Long id,
@@ -1375,7 +1382,7 @@ public class UserController {
             @RequestParam(name = "count", required = false, defaultValue = "10") Integer count) {
         try {
             if (log.isDebugEnabled()) {
-                log.debug("开始获取鹿可模块用户数据列表");
+                log.debug("开始获取鹿可模块用户数据");
             }
             log.info("前端提交过来的请求参数：id={}, userDTO={}, count={}", id, userDTO, count);
             if (bindingResult != null && bindingResult.hasErrors()) {
@@ -1425,6 +1432,7 @@ public class UserController {
             lookInfoParam.setGender(screenGender);
             lookInfoParam.setMinAge(min);
             lookInfoParam.setMaxAge(max);
+            lookInfoParam.setUserId(id);
             log.info("screenGender={}, screenAgeMin={}, screenAgeMax={}", lookInfoParam.getGender(), DateUtil.strFormat(lookInfoParam.getMinAge(), DateUtil.sdfTimeFmt), DateUtil.strFormat(lookInfoParam.getMaxAge(), DateUtil.sdfTimeFmt));
             List<User> userList = this.userMapperReader.selectLookUserList(lookInfoParam);
             List<User> userList1 = new LinkedList<>();
@@ -1451,10 +1459,70 @@ public class UserController {
                     }
                     String filename = StrUtil.trimToNull(this.projectUrlProps.getResDomain()) + StrUtil.trimToNull(this.projectUrlProps.getProjectName()) + StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()) + filenameTemp;
                     userVO3.setImg(filename);
+                    userVO3.setDistance(DistanceUtil.getDistance(userDTO.getLongitude(), userDTO.getLatitude(), userTmp.getLongitude(), userTmp.getLatitude()));
                     userVO3List.add(userVO3);
                 }
             }
             return CommonResult.success(userVO3List);
+        } catch (Exception e) {
+            log.error("获取鹿可模块用户数据出现错误", e);
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束获取鹿可模块用户数据");
+            }
+        }
+        return null;
+    }
+
+    //鹿可模块推荐用户详情数据接口
+    @GetMapping("/{id}/look-details.do")
+    public CommonResult<UserVO4> lookDetails(
+            @PathVariable(name = "id", required = true) Long id,
+            @RequestParam(name = "detailsUserId", required = true) Long detailsUserId) {
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始获取鹿可模块用户详情数据");
+            }
+            log.info("前端提交过来的请求参数：id={}, detailsUserId={}", id, detailsUserId);
+            User user = this.userMapperReader.selectByPrimaryKey(id);
+            if (user == null) {
+                return CommonResult.failed("当前用户信息不存在");
+            }
+            User userDetails = this.userMapperReader.selectByPrimaryKey(detailsUserId);
+            if (userDetails == null) {
+                return CommonResult.failed("鹿可用户信息不存在");
+            }
+            UserVO4 userVO4 = UserVO4.builder().build();
+            BeanUtils.copyProperties(userDetails, userVO4);
+            List<AttacheInfo> attacheInfoList = this.attacheInfoMapperReader.getAttacheInfoByUserId(userDetails.getId());
+            List<String> attacheList = new ArrayList<>();
+            List<String> attacheListTmp = new ArrayList<>();
+            List<String> attacheListTmp1 = new ArrayList<>();
+            for (AttacheInfo attacheInfo : attacheInfoList) {
+                String filenameString = attacheInfo.getFileName();
+                String[] filenameArr = StrUtil.split(filenameString, "||");
+                if (filenameArr.length > 0) {
+                    attacheListTmp.addAll(Arrays.asList(filenameArr));
+                } else {
+                    attacheListTmp.add(filenameString);
+                }
+            }
+            if (!attacheListTmp.isEmpty()) {
+                if (attacheListTmp.size() <= 6) {
+                    attacheListTmp1 = attacheListTmp;
+                } else {
+                    attacheListTmp1 = attacheListTmp.subList(0, 6);
+                }
+            }
+            for (String filename : attacheListTmp1) {
+                attacheList.add(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) + StrUtil.trimToNull(this.projectUrlProps.getProjectName()) + StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()) + filename);
+            }
+            userVO4.setAttacheList(attacheList);
+            String birthDate = userDetails.getYear() + "-" + userDetails.getMonth() + "-" + userDetails.getDate();
+            Date birthDay = DateUtil.fomatDate(birthDate);
+            userVO4.setAge(AgeUtil.getAge(birthDay));
+            setUserVO4(userVO4, userDetails);
+            return CommonResult.success(userVO4);
         } catch (Exception e) {
             log.error("获取鹿可模块用户数据列表出现错误", e);
         } finally {
@@ -1563,6 +1631,24 @@ public class UserController {
     }
 
     private void setUserVO(UserVO userVO, User user) {
+        if (userVO != null && user != null) {
+            Professions professions = this.professionsMapperReader.selectByPrimaryKey(user.getProfessionId());
+            if (professions != null) {
+                userVO.setProfession(professions.getName());
+                Industrys industrys = this.industrysMapperReader.selectByPrimaryKey(professions.getIndustryId());
+                if (industrys != null) {
+                    userVO.setIndustry(industrys.getName());
+                }
+            }
+            userVO.setTag1(this.getTagNameById(user.getTag1()));
+            userVO.setTag2(this.getTagNameById(user.getTag2()));
+            userVO.setTag3(this.getTagNameById(user.getTag3()));
+            userVO.setTag4(this.getTagNameById(user.getTag4()));
+            userVO.setTag5(this.getTagNameById(user.getTag5()));
+        }
+    }
+
+    private void setUserVO4(UserVO4 userVO, User user) {
         if (userVO != null && user != null) {
             Professions professions = this.professionsMapperReader.selectByPrimaryKey(user.getProfessionId());
             if (professions != null) {

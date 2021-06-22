@@ -45,4 +45,9 @@ public class LookInfoParam implements Serializable {
     @JsonProperty(value = "maxAge")
     @JSONField(name = "maxAge")
     private Date maxAge;
+
+    @ApiModelProperty(value = "排除自己的用户id")
+    @JsonProperty(value = "userId")
+    @JSONField(name = "userId")
+    private Long userId;
 }

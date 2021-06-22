@@ -1010,6 +1010,27 @@ set `district`  = '龙华新区',
 where `id` >= 135
   and `id` <= 138;
 
+select *
+from `user`
+where `district` is null
+order by `id`;
 
-	
-	
+select *
+from `user`
+where `city` = '常州市'
+  and `district` is null
+order by `id`;
+select *
+from `user`
+where `city` = '常州市'
+  and `district` is not null
+order by `id`;
+
+select *
+from `user`
+where `district` = '宝安区';
+
+select *
+from `user`
+where `city` = '深圳市'
+  and `district` = '福田区';

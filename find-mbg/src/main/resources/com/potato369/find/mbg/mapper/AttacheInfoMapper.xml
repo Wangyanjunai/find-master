@@ -99,6 +99,18 @@
         from attache_info
         where id = #{id,jdbcType=BIGINT}
     </select>
+    <select id="getAttacheInfoByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select ai.`id`, ai.`file_name`
+        from `attache_info` ai
+        where ai.`dynamic_info_by`
+            in (select di.`id`
+                from `dynamic_info` di
+                where di.`user_id` = #{userId,jdbcType=BIGINT}
+                order by di.`create_time` desc)
+          and ai.`data_type` = '0'
+          and ai.`status` = '1'
+        order by ai.`create_time` desc
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
         from attache_info

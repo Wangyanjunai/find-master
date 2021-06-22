@@ -21,6 +21,8 @@ public interface AttacheInfoMapper {
 
     AttacheInfo selectByPrimaryKey(Long id);
 
+    List<AttacheInfo> getAttacheInfoByUserId(@Param("userId") Long userId);
+
     int updateByExampleSelective(@Param("record") AttacheInfo record, @Param("example") AttacheInfoExample example);
 
     int updateByExample(@Param("record") AttacheInfo record, @Param("example") AttacheInfoExample example);

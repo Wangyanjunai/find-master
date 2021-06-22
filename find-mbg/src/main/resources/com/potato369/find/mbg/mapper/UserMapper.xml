@@ -172,6 +172,7 @@
         <include refid="Base_Column_List"/>
         from `user` ur
         where ur.`gender` <![CDATA[=]]> #{param.gender, jdbcType=CHAR}
+        and ur.`id` <![CDATA[!=]]> #{param.userId, jdbcType=BIGINT}
         and str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[<=]]>
         #{param.minAge, jdbcType=TIMESTAMP}
         and str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[>=]]>

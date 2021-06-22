@@ -19,7 +19,7 @@ public class UserVO3 {
 
     /**
      * <pre>
-     * @JSONField id：用户id
+     * id：用户id
      * </pre>
      */
     @JsonProperty(value = "id")
@@ -37,7 +37,7 @@ public class UserVO3 {
 
     /**
      * <pre>
-     * @JSONField age：年龄
+     * age：年龄
      * </pre>
      */
     @JSONField(name = "age")
@@ -46,7 +46,7 @@ public class UserVO3 {
 
     /**
      * <pre>
-     * @JSONField country：国家
+     * country：国家
      * </pre>
      */
     @JSONField(name = "country")
@@ -55,7 +55,7 @@ public class UserVO3 {
 
     /**
      * <pre>
-     * @JSONField province：省份
+     * province：省份
      * </pre>
      */
     @JSONField(name = "province")
@@ -64,7 +64,7 @@ public class UserVO3 {
 
     /**
      * <pre>
-     * @JSONField city：城市
+     * city：城市
      * </pre>
      */
     @JSONField(name = "city")
@@ -73,7 +73,7 @@ public class UserVO3 {
 
     /**
      * <pre>
-     * @JSONField city：城市
+     * district：区/县
      * </pre>
      */
     @JSONField(name = "district")
@@ -82,7 +82,7 @@ public class UserVO3 {
 
     /**
      * <pre>
-     * @JSONField other：其它
+     * other：其它
      * </pre>
      */
     @JSONField(name = "other")
@@ -91,34 +91,16 @@ public class UserVO3 {
 
     /**
      * <pre>
-     * @JSONField longitude：经度
-     * </pre>
-     */
-    @JSONField(name = "longitude")
-    @JsonProperty(value = "longitude")
-    private Double longitude;
-
-    /**
-     * <pre>
-     * @JSONField latitude：纬度
-     * </pre>
-     */
-    @JSONField(name = "latitude")
-    @JsonProperty(value = "latitude")
-    private Double latitude;
-
-    /**
-     * <pre>
-     * @JSONField distance：距离
+     * distance：距离（单位米）
      * </pre>
      */
     @JSONField(name = "distance")
     @JsonProperty(value = "distance")
-    private String distance;
+    private Double distance;
 
     /**
      * <pre>
-     * @JSONField img：第一张动态图片地址
+     * img：第一张动态图片地址
      * </pre>
      */
     @JSONField(name = "img")
