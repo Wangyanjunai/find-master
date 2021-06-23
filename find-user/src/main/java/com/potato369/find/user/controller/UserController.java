@@ -202,8 +202,8 @@ public class UserController {
     //上报或者更新极光推送唯一设备的标识接口
     @ApiOperation(value = "上报或者更新极光推送唯一设备的标识接口", notes = "上报或者更新极光推送唯一设备的标识接口", response = CommonResult.class)
     @PutMapping(value = "/{id}/uploadRegId.do")
-    public CommonResult<Map<String, Object>> uploadRegId(@PathVariable(name = "id", required = true) Long id,//id：用户id
-                                                         @RequestParam(name = "regId", required = true) String regId) {//regId：极光推送唯一设备的标识
+    public CommonResult<Map<String, Object>> uploadRegId(@PathVariable(name = "id") Long id,//id：用户id
+                                                         @RequestParam(name = "regId") String regId) {//regId：极光推送唯一设备的标识
         Map<String, Object> result = new ConcurrentHashMap<>();
         String data = "UPLOADREGID";
         String message = "FAILED";
@@ -239,8 +239,8 @@ public class UserController {
     //上传或者修改头像小图接口
     @ApiOperation(value = "上传或者修改头像小图接口", notes = "上传或者修改头像小图接口", response = CommonResult.class)
     @PutMapping(value = "/{id}/head.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
-    public CommonResult<Map<String, Object>> handleHeadIconUpload(@PathVariable(name = "id", required = true) Long id,
-                                                                  @RequestPart(name = "headIconFile", required = true) MultipartFile headIconFile01) {
+    public CommonResult<Map<String, Object>> handleHeadIconUpload(@PathVariable(name = "id") Long id,
+                                                                  @RequestPart(name = "headIconFile") MultipartFile headIconFile01) {
         if (log.isDebugEnabled()) {
             log.debug("开始上传头像小图片");
             log.debug("前端传输过来的用户id={}", id);
@@ -269,7 +269,7 @@ public class UserController {
                     + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
                     + user1.getId();
             if (headIconFile01 != null && !headIconFile01.isEmpty()) {
-                if (!FileTypeUtil.isImageType(headIconFile01.getContentType(), headIconFile01.getOriginalFilename())) {
+                if (!FileTypeUtil.isImageType(headIconFile01.getContentType(), Objects.requireNonNull(headIconFile01.getOriginalFilename()))) {
                     try {
                         this.userLogOpenFeign.record(id, operateRecord);
                     } catch (Exception e) {
@@ -333,8 +333,8 @@ public class UserController {
     @ApiOperation(value = "上传或者修改背景图片接口", notes = "上传或者修改背景图片接口", response = CommonResult.class)
     @PutMapping(value = "/{id}/background.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, Object>> handleBackgroundIconUpload(
-            @PathVariable(name = "id", required = true) Long id,
-            @RequestPart(name = "backgroundIconFile", required = true) MultipartFile backgroundIconFile02) {
+            @PathVariable(name = "id") Long id,
+            @RequestPart(name = "backgroundIconFile") MultipartFile backgroundIconFile02) {
         if (log.isDebugEnabled()) {
             log.debug("开始上传背景图片");
             log.debug("前端传输过来的用户id={}", id);
@@ -361,7 +361,7 @@ public class UserController {
                     + StrUtil.trimToNull(this.projectUrlProps.getResBackgroundIcon())
                     + user1.getId();
             if (backgroundIconFile02 != null && !backgroundIconFile02.isEmpty()) {
-                if (!FileTypeUtil.isImageType(backgroundIconFile02.getContentType(), backgroundIconFile02.getOriginalFilename())) {
+                if (!FileTypeUtil.isImageType(backgroundIconFile02.getContentType(), Objects.requireNonNull(backgroundIconFile02.getOriginalFilename()))) {
                     try {
                         this.userLogOpenFeign.record(id, operateRecord);
                     } catch (Exception e) {
@@ -913,7 +913,7 @@ public class UserController {
 
     //修改或者更新用户资料接口
     @PutMapping(value = "/{id}/update.do", consumes = {"application/json;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
-    public CommonResult<Map<String, Object>> update(@PathVariable(name = "id", required = true) Long id,
+    public CommonResult<Map<String, Object>> update(@PathVariable(name = "id") Long id,
                                                     @RequestBody UpdateUserDTO updateUserDTO) {
         if (log.isDebugEnabled()) {
             log.debug("开始修改或者更新用户资料");
@@ -1013,7 +1013,7 @@ public class UserController {
 
     //查看用户微信接口
     @GetMapping(value = "/{id}/queryWeixin.do")
-    public CommonResult<Map<String, Object>> queryWeixin(@PathVariable(name = "id", required = true) Long id) {
+    public CommonResult<Map<String, Object>> queryWeixin(@PathVariable(name = "id") Long id) {
         if (log.isDebugEnabled()) {
             log.debug("开始查看用户微信号");
         }
@@ -1039,10 +1039,14 @@ public class UserController {
 
     //获取用户举报类型列表接口
     @GetMapping(value = "/{id}/reportcategories.do")
-    public CommonResult<Map<String, List<ReportCategoryVO>>> reportCategoryList(@PathVariable(name = "id", required = true) Long userId) {
+    public CommonResult<Map<String, List<ReportCategoryVO>>> reportCategoryList(@PathVariable(name = "id") Long userId) {
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取用户举报类型列表");
+            }
+            User user = this.userMapperReader.selectByPrimaryKey(userId);
+            if (user == null) {
+                return CommonResult.failed("用户信息不存在");
             }
             Map<String, List<ReportCategoryVO>> list = new HashMap<>();
             ReportCategoryExample example = new ReportCategoryExample();
@@ -1141,7 +1145,7 @@ public class UserController {
                 dynamicInfoExample.setOrderByClause("id DESC, create_time DESC, update_time DESC");
                 dynamicInfoExample.createCriteria().andUserIdEqualTo(userId);
                 List<DynamicInfo> dynamicInfoList = this.dynamicInfoMapperRead.selectByExample(dynamicInfoExample);
-                if (dynamicInfoList != null && !dynamicInfoList.isEmpty() && dynamicInfoList.size() > 0) {
+                if (dynamicInfoList != null && !dynamicInfoList.isEmpty()) {
                     List<Long> dynamicInfoIdList = dynamicInfoList.stream().map(DynamicInfo::getId).collect(Collectors.toList());
                     if (dynamicInfoIdList.contains(reportUserId)) {
                         try {
@@ -1266,7 +1270,7 @@ public class UserController {
     //拉入拉出用户黑名单列表接口
     @PostMapping(value = "/{id}/pushblacklist.do", consumes = {"application/json;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, String>> pushBlackList(@PathVariable(name = "id") Long userId,
-                                                           @RequestBody(required = true) @Valid BlacklistDTO blacklistDTO, BindingResult bindingResult) {
+                                                           @RequestBody @Valid BlacklistDTO blacklistDTO, BindingResult bindingResult) {
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         Integer type = blacklistDTO.getType();
@@ -1377,14 +1381,14 @@ public class UserController {
     //鹿可模块推荐用户数据接口
     @GetMapping("/{id}/look.do")
     public CommonResult<List<UserVO3>> look(
-            @PathVariable(name = "id", required = true) Long id,
+            @PathVariable(name = "id") Long id,
             @Valid UserDTO3 userDTO, BindingResult bindingResult,
             @RequestParam(name = "count", required = false, defaultValue = "10") Integer count) {
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取鹿可模块用户数据");
             }
-            log.info("前端提交过来的请求参数：id={}, userDTO={}, count={}", id, userDTO, count);
+            //log.info("前端提交过来的请求参数：id={}, userDTO={}, count={}", id, userDTO, count);
             if (bindingResult != null && bindingResult.hasErrors()) {
                 return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
@@ -1433,7 +1437,7 @@ public class UserController {
             lookInfoParam.setMinAge(min);
             lookInfoParam.setMaxAge(max);
             lookInfoParam.setUserId(id);
-            log.info("screenGender={}, screenAgeMin={}, screenAgeMax={}", lookInfoParam.getGender(), DateUtil.strFormat(lookInfoParam.getMinAge(), DateUtil.sdfTimeFmt), DateUtil.strFormat(lookInfoParam.getMaxAge(), DateUtil.sdfTimeFmt));
+            //log.info("screenGender={}, screenAgeMin={}, screenAgeMax={}", lookInfoParam.getGender(), DateUtil.strFormat(lookInfoParam.getMinAge(), DateUtil.sdfTimeFmt), DateUtil.strFormat(lookInfoParam.getMaxAge(), DateUtil.sdfTimeFmt));
             List<User> userList = this.userMapperReader.selectLookUserList(lookInfoParam);
             List<User> userList1 = new LinkedList<>();
             List<UserVO3> userVO3List = new LinkedList<>();
@@ -1477,13 +1481,13 @@ public class UserController {
     //鹿可模块推荐用户详情数据接口
     @GetMapping("/{id}/look-details.do")
     public CommonResult<UserVO4> lookDetails(
-            @PathVariable(name = "id", required = true) Long id,
-            @RequestParam(name = "detailsUserId", required = true) Long detailsUserId) {
+            @PathVariable(name = "id") Long id,
+            @RequestParam(name = "detailsUserId") Long detailsUserId) {
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取鹿可模块用户详情数据");
             }
-            log.info("前端提交过来的请求参数：id={}, detailsUserId={}", id, detailsUserId);
+            //log.info("前端提交过来的请求参数：id={}, detailsUserId={}", id, detailsUserId);
             User user = this.userMapperReader.selectByPrimaryKey(id);
             if (user == null) {
                 return CommonResult.failed("当前用户信息不存在");
@@ -1630,39 +1634,39 @@ public class UserController {
         }
     }
 
-    private void setUserVO(UserVO userVO, User user) {
-        if (userVO != null && user != null) {
+    private void setUserVO(UserVO userVO3, User user) {
+        if (userVO3 != null && user != null) {
             Professions professions = this.professionsMapperReader.selectByPrimaryKey(user.getProfessionId());
             if (professions != null) {
-                userVO.setProfession(professions.getName());
+                userVO3.setProfession(professions.getName());
                 Industrys industrys = this.industrysMapperReader.selectByPrimaryKey(professions.getIndustryId());
                 if (industrys != null) {
-                    userVO.setIndustry(industrys.getName());
+                    userVO3.setIndustry(industrys.getName());
                 }
             }
-            userVO.setTag1(this.getTagNameById(user.getTag1()));
-            userVO.setTag2(this.getTagNameById(user.getTag2()));
-            userVO.setTag3(this.getTagNameById(user.getTag3()));
-            userVO.setTag4(this.getTagNameById(user.getTag4()));
-            userVO.setTag5(this.getTagNameById(user.getTag5()));
+            userVO3.setTag1(this.getTagNameById(user.getTag1()));
+            userVO3.setTag2(this.getTagNameById(user.getTag2()));
+            userVO3.setTag3(this.getTagNameById(user.getTag3()));
+            userVO3.setTag4(this.getTagNameById(user.getTag4()));
+            userVO3.setTag5(this.getTagNameById(user.getTag5()));
         }
     }
 
-    private void setUserVO4(UserVO4 userVO, User user) {
-        if (userVO != null && user != null) {
+    private void setUserVO4(UserVO4 userVO4, User user) {
+        if (userVO4 != null && user != null) {
             Professions professions = this.professionsMapperReader.selectByPrimaryKey(user.getProfessionId());
             if (professions != null) {
-                userVO.setProfession(professions.getName());
+                userVO4.setProfession(professions.getName());
                 Industrys industrys = this.industrysMapperReader.selectByPrimaryKey(professions.getIndustryId());
                 if (industrys != null) {
-                    userVO.setIndustry(industrys.getName());
+                    userVO4.setIndustry(industrys.getName());
                 }
             }
-            userVO.setTag1(this.getTagNameById(user.getTag1()));
-            userVO.setTag2(this.getTagNameById(user.getTag2()));
-            userVO.setTag3(this.getTagNameById(user.getTag3()));
-            userVO.setTag4(this.getTagNameById(user.getTag4()));
-            userVO.setTag5(this.getTagNameById(user.getTag5()));
+            userVO4.setTag1(this.getTagNameById(user.getTag1()));
+            userVO4.setTag2(this.getTagNameById(user.getTag2()));
+            userVO4.setTag3(this.getTagNameById(user.getTag3()));
+            userVO4.setTag4(this.getTagNameById(user.getTag4()));
+            userVO4.setTag5(this.getTagNameById(user.getTag5()));
         }
     }
 }
