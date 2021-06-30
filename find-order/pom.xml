@@ -6,9 +6,11 @@
         <groupId>com.potato369.find</groupId>
         <artifactId>find-master</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../../find-master</relativePath>
     </parent>
     <artifactId>find-order</artifactId>
     <name>觅鹿陌生人社交订单微服务子模块项目</name>
+    <url>https://maven.apache.org</url>
     <description>Order service project for Spring Boot</description>
 	<dependencies>
 	
@@ -133,7 +135,18 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>        
+            </plugin>
+            <!--添加site 插件-->
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.9.0</version>
+                <configuration>
+                    <locales>zh_CN</locales>
+                    <outputDirectory>${project.build.directory}/site</outputDirectory>
+                    <relativizeDecorationLinks>false</relativizeDecorationLinks>
+                </configuration>
+            </plugin>
         </plugins>
     </build>         
 </project>

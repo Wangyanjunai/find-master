@@ -14,6 +14,9 @@ public class Tag implements Serializable {
     @ApiModelProperty(value = "是否删除状态，0->否，1->是，默认：0->否")
     private String deleteStatus;
 
+    @ApiModelProperty(value = "热门值，默认：0")
+    private Integer hotValue;
+
     @ApiModelProperty(value = "创建时间")
     private Date createdTime;
 
@@ -59,6 +62,14 @@ public class Tag implements Serializable {
 
     public void setDeleteStatus(String deleteStatus) {
         this.deleteStatus = deleteStatus;
+    }
+
+    public Integer getHotValue() {
+        return hotValue;
+    }
+
+    public void setHotValue(Integer hotValue) {
+        this.hotValue = hotValue;
     }
 
     public Date getCreatedTime() {
@@ -126,6 +137,7 @@ public class Tag implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", name=").append(name);
         sb.append(", deleteStatus=").append(deleteStatus);
+        sb.append(", hotValue=").append(hotValue);
         sb.append(", createdTime=").append(createdTime);
         sb.append(", updatedTime=").append(updatedTime);
         sb.append(", deletedTime=").append(deletedTime);

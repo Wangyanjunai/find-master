@@ -305,6 +305,66 @@ public class TagExample {
             return (Criteria) this;
         }
 
+        public Criteria andHotValueIsNull() {
+            addCriterion("hot_value is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueIsNotNull() {
+            addCriterion("hot_value is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueEqualTo(Integer value) {
+            addCriterion("hot_value =", value, "hotValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueNotEqualTo(Integer value) {
+            addCriterion("hot_value <>", value, "hotValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueGreaterThan(Integer value) {
+            addCriterion("hot_value >", value, "hotValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueGreaterThanOrEqualTo(Integer value) {
+            addCriterion("hot_value >=", value, "hotValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueLessThan(Integer value) {
+            addCriterion("hot_value <", value, "hotValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueLessThanOrEqualTo(Integer value) {
+            addCriterion("hot_value <=", value, "hotValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueIn(List<Integer> values) {
+            addCriterion("hot_value in", values, "hotValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueNotIn(List<Integer> values) {
+            addCriterion("hot_value not in", values, "hotValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueBetween(Integer value1, Integer value2) {
+            addCriterion("hot_value between", value1, value2, "hotValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andHotValueNotBetween(Integer value1, Integer value2) {
+            addCriterion("hot_value not between", value1, value2, "hotValue");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedTimeIsNull() {
             addCriterion("created_time is null");
             return (Criteria) this;

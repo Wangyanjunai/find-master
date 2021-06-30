@@ -5,6 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="delete_status" jdbcType="CHAR" property="deleteStatus" />
+    <result column="hot_value" jdbcType="INTEGER" property="hotValue" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
     <result column="deleted_time" jdbcType="TIMESTAMP" property="deletedTime" />
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, delete_status, created_time, updated_time, deleted_time, reserve_column01, 
+    id, name, delete_status, hot_value, created_time, updated_time, deleted_time, reserve_column01,
     reserve_column02, reserve_column03, reserve_column04
   </sql>
   <select id="selectByExample" parameterType="com.potato369.find.mbg.model.TagExample" resultMap="BaseResultMap">
@@ -109,11 +110,11 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into tag (name, delete_status, created_time, 
+    insert into tag (name, delete_status, hot_value, created_time,
       updated_time, deleted_time, reserve_column01, 
       reserve_column02, reserve_column03, reserve_column04
       )
-    values (#{name,jdbcType=VARCHAR}, #{deleteStatus,jdbcType=CHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+    values (#{name,jdbcType=VARCHAR}, #{deleteStatus,jdbcType=CHAR}, #{hotValue, jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP},
       #{updatedTime,jdbcType=TIMESTAMP}, #{deletedTime,jdbcType=TIMESTAMP}, #{reserveColumn01,jdbcType=VARCHAR}, 
       #{reserveColumn02,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR}
       )
@@ -129,6 +130,9 @@
       </if>
       <if test="deleteStatus != null">
         delete_status,
+      </if>
+      <if test="hotValue != null">
+        hot_value,
       </if>
       <if test="createdTime != null">
         created_time,
@@ -158,6 +162,9 @@
       </if>
       <if test="deleteStatus != null">
         #{deleteStatus,jdbcType=CHAR},
+      </if>
+      <if test="hotValue != null">
+        #{hotValue,jdbcType=INTEGER},
       </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
@@ -200,6 +207,9 @@
       <if test="record.deleteStatus != null">
         delete_status = #{record.deleteStatus,jdbcType=CHAR},
       </if>
+      <if test="record.hotValue != null">
+        hot_value = #{record.hotValue,jdbcType=INTEGER},
+      </if>
       <if test="record.createdTime != null">
         created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -231,6 +241,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       delete_status = #{record.deleteStatus,jdbcType=CHAR},
+      hot_value = #{record.hotValue,jdbcType=INTEGER},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
       deleted_time = #{record.deletedTime,jdbcType=TIMESTAMP},
@@ -250,6 +261,9 @@
       </if>
       <if test="deleteStatus != null">
         delete_status = #{deleteStatus,jdbcType=CHAR},
+      </if>
+      <if test="hotValue != null">
+        hot_value = #{hotValue,jdbcType=INTEGER},
       </if>
       <if test="createdTime != null">
         created_time = #{createdTime,jdbcType=TIMESTAMP},
@@ -279,6 +293,7 @@
     update tag
     set name = #{name,jdbcType=VARCHAR},
       delete_status = #{deleteStatus,jdbcType=CHAR},
+      hot_value = #{hotValue,jdbcType=INTEGER},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       deleted_time = #{deletedTime,jdbcType=TIMESTAMP},

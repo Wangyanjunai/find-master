@@ -610,53 +610,56 @@ public class UserController {
                     }
                     message = "注册成功。";
                 }
-            } else {
-                //更新用户定位或者ip
-                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
-                    if (StrUtil.isNotEmpty(userDTO.getIp())) {
-                        LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToNull(this.aliyunProps.getUrl()), userDTO.getIp());
-                        if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(locationDTO.getIp())) {
-                            user.setIp(locationDTO.getIp());
-                        }
-                        if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(locationDTO.getCountry())) {
-                            user.setCountry(locationDTO.getCountry());
-                        }
-                        if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(locationDTO.getProvince())) {
-                            user.setProvince(locationDTO.getProvince());
-                        }
-                        if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(locationDTO.getCity())) {
-                            user.setCity(locationDTO.getCity());
-                        }
-                        if (user.getLongitude().equals(locationDTO.getLongitude())) {
-                            user.setLongitude(locationDTO.getLongitude());
-                        }
-                        if (user.getLatitude().equals(locationDTO.getLatitude())) {
-                            user.setLatitude(locationDTO.getLatitude());
-                        }
-                    }
-                } else {
-                    if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(userDTO.getIp())) {
-                        user.setIp(userDTO.getIp());
-                    }
-                    if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(userDTO.getCountry())) {
-                        user.setCountry(userDTO.getCountry());
-                    }
-                    if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(userDTO.getProvince())) {
-                        user.setProvince(userDTO.getProvince());
-                    }
-                    if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(userDTO.getCity())) {
-                        user.setCity(userDTO.getCity());
-                    }
-                    if (user.getLongitude().equals(Double.parseDouble(String.valueOf(userDTO.getLongitude())))) {
-                        user.setLongitude(Double.parseDouble(String.valueOf(userDTO.getLongitude())));
-                    }
-                    if (user.getLatitude().equals(Double.parseDouble(String.valueOf(userDTO.getLatitude())))) {
-                        user.setLatitude(Double.parseDouble(String.valueOf(userDTO.getLatitude())));
-                    }
-                }
-                user.setUpdateTime(new Date());
-                this.userMapperWrite.updateByPrimaryKeySelective(user);
-            }
+                
+            } 
+//            else 
+//            {
+//                //更新用户定位或者ip
+//                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
+//                    if (StrUtil.isNotEmpty(userDTO.getIp())) {
+//                        LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToNull(this.aliyunProps.getUrl()), userDTO.getIp());
+//                        if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(locationDTO.getIp())) {
+//                            user.setIp(locationDTO.getIp());
+//                        }
+//                        if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(locationDTO.getCountry())) {
+//                            user.setCountry(locationDTO.getCountry());
+//                        }
+//                        if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(locationDTO.getProvince())) {
+//                            user.setProvince(locationDTO.getProvince());
+//                        }
+//                        if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(locationDTO.getCity())) {
+//                            user.setCity(locationDTO.getCity());
+//                        }
+//                        if (user.getLongitude().equals(locationDTO.getLongitude())) {
+//                            user.setLongitude(locationDTO.getLongitude());
+//                        }
+//                        if (user.getLatitude().equals(locationDTO.getLatitude())) {
+//                            user.setLatitude(locationDTO.getLatitude());
+//                        }
+//                    }
+//                } else {
+//                    if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(userDTO.getIp())) {
+//                        user.setIp(userDTO.getIp());
+//                    }
+//                    if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(userDTO.getCountry())) {
+//                        user.setCountry(userDTO.getCountry());
+//                    }
+//                    if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(userDTO.getProvince())) {
+//                        user.setProvince(userDTO.getProvince());
+//                    }
+//                    if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(userDTO.getCity())) {
+//                        user.setCity(userDTO.getCity());
+//                    }
+//                    if (user.getLongitude().equals(Double.parseDouble(String.valueOf(userDTO.getLongitude())))) {
+//                        user.setLongitude(Double.parseDouble(String.valueOf(userDTO.getLongitude())));
+//                    }
+//                    if (user.getLatitude().equals(Double.parseDouble(String.valueOf(userDTO.getLatitude())))) {
+//                        user.setLatitude(Double.parseDouble(String.valueOf(userDTO.getLatitude())));
+//                    }
+//                }
+//                user.setUpdateTime(new Date());
+//                this.userMapperWrite.updateByPrimaryKeySelective(user);
+//            }
             userVO2.setId(user.getId());
             userVO2.setNickname(user.getNickName());
             userVO2.setAutograph(user.getAutograph());
@@ -1668,5 +1671,15 @@ public class UserController {
             userVO4.setTag4(this.getTagNameById(user.getTag4()));
             userVO4.setTag5(this.getTagNameById(user.getTag5()));
         }
+    }
+    
+    private void updateTagHotValue(UserDTO userDTO) {
+    	if (userDTO != null) {
+			Long tag1 = userDTO.getTag1();
+		}
+    }
+    
+    private void updateByTagId(Long tag1) {
+    	
     }
 }

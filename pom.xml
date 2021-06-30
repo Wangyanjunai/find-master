@@ -7,6 +7,7 @@
     <artifactId>find-master</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>觅鹿陌生人社交主配微服务父模块项目</name>
+    <url>https://maven.apache.org</url>
     <packaging>pom</packaging>
     <description>Find master project for Spring Boot.</description>
 
@@ -236,4 +237,19 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <build>
+        <plugins>
+            <!--添加site 插件-->
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.9.0</version>
+                <configuration>
+                    <locales>zh_CN</locales>
+                    <outputDirectory>${project.build.directory}/site</outputDirectory>
+                    <relativizeDecorationLinks>false</relativizeDecorationLinks>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
