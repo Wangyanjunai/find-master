@@ -33,6 +33,8 @@ public class UserAuthorizeAspect {
 			+ "&& !execution(public * com.potato369.find.user.controller.UserController.*register(..))"
 			+ "&& !execution(public * com.potato369.find.user.controller.UserController.*login(..))"
 			+ "&& !execution(public * com.potato369.find.user.controller.TagController.*list(..))"
+			+ "&& !execution(public * com.potato369.find.user.controller.TagController.*hotTagsList(..))"
+			+ "&& !execution(public * com.potato369.find.user.controller.TagController.*search(..))"
 			+ "&& !execution(public * com.potato369.find.user.controller.ProfessionController.*list(..))")
 	public void verify() {
 	}
@@ -41,10 +43,12 @@ public class UserAuthorizeAspect {
 	@SuppressWarnings("unchecked")
 	public CommonResult<Map<String, Object>> doVerify() {
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		assert attributes != null;
 		HttpServletRequest request = attributes.getRequest();
 		NativeWebRequest webRequest = new ServletWebRequest(request);
 		Map<String, Object> map = (Map<String, Object>) webRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
-		Long userIdLong = Long.valueOf((String)map.get("id"));
+		assert map != null;
+		Long userIdLong = Long.valueOf((String) map.get("id"));
 		if (log.isDebugEnabled()) {
 			log.debug("用户id={}", userIdLong);
 		}

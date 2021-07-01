@@ -41,6 +41,22 @@ public class TagServiceImpl implements TagService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Tag> getAllHotValueTags() {
+        TagExample tagExample = new TagExample();
+        tagExample.setDistinct(true);
+        tagExample.setOrderByClause("hot_value desc");
+        tagExample.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());
+        return this.tagMapperReader.selectByExample(tagExample).subList(0, 10);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Tag> likesByTagName(String tagName) {
+        return this.tagMapperReader.selectByKeywords(tagName);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Tag findTagByName(String name) {
         TagExample tagExample = new TagExample();
         tagExample.setDistinct(true);

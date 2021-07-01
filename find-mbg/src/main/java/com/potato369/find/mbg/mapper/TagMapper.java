@@ -2,8 +2,9 @@ package com.potato369.find.mbg.mapper;
 
 import com.potato369.find.mbg.model.Tag;
 import com.potato369.find.mbg.model.TagExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TagMapper {
     long countByExample(TagExample example);
@@ -17,6 +18,8 @@ public interface TagMapper {
     int insertSelective(Tag record);
 
     List<Tag> selectByExample(TagExample example);
+
+    List<Tag> selectByKeywords(@Param("keywords") String keywords);
 
     Tag selectByPrimaryKey(Long id);
 

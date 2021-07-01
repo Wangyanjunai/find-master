@@ -89,6 +89,10 @@ public class UserController {
 
     private AttacheInfoMapper attacheInfoMapperReader;
 
+    private TagMapper tagMapperWriter;
+
+    private TagMapper tagMapperReader;
+
     @Autowired
     public void setUserMapperWrite(UserMapper userMapperWrite) {
         this.userMapperWrite = userMapperWrite;
@@ -197,6 +201,16 @@ public class UserController {
     @Autowired
     public void setAttacheInfoMapperReader(AttacheInfoMapper attacheInfoMapperReader) {
         this.attacheInfoMapperReader = attacheInfoMapperReader;
+    }
+
+    @Autowired
+    public void setTagMapperWriter(TagMapper tagMapperWriter) {
+        this.tagMapperWriter = tagMapperWriter;
+    }
+
+    @Autowired
+    public void setTagMapperReader(TagMapper tagMapperReader) {
+        this.tagMapperReader = tagMapperReader;
     }
 
     //上报或者更新极光推送唯一设备的标识接口
@@ -528,6 +542,7 @@ public class UserController {
                 }
                 // 头像图片上传服务器
                 int result = this.userMapperWrite.insertSelective(user);
+                this.updateTagHotValue(userDTO);
                 // 头像图片存储本地路径
                 String headIconFilePath = StrUtil.trimToNull(this.projectUrlProps.getUploadRes())
                         + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
@@ -1607,32 +1622,37 @@ public class UserController {
     private void setTags(User user, UpdateUserDTO userDTO) {
         if (StrUtil.isNotEmpty(userDTO.getTag1())) {
             Long tagIdLong = this.getTagIdByName(userDTO.getTag1());
-            if (!tagIdLong.equals(user.getTag1())) {
+            if (!Objects.equals(tagIdLong, user.getTag1())) {
                 user.setTag1(tagIdLong);
+                this.updateByTagId(tagIdLong);
             }
         }
         if (StrUtil.isNotEmpty(userDTO.getTag2())) {
             Long tagIdLong = this.getTagIdByName(userDTO.getTag2());
-            if (!tagIdLong.equals(user.getTag2())) {
+            if (!Objects.equals(tagIdLong, user.getTag2())) {
                 user.setTag2(tagIdLong);
+                this.updateByTagId(tagIdLong);
             }
         }
         if (StrUtil.isNotEmpty(userDTO.getTag3())) {
             Long tagIdLong = this.getTagIdByName(userDTO.getTag3());
-            if (!tagIdLong.equals(user.getTag3())) {
+            if (!Objects.equals(tagIdLong, user.getTag3())) {
                 user.setTag3(tagIdLong);
+                this.updateByTagId(tagIdLong);
             }
         }
         if (StrUtil.isNotEmpty(userDTO.getTag4())) {
             Long tagIdLong = this.getTagIdByName(userDTO.getTag4());
-            if (!tagIdLong.equals(user.getTag4())) {
+            if (!Objects.equals(tagIdLong, user.getTag4())) {
                 user.setTag4(tagIdLong);
+                this.updateByTagId(tagIdLong);
             }
         }
         if (StrUtil.isNotEmpty(userDTO.getTag5())) {
             Long tagIdLong = this.getTagIdByName(userDTO.getTag5());
-            if (!tagIdLong.equals(user.getTag5())) {
+            if (!Objects.equals(tagIdLong, user.getTag5())) {
                 user.setTag5(tagIdLong);
+                this.updateByTagId(tagIdLong);
             }
         }
     }
@@ -1672,14 +1692,25 @@ public class UserController {
             userVO4.setTag5(this.getTagNameById(user.getTag5()));
         }
     }
-    
+
     private void updateTagHotValue(UserDTO userDTO) {
-    	if (userDTO != null) {
-			Long tag1 = userDTO.getTag1();
-		}
+        if (userDTO != null) {
+            this.updateByTagId(userDTO.getTag1());
+            this.updateByTagId(userDTO.getTag2());
+            this.updateByTagId(userDTO.getTag3());
+            this.updateByTagId(userDTO.getTag4());
+            this.updateByTagId(userDTO.getTag5());
+        }
     }
-    
-    private void updateByTagId(Long tag1) {
-    	
+
+    private void updateByTagId(Long tagId) {
+        if (tagId != null) {
+            Tag tag = this.tagMapperReader.selectByPrimaryKey(tagId);
+            if (tag != null) {
+                tag.setHotValue(tag.getHotValue() + 1);
+                tag.setUpdatedTime(new Date());
+                this.tagMapperWriter.updateByPrimaryKeySelective(tag);
+            }
+        }
     }
 }

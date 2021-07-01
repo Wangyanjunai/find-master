@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -28,29 +29,81 @@ public class TagController {
         this.tagService = tagService;
     }
 
-	@GetMapping("/list.do")
-	public CommonResult<Map<String, List<TagVO>>> list() {
-		try {
-			if (log.isDebugEnabled()) {
-				log.debug("开始获取用户标签列表");
-			}
-			List<TagVO> tagVOList = new ArrayList<>();
-			Map<String, List<TagVO>> map = new ConcurrentHashMap<>();
-			this.tagService.getAllUndeleteTags().forEach((tag) -> {
-				TagVO tagVO = new TagVO();
-				tagVO.setId(tag.getId());
-				tagVO.setName(tag.getName());
-				tagVOList.add(tagVO);
-			});
-			map.put("list", tagVOList);
-			return CommonResult.success(map, "获取用户标签列表成功");
-		} catch (Exception e) {
-			log.error("获取用户标签列表出错", e);
-			return CommonResult.failed("获取用户标签列表失败");
-		} finally {
-			if (log.isDebugEnabled()) {
-				log.debug("结束获取用户标签列表");
-			}
-		}
-	}
+    @GetMapping("/list.do")
+    public CommonResult<Map<String, List<TagVO>>> list() {
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始获取用户标签列表");
+            }
+            List<TagVO> tagVOList = new ArrayList<>();
+            Map<String, List<TagVO>> map = new ConcurrentHashMap<>();
+            this.tagService.getAllUndeleteTags().forEach((tag) -> {
+                TagVO tagVO = new TagVO();
+                tagVO.setId(tag.getId());
+                tagVO.setName(tag.getName());
+                tagVOList.add(tagVO);
+            });
+            map.put("list", tagVOList);
+            return CommonResult.success(map, "获取用户标签列表成功");
+        } catch (Exception e) {
+            log.error("获取用户标签列表出错", e);
+            return CommonResult.failed("获取用户标签列表失败");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束获取用户标签列表");
+            }
+        }
+    }
+
+    @GetMapping("/hot.do")
+    public CommonResult<Map<String, List<TagVO>>> hotTagsList() {
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始获取热门标签列表");
+            }
+            List<TagVO> tagVOList = new ArrayList<>();
+            Map<String, List<TagVO>> map = new ConcurrentHashMap<>();
+            this.tagService.getAllHotValueTags().forEach((tag) -> {
+                TagVO tagVO = new TagVO();
+                tagVO.setId(tag.getId());
+                tagVO.setName(tag.getName());
+                tagVOList.add(tagVO);
+            });
+            map.put("list", tagVOList);
+            return CommonResult.success(map, "获取热门标签列表成功");
+        } catch (Exception e) {
+            log.error("获取热门标签列表出错", e);
+            return CommonResult.failed("获取热门标签列表失败");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束获取热门标签列表");
+            }
+        }
+    }
+
+    @GetMapping("/search.do")
+    public CommonResult<Map<String, List<TagVO>>> search(@RequestParam("keywords") String key) {
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始模糊搜索标签列表");
+            }
+            List<TagVO> tagVOList = new ArrayList<>();
+            Map<String, List<TagVO>> map = new ConcurrentHashMap<>();
+            this.tagService.likesByTagName(key).forEach((tag) -> {
+                TagVO tagVO = new TagVO();
+                tagVO.setId(tag.getId());
+                tagVO.setName(tag.getName());
+                tagVOList.add(tagVO);
+            });
+            map.put("list", tagVOList);
+            return CommonResult.success(map, "模糊搜索标签列表成功");
+        } catch (Exception e) {
+            log.error("模糊搜索标签列表出错", e);
+            return CommonResult.failed("模糊搜索标签列表失败");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束模糊搜索标签列表");
+            }
+        }
+    }
 }
