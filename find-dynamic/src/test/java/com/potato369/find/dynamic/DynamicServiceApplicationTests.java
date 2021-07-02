@@ -19,7 +19,7 @@ public class DynamicServiceApplicationTests {
     private MockMvc mockMvc;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(new DynamicServiceApplication()).build();
     }
 
