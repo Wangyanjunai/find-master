@@ -5,16 +5,17 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="dynamic_id" jdbcType="BIGINT" property="dynamicId"/>
-        <result column="dynamic_status" jdbcType="CHAR" property="dynamicStatus"/>
-        <result column="public_status" jdbcType="CHAR" property="publicStatus"/>
-        <result column="is_topic" jdbcType="CHAR" property="isTopic"/><!-- 是否是话题，0->否；1->是，默认：0->否 -->
+        <result column="dynamic_status" jdbcType="CHAR" property="dynamicStatus"/><!--动态状态-->
+        <result column="public_status" jdbcType="CHAR" property="publicStatus"/><!--公开定位状态-->
+        <result column="is_topic" jdbcType="CHAR" property="isTopic"/><!-- 是否话题，0->否；1->是，默认：0->否 -->
+        <result column="is_anonymous" jdbcType="CHAR" property="isAnonymous"/><!-- 是否匿名，0->否；1->是，默认：0->否 -->
         <result column="topic_title" jdbcType="VARCHAR" property="topicTitle"/><!-- 话题标题 -->
-        <result column="likes" jdbcType="INTEGER" property="likes"/>
+        <result column="likes" jdbcType="INTEGER" property="likes"/><!--点赞数-->
         <result column="comments" jdbcType="INTEGER" property="comments"/><!-- 评论数 -->
-        <result column="applications" jdbcType="INTEGER" property="applications"/>
-        <result column="shares" jdbcType="INTEGER" property="shares"/>
-        <result column="attache_type" jdbcType="CHAR" property="attacheType"/>
-        <result column="attache_number" jdbcType="INTEGER" property="attacheNumber"/>
+        <result column="applications" jdbcType="INTEGER" property="applications"/><!--申请加微信数-->
+        <result column="shares" jdbcType="INTEGER" property="shares"/><!--分享数-->
+        <result column="attache_type" jdbcType="CHAR" property="attacheType"/><!--附件类型-->
+        <result column="attache_number" jdbcType="INTEGER" property="attacheNumber"/><!--附件数量-->
         <result column="longitude" jdbcType="DOUBLE" property="longitude"/><!--经度-->
         <result column="latitude" jdbcType="DOUBLE" property="latitude"/><!--纬度-->
         <result column="country" jdbcType="VARCHAR" property="country"/><!--国-->
@@ -22,8 +23,8 @@
         <result column="city" jdbcType="VARCHAR" property="city"/><!--市-->
         <result column="district" jdbcType="VARCHAR" property="district"/><!--县/区-->
         <result column="other" jdbcType="VARCHAR" property="other"/><!--其它-->
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/><!--创建时间-->
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/><!--更新时间-->
         <result column="reserve_column02" jdbcType="VARCHAR" property="reserveColumn02"/>
         <result column="reserve_column03" jdbcType="VARCHAR" property="reserveColumn03"/>
         <result column="reserve_column04" jdbcType="VARCHAR" property="reserveColumn04"/>
@@ -109,7 +110,7 @@
     </sql>
     <sql id="Base_Column_List">
         id, user_id, dynamic_id, dynamic_status,
-        public_status, is_topic, topic_title, likes, 
+        public_status, is_topic, is_anonymous, topic_title, likes,
         comments, applications, shares, attache_type,
     	attache_number, longitude, latitude, country, 
     	province, city, district, other, 
@@ -176,29 +177,34 @@
         </selectKey>
         insert into dynamic_info (
         user_id, dynamic_status, public_status, is_topic,
-        topic_title, likes, comments, applications,
-        shares, attache_type, attache_number, longitude,
-        latitude, country, province, city,
-        district, other, create_time, update_time,
-        dynamic_id, reserve_column02, reserve_column03, reserve_column04,
-        content
+        is_anonymous, topic_title, likes, comments,
+        applications, shares, attache_type, attache_number,
+        longitude, latitude, country, province,
+        city, district, other, create_time,
+        update_time, dynamic_id, reserve_column02, reserve_column03,
+        reserve_column04, content
         )
         values (
-            #{userId,jdbcType=BIGINT}, #{dynamicStatus,jdbcType=CHAR}, #{publicStatus,jdbcType=CHAR}, #{isTopic,jdbcType=CHAR},
-            #{topicTitle,jdbcType=VARCHAR}, #{likes,jdbcType=INTEGER}, #{comments,jdbcType=INTEGER}, #{applications,jdbcType=INTEGER},
-            #{shares,jdbcType=INTEGER}, #{attacheType,jdbcType=CHAR}, #{attacheNumber,jdbcType=INTEGER}, #{longitude,jdbcType=DOUBLE},
-            #{latitude,jdbcType=DOUBLE}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
-            #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-            #{dynamicId,jdbcType=BIGINT}, #{reserveColumn02,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR},
-            #{content,jdbcType=LONGVARCHAR}
+        #{userId,jdbcType=BIGINT}, #{dynamicStatus,jdbcType=CHAR}, #{publicStatus,jdbcType=CHAR},
+        #{isTopic,jdbcType=CHAR},
+        #{isAnonymous,jdbcType=CHAR}, #{topicTitle,jdbcType=VARCHAR}, #{likes,jdbcType=INTEGER},
+        #{comments,jdbcType=INTEGER},
+        #{applications,jdbcType=INTEGER}, #{shares,jdbcType=INTEGER}, #{attacheType,jdbcType=CHAR},
+        #{attacheNumber,jdbcType=INTEGER},
+        #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, #{country,jdbcType=VARCHAR},
+        #{province,jdbcType=VARCHAR},
+        #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}, #{dynamicId,jdbcType=BIGINT}, #{reserveColumn02,jdbcType=VARCHAR},
+        #{reserveColumn03,jdbcType=VARCHAR},
+        #{reserveColumn04,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
         )
     </insert>
     <insert id="insertImport" parameterType="com.potato369.find.mbg.model.DynamicInfo">
         insert into dynamic_info (id, user_id, dynamic_status, public_status,
-                                  likes, applications, shares,
-                                  attache_type, attache_number, create_time,
-                                  update_time, dynamic_id, reserve_column02,
-                                  reserve_column03, reserve_column04, content)
+                                  likes, applications, shares, attache_type,
+                                  attache_number, create_time, update_time, dynamic_id,
+                                  reserve_column02, reserve_column03, reserve_column04, content)
         values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{dynamicStatus,jdbcType=CHAR},
                 #{publicStatus,jdbcType=CHAR},
                 #{likes,jdbcType=INTEGER}, #{applications,jdbcType=INTEGER}, #{shares,jdbcType=INTEGER},
@@ -227,6 +233,9 @@
             </if>
             <if test="isTopic != null">
                 is_topic,
+            </if>
+            <if test="isAnonymous != null">
+                is_anonymous,
             </if>
             <if test="topicTitle != null">
                 topic_title,
@@ -304,6 +313,9 @@
             </if>
             <if test="isTopic != null">
                 #{isTopic,jdbcType=CHAR},
+            </if>
+            <if test="isAnonymous != null">
+                #{isAnonymous,jdbcType=CHAR},
             </if>
             <if test="topicTitle != null">
                 #{topicTitle,jdbcType=VARCHAR},
@@ -519,6 +531,9 @@
             <if test="record.isTopic != null">
                 is_topic = #{record.isTopic,jdbcType=CHAR},
             </if>
+            <if test="record.isAnonymous != null">
+                is_anonymous = #{record.isAnonymous,jdbcType=CHAR},
+            </if>
             <if test="record.topicTitle != null">
                 topic_title = #{record.topicTitle,jdbcType=VARCHAR},
             </if>
@@ -592,6 +607,7 @@
         dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
         public_status = #{record.publicStatus,jdbcType=CHAR},
         is_topic = #{record.isTopic,jdbcType=CHAR},
+        is_anonymous = #{record.isAnonymous,jdbcType=CHAR},
         topic_title = #{record.topicTitle,jdbcType=VARCHAR},
         likes = #{record.likes,jdbcType=INTEGER},
         comments = #{record.comments,jdbcType=INTEGER},
@@ -624,6 +640,7 @@
         dynamic_status = #{record.dynamicStatus,jdbcType=CHAR},
         public_status = #{record.publicStatus,jdbcType=CHAR},
         is_topic = #{record.isTopic,jdbcType=CHAR},
+        is_anonymous = #{record.isAnonymous,jdbcType=CHAR},
         topic_title = #{record.topicTitle,jdbcType=VARCHAR},
         likes = #{record.likes,jdbcType=INTEGER},
         comments = #{record.comments,jdbcType=INTEGER},
@@ -664,6 +681,9 @@
             </if>
             <if test="isTopic != null">
                 is_topic = #{isTopic,jdbcType=CHAR},
+            </if>
+            <if test="isAnonymous != null">
+                is_anonymous = #{isAnonymous,jdbcType=CHAR},
             </if>
             <if test="topicTitle != null">
                 topic_title = #{topicTitle,jdbcType=VARCHAR},
@@ -735,6 +755,7 @@
             dynamic_status   = #{dynamicStatus,jdbcType=CHAR},
             public_status    = #{publicStatus,jdbcType=CHAR},
             is_topic         = #{isTopic,jdbcType=CHAR},
+            is_anonymous     = #{isAnonymous,jdbcType=CHAR},
             topic_title      = #{topicTitle,jdbcType=VARCHAR},
             likes            = #{likes,jdbcType=INTEGER},
             comments         = #{comments,jdbcType=INTEGER},
@@ -764,6 +785,7 @@
             dynamic_status   = #{dynamicStatus,jdbcType=CHAR},
             public_status    = #{publicStatus,jdbcType=CHAR},
             is_topic         = #{isTopic,jdbcType=CHAR},
+            is_anonymous     = #{isAnonymous,jdbcType=CHAR},
             topic_title      = #{topicTitle,jdbcType=VARCHAR},
             likes            = #{likes,jdbcType=INTEGER},
             comments         = #{comments,jdbcType=INTEGER},

@@ -92,8 +92,7 @@ public class DynamicDTO extends AbstractDTO {
     @ApiModelProperty(value = "是否公开定位状态，0->未公开；1->公开，默认：0->未公开")
     @JSONField(name = "publicStatus")
     @JsonProperty(value = "publicStatus")
-    @Builder.Default
-    private String publicStatus = "0";
+    private String publicStatus;
 
     @ApiModelProperty(value = "内容")
     @JsonProperty(value = "content")
@@ -104,4 +103,19 @@ public class DynamicDTO extends AbstractDTO {
     @JsonProperty(value = "attacheInfoDataType")
     @JSONField(name = "attacheInfoDataType")
     private String attacheInfoDataType;
+
+    @ApiModelProperty(value = "是否话题，0->否，1->是；默认：0->否")
+    @JsonProperty(value = "isTopic")
+    @JSONField(name = "isTopic")
+    private String isTopic;
+
+    @ApiModelProperty(value = "是否匿名，0->否，1->是；默认：0->否")
+    @JsonProperty(value = "isAnonymous")
+    @JSONField(name = "isAnonymous")
+    private String isAnonymous;
+
+    @ApiModelProperty(value = "话题标题")
+    @JsonProperty(value = "topicTitle")
+    @JSONField(name = "topicTitle")
+    private String topicTitle;
 }

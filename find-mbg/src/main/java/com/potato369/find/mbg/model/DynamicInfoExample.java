@@ -504,6 +504,76 @@ public class DynamicInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsAnonymousIsNull() {
+            addCriterion("is_anonymous is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousIsNotNull() {
+            addCriterion("is_anonymous is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousEqualTo(String value) {
+            addCriterion("is_anonymous =", value, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousNotEqualTo(String value) {
+            addCriterion("is_anonymous <>", value, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousGreaterThan(String value) {
+            addCriterion("is_anonymous >", value, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousGreaterThanOrEqualTo(String value) {
+            addCriterion("is_anonymous >=", value, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousLessThan(String value) {
+            addCriterion("is_anonymous <", value, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousLessThanOrEqualTo(String value) {
+            addCriterion("is_anonymous <=", value, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousLike(String value) {
+            addCriterion("is_anonymous like", value, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousNotLike(String value) {
+            addCriterion("is_anonymous not like", value, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousIn(List<String> values) {
+            addCriterion("is_anonymous in", values, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousNotIn(List<String> values) {
+            addCriterion("is_anonymous not in", values, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousBetween(String value1, String value2) {
+            addCriterion("is_anonymous between", value1, value2, "isAnonymous");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAnonymousNotBetween(String value1, String value2) {
+            addCriterion("is_anonymous not between", value1, value2, "isAnonymous");
+            return (Criteria) this;
+        }
+
         public Criteria andTopicTitleIsNull() {
             addCriterion("topic_title is null");
             return (Criteria) this;
@@ -1823,7 +1893,7 @@ public class DynamicInfoExample {
     }
 
     public static class Criterion {
-        private String condition;
+        private final String condition;
 
         private Object value;
 
@@ -1837,7 +1907,7 @@ public class DynamicInfoExample {
 
         private boolean listValue;
 
-        private String typeHandler;
+        private final String typeHandler;
 
         public String getCondition() {
             return condition;

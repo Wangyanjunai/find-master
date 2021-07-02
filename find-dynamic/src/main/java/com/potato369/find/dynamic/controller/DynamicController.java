@@ -163,9 +163,16 @@ public class DynamicController {
             @RequestParam(name = "country", required = false, defaultValue = "中国") String country,// 发布定位（国）
             @RequestParam(name = "province", required = false) String province,// 发布定位（省份）
             @RequestParam(name = "city", required = false) String city,// 发布定位（城市）
+            @RequestParam(name = "district", required = false) String district, //发布定位（区/县）
+            @RequestParam(name = "other", required = false) String other, //发布定位（其它）
+            @RequestParam(name = "longitude", required = false) Double longitude,//发布定位（经度）
+            @RequestParam(name = "latitude", required = false) Double latitude,  //发布定位（纬度）
             @RequestParam(name = "publicStatus", required = false, defaultValue = "0") String publicStatus,// 是否公开定位状态，0->不公开，1->公开
             @RequestPart(value = "files", required = false) MultipartFile[] files,// 附件列表
-            @RequestParam(name = "content", required = false) String content) { // 动态内容
+            @RequestParam(name = "content", required = false) String content,// 动态内容
+            @RequestParam(name = "isAnonymous", required = false, defaultValue = "0") String isAnonymous, //是否匿名
+            @RequestParam(name = "isTopic", required = false, defaultValue = "0") String isTopic, //是否话题
+            @RequestParam(name = "topicTitle", required = false) String topicTitle) { //话题标题
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始发布动态内容");
@@ -187,8 +194,15 @@ public class DynamicController {
             dynamicDTO.setCountry(country);
             dynamicDTO.setProvince(province);
             dynamicDTO.setCity(city);
+            dynamicDTO.setDistrict(district);
+            dynamicDTO.setOther(other);
+            dynamicDTO.setLongitude(longitude);
+            dynamicDTO.setLatitude(latitude);
             dynamicDTO.setPublicStatus(publicStatus);
             dynamicDTO.setContent(content);
+            dynamicDTO.setIsTopic(isTopic);
+            dynamicDTO.setIsAnonymous(isAnonymous);
+            dynamicDTO.setTopicTitle(topicTitle);
             User user = this.userMapperReader.selectByPrimaryKey(userIdLong);
             if (user == null) {
                 return CommonResult.validateFailed("发布动态内容，用户信息不存在。");

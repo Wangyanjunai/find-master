@@ -8,7 +8,7 @@ import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DynamicInfo implements Serializable {
-	
+
     @ApiModelProperty(value = "动态内容id，主键")
     private Long id;
 
@@ -24,8 +24,11 @@ public class DynamicInfo implements Serializable {
     @ApiModelProperty(value = "是否公开定位状态，0->未公开；1->公开，默认：0->未公开")
     private String publicStatus;
 
-    @ApiModelProperty(value = "是否是话题，0->否；1->是，默认：0->否")
+    @ApiModelProperty(value = "是否话题，0->否；1->是，默认：0->否")
     private String isTopic;
+
+    @ApiModelProperty(value = "是否匿名，0->否；1->是，默认：0->否")
+    private String isAnonymous;
 
     @ApiModelProperty(value = "话题标题")
     private String topicTitle;
@@ -47,13 +50,13 @@ public class DynamicInfo implements Serializable {
 
     @ApiModelProperty(value = "附件数量")
     private Integer attacheNumber;
-    
+
     @ApiModelProperty(value = "经度")
     private Double longitude;
 
     @ApiModelProperty(value = "纬度")
     private Double latitude;
-    
+
     @ApiModelProperty(value = "国")
     private String country;
 
@@ -137,6 +140,14 @@ public class DynamicInfo implements Serializable {
         this.isTopic = isTopic;
     }
 
+    public String getIsAnonymous() {
+        return isAnonymous;
+    }
+
+    public void setIsAnonymous(String isAnonymous) {
+        this.isAnonymous = isAnonymous;
+    }
+
     public String getTopicTitle() {
         return topicTitle;
     }
@@ -194,62 +205,62 @@ public class DynamicInfo implements Serializable {
     }
 
     public Double getLongitude() {
-		return longitude;
-	}
+        return longitude;
+    }
 
-	public void setLongitude(Double longitude) {
-		this.longitude = longitude;
-	}
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 
-	public Double getLatitude() {
-		return latitude;
-	}
+    public Double getLatitude() {
+        return latitude;
+    }
 
-	public void setLatitude(Double latitude) {
-		this.latitude = latitude;
-	}
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public String getProvince() {
-		return province;
-	}
+    public String getProvince() {
+        return province;
+    }
 
-	public void setProvince(String province) {
-		this.province = province;
-	}
+    public void setProvince(String province) {
+        this.province = province;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getDistrict() {
-		return district;
-	}
+    public String getDistrict() {
+        return district;
+    }
 
-	public void setDistrict(String district) {
-		this.district = district;
-	}
+    public void setDistrict(String district) {
+        this.district = district;
+    }
 
-	public String getOther() {
-		return other;
-	}
+    public String getOther() {
+        return other;
+    }
 
-	public void setOther(String other) {
-		this.other = other;
-	}
+    public void setOther(String other) {
+        this.other = other;
+    }
 
-	public Date getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
@@ -299,31 +310,30 @@ public class DynamicInfo implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", userId=").append(userId);
-        sb.append(", dynamicId=").append(dynamicId);
-        sb.append(", dynamicStatus=").append(dynamicStatus);
-        sb.append(", publicStatus=").append(publicStatus);
-        sb.append(", isTopic=").append(isTopic);
-        sb.append(", topicTitle=").append(topicTitle);
-        sb.append(", likes=").append(likes);
-        sb.append(", comments=").append(comments);
-        sb.append(", applications=").append(applications);
-        sb.append(", shares=").append(shares);
-        sb.append(", attacheType=").append(attacheType);
-        sb.append(", attacheNumber=").append(attacheNumber);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", reserveColumn02=").append(reserveColumn02);
-        sb.append(", reserveColumn03=").append(reserveColumn03);
-        sb.append(", reserveColumn04=").append(reserveColumn04);
-        sb.append(", content=").append(content);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return getClass().getSimpleName() +
+                " [" +
+                "Hash = " + hashCode() +
+                ", id=" + id +
+                ", userId=" + userId +
+                ", dynamicId=" + dynamicId +
+                ", dynamicStatus=" + dynamicStatus +
+                ", publicStatus=" + publicStatus +
+                ", isTopic=" + isTopic +
+                ", isAnonymous=" + isAnonymous +
+                ", topicTitle=" + topicTitle +
+                ", likes=" + likes +
+                ", comments=" + comments +
+                ", applications=" + applications +
+                ", shares=" + shares +
+                ", attacheType=" + attacheType +
+                ", attacheNumber=" + attacheNumber +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", reserveColumn02=" + reserveColumn02 +
+                ", reserveColumn03=" + reserveColumn03 +
+                ", reserveColumn04=" + reserveColumn04 +
+                ", content=" + content +
+                ", serialVersionUID=" + serialVersionUID +
+                "]";
     }
 }

@@ -32,13 +32,13 @@ ADD COLUMN `latitude` double(12, 6) NULL DEFAULT NULL  COMMENT '纬度' AFTER `l
 -- Table structure for dynamic_info
 -- ----------------------------
 ALTER TABLE `dynamic_info`
-ADD COLUMN `longitude` double(12, 6) NULL DEFAULT NULL COMMENT '经度' AFTER `attache_number`,
-ADD COLUMN `latitude` double(12, 6) NULL DEFAULT NULL COMMENT '纬度' AFTER `longitude`,
-ADD COLUMN `country` varchar(16) NOT NULL DEFAULT '中国' COMMENT '国' AFTER `latitude`,
-ADD COLUMN `province` varchar(32) NULL DEFAULT NULL COMMENT '省' AFTER `country`,
-ADD COLUMN `city` varchar(32) NULL DEFAULT NULL COMMENT '市' AFTER `province`,
-ADD COLUMN `district` varchar(32) NULL DEFAULT NULL COMMENT '区/县' AFTER `city`,
-ADD COLUMN `other` varchar(64) NULL DEFAULT NULL COMMENT '其它地址' AFTER `district`;
+    ADD COLUMN `longitude` double(12, 6) NULL     DEFAULT NULL COMMENT '经度' AFTER `attache_number`,
+    ADD COLUMN `latitude`  double(12, 6) NULL     DEFAULT NULL COMMENT '纬度' AFTER `longitude`,
+    ADD COLUMN `country`   varchar(16)   NOT NULL DEFAULT '中国' COMMENT '国' AFTER `latitude`,
+    ADD COLUMN `province`  varchar(32)   NULL     DEFAULT NULL COMMENT '省' AFTER `country`,
+    ADD COLUMN `city`      varchar(32)   NULL     DEFAULT NULL COMMENT '市' AFTER `province`,
+    ADD COLUMN `district`  varchar(32)   NULL     DEFAULT NULL COMMENT '区/县' AFTER `city`,
+    ADD COLUMN `other`     varchar(64)   NULL     DEFAULT NULL COMMENT '其它地址' AFTER `district`;
 -- ----------------------------
 -- Records of dynamic_info
 -- ----------------------------
@@ -46,10 +46,11 @@ ADD COLUMN `other` varchar(64) NULL DEFAULT NULL COMMENT '其它地址' AFTER `d
 -- ----------------------------
 -- Table structure for dynamic_info
 -- ----------------------------
-ALTER TABLE `dynamic_info` 
-ADD COLUMN `comments` int(11) NOT NULL DEFAULT 0 COMMENT '评论数' AFTER `likes`,
-ADD COLUMN `is_topic` enum('0', '1') NOT NULL DEFAULT '0' COMMENT '是否是话题，0->否；1->是，默认：0->否' AFTER `public_status`,
-ADD COLUMN `topic_title` varchar(256) NULL DEFAULT NULL COMMENT '话题标题' AFTER `is_topic`;
+ALTER TABLE `dynamic_info`
+    ADD COLUMN `comments`     int(11)         NOT NULL DEFAULT 0 COMMENT '评论数' AFTER `likes`,
+    ADD COLUMN `is_topic`     enum ('0', '1') NOT NULL DEFAULT '0' COMMENT '是否话题，0->否；1->是，默认：0->否' AFTER `public_status`,
+    ADD COLUMN `is_anonymous` enum ('0', '1') NOT NULL DEFAULT '0' COMMENT '是否匿名，0->否；1->是，默认：0->否' AFTER `is_topic`,
+    ADD COLUMN `topic_title`  varchar(256)    NULL     DEFAULT NULL COMMENT '话题标题' AFTER `is_topic`;
 -- ----------------------------
 -- Records of dynamic_info
 -- ----------------------------
@@ -58,8 +59,9 @@ ADD COLUMN `topic_title` varchar(256) NULL DEFAULT NULL COMMENT '话题标题' A
 -- Table structure for comment
 -- ----------------------------
 DROP TABLE IF EXISTS `comment`;
-CREATE TABLE `comment`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
+CREATE TABLE `comment`
+(
+    `id`             bigint(20)                                              NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
   `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
