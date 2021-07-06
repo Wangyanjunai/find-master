@@ -107,6 +107,10 @@
         </rollingPolicy>
     </appender>
 
+    <logger name="log4j.logger.freemarker.cache" level="ERROR"/>
+
+    <logger name="log4j.logger.freemarker.beans" level="ERROR"/>
+
     <root level="info">
         <appender-ref ref="consoleLog"/>
         <appender-ref ref="fileDebugLog"/>

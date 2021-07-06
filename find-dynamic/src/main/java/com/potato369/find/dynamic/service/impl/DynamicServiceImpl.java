@@ -19,7 +19,9 @@ import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.CopyUtil;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.utils.ErrorMessageUtil;
+import com.potato369.find.common.utils.IPLocationUtil;
 import com.potato369.find.common.vo.DynamicInfoVO;
+import com.potato369.find.dynamic.config.props.AliyunProps;
 import com.potato369.find.dynamic.config.props.BaiduProps;
 import com.potato369.find.dynamic.config.props.ProjectUrlProps;
 import com.potato369.find.dynamic.service.DynamicService;
@@ -65,6 +67,8 @@ public class DynamicServiceImpl implements DynamicService {
     private BaiduProps baiduProps;
 
     private ProjectUrlProps projectUrlProps;
+
+    private AliyunProps aliyunProps;
 
     @Autowired
     public void setUserMapperReader(UserMapper userMapperReader) {
@@ -121,17 +125,21 @@ public class DynamicServiceImpl implements DynamicService {
         this.projectUrlProps = projectUrlProps;
     }
 
+    @Autowired
+    public void setAliyunProps(AliyunProps aliyunProps) {
+        this.aliyunProps = aliyunProps;
+    }
+
     //保存动态内容信息
     @Override
     @Transactional(readOnly = false)
-    public DynamicInfo save(DynamicDTO dynamicDTO) {
+    public DynamicInfo save(DynamicDTO dynamicDTO, User user) {
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.ReleaseDynamic.getCode());
         operateRecord.setUserId(dynamicDTO.getUserId());
         String nickname1 = null;
         Long userIdLong = dynamicDTO.getUserId();
-        User user = this.userMapperReader.selectByPrimaryKey(userIdLong);
         if (user != null) {
             nickname1 = user.getNickName();
             String imei2 = dynamicDTO.getImei();
@@ -143,6 +151,14 @@ public class DynamicServiceImpl implements DynamicService {
             String country2 = dynamicDTO.getCountry();
             String province2 = dynamicDTO.getProvince();
             String city2 = dynamicDTO.getCity();
+            String district2 = dynamicDTO.getDistrict();
+            String other2 = dynamicDTO.getOther();
+            Double latitude2 = dynamicDTO.getLatitude();
+            Double longitude2 = dynamicDTO.getLongitude();
+            String publicStatus2 = dynamicDTO.getPublicStatus();
+            String isAnonymous2 = dynamicDTO.getIsAnonymous();
+            String isTopic2 = dynamicDTO.getIsTopic();
+            String topicTitle2 = dynamicDTO.getTopicTitle();
             //如果前端传输过来的动态信息这些字段都为空，则复制用户注册时填写的信息到动态信息表
             if (StrUtil.isAllEmpty(imei2, model2, sysName2, sysCode2, networkMode2)) {
                 dynamicDTO.setImei(user.getImei());
@@ -151,17 +167,17 @@ public class DynamicServiceImpl implements DynamicService {
                 dynamicDTO.setSysCode(user.getSysCode());
                 dynamicDTO.setNetworkMode(user.getNetworkMode());
             }
-            LocationDTO locationDTO = LocationDTO.builder().build();
-            locationDTO.setUserId(userIdLong);
-            locationDTO.setIp(ip2);
-            locationDTO.setCountry(country2);
-            locationDTO.setProvince(province2);
-            locationDTO.setCity(city2);
-            if (StrUtil.isAllEmpty(locationDTO.getCountry(), locationDTO.getProvince(), locationDTO.getCity())) {
-                DynamicDTO dynamicDTO2 = this.getLocation(locationDTO, user);
-                dynamicDTO.setCountry(dynamicDTO2.getCountry());
-                dynamicDTO.setProvince(dynamicDTO2.getProvince());
-                dynamicDTO.setCity(dynamicDTO2.getCity());
+            if (StrUtil.isNotEmpty(ip2)) {
+                if (StrUtil.isAllEmpty(province2, city2, district2, other2)) {
+                    LocationDTO locationDTO2 = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), ip2);
+                    dynamicDTO.setCountry(locationDTO2.getCountry());
+                    dynamicDTO.setProvince(locationDTO2.getProvince());
+                    dynamicDTO.setCity(locationDTO2.getCity());
+                    dynamicDTO.setDistrict(locationDTO2.getDistrict());
+                    dynamicDTO.setOther(locationDTO2.getOther());
+                    dynamicDTO.setLongitude(locationDTO2.getLongitude());
+                    dynamicDTO.setLatitude(locationDTO2.getLatitude());
+                }
             }
         }
         Dynamic dynamic = this.findDynamicByUserId(userIdLong, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
@@ -356,7 +372,7 @@ public class DynamicServiceImpl implements DynamicService {
                                 }
                                 dynamicDTOTmp.setProvince(addr[1] + "省");
                                 dynamicDTOTmp.setCity(addr[2] + "市");
-                                if (dynamicDTOTmp != null && StrUtil.isNotEmpty(dynamicDTOTmp.getCity())) {
+                                if (StrUtil.isNotEmpty(dynamicDTOTmp.getCity())) {
                                     MunicipalityConstant contant = new MunicipalityConstant();
                                     List<String> municipalityList = contant.getMunicipalityList();
                                     if (municipalityList.contains(dynamicDTOTmp.getCity())) {

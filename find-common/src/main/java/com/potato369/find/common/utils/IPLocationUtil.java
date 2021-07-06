@@ -109,8 +109,7 @@ public class IPLocationUtil {
                     }
                 }
                 if (aliyunJsonRootBean != null) {
-                    if (StrUtil.isNotEmpty(aliyunJsonRootBean.getStatus()) && "1".equals(aliyunJsonRootBean.getStatus())
-                            && StrUtil.isNotEmpty(aliyunJsonRootBean.getInfo()) && "OK".equals(aliyunJsonRootBean.getInfo())) {
+                    if (StrUtil.isNotEmpty(aliyunJsonRootBean.getStatus()) && "1".equals(aliyunJsonRootBean.getStatus()) && StrUtil.isNotEmpty(aliyunJsonRootBean.getInfo()) && "OK".equals(aliyunJsonRootBean.getInfo())) {
                         locationDTO.setCountry("中国");
                         locationDTO.setProvince(aliyunJsonRootBean.getProvince());
                         locationDTO.setCity(aliyunJsonRootBean.getCity());

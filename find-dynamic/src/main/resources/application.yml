@@ -73,6 +73,10 @@ pagehelper:
 baidu:
   url: https://api.map.baidu.com/location/ip
   ak: OvTyDm7rLM2soYix1D0tZKEs4SL0GlAx
+#阿里云IP定位接口参数配置
+aliyun:
+  appcode: 5c21289ddc9749f6a105b40d24479398
+  url: http://iploc.market.alicloudapi.com/v3/ip
 #项目路径参数配置
 project-url:
   project-name: /find

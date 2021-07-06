@@ -24,10 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -68,6 +65,8 @@ public class DynamicController {
     private MessageMapper messageMapperReader;
 
     private UserLogService userLogOpenFeign;
+
+    private SensitiveWordsMapper sensitiveWordsMapperReader;
 
     @Autowired
     public void setDynamicService(DynamicService dynamicService) {
@@ -149,6 +148,11 @@ public class DynamicController {
         this.userLogOpenFeign = userLogOpenFeign;
     }
 
+    @Autowired
+    public void setSensitiveWordsMapperReader(SensitiveWordsMapper sensitiveWordsMapperReader) {
+        this.sensitiveWordsMapperReader = sensitiveWordsMapperReader;
+    }
+
     // 用户发布动态附件（包括图片和语音）
     @PostMapping(value = "/{id}/release.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, Object>> releaseDynamicFiles(
@@ -203,15 +207,33 @@ public class DynamicController {
             dynamicDTO.setIsTopic(isTopic);
             dynamicDTO.setIsAnonymous(isAnonymous);
             dynamicDTO.setTopicTitle(topicTitle);
+            //校验用户信息是否存在
             User user = this.userMapperReader.selectByPrimaryKey(userIdLong);
             if (user == null) {
                 return CommonResult.validateFailed("发布动态内容，用户信息不存在。");
             }
-            if (files == null) {
+            //校验动态内容类型是否正确
+            if (!Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Image.getCodeStr()) || !Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Audio.getCodeStr())) {
+                return CommonResult.validateFailed("发布动态内容，不允许此动态内容类型。");
+            }
+            //校验发布的内容是否包含敏感词汇
+            SensitiveWordsExample sensitiveWordsExample = new SensitiveWordsExample();
+            sensitiveWordsExample.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());
+            List<SensitiveWords> sensitiveWordsList = this.sensitiveWordsMapperReader.selectByExampleWithBLOBs(sensitiveWordsExample);
+            for (SensitiveWords sensitiveWords : sensitiveWordsList) {
+                if (StrUtil.isNotEmpty(content)) {
+                    if (content.contains(sensitiveWords.getContent())) {
+                        return CommonResult.validateFailed("发布动态内容，动态内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，不允许发布。");
+                    }
+                }
+            }
+            //发布不带附件的动态内容
+            if (files == null || files.length <= 0) {
+                //校验发布的内容是否为空
                 if (StrUtil.isEmpty(content)) {
                     return CommonResult.validateFailed("发布动态内容不能为空。");
                 }
-                this.dynamicService.save(dynamicDTO);
+                this.dynamicService.save(dynamicDTO, user);
                 Map<String, Object> result = new ConcurrentHashMap<>();
                 result.put("RELEASED", "OK");
                 operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
@@ -223,21 +245,13 @@ public class DynamicController {
                 return CommonResult.success(result, "发布动态内容成功。");
             }
             if (AttacheInfoDataTypeEnum.Image.getCode().toString().equals(attacheInfoDataType)) {
-                if (files.length == 0) {
-                    try {
-                        this.userLogOpenFeign.record(userIdLong, operateRecord);
-                    } catch (Exception e) {
-                        log.error("记录用户操作记录失败", e);
-                    }
-                    return CommonResult.failed("发布动态内容图片资源文件不能为空。");
-                }
                 if (files.length > 4) {
                     try {
                         this.userLogOpenFeign.record(userIdLong, operateRecord);
                     } catch (Exception e) {
                         log.error("记录用户操作记录失败", e);
                     }
-                    return CommonResult.failed("一次发布动态内容图片资源文件不能大于4张包括4张。");
+                    return CommonResult.validateFailed("一次发布动态内容图片资源文件不能大于4张包括4张。");
                 }
                 //判断图片资源文件类型是否正确
                 for (MultipartFile multipartFile : files) {
@@ -246,31 +260,23 @@ public class DynamicController {
                     } catch (Exception e) {
                         log.error("记录用户操作记录失败", e);
                     }
-                    if (!FileTypeUtil.isImageType(multipartFile.getContentType(), multipartFile.getOriginalFilename())) {
+                    if (!FileTypeUtil.isImageType(multipartFile.getContentType(), Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
                         return CommonResult.failed("发布动态内容图片资源文件类型不正确。");
                     }
                 }
             }
             if (AttacheInfoDataTypeEnum.Audio.getCode().toString().equals(attacheInfoDataType)) {
-                if (files.length == 0) {
-                    try {
-                        this.userLogOpenFeign.record(userIdLong, operateRecord);
-                    } catch (Exception e) {
-                        log.error("记录用户操作记录失败", e);
-                    }
-                    return CommonResult.failed("发布动态内容语音资源文件不能为空。");
-                }
                 if (files.length > 1) {
                     try {
                         this.userLogOpenFeign.record(userIdLong, operateRecord);
                     } catch (Exception e) {
                         log.error("记录用户操作记录失败", e);
                     }
-                    return CommonResult.failed("一次发布动态内容语音资源文件不能大于1个包括1个。");
+                    return CommonResult.validateFailed("一次发布动态内容语音资源文件不能大于1个包括1个。");
                 }
                 //判断图片资源文件类型是否正确
                 for (MultipartFile multipartFile : files) {
-                    if (!FileTypeUtil.isAudioType(multipartFile.getContentType(), multipartFile.getOriginalFilename())) {
+                    if (!FileTypeUtil.isAudioType(multipartFile.getContentType(), Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
                         try {
                             this.userLogOpenFeign.record(userIdLong, operateRecord);
                         } catch (Exception e) {

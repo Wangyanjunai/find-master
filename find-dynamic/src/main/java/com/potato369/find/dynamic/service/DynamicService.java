@@ -13,7 +13,7 @@ import java.util.Map;
 
 public interface DynamicService {
 
-    DynamicInfo save(DynamicDTO dynamicDTO) throws Exception;
+    DynamicInfo save(DynamicDTO dynamicDTO, User user) throws Exception;
 
     CommonResult<Map<String, Object>> update(DynamicDTO dynamicDTO, MultipartFile[] files, String message) throws Exception;
 

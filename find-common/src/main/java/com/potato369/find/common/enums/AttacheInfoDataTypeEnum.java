@@ -21,11 +21,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum AttacheInfoDataTypeEnum implements CodeEnum<Integer> {
 
-    Image(0, "图片"),
+    Image(0, "0", "图片"),
 
-    Audio(1, "语音"),
+    Audio(1, "1", "语音"),
     ;
     private Integer code;
+
+    private String codeStr;
 
     private String name;
 }

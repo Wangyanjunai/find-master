@@ -101,7 +101,7 @@
             <!--文件路径，定义了日志的切分方式——把每一天的日志归档到一个文件中，以防止日志填满整个磁盘空间-->
             <fileNamePattern>log/admin-web/%d{yyyy-MM-dd}/error-.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志-->
- 			<MaxFileSize>50MB</MaxFileSize>
+            <MaxFileSize>50MB</MaxFileSize>
             <totalSizeCap>5GB</totalSizeCap>
             <MaxHistory>100</MaxHistory>
         </rollingPolicy>
@@ -110,6 +110,10 @@
     <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
 
     <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="TRACE"/>
+
+    <logger name="log4j.logger.freemarker.cache" level="ERROR"/>
+
+    <logger name="log4j.logger.freemarker.beans" level="ERROR"/>
 
     <root level="info">
         <appender-ref ref="consoleLog"/>
