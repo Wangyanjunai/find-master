@@ -66,7 +66,7 @@ public class DynamicServiceImpl implements DynamicService {
     private ProjectUrlProps projectUrlProps;
 
     private AliyunProps aliyunProps;
-    
+
     private OperateRecordMapper operateRecordMapperWriter;
 
     @Autowired
@@ -121,57 +121,54 @@ public class DynamicServiceImpl implements DynamicService {
 
     @Autowired
     public void setOperateRecordMapperWriter(OperateRecordMapper operateRecordMapperWriter) {
-		this.operateRecordMapperWriter = operateRecordMapperWriter;
-	}
-    
+        this.operateRecordMapperWriter = operateRecordMapperWriter;
+    }
 
-	//保存动态内容信息
+
+    //保存动态内容信息
     @Override
     @Transactional(readOnly = false)
     public int save(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception {
-    	OperateRecord operateRecord = new OperateRecord();
+        OperateRecord operateRecord = new OperateRecord();
         operateRecord.setUserId(user.getId());
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.ReleaseDynamic.getCode());
-        String nickname1 = null;
         Long userIdLong = dynamicDTO.getUserId();
-        if (user != null) {
-            nickname1 = user.getNickName();
-            String imei2 = dynamicDTO.getImei();
-            String model2 = dynamicDTO.getModel();
-            String sysName2 = dynamicDTO.getSysName();
-            String sysCode2 = dynamicDTO.getSysCode();
-            String networkMode2 = dynamicDTO.getNetworkMode();
-            String ip2 = dynamicDTO.getIp();
-            String province2 = dynamicDTO.getProvince();
-            String city2 = dynamicDTO.getCity();
-            String district2 = dynamicDTO.getDistrict();
-            String other2 = dynamicDTO.getOther();
-            //如果前端传输过来的动态信息这些字段都为空，则复制用户注册时填写的信息到动态信息表
-            if (StrUtil.isAllEmpty(imei2, model2, sysName2, sysCode2, networkMode2)) {
-                dynamicDTO.setImei(user.getImei());
-                dynamicDTO.setModel(user.getModel());
-                dynamicDTO.setSysName(user.getSysName());
-                dynamicDTO.setSysCode(user.getSysCode());
-                dynamicDTO.setNetworkMode(user.getNetworkMode());
-            }
-            if (StrUtil.isNotEmpty(ip2)) {
-                if (StrUtil.isAllEmpty(province2, city2, district2, other2)) {
-                    LocationDTO locationDTO2 = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), ip2);
-                    dynamicDTO.setCountry(locationDTO2.getCountry());
-                    dynamicDTO.setProvince(locationDTO2.getProvince());
-                    dynamicDTO.setCity(locationDTO2.getCity());
-                    dynamicDTO.setDistrict(locationDTO2.getDistrict());
-                    dynamicDTO.setOther(locationDTO2.getOther());
-                    dynamicDTO.setLongitude(locationDTO2.getLongitude());
-                    dynamicDTO.setLatitude(locationDTO2.getLatitude());
-                }
+        String nickname1 = user.getNickName();
+        String imei2 = dynamicDTO.getImei();
+        String model2 = dynamicDTO.getModel();
+        String sysName2 = dynamicDTO.getSysName();
+        String sysCode2 = dynamicDTO.getSysCode();
+        String networkMode2 = dynamicDTO.getNetworkMode();
+        String ip2 = dynamicDTO.getIp();
+        String province2 = dynamicDTO.getProvince();
+        String city2 = dynamicDTO.getCity();
+        String district2 = dynamicDTO.getDistrict();
+        String other2 = dynamicDTO.getOther();
+        //如果前端传输过来的动态信息这些字段都为空，则复制用户注册时填写的信息到动态信息表
+        if (StrUtil.isAllEmpty(imei2, model2, sysName2, sysCode2, networkMode2)) {
+            dynamicDTO.setImei(user.getImei());
+            dynamicDTO.setModel(user.getModel());
+            dynamicDTO.setSysName(user.getSysName());
+            dynamicDTO.setSysCode(user.getSysCode());
+            dynamicDTO.setNetworkMode(user.getNetworkMode());
+        }
+        if (StrUtil.isNotEmpty(ip2)) {
+            if (StrUtil.isAllEmpty(province2, city2, district2, other2)) {
+                LocationDTO locationDTO2 = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), ip2);
+                dynamicDTO.setCountry(locationDTO2.getCountry());
+                dynamicDTO.setProvince(locationDTO2.getProvince());
+                dynamicDTO.setCity(locationDTO2.getCity());
+                dynamicDTO.setDistrict(locationDTO2.getDistrict());
+                dynamicDTO.setOther(locationDTO2.getOther());
+                dynamicDTO.setLongitude(locationDTO2.getLongitude());
+                dynamicDTO.setLatitude(locationDTO2.getLatitude());
             }
         }
-        int result1 = 0;
+        int result1;
         int result2 = 0;
         int result3 = 0;
-        int result4 = 0;
+        int result4;
         Dynamic dynamic = this.findDynamicByUserId(userIdLong, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
         if (dynamic != null) {
             String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
@@ -195,8 +192,8 @@ public class DynamicServiceImpl implements DynamicService {
             dynamicInfo.setDynamicId(dynamic.getId());
             dynamicInfo.setUserId(userIdLong);
             if (files != null && files.length > 0) {
-            	String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
-            	StringBuffer filePath = new StringBuffer().append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
+                StringBuffer filePath = new StringBuffer().append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
                 if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), attacheInfoDataType)) {
                     filePath.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
                 }
@@ -235,17 +232,17 @@ public class DynamicServiceImpl implements DynamicService {
                 String fileNames = ErrorMessageUtil.fileNameBuild(files2, fileString);
                 attacheInfo.setFileName(fileNames);// 附件名称
                 result2 = this.attacheInfoMapperWriter.insertSelective(attacheInfo);
-    		}
+            }
             result3 = this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
             if (result3 > 0) {
-            	operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
-			}
+                operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
+            }
         }
         result4 = this.operateRecordMapperWriter.insertSelective(operateRecord);
         return result1 + result2 + result3 + result4;
     }
 
-	//筛选动态内容信息
+    //筛选动态内容信息
     @Override
     @Transactional(readOnly = true)
     public void find(Long userId) {
@@ -266,7 +263,7 @@ public class DynamicServiceImpl implements DynamicService {
     @Transactional(readOnly = false)
     public int update(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception {
         String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
-        StringBuffer filePath = new StringBuffer().append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+        StringBuilder filePath = new StringBuilder().append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
         if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), attacheInfoDataType)) {
             filePath.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
         }
@@ -303,10 +300,10 @@ public class DynamicServiceImpl implements DynamicService {
         attacheInfo.setDynamicInfoBy(dynamicInfo.getId());// 动态内容id
         attacheInfo.setDataType(attacheInfoDataType); // 附件类型
         List<File> files2 = new ArrayList<>();
-        String fileString = new StringBuffer().append(userIdLong).append("/")
-                .append(DatePattern.PURE_DATE_FORMAT.format(new Date())).append("/")
-                .append(System.currentTimeMillis())
-                .append("/").toString();
+        String fileString = userIdLong + "/" +
+                DatePattern.PURE_DATE_FORMAT.format(new Date()) + "/" +
+                System.currentTimeMillis() +
+                "/";
         for (MultipartFile multipartFile : files) {
             byte[] bytes = multipartFile.getBytes();
             StringBuffer stringBuffer = new StringBuffer();
@@ -315,10 +312,7 @@ public class DynamicServiceImpl implements DynamicService {
             if (!path1.exists()) {
                 path1.mkdirs();
             }
-            String filename = multipartFile.getOriginalFilename();
-            String filenameSuffix = FileUtil.getSuffix(filename);
-            filename = new StringBuffer().append(UUID.randomUUID()).append(".").append(filenameSuffix).toString();
-            filename = new StringBuffer().append(filename).toString();
+            String filename = UUID.randomUUID() + "." + FileUtil.getSuffix(multipartFile.getOriginalFilename());
             Path path = Paths.get(stringBuffer.append(filename).toString());
             if (!multipartFile.isEmpty()) {
                 path.toFile();
