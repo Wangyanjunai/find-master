@@ -4,7 +4,6 @@ import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.DynamicDTO;
 import com.potato369.find.common.dto.LocationDTO;
 import com.potato369.find.mbg.model.Dynamic;
-import com.potato369.find.mbg.model.DynamicInfo;
 import com.potato369.find.mbg.model.DynamicInfoParam;
 import com.potato369.find.mbg.model.User;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,9 +12,9 @@ import java.util.Map;
 
 public interface DynamicService {
 
-    DynamicInfo save(DynamicDTO dynamicDTO, User user) throws Exception;
+	int save(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception;
 
-    CommonResult<Map<String, Object>> update(DynamicDTO dynamicDTO, MultipartFile[] files, String message) throws Exception;
+	int update(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception;
 
     void find(Long userId) throws Exception;
 

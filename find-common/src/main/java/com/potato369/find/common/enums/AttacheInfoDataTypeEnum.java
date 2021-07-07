@@ -24,6 +24,8 @@ public enum AttacheInfoDataTypeEnum implements CodeEnum<Integer> {
     Image(0, "0", "图片"),
 
     Audio(1, "1", "语音"),
+    
+    Text(2, "2", "文字"),
     ;
     private Integer code;
 

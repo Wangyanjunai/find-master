@@ -1034,3 +1034,7 @@ select *
 from `user`
 where `city` = '深圳市'
   and `district` = '福田区';
+  
+  
+select * from `industrys`;  
+select * from `professions`;  
