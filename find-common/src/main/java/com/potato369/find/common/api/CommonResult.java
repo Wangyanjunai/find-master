@@ -66,7 +66,7 @@ public class CommonResult<T> {
      * @param errorCode 错误码
      */
     public static <T> CommonResult<T> failed(T data, IErrorCode errorCode) {
-        return new CommonResult<T>(403, errorCode.getCode(), errorCode.getMessage(), data);
+        return new CommonResult<T>(500, errorCode.getCode(), errorCode.getMessage(), data);
     }
 
     /**
@@ -75,7 +75,7 @@ public class CommonResult<T> {
      * @param errorCode 错误码
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode) {
-        return new CommonResult<T>(403, errorCode.getCode(), errorCode.getMessage(), null);
+        return new CommonResult<T>(500, errorCode.getCode(), errorCode.getMessage(), null);
     }
 
     /**
@@ -84,7 +84,7 @@ public class CommonResult<T> {
      * @param errorCode 错误码
      */
     public static <T> CommonResult<T> failed(Integer errorCode, String message) {
-        return new CommonResult<T>(403, errorCode, message, null);
+        return new CommonResult<T>(500, errorCode, message, null);
     }
 
     /**
@@ -93,7 +93,7 @@ public class CommonResult<T> {
      * @param message 提示信息
      */
     public static <T> CommonResult<T> failed(String message) {
-        return new CommonResult<T>(403, ResultCode.FAILED.getCode(), message, null);
+        return new CommonResult<T>(500, ResultCode.FAILED.getCode(), message, null);
     }
 
     /**
@@ -130,7 +130,7 @@ public class CommonResult<T> {
      * 未授权返回结果
      */
     public static <T> CommonResult<T> forbidden(T data) {
-        return new CommonResult<T>(402, ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
+        return new CommonResult<T>(403, ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
 
     @Override

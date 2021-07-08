@@ -133,8 +133,8 @@ public class DynamicServiceImpl implements DynamicService {
         operateRecord.setUserId(user.getId());
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.ReleaseDynamic.getCode());
-        Long userIdLong = dynamicDTO.getUserId();
-        String nickname1 = user.getNickName();
+        Long userId2 = user.getId();
+        String nickname2 = user.getNickName();
         String imei2 = dynamicDTO.getImei();
         String model2 = dynamicDTO.getModel();
         String sysName2 = dynamicDTO.getSysName();
@@ -165,24 +165,24 @@ public class DynamicServiceImpl implements DynamicService {
                 dynamicDTO.setLatitude(locationDTO2.getLatitude());
             }
         }
-        int result1;
+        int result1 = 0;
         int result2 = 0;
         int result3 = 0;
-        int result4;
-        Dynamic dynamic = this.findDynamicByUserId(userIdLong, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
-        if (dynamic != null) {
+        int result4 = 0;
+        Dynamic dynamic = this.findDynamicByUserId(userId2, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
+        if (!Objects.isNull(dynamic)) {
             String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
             BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
-            dynamic.setNickName(nickname1);
-            dynamic.setUserId(userIdLong);
+            dynamic.setUserId(userId2);
+            dynamic.setNickName(nickname2);
             dynamic.setUpdateTime(new Date());
             result1 = this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
         } else {
             dynamic = new Dynamic();
             String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
             BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
-            dynamic.setNickName(nickname1);
-            dynamic.setUserId(userIdLong);
+            dynamic.setUserId(userId2);
+            dynamic.setNickName(nickname2);
             result1 = this.dynamicMapperWriter.insertSelective(dynamic);
         }
         if (result1 > 0) {
@@ -190,8 +190,14 @@ public class DynamicServiceImpl implements DynamicService {
             String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
             BeanUtils.copyProperties(dynamicDTO, dynamicInfo, nullPropertyNames);
             dynamicInfo.setDynamicId(dynamic.getId());
-            dynamicInfo.setUserId(userIdLong);
-            if (files != null && files.length > 0) {
+            dynamicInfo.setUserId(userId2);
+            if (!Objects.isNull(files) && files.length > 0) {
+                dynamicInfo.setAttacheNumber(files.length);
+            } else {
+                dynamicInfo.setAttacheNumber(0);
+            }
+            result2 = this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
+            if (!Objects.isNull(files) && files.length > 0) {
                 String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
                 StringBuffer filePath = new StringBuffer().append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
                 if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), attacheInfoDataType)) {
@@ -200,12 +206,11 @@ public class DynamicServiceImpl implements DynamicService {
                 if (Objects.equals(AttacheInfoDataTypeEnum.Audio.getCodeStr(), attacheInfoDataType)) {
                     filePath.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
                 }
-                dynamicInfo.setAttacheNumber(files.length);
                 AttacheInfo attacheInfo = new AttacheInfo();
                 attacheInfo.setDynamicInfoBy(dynamicInfo.getId());// 动态内容id
                 attacheInfo.setDataType(attacheInfoDataType); // 附件类型
                 List<File> files2 = new ArrayList<>();
-                String fileString = new StringBuffer().append(userIdLong).append("/")
+                String fileString = new StringBuffer().append(userId2).append("/")
                         .append(DatePattern.PURE_DATE_FORMAT.format(new Date())).append("/")
                         .append(System.currentTimeMillis())
                         .append("/").toString();
@@ -231,14 +236,14 @@ public class DynamicServiceImpl implements DynamicService {
                 }
                 String fileNames = ErrorMessageUtil.fileNameBuild(files2, fileString);
                 attacheInfo.setFileName(fileNames);// 附件名称
-                result2 = this.attacheInfoMapperWriter.insertSelective(attacheInfo);
+                result3 = this.attacheInfoMapperWriter.insertSelective(attacheInfo);
             }
-            result3 = this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
-            if (result3 > 0) {
+            if (result2 > 0) {
                 operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
             }
         }
         result4 = this.operateRecordMapperWriter.insertSelective(operateRecord);
+//        log.info("result1 + result2 + result3 + result4={}", result1 + result2 + result3 + result4);
         return result1 + result2 + result3 + result4;
     }
 

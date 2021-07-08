@@ -47,7 +47,7 @@ spring:
     multipart:
       enabled: true
       #限制单个文件的最大值
-      max-file-size: 5MB
+      max-file-size: 10MB
       #限制上传的多个文件的总大小
       max-request-size: 50MB
   jackson:

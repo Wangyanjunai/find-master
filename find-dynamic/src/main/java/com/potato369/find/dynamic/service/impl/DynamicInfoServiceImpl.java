@@ -38,6 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * </pre>
  */
 @Service
+@Transactional
 public class DynamicInfoServiceImpl implements DynamicInfoService {
 
     private DynamicInfoMapper dynamicInfoMapperReader;
@@ -190,6 +191,25 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
             }
         }
         data.put("list", list2);
+        return data;
+    }
+
+    /**
+     * 根据用户id分页获取热门话题数据
+     *
+     * @param userId   用户id
+     * @param pageNum  当前页码
+     * @param pageSize 每页条数
+     * @return 热门话题数据
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> findHotTopicList(Long userId, Integer pageNum, Integer pageSize) {
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        final PageInfo<String> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectHotTopic(userId));
+        data.put("totalPage", listPageInfo.getPages());
+        data.put("list", listPageInfo.getList());
+        data.put("total", listPageInfo.getTotal());
         return data;
     }
 }

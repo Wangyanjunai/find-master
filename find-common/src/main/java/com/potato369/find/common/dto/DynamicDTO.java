@@ -1,7 +1,5 @@
 package com.potato369.find.common.dto;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -13,109 +11,71 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 public class DynamicDTO extends AbstractDTO {
 
-    @ApiModelProperty(value = "动态内容id")
-    @JSONField(name = "dynamicInfoId")
-    @JsonProperty(value = "dynamicInfoId")
+    @ApiModelProperty("动态内容id")
     private Long dynamicInfoId;
 
-    @ApiModelProperty(value = "发布者id")
-    @JsonProperty(value = "userId")
-    @JSONField(name = "userId")
+    @ApiModelProperty("发布者id")
     private Long userId;
 
-    @ApiModelProperty(value = "设备串码")
-    @JSONField(name = "imei")
-    @JsonProperty(value = "imei")
+    @ApiModelProperty("设备串码")
     private String imei;
 
-    @ApiModelProperty(value = "设备型号")
-    @JsonProperty(value = "model")
-    @JSONField(name = "model")
+    @ApiModelProperty("设备型号")
     private String model;
 
-    @ApiModelProperty(value = "系统名称")
-    @JSONField(name = "sysName")
-    @JsonProperty(value = "sysName")
+    @ApiModelProperty("系统名称")
     private String sysName;
 
-    @ApiModelProperty(value = "系统版本")
-    @JsonProperty(value = "sysCode")
-    @JSONField(name = "sysCode")
+    @ApiModelProperty("系统版本")
     private String sysCode;
 
-    @ApiModelProperty(value = "网络方式")
-    @JSONField(name = "networkMode")
-    @JsonProperty(value = "networkMode")
-    private String networkMode;
+    @ApiModelProperty("网络方式")
+    @Builder.Default
+    private String networkMode = "WIFI";
 
-    @ApiModelProperty(value = "客户端IP")
-    @JsonProperty(value = "ip")
-    @JSONField(name = "ip")
+    @ApiModelProperty("客户端IP")
     private String ip;
 
-    @ApiModelProperty(value = "经度")
-    @JsonProperty(value = "longitude")
-    @JSONField(name = "longitude")
+    @ApiModelProperty("定位地址（经度）")
     private Double longitude;
 
-    @ApiModelProperty(value = "纬度")
-    @JsonProperty(value = "latitude")
-    @JSONField(name = "latitude")
+    @ApiModelProperty("定位地址（纬度）")
     private Double latitude;
 
-    @ApiModelProperty(value = "国")
-    @JsonProperty(value = "country")
-    @JSONField(name = "country")
+    @ApiModelProperty("定位地址（国家）")
     @Builder.Default
     private String country = "中国";
 
-    @ApiModelProperty(value = "省")
-    @JsonProperty(value = "province")
-    @JSONField(name = "province")
+    @ApiModelProperty("定位地址（省份）")
     private String province;
 
-    @ApiModelProperty(value = "市")
-    @JsonProperty(value = "city")
-    @JSONField(name = "city")
+    @ApiModelProperty("定位地址（城市）")
     private String city;
 
-    @ApiModelProperty(value = "区/县")
-    @JsonProperty(value = "district")
-    @JSONField(name = "district")
+    @ApiModelProperty("定位地址（区/县）")
     private String district;
 
-    @ApiModelProperty(value = "其它")
-    @JsonProperty(value = "other")
-    @JSONField(name = "other")
+    @ApiModelProperty("定位地址（其它）")
     private String other;
 
-    @ApiModelProperty(value = "是否公开定位状态，0->未公开；1->公开，默认：0->未公开")
-    @JSONField(name = "publicStatus")
-    @JsonProperty(value = "publicStatus")
-    private String publicStatus;
+    @ApiModelProperty("是否公开定位状态，0->未公开；1->公开，默认：0->未公开")
+    @Builder.Default
+    private String publicStatus = "0";
 
-    @ApiModelProperty(value = "内容")
-    @JsonProperty(value = "content")
-    @JSONField(name = "content")
+    @ApiModelProperty("内容")
     private String content;
 
-    @ApiModelProperty(value = "附件类型，0->无附件，纯文本，1->图片，2->语音")
-    @JsonProperty(value = "attacheInfoDataType")
-    @JSONField(name = "attacheInfoDataType")
+    @ApiModelProperty("动态内容类型，0->图片，1->语音，2->文字（不包含图片，语音资源）")
     private String attacheInfoDataType;
 
-    @ApiModelProperty(value = "是否话题，0->否，1->是；默认：0->否")
-    @JsonProperty(value = "isTopic")
-    @JSONField(name = "isTopic")
-    private String isTopic;
+    @ApiModelProperty("是否话题，0->否，1->是；默认：0->否")
+    @Builder.Default
+    private String isTopic = "0";
 
-    @ApiModelProperty(value = "是否匿名，0->否，1->是；默认：0->否")
-    @JsonProperty(value = "isAnonymous")
-    @JSONField(name = "isAnonymous")
-    private String isAnonymous;
+    @ApiModelProperty("是否匿名，0->否，1->是；默认：0->否")
+    @Builder.Default
+    private String isAnonymous = "0";
 
-    @ApiModelProperty(value = "话题标题")
-    @JsonProperty(value = "topicTitle")
-    @JSONField(name = "topicTitle")
+    @ApiModelProperty("话题标题")
     private String topicTitle;
 }

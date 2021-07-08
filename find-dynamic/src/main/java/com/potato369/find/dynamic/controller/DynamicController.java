@@ -142,129 +142,96 @@ public class DynamicController {
 
     @Autowired
     public void setSensitiveWordsService(SensitiveWordsService sensitiveWordsService) {
-		this.sensitiveWordsService = sensitiveWordsService;
-	}
+        this.sensitiveWordsService = sensitiveWordsService;
+    }
 
 
     // 用户发布动态附件（包括图片和语音）
     @PostMapping(value = "/{id}/release.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, Object>> release(
-            @PathVariable(name = "id", required = true) Long userIdLong,// 用户id
-            @RequestParam(name = "attacheInfoDataType", required = false) String attacheInfoDataType,// 附件类型，0->图片，1->语音，2->文字（不包含图片，语音资源）
-            @RequestParam(name = "imei", required = false) String imei,// 设备串号
-            @RequestParam(name = "model", required = false) String model,// 设备型号
-            @RequestParam(name = "sysName", required = false) String sysName,// 设备系统名称
-            @RequestParam(name = "sysCode", required = false) String sysCode,// 设备系统版本
-            @RequestParam(name = "networkMode", required = false, defaultValue = "4G") String networkMode,// 网络方式
-            @RequestParam(name = "ip", required = false) String ip,// 客户端IP
-            @RequestParam(name = "country", required = false, defaultValue = "中国") String country,// 发布定位（国）
-            @RequestParam(name = "province", required = false) String province,// 发布定位（省份）
-            @RequestParam(name = "city", required = false) String city,// 发布定位（城市）
-            @RequestParam(name = "district", required = false) String district, // 发布定位（区/县）
-            @RequestParam(name = "other", required = false) String other, // 发布定位（其它）
-            @RequestParam(name = "longitude", required = false) Double longitude,// 发布定位（经度）
-            @RequestParam(name = "latitude", required = false) Double latitude,  // 发布定位（纬度）
-            @RequestParam(name = "publicStatus", required = false, defaultValue = "0") String publicStatus,// 是否公开定位状态，0->不公开，1->公开
-            @RequestPart(value = "files", required = false) MultipartFile[] files,// 附件列表
-            @RequestParam(name = "content", required = false) String content,// 动态内容
-            @RequestParam(name = "isAnonymous", required = false, defaultValue = "0") String isAnonymous, // 是否匿名
-            @RequestParam(name = "isTopic", required = false, defaultValue = "0") String isTopic, // 是否话题
-            @RequestParam(name = "topicTitle", required = false) String topicTitle) { // 话题标题
+            @PathVariable(name = "id", required = true) Long userId,
+            DynamicDTO dynamicDTO,
+            @RequestPart(name = "files", required = false) MultipartFile[] files) {// 附件列表
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始发布动态内容");
             }
-            DynamicDTO dynamicDTO = new DynamicDTO();
-            dynamicDTO.setUserId(userIdLong);
-            dynamicDTO.setImei(imei);
-            dynamicDTO.setAttacheInfoDataType(attacheInfoDataType);
-            dynamicDTO.setModel(model);
-            dynamicDTO.setSysName(sysName);
-            dynamicDTO.setSysCode(sysCode);
-            dynamicDTO.setNetworkMode(networkMode);
-            dynamicDTO.setIp(ip);
-            dynamicDTO.setCountry(country);
-            dynamicDTO.setProvince(province);
-            dynamicDTO.setCity(city);
-            dynamicDTO.setDistrict(district);
-            dynamicDTO.setOther(other);
-            dynamicDTO.setLongitude(longitude);
-            dynamicDTO.setLatitude(latitude);
-            dynamicDTO.setPublicStatus(publicStatus);
-            dynamicDTO.setContent(content);
-            dynamicDTO.setIsTopic(isTopic);
-            dynamicDTO.setIsAnonymous(isAnonymous);
-            dynamicDTO.setTopicTitle(topicTitle);
+            if (Objects.isNull(dynamicDTO)) {
+                return CommonResult.validateFailed("发布动态内容，参数校验失败。");
+            }
             //校验用户信息是否存在
-            User user = this.userMapperReader.selectByPrimaryKey(userIdLong);
-            if (user == null) {
+            User user = this.userMapperReader.selectByPrimaryKey(userId);
+            if (Objects.isNull(user)) {
                 return CommonResult.validateFailed("发布动态内容，用户信息不存在。");
             }
+            dynamicDTO.setUserId(userId);
+            String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
             //校验动态内容类型是否正确
-            if (!Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Image.getCodeStr()) 
-             && !Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Audio.getCodeStr())
-             && !Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Text.getCodeStr())) {
+            if (!Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Image.getCodeStr())
+                    && !Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Audio.getCodeStr())
+                    && !Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Text.getCodeStr())) {
                 return CommonResult.validateFailed("发布动态内容，不允许此动态内容类型。");
             }
             //校验发布的内容是否包含敏感词汇
-            SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(content);
-            if (sensitiveWords != null) {
+            SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(dynamicDTO.getContent());
+            if (!Objects.isNull(sensitiveWords)) {
                 return CommonResult.validateFailed("发布动态内容，动态内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，不允许发布。");
             }
-            //校验发布话题话题标题是否为空
-            if (Objects.equals(IsTopicEnum.Yes.getType(), isTopic)) {
-				if(StrUtil.isEmpty(topicTitle)) {
-					return CommonResult.validateFailed("发布动态内容，发布话题标题不能为空。");
-				}
-			}
+            //校验发布话题的话题标题是否为空
+            if (Objects.equals(IsTopicEnum.Yes.getType(), dynamicDTO.getIsTopic())) {
+                if (StrUtil.isEmpty(dynamicDTO.getTopicTitle())) {
+                    return CommonResult.validateFailed("发布动态内容，发布话题的话题标题不能为空。");
+                }
+            }
             //校验客户端IP，定位省份，城市，区/县，其它地址，经纬度是否全部为空
             String longitudeString = null;
-            if (longitude != null) {
-            	longitudeString = String.valueOf(longitude);
-			}
+            if (!Objects.isNull(dynamicDTO.getLongitude())) {
+                longitudeString = String.valueOf(dynamicDTO.getLongitude());
+            }
             String latitudeString = null;
-            if (latitude != null) {
-            	latitudeString = String.valueOf(latitude);
-			}
-            if (StrUtil.isAllEmpty(ip, province, city, district, other, longitudeString, latitudeString)) {
-            	return CommonResult.validateFailed("发布动态内容，动态定位客户端IP和动态定位地址不能同时为空。");
-			}
+            if (!Objects.isNull(dynamicDTO.getLatitude())) {
+                latitudeString = String.valueOf(dynamicDTO.getLatitude());
+            }
+            if (StrUtil.isAllEmpty(dynamicDTO.getIp(), dynamicDTO.getProvince(), dynamicDTO.getCity(), dynamicDTO.getDistrict(), dynamicDTO.getOther(), longitudeString, latitudeString)) {
+                return CommonResult.validateFailed("发布动态内容，动态定位客户端IP和动态定位地址不能同时为空。");
+            }
             Map<String, Object> result = new ConcurrentHashMap<>();
-            //发布不带附件的动态内容
-            if (Objects.equals(AttacheInfoDataTypeEnum.Text.getCodeStr(), attacheInfoDataType)) {
-            	//校验发布的内容是否为空
-                if (files == null || files.length <= 0) {
-                	if (StrUtil.isEmpty(content)) {
+            if (Objects.isNull(files)) {
+                //发布不带附件的动态内容
+                if (Objects.equals(AttacheInfoDataTypeEnum.Text.getCodeStr(), attacheInfoDataType)) {
+                    //校验发布的内容是否为空
+                    if (StrUtil.isEmpty(dynamicDTO.getContent())) {
                         return CommonResult.validateFailed("发布动态内容不能为空。");
                     }
-				}
-            }
-            if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), attacheInfoDataType)) {
-                if (files.length > 4) {
-                    return CommonResult.validateFailed("一次发布动态内容图片资源文件不能大于4张包括4张。");
                 }
-                //判断图片资源文件类型是否正确
-                for (MultipartFile multipartFile : files) {
-                    if (!FileTypeUtil.isImageType(multipartFile.getContentType(), Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
-                        return CommonResult.failed("发布动态内容图片资源文件类型不正确。");
+            } else {
+                if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), attacheInfoDataType)) {
+                    if (files.length > 4) {
+                        return CommonResult.validateFailed("一次发布动态内容图片资源文件不能大于4张包括4张。");
+                    }
+                    //判断图片资源文件类型是否正确
+                    for (MultipartFile multipartFile : files) {
+                        if (!FileTypeUtil.isImageType(multipartFile.getContentType(), Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
+                            return CommonResult.failed("发布动态内容图片资源文件类型不正确。");
+                        }
                     }
                 }
-            }
-            if (Objects.equals(AttacheInfoDataTypeEnum.Audio.getCodeStr(), attacheInfoDataType)) {
-                if (files.length > 1) {
-                    return CommonResult.validateFailed("一次发布动态内容语音资源文件不能大于1个包括1个。");
-                }
-                //判断图片资源文件类型是否正确
-                for (MultipartFile multipartFile : files) {
-                    if (!FileTypeUtil.isAudioType(multipartFile.getContentType(), Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
-                        return CommonResult.failed("发布动态内容语音资源文件类型不正确。");
+                if (Objects.equals(AttacheInfoDataTypeEnum.Audio.getCodeStr(), attacheInfoDataType)) {
+                    if (files.length > 1) {
+                        return CommonResult.validateFailed("一次发布动态内容语音资源文件不能大于1个包括1个。");
+                    }
+                    //判断图片资源文件类型是否正确
+                    for (MultipartFile multipartFile : files) {
+                        if (!FileTypeUtil.isAudioType(multipartFile.getContentType(), Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
+                            return CommonResult.failed("发布动态内容语音资源文件类型不正确。");
+                        }
                     }
                 }
             }
             int result2 = this.dynamicService.save(user, dynamicDTO, files);
-            if(result2 > 0) {
-            	result.put("RELEASED", "OK");
-            	return CommonResult.success(result, "发布动态内容成功。");
+            if (result2 >= 4) {
+                result.put("RELEASED", "OK");
+                return CommonResult.success(result, "发布动态内容成功。");
             }
         } catch (Exception e) {
             log.error("发布动态内容出错", e);
@@ -274,12 +241,14 @@ public class DynamicController {
                 log.debug("结束发布动态内容");
             }
         }
-		return null;
+        return null;
     }
 
-	//检测用户发布动态定位是否发生改变
+    //检测用户发布动态定位是否发生改变
     @PostMapping(value = "/{id}/checkLocation.do")
-    public CommonResult<Map<String, Object>> checkLocation(@PathVariable(name = "id") Long userIdLong, @RequestBody LocationDTO locationDTO) {
+    public CommonResult<Map<String, Object>> checkLocation(
+            @PathVariable(name = "id", required = true) Long userIdLong,
+            @RequestBody LocationDTO locationDTO) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         try {
             if (log.isDebugEnabled()) {
@@ -311,7 +280,9 @@ public class DynamicController {
 
     //更新用户发布动态定位
     @PostMapping(value = "/{id}/updateLocation.do")
-    public CommonResult<Map<String, Object>> updateLocation(@PathVariable(name = "id") Long userIdLong, @RequestBody LocationDTO locationDTO) {
+    public CommonResult<Map<String, Object>> updateLocation(
+            @PathVariable(name = "id", required = true) Long userIdLong,
+            @RequestBody LocationDTO locationDTO) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String b = "ERROR";
         try {
@@ -924,7 +895,7 @@ public class DynamicController {
 
     // 分页获取用户自己发布的所有动态内容列表
     @GetMapping(value = "/{id}/mylist.do")
-    public CommonResult<Map<String, Object>> mylist(@PathVariable(name = "id", required = true) Long userId,
+    public CommonResult<Map<String, Object>> myList(@PathVariable(name = "id", required = true) Long userId,
                                                     @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
                                                     @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize) {
         try {
@@ -945,4 +916,26 @@ public class DynamicController {
             }
         }
     }
+
+    //分页获取热门话题
+    @GetMapping(value = "/{id}/hotTopics.do")
+    public CommonResult<Map<String, Object>> hotTopics(@PathVariable(name = "id", required = true) Long userId,
+                                                       @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                                       @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
+
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始分页获取热门话题列表");
+            }
+            return CommonResult.success(this.dynamicInfoService.findHotTopicList(userId, pageNum, pageSize), "分页获取热门话题列表成功。");
+        } catch (Exception e) {
+            log.error("分页获取热门话题列表出错", e);
+            return CommonResult.failed("分页获取热门话题列表出现错误。");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束分页获取热门话题列表");
+            }
+        }
+    }
+
 }

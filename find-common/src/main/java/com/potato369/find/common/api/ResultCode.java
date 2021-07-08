@@ -22,12 +22,11 @@ public enum ResultCode implements IErrorCode {
 
     NOT_PULL_OR_PUSH_OWNER_BLACKLIST_ERROR(302, "不能将自己推入拉出黑名单列表。"),
 
+    VALIDATE_FAILED(400, "参数校验失败。"),
 
     UNAUTHORIZED(401, "暂未登录或token已经过期。"),
 
     FORBIDDEN(403, "没有相关权限。"),
-
-    VALIDATE_FAILED(404, "参数检验失败。"),
 
     FILE_EXCEEDS_LIMIT(420, "上传的单个文件大小超过10M，服务器不允许上传。"),
 

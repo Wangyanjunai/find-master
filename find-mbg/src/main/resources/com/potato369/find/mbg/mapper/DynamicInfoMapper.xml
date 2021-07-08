@@ -465,6 +465,14 @@
         ORDER BY di.`dynamic_status` DESC, di.`create_time` DESC, di.`update_time` DESC
     </select>
 
+    <select id="selectHotTopic" resultType="string" parameterType="java.lang.Long">
+        SELECT `topic_title`
+        FROM `dynamic_info`
+        GROUP BY `topic_title`
+        HAVING SUM(`comments`) > 0
+        ORDER BY SUM(`comments`) DESC
+    </select>
+
     <select id="selectMyDynamicInfoData" parameterType="java.lang.Long" resultMap="BaseResultMap2">
         SELECT DISTINCT di.`id`                    AS dynamic_info_id,
                         ur.`id`                    AS user_id,
