@@ -19,6 +19,9 @@ public class LikeRecord implements Serializable {
 
     @ApiModelProperty(value = "状态，0->点赞；1->取消，默认：0->点赞")
     private String status;
+    
+    @ApiModelProperty(value = "类型，0->动态，1->评论，2->其它，默认：0->动态")
+    private String type;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
@@ -72,7 +75,15 @@ public class LikeRecord implements Serializable {
         this.status = status;
     }
 
-    public Date getCreateTime() {
+    public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Date getCreateTime() {
         return createTime;
     }
 
@@ -130,6 +141,7 @@ public class LikeRecord implements Serializable {
         sb.append(", userId=").append(userId);
         sb.append(", dynamicInfoId=").append(dynamicInfoId);
         sb.append(", status=").append(status);
+        sb.append(", type=").append(type);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", reserveColumn01=").append(reserveColumn01);

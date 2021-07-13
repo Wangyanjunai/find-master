@@ -27,7 +27,7 @@ public class UserAuthorizeAspect {
         this.userMapperReader = userMapperReader;
     }
 
-    @Pointcut("execution(public * com.potato369.find.dynamic.controller.Dynamic*.*(..))"
+    @Pointcut("execution(public * com.potato369.find.dynamic.controller.*.*(..))"
             + "&& !execution(public * com.potato369.find.dynamic.controller.HelloController*.*(..))")
     public void verify() {
     }

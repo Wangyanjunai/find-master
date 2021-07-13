@@ -2,9 +2,11 @@ package com.potato369.find.dynamic.service.impl;
 
 import com.potato369.find.common.enums.*;
 import com.potato369.find.dynamic.service.LikeRecordService;
+import com.potato369.find.mbg.mapper.CommentMapper;
 import com.potato369.find.mbg.mapper.DynamicInfoMapper;
 import com.potato369.find.mbg.mapper.LikeRecordMapper;
 import com.potato369.find.mbg.mapper.MessageMapper;
+import com.potato369.find.mbg.model.Comment;
 import com.potato369.find.mbg.model.DynamicInfo;
 import com.potato369.find.mbg.model.LikeRecord;
 import com.potato369.find.mbg.model.LikeRecordExample;
@@ -38,6 +40,8 @@ public class LikeRecordServiceImpl implements LikeRecordService {
     private DynamicInfoMapper dynamicInfoMapperWriter;
 
     private MessageMapper messageMapperWriter;
+    
+    private CommentMapper commentMapperWriter;
 
     @Autowired
     public void setLikeRecordMapperReader(LikeRecordMapper likeRecordMapperReader) {
@@ -59,7 +63,12 @@ public class LikeRecordServiceImpl implements LikeRecordService {
         this.messageMapperWriter = messageMapperWriter;
     }
 
-    /**
+    @Autowired
+    public void setCommentMapperWriter(CommentMapper commentMapperWriter) {
+		this.commentMapperWriter = commentMapperWriter;
+	}
+
+	/**
      * 根据用户id和动态内容id查询用户对该条动态内容的点赞记录
      *
      * @param userId        用户id
@@ -68,11 +77,11 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      */
     @Override
     @Transactional(readOnly = true)
-    public LikeRecord findByUserIdAndDynamicInfoId(Long userId, Long dynamicInfoId) {
+    public LikeRecord findByUserIdAndDynamicInfoId(Long userId, Long dynamicInfoId, String type) {
         LikeRecordExample likeRecordExample = new LikeRecordExample();
         likeRecordExample.setDistinct(true);
         likeRecordExample.setOrderByClause("create_time DESC, id DESC");
-        likeRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId);
+        likeRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId).andTypeEqualTo(type);
         List<LikeRecord> likeRecordList = this.likeRecordMapperReader.selectByExample(likeRecordExample);
         if (likeRecordList != null && !likeRecordList.isEmpty()) {
             return likeRecordList.get(0);
@@ -80,7 +89,7 @@ public class LikeRecordServiceImpl implements LikeRecordService {
         return null;
     }
 
-    /**
+	/**
      * 根据用户id和动态内容id删除或者取消用户对该条动态内容的点赞记录
      *
      * @param userId      用户id
@@ -126,6 +135,7 @@ public class LikeRecordServiceImpl implements LikeRecordService {
                 likeRecord.setDynamicInfoId(dynamicInfo.getId());
                 likeRecord.setUserId(userId);
                 likeRecord.setStatus(LikeStatusEnum.YES.getType());
+                likeRecord.setType(LikeRecordTypeEnum.Dynamic.getType());
                 b = this.likeRecordMapperWriter.insertSelective(likeRecord);
             } else {
                 likeRecord.setStatus(LikeStatusEnum.YES.getType());
@@ -147,6 +157,50 @@ public class LikeRecordServiceImpl implements LikeRecordService {
         }
         return a + b + c;
     }
+    
+    /**
+     * 根据用户id和评论id点赞用户对该条评论内容
+     *
+     * @param userId      用户id
+     * @param dynamicInfo 动态内容
+     * @return 点赞记录条数
+     */
+    @Override
+    @Transactional
+    public int createByUserIdAndCommentId(String content, Long userId, Comment comment, LikeRecord likeRecord) {
+        int a = 0, b = 0, c = 0;
+        if (comment != null) {
+            int likes = comment.getLikes();
+            comment.setLikes(likes + 1);
+            comment.setUpdatedTime(new Date());
+            a = this.commentMapperWriter.updateByPrimaryKeySelective(comment);
+            if (likeRecord == null) {
+                likeRecord = new LikeRecord();
+                likeRecord.setDynamicInfoId(comment.getId());
+                likeRecord.setUserId(userId);
+                likeRecord.setStatus(LikeStatusEnum.YES.getType());
+                likeRecord.setType(LikeRecordTypeEnum.Comment.getType());
+                b = this.likeRecordMapperWriter.insertSelective(likeRecord);
+            } else {
+                likeRecord.setStatus(LikeStatusEnum.YES.getType());
+                likeRecord.setUpdateTime(new Date());
+                b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
+            }
+            //消息记录
+            Message messageRecord = new Message();
+            messageRecord.setContent(content);//消息内容
+            messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
+            messageRecord.setRecipientUserId(comment.getUserId());//接收者用户id
+            messageRecord.setSendUserId(userId);//发送者用户id
+            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//未读
+            messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型，点赞->likes
+            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
+            messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
+            messageRecord.setReserveColumn04(String.valueOf(likeRecord.getId()));//点赞记录id
+            c = this.messageMapperWriter.insertSelective(messageRecord);
+        }
+        return a + b + c;
+    }
 
     /**
      * 更新动态内容点赞记录状态
@@ -156,10 +210,24 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      * @return int
      */
     @Override
-    @Transactional
+    @Transactional(readOnly = false)
     public int update(LikeRecord likeRecord, DynamicInfo dynamicInfo) {
         int a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
         int b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
         return a + b;
     }
+    /**
+     * 更新动态内容点赞记录状态
+     *
+     * @param likeRecord  点赞记录
+     * @param dynamicInfo 动态内容
+     * @return int
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public int updateComment(LikeRecord likeRecord, Comment comment) {
+        int a = this.commentMapperWriter.updateByPrimaryKeySelective(comment);
+        int b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
+        return a + b;
+    }    
 }

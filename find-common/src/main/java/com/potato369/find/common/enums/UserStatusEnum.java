@@ -10,11 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum UserStatusEnum implements CodeEnum<Integer>{
 
-	Normal(0, "正常"),
+	Normal(0, "0", "正常"),
 	
-	Abnormal(1, "异常"),
+	Abnormal(1, "1", "异常"),
 	;
 	private Integer code;
+	
+	private String status;
 	
 	private String name;
 }

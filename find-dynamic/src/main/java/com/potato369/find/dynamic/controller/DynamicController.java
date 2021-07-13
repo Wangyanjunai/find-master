@@ -703,7 +703,7 @@ public class DynamicController {
                 return CommonResult.failed(data, ResultCode.LIKES_USER_IS_NOT_EXIST);
             }
             //点赞记录信息
-            LikeRecord likeRecord = this.likeRecordService.findByUserIdAndDynamicInfoId(userId, dynamicInfoId);
+            LikeRecord likeRecord = this.likeRecordService.findByUserIdAndDynamicInfoId(userId, dynamicInfoId, LikeRecordTypeEnum.Dynamic.getType());
             //取消点赞
             if (LikeStatusEnum.NO.getType().equals(type)) {
                 if (likeRecord == null) {

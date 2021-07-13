@@ -13,6 +13,9 @@ public class Comment implements Serializable {
 
     @ApiModelProperty(value = "动态内容id")
     private Long dynamicInfoId;
+    
+    @ApiModelProperty(value = "评论的点赞数")
+    private Integer likes;
 
     @ApiModelProperty(value = "是否删除状态，0->否，1->是，默认：0->否")
     private String deleteStatus;
@@ -67,7 +70,15 @@ public class Comment implements Serializable {
         this.dynamicInfoId = dynamicInfoId;
     }
 
-    public String getDeleteStatus() {
+    public Integer getLikes() {
+		return likes;
+	}
+
+	public void setLikes(Integer likes) {
+		this.likes = likes;
+	}
+
+	public String getDeleteStatus() {
         return deleteStatus;
     }
 
@@ -148,6 +159,7 @@ public class Comment implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", userId=").append(userId);
         sb.append(", dynamicInfoId=").append(dynamicInfoId);
+        sb.append(", likes=").append(likes);
         sb.append(", deleteStatus=").append(deleteStatus);
         sb.append(", createdTime=").append(createdTime);
         sb.append(", updatedTime=").append(updatedTime);

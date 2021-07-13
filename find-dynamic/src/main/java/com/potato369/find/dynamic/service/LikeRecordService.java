@@ -1,5 +1,8 @@
 package com.potato369.find.dynamic.service;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import com.potato369.find.mbg.model.Comment;
 import com.potato369.find.mbg.model.DynamicInfo;
 import com.potato369.find.mbg.model.LikeRecord;
 
@@ -15,6 +18,7 @@ import com.potato369.find.mbg.model.LikeRecord;
  * @Copyright Copyright (c) 2016 ~ 2028 版权所有 (C) 土豆互联科技(深圳)有限公司 https://www.potato369.com All Rights Reserved。
  * </pre>
  */
+@Transactional
 public interface LikeRecordService {
 
     /**
@@ -24,7 +28,7 @@ public interface LikeRecordService {
      * @param dynamicInfoId 动态内容id
      * @return 点赞记录
      */
-    LikeRecord findByUserIdAndDynamicInfoId(Long userId, Long dynamicInfoId);
+    LikeRecord findByUserIdAndDynamicInfoId(Long userId, Long dynamicInfoId, String type);
 
     /**
      * 根据用户id和动态内容id删除或者取消用户对该条动态内容的点赞记录
@@ -53,4 +57,22 @@ public interface LikeRecordService {
      * @return int
      */
     int update(LikeRecord likeRecord, DynamicInfo dynamicInfo);
-}
+    
+    /**
+     * 更新评论点赞记录状态
+     *
+     * @param likeRecord  点赞记录
+     * @param comment 评论
+     * @return int
+     */
+    int updateComment(LikeRecord likeRecord, Comment comment);
+    
+    /**
+     * 根据用户id和评论id点赞用户对该条评论内容
+     *
+     * @param userId      用户id
+     * @param dynamicInfo 动态内容
+     * @return 点赞记录条数
+     */
+    int createByUserIdAndCommentId(String content, Long userId, Comment comment, LikeRecord likeRecord); 
+};
