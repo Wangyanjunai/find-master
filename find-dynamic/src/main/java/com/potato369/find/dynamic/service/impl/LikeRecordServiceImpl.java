@@ -134,11 +134,11 @@ public class LikeRecordServiceImpl implements LikeRecordService {
                 likeRecord = new LikeRecord();
                 likeRecord.setDynamicInfoId(dynamicInfo.getId());
                 likeRecord.setUserId(userId);
-                likeRecord.setStatus(LikeStatusEnum.YES.getType());
+                likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
                 likeRecord.setType(LikeRecordTypeEnum.Dynamic.getType());
                 b = this.likeRecordMapperWriter.insertSelective(likeRecord);
             } else {
-                likeRecord.setStatus(LikeStatusEnum.YES.getType());
+                likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
                 likeRecord.setUpdateTime(new Date());
                 b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
             }
@@ -178,11 +178,11 @@ public class LikeRecordServiceImpl implements LikeRecordService {
                 likeRecord = new LikeRecord();
                 likeRecord.setDynamicInfoId(comment.getId());
                 likeRecord.setUserId(userId);
-                likeRecord.setStatus(LikeStatusEnum.YES.getType());
+                likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
                 likeRecord.setType(LikeRecordTypeEnum.Comment.getType());
                 b = this.likeRecordMapperWriter.insertSelective(likeRecord);
             } else {
-                likeRecord.setStatus(LikeStatusEnum.YES.getType());
+                likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
                 likeRecord.setUpdateTime(new Date());
                 b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
             }

@@ -1,7 +1,7 @@
 package com.potato369.find.dynamic.service;
 
 
-import com.github.pagehelper.Page;
+import com.potato369.find.common.vo.PageCommentVOs;
 import com.potato369.find.mbg.model.Comment;
 
 public interface CommentService {
@@ -34,5 +34,5 @@ public interface CommentService {
 	 * @param pageSize
 	 * @return
 	 */
-	Page<Comment> pageCommentsByDynamicId(Long dynamicId, int pageNum, int pageSize);
+	PageCommentVOs pageCommentsByDynamicId(Long userId, Long dynamicId, int pageNum, int pageSize);
 }

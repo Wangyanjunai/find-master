@@ -705,11 +705,11 @@ public class DynamicController {
             //点赞记录信息
             LikeRecord likeRecord = this.likeRecordService.findByUserIdAndDynamicInfoId(userId, dynamicInfoId, LikeRecordTypeEnum.Dynamic.getType());
             //取消点赞
-            if (LikeStatusEnum.NO.getType().equals(type)) {
+            if (LikeStatusEnum.NO.getStatus().equals(type)) {
                 if (likeRecord == null) {
                     return CommonResult.failed(data, ResultCode.LIKES_RECORD_IS_NOT_EXIST);
                 }
-                likeRecord.setStatus(LikeStatusEnum.NO.getType());
+                likeRecord.setStatus(LikeStatusEnum.NO.getStatus());
                 likeRecord.setUpdateTime(new Date());
                 dynamicInfo.setLikes(dynamicInfo.getLikes() - 1);
                 dynamicInfo.setUpdateTime(new Date());
@@ -720,7 +720,7 @@ public class DynamicController {
                 }
             }
             //点赞
-            if (LikeStatusEnum.YES.getType().equals(type)) {
+            if (LikeStatusEnum.YES.getStatus().equals(type)) {
                 String content = user.getNickName() + "点赞你的动态" + dynamicInfo.getContent();//消息内容
                 int result = this.likeRecordService.createByUserIdAndDynamicInfoId(content, userId, dynamicInfo, likeRecord);
                 if (result > 0) {

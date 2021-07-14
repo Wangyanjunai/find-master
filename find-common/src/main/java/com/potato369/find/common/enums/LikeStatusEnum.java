@@ -28,7 +28,7 @@ public enum LikeStatusEnum implements CodeEnum<Integer> {
 
     private Integer code;
 
-    private String type;
+    private String status;
 
     private String msg;
 }

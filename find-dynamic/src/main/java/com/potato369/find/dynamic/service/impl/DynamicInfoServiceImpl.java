@@ -148,10 +148,10 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
                 if (likeRecordList != null && !likeRecordList.isEmpty()) {
                     LikeRecord likeRecord = likeRecordList.get(0);
                     if (likeRecord != null) {
-                        if (likeRecord.getStatus().equals(LikeStatusEnum.YES.getType())) {
+                        if (likeRecord.getStatus().equals(LikeStatusEnum.YES.getStatus())) {
                             dynamicInfoVO.setLikeStatus(true);
                         }
-                        if (likeRecord.getStatus().equals(LikeStatusEnum.NO.getType())) {
+                        if (likeRecord.getStatus().equals(LikeStatusEnum.NO.getStatus())) {
                             dynamicInfoVO.setLikeStatus(false);
                         }
                     }
