@@ -60,8 +60,6 @@ public class UserController {
 
     private ReportCategoryDaoUseJdbcTemplate reportCategoryDaoUseJdbcTemplate;
 
-    private OperateRecordMapper operateRecordMapperWrite;
-
     private ReportCategoryMapper reportCategoryMapper;
 
     private ReportInfoMapper reportInfoMapper;
@@ -129,11 +127,6 @@ public class UserController {
     @Autowired
     public void setReportCategoryDaoUseJdbcTemplate(ReportCategoryDaoUseJdbcTemplate reportCategoryDaoUseJdbcTemplate) {
         this.reportCategoryDaoUseJdbcTemplate = reportCategoryDaoUseJdbcTemplate;
-    }
-
-    @Autowired
-    public void setOperateRecordMapperWrite(OperateRecordMapper operateRecordMapperWrite) {
-        this.operateRecordMapperWrite = operateRecordMapperWrite;
     }
 
     @Autowired
