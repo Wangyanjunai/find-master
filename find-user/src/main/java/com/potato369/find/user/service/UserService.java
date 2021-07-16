@@ -1,5 +1,6 @@
 package com.potato369.find.user.service;
 
+import com.potato369.find.common.dto.OperateRecordDTO;
 import com.potato369.find.mbg.model.OperateRecord;
 import com.potato369.find.mbg.model.User;
 import org.springframework.web.multipart.MultipartFile;
@@ -60,7 +61,7 @@ public interface UserService {
      * @param multipartFileName 头像图片文件，动态内容图片
      * @param operateRecord     操作记录
      */
-    void uploadHeadIcon1(User user, String content, String multipartFileName, OperateRecord operateRecord);
+    void uploadHeadIcon1(User user, String content, String multipartFileName, OperateRecordDTO operateRecord);
 
     /**
      * 更新用户VIP等级

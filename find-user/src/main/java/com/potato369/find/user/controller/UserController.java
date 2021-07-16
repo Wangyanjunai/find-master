@@ -93,7 +93,7 @@ public class UserController {
     private TagMapper tagMapperWriter;
 
     private TagMapper tagMapperReader;
-    
+
     private SensitiveWordsService sensitiveWordsService;
 
     @Autowired
@@ -215,13 +215,13 @@ public class UserController {
     public void setTagMapperReader(TagMapper tagMapperReader) {
         this.tagMapperReader = tagMapperReader;
     }
-    
+
     @Autowired
     public void setSensitiveWordsService(SensitiveWordsService sensitiveWordsService) {
-		this.sensitiveWordsService = sensitiveWordsService;
-	}
+        this.sensitiveWordsService = sensitiveWordsService;
+    }
 
-	//上报或者更新极光推送唯一设备的标识接口
+    //上报或者更新极光推送唯一设备的标识接口
     @ApiOperation(value = "上报或者更新极光推送唯一设备的标识接口", notes = "上报或者更新极光推送唯一设备的标识接口", response = CommonResult.class)
     @PutMapping(value = "/{id}/uploadRegId.do")
     public CommonResult<Map<String, Object>> uploadRegId(@PathVariable(name = "id") Long id,//id：用户id
@@ -270,7 +270,7 @@ public class UserController {
         Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("id", id);
         User user1 = this.userMapperReader.selectByPrimaryKey(id);
-        OperateRecord operateRecord = new OperateRecord();
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setUserId(id);
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.UploadHeadIcon.getCode());
@@ -364,7 +364,7 @@ public class UserController {
         Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("id", id);
         User user1 = this.userMapperReader.selectByPrimaryKey(id);
-        OperateRecord operateRecord = new OperateRecord();
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setUserId(id);
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         try {
@@ -452,7 +452,7 @@ public class UserController {
         Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
         String message = "注册失败。";
-        OperateRecord operateRecord = new OperateRecord();
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
         operateRecord.setUserId(0L);
@@ -523,7 +523,7 @@ public class UserController {
                 if (StrUtil.isEmpty(nickname)) {
                     user.setNickName(new RandomNickNameUtil().randomName());
                 } else {
-                	//校验发布的内容是否包含敏感词汇
+                    //校验发布的内容是否包含敏感词汇
                     SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(nickname);
                     if (!Objects.isNull(sensitiveWords)) {
                         return CommonResult.validateFailed("用户昵称包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止添加。");
@@ -643,8 +643,8 @@ public class UserController {
                     }
                     message = "注册成功。";
                 }
-                
-            } 
+
+            }
 //            else 
 //            {
 //                //更新用户定位或者ip
@@ -707,22 +707,18 @@ public class UserController {
                 this.userLogOpenFeign.record(user.getId(), operateRecord);
             } catch (Exception e) {
                 log.error("记录用户操作记录失败", e);
+                return CommonResult.failed("记录用户操作记录失败");
             }
             map.put("userDTO", userVO2);
             return CommonResult.success(map, message);
         } catch (Exception e) {
             log.error("注册出现错误", e);
-            try {
-                this.operateRecordMapperWrite.insert(operateRecord);
-            } catch (Exception e2) {
-                log.error("记录用户操作记录失败", e);
-            }
-            return CommonResult.failed(message);
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束注册");
             }
         }
+        return null;
     }
 
     //登录接口
@@ -736,7 +732,7 @@ public class UserController {
         Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
         String message = "登录失败。";
-        OperateRecord operateRecord = new OperateRecord();
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
         operateRecord.setUserId(0L);
@@ -897,16 +893,12 @@ public class UserController {
                 this.userLogOpenFeign.record(user.getId(), operateRecord);
             } catch (Exception e) {
                 log.error("记录用户操作记录失败", e);
+                return CommonResult.failed("记录用户操作记录失败");
             }
             map.put("user", userVO2);
             return CommonResult.success(map, message);
         } catch (Exception e) {
             log.error("登录出现错误", e);
-            try {
-                this.operateRecordMapperWrite.insert(operateRecord);
-            } catch (Exception e2) {
-                log.error("记录用户操作记录失败", e);
-            }
             return CommonResult.failed(message);
         } finally {
             if (log.isDebugEnabled()) {
@@ -958,7 +950,7 @@ public class UserController {
             log.debug("前端传输过来的用户信息id={}，updateUserDTO={}", id, updateUserDTO);
         }
         Map<String, Object> data = new ConcurrentHashMap<>();
-        OperateRecord operateRecord = new OperateRecord();
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.UpdateUser.getCode());
         operateRecord.setUserId(id);
@@ -1128,7 +1120,7 @@ public class UserController {
             if (log.isDebugEnabled()) {
                 log.debug("开始记录用户举报内容。");
             }
-            OperateRecord operateRecord = new OperateRecord();
+            OperateRecordDTO operateRecord = new OperateRecordDTO();
             operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
             operateRecord.setUserId(userId);
             if (bindingResult.hasErrors()) {
@@ -1154,12 +1146,12 @@ public class UserController {
             Long reportUserId = reportInfoDTO.getBeingReportId();       //被举报用户id或者动态id
             String reportContent = reportInfoDTO.getReportContent();    //举报填写的内容
             if (StrUtil.isNotEmpty(reportContent)) {
-            	//校验举报填写的内容是否包含敏感词汇
+                //校验举报填写的内容是否包含敏感词汇
                 SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(reportContent);
                 if (!Objects.isNull(sensitiveWords)) {
                     return CommonResult.validateFailed("举报填写的内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
                 }
-			}
+            }
             User reportUser = this.userDaoUseJdbcTemplate.getById(userId);
             if (reportUser == null) {
                 try {
@@ -1324,7 +1316,7 @@ public class UserController {
     @PostMapping(value = "/{id}/pushblacklist.do", consumes = {"application/json;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, String>> pushBlackList(@PathVariable(name = "id") Long userId,
                                                            @RequestBody @Valid BlacklistDTO blacklistDTO, BindingResult bindingResult) {
-        OperateRecord operateRecord = new OperateRecord();
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         Integer type = blacklistDTO.getType();
         Map<String, String> data = new HashMap<>();

@@ -3,6 +3,7 @@ package com.potato369.find.user.service.impl;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import com.potato369.find.common.dto.DynamicDTO;
+import com.potato369.find.common.dto.OperateRecordDTO;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.CopyUtil;
 import com.potato369.find.mbg.mapper.OperateRecordMapper;
@@ -192,7 +193,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = false)
-    public void uploadHeadIcon1(User user, String content, String multipartFileName, OperateRecord operateRecord) {
+    public void uploadHeadIcon1(User user, String content, String multipartFileName, OperateRecordDTO operateRecord) {
         try {
             if (StrUtil.isNotEmpty(content)) {
                 DynamicDTO dynamicDTO = new DynamicDTO();

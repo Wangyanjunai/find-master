@@ -90,16 +90,9 @@
             <artifactId>find-common</artifactId>
         </dependency>
         
-        <!-- mbg模块 -->
-        <dependency>
-            <groupId>com.potato369.find</groupId>
-            <artifactId>find-mbg</artifactId>
-        </dependency>
-        
         <dependency>
         	<groupId>io.github.openfeign.form</groupId>
         	<artifactId>feign-form</artifactId>
-        	<version>3.8.0</version>
         </dependency>
         
         <dependency>

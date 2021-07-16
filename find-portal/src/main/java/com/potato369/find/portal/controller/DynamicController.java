@@ -2,9 +2,9 @@ package com.potato369.find.portal.controller;
 
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.LocationDTO;
+import com.potato369.find.common.dto.OperateRecordDTO;
 import com.potato369.find.common.enums.OperateRecordStatusEnum;
 import com.potato369.find.common.enums.OperateRecordTypeEnum;
-import com.potato369.find.mbg.model.OperateRecord;
 import com.potato369.find.portal.feign.DynamicService;
 import com.potato369.find.portal.feign.UserLogService;
 import io.swagger.annotations.*;
@@ -232,7 +232,7 @@ public class DynamicController {
             @RequestParam(name = "city", required = false) @ApiParam(name = "city", value = "定位（城市）") String city,
             @RequestParam(name = "publicStatus", required = false) @ApiParam(name = "publicStatus", value = "是否公开定位", allowableValues = "0, 1", example = "0") String publicStatus,
             @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "动态内容") String content) {
-        OperateRecord operateRecord = new OperateRecord();
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
         operateRecord.setUserId(userId);
         operateRecord.setType(OperateRecordTypeEnum.ReleaseDynamic.getCode());
@@ -342,7 +342,7 @@ public class DynamicController {
     public CommonResult<Map<String, Object>> updateLocation(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
             @RequestBody @ApiParam("定位实体对象") LocationDTO locationDTO) {
-        OperateRecord operateRecord = new OperateRecord();
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
         operateRecord.setUserId(userId);
         operateRecord.setType(OperateRecordTypeEnum.UpdateLocation.getCode());
@@ -531,7 +531,7 @@ public class DynamicController {
     public CommonResult<Map<String, Object>> delete(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
             @RequestParam(name = "dynamicInfoId") @ApiParam(name = "dynamicInfoId", value = "动态信息id", required = true, example = "1") Long dynamicInfoId) {
-        OperateRecord operateRecord = new OperateRecord();
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
         operateRecord.setUserId(userId);
         operateRecord.setType(OperateRecordTypeEnum.DeleteDynamic.getCode());
