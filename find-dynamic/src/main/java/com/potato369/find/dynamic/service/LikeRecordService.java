@@ -70,9 +70,9 @@ public interface LikeRecordService {
     /**
      * 根据用户id和评论id点赞用户对该条评论内容
      *
-     * @param userId      用户id
-     * @param dynamicInfo 动态内容
+     * @param userId  用户id
+     * @param comment 评论
      * @return 点赞记录条数
      */
-    int createByUserIdAndCommentId(String content, Long userId, Comment comment, LikeRecord likeRecord); 
+    int createByUserIdAndCommentId(Long userId, Comment comment, LikeRecord likeRecord); 
 };

@@ -26,18 +26,16 @@ import com.potato369.find.common.dto.CommentDTO;
 import com.potato369.find.common.enums.DeleteStatusEnum;
 import com.potato369.find.common.enums.LikeRecordTypeEnum;
 import com.potato369.find.common.enums.LikeStatusEnum;
-import com.potato369.find.dynamic.config.bean.PushBean;
 import com.potato369.find.dynamic.service.CommentService;
 import com.potato369.find.dynamic.service.DynamicInfoService;
-import com.potato369.find.dynamic.service.JiGuangPushService;
+//import com.potato369.find.dynamic.service.JiGuangPushService;
 import com.potato369.find.dynamic.service.LikeRecordService;
 import com.potato369.find.dynamic.service.SensitiveWordsService;
-import com.potato369.find.dynamic.service.UserService;
+//import com.potato369.find.dynamic.service.UserService;
 import com.potato369.find.mbg.model.Comment;
 import com.potato369.find.mbg.model.DynamicInfo;
 import com.potato369.find.mbg.model.LikeRecord;
 import com.potato369.find.mbg.model.SensitiveWords;
-import com.potato369.find.mbg.model.User;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,9 +64,9 @@ public class CommentController {
 
     private LikeRecordService likeRecordService;
 
-    private UserService userService;
+    // private UserService userService;
 
-    private JiGuangPushService jiGuangPushService;
+    // private JiGuangPushService jiGuangPushService;
 
     @Autowired
     public void setDynamicInfoService(DynamicInfoService dynamicInfoService) {
@@ -90,15 +88,15 @@ public class CommentController {
         this.likeRecordService = likeRecordService;
     }
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setJiGuangPushService(JiGuangPushService jiGuangPushService) {
-        this.jiGuangPushService = jiGuangPushService;
-    }
+//    @Autowired
+//    public void setUserService(UserService userService) {
+//        this.userService = userService;
+//    }
+//
+//    @Autowired
+//    public void setJiGuangPushService(JiGuangPushService jiGuangPushService) {
+//        this.jiGuangPushService = jiGuangPushService;
+//    }
 
     //发布评论
     @PostMapping("/{id}/release.do")
@@ -241,17 +239,17 @@ public class CommentController {
             }
             //点赞
             if (Objects.equals(LikeStatusEnum.YES.getStatus(), type)) {
-                User user = this.userService.findUserById(userId);//评论者
-                User publishUser = this.userService.findUserById(comment.getUserId());//评论发表者
-                String content = user.getNickName() + "点赞你的评论" + comment.getContent();//消息内容
-                int result = this.likeRecordService.createByUserIdAndCommentId(content, userId, comment, likeRecord);
+                // User user = this.userService.findUserById(userId);//评论者
+                // User publishUser = this.userService.findUserById(comment.getUserId());//评论发表者
+                // String content = user.getNickName() + "点赞你的评论" + comment.getContent();//消息内容
+                int result = this.likeRecordService.createByUserIdAndCommentId(userId, comment, likeRecord);
                 if (result > 0) {
                     data.put("LIKES", "OK");
-                    String title = "互动消息";//消息标题
-                    PushBean pushBean = new PushBean();
-                    pushBean.setAlert(content);
-                    pushBean.setTitle(title);
-                    this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
+//                    String title = "互动消息";//消息标题
+//                    PushBean pushBean = new PushBean();
+//                    pushBean.setAlert(content);
+//                    pushBean.setTitle(title);
+//                    this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
                     return CommonResult.success(data, "点赞成功。");
                 }
             }

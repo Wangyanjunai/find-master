@@ -154,7 +154,6 @@ public class CommentServiceImpl implements CommentService {
                             .andTypeEqualTo(LikeRecordTypeEnum.Comment.getType())
                             .andStatusEqualTo(LikeStatusEnum.YES.getStatus());
                     List<LikeRecord> likeRecordList = this.likeRecordMapperReader.selectByExample(likeRecordExample);
-                    System.out.println("likeRecordList="+likeRecordList);
                     if (!Objects.isNull(likeRecordList) && likeRecordList.size() > 0) {
                         commentVO.setIsOrNotLikes(LikeStatusEnum.YES.getStatus());
                     } else {

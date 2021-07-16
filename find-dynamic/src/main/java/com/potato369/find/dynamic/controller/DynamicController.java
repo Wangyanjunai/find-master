@@ -175,12 +175,17 @@ public class DynamicController {
             //校验发布的内容是否包含敏感词汇
             SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(dynamicDTO.getContent());
             if (!Objects.isNull(sensitiveWords)) {
-                return CommonResult.validateFailed("发布动态内容，动态内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，不允许发布。");
+                return CommonResult.validateFailed("发布动态内容，动态内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
             }
             //校验发布话题的话题标题是否为空
             if (Objects.equals(IsTopicEnum.Yes.getType(), dynamicDTO.getIsTopic())) {
                 if (StrUtil.isEmpty(dynamicDTO.getTopicTitle())) {
                     return CommonResult.validateFailed("发布动态内容，发布话题的话题标题不能为空。");
+                }
+                //校验发布的内容是否包含敏感词汇
+                SensitiveWords sensitiveWords1 = this.sensitiveWordsService.checkHasSensitiveWords(dynamicDTO.getTopicTitle());
+                if (!Objects.isNull(sensitiveWords1)) {
+                    return CommonResult.validateFailed("发布动态内容，话题标题包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
                 }
             }
             //校验客户端IP，定位省份，城市，区/县，其它地址，经纬度是否全部为空
@@ -484,9 +489,9 @@ public class DynamicController {
             // 5、 校验星座数组参数，星座值是否在十二星座中选择
             ConstellationConstant constellationConstant = new ConstellationConstant();
             if (constellations != null && constellations.size() > 0) {
-                for (int i = 0; i < constellations.size(); i++) {
-                    if (!constellationConstant.getConstellationList().contains(constellations.get(i))) {
-                        return CommonResult.validateFailed("星座参数校验不通过，星座值：" + constellations.get(i) + "非法！");
+                for (String constellation : constellations) {
+                    if (!constellationConstant.getConstellationList().contains(constellation)) {
+                        return CommonResult.validateFailed("星座参数校验不通过，星座值：" + constellation + "非法！");
                     }
                 }
             }
@@ -524,13 +529,13 @@ public class DynamicController {
             // 如果前端传过来的年龄范围最小值为空或等于0
             //（普通用户+VIP用户）默认条件二：设置默认最小年龄范围->16岁
             // 设置年龄范围最小值筛选条件
-            // dynamicLocationDTO.setMinAge(DateUtil.fomatDate(DateUtil.getBeforeYearByAge(minAge)));
+            // dynamicLocationDTO.setMinAge(DateUtil.formatDate(DateUtil.getBeforeYearByAge(minAge)));
             dynamicInfoParam.setMinAge(DateUtil.fomatDate(DateUtil.getBeforeYearByAge(minAge)));
 
             // 如果前端传过来的年龄范围最大值为空或等于0
             //（普通用户+VIP用户）默认条件二：设置默认最大年龄范围->35岁
             // 设置年龄范围最大值筛选条件
-            // dynamicLocationDTO.setMaxAge(DateUtil.fomatDate(DateUtil.getBeforeYearByAge(maxAge)));
+            // dynamicLocationDTO.setMaxAge(DateUtil.formatDate(DateUtil.getBeforeYearByAge(maxAge)));
             // 7、 年龄最大值范围参数，是否大于等于50岁，是否是50+，则查询条件查询所有的大于最小年龄范围的用户
             if (maxAge >= 50) {
                 dynamicInfoParam.setMaxAge(null);
@@ -610,7 +615,7 @@ public class DynamicController {
 //            log.info("blackUserIdList={}", blackUserIdList);
             // 将自己加入到白名单或者筛选的用户列表中
             // userIdList.add(userId);
-            blackUserIdList = CopyUtil.removeLongDuplicate(blackUserIdList);
+            CopyUtil.removeLongDuplicate(blackUserIdList);
 //            log.info("userIdList={}", userIdList);
             dynamicInfoParam.setBlackRecordUserIdLongList(blackUserIdList);
             Map<String, Object> data = this.dynamicService.getDynamicInfoData(userId, dynamicInfoParam, pageNum, pageSize);
@@ -706,7 +711,7 @@ public class DynamicController {
             LikeRecord likeRecord = this.likeRecordService.findByUserIdAndDynamicInfoId(userId, dynamicInfoId, LikeRecordTypeEnum.Dynamic.getType());
             //取消点赞
             if (LikeStatusEnum.NO.getStatus().equals(type)) {
-                if (likeRecord == null) {
+                if (Objects.isNull(likeRecord)) {
                     return CommonResult.failed(data, ResultCode.LIKES_RECORD_IS_NOT_EXIST);
                 }
                 likeRecord.setStatus(LikeStatusEnum.NO.getStatus());
@@ -764,31 +769,29 @@ public class DynamicController {
             }
             //申请加微信者
             User applicantUser = this.userMapperReader.selectByPrimaryKey(applicantUserId);
-            if (applicantUser == null) {
+            if (Objects.isNull(applicantUser)) {
                 return CommonResult.failed(data, ResultCode.APPLICANT_USER_IS_NOT_EXIST);
             }
             //被申请加微信者动态内容信息
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
-            if (dynamicInfo == null) {
+            if (Objects.isNull(dynamicInfo)) {
                 return CommonResult.failed(data, ResultCode.DYNAMIC_IS_NOT_EXIST);
             }
             //被申请者用户id
             Long applicantsUserId = dynamicInfo.getUserId();
-
             //需要判断是否是在申请加自己微信
-            if (applicantsUserId.equals(applicantUserId)) {
+            if (Objects.equals(applicantsUserId, applicantUserId)) {
                 return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_VALID);
             }
             //被申请者用户信息
             User applicantsUser = this.userMapperReader.selectByPrimaryKey(applicantsUserId);
-            if (applicantsUser == null) {
+            if (Objects.isNull(applicantsUser)) {
                 return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
             }
-
-            // 获取申请加微信者申请加被申请加微信者微信记录条数
+            // 获取申请加微信者申请加被申请加微信者微信记录条数，查询当天用户申请加微信次数
             int count = this.applicationRecordMapperReader.countByUserId(applicantUserId, applicantsUserId);
             if (count > 0) {
-                // 如果被申请加微信者未回复申请加微信者发送的消息，则不允许继续申请加被申请人微信
+                // 如果次数大于0，则判断被申请加微信者未回复申请加微信者发送的消息，则不允许继续申请加被申请人微信
                 MessageExample messageExample = new MessageExample();
                 messageExample.setOrderByClause("create_time DESC");
                 messageExample.createCriteria()
@@ -797,9 +800,9 @@ public class DynamicController {
                         .andReserveColumn01EqualTo(MessageTypeEnum.Applications.getMessage())
                         .andReserveColumn02EqualTo(MessageType2Enum.SEND.getCodeStr());
                 List<Message> messageList = this.messageMapperReader.selectByExample(messageExample);
-                if (messageList != null && !messageList.isEmpty()) {
+                if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
                     Message messageTemp = messageList.get(0);
-                    if (messageTemp != null) {
+                    if (!Objects.isNull(messageTemp)) {
                         int count2 = this.messageMapperReader.countByUserId(applicantsUserId, applicantUserId, messageTemp.getId());
                         if (count2 <= 0) {
                             return CommonResult.failed(data, ResultCode.NO_REPLY_OVERRUN);
@@ -807,10 +810,10 @@ public class DynamicController {
                     }
                 }
             }
-            // 非VIP用户加不同人微信次数看配置，目前配置是没人每天只能申请添加微信5次，VIP用户没有限制
+            // 非VIP用户加不同人微信次数看配置，目前配置是每人每天只能申请添加微信5次，VIP用户没有限制
             ApplicationSetting applicationSetting = this.applicationSettingService.findApplication();
             int times = 0;
-            if (applicationSetting != null) {
+            if (!Objects.isNull(applicationSetting)) {
                 times = applicationSetting.getTimes();
             }
             if (UserGradeEnum.VIP0.getGrade().equals(applicantUser.getGrade())) {
@@ -825,6 +828,11 @@ public class DynamicController {
             applicationRecord.setReserveColumn01(String.valueOf(applicantsUserId));//被申请加微信者用户id
             if (StrUtil.isEmpty(message)) {
                 message = "申请加您的微信，麻烦通过一下，谢谢！";
+            }
+            //校验发布的内容是否包含敏感词汇
+            SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(message);
+            if (!Objects.isNull(sensitiveWords)) {
+                return CommonResult.validateFailed("发送消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
             }
             int rowResult = this.applicationRecordService.saveApplicationRecord(dynamicInfo, applicationRecord, message);
             String msg;

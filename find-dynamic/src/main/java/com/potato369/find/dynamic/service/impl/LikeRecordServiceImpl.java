@@ -40,7 +40,7 @@ public class LikeRecordServiceImpl implements LikeRecordService {
     private DynamicInfoMapper dynamicInfoMapperWriter;
 
     private MessageMapper messageMapperWriter;
-    
+
     private CommentMapper commentMapperWriter;
 
     @Autowired
@@ -65,10 +65,10 @@ public class LikeRecordServiceImpl implements LikeRecordService {
 
     @Autowired
     public void setCommentMapperWriter(CommentMapper commentMapperWriter) {
-		this.commentMapperWriter = commentMapperWriter;
-	}
+        this.commentMapperWriter = commentMapperWriter;
+    }
 
-	/**
+    /**
      * 根据用户id和动态内容id查询用户对该条动态内容的点赞记录
      *
      * @param userId        用户id
@@ -89,7 +89,7 @@ public class LikeRecordServiceImpl implements LikeRecordService {
         return null;
     }
 
-	/**
+    /**
      * 根据用户id和动态内容id删除或者取消用户对该条动态内容的点赞记录
      *
      * @param userId      用户id
@@ -157,18 +157,18 @@ public class LikeRecordServiceImpl implements LikeRecordService {
         }
         return a + b + c;
     }
-    
+
     /**
      * 根据用户id和评论id点赞用户对该条评论内容
      *
-     * @param userId      用户id
-     * @param dynamicInfo 动态内容
+     * @param userId  用户id
+     * @param comment 评论
      * @return 点赞记录条数
      */
     @Override
     @Transactional
-    public int createByUserIdAndCommentId(String content, Long userId, Comment comment, LikeRecord likeRecord) {
-        int a = 0, b = 0, c = 0;
+    public int createByUserIdAndCommentId(Long userId, Comment comment, LikeRecord likeRecord) {
+        int a = 0, b = 0;
         if (comment != null) {
             int likes = comment.getLikes();
             comment.setLikes(likes + 1);
@@ -187,19 +187,19 @@ public class LikeRecordServiceImpl implements LikeRecordService {
                 b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
             }
             //消息记录
-            Message messageRecord = new Message();
-            messageRecord.setContent(content);//消息内容
-            messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
-            messageRecord.setRecipientUserId(comment.getUserId());//接收者用户id
-            messageRecord.setSendUserId(userId);//发送者用户id
-            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//未读
-            messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型，点赞->likes
-            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
-            messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
-            messageRecord.setReserveColumn04(String.valueOf(likeRecord.getId()));//点赞记录id
-            c = this.messageMapperWriter.insertSelective(messageRecord);
+//            Message messageRecord = new Message();
+//            messageRecord.setContent(content);//消息内容
+//            messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
+//            messageRecord.setRecipientUserId(comment.getUserId());//接收者用户id
+//            messageRecord.setSendUserId(userId);//发送者用户id
+//            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//未读
+//            messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型，点赞->likes
+//            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
+//            messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
+//            messageRecord.setReserveColumn04(String.valueOf(likeRecord.getId()));//点赞记录id
+//            c = this.messageMapperWriter.insertSelective(messageRecord);
         }
-        return a + b + c;
+        return a + b;
     }
 
     /**
@@ -216,11 +216,12 @@ public class LikeRecordServiceImpl implements LikeRecordService {
         int b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
         return a + b;
     }
+
     /**
      * 更新动态内容点赞记录状态
      *
-     * @param likeRecord  点赞记录
-     * @param dynamicInfo 动态内容
+     * @param likeRecord 点赞记录
+     * @param comment    评论
      * @return int
      */
     @Override
@@ -229,5 +230,5 @@ public class LikeRecordServiceImpl implements LikeRecordService {
         int a = this.commentMapperWriter.updateByPrimaryKeySelective(comment);
         int b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
         return a + b;
-    }    
+    }
 }

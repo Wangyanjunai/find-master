@@ -207,9 +207,9 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
     public Map<String, Object> findHotTopicList(Long userId, Integer pageNum, Integer pageSize) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         final PageInfo<String> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectHotTopic(userId));
+        data.put("totalSize", listPageInfo.getTotal());
         data.put("totalPage", listPageInfo.getPages());
         data.put("list", listPageInfo.getList());
-        data.put("total", listPageInfo.getTotal());
         return data;
     }
 }

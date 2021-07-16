@@ -16,6 +16,8 @@ import com.potato369.find.message.config.bean.PushBean;
 import com.potato369.find.message.config.props.ProjectUrlProps;
 import com.potato369.find.message.service.JiGuangPushService;
 import com.potato369.find.message.service.MessageService;
+import com.potato369.find.message.service.SensitiveWordsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +42,8 @@ public class MessageServiceImpl implements MessageService {
     private ProjectUrlProps projectUrlProps;
 
     private JiGuangPushService jiGuangPushService;
+    
+    private SensitiveWordsService sensitiveWordsService;
 
     @Autowired
     public void setMessageMapperReader(MessageMapper messageMapperReader) {
@@ -76,7 +80,12 @@ public class MessageServiceImpl implements MessageService {
         this.jiGuangPushService = jiGuangPushService;
     }
 
-    @Override
+    @Autowired
+    public void setSensitiveWordsService(SensitiveWordsService sensitiveWordsService) {
+		this.sensitiveWordsService = sensitiveWordsService;
+	}
+
+	@Override
     @Transactional(readOnly = true)
     public LikesMessageVO selectLikesMessage(Long userId) {
         // 查询未读点赞消息
@@ -188,13 +197,13 @@ public class MessageServiceImpl implements MessageService {
                 User user1 = this.userMapperReader.selectByPrimaryKey(sendUserId);
                 // 消息接收者（被申请加微信者）
                 User user2 = this.userMapperReader.selectByPrimaryKey(recipientUserId);
-                if (sendUserId == userId) {
+                if (Objects.equals(sendUserId, userId)) {
                     getUserInfo(user2, messageInfoVO);
                 } else {
                     getUserInfo(user1, messageInfoVO);
                 }
                 List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(sendUserId, recipientUserId);
-                if (messageList != null && !messageList.isEmpty()) {
+                if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
                     Message message1 = messageList.get(0);
                     messageInfoVO.setMessageId(message1.getId());
                     if (MessageType2Enum.REPLY.getCodeStr().equals(message1.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
@@ -204,7 +213,7 @@ public class MessageServiceImpl implements MessageService {
                             String[] strings = StrUtil.split(contentString, "|");
                             messageInfoVO.setContent(strings[0]);
                             if (StrUtil.isEmpty(strings[1])) {
-                                if (user1 != null) {
+                                if (!Objects.isNull(user1)) {
                                     messageInfoVO.setWeixinId(user1.getWeixinId());
                                 }
                             } else {
@@ -277,8 +286,8 @@ public class MessageServiceImpl implements MessageService {
                             + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) + sendUser.getId() + "/"
                             + sendUser.getHeadIcon());
                     String content = message.getContent();
-                    if (StrUtil.isNotEmpty(content) && StrUtil.contains(content, "|")) {
-                        content = StrUtil.removeAll(content, "|");
+                    if (StrUtil.isNotEmpty(content) && StrUtil.contains(content, "|") && StrUtil.contains(content, sendUser.getWeixinId())) {
+                        content = StrUtil.removeAll(content, "|" + sendUser.getWeixinId())+"，我的微信号是：" + sendUser.getWeixinId();
                     }
                     messageInfoVO2.setContent(content);
                     messageInfoVO2s.add(messageInfoVO2);
@@ -299,12 +308,12 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional
     public CommonResult<Map<String, Object>> sendMessageAndPush(Long sendUserId, Long messageId, String content) {
-        Map<String, Object> data = new ConcurrentHashMap<>();
+    	Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("SEND", "ERROR");
         String msg;
         // 判断回复的消息记录是否存在
         Message messageRecord2 = this.messageMapperReader.selectByPrimaryKey(messageId);
-        if (messageRecord2 == null) {
+        if (Objects.isNull(messageRecord2)) {
             return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_IS_NOT_EXIST);
         }
         // 判断回复的消息记录是否被删除状态
@@ -336,6 +345,11 @@ public class MessageServiceImpl implements MessageService {
         User recipientUser1 = this.userMapperReader.selectByPrimaryKey(recipientUserId);
         if (recipientUser1 == null) {
             return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_EXIST);
+        }
+        //校验发布的消息内容是否包含敏感词汇
+        SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(content);
+        if (!Objects.isNull(sensitiveWords)) {
+            return CommonResult.validateFailed("发消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，不允许发布。");
         }
         Message messageRecord = new Message();
         messageRecord.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
@@ -429,107 +443,108 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = false)
     public CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type, String content, String weChatId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
-        String key = "REPLY";
-        String value = "ERROR";
+        data.put("REPLY", "ERROR");
         // 申请加微信消息记录
         Message messageOld = this.messageMapperReader.selectByPrimaryKey(messageId);
-        if (messageOld == null) {
+        if (Objects.isNull(messageOld)) {
             return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_IS_NOT_EXIST);
         }
+        // 消息发送者用户id,申请者
         long sendUserId = messageOld.getSendUserId();
-        long recipientUserId = messageOld.getRecipientUserId();
         // 判断被申请加微信者用户信息是否存在，或者回复消息接收者用户信息是否存在
         User applicantsUser = this.userMapperReader.selectByPrimaryKey(applicantsUserId);
-        if (applicantsUser == null) {
-            data.put(key, value);
+        if (Objects.isNull(applicantsUser)) {
             return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
         }
         // 判断申请加微信者用户信息是否存在，或者回复消息发送者用户信息是否存在
         User applicantUser = this.userMapperReader.selectByPrimaryKey(sendUserId);
-        if (applicantUser == null) {
-            data.put(key, value);
+        if (Objects.isNull(applicantUser)) {
             return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
         }
-        long userId;
-        if (applicantsUserId.equals(recipientUserId)) {
-            userId = sendUserId;
-        } else {
-            userId = applicantsUserId;
-        }
         ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
-        applicationRecordExample.setDistinct(true);
         applicationRecordExample.createCriteria()
-                .andUserIdEqualTo(userId)
+                .andUserIdEqualTo(sendUserId)
                 .andReserveColumn01EqualTo(String.valueOf(applicantsUserId));
         List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
-        ApplicationRecord applicationRecord;
-        if (applicationRecordList != null && !applicationRecordList.isEmpty()) {
-            applicationRecord = applicationRecordList.get(0);
-            if (applicationRecord != null && applicationRecord.getReserveColumn01().equals(String.valueOf(applicantsUserId))) {
-                // 如果是同意申请加微信
-                String weixinId = applicantsUser.getWeixinId();// 数据库获取到的被申请人的微信号
-                if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
-                    if (StrUtil.isNotEmpty(weChatId)) {
-                        if (StrUtil.isEmpty(content)) {
-                            content = "已同意添加微信，我的微信号是：|" + weChatId;
+        if (Objects.isNull(applicationRecordList) || applicationRecordList.isEmpty()) {
+            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
+        }
+        MessageExample messageExample = new MessageExample();
+        messageExample.createCriteria().andRecipientUserIdEqualTo(applicantsUserId).andSendUserIdEqualTo(sendUserId).andReserveColumn01EqualTo(MessageTypeEnum.Applications.getMessage());
+        List<Message> messageList = this.messageMapperReader.selectByExample(messageExample);
+        if (Objects.isNull(messageList) || messageList.isEmpty()) {
+            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
+        }
+        ApplicationRecord applicationRecord = applicationRecordList.get(0);
+        if (!Objects.isNull(applicationRecord)) {
+            // 如果是同意申请加微信
+            String welkinId = applicantsUser.getWeixinId();// 数据库获取到的被申请人的微信号
+            if (StrUtil.isNotEmpty(content)) {
+            	//校验发布的内容是否包含敏感词汇
+                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(content);
+                if (!Objects.isNull(sensitiveWords)) {
+                    return CommonResult.validateFailed("发消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
+                }
+    		}
+            if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
+                if (StrUtil.isNotEmpty(weChatId)) {
+                    if (StrUtil.isEmpty(content)) {
+                        content = "已同意添加微信，我的微信号是：|" + weChatId;
+                    } else {
+                        if (content.contains(weChatId)) {
+                            content = content + "|";
                         } else {
-                            if (content.contains(weChatId)) {
+                            content = content + "|" + weChatId;
+                        }
+                    }
+                } else {
+                    if (StrUtil.isNotEmpty(welkinId)) {
+                        if (StrUtil.isEmpty(content)) {
+                            content = "已同意添加微信，我的微信号是：|" + welkinId;
+                        } else {
+                            if (content.contains(welkinId)) {
                                 content = content + "|";
                             } else {
                                 content = content + "|" + weChatId;
                             }
                         }
-                    } else {
-                        if (StrUtil.isNotEmpty(weixinId)) {
-                            if (StrUtil.isEmpty(content)) {
-                                content = "已同意添加微信，我的微信号是：|" + weixinId;
-                            } else {
-                                if (content.contains(weixinId)) {
-                                    content = content + "|";
-                                } else {
-                                    content = content + "|" + weChatId;
-                                }
-                            }
-                        }
-                    }
-                    if (StrUtil.isNotEmpty(weChatId) && !weChatId.equals(weixinId)) {
-                        applicantsUser.setWeixinId(weChatId);
-                        applicantsUser.setUpdateTime(new Date());
-                        this.userMapperWriter.updateByPrimaryKeySelective(applicantsUser);
                     }
                 }
-                // 如果是拒绝申请加微信
-                if (MessageType3Enum.REFUSE.getCodeStr().equals(type)) {
-                    if (StrUtil.isEmpty(content)) {
-                        content = "非常抱歉，我不想加你！";
-                    }
+                if (StrUtil.isNotEmpty(weChatId) && !weChatId.equals(welkinId)) {
+                    applicantsUser.setWeixinId(weChatId);
+                    applicantsUser.setUpdateTime(new Date());
+                    this.userMapperWriter.updateByPrimaryKeySelective(applicantsUser);
                 }
-                Message message = new Message();
-                message.setSendUserId(applicantsUserId);
-                message.setRecipientUserId(sendUserId);
-                message.setContent(content);
-                message.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
-                message.setStatus(MessageStatusEnum.UNREAD.getStatus());
-                message.setReserveColumn01(MessageTypeEnum.Applications.getMessage());
-                message.setReserveColumn02(MessageType2Enum.REPLY.getCodeStr());
-                message.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
-                message.setReserveColumn04(String.valueOf(0));
-                this.messageMapperWriter.insertSelective(message);
-                String title = applicantsUser.getNickName();// 消息标题
-                PushBean pushBean = new PushBean();
-                pushBean.setAlert(content);
-                pushBean.setTitle(title);
-                this.jiGuangPushService.pushAndroid(pushBean, applicantUser.getReserveColumn03());
-                value = "OK";
-                data.put(key, value);
-                return CommonResult.success(data, ResultCode.SUCCESS.getMessage());
-            } else {
-                return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
             }
+            // 如果是拒绝申请加微信
+            if (MessageType3Enum.REFUSE.getCodeStr().equals(type)) {
+                if (StrUtil.isEmpty(content)) {
+                    content = "非常抱歉，我不想加你！";
+                }
+            }
+            Message message = new Message();
+            message.setSendUserId(applicantsUserId);
+            message.setRecipientUserId(sendUserId);
+            message.setContent(content);
+            message.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
+            message.setStatus(MessageStatusEnum.UNREAD.getStatus());
+            message.setReserveColumn01(MessageTypeEnum.Applications.getMessage());
+            message.setReserveColumn02(MessageType2Enum.REPLY.getCodeStr());
+            message.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
+            message.setReserveColumn04(String.valueOf(messageOld.getId()));
+            this.messageMapperWriter.insertSelective(message);
+            String title = applicantsUser.getNickName();// 消息标题
+            PushBean pushBean = new PushBean();
+            pushBean.setAlert(content);
+            pushBean.setTitle(title);
+            this.jiGuangPushService.pushAndroid(pushBean, applicantUser.getReserveColumn03());
+            data.put("REPLY", "OK");
+            return CommonResult.success(data, ResultCode.SUCCESS.getMessage());
+        } else {
+            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
         }
-        return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
     }
 }

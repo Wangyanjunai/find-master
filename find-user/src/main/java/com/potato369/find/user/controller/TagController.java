@@ -2,7 +2,11 @@ package com.potato369.find.user.controller;
 
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.vo.TagVO;
+import com.potato369.find.mbg.model.SensitiveWords;
+import com.potato369.find.user.service.SensitiveWordsService;
 import com.potato369.find.user.service.TagService;
+
+import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
@@ -23,13 +28,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TagController {
 
     private TagService tagService;
+    
+    private SensitiveWordsService sensitiveWordsService;
 
     @Autowired
     public void setTagService(TagService tagService) {
         this.tagService = tagService;
     }
+    
+    @Autowired
+    public void setSensitiveWordsService(SensitiveWordsService sensitiveWordsService) {
+		this.sensitiveWordsService = sensitiveWordsService;
+	}
 
-    @GetMapping("/list.do")
+	@GetMapping("/list.do")
     public CommonResult<Map<String, List<TagVO>>> list() {
         try {
             if (log.isDebugEnabled()) {
@@ -87,6 +99,13 @@ public class TagController {
             if (log.isDebugEnabled()) {
                 log.debug("开始模糊搜索标签列表");
             }
+            if (StrUtil.isNotEmpty(key)) {
+            	//校验发布的内容是否包含敏感词汇
+                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(key);
+                if (!Objects.isNull(sensitiveWords)) {
+                    return CommonResult.validateFailed("模糊搜索标签，标签包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止搜索。");
+                }
+			}
             List<TagVO> tagVOList = new ArrayList<>();
             Map<String, List<TagVO>> map = new ConcurrentHashMap<>();
             this.tagService.likesByTagName(key).forEach((tag) -> {

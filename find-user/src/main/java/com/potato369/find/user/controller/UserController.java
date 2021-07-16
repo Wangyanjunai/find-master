@@ -20,6 +20,7 @@ import com.potato369.find.user.dao.DynamicInfoDaoUseJdbcTemplate;
 import com.potato369.find.user.dao.ReportCategoryDaoUseJdbcTemplate;
 import com.potato369.find.user.dao.UserDaoUseJdbcTemplate;
 import com.potato369.find.user.feign.UserLogService;
+import com.potato369.find.user.service.SensitiveWordsService;
 import com.potato369.find.user.service.TagService;
 import com.potato369.find.user.service.UserService;
 import com.potato369.find.user.utils.RandomNickNameUtil;
@@ -92,6 +93,8 @@ public class UserController {
     private TagMapper tagMapperWriter;
 
     private TagMapper tagMapperReader;
+    
+    private SensitiveWordsService sensitiveWordsService;
 
     @Autowired
     public void setUserMapperWrite(UserMapper userMapperWrite) {
@@ -212,8 +215,13 @@ public class UserController {
     public void setTagMapperReader(TagMapper tagMapperReader) {
         this.tagMapperReader = tagMapperReader;
     }
+    
+    @Autowired
+    public void setSensitiveWordsService(SensitiveWordsService sensitiveWordsService) {
+		this.sensitiveWordsService = sensitiveWordsService;
+	}
 
-    //上报或者更新极光推送唯一设备的标识接口
+	//上报或者更新极光推送唯一设备的标识接口
     @ApiOperation(value = "上报或者更新极光推送唯一设备的标识接口", notes = "上报或者更新极光推送唯一设备的标识接口", response = CommonResult.class)
     @PutMapping(value = "/{id}/uploadRegId.do")
     public CommonResult<Map<String, Object>> uploadRegId(@PathVariable(name = "id") Long id,//id：用户id
@@ -515,6 +523,11 @@ public class UserController {
                 if (StrUtil.isEmpty(nickname)) {
                     user.setNickName(new RandomNickNameUtil().randomName());
                 } else {
+                	//校验发布的内容是否包含敏感词汇
+                    SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(nickname);
+                    if (!Objects.isNull(sensitiveWords)) {
+                        return CommonResult.validateFailed("用户昵称包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止添加。");
+                    }
                     user.setNickName(nickname);
                 }
                 if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
@@ -539,6 +552,11 @@ public class UserController {
                     if (UserGenderEnum.Male.getCode().toString().equals(user.getGender())) {
                         user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent()));
                     }
+                }
+                //校验发布的内容是否包含敏感词汇
+                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(autograph);
+                if (!Objects.isNull(sensitiveWords)) {
+                    return CommonResult.validateFailed("签名包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
                 }
                 // 头像图片上传服务器
                 int result = this.userMapperWrite.insertSelective(user);
@@ -946,7 +964,17 @@ public class UserController {
         operateRecord.setUserId(id);
         try {
             User user = this.userMapperReader.selectByPrimaryKey(id);
-            if (user != null) {
+            //校验昵称是否包含敏感词汇
+            SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(updateUserDTO.getNickname());
+            if (!Objects.isNull(sensitiveWords)) {
+                return CommonResult.validateFailed("用户昵称包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止添加。");
+            }
+            //校验签名内容是否包含敏感词汇
+            SensitiveWords sensitiveWords2 = this.sensitiveWordsService.checkHasSensitiveWords(updateUserDTO.getAutograph());
+            if (!Objects.isNull(sensitiveWords)) {
+                return CommonResult.validateFailed("签名包含" + sensitiveWords2.getTypeName() + "类型敏感词汇，禁止发布。");
+            }
+            if (!Objects.isNull(user)) {
                 this.copy(updateUserDTO, user);
                 user.setUpdateTime(new Date());
                 this.userMapperWrite.updateByPrimaryKeySelective(user);
@@ -1122,9 +1150,16 @@ public class UserController {
                 }
                 return CommonResult.failed("举报类目信息不存在，记录用户举报内容失败。");
             }
-            String reportType = reportInfoDTO.getReportType();              //举报类型，1->动态，2->用户，默认：1-动态
+            String reportType = reportInfoDTO.getReportType();          //举报类型，1->动态，2->用户，默认：1-动态
             Long reportUserId = reportInfoDTO.getBeingReportId();       //被举报用户id或者动态id
-            String reportContent = reportInfoDTO.getReportContent();        //举报填写的内容
+            String reportContent = reportInfoDTO.getReportContent();    //举报填写的内容
+            if (StrUtil.isNotEmpty(reportContent)) {
+            	//校验举报填写的内容是否包含敏感词汇
+                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(reportContent);
+                if (!Objects.isNull(sensitiveWords)) {
+                    return CommonResult.validateFailed("举报填写的内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
+                }
+			}
             User reportUser = this.userDaoUseJdbcTemplate.getById(userId);
             if (reportUser == null) {
                 try {
