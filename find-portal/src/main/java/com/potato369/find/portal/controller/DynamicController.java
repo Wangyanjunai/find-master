@@ -9,6 +9,7 @@ import com.potato369.find.portal.feign.DynamicService;
 import com.potato369.find.portal.feign.UserLogService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -216,7 +217,7 @@ public class DynamicController {
      */
     @ApiOperation(value = "发布动态内容接口", notes = "用于用户发布动态内容包括文字，图片，语音。")
     @ApiResponses(@ApiResponse(code = 200, message = "发布动态内容成功", response = CommonResult.class))
-    @PostMapping(value = "/{id}/release", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
+    @PostMapping(value = "/{id}/release", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, Object>> release(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", example = "1", required = true) Long userId,
             @RequestParam(name = "imei", required = false) @ApiParam(name = "imei", value = "设备串码") String imei,

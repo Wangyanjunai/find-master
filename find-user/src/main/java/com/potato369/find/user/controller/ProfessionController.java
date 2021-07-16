@@ -1,22 +1,20 @@
 package com.potato369.find.user.controller;
 
+import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.common.vo.IndustriesVO;
+import com.potato369.find.common.vo.ProfessionsVO;
+import com.potato369.find.user.service.ProfessionService;
+import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-
-import com.potato369.find.common.vo.IndustriesVO;
-import com.potato369.find.user.service.ProfessionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.common.vo.ProfessionsVO;
-
-import io.swagger.annotations.Api;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Api(value = "用户模块职业管理控制器类")
@@ -44,7 +42,7 @@ public class ProfessionController {
 				industriesVO.setId(industries.getId());
 				industriesVO.setName(industries.getName());
 				List<ProfessionsVO> professionsVOList = new ArrayList<>();
-				this.professionService.getProfessionsByIndustrysId(industries.getId()).stream().forEach(professions -> {
+				this.professionService.getProfessionsByIndustrysId(industries.getId()).forEach(professions -> {
 					ProfessionsVO professionsVO = new ProfessionsVO();
 					professionsVO.setId(professions.getId());
 					professionsVO.setName(professions.getName());
