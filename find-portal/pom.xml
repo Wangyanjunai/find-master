@@ -96,9 +96,9 @@
         </dependency>
         
         <dependency>
-        	<groupId>io.github.openfeign.form</groupId>
-        	<artifactId>feign-form-spring</artifactId>
-        </dependency>      
+            <groupId>io.github.openfeign.form</groupId>
+            <artifactId>feign-form-spring</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <finalName>find-portal-8084</finalName>
