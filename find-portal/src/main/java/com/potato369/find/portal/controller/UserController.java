@@ -4,6 +4,7 @@ import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.BlacklistDTO;
 import com.potato369.find.common.dto.ReportInfoDTO;
 import com.potato369.find.common.dto.UpdateUserDTO;
+import com.potato369.find.common.vo.IndustriesVO;
 import com.potato369.find.common.vo.ReportCategoryVO;
 import com.potato369.find.common.vo.UserVO2;
 import com.potato369.find.portal.feign.UserService;
@@ -609,7 +610,7 @@ public class UserController {
      * }
      */
     @ApiOperation(value = "更新用户资料接口", notes = "用于提交更新用户资料信息。")
-    @PutMapping(value = "/{id}/update")
+    @PutMapping(value = "/{id}/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CommonResult<Map<String, Object>> update(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", example = "1", required = true) Long userId,
             @RequestBody UpdateUserDTO updateUserDTO) {
@@ -874,7 +875,7 @@ public class UserController {
      * }
      */
     @ApiOperation(value = "用户举报接口", notes = "用于用户进行举报不良信息。")
-    @PostMapping(value = "/{id}/report")
+    @PostMapping(value = "/{id}/report", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CommonResult<Map<String, Object>> report(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", example = "1", required = true) Long userId,
             @RequestBody @Valid ReportInfoDTO reportInfoDTO) {
@@ -1061,10 +1062,74 @@ public class UserController {
      * }
      */
     @ApiOperation(value = "拉入推出黑名单接口", notes = "用于用户拉入推出黑名单列表。")
-    @PostMapping(value = "/{id}/pushOrPull")
+    @PostMapping(value = "/{id}/pushOrPull", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CommonResult<Map<String, String>> pushOrPullToBlacklist(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", example = "1", required = true) Long userId,
             @RequestBody @Valid BlacklistDTO blacklistDTO) {
         return this.userFeignClient.pushBlackList(userId, blacklistDTO);
+    }
+
+    /**
+     * @api {get} http://8.135.36.45:8084/find/user/professions 拉入推出黑名单接口
+     * @apiVersion 1.0.0
+     * @apiGroup 用户模块API
+     * @apiName 拉入推出黑名单接口
+     * @apiParam (接口请求参数) {long} id 用户id
+     * @apiParam (接口请求参数) {long} blackUserId 黑名单用户id
+     * @apiParam (接口请求参数) {int} type 奇数->拉入，偶数->推出
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl --insecure -X POST -v http://8.135.36.45:8084/find/user/1/pushOrPull -H "Content-Type: application/json;charset=UTF-8" -d '{"blackUserId":2, "type":0}'
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {long{0-500}} code 消息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {object} [data] 数据
+     * @apiSuccess (200) {object} [PULL] 推出状态
+     * @apiSuccess (200) {object} [PUSH] 拉入状态
+     * @apiSuccessExample {json} 200响应示例 推出黑名单列表
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "将用户千柳推出黑名单列表成功。",
+     * "data": {
+     * "PULL": "OK"
+     * }
+     * }
+     * @apiSuccessExample {json} 200响应示例 拉入黑名单列表
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "将用户千柳拉入黑名单列表成功。",
+     * "data": {
+     * "PUSH": "OK"
+     * }
+     * }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册",
+     * }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应"
+     * }
+     */
+    @ApiOperation(value = "获取行业和职业列表接口", notes = "用于获取行业和职业列表。")
+    @GetMapping(value = "/professions")
+    public CommonResult<Map<String, List<IndustriesVO>>> professionList() {
+        return this.userFeignClient.professionList();
     }
 }

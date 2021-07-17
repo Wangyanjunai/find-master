@@ -4,6 +4,7 @@ import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.BlacklistDTO;
 import com.potato369.find.common.dto.ReportInfoDTO;
 import com.potato369.find.common.dto.UpdateUserDTO;
+import com.potato369.find.common.vo.IndustriesVO;
 import com.potato369.find.common.vo.ReportCategoryVO;
 import com.potato369.find.common.vo.UserVO2;
 import com.potato369.find.portal.feign.fallback.UserServiceFeignFallback;
@@ -69,8 +70,8 @@ public interface UserService {
             @RequestParam(name = "city", required = false) String city);
 
     // 远程调用修改或者更新用户资料接口
-    @PutMapping(value = "/find/v1/user/{id}/update.do")
-    CommonResult<Map<String, Object>> update(@PathVariable(name = "id") Long userId, @RequestBody(required = false) UpdateUserDTO user);
+    @PutMapping(value = "/find/v1/user/{id}/update.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    CommonResult<Map<String, Object>> update(@PathVariable(name = "id") Long userId, @RequestBody UpdateUserDTO user);
 
     // 远程调用查看用户个人资料接口
     @GetMapping(value = "/find/v1/user/{id}/query.do")
@@ -84,7 +85,7 @@ public interface UserService {
     CommonResult<Map<String, List<ReportCategoryVO>>> reportCategoryList(@PathVariable(name = "id") Long userId);
 
     // 远程调用记录用户举报内容接口
-    @PostMapping(value = "/find/v1/user/{id}/report.do")
+    @PostMapping(value = "/find/v1/user/{id}/report.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     CommonResult<Map<String, Object>> reportDynamic(@PathVariable(name = "id") Long userId, @RequestBody @Valid ReportInfoDTO reportInfoDTO);
 
     // 远程调用获取用户黑名单列表接口
@@ -92,10 +93,10 @@ public interface UserService {
     CommonResult<Map<String, Object>> blackList(@PathVariable(name = "id") Long userId);
 
     // 远程调用拉入推出用户黑名单列表接口
-    @PostMapping(value = "/find/v1/user/{id}/pushblacklist.do")
+    @PostMapping(value = "/find/v1/user/{id}/pushblacklist.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     CommonResult<Map<String, String>> pushBlackList(@PathVariable(name = "id") Long userId, @RequestBody @Valid BlacklistDTO blacklistDTO);
 
     // 远程调用行业和职业列表接口
-    @GetMapping(value = "/find/v1/user/professions.do")
-    CommonResult<Map<String, List<String>>> professionList();
+    @GetMapping(value = "/find/v1/professions/list.do")
+    CommonResult<Map<String, List<IndustriesVO>>> professionList();
 }

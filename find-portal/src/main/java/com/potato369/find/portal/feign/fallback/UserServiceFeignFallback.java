@@ -4,6 +4,7 @@ import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.BlacklistDTO;
 import com.potato369.find.common.dto.ReportInfoDTO;
 import com.potato369.find.common.dto.UpdateUserDTO;
+import com.potato369.find.common.vo.IndustriesVO;
 import com.potato369.find.common.vo.ReportCategoryVO;
 import com.potato369.find.common.vo.UserVO2;
 import com.potato369.find.portal.feign.UserService;
@@ -120,7 +121,7 @@ public class UserServiceFeignFallback implements UserService {
 	}
 
 	@Override
-	public CommonResult<Map<String, List<String>>> professionList() {
+	public CommonResult<Map<String, List<IndustriesVO>>> professionList() {
 		log.error("进入了熔断器方法！！！");
 		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
 	}

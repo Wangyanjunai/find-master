@@ -1,7 +1,7 @@
 spring:
   profiles:
     active:
-      - dev
+      - dev2
   datasource:
     druid:
       async-init: true                                        #有initialSize数量较多时，打开会加快应用启动时间
@@ -85,5 +85,4 @@ project-url:
   res-head-icon: /img/head/
   res-background-icon: /img/background/
   res-voices-file: /res/voices/
-  res-images-file: /res/images/  
-  
+  res-images-file: /res/images/

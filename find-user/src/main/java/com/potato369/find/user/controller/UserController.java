@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -253,7 +254,7 @@ public class UserController {
 
     //上传或者修改头像小图接口
     @ApiOperation(value = "上传或者修改头像小图接口", notes = "上传或者修改头像小图接口", response = CommonResult.class)
-    @PutMapping(value = "/{id}/head.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
+    @PutMapping(value = "/{id}/head.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, Object>> handleHeadIconUpload(@PathVariable(name = "id") Long id,
                                                                   @RequestPart(name = "headIconFile") MultipartFile headIconFile01) {
         if (log.isDebugEnabled()) {
@@ -346,7 +347,7 @@ public class UserController {
 
     //上传或者修改背景图片接口
     @ApiOperation(value = "上传或者修改背景图片接口", notes = "上传或者修改背景图片接口", response = CommonResult.class)
-    @PutMapping(value = "/{id}/background.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
+    @PutMapping(value = "/{id}/background.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, Object>> handleBackgroundIconUpload(
             @PathVariable(name = "id") Long id,
             @RequestPart(name = "backgroundIconFile") MultipartFile backgroundIconFile02) {
@@ -438,7 +439,7 @@ public class UserController {
 
     //注册接口
     @ApiOperation(value = "注册接口", notes = "注册接口", response = CommonResult.class)
-    @PostMapping(value = "/reg.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
+    @PostMapping(value = "/reg.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, UserVO2>> register(
             @Valid UserDTO userDTO, BindingResult bindingResult,
             @RequestPart(value = "head", required = false) MultipartFile head) { // head：头像图片文件
@@ -933,7 +934,7 @@ public class UserController {
     }
 
     //修改或者更新用户资料接口
-    @PutMapping(value = "/{id}/update.do", consumes = {"application/json;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
+    @PutMapping(value = "/{id}/update.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CommonResult<Map<String, Object>> update(@PathVariable(name = "id") Long id,
                                                     @RequestBody UpdateUserDTO updateUserDTO) {
         if (log.isDebugEnabled()) {
@@ -1107,7 +1108,7 @@ public class UserController {
     }
 
     //记录用户举报内容接口
-    @PostMapping(value = "/{id}/report.do", consumes = {"application/json;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
+    @PostMapping(value = "/{id}/report.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CommonResult<Map<String, Object>> report(@PathVariable(name = "id") Long userId, @RequestBody @Valid ReportInfoDTO reportInfoDTO, BindingResult bindingResult) {
         try {
             if (log.isDebugEnabled()) {
@@ -1306,7 +1307,7 @@ public class UserController {
     }
 
     //拉入拉出用户黑名单列表接口
-    @PostMapping(value = "/{id}/pushblacklist.do", consumes = {"application/json;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
+    @PostMapping(value = "/{id}/pushblacklist.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CommonResult<Map<String, String>> pushBlackList(@PathVariable(name = "id") Long userId,
                                                            @RequestBody @Valid BlacklistDTO blacklistDTO, BindingResult bindingResult) {
         OperateRecordDTO operateRecord = new OperateRecordDTO();
