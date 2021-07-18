@@ -6,6 +6,7 @@ import com.potato369.find.common.dto.ReportInfoDTO;
 import com.potato369.find.common.dto.UpdateUserDTO;
 import com.potato369.find.common.vo.IndustriesVO;
 import com.potato369.find.common.vo.ReportCategoryVO;
+import com.potato369.find.common.vo.TagVO;
 import com.potato369.find.common.vo.UserVO2;
 import com.potato369.find.portal.feign.fallback.UserServiceFeignFallback;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -99,4 +100,16 @@ public interface UserService {
     // 远程调用行业和职业列表接口
     @GetMapping(value = "/find/v1/professions/list.do")
     CommonResult<Map<String, List<IndustriesVO>>> professionList();
+
+    // 远程调用用户注册标签列表接口
+    @GetMapping(value = "/find/v1/tag/list.do")
+    CommonResult<Map<String, List<TagVO>>> tagList();
+
+    // 远程调用获取热门标签列表接口
+    @GetMapping(value = "/find/v1/tag/hot.do")
+    CommonResult<Map<String, List<TagVO>>> tagHot();
+
+    // 远程调用获取热门标签列表接口
+    @GetMapping(value = "/find/v1/tag/search.do")
+    CommonResult<Map<String, List<TagVO>>> search(@RequestParam(name = "keywords") String key);
 }

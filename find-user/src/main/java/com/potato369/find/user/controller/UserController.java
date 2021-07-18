@@ -256,7 +256,7 @@ public class UserController {
     @ApiOperation(value = "上传或者修改头像小图接口", notes = "上传或者修改头像小图接口", response = CommonResult.class)
     @PutMapping(value = "/{id}/head.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, Object>> handleHeadIconUpload(@PathVariable(name = "id") Long id,
-                                                                  @RequestPart(name = "headIconFile") MultipartFile headIconFile01) {
+                                                                  @RequestPart(value = "headIconFile") MultipartFile headIconFile01) {
         if (log.isDebugEnabled()) {
             log.debug("开始上传头像小图片");
             log.debug("前端传输过来的用户id={}", id);
@@ -264,6 +264,9 @@ public class UserController {
         Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("id", id);
         User user1 = this.userMapperReader.selectByPrimaryKey(id);
+        if (Objects.isNull(user1)) {
+            return CommonResult.validateFailed("用户信息不存在");
+        }
         OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setUserId(id);
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
@@ -271,7 +274,6 @@ public class UserController {
         try {
             // 头像图片上传服务器
             String headIconFileName;
-
             // 头像图片nginx服务器URL
             StringBuilder headIconFileUrlBf = new StringBuilder()
                     .append(StrUtil.trimToNull(this.projectUrlProps.getResDomain()))
@@ -284,7 +286,7 @@ public class UserController {
                     + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
                     + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
                     + user1.getId();
-            if (headIconFile01 != null && !headIconFile01.isEmpty()) {
+            if (!Objects.isNull(headIconFile01) && !headIconFile01.isEmpty()) {
                 if (!FileTypeUtil.isImageType(headIconFile01.getContentType(), Objects.requireNonNull(headIconFile01.getOriginalFilename()))) {
                     try {
                         this.userLogOpenFeign.record(id, operateRecord);
@@ -295,18 +297,21 @@ public class UserController {
                 }
                 String oldFileName = headIconFile01.getOriginalFilename();
                 String newFileName = null;
-                if (oldFileName != null) {
+                if (!Objects.isNull(oldFileName)) {
                     newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
                 }
                 assert newFileName != null;
                 File headIconFile = new File(headIconFilePath, newFileName);
                 headIconFileName = headIconFile.getName();
                 try {
-                    if (StrUtil.isNotEmpty(user1.getHeadIcon()) && !headIconFileName.equals(user1.getHeadIcon())) {
-                        File oldHeadIconFile = new File(headIconFilePath, user1.getHeadIcon());
-                        //删除之前服务器的头像
-                        if (oldHeadIconFile.exists()) {
-                            oldHeadIconFile.delete();
+                    // log.info("h1={}, h2={}", headIconFileName, user1.getHeadIcon());
+                    if (!Objects.equals(headIconFileName, user1.getHeadIcon())) {
+                        if (!Objects.isNull(user1.getHeadIcon())) {
+                            File oldHeadIconFile = new File(headIconFilePath, user1.getHeadIcon());
+                            //删除之前服务器的头像
+                            if (oldHeadIconFile.exists()) {
+                                oldHeadIconFile.delete();
+                            }
                         }
                         if (!headIconFile.getParentFile().exists()) {
                             headIconFile.getParentFile().mkdirs();
@@ -376,7 +381,7 @@ public class UserController {
                     + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
                     + StrUtil.trimToNull(this.projectUrlProps.getResBackgroundIcon())
                     + user1.getId();
-            if (backgroundIconFile02 != null && !backgroundIconFile02.isEmpty()) {
+            if (!Objects.isNull(backgroundIconFile02) && !backgroundIconFile02.isEmpty()) {
                 if (!FileTypeUtil.isImageType(backgroundIconFile02.getContentType(), Objects.requireNonNull(backgroundIconFile02.getOriginalFilename()))) {
                     try {
                         this.userLogOpenFeign.record(id, operateRecord);
@@ -387,30 +392,33 @@ public class UserController {
                 }
                 String oldFileName = backgroundIconFile02.getOriginalFilename();
                 String newFileName = null;
-                if (oldFileName != null) {
+                if (!Objects.isNull(oldFileName)) {
                     newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
                 }
                 assert newFileName != null;
                 File bgIconFile = new File(bgIconFilePath, newFileName);
                 bgIconFileName = bgIconFile.getName();
                 try {
-                    if (StrUtil.isNotEmpty(user1.getBackgroundIcon()) && !bgIconFileName.equals(user1.getBackgroundIcon())) {
-                        // 删除之前服务器的背景
-                        File oldBgIconFile = new File(bgIconFilePath, user1.getBackgroundIcon());
-                        if (oldBgIconFile.exists()) {
-                            oldBgIconFile.delete();
+                    log.info("h1={}, h2={}", bgIconFileName, user1.getBackgroundIcon());
+                    if (!Objects.equals(bgIconFileName, user1.getBackgroundIcon())) {
+                        if (!Objects.isNull(user1.getBackgroundIcon())) {
+                            // 删除之前服务器的背景
+                            File oldBgIconFile = new File(bgIconFilePath, user1.getBackgroundIcon());
+                            if (oldBgIconFile.exists()) {
+                                oldBgIconFile.delete();
+                            }
                         }
+                        if (!bgIconFile.getParentFile().exists()) {
+                            bgIconFile.getParentFile().mkdirs();
+                        }
+                        // 重新上传新的头像到服务器，并更新用户数据库头像信息
+                        backgroundIconFile02.transferTo(bgIconFile);
+                        user1.setBackgroundIcon(bgIconFileName);
+                        user1.setUpdateTime(new Date());
+                        operateRecord.setType(OperateRecordTypeEnum.UpdateBackgroundIcon.getCode());
+                        this.userMapperWrite.updateByPrimaryKeySelective(user1);
+                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     }
-                    if (!bgIconFile.getParentFile().exists()) {
-                        bgIconFile.getParentFile().mkdirs();
-                    }
-                    // 重新上传新的头像到服务器，并更新用户数据库头像信息
-                    backgroundIconFile02.transferTo(bgIconFile);
-                    user1.setBackgroundIcon(bgIconFileName);
-                    user1.setUpdateTime(new Date());
-                    operateRecord.setType(OperateRecordTypeEnum.UpdateBackgroundIcon.getCode());
-                    this.userMapperWrite.updateByPrimaryKeySelective(user1);
-                    operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     bgIconFileUrlBf.append(bgIconFileName);
                 } catch (Exception e) {
                     log.error("上传用户头像小图到Nginx服务器出现错误", e);

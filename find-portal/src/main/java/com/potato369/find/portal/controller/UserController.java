@@ -6,6 +6,7 @@ import com.potato369.find.common.dto.ReportInfoDTO;
 import com.potato369.find.common.dto.UpdateUserDTO;
 import com.potato369.find.common.vo.IndustriesVO;
 import com.potato369.find.common.vo.ReportCategoryVO;
+import com.potato369.find.common.vo.TagVO;
 import com.potato369.find.common.vo.UserVO2;
 import com.potato369.find.portal.feign.UserService;
 import io.swagger.annotations.Api;
@@ -165,7 +166,7 @@ public class UserController {
     @PutMapping(value = "/{id}/head", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, Object>> head(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", example = "1", required = true) Long userId,
-            @RequestPart("headIconFile") @ApiParam("头像图片文件") MultipartFile headIconFile) {
+            @RequestPart(value = "headIconFile") @ApiParam("头像图片文件") MultipartFile headIconFile) {
         return this.userFeignClient.head(userId, headIconFile);
     }
 
@@ -1070,40 +1071,116 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/professions 拉入推出黑名单接口
+     * @api {get} http://8.135.36.45:8084/find/user/professions 获取行业和职业列表接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
-     * @apiName 拉入推出黑名单接口
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {long} blackUserId 黑名单用户id
-     * @apiParam (接口请求参数) {int} type 奇数->拉入，偶数->推出
+     * @apiName 获取行业和职业列表接口
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl --insecure -X POST -v http://8.135.36.45:8084/find/user/1/pushOrPull -H "Content-Type: application/json;charset=UTF-8" -d '{"blackUserId":2, "type":0}'
+     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/professions -H "Content-Type: application/json;charset=UTF-8"
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object} [PULL] 推出状态
-     * @apiSuccess (200) {object} [PUSH] 拉入状态
-     * @apiSuccessExample {json} 200响应示例 推出黑名单列表
+     * @apiSuccess (200) {object[]} [list] 行业列表
+     * @apiSuccess (200) {long} [id] 行业id
+     * @apiSuccess (200) {string} [name] 行业名称
+     * @apiSuccess (200) {object[]} [list] 职业列表
+     * @apiSuccess (200) {long} [id] 职业id
+     * @apiSuccess (200) {string} [name] 职业名称
+     * @apiSuccessExample {json} 200响应示例 行业和职业列表
      * HTTP/1.1 200 OK
      * {
      * "status": 200,
      * "code": 0,
-     * "msg": "将用户千柳推出黑名单列表成功。",
+     * "msg": "获取用户注册行业和岗位信息列表成功",
      * "data": {
-     * "PULL": "OK"
-     * }
-     * }
-     * @apiSuccessExample {json} 200响应示例 拉入黑名单列表
-     * HTTP/1.1 200 OK
+     * "list": [
      * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "将用户千柳拉入黑名单列表成功。",
-     * "data": {
-     * "PUSH": "OK"
+     * "id": 1,
+     * "name": "计算机/互联网/通信/电子",
+     * "list": [
+     * {
+     * "id": 1,
+     * "name": "后端开发工程师"
+     * },
+     * {
+     * "id": 2,
+     * "name": "移动开发工程师"
+     * },
+     * {
+     * "id": 3,
+     * "name": "前端开发工程师"
+     * },
+     * {
+     * "id": 4,
+     * "name": "算法工程师"
+     * },
+     * {
+     * "id": 5,
+     * "name": "测试工程师"
+     * },
+     * {
+     * "id": 6,
+     * "name": "运维/技术支持"
+     * },
+     * {
+     * "id": 7,
+     * "name": "产品经理"
+     * },
+     * {
+     * "id": 8,
+     * "name": "运营"
+     * },
+     * {
+     * "id": 9,
+     * "name": "技术管理"
+     * },
+     * {
+     * "id": 10,
+     * "name": "电子商务"
+     * },
+     * {
+     * "id": 11,
+     * "name": "半导体/芯片"
+     * },
+     * {
+     * "id": 12,
+     * "name": "电子/电器/仪器仪表"
+     * },
+     * {
+     * "id": 13,
+     * "name": "通信技术开发及应用"
+     * },
+     * {
+     * "id": 14,
+     * "name": "项目管理"
+     * }
+     * ]
+     * },
+     * {
+     * "id": 2,
+     * "name": "金融/银行/保险",
+     * "list": [
+     * {
+     * "id": 15,
+     * "name": "金融/投资/证券"
+     * },
+     * {
+     * "id": 16,
+     * "name": "银行"
+     * },
+     * {
+     * "id": 17,
+     * "name": "保险"
+     * },
+     * {
+     * "id": 18,
+     * "name": "信托/担保/拍卖/典当"
+     * }
+     * ]
+     * }
+     * ]
      * }
      * }
      * @apiError (404) {int{0-65535}} status 响应状态码
@@ -1131,5 +1208,246 @@ public class UserController {
     @GetMapping(value = "/professions")
     public CommonResult<Map<String, List<IndustriesVO>>> professionList() {
         return this.userFeignClient.professionList();
+    }
+
+    /**
+     * @api {get} http://8.135.36.45:8084/find/user/tags 获取用户注册标签列表接口
+     * @apiVersion 1.0.0
+     * @apiGroup 用户模块API
+     * @apiName 获取用户注册标签列表
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/tags -H "Content-Type: application/json;charset=UTF-8"
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {long{0-500}} code 消息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {object} [data] 数据
+     * @apiSuccess (200) {object[]} [list] 标签列表
+     * @apiSuccess (200) {long} [id] 标签id
+     * @apiSuccess (200) {string} [name] 标签名称
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "获取用户标签列表成功",
+     * "data": {
+     * "list": [
+     * {
+     * "id": 1,
+     * "name": "颜值"
+     * },
+     * {
+     * "id": 2,
+     * "name": "吃货"
+     * },
+     * {
+     * "id": 3,
+     * "name": "篮球"
+     * },
+     * {
+     * "id": 4,
+     * "name": "学习"
+     * },
+     * {
+     * "id": 5,
+     * "name": "二次元"
+     * },
+     * {
+     * "id": 6,
+     * "name": "音乐"
+     * },
+     * {
+     * "id": 7,
+     * "name": "旅游"
+     * },
+     * {
+     * "id": 8,
+     * "name": "足球"
+     * },
+     * {
+     * "id": 9,
+     * "name": "游戏"
+     * },
+     * {
+     * "id": 10,
+     * "name": "影视"
+     * }
+     * ]
+     * }
+     * }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册",
+     * }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应"
+     * }
+     */
+    @ApiOperation(value = "获取用户注册标签列表接口", notes = "用于获取用户注册标签列表。")
+    @GetMapping(value = "/tags")
+    public CommonResult<Map<String, List<TagVO>>> tagList() {
+        return this.userFeignClient.tagList();
+    }
+
+    /**
+     * @api {get} http://8.135.36.45:8084/find/user/hot-tags 获取热门标签列表接口
+     * @apiVersion 1.0.0
+     * @apiGroup 用户模块API
+     * @apiName 获取热门标签列表
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/hot-tags -H "Content-Type: application/json;charset=UTF-8"
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {long{0-500}} code 消息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {object} [data] 数据
+     * @apiSuccess (200) {object[]} [list] 标签列表
+     * @apiSuccess (200) {long} [id] 标签id
+     * @apiSuccess (200) {string} [name] 标签名称
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "获取热门标签列表成功",
+     * "data": {
+     * "list": [
+     * {
+     * "id": 1,
+     * "name": "颜值"
+     * },
+     * {
+     * "id": 2,
+     * "name": "吃货"
+     * },
+     * {
+     * "id": 3,
+     * "name": "篮球"
+     * },
+     * {
+     * "id": 4,
+     * "name": "学习"
+     * },
+     * {
+     * "id": 5,
+     * "name": "二次元"
+     * },
+     * {
+     * "id": 6,
+     * "name": "音乐"
+     * },
+     * {
+     * "id": 7,
+     * "name": "旅游"
+     * },
+     * {
+     * "id": 8,
+     * "name": "足球"
+     * },
+     * {
+     * "id": 9,
+     * "name": "游戏"
+     * },
+     * {
+     * "id": 10,
+     * "name": "影视"
+     * }
+     * ]
+     * }
+     * }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册",
+     * }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应"
+     * }
+     */
+    @ApiOperation(value = "获取热门标签列表接口", notes = "用于获取热门标签列表。")
+    @GetMapping(value = "/hot-tags")
+    public CommonResult<Map<String, List<TagVO>>> hotTagList() {
+        return this.userFeignClient.tagHot();
+    }
+
+    /**
+     * @api {get} http://8.135.36.45:8084/find/user/search-tag 模糊搜索标签接口
+     * @apiVersion 1.0.0
+     * @apiGroup 用户模块API
+     * @apiName 模糊搜索标签
+     * @apiParam (接口请求参数) {string} keywords 关键词
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/search-tag?keywords=元 -H "Content-Type: application/json;charset=UTF-8"
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {long{0-500}} code 消息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {object} [data] 数据
+     * @apiSuccess (200) {object[]} [list] 标签列表
+     * @apiSuccess (200) {long} [id] 标签id
+     * @apiSuccess (200) {string} [name] 标签名称
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "模糊搜索标签列表成功",
+     * "data": {
+     * "list": [
+     * {
+     * "id": 5,
+     * "name": "二次元"
+     * }
+     * ]
+     * }
+     * }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册",
+     * }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应"
+     * }
+     */
+    @ApiOperation(value = "模糊搜索标签接口", notes = "用于模糊搜索标签。")
+    @GetMapping(value = "/search-tag")
+    CommonResult<Map<String, List<TagVO>>> search(@RequestParam(name = "keywords") String keywords) {
+        return this.userFeignClient.search(keywords);
     }
 }

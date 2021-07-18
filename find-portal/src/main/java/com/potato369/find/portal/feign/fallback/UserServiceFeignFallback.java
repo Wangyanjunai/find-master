@@ -6,6 +6,7 @@ import com.potato369.find.common.dto.ReportInfoDTO;
 import com.potato369.find.common.dto.UpdateUserDTO;
 import com.potato369.find.common.vo.IndustriesVO;
 import com.potato369.find.common.vo.ReportCategoryVO;
+import com.potato369.find.common.vo.TagVO;
 import com.potato369.find.common.vo.UserVO2;
 import com.potato369.find.portal.feign.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,15 +23,15 @@ import java.util.Map;
 @Component
 public class UserServiceFeignFallback implements UserService {
 
-	@Override
-	public CommonResult<Map<String, Boolean>> isRegister(String phone) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
-	
-	@Override
-	public CommonResult<Map<String, Object>> register(
-			@RequestParam(name = "phone", required = true) String phone,
+    @Override
+    public CommonResult<Map<String, Boolean>> isRegister(String phone) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
+
+    @Override
+    public CommonResult<Map<String, Object>> register(
+            @RequestParam(name = "phone", required = true) String phone,
             @RequestParam(name = "ip", required = false) String ip,
             @RequestParam(name = "gender", required = false) String gender,
             @RequestParam(name = "platform", required = false) String platform,
@@ -50,79 +51,97 @@ public class UserServiceFeignFallback implements UserService {
             @RequestParam(name = "city", required = false) String city,
             @RequestParam(name = "autograph", required = false) String autograph,
             @RequestPart(value = "head", required = false) MultipartFile head) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> update(Long userId, UpdateUserDTO user) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> update(Long userId, UpdateUserDTO user) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> query(Long userId) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> query(Long userId) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> queryWeixin(Long userId) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> queryWeixin(Long userId) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, List<ReportCategoryVO>>> reportCategoryList(Long userId) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, List<ReportCategoryVO>>> reportCategoryList(Long userId) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> reportDynamic(Long userId, @Valid ReportInfoDTO reportInfoDTO) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> reportDynamic(Long userId, @Valid ReportInfoDTO reportInfoDTO) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> blackList(Long userId) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> blackList(Long userId) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, String>> pushBlackList(Long userId, @Valid BlacklistDTO blacklistDTO) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, String>> pushBlackList(Long userId, @Valid BlacklistDTO blacklistDTO) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> head(Long id, MultipartFile headIconFile01) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> head(Long id, MultipartFile headIconFile01) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> background(Long id, MultipartFile backgroundIconFile02) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> background(Long id, MultipartFile backgroundIconFile02) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, Object>> uploadRegId(Long id, String regId) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, Object>> uploadRegId(Long id, String regId) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, UserVO2>> login(String phone, String ip, String country, String province, String city) {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, UserVO2>> login(String phone, String ip, String country, String province, String city) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 
-	@Override
-	public CommonResult<Map<String, List<IndustriesVO>>> professionList() {
-		log.error("进入了熔断器方法！！！");
-		return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-	}
+    @Override
+    public CommonResult<Map<String, List<IndustriesVO>>> professionList() {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
+
+    @Override
+    public CommonResult<Map<String, List<TagVO>>> tagList() {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
+
+    @Override
+    public CommonResult<Map<String, List<TagVO>>> tagHot() {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
+
+    @Override
+    public CommonResult<Map<String, List<TagVO>>> search(String key) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 }
