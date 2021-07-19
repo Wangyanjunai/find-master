@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/v1/user")
 public class UserController {
 
-    private UserMapper userMapperWrite;
+    private UserMapper userMapperWriter;
 
     private UserMapper userMapperReader;
 
@@ -65,11 +65,11 @@ public class UserController {
 
     private ReportInfoMapper reportInfoMapper;
 
-    private DynamicInfoMapper dynamicInfoMapperRead;
+    private DynamicInfoMapper dynamicInfoMapperReader;
 
-    private BlacklistRecordMapper blacklistRecordMapperRead;
+    private BlacklistRecordMapper blacklistRecordMapperReader;
 
-    private BlacklistRecordMapper blacklistRecordMapperWrite;
+    private BlacklistRecordMapper blacklistRecordMapperWriter;
 
     private AliyunProps aliyunProps;
 
@@ -96,8 +96,8 @@ public class UserController {
     private SensitiveWordsService sensitiveWordsService;
 
     @Autowired
-    public void setUserMapperWrite(UserMapper userMapperWrite) {
-        this.userMapperWrite = userMapperWrite;
+    public void setUserMapperWriter(UserMapper userMapperWriter) {
+        this.userMapperWriter = userMapperWriter;
     }
 
     @Autowired
@@ -141,18 +141,18 @@ public class UserController {
     }
 
     @Autowired
-    public void setDynamicInfoMapperRead(DynamicInfoMapper dynamicInfoMapperRead) {
-        this.dynamicInfoMapperRead = dynamicInfoMapperRead;
+    public void setDynamicInfoMapperReader(DynamicInfoMapper dynamicInfoMapperReader) {
+        this.dynamicInfoMapperReader = dynamicInfoMapperReader;
     }
 
     @Autowired
-    public void setBlacklistRecordMapperRead(BlacklistRecordMapper blacklistRecordMapperRead) {
-        this.blacklistRecordMapperRead = blacklistRecordMapperRead;
+    public void setBlacklistRecordMapperReader(BlacklistRecordMapper blacklistRecordMapperReader) {
+        this.blacklistRecordMapperReader = blacklistRecordMapperReader;
     }
 
     @Autowired
-    public void setBlacklistRecordMapperWrite(BlacklistRecordMapper blacklistRecordMapperWrite) {
-        this.blacklistRecordMapperWrite = blacklistRecordMapperWrite;
+    public void setBlacklistRecordMapperWriter(BlacklistRecordMapper blacklistRecordMapperWriter) {
+        this.blacklistRecordMapperWriter = blacklistRecordMapperWriter;
     }
 
     @Autowired
@@ -236,7 +236,7 @@ public class UserController {
             if (StrUtil.isNotEmpty(regId) && !regId.equals(regIdOld)) {
                 user.setReserveColumn03(regId);
                 user.setUpdateTime(new Date());
-                int row = this.userMapperWrite.updateByPrimaryKeySelective(user);
+                int row = this.userMapperWriter.updateByPrimaryKeySelective(user);
                 if (row > 0) {
                     message = "OK";
                 }
@@ -321,7 +321,7 @@ public class UserController {
                         user1.setHeadIcon(headIconFileName);
                         user1.setUpdateTime(new Date());
                         operateRecord.setType(OperateRecordTypeEnum.UpdateHeadIcon.getCode());
-                        this.userMapperWrite.updateByPrimaryKeySelective(user1);
+                        this.userMapperWriter.updateByPrimaryKeySelective(user1);
                         operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     }
                     headIconFileUrlBf.append(headIconFileName);
@@ -416,7 +416,7 @@ public class UserController {
                         user1.setBackgroundIcon(bgIconFileName);
                         user1.setUpdateTime(new Date());
                         operateRecord.setType(OperateRecordTypeEnum.UpdateBackgroundIcon.getCode());
-                        this.userMapperWrite.updateByPrimaryKeySelective(user1);
+                        this.userMapperWriter.updateByPrimaryKeySelective(user1);
                         operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     }
                     bgIconFileUrlBf.append(bgIconFileName);
@@ -461,7 +461,7 @@ public class UserController {
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始注册");
-                log.debug("前端传输过来的用户信息user={}", userDTO);
+                log.debug("前端传输过来的用户信息userDTO={}", userDTO);
             }
             if (bindingResult.hasErrors()) {
                 try {
@@ -477,25 +477,25 @@ public class UserController {
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("手机号码参数校验失败，手机号码格式不正确。");
+                return CommonResult.validateFailed("参数校验不通过，手机号码格式不正确。");
             }
             Double longitude = userDTO.getLongitude();
             String longitudeStr = "";
-            if (longitude != null) {
+            if (!Objects.isNull(longitude)) {
                 longitudeStr = String.valueOf(longitude);
             }
             Double latitude = userDTO.getLatitude();
             String latitudeStr = "";
-            if (latitude != null) {
+            if (!Objects.isNull(latitude)) {
                 latitudeStr = String.valueOf(latitude);
             }
-            if (StrUtil.isAllEmpty(userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
+            if (StrUtil.isAllEmpty(userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeStr, latitudeStr)) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市、经度、纬度）参数校验失败，客户端IP，定位（国家、省份、城市、经度，纬度）不能同时为空。");
+                return CommonResult.validateFailed("参数校验不通过，客户端IP，定位（国家、省份、城市、区/县、其它、经纬度）不能同时为空。");
             }
             if (StrUtil.isNotEmpty(userDTO.getIp()) && !RegexUtil.isMathIp(userDTO.getIp())) {
                 try {
@@ -503,7 +503,7 @@ public class UserController {
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("客户端IP参数校验失败，客户端IP格式不正确。");
+                return CommonResult.validateFailed("参数校验不通过，客户端IP格式不正确。");
             }
             if (StrUtil.isNotEmpty(userDTO.getConstellation())) {
                 ConstellationConstant ConstellationConstant = new ConstellationConstant();
@@ -513,26 +513,26 @@ public class UserController {
                     } catch (Exception e) {
                         log.error("记录用户操作记录失败", e);
                     }
-                    return CommonResult.validateFailed("星座参数校验不通过，星座值非法。");
+                    return CommonResult.validateFailed("参数校验不通过，星座值非法。");
                 }
             }
             User user = this.userDaoUseJdbcTemplate.getByPhone(userDTO.getPhone());
             String fileString1 = "";
-            if (user == null) {
+            if (Objects.isNull(user)) {
                 user = new User();
                 BeanUtils.copyProperties(userDTO, user);
                 String nickname = userDTO.getNickname();
                 if (StrUtil.isEmpty(nickname)) {
-                    user.setNickName(new RandomNickNameUtil().randomName());
+                    nickname = new RandomNickNameUtil().randomName();
                 } else {
                     //校验发布的内容是否包含敏感词汇
                     SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(nickname);
                     if (!Objects.isNull(sensitiveWords)) {
-                        return CommonResult.validateFailed("用户昵称包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止添加。");
+                        return CommonResult.validateFailed("参数校验不通过，昵称包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止添加。");
                     }
-                    user.setNickName(nickname);
                 }
-                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
+                user.setNickName(nickname);
+                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeStr, latitudeStr)) {
                     // 根据IP调用百度定位获取地址
                     if (StrUtil.isNotEmpty(userDTO.getIp())) {
                         LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), userDTO.getIp());
@@ -548,20 +548,21 @@ public class UserController {
                 }
                 String autograph = userDTO.getAutograph();
                 if (StrUtil.isEmpty(autograph)) {
-                    if (UserGenderEnum.Female.getCode().toString().equals(user.getGender())) {
-                        user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent()));
+                    if (Objects.equals(UserGenderEnum.Female.getGender(), user.getGender())) {
+                        autograph = StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent());
                     }
-                    if (UserGenderEnum.Male.getCode().toString().equals(user.getGender())) {
-                        user.setAutograph(StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent()));
+                    if (Objects.equals(UserGenderEnum.Male.getGender(), user.getGender())) {
+                        autograph = StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent());
                     }
                 }
+                user.setAutograph(autograph);
                 //校验发布的内容是否包含敏感词汇
                 SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(autograph);
                 if (!Objects.isNull(sensitiveWords)) {
                     return CommonResult.validateFailed("签名包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
                 }
                 // 头像图片上传服务器
-                int result = this.userMapperWrite.insertSelective(user);
+                int result = this.userMapperWriter.insertSelective(user);
                 this.updateTagHotValue(userDTO);
                 // 头像图片存储本地路径
                 String headIconFilePath = StrUtil.trimToNull(this.projectUrlProps.getUploadRes())
@@ -614,7 +615,7 @@ public class UserController {
                         operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                         user.setHeadIcon(newHeadIconFileName);
                         user.setUpdateTime(new Date());
-                        this.userMapperWrite.updateByPrimaryKeySelective(user);
+                        this.userMapperWriter.updateByPrimaryKeySelective(user);
                     } catch (Exception e) {
                         log.error("上传用户头像小图到Nginx服务器出现错误", e);
                     }
@@ -647,54 +648,6 @@ public class UserController {
                 }
 
             }
-//            else 
-//            {
-//                //更新用户定位或者ip
-//                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), longitudeStr, latitudeStr)) {
-//                    if (StrUtil.isNotEmpty(userDTO.getIp())) {
-//                        LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToNull(this.aliyunProps.getUrl()), userDTO.getIp());
-//                        if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(locationDTO.getIp())) {
-//                            user.setIp(locationDTO.getIp());
-//                        }
-//                        if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(locationDTO.getCountry())) {
-//                            user.setCountry(locationDTO.getCountry());
-//                        }
-//                        if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(locationDTO.getProvince())) {
-//                            user.setProvince(locationDTO.getProvince());
-//                        }
-//                        if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(locationDTO.getCity())) {
-//                            user.setCity(locationDTO.getCity());
-//                        }
-//                        if (user.getLongitude().equals(locationDTO.getLongitude())) {
-//                            user.setLongitude(locationDTO.getLongitude());
-//                        }
-//                        if (user.getLatitude().equals(locationDTO.getLatitude())) {
-//                            user.setLatitude(locationDTO.getLatitude());
-//                        }
-//                    }
-//                } else {
-//                    if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(userDTO.getIp())) {
-//                        user.setIp(userDTO.getIp());
-//                    }
-//                    if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(userDTO.getCountry())) {
-//                        user.setCountry(userDTO.getCountry());
-//                    }
-//                    if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(userDTO.getProvince())) {
-//                        user.setProvince(userDTO.getProvince());
-//                    }
-//                    if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(userDTO.getCity())) {
-//                        user.setCity(userDTO.getCity());
-//                    }
-//                    if (user.getLongitude().equals(Double.parseDouble(String.valueOf(userDTO.getLongitude())))) {
-//                        user.setLongitude(Double.parseDouble(String.valueOf(userDTO.getLongitude())));
-//                    }
-//                    if (user.getLatitude().equals(Double.parseDouble(String.valueOf(userDTO.getLatitude())))) {
-//                        user.setLatitude(Double.parseDouble(String.valueOf(userDTO.getLatitude())));
-//                    }
-//                }
-//                user.setUpdateTime(new Date());
-//                this.userMapperWrite.updateByPrimaryKeySelective(user);
-//            }
             userVO2.setId(user.getId());
             userVO2.setNickname(user.getNickName());
             userVO2.setAutograph(user.getAutograph());
@@ -739,7 +692,6 @@ public class UserController {
         operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
         operateRecord.setUserId(0L);
         try {
-            log.info("phone={}, ip={}, country={}, province={}, city={}, district={}, other={}, longitude={}, latitude={}", userDTO.getPhone(), userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), userDTO.getLongitude(), userDTO.getLatitude());
             if (bindingResult.hasErrors()) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
@@ -754,28 +706,25 @@ public class UserController {
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("手机号码参数校验失败，手机号码格式不正确。");
+                return CommonResult.validateFailed("参数校验不通过，手机号码格式不正确。");
             }
-
             Double longitude = userDTO.getLongitude();//经度
             String longitudeString = "";
-            if (longitude != null) {
+            if (!Objects.isNull(longitude)) {
                 longitudeString = String.valueOf(longitude);
             }
-
             Double latitude = userDTO.getLatitude();//纬度
             String latitudeString = "";
-            if (latitude != null) {
+            if (!Objects.isNull(latitude)) {
                 latitudeString = String.valueOf(latitude);
             }
-
             if (StrUtil.isAllEmpty(userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeString, latitudeString)) {
                 try {
                     this.userLogOpenFeign.record(0L, operateRecord);
                 } catch (Exception e) {
                     log.error("记录用户操作记录失败", e);
                 }
-                return CommonResult.validateFailed("客户端IP，定位（国家、省份、城市、区/县、其它、经度、纬度）参数校验失败，客户端IP，定位（国家、省份、城市、区/县、其它、经度、纬度）不能同时为空。");
+                return CommonResult.validateFailed("参数校验失败，客户端IP，定位（国家、省份、城市、区/县、其它、经度、纬度）不能同时为空。");
             }
             if (StrUtil.isNotEmpty(userDTO.getIp()) && !RegexUtil.isMathIp(userDTO.getIp())) {
                 try {
@@ -786,118 +735,113 @@ public class UserController {
                 return CommonResult.validateFailed("客户端IP参数校验失败，客户端IP格式不正确。");
             }
             User user = this.userDaoUseJdbcTemplate.getByPhone(userDTO.getPhone());
-            if (user == null) {
+            if (Objects.isNull(user)) {
                 return CommonResult.failed("该手机号码未注册用户，请注册后再试。");
             }
             if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeString, latitudeString)) {
                 if (StrUtil.isNotEmpty(userDTO.getIp())) {
                     //更新用户定位或者ip
                     LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), userDTO.getIp());
-                    if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(locationDTO.getIp())) {
+                    if (!Objects.equals(user.getIp(), locationDTO.getIp())) {
                         user.setIp(locationDTO.getIp());
                     }
-                    if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(locationDTO.getCountry())) {
+                    if (!Objects.equals(user.getCountry(), locationDTO.getCountry())) {
                         user.setCountry(locationDTO.getCountry());
                     }
-                    if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(locationDTO.getProvince())) {
+                    if (!Objects.equals(user.getProvince(), locationDTO.getProvince())) {
                         user.setProvince(locationDTO.getProvince());
                     }
-                    if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(locationDTO.getCity())) {
+                    if (!Objects.equals(user.getCity(), locationDTO.getCity())) {
                         user.setCity(locationDTO.getCity());
                     }
-                    if (StrUtil.isNotEmpty(user.getDistrict()) && !user.getDistrict().equals(locationDTO.getDistrict())) {
+                    if (!Objects.equals(user.getDistrict(), locationDTO.getDistrict())) {
                         user.setDistrict(locationDTO.getDistrict());
                     }
-                    if (StrUtil.isNotEmpty(user.getOther()) && !user.getOther().equals(locationDTO.getOther())) {
+                    if (!Objects.equals(user.getOther(), locationDTO.getOther())) {
                         user.setOther(locationDTO.getOther());
                     }
-                    if (user.getLongitude() == null) {
-                        user.setLongitude(locationDTO.getLongitude());
-                    } else if (!user.getLongitude().equals(locationDTO.getLongitude())) {
+                    if (!Objects.equals(user.getLongitude(), locationDTO.getLongitude())) {
                         user.setLongitude(locationDTO.getLongitude());
                     }
-                    if (user.getLatitude() == null) {
-                        user.setLatitude(locationDTO.getLatitude());
-                    } else if (!user.getLatitude().equals(locationDTO.getLatitude())) {
+                    if (!Objects.equals(user.getLatitude(), locationDTO.getLatitude())) {
                         user.setLatitude(locationDTO.getLatitude());
                     }
                 }
             } else {
-                if (StrUtil.isNotEmpty(user.getIp()) && !user.getIp().equals(userDTO.getIp())) {
+                if (!Objects.equals(user.getIp(), userDTO.getIp())) {
                     user.setIp(userDTO.getIp());
                 }
-                if (StrUtil.isNotEmpty(user.getCountry()) && !user.getCountry().equals(userDTO.getCountry())) {
+                if (!Objects.equals(user.getCountry(), userDTO.getCountry())) {
                     user.setCountry(userDTO.getCountry());
                 }
-                if (StrUtil.isNotEmpty(user.getProvince()) && !user.getProvince().equals(userDTO.getProvince())) {
+                if (!Objects.equals(user.getProvince(), userDTO.getProvince())) {
                     user.setProvince(userDTO.getProvince());
                 }
-                if (StrUtil.isNotEmpty(user.getCity()) && !user.getCity().equals(userDTO.getCity())) {
+                if (!Objects.equals(user.getCity(), userDTO.getCity())) {
                     user.setCity(userDTO.getCity());
                 }
-                if (StrUtil.isNotEmpty(user.getDistrict()) && !user.getDistrict().equals(userDTO.getDistrict())) {
+                if (!Objects.equals(user.getDistrict(), userDTO.getDistrict())) {
                     user.setDistrict(userDTO.getDistrict());
                 }
-                if (StrUtil.isNotEmpty(user.getOther()) && !user.getOther().equals(userDTO.getOther())) {
+                if (!Objects.equals(user.getOther(), userDTO.getOther())) {
                     user.setOther(userDTO.getOther());
                 }
-                if (!user.getLongitude().equals(userDTO.getLongitude())) {
+                if (!Objects.equals(user.getLongitude(), userDTO.getLongitude())) {
                     user.setLongitude(userDTO.getLongitude());
                 }
-                if (!user.getLatitude().equals(userDTO.getLatitude())) {
+                if (!Objects.equals(user.getLatitude(), userDTO.getLatitude())) {
                     user.setLatitude(userDTO.getLatitude());
                 }
             }
             user.setUpdateTime(new Date());
-            this.userMapperWrite.updateByPrimaryKeySelective(user);
+            //this.userMapperWriter.updateByPrimaryKeySelective(user);
             Dynamic dynamic = this.dynamicDaoUseJdbcTemplate.getByUserId(user.getId());
-            if (dynamic != null) {
-                if (StrUtil.isNotEmpty(dynamic.getCountry()) && !dynamic.getCountry().equals(user.getCountry())) {
-                    dynamic.setCountry(user.getCountry());
-                }
-                if (StrUtil.isNotEmpty(dynamic.getProvince()) && !dynamic.getProvince().equals(user.getProvince())) {
-                    dynamic.setProvince(user.getProvince());
-                }
-                if (StrUtil.isNotEmpty(dynamic.getCity()) && !dynamic.getCity().equals(user.getCity())) {
-                    dynamic.setCity(user.getCity());
-                }
-                if (StrUtil.isNotEmpty(dynamic.getDistrict()) && !dynamic.getDistrict().equals(user.getDistrict())) {
-                    dynamic.setDistrict(user.getDistrict());
-                }
-                if (StrUtil.isNotEmpty(dynamic.getOther()) && !dynamic.getOther().equals(user.getOther())) {
-                    dynamic.setOther(user.getOther());
-                }
-                if (dynamic.getLongitude() == null) {
-                    dynamic.setLongitude(user.getLongitude());
-                } else if (!dynamic.getLongitude().equals(user.getLongitude())) {
-                    dynamic.setLongitude(user.getLongitude());
-                }
-                if (dynamic.getLatitude() == null) {
-                    dynamic.setLatitude(user.getLatitude());
-                } else if (!dynamic.getLatitude().equals(user.getLatitude())) {
-                    dynamic.setLatitude(user.getLatitude());
-                }
-                dynamic.setUpdateTime(new Date());
-                this.dynamicMapperWriter.updateByPrimaryKey(dynamic);
+            if (Objects.isNull(dynamic)) {
+                return CommonResult.failed("该注册用户动态不存在，请注册后再试。");
             }
-            message = "登录成功。";
-            userVO2.setId(user.getId());
-            userVO2.setNickname(user.getNickName());
-            userVO2.setAutograph(user.getAutograph());
-            userVO2.setGender(user.getGender());
-            userVO2.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
-                    StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
-                    StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                    + user.getId()
-                    + "/"
-                    + user.getHeadIcon());
-            try {
-                this.userLogOpenFeign.record(user.getId(), operateRecord);
-            } catch (Exception e) {
-                log.error("记录用户操作记录失败", e);
-                return CommonResult.failed("记录用户操作记录失败");
+            if (!Objects.equals(dynamic.getCountry(), user.getCountry())) {
+                dynamic.setCountry(user.getCountry());
             }
-            map.put("user", userVO2);
+            if (!Objects.equals(dynamic.getProvince(), user.getProvince())) {
+                dynamic.setProvince(user.getProvince());
+            }
+            if (!Objects.equals(dynamic.getCity(), user.getCity())) {
+                dynamic.setCity(user.getCity());
+            }
+            if (!Objects.equals(dynamic.getDistrict(), user.getDistrict())) {
+                dynamic.setDistrict(user.getDistrict());
+            }
+            if (!Objects.equals(dynamic.getOther(), user.getOther())) {
+                dynamic.setOther(user.getOther());
+            }
+            if (!Objects.equals(dynamic.getLongitude(), user.getLongitude())) {
+                dynamic.setLongitude(user.getLongitude());
+            }
+            if (!Objects.equals(dynamic.getLatitude(), user.getLatitude())) {
+                dynamic.setLatitude(user.getLatitude());
+            }
+            dynamic.setUpdateTime(new Date());
+            int a = this.userService.update(user, dynamic);
+            if (a > 0) {
+                message = "登录成功。";
+                userVO2.setId(user.getId());
+                userVO2.setNickname(user.getNickName());
+                userVO2.setAutograph(user.getAutograph());
+                userVO2.setGender(user.getGender());
+                userVO2.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                        + user.getId()
+                        + "/"
+                        + user.getHeadIcon());
+                try {
+                    this.userLogOpenFeign.record(user.getId(), operateRecord);
+                } catch (Exception e) {
+                    log.error("记录用户操作记录失败", e);
+                    return CommonResult.failed("记录用户操作记录失败");
+                }
+                map.put("user", userVO2);
+            }
             return CommonResult.success(map, message);
         } catch (Exception e) {
             log.error("登录出现错误", e);
@@ -971,7 +915,7 @@ public class UserController {
             if (!Objects.isNull(user)) {
                 this.copy(updateUserDTO, user);
                 user.setUpdateTime(new Date());
-                this.userMapperWrite.updateByPrimaryKeySelective(user);
+                this.userMapperWriter.updateByPrimaryKeySelective(user);
                 try {
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     this.userLogOpenFeign.record(id, operateRecord);
@@ -1191,7 +1135,7 @@ public class UserController {
                 DynamicInfoExample dynamicInfoExample = new DynamicInfoExample();
                 dynamicInfoExample.setOrderByClause("id DESC, create_time DESC, update_time DESC");
                 dynamicInfoExample.createCriteria().andUserIdEqualTo(userId);
-                List<DynamicInfo> dynamicInfoList = this.dynamicInfoMapperRead.selectByExample(dynamicInfoExample);
+                List<DynamicInfo> dynamicInfoList = this.dynamicInfoMapperReader.selectByExample(dynamicInfoExample);
                 if (dynamicInfoList != null && !dynamicInfoList.isEmpty()) {
                     List<Long> dynamicInfoIdList = dynamicInfoList.stream().map(DynamicInfo::getId).collect(Collectors.toList());
                     if (dynamicInfoIdList.contains(reportUserId)) {
@@ -1274,7 +1218,7 @@ public class UserController {
             example.createCriteria().andOwnerUserIdEqualTo(userId);
             final PageInfo<BlacklistRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
                     .setOrderBy("create_time DESC, update_time DESC")
-                    .doSelectPageInfo(() -> this.blacklistRecordMapperRead
+                    .doSelectPageInfo(() -> this.blacklistRecordMapperReader
                             .selectByExample(example).stream()
                             .filter((BlacklistRecord b) -> (b.getStatus() % 2) != 0).collect(Collectors.toList()));
             //log.info("listPageInfo={}", listPageInfo);
@@ -1362,7 +1306,7 @@ public class UserController {
             example.createCriteria()
                     .andOwnerUserIdEqualTo(userId)
                     .andBlackUserIdEqualTo(blackUserId);
-            List<BlacklistRecord> blacklistRecords = this.blacklistRecordMapperRead.selectByExample(example);
+            List<BlacklistRecord> blacklistRecords = this.blacklistRecordMapperReader.selectByExample(example);
             BlacklistRecord blacklistRecord = new BlacklistRecord();
             blacklistRecord.setOwnerUserId(userId);
             blacklistRecord.setBlackUserId(blackUserId);
@@ -1378,7 +1322,7 @@ public class UserController {
                     return CommonResult.failed(data, ResultCode.USER_EXIST_BLACKLIST_ERROR);
                 } else {
                     blacklistRecord.setStatus(OperateRecordTypeEnum.PushBlackList.getCode());
-                    int result = this.blacklistRecordMapperWrite.insertSelective(blacklistRecord);
+                    int result = this.blacklistRecordMapperWriter.insertSelective(blacklistRecord);
                     if (result > 0) {
                         operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     }
@@ -1401,7 +1345,7 @@ public class UserController {
                             .andIdEqualTo(blacklistRecord2.getId())
                             .andOwnerUserIdEqualTo(blacklistRecord2.getOwnerUserId())
                             .andBlackUserIdEqualTo(blacklistRecord2.getBlackUserId());
-                    int result = this.blacklistRecordMapperWrite.deleteByExample(example2);
+                    int result = this.blacklistRecordMapperWriter.deleteByExample(example2);
                     if (result > 0) {
                         operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     }
@@ -1427,10 +1371,11 @@ public class UserController {
 
     //鹿可模块推荐用户数据接口
     @GetMapping("/{id}/look.do")
-    public CommonResult<List<UserVO3>> look(
+    public CommonResult<Map<String, List<UserVO3>>> look(
             @PathVariable(name = "id") Long id,
             @Valid UserDTO3 userDTO, BindingResult bindingResult,
             @RequestParam(name = "count", required = false, defaultValue = "10") Integer count) {
+        Map<String, List<UserVO3>> data = new ConcurrentHashMap<>();
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取鹿可模块用户数据");
@@ -1501,12 +1446,12 @@ public class UserController {
                     String birthDateTmp = userTmp.getYear() + "-" + userTmp.getMonth() + "-" + userTmp.getDate();
                     Date birthDayTmp = DateUtil.fomatDate(birthDateTmp);
                     userVO3.setAge(AgeUtil.getAge(birthDayTmp));
-                    String[] filenameTemps = StrUtil.split(this.dynamicInfoMapperRead.getFileNameByUserId(userTmp.getId()), "||");
+                    String[] filenameTemps = StrUtil.split(this.dynamicInfoMapperReader.getFileNameByUserId(userTmp.getId()), "||");
                     String filenameTemp;
                     if (filenameTemps != null && filenameTemps.length > 0) {
                         filenameTemp = filenameTemps[0];
                     } else {
-                        filenameTemp = this.dynamicInfoMapperRead.getFileNameByUserId(userTmp.getId());
+                        filenameTemp = this.dynamicInfoMapperReader.getFileNameByUserId(userTmp.getId());
                     }
                     String filename = StrUtil.trimToNull(this.projectUrlProps.getResDomain()) + StrUtil.trimToNull(this.projectUrlProps.getProjectName()) + StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()) + filenameTemp;
                     userVO3.setImg(filename);
@@ -1514,7 +1459,8 @@ public class UserController {
                     userVO3List.add(userVO3);
                 }
             }
-            return CommonResult.success(userVO3List);
+            data.put("list", userVO3List);
+            return CommonResult.success(data);
         } catch (Exception e) {
             log.error("获取鹿可模块用户数据出现错误", e);
         } finally {

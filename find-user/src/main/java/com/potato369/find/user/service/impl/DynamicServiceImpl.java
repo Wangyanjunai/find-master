@@ -462,8 +462,8 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    public CommonResult<Map<String, Object>> update1(User user, DynamicDTO dynamicDTO, String fileName, String message)
-            throws Exception {
+    @Transactional(readOnly = false)
+    public CommonResult<Map<String, Object>> update1(User user, DynamicDTO dynamicDTO, String fileName, String message) {
         // 附件文件数据类型
         String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
 
@@ -471,12 +471,10 @@ public class DynamicServiceImpl implements DynamicService {
         Long userIdLong = dynamicDTO.getUserId();
 
         // 动态信息
-        Dynamic dynamic = null;
+        Dynamic dynamic;
         // 根据用户id，发布定位地址（国），省份，城市获取设备动态信息
-        if (dynamicDTO != null) {
-            dynamic = this.findDynamicByUserId(userIdLong, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
-        }
-        if (dynamic != null) {
+        dynamic = this.findDynamicByUserId(userIdLong, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
+        if (!Objects.isNull(dynamic)) {
             String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
             BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
             this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
@@ -496,20 +494,19 @@ public class DynamicServiceImpl implements DynamicService {
         dynamicInfo.setContent(dynamicDTO.getContent());
         dynamicInfo.setPublicStatus(dynamicDTO.getPublicStatus());
         dynamicInfo.setUserId(userIdLong);
-        dynamicInfo.setLongitude(dynamicDTO.getLongitude());
-        dynamicInfo.setLatitude(dynamicDTO.getLatitude());
         dynamicInfo.setCountry(dynamicDTO.getCountry());
         dynamicInfo.setProvince(dynamicDTO.getProvince());
         dynamicInfo.setCity(dynamicDTO.getCity());
         dynamicInfo.setDistrict(dynamicDTO.getDistrict());
         dynamicInfo.setOther(dynamicDTO.getOther());
+        dynamicInfo.setLongitude(dynamicDTO.getLongitude());
+        dynamicInfo.setLatitude(dynamicDTO.getLatitude());
         // 将动态信息入库
         this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
 
         AttacheInfo attacheInfo = new AttacheInfo();
         attacheInfo.setDynamicInfoBy(dynamicInfo.getId());// 动态内容id
         attacheInfo.setDataType(attacheInfoDataType); // 附件类型
-
         attacheInfo.setFileName(fileName);// 附件名称
         this.attacheInfoMapperWriter.insertSelective(attacheInfo);
         Map<String, Object> data = new HashMap<>();

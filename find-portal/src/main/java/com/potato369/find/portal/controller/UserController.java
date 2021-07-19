@@ -4,10 +4,7 @@ import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.BlacklistDTO;
 import com.potato369.find.common.dto.ReportInfoDTO;
 import com.potato369.find.common.dto.UpdateUserDTO;
-import com.potato369.find.common.vo.IndustriesVO;
-import com.potato369.find.common.vo.ReportCategoryVO;
-import com.potato369.find.common.vo.TagVO;
-import com.potato369.find.common.vo.UserVO2;
+import com.potato369.find.common.vo.*;
 import com.potato369.find.portal.feign.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -248,7 +245,6 @@ public class UserController {
      * @apiGroup 用户模块API
      * @apiName 用户注册
      * @apiParam (接口请求参数) {string {11}} phone 手机号码
-     * @apiParam (接口请求参数) {string {16}} [ip] 客户端IP不能与定位（国家、省份，城市）同时为空
      * @apiParam (接口请求参数) {string {1} ="0", "1"}} gender 性别，0->女生；1->男生
      * @apiParam (接口请求参数) {string {1..16}} [platform] 平台
      * @apiParam (接口请求参数) {string {0..32}} nickname 昵称
@@ -262,15 +258,25 @@ public class UserController {
      * @apiParam (接口请求参数) {string {0..2}} month 出生月份
      * @apiParam (接口请求参数) {string {0..2}} date 出生日期
      * @apiParam (接口请求参数) {string={"水瓶座","双鱼座","白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座"}} constellation 星座
+     * @apiParam (接口请求参数) {string {16}} [ip] 客户端IP不能与定位（国家、省份，城市、区/县、其它、经度、纬度）同时为空
      * @apiParam (接口请求参数) {string {0..16}} [country] 定位（国家）
      * @apiParam (接口请求参数) {string {0..32}} [province] 定位（省份）
      * @apiParam (接口请求参数) {string {0..32}} [city] 定位（城市）
+     * @apiParam (接口请求参数) {string {0..32}} [district] 定位（区/县）
+     * @apiParam (接口请求参数) {string {0..32}} [other] 定位（其它）
+     * @apiParam (接口请求参数) {double {0..16}} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {double {0..16}} [latitude] 定位（纬度）
+     * @apiParam (接口请求参数) {long {0..32}} [professionId] 职业编号
+     * @apiParam (接口请求参数) {long {0..32}} [tag1] 标签1编号
+     * @apiParam (接口请求参数) {long {0..32}} [tag2] 标签2编号
+     * @apiParam (接口请求参数) {long {0..32}} [tag3] 标签3编号
+     * @apiParam (接口请求参数) {long {0..32}} [tag4] 标签4编号
+     * @apiParam (接口请求参数) {long {0..32}} [tag5] 标签5编号
      * @apiParam (接口请求参数) {string {0..255}} [autograph] 签名/发布动态内容
      * @apiParam (接口请求参数) {file} head 头像图片文件
      * @apiParamExample {json} 请求示例01（注册01）
      * HTTP/1.1 OK 封装表单数据格式01 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
      * "phone" : "18138812110",
-     * "ip" : "183.14.29.70",
      * "gender" : "1",
      * "platform" : "Baidu",
      * "nickname" : "张三",
@@ -284,12 +290,15 @@ public class UserController {
      * "month" : "05",
      * "date" : "05",
      * "constellation" : "巨蟹座",
+     * "ip" : "183.14.29.70",
+     * "professionId" : 15,
+     * "tag1" : 3,
+     * "tag2" : 5,
      * "autograph" : "新人来到，多多关照，谢谢！",
      * "head":"D:\Program\Resources\find\img\head\02.png"
      * @apiParamExample {json} 请求示例02（注册02）
      * HTTP/1.1 OK 封装表单数据格式02 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
      * "phone" : "18138812310",
-     * "ip" : "123.84.129.170",
      * "gender" : "0",
      * "platform" : "HUAWEI",
      * "nickname" : "李四",
@@ -303,11 +312,20 @@ public class UserController {
      * "month" : "05",
      * "date" : "05",
      * "constellation" : "巨蟹座",
-     * "autograph" : "新人来到，多多关照，谢谢！",
+     * "professionId" : 5,
+     * "tag1" : 4,
+     * "tag2" : 6,
+     * "tag3" : 8,
+     * "autograph" : "大家好，陌生人报道，多多关照。",
+     * "ip" : "123.84.129.170",
      * "country" : "中国",
-     * "province" : "广东",
-     * "city" : "广州",
-     * "head":"D:\Program\Resources\find\img\head\02.png"
+     * "province" : "广东省",
+     * "city" : "深圳市",
+     * "district" : "南山区",
+     * "other" : "科兴科学园A座",
+     * "longitude" : 113.862941,
+     * "latitude" : 22.452714,
+     * "head":"D:\Program\Resources\find\img\head\01.png"
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -371,7 +389,6 @@ public class UserController {
     @PostMapping(value = "/reg", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, Object>> reg(
             @RequestParam(name = "phone") @ApiParam("手机号码") String phone, // phone：手机号码
-            @RequestParam(name = "ip", required = false) @ApiParam("客户端IP") String ip, // ip：客户端IP
             @RequestParam(name = "gender", required = false) @ApiParam("性别") String gender, // gender：性别
             @RequestParam(name = "platform", required = false) @ApiParam("平台") String platform, // platform：平台
             @RequestParam(name = "nickname", required = false) @ApiParam("昵称") String nickname, // nickname：昵称
@@ -385,13 +402,24 @@ public class UserController {
             @RequestParam(name = "month", required = false) @ApiParam("出生月份") String month, // month：出生月份
             @RequestParam(name = "date", required = false) @ApiParam("出生日期") String date, // date：出生日期
             @RequestParam(name = "constellation", required = false) @ApiParam("星座") String constellation, // constellation：星座
+            @RequestParam(name = "ip", required = false) @ApiParam("客户端IP") String ip, // ip：客户端IP
             @RequestParam(name = "country", required = false) @ApiParam("国家") String country, // country：国家
             @RequestParam(name = "province", required = false) @ApiParam("省份") String province, // province：省份
             @RequestParam(name = "city", required = false) @ApiParam("城市") String city, // city：城市
+            @RequestParam(name = "district", required = false) @ApiParam("区/县") String district, // district：区/县
+            @RequestParam(name = "other", required = false) @ApiParam("其它") String other, // other：其它
+            @RequestParam(name = "longitude", required = false) @ApiParam("经度") Double longitude, // longitude：经度
+            @RequestParam(name = "latitude", required = false) @ApiParam("纬度") Double latitude, // latitude：纬度
+            @RequestParam(name = "professionId", required = false) @ApiParam("职业编号") Long professionId, // professionId：职业编号
+            @RequestParam(name = "tag1", required = false) @ApiParam("标签1编号") Long tag1, // tag1：标签1编号
+            @RequestParam(name = "tag2", required = false) @ApiParam("标签2编号") Long tag2, // tag2：标签2编号
+            @RequestParam(name = "tag3", required = false) @ApiParam("标签3编号") Long tag3, // tag3：标签3编号
+            @RequestParam(name = "tag4", required = false) @ApiParam("标签4编号") Long tag4, // tag4：标签4编号
+            @RequestParam(name = "tag5", required = false) @ApiParam("标签5编号") Long tag5, // tag5：标签5编号
             @RequestParam(name = "autograph", required = false) @ApiParam("签名/动态内容") String autograph, // autograph：签名/动态内容
             @RequestPart(value = "head", required = false) @ApiParam("头像图片文件") MultipartFile head) { // head：头像图片文件
         log.info("phone={}, ip={}, gender={}, platform={}, nickname={}, weixinId={}, imei={}, model={}, sysName={}, sysCode={}, networkMode={}, year={}, month={}, date={}, constellation={}, country={}, province={}, city={}, autograph={}, head={}", phone, ip, gender, platform, nickname, weixinId, imei, model, sysName, sysCode, networkMode, year, month, date, constellation, country, province, city, autograph, head);
-        return this.userFeignClient.register(phone, ip, gender, platform, nickname, weixinId, imei, model, sysName, sysCode, networkMode, year, month, date, constellation, country, province, city, autograph, head);
+        return this.userFeignClient.register(phone, gender, platform, nickname, weixinId, imei, model, sysName, sysCode, networkMode, year, month, date, constellation, ip, country, province, city, district, other, longitude, latitude, professionId, tag1, tag2, tag3, tag4, tag5, autograph, head);
     }
 
     //用户登录接口
@@ -402,16 +430,20 @@ public class UserController {
      * @apiGroup 用户模块API
      * @apiName 用户登录
      * @apiParam (接口请求参数) {string {11}} phone 手机号码
-     * @apiParam (接口请求参数) {string {16}} [ip] 客户端IP不能与定位（国家、省份，城市）同时为空
+     * @apiParam (接口请求参数) {string {16}} [ip] 客户端IP不能与定位（国家、省份、城市、区/县、其它、经纬度）同时为空
      * @apiParam (接口请求参数) {string {0..16}} [country] 定位（国家）
      * @apiParam (接口请求参数) {string {0..32}} [province] 定位（省份）
      * @apiParam (接口请求参数) {string {0..32}} [city] 定位（城市）
+     * @apiParam (接口请求参数) {string {0..32}} [district] 定位（区/县）
+     * @apiParam (接口请求参数) {string {0..32}} [other] 定位（其它）
+     * @apiParam (接口请求参数) {double {0..16}} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {double {0..16}} [latitude] 定位（纬度）
      * @apiParamExample {json} 请求示例01（手机号码和客户端IP登录）
      * HTTP/1.1 OK
      * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/login?phone=18138812310&ip=183.14.29.70
      * @apiParamExample {json} 请求示例02（手机号码和定位地址登录）
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/login?phone=18138812236&country=中国&province=广东省&city=深圳市
+     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/login?phone=18138812236&country=中国&province=广东省&city=广州市&district=荔湾区&other=荔湾汽车站&longitude=103.962941&latitude=21.462714&ip=181.14.30.190
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -421,7 +453,6 @@ public class UserController {
      * @apiSuccess (200) {string} [gender] 性别
      * @apiSuccess (200) {string} [nickname] 昵称
      * @apiSuccess (200) {string} [head] 头像图片地址
-     * @apiSuccess (200) {string} [bg] 背景图片地址
      * @apiSuccess (200) {string} [autograph] 签名
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
@@ -435,7 +466,6 @@ public class UserController {
      * "gender": "1",
      * "nickname": "张三",
      * "head": "http://8.135.36.45:8000/find/img/head/head.png",
-     * "bg": "http://8.135.36.45:8000/find/img/background/bg.png",
      * "autograph": "新人小生，初来乍到，请多关照。"
      * }
      * }
@@ -478,8 +508,12 @@ public class UserController {
             @RequestParam(name = "ip", required = false) @ApiParam("客户端IP") String ip, // ip：客户端IP
             @RequestParam(name = "country", required = false) @ApiParam("国家") String country, // country：国家
             @RequestParam(name = "province", required = false) @ApiParam("省份") String province, // province：省份
-            @RequestParam(name = "city", required = false) @ApiParam("城市") String city) { //city：城市
-        return this.userFeignClient.login(phone, ip, country, province, city);
+            @RequestParam(name = "city", required = false) @ApiParam("城市") String city,//city：城市
+            @RequestParam(name = "district", required = false) @ApiParam("区/县") String district, //district：其它
+            @RequestParam(name = "other", required = false) @ApiParam("其它") String other, //other：其它
+            @RequestParam(name = "longitude", required = false) @ApiParam("经度") Double longitude, //longitude：经度
+            @RequestParam(name = "latitude", required = false) @ApiParam("纬度") Double latitude) { //latitude：纬度
+        return this.userFeignClient.login(phone, ip, country, province, city, district, other, longitude, latitude);
     }
 
     /**
@@ -1449,5 +1483,182 @@ public class UserController {
     @GetMapping(value = "/search-tag")
     CommonResult<Map<String, List<TagVO>>> search(@RequestParam(name = "keywords") String keywords) {
         return this.userFeignClient.search(keywords);
+    }
+
+    /**
+     * @api {get} http://8.135.36.45:8084/find/user/{id}/look 鹿可模块推荐用户数据接口
+     * @apiVersion 1.0.0
+     * @apiGroup 用户模块API
+     * @apiName 鹿可模块推荐用户数据
+     * @apiParam (接口请求参数) {long} id 用户id
+     * @apiParam (接口请求参数) {string} ip 客户端ip
+     * @apiParam (接口请求参数) {double} longitude 定位（经度）
+     * @apiParam (接口请求参数) {double} latitude 定位（纬度）
+     * @apiParam (接口请求参数) {int} [count] 推荐用户数量，默认：10
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/35/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&count=10 -H "Content-Type: application/json;charset=UTF-8"
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {long{0-500}} code 消息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {object} [data] 数据
+     * @apiSuccess (200) {object[]} [list] 鹿可用户列表
+     * @apiSuccess (200) {long} [id] 用户id
+     * @apiSuccess (200) {string} [nickname] 用户昵称
+     * @apiSuccess (200) {int} [age] 年龄
+     * @apiSuccess (200) {string} [country] 国家
+     * @apiSuccess (200) {string} [province] 省份
+     * @apiSuccess (200) {string} [city] 城市
+     * @apiSuccess (200) {string} [district] 区/县
+     * @apiSuccess (200) {double} [distance] 距离（单位：米）
+     * @apiSuccess (200) {string} [img] 动态图片地址
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "list": [
+     * {
+     * "id": 57,
+     * "nickname": "孤烟丶",
+     * "age": 25,
+     * "country": "中国",
+     * "province": "陕西省",
+     * "city": "西安市",
+     * "district": "新城区",
+     * "distance": 1401785.0930982907,
+     * "img": "http://127.0.0.1:9000/find/res/images/57/20200701/05.png"
+     * },
+     * {
+     * "id": 51,
+     * "nickname": "暮夏",
+     * "age": 24,
+     * "country": "中国",
+     * "province": "江苏省",
+     * "city": "南京市",
+     * "district": "秦淮区",
+     * "distance": 1165271.2196834162,
+     * "img": "http://127.0.0.1:9000/find/res/images/51/20200503/03.png"
+     * },
+     * {
+     * "id": 22,
+     * "nickname": "曲终人散",
+     * "age": 22,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "district": "福田区",
+     * "distance": 11630.023919958885,
+     * "img": "http://127.0.0.1:9000/find/res/images/22/20200711/02.png"
+     * },
+     * {
+     * "id": 10,
+     * "nickname": "澡澡猫",
+     * "age": 20,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "广州市",
+     * "district": "南沙区",
+     * "distance": 50080.18515040895,
+     * "img": "http://127.0.0.1:9000/find/res/images/10/20200722/01.png"
+     * },
+     * {
+     * "id": 34,
+     * "nickname": "白素杉",
+     * "age": 24,
+     * "country": "中国",
+     * "province": "北京市",
+     * "city": "北京市",
+     * "district": "朝阳区",
+     * "distance": 1961017.910353171,
+     * "img": "http://127.0.0.1:9000/find/res/images/34/20200612/01.png"
+     * },
+     * {
+     * "id": 68,
+     * "nickname": "丶倾城",
+     * "age": 23,
+     * "country": "中国",
+     * "province": "上海市",
+     * "city": "上海市",
+     * "district": "普陀区",
+     * "distance": 1224663.7761815006,
+     * "img": "http://127.0.0.1:9000/find/res/images/68/20200819/04.png"
+     * },
+     * {
+     * "id": 90,
+     * "nickname": "黑喵",
+     * "age": 23,
+     * "country": "中国",
+     * "province": "湖北省",
+     * "city": "武汉市",
+     * "district": "汉南区",
+     * "distance": 873505.2168993158,
+     * "img": "http://127.0.0.1:9000/find/res/images/90/20201007/01.png"
+     * },
+     * {
+     * "id": 37,
+     * "nickname": "无所谓",
+     * "age": 24,
+     * "country": "中国",
+     * "province": "北京市",
+     * "city": "北京市",
+     * "district": "海淀区",
+     * "distance": 1960152.7662839654,
+     * "img": "http://127.0.0.1:9000/find/res/images/37/20200626/01.png"
+     * },
+     * {
+     * "id": 149,
+     * "nickname": "洋洋12",
+     * "age": 25,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "district": "坪山新区",
+     * "distance": 46866.36032411066,
+     * "img": "http://127.0.0.1:9000/find/res/images/149/20210610/1623324450475/28747ba1-d92b-42ef-9bf1-d18a50eecb88.jpg"
+     * },
+     * {
+     * "id": 91,
+     * "nickname": "桃子",
+     * "age": 24,
+     * "country": "中国",
+     * "province": "四川省",
+     * "city": "成都市",
+     * "district": "锦江区",
+     * "distance": 1340238.1195277926,
+     * "img": "http://127.0.0.1:9000/find/res/images/91/20201117/02.png"
+     * }
+     * ]
+     * }
+     * }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册",
+     * }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应"
+     * }
+     */
+    @GetMapping("/{id}/look")
+    CommonResult<Map<String, List<UserVO3>>> look(@PathVariable(name = "id") Long id,
+                                                  @RequestParam(name = "ip") String ip,
+                                                  @RequestParam(name = "longitude") Double longitude,
+                                                  @RequestParam(name = "latitude") Double latitude,
+                                                  @RequestParam(name = "count", required = false, defaultValue = "10") Integer count) {
+        return this.userFeignClient.look(id, ip, longitude, latitude, count);
     }
 }

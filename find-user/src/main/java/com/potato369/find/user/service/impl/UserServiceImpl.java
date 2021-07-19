@@ -6,8 +6,10 @@ import com.potato369.find.common.dto.DynamicDTO;
 import com.potato369.find.common.dto.OperateRecordDTO;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.CopyUtil;
+import com.potato369.find.mbg.mapper.DynamicMapper;
 import com.potato369.find.mbg.mapper.OperateRecordMapper;
 import com.potato369.find.mbg.mapper.UserMapper;
+import com.potato369.find.mbg.model.Dynamic;
 import com.potato369.find.mbg.model.OperateRecord;
 import com.potato369.find.mbg.model.User;
 import com.potato369.find.user.config.props.ProjectUrlProps;
@@ -27,23 +29,26 @@ import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class UserServiceImpl implements UserService {
 
-    private UserMapper userMapperWrite;
+    private UserMapper userMapperWriter;
 
     private UserMapper userMapperReader;
 
     private UserDaoUseJdbcTemplate userDaoUseJdbcTemplate;
 
-    private OperateRecordMapper operateRecordMapperWrite;
+    private OperateRecordMapper operateRecordMapperWriter;
 
     private ProjectUrlProps projectUrlProps;
 
     private DynamicService dynamicService;
 
+    private DynamicMapper dynamicMapperWriter;
+
     @Autowired
-    public void setUserMapperWrite(UserMapper userMapperWrite) {
-        this.userMapperWrite = userMapperWrite;
+    public void setUserMapperWriter(UserMapper userMapperWriter) {
+        this.userMapperWriter = userMapperWriter;
     }
 
     @Autowired
@@ -57,8 +62,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Autowired
-    public void setOperateRecordMapperWrite(OperateRecordMapper operateRecordMapperWrite) {
-        this.operateRecordMapperWrite = operateRecordMapperWrite;
+    public void setOperateRecordMapperWriter(OperateRecordMapper operateRecordMapperWriter) {
+        this.operateRecordMapperWriter = operateRecordMapperWriter;
     }
 
     @Autowired
@@ -71,11 +76,16 @@ public class UserServiceImpl implements UserService {
         this.dynamicService = dynamicService;
     }
 
+    @Autowired
+    public void setDynamicMapperWriter(DynamicMapper dynamicMapperWriter) {
+        this.dynamicMapperWriter = dynamicMapperWriter;
+    }
+
     @Override
     @Transactional(readOnly = false)
     public int save(User user, OperateRecord operateRecord) {
-        int result01 = this.userMapperWrite.insertSelective(user);
-        int result02 = this.operateRecordMapperWrite.insert(operateRecord);
+        int result01 = this.userMapperWriter.insertSelective(user);
+        int result02 = this.operateRecordMapperWriter.insert(operateRecord);
         if (result01 > 0 && result02 > 0) {
             return 2;
         }
@@ -88,19 +98,34 @@ public class UserServiceImpl implements UserService {
         User currentInstance = this.userDaoUseJdbcTemplate.getById(id);
         String[] nullPropertyNames = CopyUtil.getNullPropertyNames(user);
         BeanUtils.copyProperties(user, currentInstance, nullPropertyNames);
-        int result01 = this.userMapperWrite.updateByPrimaryKey(currentInstance);
-        int result02 = this.operateRecordMapperWrite.insert(operateRecord);
+        int result01 = this.userMapperWriter.updateByPrimaryKey(currentInstance);
+        int result02 = this.operateRecordMapperWriter.insert(operateRecord);
         if (result01 > 0 && result02 > 0) {
             return 2;
         }
         return 0;
     }
 
+    /**
+     * 登录修改用户信息和动态信息
+     *
+     * @param user    用户信息
+     * @param dynamic 动态信息
+     * @return 更新用户条数
+     */
+    @Override
+    @Transactional(readOnly = false)
+    public int update(User user, Dynamic dynamic) {
+        int a = this.userMapperWriter.updateByPrimaryKeySelective(user);
+        int b = this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
+        return a + b;
+    }
+
     @Override
     @Transactional(readOnly = true)
     public User find(Long id, OperateRecord operateRecord) {
         User currentInstance = this.userDaoUseJdbcTemplate.getById(id);
-        this.operateRecordMapperWrite.insert(operateRecord);
+        this.operateRecordMapperWriter.insert(operateRecord);
         return currentInstance;
     }
 
@@ -176,7 +201,7 @@ public class UserServiceImpl implements UserService {
                     user1.setBackgroundIcon(backgroundIconFileName);
                     user1.setUpdateTime(new Date());
                     operateRecord.setType(OperateRecordTypeEnum.UpdateBackgroundIcon.getCode());
-                    this.userMapperWrite.updateByPrimaryKey(user1);
+                    this.userMapperWriter.updateByPrimaryKey(user1);
                 }
                 backgroundIconFile01.transferTo(backgroundIconFile);
                 backgroundIconFileUrlBf.append(backgroundIconFileName);
@@ -205,16 +230,16 @@ public class UserServiceImpl implements UserService {
                 dynamicDTO.setSysCode(user.getSysCode());
                 dynamicDTO.setNetworkMode(user.getNetworkMode());
                 dynamicDTO.setIp(user.getIp());
-                dynamicDTO.setLongitude(user.getLongitude());
-                dynamicDTO.setLatitude(user.getLatitude());
                 dynamicDTO.setCountry(user.getCountry());
                 dynamicDTO.setProvince(user.getProvince());
                 dynamicDTO.setCity(user.getCity());
                 dynamicDTO.setDistrict(user.getDistrict());
                 dynamicDTO.setOther(user.getOther());
+                dynamicDTO.setLongitude(user.getLongitude());
+                dynamicDTO.setLatitude(user.getLatitude());
                 dynamicDTO.setPublicStatus(PublicStatusEnum.NOPublic.getCode().toString());
                 dynamicDTO.setContent(content);
-                this.dynamicService.update1(user, dynamicDTO, multipartFileName, "发布动态内容包括上传一张或者多个动态内容资源文件成功。");
+                this.dynamicService.update1(user, dynamicDTO, multipartFileName, "注册并发布一条动态成功。");
             }
         } catch (Exception e) {
             log.error("上传用户头像小图到Nginx服务器出现错误", e);
@@ -235,7 +260,7 @@ public class UserServiceImpl implements UserService {
         for (User user : userList) {
             user.setGrade(UserGradeEnum.VIP0.getGrade());
             user.setUpdateTime(new Date());
-            this.userMapperWrite.updateByPrimaryKeySelective(user);
+            this.userMapperWriter.updateByPrimaryKeySelective(user);
         }
     }
 }

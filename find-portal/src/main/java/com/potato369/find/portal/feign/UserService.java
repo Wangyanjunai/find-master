@@ -4,10 +4,7 @@ import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.BlacklistDTO;
 import com.potato369.find.common.dto.ReportInfoDTO;
 import com.potato369.find.common.dto.UpdateUserDTO;
-import com.potato369.find.common.vo.IndustriesVO;
-import com.potato369.find.common.vo.ReportCategoryVO;
-import com.potato369.find.common.vo.TagVO;
-import com.potato369.find.common.vo.UserVO2;
+import com.potato369.find.common.vo.*;
 import com.potato369.find.portal.feign.fallback.UserServiceFeignFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -41,12 +38,11 @@ public interface UserService {
     // 远程调用登录或者注册接口
     @PostMapping(value = "/find/v1/user/reg.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     CommonResult<Map<String, Object>> register(
-            @RequestParam(name = "phone") String phone, // phone：手机号码
-            @RequestParam(name = "ip", required = false) String ip, // ip：客户端IP
+            @RequestParam(name = "phone", required = true) String phone, // phone：手机号
             @RequestParam(name = "gender", required = false) String gender, // gender：性别
             @RequestParam(name = "platform", required = false) String platform, // platform：平台
             @RequestParam(name = "nickname", required = false) String nickname, // nickname：昵称
-            @RequestParam(name = "weixinId", required = false) String weixinId, // weixinId：微信号码
+            @RequestParam(name = "weixinId", required = false) String weixinId, // weixinId：微信号
             @RequestParam(name = "imei", required = false) String imei, // imei：设备串码
             @RequestParam(name = "model", required = false) String model, // model：设备型号 
             @RequestParam(name = "sysName", required = false) String sysName, // sysName：系统名称
@@ -56,9 +52,20 @@ public interface UserService {
             @RequestParam(name = "month", required = false) String month, // month：出生月份
             @RequestParam(name = "date", required = false) String date, // date：出生日期
             @RequestParam(name = "constellation", required = false) String constellation, // constellation：星座
+            @RequestParam(name = "ip", required = false) String ip, // ip：客户端IP
             @RequestParam(name = "country", required = false) String country, // country：国家
             @RequestParam(name = "province", required = false) String province, // province：省份
             @RequestParam(name = "city", required = false) String city, // city：城市
+            @RequestParam(name = "district", required = false) String district, // district：区/县
+            @RequestParam(name = "other", required = false) String other, // other：其它
+            @RequestParam(name = "longitude", required = false) Double longitude, // longitude：经度
+            @RequestParam(name = "latitude", required = false) Double latitude, // latitude：纬度
+            @RequestParam(name = "professionId", required = false) Long professionId, // professionId：职业编号
+            @RequestParam(name = "tag1", required = false) Long tag1, // tag1：标签1编号
+            @RequestParam(name = "tag2", required = false) Long tag2, // tag2：标签2编号
+            @RequestParam(name = "tag3", required = false) Long tag3, // tag3：标签3编号
+            @RequestParam(name = "tag4", required = false) Long tag4, // tag4：标签4编号
+            @RequestParam(name = "tag5", required = false) Long tag5, // tag5：标签5编号
             @RequestParam(name = "autograph", required = false) String autograph, // autograph：签名/动态内容
             @RequestPart(value = "head", required = false) MultipartFile head); // head：头像图片文件
 
@@ -68,7 +75,11 @@ public interface UserService {
             @RequestParam(name = "ip", required = false) String ip, // ip：客户端IP
             @RequestParam(name = "country", required = false) String country, // country：国家
             @RequestParam(name = "province", required = false) String province, // province：省份
-            @RequestParam(name = "city", required = false) String city);
+            @RequestParam(name = "city", required = false) String city, //city：城市
+            @RequestParam(name = "district", required = false) String district, //district：区/县
+            @RequestParam(name = "other", required = false) String other, //other：其它
+            @RequestParam(name = "longitude", required = false) Double longitude, //longitude：经度
+            @RequestParam(name = "latitude", required = false) Double latitude); //latitude：纬度
 
     // 远程调用修改或者更新用户资料接口
     @PutMapping(value = "/find/v1/user/{id}/update.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -112,4 +123,12 @@ public interface UserService {
     // 远程调用获取热门标签列表接口
     @GetMapping(value = "/find/v1/tag/search.do")
     CommonResult<Map<String, List<TagVO>>> search(@RequestParam(name = "keywords") String key);
+
+    //远程调用鹿可模块推荐用户数据接口
+    @GetMapping("/find/v1/user/{id}/look.do")
+    CommonResult<Map<String, List<UserVO3>>> look(@PathVariable(name = "id") Long id,
+                                                  @RequestParam(name = "ip") String ip,
+                                                  @RequestParam(name = "longitude") Double longitude,
+                                                  @RequestParam(name = "latitude") Double latitude,
+                                                  @RequestParam(name = "count", required = false, defaultValue = "10") Integer count);
 }

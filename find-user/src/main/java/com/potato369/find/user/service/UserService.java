@@ -1,6 +1,7 @@
 package com.potato369.find.user.service;
 
 import com.potato369.find.common.dto.OperateRecordDTO;
+import com.potato369.find.mbg.model.Dynamic;
 import com.potato369.find.mbg.model.OperateRecord;
 import com.potato369.find.mbg.model.User;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +26,15 @@ public interface UserService {
      * @return 更新用户条数
      */
     int update(Long id, User user, OperateRecord operateRecord);
+
+    /**
+     * 登录修改用户信息和动态信息
+     *
+     * @param user    用户信息
+     * @param dynamic 动态信息
+     * @return 更新用户条数
+     */
+    int update(User user, Dynamic dynamic);
 
     /**
      * 查找用户个人资料

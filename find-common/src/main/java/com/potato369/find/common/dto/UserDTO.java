@@ -168,30 +168,30 @@ public class UserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * country：国
+     * country：国家
      * </pre>
      */
-    @ApiModelProperty(value = "国")
+    @ApiModelProperty(value = "国家")
     @JSONField(name = "country")
     @JsonProperty(value = "country")
     private String country;
 
     /**
      * <pre>
-     * province：省
+     * province：省份
      * </pre>
      */
-    @ApiModelProperty(value = "省")
+    @ApiModelProperty(value = "省份")
     @JSONField(name = "province")
     @JsonProperty(value = "province")
     private String province;
 
     /**
      * <pre>
-     * city：市
+     * city：城市
      * </pre>
      */
-    @ApiModelProperty(value = "市")
+    @ApiModelProperty(value = "城市")
     @JSONField(name = "city")
     @JsonProperty(value = "city")
     private String city;
@@ -211,7 +211,7 @@ public class UserDTO extends AbstractDTO {
      * other：其它
      * </pre>
      */
-    @ApiModelProperty(value = "区/县")
+    @ApiModelProperty(value = "其它")
     @JSONField(name = "other")
     @JsonProperty(value = "other")
     private String other;
@@ -248,20 +248,20 @@ public class UserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * tag1：标签1编号id
+     * tag1：标签1编号
      * </pre>
      */
-    @ApiModelProperty(value = "标签1")
+    @ApiModelProperty(value = "标签1编号")
     @JSONField(name = "tag1")
     @JsonProperty(value = "tag1")
     private Long tag1;
 
     /**
      * <pre>
-     * tag2：标签2编号id
+     * tag2：标签2编号
      * </pre>
      */
-    @ApiModelProperty(value = "标签2")
+    @ApiModelProperty(value = "标签2编号")
     @JSONField(name = "tag2")
     @JsonProperty(value = "tag2")
     private Long tag2;
@@ -271,17 +271,17 @@ public class UserDTO extends AbstractDTO {
      * tag3：标签3编号id
      * </pre>
      */
-    @ApiModelProperty(value = "标签3")
+    @ApiModelProperty(value = "标签3编号")
     @JSONField(name = "tag3")
     @JsonProperty(value = "tag3")
     private Long tag3;
 
     /**
      * <pre>
-     * tag4：标签4编号id
+     * tag4：标签4编号
      * </pre>
      */
-    @ApiModelProperty(value = "标签4")
+    @ApiModelProperty(value = "标签4编号")
     @JSONField(name = "tag4")
     @JsonProperty(value = "tag4")
     private Long tag4;
@@ -289,10 +289,10 @@ public class UserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * tag5：标签5编号id
+     * tag5：标签5编号
      * </pre>
      */
-    @ApiModelProperty(value = "标签5")
+    @ApiModelProperty(value = "标签5编号")
     @JSONField(name = "tag5")
     @JsonProperty(value = "tag5")
     private Long tag5;
