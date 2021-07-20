@@ -14,8 +14,8 @@ public interface DynamicService {
     DynamicInfo save(DynamicDTO dynamicDTO) throws Exception;
 
     CommonResult<Map<String, Object>> update(User user, DynamicDTO dynamicDTO, MultipartFile[] files, String message) throws Exception;
-    
-    CommonResult<Map<String, Object>> update1(User user, DynamicDTO dynamicDTO, String fileName, String message) throws Exception;
+
+    int release(User user, DynamicDTO dynamicDTO, String fileName) throws Exception;
 
     void find(Long userId) throws Exception;
 
@@ -30,8 +30,8 @@ public interface DynamicService {
     Integer updateLocation(LocationDTO locationDTO, DynamicDTO dynamicDTO);
 
     List<DynamicInfoData> getDynamicInfoData(DynamicInfoParam dynamicInfoParam, Integer pageNum, Integer sizeNum);
-    
+
     Dynamic getDynamicByUserId(Long userId);
-    
+
     Dynamic findDynamicByUserId(Long userId, String country, String province, String city);
 }

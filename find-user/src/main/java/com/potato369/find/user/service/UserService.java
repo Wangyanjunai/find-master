@@ -71,7 +71,7 @@ public interface UserService {
      * @param multipartFileName 头像图片文件，动态内容图片
      * @param operateRecord     操作记录
      */
-    void uploadHeadIcon1(User user, String content, String multipartFileName, OperateRecordDTO operateRecord);
+    int register(User user, String content, String multipartFileName, OperateRecordDTO operateRecord);
 
     /**
      * 更新用户VIP等级

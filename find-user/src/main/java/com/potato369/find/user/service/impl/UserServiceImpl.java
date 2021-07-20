@@ -218,10 +218,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = false)
-    public void uploadHeadIcon1(User user, String content, String multipartFileName, OperateRecordDTO operateRecord) {
+    public int register(User user, String content, String multipartFileName, OperateRecordDTO operateRecord) {
         try {
             if (StrUtil.isNotEmpty(content)) {
-                DynamicDTO dynamicDTO = new DynamicDTO();
+                DynamicDTO dynamicDTO = DynamicDTO.builder().build();
                 dynamicDTO.setUserId(user.getId());
                 dynamicDTO.setImei(user.getImei());
                 dynamicDTO.setAttacheInfoDataType(AttacheInfoDataTypeEnum.Image.getCode().toString());
@@ -239,7 +239,7 @@ public class UserServiceImpl implements UserService {
                 dynamicDTO.setLatitude(user.getLatitude());
                 dynamicDTO.setPublicStatus(PublicStatusEnum.NOPublic.getCode().toString());
                 dynamicDTO.setContent(content);
-                this.dynamicService.update1(user, dynamicDTO, multipartFileName, "注册并发布一条动态成功。");
+                return this.dynamicService.release(user, dynamicDTO, multipartFileName);
             }
         } catch (Exception e) {
             log.error("上传用户头像小图到Nginx服务器出现错误", e);
@@ -247,7 +247,7 @@ public class UserServiceImpl implements UserService {
         if (log.isDebugEnabled()) {
             log.debug("上传用户头像小图到Nginx服务器成功，file={}", multipartFileName);
         }
-
+        return 0;
     }
 
     /**

@@ -53,8 +53,6 @@ public class UserController {
 
     private UserDaoUseJdbcTemplate userDaoUseJdbcTemplate;
 
-    private DynamicMapper dynamicMapperWriter;
-
     private DynamicDaoUseJdbcTemplate dynamicDaoUseJdbcTemplate;
 
     private DynamicInfoDaoUseJdbcTemplate dynamicInfoDaoUseJdbcTemplate;
@@ -108,11 +106,6 @@ public class UserController {
     @Autowired
     public void setUserDaoUseJdbcTemplate(UserDaoUseJdbcTemplate userDaoUseJdbcTemplate) {
         this.userDaoUseJdbcTemplate = userDaoUseJdbcTemplate;
-    }
-
-    @Autowired
-    public void setDynamicMapperWriter(DynamicMapper dynamicMapperWriter) {
-        this.dynamicMapperWriter = dynamicMapperWriter;
     }
 
     @Autowired
@@ -399,7 +392,7 @@ public class UserController {
                 File bgIconFile = new File(bgIconFilePath, newFileName);
                 bgIconFileName = bgIconFile.getName();
                 try {
-                    log.info("h1={}, h2={}", bgIconFileName, user1.getBackgroundIcon());
+                    //log.info("h1={}, h2={}", bgIconFileName, user1.getBackgroundIcon());
                     if (!Objects.equals(bgIconFileName, user1.getBackgroundIcon())) {
                         if (!Objects.isNull(user1.getBackgroundIcon())) {
                             // 删除之前服务器的背景
@@ -450,7 +443,7 @@ public class UserController {
     @PostMapping(value = "/reg.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, UserVO2>> register(
             @Valid UserDTO userDTO, BindingResult bindingResult,
-            @RequestPart(value = "head", required = false) MultipartFile head) { // head：头像图片文件
+            @RequestPart(value = "head", required = true) MultipartFile head) { // head：头像图片文件
         Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
         String message = "注册失败。";
@@ -464,19 +457,10 @@ public class UserController {
                 log.debug("前端传输过来的用户信息userDTO={}", userDTO);
             }
             if (bindingResult.hasErrors()) {
-                try {
-                    this.userLogOpenFeign.record(0L, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
-                return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+                return CommonResult.validateFailed("参数校验不通过，" + Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
-            if (!RegexUtil.isMathPhone(userDTO.getPhone())) {
-                try {
-                    this.userLogOpenFeign.record(0L, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
+            String phone = userDTO.getPhone();
+            if (!RegexUtil.isMathPhone(phone)) {
                 return CommonResult.validateFailed("参数校验不通过，手机号码格式不正确。");
             }
             Double longitude = userDTO.getLongitude();
@@ -490,47 +474,50 @@ public class UserController {
                 latitudeStr = String.valueOf(latitude);
             }
             if (StrUtil.isAllEmpty(userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeStr, latitudeStr)) {
-                try {
-                    this.userLogOpenFeign.record(0L, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
                 return CommonResult.validateFailed("参数校验不通过，客户端IP，定位（国家、省份、城市、区/县、其它、经纬度）不能同时为空。");
             }
             if (StrUtil.isNotEmpty(userDTO.getIp()) && !RegexUtil.isMathIp(userDTO.getIp())) {
-                try {
-                    this.userLogOpenFeign.record(0L, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
                 return CommonResult.validateFailed("参数校验不通过，客户端IP格式不正确。");
             }
-            if (StrUtil.isNotEmpty(userDTO.getConstellation())) {
+            String constellation = userDTO.getConstellation();
+            if (!Objects.isNull(constellation)) {
                 ConstellationConstant ConstellationConstant = new ConstellationConstant();
-                if (!ConstellationConstant.getConstellationList().contains(userDTO.getConstellation())) {
-                    try {
-                        this.userLogOpenFeign.record(0L, operateRecord);
-                    } catch (Exception e) {
-                        log.error("记录用户操作记录失败", e);
-                    }
+                if (!ConstellationConstant.getConstellationList().contains(constellation)) {
                     return CommonResult.validateFailed("参数校验不通过，星座值非法。");
                 }
             }
+            if (Objects.isNull(head) || head.isEmpty()) {
+                return CommonResult.validateFailed("参数校验不通过，头像图片文件不能为空。");
+            }
+            if (!FileTypeUtil.isImageType(head.getContentType(), Objects.requireNonNull(head.getOriginalFilename()))) {
+                return CommonResult.validateFailed("参数校验不通过，头像图片文件类型不符合要求。");
+            }
+            String nickname = userDTO.getNickname();
+            if (StrUtil.isEmpty(nickname)) {
+                nickname = new RandomNickNameUtil().randomName();
+            }
+            if (!Objects.isNull(nickname)) {
+                //校验发布的内容是否包含敏感词汇
+                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(nickname);
+                if (!Objects.isNull(sensitiveWords)) {
+                    return CommonResult.validateFailed("参数校验不通过，昵称包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止添加。");
+                }
+            }
+            String autograph = userDTO.getAutograph();
+            //校验发布的内容是否包含敏感词汇
+            if (!Objects.isNull(autograph)) {
+                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(autograph);
+                if (!Objects.isNull(sensitiveWords)) {
+                    return CommonResult.validateFailed("签名包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
+                }
+            }
             User user = this.userDaoUseJdbcTemplate.getByPhone(userDTO.getPhone());
-            String fileString1 = "";
             if (Objects.isNull(user)) {
                 user = new User();
                 BeanUtils.copyProperties(userDTO, user);
-                String nickname = userDTO.getNickname();
-                if (StrUtil.isEmpty(nickname)) {
-                    nickname = new RandomNickNameUtil().randomName();
-                } else {
-                    //校验发布的内容是否包含敏感词汇
-                    SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(nickname);
-                    if (!Objects.isNull(sensitiveWords)) {
-                        return CommonResult.validateFailed("参数校验不通过，昵称包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止添加。");
-                    }
-                }
+                UpdateUserDTO updateUserDTO = UpdateUserDTO.builder().build();
+                BeanUtils.copyProperties(userDTO, updateUserDTO);
+                this.copy(updateUserDTO, user);
                 user.setNickName(nickname);
                 if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeStr, latitudeStr)) {
                     // 根据IP调用百度定位获取地址
@@ -546,7 +533,6 @@ public class UserController {
                         user.setLatitude(locationDTO.getLatitude());
                     }
                 }
-                String autograph = userDTO.getAutograph();
                 if (StrUtil.isEmpty(autograph)) {
                     if (Objects.equals(UserGenderEnum.Female.getGender(), user.getGender())) {
                         autograph = StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent());
@@ -556,97 +542,59 @@ public class UserController {
                     }
                 }
                 user.setAutograph(autograph);
-                //校验发布的内容是否包含敏感词汇
-                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(autograph);
-                if (!Objects.isNull(sensitiveWords)) {
-                    return CommonResult.validateFailed("签名包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
-                }
-                // 头像图片上传服务器
+                // 保存用户信息到数据库
                 int result = this.userMapperWriter.insertSelective(user);
-                this.updateTagHotValue(userDTO);
-                // 头像图片存储本地路径
-                String headIconFilePath = StrUtil.trimToNull(this.projectUrlProps.getUploadRes())
-                        + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                        + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                        + user.getId();
-                // 头像图片上传服务器
-                String newHeadIconFileName = null;
-                if (head != null && !head.isEmpty()) {
-                    if (!FileTypeUtil.isImageType(head.getContentType(), Objects.requireNonNull(head.getOriginalFilename()))) {
-                        try {
-                            this.userLogOpenFeign.record(0L, operateRecord);
-                        } catch (Exception e) {
-                            log.error("记录用户操作记录失败", e);
-                        }
-                        return CommonResult.validateFailed("上传头像文件类型不符合要求。");
-                    }
-                    String oldFileName = head.getOriginalFilename();
-                    String newFileName = null;
-                    if (oldFileName != null) {
-                        newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
-                    }
-                    assert newFileName != null;
-                    File newHeadIconFile = new File(headIconFilePath, newFileName);
-                    newHeadIconFileName = newHeadIconFile.getName();
-                    StringBuilder filePath = new StringBuilder()
-                            .append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes()))
-                            .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
-                            .append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
-                    fileString1 = user.getId() +
-                            "/" +
-                            DateUtil.getDays() +
-                            "/" +
-                            System.currentTimeMillis() +
-                            "/";
-                    // 附件文件存放路径
-                    String fileString = filePath.append(fileString1).toString();
-                    //发布一条动态
-                    File newHeadIconFileDy = new File(fileString, newFileName);
-                    try {
-                        if (!newHeadIconFile.getParentFile().exists()) {
-                            newHeadIconFile.getParentFile().mkdirs();
-                        }
-                        if (!newHeadIconFileDy.getParentFile().exists()) {
-                            newHeadIconFileDy.getParentFile().mkdirs();
-                        }
-                        //重新上传新的头像到服务器，并更新用户数据库头像信息
-                        head.transferTo(newHeadIconFile);
-                        FileUtil.copyDir(newHeadIconFile.getParent(), newHeadIconFileDy.getParent());
-                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
-                        user.setHeadIcon(newHeadIconFileName);
-                        user.setUpdateTime(new Date());
-                        this.userMapperWriter.updateByPrimaryKeySelective(user);
-                    } catch (Exception e) {
-                        log.error("上传用户头像小图到Nginx服务器出现错误", e);
-                    }
-                    if (log.isDebugEnabled()) {
-                        log.debug("上传用户头像小图到Nginx服务器成功，file={}", newHeadIconFile.getAbsolutePath() + newHeadIconFile.getName());
-                    }
-                }
+//                log.info("result={}", result);
                 if (result > 0) {
-                    operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
-                    operateRecord.setUserId(user.getId());
-                    if (head != null && !head.isEmpty()) {
-                        if (!FileTypeUtil.isImageType(head.getContentType(), Objects.requireNonNull(head.getOriginalFilename()))) {
-                            try {
-                                this.userLogOpenFeign.record(0L, operateRecord);
-                            } catch (Exception e) {
-                                log.error("记录用户操作记录失败", e);
-                            }
-                            return CommonResult.validateFailed("上传发布动态图片文件类型不符合要求。");
-                        }
-                        this.userService.uploadHeadIcon1(user, autograph, fileString1 + newHeadIconFileName, operateRecord);
-                    } else {
+                    this.updateTagHotValue(userDTO);
+                    // 头像图片存储本地路径
+                    String headIconFilePath = StrUtil.trimToNull(this.projectUrlProps.getUploadRes())
+                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                            + user.getId();
+                    // 头像图片上传服务器
+                    String oldHeadFileName = head.getOriginalFilename();
+                    if (!Objects.isNull(oldHeadFileName)) {
+//                        log.info("oldHeadFileName={}", oldHeadFileName);
                         try {
-                            this.userLogOpenFeign.record(0L, operateRecord);
+                            String newHeadFileName = UUID.randomUUID() + oldHeadFileName.substring(oldHeadFileName.lastIndexOf("."));
+                            File newHeadIconFile = new File(headIconFilePath, newHeadFileName);
+                            if (!newHeadIconFile.getParentFile().exists()) {
+                                newHeadIconFile.getParentFile().mkdirs();
+                            }
+                            //重新上传新的头像到服务器，并更新用户数据库头像信息
+                            head.transferTo(newHeadIconFile);
+                            // 附件文件存放路径
+                            String dynamicIconFilePath = StrUtil.trimToNull(this.projectUrlProps.getUploadRes()) +
+                                    StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
+                                    StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile());
+                            String fileString = user.getId() + "/" + DateUtil.getDays() + "/" + System.currentTimeMillis() + "";
+                            //发布一条动态
+                            File newHeadIconFileDy = new File(dynamicIconFilePath + fileString);
+//                            log.info("aaaa={}", newHeadIconFileDy.getName());
+                            try {
+                                if (!newHeadIconFileDy.getParentFile().exists()) {
+                                    newHeadIconFileDy.getParentFile().mkdirs();
+                                }
+                                //复制到动态目录
+                                FileUtil.copyDir(newHeadIconFile.getParent(), newHeadIconFileDy.getParent());
+                            } catch (Exception e) {
+                                log.error("用头像发布一条动态到服务器出现错误", e);
+                            }
+                            user.setHeadIcon(newHeadIconFile.getName());
+                            user.setUpdateTime(new Date());
+                            int result02 = this.userService.register(user, autograph, fileString + newHeadIconFile.getName(), operateRecord);
+                            log.info("result02={}", result02);
+                            if (Objects.equals(result02, 4)) {
+                                message = "注册成功。";
+                                operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
+                                operateRecord.setUserId(user.getId());
+                            }
                         } catch (Exception e) {
-                            log.error("记录用户操作记录失败", e);
+                            log.error("上传用户头像小图到Nginx服务器出现错误", e);
                         }
-                        return CommonResult.validateFailed("上传发布动态图片文件不能为空。");
                     }
-                    message = "注册成功。";
                 }
-
             }
             userVO2.setId(user.getId());
             userVO2.setNickname(user.getNickName());
@@ -855,7 +803,7 @@ public class UserController {
 
     //判断用户是否已经注册接口
     @GetMapping(value = "/isreg.do")
-    public CommonResult<Map<String, Boolean>> isregister(@RequestParam(name = "phone") String phone) {
+    public CommonResult<Map<String, Boolean>> isregister(@RequestParam(name = "phone", required = true) String phone) {
         if (log.isDebugEnabled()) {
             log.debug("前端传输过来的用户手机号码={}", phone);
         }
@@ -903,19 +851,34 @@ public class UserController {
         try {
             User user = this.userMapperReader.selectByPrimaryKey(id);
             //校验昵称是否包含敏感词汇
-            SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(updateUserDTO.getNickname());
-            if (!Objects.isNull(sensitiveWords)) {
-                return CommonResult.validateFailed("用户昵称包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止添加。");
+            SensitiveWords sensitiveWords01 = this.sensitiveWordsService.checkHasSensitiveWords(updateUserDTO.getNickname());
+            if (!Objects.isNull(sensitiveWords01)) {
+                return CommonResult.validateFailed("用户昵称包含" + sensitiveWords01.getTypeName() + "类型敏感词汇，禁止添加。");
             }
             //校验签名内容是否包含敏感词汇
-            SensitiveWords sensitiveWords2 = this.sensitiveWordsService.checkHasSensitiveWords(updateUserDTO.getAutograph());
-            if (!Objects.isNull(sensitiveWords)) {
-                return CommonResult.validateFailed("签名包含" + sensitiveWords2.getTypeName() + "类型敏感词汇，禁止发布。");
+            SensitiveWords sensitiveWords02 = this.sensitiveWordsService.checkHasSensitiveWords(updateUserDTO.getAutograph());
+            if (!Objects.isNull(sensitiveWords02)) {
+                return CommonResult.validateFailed("签名包含" + sensitiveWords02.getTypeName() + "类型敏感词汇，禁止发布。");
             }
-            if (!Objects.isNull(user)) {
+            //校验星座值是否符合要求
+            if (StrUtil.isNotEmpty(updateUserDTO.getConstellation())) {
+                ConstellationConstant ConstellationConstant = new ConstellationConstant();
+                if (!ConstellationConstant.getConstellationList().contains(updateUserDTO.getConstellation())) {
+                    try {
+                        this.userLogOpenFeign.record(0L, operateRecord);
+                    } catch (Exception e) {
+                        log.error("记录用户操作记录失败", e);
+                    }
+                    return CommonResult.validateFailed("参数校验不通过，星座值非法。");
+                }
+            }
+            if (!Objects.isNull(user) && !Objects.isNull(updateUserDTO)) {
                 this.copy(updateUserDTO, user);
                 user.setUpdateTime(new Date());
-                this.userMapperWriter.updateByPrimaryKeySelective(user);
+                int a = this.userMapperWriter.updateByPrimaryKeySelective(user);
+                if (a > 0) {
+                    data.put("UPDATE", "OK");
+                }
                 try {
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     this.userLogOpenFeign.record(id, operateRecord);
@@ -923,7 +886,6 @@ public class UserController {
                     log.error("记录用户操作记录失败", e2);
                 }
             }
-            data.put("UPDATE", "OK");
             return CommonResult.success(data, "修改或者更新用户资料成功");
         } catch (Exception e) {
             log.error("修改或者更新用户资料出现错误", e);
@@ -1482,11 +1444,11 @@ public class UserController {
             }
             //log.info("前端提交过来的请求参数：id={}, detailsUserId={}", id, detailsUserId);
             User user = this.userMapperReader.selectByPrimaryKey(id);
-            if (user == null) {
+            if (Objects.isNull(user)) {
                 return CommonResult.failed("当前用户信息不存在");
             }
             User userDetails = this.userMapperReader.selectByPrimaryKey(detailsUserId);
-            if (userDetails == null) {
+            if (Objects.isNull(userDetails)) {
                 return CommonResult.failed("鹿可用户信息不存在");
             }
             UserVO4 userVO4 = UserVO4.builder().build();
@@ -1533,33 +1495,31 @@ public class UserController {
 
     //复制需要更新的用户信息
     private void copy(UpdateUserDTO userDTO, User user) {
-        if (userDTO != null && user != null) {
-            if (StrUtil.isNotEmpty(userDTO.getYear()) && !userDTO.getYear().equals(user.getYear())) {//出生年代
-                user.setYear(userDTO.getYear());
-            }
-            if (StrUtil.isNotEmpty(userDTO.getMonth()) && !userDTO.getMonth().equals(user.getMonth())) {//出生月份
-                user.setMonth(userDTO.getMonth());
-            }
-            if (StrUtil.isNotEmpty(userDTO.getDate()) && !userDTO.getDate().equals(user.getDate())) {//出生日期
-                user.setDate(userDTO.getDate());
-            }
-            if (StrUtil.isNotEmpty(userDTO.getConstellation()) && !userDTO.getConstellation().equals(user.getConstellation())) {//星座
-                user.setConstellation(userDTO.getConstellation());
-            }
-            if (StrUtil.isNotEmpty(userDTO.getNickname()) && !userDTO.getNickname().equals(user.getNickName())) {//昵称
-                user.setNickName(userDTO.getNickname());
-            }
-            if (StrUtil.isNotEmpty(userDTO.getWeixinId()) && !userDTO.getWeixinId().equals(user.getWeixinId())) {//微信号
-                user.setWeixinId(userDTO.getWeixinId());
-            }
-            if (StrUtil.isNotEmpty(userDTO.getAutograph()) && !userDTO.getAutograph().equals(user.getAutograph())) {//签名
-                user.setAutograph(userDTO.getAutograph());
-            }
-            if (userDTO.getProfessionId() != null && !userDTO.getProfessionId().equals(user.getProfessionId())) {//职业Id
-                user.setProfessionId(userDTO.getProfessionId());
-            }
-            this.setTags(user, userDTO);
+        if (!Objects.equals(userDTO.getYear(), user.getYear())) {
+            user.setYear(userDTO.getYear());//出生年代
         }
+        if (!Objects.equals(userDTO.getMonth(), user.getMonth())) {
+            user.setMonth(userDTO.getMonth());//出生月份
+        }
+        if (!Objects.equals(userDTO.getDate(), user.getDate())) {
+            user.setDate(userDTO.getDate());//出生日期
+        }
+        if (!Objects.equals(userDTO.getConstellation(), user.getConstellation())) {
+            user.setConstellation(userDTO.getConstellation());//星座
+        }
+        if (!Objects.equals(userDTO.getNickname(), user.getNickName())) {
+            user.setNickName(userDTO.getNickname());//昵称
+        }
+        if (!Objects.equals(userDTO.getWeixinId(), user.getWeixinId())) {
+            user.setWeixinId(userDTO.getWeixinId());//昵称
+        }
+        if (!Objects.equals(userDTO.getAutograph(), user.getAutograph())) {
+            user.setAutograph(userDTO.getAutograph());//签名
+        }
+        if (!Objects.equals(userDTO.getProfessionId(), user.getProfessionId())) {
+            user.setProfessionId(userDTO.getProfessionId());//职业id
+        }
+        this.setTags(user, userDTO);//标签
     }
 
     /**
@@ -1570,15 +1530,17 @@ public class UserController {
      * </pre>
      */
     private Long getTagIdByName(String name) {
-        Long tagIdLong;
-        Tag tag = this.tagService.findTagByName(name);
-        if (tag != null) {
-            tagIdLong = tag.getId();
-        } else {
-            tag = new Tag();
-            tag.setName(name);
-            tag.setReserveColumn01(TagTypeEnum.USER.getType());
-            tagIdLong = this.tagService.saveTag(tag);
+        Long tagIdLong = null;
+        if (!Objects.isNull(name)) {
+            Tag tag = this.tagService.findTagByName(name);
+            if (!Objects.isNull(tag)) {
+                tagIdLong = tag.getId();
+            } else {
+                tag = new Tag();
+                tag.setName(name);
+                tag.setReserveColumn01(TagTypeEnum.USER.getType());
+                tagIdLong = this.tagService.saveTag(tag);
+            }
         }
         return tagIdLong;
     }
@@ -1633,12 +1595,12 @@ public class UserController {
     }
 
     private void setUserVO(UserVO userVO3, User user) {
-        if (userVO3 != null && user != null) {
+        if (!Objects.isNull(userVO3) && !Objects.isNull(user)) {
             Professions professions = this.professionsMapperReader.selectByPrimaryKey(user.getProfessionId());
-            if (professions != null) {
+            if (!Objects.isNull(professions)) {
                 userVO3.setProfession(professions.getName());
                 Industrys industrys = this.industrysMapperReader.selectByPrimaryKey(professions.getIndustryId());
-                if (industrys != null) {
+                if (!Objects.isNull(industrys)) {
                     userVO3.setIndustry(industrys.getName());
                 }
             }
@@ -1651,12 +1613,12 @@ public class UserController {
     }
 
     private void setUserVO4(UserVO4 userVO4, User user) {
-        if (userVO4 != null && user != null) {
+        if (!Objects.isNull(userVO4) && !Objects.isNull(user)) {
             Professions professions = this.professionsMapperReader.selectByPrimaryKey(user.getProfessionId());
-            if (professions != null) {
+            if (!Objects.isNull(professions)) {
                 userVO4.setProfession(professions.getName());
                 Industrys industrys = this.industrysMapperReader.selectByPrimaryKey(professions.getIndustryId());
-                if (industrys != null) {
+                if (!Objects.isNull(industrys)) {
                     userVO4.setIndustry(industrys.getName());
                 }
             }
@@ -1669,19 +1631,19 @@ public class UserController {
     }
 
     private void updateTagHotValue(UserDTO userDTO) {
-        if (userDTO != null) {
-            this.updateByTagId(userDTO.getTag1());
-            this.updateByTagId(userDTO.getTag2());
-            this.updateByTagId(userDTO.getTag3());
-            this.updateByTagId(userDTO.getTag4());
-            this.updateByTagId(userDTO.getTag5());
+        if (!Objects.isNull(userDTO)) {
+            this.updateByTagId(this.getTagIdByName(userDTO.getTag1()));
+            this.updateByTagId(this.getTagIdByName(userDTO.getTag2()));
+            this.updateByTagId(this.getTagIdByName(userDTO.getTag3()));
+            this.updateByTagId(this.getTagIdByName(userDTO.getTag4()));
+            this.updateByTagId(this.getTagIdByName(userDTO.getTag5()));
         }
     }
 
     private void updateByTagId(Long tagId) {
-        if (tagId != null) {
+        if (!Objects.isNull(tagId)) {
             Tag tag = this.tagMapperReader.selectByPrimaryKey(tagId);
-            if (tag != null) {
+            if (!Objects.isNull(tag)) {
                 tag.setHotValue(tag.getHotValue() + 1);
                 tag.setUpdatedTime(new Date());
                 this.tagMapperWriter.updateByPrimaryKeySelective(tag);

@@ -51,13 +51,13 @@ public class UserServiceFeignFallback implements UserService {
             @RequestParam(name = "longitude", required = false) Double longitude, // longitude：经度
             @RequestParam(name = "latitude", required = false) Double latitude, // latitude：纬度
             @RequestParam(name = "professionId", required = false) Long professionId, // professionId：职业编号
-            @RequestParam(name = "tag1", required = false) Long tag1, // tag1：标签1编号
-            @RequestParam(name = "tag2", required = false) Long tag2, // tag2：标签2编号
-            @RequestParam(name = "tag3", required = false) Long tag3, // tag3：标签3编号
-            @RequestParam(name = "tag4", required = false) Long tag4, // tag4：标签4编号
-            @RequestParam(name = "tag5", required = false) Long tag5, // tag5：标签5编号
+            @RequestParam(name = "tag1", required = false) String tag1, // tag1：标签1编号
+            @RequestParam(name = "tag2", required = false) String tag2, // tag2：标签2编号
+            @RequestParam(name = "tag3", required = false) String tag3, // tag3：标签3编号
+            @RequestParam(name = "tag4", required = false) String tag4, // tag4：标签4编号
+            @RequestParam(name = "tag5", required = false) String tag5, // tag5：标签5编号
             @RequestParam(name = "autograph", required = false) String autograph,
-            @RequestPart(value = "head", required = false) MultipartFile head) {
+            @RequestPart(value = "head", required = true) MultipartFile head) {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }

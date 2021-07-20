@@ -61,13 +61,13 @@ public interface UserService {
             @RequestParam(name = "longitude", required = false) Double longitude, // longitude：经度
             @RequestParam(name = "latitude", required = false) Double latitude, // latitude：纬度
             @RequestParam(name = "professionId", required = false) Long professionId, // professionId：职业编号
-            @RequestParam(name = "tag1", required = false) Long tag1, // tag1：标签1编号
-            @RequestParam(name = "tag2", required = false) Long tag2, // tag2：标签2编号
-            @RequestParam(name = "tag3", required = false) Long tag3, // tag3：标签3编号
-            @RequestParam(name = "tag4", required = false) Long tag4, // tag4：标签4编号
-            @RequestParam(name = "tag5", required = false) Long tag5, // tag5：标签5编号
+            @RequestParam(name = "tag1", required = false) String tag1, // tag1：标签1编号
+            @RequestParam(name = "tag2", required = false) String tag2, // tag2：标签2编号
+            @RequestParam(name = "tag3", required = false) String tag3, // tag3：标签3编号
+            @RequestParam(name = "tag4", required = false) String tag4, // tag4：标签4编号
+            @RequestParam(name = "tag5", required = false) String tag5, // tag5：标签5编号
             @RequestParam(name = "autograph", required = false) String autograph, // autograph：签名/动态内容
-            @RequestPart(value = "head", required = false) MultipartFile head); // head：头像图片文件
+            @RequestPart(value = "head", required = true) MultipartFile head); // head：头像图片文件
 
     @PutMapping(value = "/find/v1/user/login.do")
     CommonResult<Map<String, UserVO2>> login(

@@ -84,10 +84,10 @@ public class UpdateUserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * professionId：职业
+     * professionId：职业编号
      * </pre>
      */
-    @ApiModelProperty(value = "职业")
+    @ApiModelProperty(value = "职业编号")
     @JSONField(name = "professionId")
     @JsonProperty(value = "professionId")
     private Long professionId;
@@ -114,7 +114,7 @@ public class UpdateUserDTO extends AbstractDTO {
 
     /**
      * <pre>
-     * tag3：标签3
+     * tag3：标签3编号
      * </pre>
      */
     @ApiModelProperty(value = "标签3")

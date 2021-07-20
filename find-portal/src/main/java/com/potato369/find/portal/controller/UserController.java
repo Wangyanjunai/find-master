@@ -19,8 +19,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
-@Api(value = "user-controller", tags = "用户信息模块Restful API")
 @Slf4j
+@Api(value = "user-controller", tags = "用户信息模块Restful API")
 @RestController
 @RequestMapping("/user")
 //@Profile({"dev", "dev2", "test", "prod"})
@@ -411,13 +411,13 @@ public class UserController {
             @RequestParam(name = "longitude", required = false) @ApiParam("经度") Double longitude, // longitude：经度
             @RequestParam(name = "latitude", required = false) @ApiParam("纬度") Double latitude, // latitude：纬度
             @RequestParam(name = "professionId", required = false) @ApiParam("职业编号") Long professionId, // professionId：职业编号
-            @RequestParam(name = "tag1", required = false) @ApiParam("标签1编号") Long tag1, // tag1：标签1编号
-            @RequestParam(name = "tag2", required = false) @ApiParam("标签2编号") Long tag2, // tag2：标签2编号
-            @RequestParam(name = "tag3", required = false) @ApiParam("标签3编号") Long tag3, // tag3：标签3编号
-            @RequestParam(name = "tag4", required = false) @ApiParam("标签4编号") Long tag4, // tag4：标签4编号
-            @RequestParam(name = "tag5", required = false) @ApiParam("标签5编号") Long tag5, // tag5：标签5编号
+            @RequestParam(name = "tag1", required = false) @ApiParam("标签1编号") String tag1, // tag1：标签1编号
+            @RequestParam(name = "tag2", required = false) @ApiParam("标签2编号") String tag2, // tag2：标签2编号
+            @RequestParam(name = "tag3", required = false) @ApiParam("标签3编号") String tag3, // tag3：标签3编号
+            @RequestParam(name = "tag4", required = false) @ApiParam("标签4编号") String tag4, // tag4：标签4编号
+            @RequestParam(name = "tag5", required = false) @ApiParam("标签5编号") String tag5, // tag5：标签5编号
             @RequestParam(name = "autograph", required = false) @ApiParam("签名/动态内容") String autograph, // autograph：签名/动态内容
-            @RequestPart(value = "head", required = false) @ApiParam("头像图片文件") MultipartFile head) { // head：头像图片文件
+            @RequestPart(value = "head", required = true) @ApiParam("头像图片文件") MultipartFile head) { // head：头像图片文件
         log.info("phone={}, ip={}, gender={}, platform={}, nickname={}, weixinId={}, imei={}, model={}, sysName={}, sysCode={}, networkMode={}, year={}, month={}, date={}, constellation={}, country={}, province={}, city={}, autograph={}, head={}", phone, ip, gender, platform, nickname, weixinId, imei, model, sysName, sysCode, networkMode, year, month, date, constellation, country, province, city, autograph, head);
         return this.userFeignClient.register(phone, gender, platform, nickname, weixinId, imei, model, sysName, sysCode, networkMode, year, month, date, constellation, ip, country, province, city, district, other, longitude, latitude, professionId, tag1, tag2, tag3, tag4, tag5, autograph, head);
     }
@@ -591,6 +591,12 @@ public class UserController {
      * @apiParam (接口请求参数) {string {0..2}} [date] 出生日期
      * @apiParam (接口请求参数) {string {0..4}} [constellation={"水瓶座","双鱼座","白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座"}] 星座
      * @apiParam (接口请求参数) {string} [autograph] 签名
+     * @apiParam (接口请求参数) {long} [professionId] 职业编号
+     * @apiParam (接口请求参数) {string} [tag1] 标签1
+     * @apiParam (接口请求参数) {string} [tag2] 标签2
+     * @apiParam (接口请求参数) {string} [tag3] 标签3
+     * @apiParam (接口请求参数) {string} [tag4] 标签4
+     * @apiParam (接口请求参数) {string} [tag5] 标签5
      * @apiParamExample {json} 请求示例 修改昵称
      * HTTP/1.1 OK
      * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;;charset=UTF-8" -d '{"nickname":"王6"}'
@@ -609,6 +615,17 @@ public class UserController {
      * @apiParamExample {json} 请求示例 修改签名，出生年月日，星座，昵称，微信号
      * HTTP/1.1 OK
      * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"nickname":"王666", "weixinId":"12622www", "autograph":"126我的ss2", "year":"1996", "month":"08", "date":"03", "constellation":"射手座"}'
+     * @apiParamExample {json} 请求示例 修改职业
+     * HTTP/1.1 OK
+     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"professionId": 20}'
+     * @apiParamExample {json} 请求示例 修改标签1，标签2，标签3
+     * HTTP/1.1 OK
+     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '
+     * {
+     * "tag1": "颜值",
+     * "tag2": "音乐",
+     * "tag3": "影视"
+     * }'
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
