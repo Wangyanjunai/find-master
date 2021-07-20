@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.validation.constraints.NotEmpty;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -23,7 +21,6 @@ public class UserDTO extends AbstractDTO {
     @ApiModelProperty(value = "手机号码")
     @JSONField(name = "phone")
     @JsonProperty(value = "phone")
-    @NotEmpty(message = "手机号码参数校验失败，手机号码不能为空。")
     private String phone;
 
     /**

@@ -442,7 +442,7 @@ public class UserController {
     @ApiOperation(value = "注册接口", notes = "注册接口", response = CommonResult.class)
     @PostMapping(value = "/reg.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, UserVO2>> register(
-            @Valid UserDTO userDTO, BindingResult bindingResult,
+            UserDTO userDTO,
             @RequestPart(value = "head", required = true) MultipartFile head) { // head：头像图片文件
         Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
@@ -456,10 +456,12 @@ public class UserController {
                 log.debug("开始注册");
                 log.debug("前端传输过来的用户信息userDTO={}", userDTO);
             }
-            if (bindingResult.hasErrors()) {
-                return CommonResult.validateFailed("参数校验不通过，" + Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
-            }
+            //校验手机号码是否为空
             String phone = userDTO.getPhone();
+            if (Objects.isNull(phone)) {
+                return CommonResult.validateFailed("参数校验不通过，手机号码不能为空。");
+            }
+            //校验手机号码格式是否正确
             if (!RegexUtil.isMathPhone(phone)) {
                 return CommonResult.validateFailed("参数校验不通过，手机号码格式不正确。");
             }
@@ -473,22 +475,26 @@ public class UserController {
             if (!Objects.isNull(latitude)) {
                 latitudeStr = String.valueOf(latitude);
             }
+            //校验客户端IP，定位（国家、省份、城市、区/县、其它、经纬度）是否同时为空。
             if (StrUtil.isAllEmpty(userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeStr, latitudeStr)) {
                 return CommonResult.validateFailed("参数校验不通过，客户端IP，定位（国家、省份、城市、区/县、其它、经纬度）不能同时为空。");
             }
             if (StrUtil.isNotEmpty(userDTO.getIp()) && !RegexUtil.isMathIp(userDTO.getIp())) {
                 return CommonResult.validateFailed("参数校验不通过，客户端IP格式不正确。");
             }
+            //校验星座是否符合要求
             String constellation = userDTO.getConstellation();
             if (!Objects.isNull(constellation)) {
                 ConstellationConstant ConstellationConstant = new ConstellationConstant();
                 if (!ConstellationConstant.getConstellationList().contains(constellation)) {
-                    return CommonResult.validateFailed("参数校验不通过，星座值非法。");
+                    return CommonResult.validateFailed("参数校验不通过，星座不符合要求。");
                 }
             }
+            //校验头像图片文件是否为空
             if (Objects.isNull(head) || head.isEmpty()) {
                 return CommonResult.validateFailed("参数校验不通过，头像图片文件不能为空。");
             }
+            //校验头像图片文件格式是否符合要求
             if (!FileTypeUtil.isImageType(head.getContentType(), Objects.requireNonNull(head.getOriginalFilename()))) {
                 return CommonResult.validateFailed("参数校验不通过，头像图片文件类型不符合要求。");
             }
@@ -497,18 +503,18 @@ public class UserController {
                 nickname = new RandomNickNameUtil().randomName();
             }
             if (!Objects.isNull(nickname)) {
-                //校验发布的内容是否包含敏感词汇
+                //校验昵称是否包含敏感词汇
                 SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(nickname);
                 if (!Objects.isNull(sensitiveWords)) {
                     return CommonResult.validateFailed("参数校验不通过，昵称包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止添加。");
                 }
             }
             String autograph = userDTO.getAutograph();
-            //校验发布的内容是否包含敏感词汇
+            //校验签名是否包含敏感词汇
             if (!Objects.isNull(autograph)) {
                 SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(autograph);
                 if (!Objects.isNull(sensitiveWords)) {
-                    return CommonResult.validateFailed("签名包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
+                    return CommonResult.validateFailed("参数校验不通过，签名包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
                 }
             }
             User user = this.userDaoUseJdbcTemplate.getByPhone(userDTO.getPhone());
@@ -584,7 +590,7 @@ public class UserController {
                             user.setHeadIcon(newHeadIconFile.getName());
                             user.setUpdateTime(new Date());
                             int result02 = this.userService.register(user, autograph, fileString + newHeadIconFile.getName(), operateRecord);
-                            log.info("result02={}", result02);
+                            //log.info("result02={}", result02);
                             if (Objects.equals(result02, 4)) {
                                 message = "注册成功。";
                                 operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
@@ -606,22 +612,17 @@ public class UserController {
                     + user.getId()
                     + "/"
                     + user.getHeadIcon());
-            try {
-                this.userLogOpenFeign.record(user.getId(), operateRecord);
-            } catch (Exception e) {
-                log.error("记录用户操作记录失败", e);
-                return CommonResult.failed("记录用户操作记录失败");
-            }
+            this.userLogOpenFeign.record(user.getId(), operateRecord);
             map.put("userDTO", userVO2);
             return CommonResult.success(map, message);
         } catch (Exception e) {
             log.error("注册出现错误", e);
+            return CommonResult.failed(message);
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束注册");
             }
         }
-        return null;
     }
 
     //登录接口
