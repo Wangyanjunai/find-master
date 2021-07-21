@@ -165,4 +165,10 @@ public class UserServiceFeignFallback implements UserService {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }
+
+    @Override
+    public CommonResult<UserVO4> lookDetails(Long id, Long detailsUserId) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 }

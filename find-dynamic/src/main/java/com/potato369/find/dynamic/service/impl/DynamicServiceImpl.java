@@ -199,7 +199,7 @@ public class DynamicServiceImpl implements DynamicService {
             result2 = this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
             if (!Objects.isNull(files) && files.length > 0) {
                 String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
-                StringBuffer filePath = new StringBuffer().append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                StringBuilder filePath = new StringBuilder().append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
                 if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), attacheInfoDataType)) {
                     filePath.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
                 }
@@ -209,32 +209,26 @@ public class DynamicServiceImpl implements DynamicService {
                 AttacheInfo attacheInfo = new AttacheInfo();
                 attacheInfo.setDynamicInfoBy(dynamicInfo.getId());// 动态内容id
                 attacheInfo.setDataType(attacheInfoDataType); // 附件类型
-                List<File> files2 = new ArrayList<>();
-                String fileString = new StringBuffer().append(userId2).append("/")
-                        .append(DatePattern.PURE_DATE_FORMAT.format(new Date())).append("/")
-                        .append(System.currentTimeMillis())
-                        .append("/").toString();
+                List<File> files02 = new ArrayList<>();
+                String fileString = userId2 + "/" +
+                        DatePattern.PURE_DATE_FORMAT.format(new Date()) + "/" +
+                        System.currentTimeMillis() + "/";
                 for (MultipartFile multipartFile : files) {
-                    byte[] bytes = multipartFile.getBytes();
-                    StringBuffer stringBuffer = new StringBuffer();
-                    stringBuffer.append(filePath).append("/").append(fileString);
-                    File path1 = new File(stringBuffer.toString());
-                    if (!path1.exists()) {
-                        path1.mkdirs();
+                    StringBuilder stringBuffer = new StringBuilder().append(filePath).append("/").append(fileString);
+                    File path01 = new File(stringBuffer.toString());
+                    if (!path01.exists()) {
+                        path01.mkdirs();
                     }
-                    String filename = multipartFile.getOriginalFilename();
-                    String filenameSuffix = FileUtil.getSuffix(filename);
-                    filename = new StringBuffer().append(UUID.randomUUID()).append(".").append(filenameSuffix).toString();
-                    filename = new StringBuffer().append(filename).toString();
-                    Path path = Paths.get(stringBuffer.append(filename).toString());
+                    String fileName = UUID.randomUUID() + "." + FileUtil.getSuffix(multipartFile.getOriginalFilename());
+                    Path path02 = Paths.get(stringBuffer.append(fileName).toString());
                     if (!multipartFile.isEmpty()) {
-                        path.toFile();
-                        File file = new File(path.toString());
-                        files2.add(file);
-                        Files.write(path, bytes);
+                        path02.toFile();
+                        File file = new File(path02.toString());
+                        files02.add(file);
+                        Files.write(path02, multipartFile.getBytes());
                     }
                 }
-                String fileNames = ErrorMessageUtil.fileNameBuild(files2, fileString);
+                String fileNames = ErrorMessageUtil.fileNameBuild(files02, fileString);
                 attacheInfo.setFileName(fileNames);// 附件名称
                 result3 = this.attacheInfoMapperWriter.insertSelective(attacheInfo);
             }
@@ -243,7 +237,6 @@ public class DynamicServiceImpl implements DynamicService {
             }
         }
         result4 = this.operateRecordMapperWriter.insertSelective(operateRecord);
-//        log.info("result1 + result2 + result3 + result4={}", result1 + result2 + result3 + result4);
         return result1 + result2 + result3 + result4;
     }
 

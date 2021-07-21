@@ -2,6 +2,7 @@ package com.potato369.find.portal.feign;
 
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.LocationDTO;
+import com.potato369.find.portal.config.FeignMultipartSupportConfig;
 import com.potato369.find.portal.feign.fallback.DynamicServiceFeignFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -11,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "dynamic-service", fallback = DynamicServiceFeignFallback.class)
+@FeignClient(name = "dynamic-service", fallback = DynamicServiceFeignFallback.class, configuration = FeignMultipartSupportConfig.class)
 public interface DynamicService {
 
     @PostMapping(value = "/find/v1/dynamic/{id}/release.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -25,10 +26,17 @@ public interface DynamicService {
             @RequestParam(name = "sysCode", required = false) String sysCode,
             @RequestParam(name = "networkMode", required = false) String networkMode,
             @RequestParam(name = "ip", required = false) String ip,
+            @RequestParam(name = "longitude", required = false) Double longitude,
+            @RequestParam(name = "latitude", required = false) Double latitude,
             @RequestParam(name = "country", required = false) String country,
             @RequestParam(name = "province", required = false) String province,
             @RequestParam(name = "city", required = false) String city,
+            @RequestParam(name = "district", required = false) String district,
+            @RequestParam(name = "other", required = false) String other,
             @RequestParam(name = "publicStatus", required = false) String publicStatus,
+            @RequestParam(name = "isTopic", required = false) String isTopic,
+            @RequestParam(name = "topicTitle", required = false) String topicTitle,
+            @RequestParam(name = "isAnonymous", required = false) String isAnonymous,
             @RequestParam(name = "content", required = false) String content);
 
     @PostMapping(value = "/find/v1/dynamic/{id}/checkLocation.do")
@@ -75,4 +83,29 @@ public interface DynamicService {
 
     @GetMapping(value = "/find/v1/dynamic/{id}/mylist.do")
     CommonResult<Map<String, Object>> mylist(@PathVariable(name = "id") Long userId, @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum, @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize);
+
+    //远程调用发表评论
+    @PostMapping("/find/v1/comment/{id}/release.do")
+    CommonResult<Map<String, Object>> releaseComment(@PathVariable(name = "id") Long userId,
+                                              @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
+                                              @RequestParam(name = "content") String content);
+
+    //远程调用删除评论
+    @DeleteMapping("/find/v1/comment/{id}/delete.do")
+    CommonResult<Map<String, Object>> deleteComment(@PathVariable(name = "id") Long userId,
+                                             @RequestParam(name = "commentId") Long commentId);
+
+    //远程调用分页查询某条动态内容的所有评论详情数据
+    @GetMapping("/find/v1/comment/{id}/query.do")
+    CommonResult<Map<String, Object>> queryComment(
+            @PathVariable(name = "id") Long userId,
+            @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
+            @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize);
+
+    //远程调用点赞/取消点赞评论（修改评论）
+    @PutMapping("/find/v1/comment/{id}/likes.do")
+    CommonResult<Map<String, Object>> likesComment(@PathVariable(name = "id") Long userId,
+                                            @RequestParam(name = "commentId") Long commentId,
+                                            @RequestParam(name = "type") String type);
 }

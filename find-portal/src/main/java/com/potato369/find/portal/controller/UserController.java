@@ -36,7 +36,7 @@ public class UserController {
     //上报或者更新极光推送唯一设备的标识接口
 
     /**
-     * @api {put} http://8.135.36.45:8084/find/user/{id}/uploadRegId 上报极光推送设备标识接口
+     * @api {put} http://127.0.0.1:8084/find/user/{id}/uploadRegId 上报极光推送设备标识接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 上报极光推送设备标识
@@ -44,7 +44,7 @@ public class UserController {
      * @apiParam (接口请求参数) {string} regId 极光推送唯一设备标识
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT http://8.135.36.45:8084/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a
+     * curl -v -X PUT http://127.0.0.1:8084/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -101,7 +101,7 @@ public class UserController {
     //修改头像接口
 
     /**
-     * @api {put} http://8.135.36.45:8084/find/user/{id}/head 修改头像接口
+     * @api {put} http://127.0.0.1:8084/find/user/{id}/head 修改头像接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 修改头像
@@ -170,7 +170,7 @@ public class UserController {
     //修改背景图接口
 
     /**
-     * @api {put} http://8.135.36.45:8084/find/user/{id}/background 修改背景图接口
+     * @api {put} http://127.0.0.1:8084/find/user/{id}/background 修改背景图接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 修改背景图
@@ -240,7 +240,7 @@ public class UserController {
     //用户注册接口
 
     /**
-     * @api {post} http://8.135.36.45:8084/find/user/reg 用户注册接口
+     * @api {post} http://127.0.0.1:8084/find/user/reg 用户注册接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 用户注册
@@ -267,11 +267,11 @@ public class UserController {
      * @apiParam (接口请求参数) {double {0..16}} [longitude] 定位（经度）
      * @apiParam (接口请求参数) {double {0..16}} [latitude] 定位（纬度）
      * @apiParam (接口请求参数) {long {0..32}} [professionId] 职业编号
-     * @apiParam (接口请求参数) {long {0..32}} [tag1] 标签1编号
-     * @apiParam (接口请求参数) {long {0..32}} [tag2] 标签2编号
-     * @apiParam (接口请求参数) {long {0..32}} [tag3] 标签3编号
-     * @apiParam (接口请求参数) {long {0..32}} [tag4] 标签4编号
-     * @apiParam (接口请求参数) {long {0..32}} [tag5] 标签5编号
+     * @apiParam (接口请求参数) {string {0..32}} [tag1] 标签1
+     * @apiParam (接口请求参数) {string {0..32}} [tag2] 标签2
+     * @apiParam (接口请求参数) {string {0..32}} [tag3] 标签3
+     * @apiParam (接口请求参数) {string {0..32}} [tag4] 标签4
+     * @apiParam (接口请求参数) {string {0..32}} [tag5] 标签5
      * @apiParam (接口请求参数) {string {0..255}} [autograph] 签名/发布动态内容
      * @apiParam (接口请求参数) {file} head 头像图片文件
      * @apiParamExample {json} 请求示例01（注册01）
@@ -292,8 +292,8 @@ public class UserController {
      * "constellation" : "巨蟹座",
      * "ip" : "183.14.29.70",
      * "professionId" : 15,
-     * "tag1" : 3,
-     * "tag2" : 5,
+     * "tag1" : "音乐",
+     * "tag2" : "篮球",
      * "autograph" : "新人来到，多多关照，谢谢！",
      * "head":"D:\Program\Resources\find\img\head\02.png"
      * @apiParamExample {json} 请求示例02（注册02）
@@ -313,9 +313,9 @@ public class UserController {
      * "date" : "05",
      * "constellation" : "巨蟹座",
      * "professionId" : 5,
-     * "tag1" : 4,
-     * "tag2" : 6,
-     * "tag3" : 8,
+     * "tag1" : "学习",
+     * "tag2" : "音乐",
+     * "tag3" : "足球",
      * "autograph" : "大家好，陌生人报道，多多关照。",
      * "ip" : "123.84.129.170",
      * "country" : "中国",
@@ -394,7 +394,7 @@ public class UserController {
             @RequestParam(name = "nickname", required = false) @ApiParam("昵称") String nickname, // nickname：昵称
             @RequestParam(name = "weixinId", required = false) @ApiParam("微信号") String weixinId, // weixinId：微信号
             @RequestParam(name = "imei", required = false) @ApiParam("设备串码") String imei, // imei：设备串码
-            @RequestParam(name = "model", required = false) @ApiParam("设备型号") String model, // model：设备型号 
+            @RequestParam(name = "model", required = false) @ApiParam("设备型号") String model, // model：设备型号
             @RequestParam(name = "sysName", required = false) @ApiParam("系统名称") String sysName, // sysName：系统名称
             @RequestParam(name = "sysCode", required = false) @ApiParam("系统版本") String sysCode, // sysCode：系统版本
             @RequestParam(name = "networkMode", required = false) @ApiParam("上网方式") String networkMode, // networkMode：上网方式
@@ -411,11 +411,11 @@ public class UserController {
             @RequestParam(name = "longitude", required = false) @ApiParam("经度") Double longitude, // longitude：经度
             @RequestParam(name = "latitude", required = false) @ApiParam("纬度") Double latitude, // latitude：纬度
             @RequestParam(name = "professionId", required = false) @ApiParam("职业编号") Long professionId, // professionId：职业编号
-            @RequestParam(name = "tag1", required = false) @ApiParam("标签1编号") String tag1, // tag1：标签1编号
-            @RequestParam(name = "tag2", required = false) @ApiParam("标签2编号") String tag2, // tag2：标签2编号
-            @RequestParam(name = "tag3", required = false) @ApiParam("标签3编号") String tag3, // tag3：标签3编号
-            @RequestParam(name = "tag4", required = false) @ApiParam("标签4编号") String tag4, // tag4：标签4编号
-            @RequestParam(name = "tag5", required = false) @ApiParam("标签5编号") String tag5, // tag5：标签5编号
+            @RequestParam(name = "tag1", required = false) @ApiParam("标签1") String tag1, // tag1：标签1编号
+            @RequestParam(name = "tag2", required = false) @ApiParam("标签2") String tag2, // tag2：标签2编号
+            @RequestParam(name = "tag3", required = false) @ApiParam("标签3") String tag3, // tag3：标签3编号
+            @RequestParam(name = "tag4", required = false) @ApiParam("标签4") String tag4, // tag4：标签4编号
+            @RequestParam(name = "tag5", required = false) @ApiParam("标签5") String tag5, // tag5：标签5编号
             @RequestParam(name = "autograph", required = false) @ApiParam("签名/动态内容") String autograph, // autograph：签名/动态内容
             @RequestPart(value = "head", required = true) @ApiParam("头像图片文件") MultipartFile head) { // head：头像图片文件
         log.info("phone={}, ip={}, gender={}, platform={}, nickname={}, weixinId={}, imei={}, model={}, sysName={}, sysCode={}, networkMode={}, year={}, month={}, date={}, constellation={}, country={}, province={}, city={}, autograph={}, head={}", phone, ip, gender, platform, nickname, weixinId, imei, model, sysName, sysCode, networkMode, year, month, date, constellation, country, province, city, autograph, head);
@@ -425,7 +425,7 @@ public class UserController {
     //用户登录接口
 
     /**
-     * @api {put} http://8.135.36.45:8084/find/user/login 用户登录接口
+     * @api {put} http://127.0.0.1:8084/find/user/login 用户登录接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 用户登录
@@ -440,10 +440,10 @@ public class UserController {
      * @apiParam (接口请求参数) {double {0..16}} [latitude] 定位（纬度）
      * @apiParamExample {json} 请求示例01（手机号码和客户端IP登录）
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/login?phone=18138812310&ip=183.14.29.70
+     * curl --insecure -X PUT -v http://127.0.0.1:8084/find/user/login?phone=18138812310&ip=183.14.29.70
      * @apiParamExample {json} 请求示例02（手机号码和定位地址登录）
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/login?phone=18138812236&country=中国&province=广东省&city=广州市&district=荔湾区&other=荔湾汽车站&longitude=103.962941&latitude=21.462714&ip=181.14.30.190
+     * curl --insecure -X PUT -v http://127.0.0.1:8084/find/user/login?phone=18138812236&country=中国&province=广东省&city=广州市&district=荔湾区&other=荔湾汽车站&longitude=103.962941&latitude=21.462714&ip=181.14.30.190
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -517,14 +517,14 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/isreg?phone={手机号码} 判断手机号是否注册接口
+     * @api {get} http://127.0.0.1:8084/find/user/isreg?phone={手机号码} 判断手机号是否注册接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 判断手机号是否注册
      * @apiParam (接口请求参数) {string {11}} phone 手机号码，必须是11位数字符合要求的手机号码
      * @apiParamExample {json} 请求示例（判断手机号是否注册）
      * HTTP/1.1 OK
-     * curl -v -X GET http://8.135.36.45:8084/find/user/isreg?phone=18138802541
+     * curl -v -X GET http://127.0.0.1:8084/find/user/isreg?phone=18138802541
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -579,7 +579,7 @@ public class UserController {
     }
 
     /**
-     * @api {put} http://8.135.36.45:8084/find/user/{id}/update 更新用户资料接口
+     * @api {put} http://127.0.0.1:8084/find/user/{id}/update 更新用户资料接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 更新用户资料
@@ -599,28 +599,28 @@ public class UserController {
      * @apiParam (接口请求参数) {string} [tag5] 标签5
      * @apiParamExample {json} 请求示例 修改昵称
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;;charset=UTF-8" -d '{"nickname":"王6"}'
+     * curl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H "Content-Type: application/json;;charset=UTF-8" -d '{"nickname":"王6"}'
      * @apiParamExample {json} 请求示例 修改微信号
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"weixinId":"12622"}'
+     * curl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"weixinId":"12622"}'
      * @apiParamExample {json} 请求示例 修改出生年月日和星座
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"year":"1996", "month":"08", "date":"03", "constellation":"双子座"}'
+     * curl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"year":"1996", "month":"08", "date":"03", "constellation":"双子座"}'
      * @apiParamExample {json} 请求示例 修改签名
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"autograph":"12622"}'
+     * curl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"autograph":"12622"}'
      * @apiParamExample {json} 请求示例 修改签名和出生年月日，星座
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"autograph":"126我的2", "year":"1996", "month":"08", "date":"03", "constellation":"水平座"}'
+     * curl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"autograph":"126我的2", "year":"1996", "month":"08", "date":"03", "constellation":"水平座"}'
      * @apiParamExample {json} 请求示例 修改签名，出生年月日，星座，昵称，微信号
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"nickname":"王666", "weixinId":"12622www", "autograph":"126我的ss2", "year":"1996", "month":"08", "date":"03", "constellation":"射手座"}'
+     * curl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"nickname":"王666", "weixinId":"12622www", "autograph":"126我的ss2", "year":"1996", "month":"08", "date":"03", "constellation":"射手座"}'
      * @apiParamExample {json} 请求示例 修改职业
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"professionId": 20}'
+     * curl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '{"professionId": 20}'
      * @apiParamExample {json} 请求示例 修改标签1，标签2，标签3
      * HTTP/1.1 OK
-     * curl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '
+     * curl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H "Content-Type: application/json;charset=UTF-8" -d '
      * {
      * "tag1": "颜值",
      * "tag2": "音乐",
@@ -670,14 +670,14 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/{id}/query 查看用户资料接口
+     * @api {get} http://127.0.0.1:8084/find/user/{id}/query 查看用户资料接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 查看用户资料
      * @apiParam (接口请求参数) {long} id 用户id
      * @apiParamExample {json} 请求示例 获取用户资料
      * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/query
+     * curl --insecure -X GET -v http://127.0.0.1:8084/find/user/1/query
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -738,14 +738,14 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/{id}/queryWeixin 查看用户微信号接口
+     * @api {get} http://127.0.0.1:8084/find/user/{id}/queryWeixin 查看用户微信号接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 查看用户微信号
      * @apiParam (接口请求参数) {long} id 用户id
      * @apiParamExample {json} 请求示例 修改昵称
      * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/queryWeixin
+     * curl --insecure -X GET -v http://127.0.0.1:8084/find/user/1/queryWeixin
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -792,14 +792,14 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/{id}/report-categories 获取用户举报类型接口
+     * @api {get} http://127.0.0.1:8084/find/user/{id}/report-categories 获取用户举报类型接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 获取用户举报类型
      * @apiParam (接口请求参数) {long} id 用户id
      * @apiParamExample {json} 请求示例 查看用户举报类型
      * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/report-categories
+     * curl --insecure -X GET -v http://127.0.0.1:8084/find/user/1/report-categories
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -878,7 +878,7 @@ public class UserController {
     }
 
     /**
-     * @api {post} http://8.135.36.45:8084/find/user/{id}/report 用户举报接口
+     * @api {post} http://127.0.0.1:8084/find/user/{id}/report 用户举报接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 用户举报
@@ -889,7 +889,7 @@ public class UserController {
      * @apiParam (接口请求参数) {string} reportContent 举报内容
      * @apiParamExample {json} 请求示例 查看用户举报类型
      * HTTP/1.1 OK
-     * curl --insecure -X POST -v http://8.135.36.45:8084/find/user/{id}/report -H "Content-Type: application/json;charset=UTF-8" -d '{"categoryId":1, "reportType":1, "beingReportId":3, "reportContent":"老是打广告dddddd+++++++！！！！！"}'
+     * curl --insecure -X POST -v http://127.0.0.1:8084/find/user/{id}/report -H "Content-Type: application/json;charset=UTF-8" -d '{"categoryId":1, "reportType":1, "beingReportId":3, "reportContent":"老是打广告dddddd+++++++！！！！！"}'
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -935,7 +935,7 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/{id}/blacklist?pageNum={pageNum}&pageSize={pageSize} 获取用户黑名单列表接口
+     * @api {get} http://127.0.0.1:8084/find/user/{id}/blacklist?pageNum={pageNum}&pageSize={pageSize} 获取用户黑名单列表接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 获取用户黑名单列表接口
@@ -944,7 +944,7 @@ public class UserController {
      * @apiParam (接口请求参数) {int} [pageSize] 每页条数，默认值：10
      * @apiParamExample {json} 请求示例 查看用户举报类型
      * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/blacklist?pageNum=1&pageSize=10
+     * curl --insecure -X GET -v http://127.0.0.1:8084/find/user/1/blacklist?pageNum=1&pageSize=10
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -1056,7 +1056,7 @@ public class UserController {
 
 
     /**
-     * @api {post} http://8.135.36.45:8084/find/user/{id}/pushOrPull 拉入推出黑名单接口
+     * @api {post} http://127.0.0.1:8084/find/user/{id}/pushOrPull 拉入推出黑名单接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 拉入推出黑名单接口
@@ -1065,7 +1065,7 @@ public class UserController {
      * @apiParam (接口请求参数) {int} type 奇数->拉入，偶数->推出
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl --insecure -X POST -v http://8.135.36.45:8084/find/user/1/pushOrPull -H "Content-Type: application/json;charset=UTF-8" -d '{"blackUserId":2, "type":0}'
+     * curl --insecure -X POST -v http://127.0.0.1:8084/find/user/1/pushOrPull -H "Content-Type: application/json;charset=UTF-8" -d '{"blackUserId":2, "type":0}'
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -1122,13 +1122,13 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/professions 获取行业和职业列表接口
+     * @api {get} http://127.0.0.1:8084/find/user/professions 获取行业和职业列表接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 获取行业和职业列表接口
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/professions -H "Content-Type: application/json;charset=UTF-8"
+     * curl --insecure -X GET -v http://127.0.0.1:8084/find/user/professions -H "Content-Type: application/json;charset=UTF-8"
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -1262,13 +1262,13 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/tags 获取用户注册标签列表接口
+     * @api {get} http://127.0.0.1:8084/find/user/tags 获取用户注册标签列表接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 获取用户注册标签列表
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/tags -H "Content-Type: application/json;charset=UTF-8"
+     * curl --insecure -X GET -v http://127.0.0.1:8084/find/user/tags -H "Content-Type: application/json;charset=UTF-8"
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -1276,7 +1276,7 @@ public class UserController {
      * @apiSuccess (200) {object[]} [list] 标签列表
      * @apiSuccess (200) {long} [id] 标签id
      * @apiSuccess (200) {string} [name] 标签名称
-     * HTTP/1.1 200 OK
+     * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
      * "code": 0,
@@ -1354,13 +1354,13 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/hot-tags 获取热门标签列表接口
+     * @api {get} http://127.0.0.1:8084/find/user/hot-tags 获取热门标签列表接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 获取热门标签列表
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/hot-tags -H "Content-Type: application/json;charset=UTF-8"
+     * curl --insecure -X GET -v http://127.0.0.1:8084/find/user/hot-tags -H "Content-Type: application/json;charset=UTF-8"
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -1368,7 +1368,7 @@ public class UserController {
      * @apiSuccess (200) {object[]} [list] 标签列表
      * @apiSuccess (200) {long} [id] 标签id
      * @apiSuccess (200) {string} [name] 标签名称
-     * HTTP/1.1 200 OK
+     * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
      * "code": 0,
@@ -1446,14 +1446,14 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/search-tag 模糊搜索标签接口
+     * @api {get} http://127.0.0.1:8084/find/user/search-tag 模糊搜索标签接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 模糊搜索标签
      * @apiParam (接口请求参数) {string} keywords 关键词
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/search-tag?keywords=元 -H "Content-Type: application/json;charset=UTF-8"
+     * curl --insecure -X GET -v http://127.0.0.1:8084/find/user/search-tag?keywords=元 -H "Content-Type: application/json;charset=UTF-8"
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -1461,7 +1461,7 @@ public class UserController {
      * @apiSuccess (200) {object[]} [list] 标签列表
      * @apiSuccess (200) {long} [id] 标签id
      * @apiSuccess (200) {string} [name] 标签名称
-     * HTTP/1.1 200 OK
+     * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
      * "code": 0,
@@ -1503,7 +1503,7 @@ public class UserController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/user/{id}/look 鹿可模块推荐用户数据接口
+     * @api {get} http://127.0.0.1:8084/find/user/{id}/look 鹿可模块推荐用户数据接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 鹿可模块推荐用户数据
@@ -1514,7 +1514,7 @@ public class UserController {
      * @apiParam (接口请求参数) {int} [count] 推荐用户数量，默认：10
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://8.135.36.45:8084/find/user/35/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&count=10 -H "Content-Type: application/json;charset=UTF-8"
+     * curl --insecure -X GET -v http://127.0.0.1:8084/find/user/35/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&count=10 -H "Content-Type: application/json;charset=UTF-8"
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {long{0-500}} code 消息码
      * @apiSuccess (200) {string{..255}} msg 说明
@@ -1529,7 +1529,7 @@ public class UserController {
      * @apiSuccess (200) {string} [district] 区/县
      * @apiSuccess (200) {double} [distance] 距离（单位：米）
      * @apiSuccess (200) {string} [img] 动态图片地址
-     * HTTP/1.1 200 OK
+     * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
      * "code": 0,
@@ -1677,5 +1677,84 @@ public class UserController {
                                                   @RequestParam(name = "latitude") Double latitude,
                                                   @RequestParam(name = "count", required = false, defaultValue = "10") Integer count) {
         return this.userFeignClient.look(id, ip, longitude, latitude, count);
+    }
+
+    /**
+     * @api {get} http://127.0.0.1:8084/find/user/{id}/look-details 鹿可模块推荐用户详情接口
+     * @apiVersion 1.0.0
+     * @apiGroup 用户模块API
+     * @apiName 鹿可模块推荐用户详情
+     * @apiParam (接口请求参数) {long} id 用户id
+     * @apiParam (接口请求参数) {long} detailsUserId 用户详情id
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl --insecure -X GET -v http://127.0.0.1:8084/find/user/35/look-details?detailsUserId=65 -H "Content-Type: application/json;charset=UTF-8"
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {long{0-500}} code 消息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {object} [data] 数据
+     * @apiSuccess (200) {long} [id] 用户id
+     * @apiSuccess (200) {string[]{1..6}} [attacheList] 动态图片列表，最多6张
+     * @apiSuccess (200) {string} [nickname] 昵称
+     * @apiSuccess (200) {string} [constellation] 星座
+     * @apiSuccess (200) {string} [gender] 性别，0->女，1->男
+     * @apiSuccess (200) {int} [age] 年龄
+     * @apiSuccess (200) {string} [industry] 行业
+     * @apiSuccess (200) {string} [profession] 职业
+     * @apiSuccess (200) {string} [country] 国家
+     * @apiSuccess (200) {string} [province] 省份
+     * @apiSuccess (200) {string} [city] 城市
+     * @apiSuccess (200) {string} [district] 区/县
+     * @apiSuccessExample HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "id": 65,
+     * "attacheList": [
+     * "http://127.0.0.1:9000/find/res/images/65/20201113/04.png",
+     * "http://127.0.0.1:9000/find/res/images/65/20201113/05.png",
+     * "http://127.0.0.1:9000/find/res/images/65/20201107/09.png",
+     * "http://127.0.0.1:9000/find/res/images/65/20201107/010.png",
+     * "http://127.0.0.1:9000/find/res/images/65/20201024/012.png",
+     * "http://127.0.0.1:9000/find/res/images/65/20201024/06.png"
+     * ],
+     * "nickname": "兰烬",
+     * "constellation": "金牛座",
+     * "gender": "0",
+     * "age": 23,
+     * "industry": "计算机/互联网/通信/电子",
+     * "profession": "后端开发工程师",
+     * "country": "中国",
+     * "province": "上海市",
+     * "city": "上海市",
+     * "district": "徐汇区"
+     * }
+     * }
+     * @apiError (404) {int{0-65535}} status 响应状态码
+     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册",
+     * }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应"
+     * }
+     */
+    @GetMapping("/{id}/look-details")
+    CommonResult<UserVO4> lookDetails(@PathVariable(name = "id") Long id, @RequestParam(name = "detailsUserId") Long detailsUserId) {
+        return this.userFeignClient.lookDetails(id, detailsUserId);
     }
 }

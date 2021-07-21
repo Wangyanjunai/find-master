@@ -26,14 +26,14 @@ public class OrderController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/order/{id}/product/list 获取充值商品列表接口
+     * @api {get} http://127.0.0.1:8084/find/order/{id}/product/list 获取充值商品列表接口
      * @apiVersion 1.0.0
      * @apiGroup 订单模块API
      * @apiName 获取充值商品列表
      * @apiParam (接口请求参数) {long} id 用户id
      * @apiParamExample {json} 请求示例03（手机号码和客户端IP登录）
      * HTTP/1.1 OK
-     * curl -v -X GET http://8.135.36.45:8084/find/order/1/product/list
+     * curl -v -X GET http://127.0.0.1:8084/find/order/1/product/list
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -122,7 +122,7 @@ public class OrderController {
     }
 
     /**
-     * @api {post} http://8.135.36.45:8084/find/order/{id}/mobile/create 创建预支付订单接口
+     * @api {post} http://127.0.0.1:8084/find/order/{id}/mobile/create 创建预支付订单接口
      * @apiVersion 1.0.0
      * @apiGroup 订单模块API
      * @apiName 创建预支付订单
@@ -132,7 +132,7 @@ public class OrderController {
      * @apiParam (请求参数) {string} [ip] 客户端IP
      * @apiParamExample {json} 请求示例01（微信支付）
      * HTTP/1.1 OK
-     * curl -v -X POST http://8.135.36.45:8084/find/order/1/mobile/create -H "Content-Type:application/json;charset=utf-8" -d '{"pid":1, "mode":0, "ip":"127.0.0.1"}'
+     * curl -v -X POST http://127.0.0.1:8084/find/order/1/mobile/create -H "Content-Type:application/json;charset=utf-8" -d '{"pid":1, "mode":0, "ip":"127.0.0.1"}'
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -176,7 +176,7 @@ public class OrderController {
      * }
      * @apiParamExample {json} 请求示例02（支付宝支付）
      * HTTP/1.1 OK
-     * curl -v -X POST http://8.135.36.45:8084/find/order/1/mobile/create -H "Content-Type:application/json;charset=utf-8" -d '{"pid":1, "mode":1, "ip":"127.0.0.1"}'
+     * curl -v -X POST http://127.0.0.1:8084/find/order/1/mobile/create -H "Content-Type:application/json;charset=utf-8" -d '{"pid":1, "mode":1, "ip":"127.0.0.1"}'
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码

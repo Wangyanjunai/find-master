@@ -5,6 +5,7 @@ import com.potato369.find.common.dto.BlacklistDTO;
 import com.potato369.find.common.dto.ReportInfoDTO;
 import com.potato369.find.common.dto.UpdateUserDTO;
 import com.potato369.find.common.vo.*;
+import com.potato369.find.portal.config.FeignMultipartSupportConfig;
 import com.potato369.find.portal.feign.fallback.UserServiceFeignFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 // 用户中心微服务远程调用feignClient
-@FeignClient(name = "user-service", fallback = UserServiceFeignFallback.class)
+@FeignClient(name = "user-service", fallback = UserServiceFeignFallback.class, configuration = FeignMultipartSupportConfig.class)
 public interface UserService {
 
     // 远程调用上报或者更新极光推送唯一设备的标识接口
@@ -61,11 +62,11 @@ public interface UserService {
             @RequestParam(name = "longitude", required = false) Double longitude, // longitude：经度
             @RequestParam(name = "latitude", required = false) Double latitude, // latitude：纬度
             @RequestParam(name = "professionId", required = false) Long professionId, // professionId：职业编号
-            @RequestParam(name = "tag1", required = false) String tag1, // tag1：标签1编号
-            @RequestParam(name = "tag2", required = false) String tag2, // tag2：标签2编号
-            @RequestParam(name = "tag3", required = false) String tag3, // tag3：标签3编号
-            @RequestParam(name = "tag4", required = false) String tag4, // tag4：标签4编号
-            @RequestParam(name = "tag5", required = false) String tag5, // tag5：标签5编号
+            @RequestParam(name = "tag1", required = false) String tag1, // tag1：标签1
+            @RequestParam(name = "tag2", required = false) String tag2, // tag2：标签2
+            @RequestParam(name = "tag3", required = false) String tag3, // tag3：标签3
+            @RequestParam(name = "tag4", required = false) String tag4, // tag4：标签4
+            @RequestParam(name = "tag5", required = false) String tag5, // tag5：标签5
             @RequestParam(name = "autograph", required = false) String autograph, // autograph：签名/动态内容
             @RequestPart(value = "head", required = true) MultipartFile head); // head：头像图片文件
 
@@ -131,4 +132,8 @@ public interface UserService {
                                                   @RequestParam(name = "longitude") Double longitude,
                                                   @RequestParam(name = "latitude") Double latitude,
                                                   @RequestParam(name = "count", required = false, defaultValue = "10") Integer count);
+
+    //远程调用鹿可模块推荐用户详情数据接口
+    @GetMapping("/find/v1/user/{id}/look-details.do")
+    CommonResult<UserVO4> lookDetails(@PathVariable(name = "id") Long id, @RequestParam(name = "detailsUserId") Long detailsUserId);
 }

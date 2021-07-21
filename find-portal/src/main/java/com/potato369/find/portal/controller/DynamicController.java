@@ -219,26 +219,28 @@ public class DynamicController {
     @ApiResponses(@ApiResponse(code = 200, message = "发布动态内容成功", response = CommonResult.class))
     @PostMapping(value = "/{id}/release", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, Object>> release(
-            @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", example = "1", required = true) Long userId,
+            @PathVariable(name = "id", required = true) @ApiParam(name = "id", value = "用户id", example = "1", required = true) Long userId,
             @RequestParam(name = "imei", required = false) @ApiParam(name = "imei", value = "设备串码") String imei,
-            @RequestParam(name = "attacheInfoDataType", required = false) @ApiParam(name = "attacheInfoDataType", value = "附件类型") String attacheInfoDataType,
+            @RequestParam(name = "attacheInfoDataType", required = false) @ApiParam(name = "attacheInfoDataType", value = "动态内容类型：必需传参数，0->图片，1->语音，2->文字（不包含图片，语音的纯文字）", allowableValues = "0, 1, 2", example = "0") String attacheInfoDataType,
             @RequestPart(value = "files", required = false) @ApiParam(name = "files", value = "附件数组") MultipartFile[] files,
             @RequestParam(name = "model", required = false) @ApiParam(name = "model", value = "设备型号") String model,
             @RequestParam(name = "sysName", required = false) @ApiParam(name = "sysName", value = "系统名称") String sysName,
             @RequestParam(name = "sysCode", required = false) @ApiParam(name = "sysCode", value = "系统版本") String sysCode,
             @RequestParam(name = "networkMode", required = false) @ApiParam(name = "networkMode", value = "上网方式", allowableValues = "2G,3G,4G,5G,WIFI", example = "4G") String networkMode,
             @RequestParam(name = "ip", required = false) @ApiParam(name = "ip", value = "客户端IP") String ip,
+            @RequestParam(name = "longitude", required = false) @ApiParam(name = "longitude", value = "定位（经度）") Double longitude,
+            @RequestParam(name = "latitude", required = false) @ApiParam(name = "latitude", value = "定位（纬度）") Double latitude,
             @RequestParam(name = "country", required = false) @ApiParam(name = "country", value = "定位（国家）") String country,
             @RequestParam(name = "province", required = false) @ApiParam(name = "province", value = "定位（省份）") String province,
             @RequestParam(name = "city", required = false) @ApiParam(name = "city", value = "定位（城市）") String city,
+            @RequestParam(name = "district", required = false) @ApiParam(name = "district", value = "定位（区/县）") String district,
+            @RequestParam(name = "other", required = false) @ApiParam(name = "other", value = "定位（其它）") String other,
             @RequestParam(name = "publicStatus", required = false) @ApiParam(name = "publicStatus", value = "是否公开定位", allowableValues = "0, 1", example = "0") String publicStatus,
+            @RequestParam(name = "isTopic", required = false) @ApiParam(name = "isTopic", value = "是否话题，0->否，1->是，默认：0", allowableValues = "0, 1", example = "0") String isTopic,
+            @RequestParam(name = "topicTitle", required = false) @ApiParam(name = "topicTitle", value = "话题标题") String topicTitle,
+            @RequestParam(name = "isAnonymous", required = false) @ApiParam(name = "isAnonymous", value = "是否匿名，0->否，1->是，默认：0", allowableValues = "0, 1", example = "0") String isAnonymous,
             @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "动态内容") String content) {
-        OperateRecordDTO operateRecord = new OperateRecordDTO();
-        operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
-        operateRecord.setUserId(userId);
-        operateRecord.setType(OperateRecordTypeEnum.ReleaseDynamic.getCode());
-        this.userLogFeignClient.record(userId, operateRecord);
-        return this.dynamicFeignClient.release(userId, imei, attacheInfoDataType, files, model, sysName, sysCode, networkMode, ip, country, province, city, publicStatus, content);
+        return this.dynamicFeignClient.release(userId, imei, attacheInfoDataType, files, model, sysName, sysCode, networkMode, ip, longitude, latitude, country, province, city, district, other, publicStatus, isTopic, topicTitle, isAnonymous, content);
     }
 
     /**

@@ -1,7 +1,7 @@
 [
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/dynamic/{id}/share",
+    "url": "http://127.0.0.1:8084/find/dynamic/{id}/share",
     "title": "分享动态内容接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -42,7 +42,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/share?dynamicInfoId=86&mode=0",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/dynamic/70/share?dynamicInfoId=86&mode=0",
           "type": "json"
         }
       ]
@@ -182,13 +182,286 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/dynamic/{id}/share"
+        "url": "http://127.0.0.1:8084/find/dynamic/{id}/share"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "http://127.0.0.1:8084/find/comment/{id}/query",
+    "title": "分页查询评论接口",
+    "version": "1.0.0",
+    "group": "动态模块API",
+    "name": "分页查询评论接口",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "dynamicInfoId",
+            "description": "<p>动态内容id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "int",
+            "optional": true,
+            "field": "pageNum",
+            "description": "<p>当前页数，默认：1</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "int",
+            "optional": true,
+            "field": "pageSize",
+            "description": "<p>每页条数，默认：20</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET http://127.0.0.1:8084/find/comment/35/query?dynamicInfoId=1&pageNum=1&pageSize=20",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "totalSize",
+            "description": "<p>总条数</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "optional": true,
+            "field": "totalPage",
+            "description": "<p>总页数</p>"
+          },
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": true,
+            "field": "list",
+            "description": "<p>评论数据列表</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "userId",
+            "description": "<p>评论的用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "commentId",
+            "description": "<p>评论id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "nickname",
+            "description": "<p>评论的用户昵称</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "head",
+            "description": "<p>评论的用户头像URL</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "content",
+            "description": "<p>评论内容</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "dateTime",
+            "description": "<p>评论时间</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "isOrNotLikes",
+            "description": "<p>当前用户是否点赞，0-&gt;点赞，1-&gt;未点赞</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "optional": true,
+            "field": "likes",
+            "description": "<p>当前评论点赞数</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"分页查询某条动态内容的所有评论详情数据成功。\",\n\"data\": {\n\"totalSize\": 15,\n\"totalPage\": 1,\n\"list\": [\n{\n\"userId\": 35,\n\"commentId\": 30,\n\"nickname\": \"思思\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/35/02.png\",\n\"content\": \"好的，会的\",\n\"dateTime\": \"2021-07-21 12:04:39\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 70,\n\"commentId\": 16,\n\"nickname\": \"阿萌\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/70/03.png\",\n\"content\": \"我的加油，加油。\",\n\"dateTime\": \"2021-07-14 15:31:56\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 3\n},\n{\n\"userId\": 70,\n\"commentId\": 15,\n\"nickname\": \"阿萌\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/70/03.png\",\n\"content\": \"我的加油。\",\n\"dateTime\": \"2021-07-14 15:17:51\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 122,\n\"commentId\": 14,\n\"nickname\": \"丸子\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/122/01.png\",\n\"content\": \"好的，\",\n\"dateTime\": \"2021-07-13 21:04:58\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 121,\n\"commentId\": 13,\n\"nickname\": \"夹心小憨宝\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/121/03.png\",\n\"content\": \"好的，\",\n\"dateTime\": \"2021-07-13 21:04:54\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 138,\n\"commentId\": 12,\n\"nickname\": \"阿妩\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"content\": \"好的，\",\n\"dateTime\": \"2021-07-13 21:04:48\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 141,\n\"commentId\": 11,\n\"nickname\": \"good\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/141/cd118c01-db49-43f9-a857-07bf53ee2918.png\",\n\"content\": \"好的，\",\n\"dateTime\": \"2021-07-13 21:04:43\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 23,\n\"commentId\": 10,\n\"nickname\": \"北柠陌寒\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/23/06.png\",\n\"content\": \"好的，\",\n\"dateTime\": \"2021-07-13 21:04:36\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 42,\n\"commentId\": 9,\n\"nickname\": \"轻吟\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/42/01.png\",\n\"content\": \"好的，\",\n\"dateTime\": \"2021-07-13 21:04:31\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 41,\n\"commentId\": 8,\n\"nickname\": \"卖萌迪\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/41/02.png\",\n\"content\": \"好的，\",\n\"dateTime\": \"2021-07-13 21:04:26\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 51,\n\"commentId\": 7,\n\"nickname\": \"暮夏\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/51/02.png\",\n\"content\": \"好的，\",\n\"dateTime\": \"2021-07-13 21:04:20\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 50,\n\"commentId\": 6,\n\"nickname\": \"来愿\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/50/02.png\",\n\"content\": \"好的，我会的，欢迎！\",\n\"dateTime\": \"2021-07-13 20:58:59\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 60,\n\"commentId\": 5,\n\"nickname\": \"尘埃\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/60/01.png\",\n\"content\": \"好的，我会的，欢迎！\",\n\"dateTime\": \"2021-07-13 20:58:52\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 63,\n\"commentId\": 4,\n\"nickname\": \"浮生\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/63/07.png\",\n\"content\": \"好的，我会的，欢迎！\",\n\"dateTime\": \"2021-07-13 20:58:30\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n},\n{\n\"userId\": 73,\n\"commentId\": 3,\n\"nickname\": \"如风\",\n\"head\": \"http://127.0.0.1:9000/find/img/head/73/05.png\",\n\"content\": \"好的，我会的，欢迎！\",\n\"dateTime\": \"2021-07-13 20:58:22\",\n\"isOrNotLikes\": \"0\",\n\"likes\": 0\n}\n]\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500 错误",
+          "content": "{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/CommentController.java",
+    "groupTitle": "动态模块API",
+    "sampleRequest": [
+      {
+        "url": "http://127.0.0.1:8084/find/comment/{id}/query"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/dynamic/{id}/delete",
+    "url": "http://127.0.0.1:8084/find/dynamic/{id}/delete",
     "title": "删除动态内容接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -215,12 +488,12 @@
       "examples": [
         {
           "title": "请求示例01（是自己发布的动态内容， 删除成功）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/delete?dynamicInfoId=85",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/dynamic/70/delete?dynamicInfoId=85",
           "type": "json"
         },
         {
           "title": "请求示例02（非自己发布的动态内容， 删除失败）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/delete?dynamicInfoId=86",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/dynamic/70/delete?dynamicInfoId=86",
           "type": "json"
         }
       ]
@@ -365,13 +638,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/dynamic/{id}/delete"
+        "url": "http://127.0.0.1:8084/find/dynamic/{id}/delete"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://8.135.36.45:8084/find/dynamic/{id}/release",
+    "url": "http://127.0.0.1:8084/find/dynamic/{id}/release",
     "title": "发布动态内容接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -500,22 +773,22 @@
       "examples": [
         {
           "title": "请求示例01（发布图片有具体发布定位地址）",
-          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"1\",\n\"files\": \"C:\\Users\\Administrator\\Pictures\\images\\01.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\02.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\03.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\04.jpg\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"广州\",\n\"publicStatus\": \"0\",\n\"content\": \"发布照片。\"\n}'",
+          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://127.0.0.1:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"1\",\n\"files\": \"C:\\Users\\Administrator\\Pictures\\images\\01.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\02.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\03.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\04.jpg\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"广州\",\n\"publicStatus\": \"0\",\n\"content\": \"发布照片。\"\n}'",
           "type": "json"
         },
         {
           "title": "请求示例02（发布图片有客户端IP）",
-          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"1\",\n\"files\": \"C:\\Users\\Administrator\\Pictures\\images\\01.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\02.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\03.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\04.jpg\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布照片。\"\n}'",
+          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://127.0.0.1:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"1\",\n\"files\": \"C:\\Users\\Administrator\\Pictures\\images\\01.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\02.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\03.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\04.jpg\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布照片。\"\n}'",
           "type": "json"
         },
         {
           "title": "请求示例03（发布语音有客户端IP）",
-          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"2\",\n\"files\": \"F:\\文件\\各种音乐\\(DJ)中文DJ\\7姨、高梦瑶、妖姬 - 威震八方.mp3\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布语音。\"\n}'",
+          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://127.0.0.1:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"2\",\n\"files\": \"F:\\文件\\各种音乐\\(DJ)中文DJ\\7姨、高梦瑶、妖姬 - 威震八方.mp3\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布语音。\"\n}'",
           "type": "json"
         },
         {
           "title": "请求示例04（发布纯文字有客户端IP）",
-          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://8.135.36.45:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"0\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布语音。\"\n}'",
+          "content": "HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl -v -X POST -H 'multipart/form-data;charset=utf-8' http://127.0.0.1:8084/find/dynamic/3/release\n-d '{\n\"imei\": \"895568564457954422\",\n\"attacheInfoDataType\": \"0\",\n\"model\": \"vivo x7 plus\",\n\"sysName\": \"Android\",\n\"sysCode\": \"9.0\",\n\"networkMode\": \"WIFI\",\n\"ip\": \"183.14.31.54\",\n\"publicStatus\": \"0\",\n\"content\": \"发布语音。\"\n}'",
           "type": "json"
         }
       ]
@@ -686,13 +959,213 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/dynamic/{id}/release"
+        "url": "http://127.0.0.1:8084/find/dynamic/{id}/release"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://8.135.36.45:8084/find/dynamic/{id}/updateLocation",
+    "url": "http://127.0.0.1:8084/find/comment/{id}/release",
+    "title": "发表评论接口",
+    "version": "1.0.0",
+    "group": "动态模块API",
+    "name": "发表评论",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "dynamicInfoId",
+            "description": "<p>动态内容id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": false,
+            "field": "content",
+            "description": "<p>评论内容</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST http://127.0.0.1:8084/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "allowedValues": [
+              "{\"OK\"",
+              "\"FAILED\"}"
+            ],
+            "optional": true,
+            "field": "RELEASE",
+            "description": "<p>发布状态，OK-&gt;“成功”，FAILED-&gt;“失败”</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"发布评论成功\",\n\"data\": {\n\"RELEASE\": \"OK\"\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500 错误",
+          "content": "{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/CommentController.java",
+    "groupTitle": "动态模块API",
+    "sampleRequest": [
+      {
+        "url": "http://127.0.0.1:8084/find/comment/{id}/release"
+      }
+    ]
+  },
+  {
+    "type": "post",
+    "url": "http://127.0.0.1:8084/find/dynamic/{id}/updateLocation",
     "title": "更新动态地址定位接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -740,17 +1213,17 @@
       "examples": [
         {
           "title": "请求示例01（有客户端IP）",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation -d '{\"ip\":\"183.14.133.239\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/updateLocation -d '{\"ip\":\"183.14.133.239\"}'",
           "type": "json"
         },
         {
           "title": "请求示例02（有定位（国家）、（省份）、（城市））",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation -d '{\"country\": \"中国\", \"province\": \"广东\", \"city\": \"深圳\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/updateLocation -d '{\"country\": \"中国\", \"province\": \"广东\", \"city\": \"深圳\"}'",
           "type": "json"
         },
         {
           "title": "请求示例03（有客户端IP，定位（国家）、（省份）、（城市））",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation\n-d '{\n\"ip\": \"183.14.133.239\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"深圳\"\n}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/updateLocation\n-d '{\n\"ip\": \"183.14.133.239\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"深圳\"\n}'",
           "type": "json"
         }
       ]
@@ -818,7 +1291,7 @@
         },
         {
           "title": "200响应示例03（有客户端IP，发布定位地址（国）、（省）、（市））",
-          "content": "HTTP/1.1 200 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/updateLocation",
+          "content": "HTTP/1.1 200 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/updateLocation",
           "type": "json"
         }
       ]
@@ -912,13 +1385,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/dynamic/{id}/updateLocation"
+        "url": "http://127.0.0.1:8084/find/dynamic/{id}/updateLocation"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://8.135.36.45:8084/find/dynamic/{id}/checkLocation",
+    "url": "http://127.0.0.1:8084/find/dynamic/{id}/checkLocation",
     "title": "检查定位地址是否更改接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -966,17 +1439,17 @@
       "examples": [
         {
           "title": "请求示例01（有客户端IP）",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation -d '{\"ip\":\"183.14.133.239\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/checkLocation -d '{\"ip\":\"183.14.133.239\"}'",
           "type": "json"
         },
         {
           "title": "请求示例02（有发布定位地址（国）、省、市）",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation -d '{\"country\": \"中国\", \"province\": \"广东\", \"city\": \"深圳\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/checkLocation -d '{\"country\": \"中国\", \"province\": \"广东\", \"city\": \"深圳\"}'",
           "type": "json"
         },
         {
           "title": "请求示例03（有客户端IP，发布定位地址（国）、（省）、（市））",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation\n-d '{\n\"ip\": \"183.14.133.239\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"深圳\"\n}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/checkLocation\n-d '{\n\"ip\": \"183.14.133.239\",\n\"country\": \"中国\",\n\"province\": \"广东\",\n\"city\": \"深圳\"\n}'",
           "type": "json"
         }
       ]
@@ -1037,7 +1510,7 @@
         },
         {
           "title": "200响应示例03（有客户端IP，发布定位地址（国）、（省）、（市））",
-          "content": "HTTP/1.1 200 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://8.135.36.45:8084/find/dynamic/1/checkLocation -d '{}'",
+          "content": "HTTP/1.1 200 OK\ncurl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/checkLocation -d '{}'",
           "type": "json"
         }
       ]
@@ -1131,13 +1604,223 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/dynamic/{id}/checkLocation"
+        "url": "http://127.0.0.1:8084/find/dynamic/{id}/checkLocation"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/dynamic/{id}/likes",
+    "url": "http://127.0.0.1:8084/find/comment/{id}/likes",
+    "title": "点赞/取消评论接口",
+    "version": "1.0.0",
+    "group": "动态模块API",
+    "name": "点赞/取消评论接口",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "commentId",
+            "description": "<p>评论id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": false,
+            "field": "type",
+            "description": "<p>类型，0-&gt;取消，1-&gt;点赞</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例（点赞）",
+          "content": "curl -v -X PUT http://127.0.0.1:8084/find/comment/35/likes?commentId=16&type=1",
+          "type": "json"
+        },
+        {
+          "title": "请求示例（取消）",
+          "content": "curl -v -X PUT http://127.0.0.1:8084/find/comment/35/likes?commentId=16&type=0",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "allowedValues": [
+              "{\"OK\"",
+              "\"FAILED\"}"
+            ],
+            "optional": true,
+            "field": "LIKES",
+            "description": "<p>点赞状态，OK-&gt;“成功”，FAILED-&gt;“失败”</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例（点赞）",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"点赞成功。\",\n\"data\": {\n\"LIKES\": \"OK\"\n}\n}",
+          "type": "json"
+        },
+        {
+          "title": "200响应示例（取消）",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"取消点赞成功。\",\n\"data\": {\n\"LIKES\": \"OK\"\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500 错误",
+          "content": "{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/CommentController.java",
+    "groupTitle": "动态模块API",
+    "sampleRequest": [
+      {
+        "url": "http://127.0.0.1:8084/find/comment/{id}/likes"
+      }
+    ]
+  },
+  {
+    "type": "put",
+    "url": "http://127.0.0.1:8084/find/dynamic/{id}/likes",
     "title": "点赞或取消点赞接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -1172,17 +1855,17 @@
       "examples": [
         {
           "title": "请求示例01（取消，点赞记录不存在）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0",
           "type": "json"
         },
         {
           "title": "请求示例02（取消点赞，点赞记录存在）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/dynamic/70/likes?dynamicInfoId=86&type=0",
           "type": "json"
         },
         {
           "title": "请求示例03（点赞，点赞记录不存在）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/likes?dynamicInfoId=86&type=1",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/dynamic/70/likes?dynamicInfoId=86&type=1",
           "type": "json"
         }
       ]
@@ -1332,13 +2015,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/dynamic/{id}/likes"
+        "url": "http://127.0.0.1:8084/find/dynamic/{id}/likes"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/dynamic/{id}/application",
+    "url": "http://127.0.0.1:8084/find/dynamic/{id}/application",
     "title": "申请加微信接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -1373,12 +2056,12 @@
       "examples": [
         {
           "title": "请求示例01（第1次申请加微信）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信，请发送微信号码过来",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信，请发送微信号码过来",
           "type": "json"
         },
         {
           "title": "请求示例02（第6次申请加微信）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信16",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信16",
           "type": "json"
         }
       ]
@@ -1523,13 +2206,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/dynamic/{id}/application"
+        "url": "http://127.0.0.1:8084/find/dynamic/{id}/application"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/dynamic/{id}/screen",
+    "url": "http://127.0.0.1:8084/find/dynamic/{id}/screen",
     "title": "筛选动态内容列表接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -1636,7 +2319,7 @@
       "examples": [
         {
           "title": "请求示例01",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET http://8.135.36.45:8084/find/dynamic/71/screen?pageNum=1&pageSize=20&gender=0&minAge=16&maxAge=39&constellation=巨蟹座,水瓶座&dataType=0&provinceList=广东省,广西省,湖南省&cityList=深圳市,广州市,南宁市,长沙市",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET http://127.0.0.1:8084/find/dynamic/71/screen?pageNum=1&pageSize=20&gender=0&minAge=16&maxAge=39&constellation=巨蟹座,水瓶座&dataType=0&provinceList=广东省,广西省,湖南省&cityList=深圳市,广州市,南宁市,长沙市",
           "type": "json"
         }
       ]
@@ -1874,13 +2557,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/dynamic/{id}/screen"
+        "url": "http://127.0.0.1:8084/find/dynamic/{id}/screen"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/dynamic/{id}/mylist",
+    "url": "http://127.0.0.1:8084/find/dynamic/{id}/mylist",
     "title": "获取自己的动态内容列表接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -1914,7 +2597,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/71/mylist?pageNum=1&pageSize=20",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/dynamic/71/mylist?pageNum=1&pageSize=20",
           "type": "json"
         }
       ]
@@ -2152,13 +2835,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/dynamic/{id}/mylist"
+        "url": "http://127.0.0.1:8084/find/dynamic/{id}/mylist"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/dynamic/{id}/list",
+    "url": "http://127.0.0.1:8084/find/dynamic/{id}/list",
     "title": "觅鹿主界面动态内容列表接口",
     "version": "1.0.0",
     "group": "动态模块API",
@@ -2192,7 +2875,7 @@
       "examples": [
         {
           "title": "请求示例01",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/dynamic/73/list?pageNum=1&pageSize=20",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/dynamic/73/list?pageNum=1&pageSize=20",
           "type": "json"
         }
       ]
@@ -2430,13 +3113,13 @@
     "groupTitle": "动态模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/dynamic/{id}/list"
+        "url": "http://127.0.0.1:8084/find/dynamic/{id}/list"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/message/{id}/updateAll",
+    "url": "http://127.0.0.1:8084/find/message/{id}/updateAll",
     "title": "全部消息已读接口",
     "version": "1.0.0",
     "group": "消息模块API",
@@ -2456,7 +3139,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://8.135.36.45:8084/find/message/60/updateAll\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://127.0.0.1:8084/find/message/60/updateAll\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -2612,13 +3295,13 @@
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/message/{id}/updateAll"
+        "url": "http://127.0.0.1:8084/find/message/{id}/updateAll"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/message/{id1}/{id2}/messages",
+    "url": "http://127.0.0.1:8084/find/message/{id1}/{id2}/messages",
     "title": "分页获取消息历史记录列表接口",
     "version": "1.0.0",
     "group": "消息模块API",
@@ -2659,7 +3342,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://8.135.36.45:8084/find/message/138/139/messages?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://127.0.0.1:8084/find/message/138/139/messages?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -2871,13 +3554,13 @@
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/message/{id1}/{id2}/messages"
+        "url": "http://127.0.0.1:8084/find/message/{id1}/{id2}/messages"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/message/{id}/all",
+    "url": "http://127.0.0.1:8084/find/message/{id}/all",
     "title": "分页获取消息界面点赞和申请加微信消息列表接口",
     "version": "1.0.0",
     "group": "消息模块API",
@@ -2911,7 +3594,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://8.135.36.45:8084/find/message/29/all?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://127.0.0.1:8084/find/message/29/all?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -3172,13 +3855,13 @@
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/message/{id}/all"
+        "url": "http://127.0.0.1:8084/find/message/{id}/all"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/message/{id}/likes",
+    "url": "http://127.0.0.1:8084/find/message/{id}/likes",
     "title": "分页获取点赞消息列表接口",
     "version": "1.0.0",
     "group": "消息模块API",
@@ -3212,7 +3895,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://8.135.36.45:8084/find/message/29/likes?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://127.0.0.1:8084/find/message/29/likes?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -3424,13 +4107,13 @@
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/message/{id}/likes"
+        "url": "http://127.0.0.1:8084/find/message/{id}/likes"
       }
     ]
   },
   {
     "type": "delete",
-    "url": "http://8.135.36.45:8084/find/message/{id}/deleteLikes",
+    "url": "http://127.0.0.1:8084/find/message/{id}/deleteLikes",
     "title": "删除点赞消息记录接口",
     "version": "1.0.0",
     "group": "消息模块API",
@@ -3457,7 +4140,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://8.135.36.45:8084/find/message/60/deleteLikes?messageId=28\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://127.0.0.1:8084/find/message/60/deleteLikes?messageId=28\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -3613,13 +4296,13 @@
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/message/{id}/deleteLikes"
+        "url": "http://127.0.0.1:8084/find/message/{id}/deleteLikes"
       }
     ]
   },
   {
     "type": "delete",
-    "url": "http://8.135.36.45:8084/find/message/{id1}/delete",
+    "url": "http://127.0.0.1:8084/find/message/{id1}/delete",
     "title": "删除申请加微信消息记录接口",
     "version": "1.0.0",
     "group": "消息模块API",
@@ -3646,7 +4329,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://8.135.36.45:8084/find/message/60/delete?id2=28\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://127.0.0.1:8084/find/message/60/delete?id2=28\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -3802,13 +4485,13 @@
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/message/{id1}/delete"
+        "url": "http://127.0.0.1:8084/find/message/{id1}/delete"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://8.135.36.45:8084/find/message/{id}/send",
+    "url": "http://127.0.0.1:8084/find/message/{id}/send",
     "title": "发送消息接口",
     "version": "1.0.0",
     "group": "消息模块API",
@@ -3842,12 +4525,12 @@
       "examples": [
         {
           "title": "请求示例 发送消息",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/60/send?messageId=25&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://127.0.0.1:8084/find/message/60/send?messageId=25&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
           "type": "json"
         },
         {
           "title": "请求示例 回复消息",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://8.135.36.45:8084/find/message/29/send?messageId=2&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://127.0.0.1:8084/find/message/29/send?messageId=2&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -4008,13 +4691,13 @@
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/message/{id}/send"
+        "url": "http://127.0.0.1:8084/find/message/{id}/send"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/message/{id}/reply",
+    "url": "http://127.0.0.1:8084/find/message/{id}/reply",
     "title": "回复申请加微信消息记录接口",
     "version": "1.0.0",
     "group": "消息模块API",
@@ -4059,19 +4742,19 @@
             "type": "string",
             "optional": true,
             "field": "weChatId",
-            "description": "<p>微信id</p>"
+            "description": "<p>微信号</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "请求示例 回复申请加微信消息（拒绝）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://8.135.36.45:8084/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://127.0.0.1:8084/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！\" -H \"accept: application/json\"",
           "type": "json"
         },
         {
           "title": "请求示例 回复申请加微信消息（同意）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://8.135.36.45:8084/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a\" -H \"accept: application/json\"",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://127.0.0.1:8084/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -4232,13 +4915,13 @@
     "groupTitle": "消息模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/message/{id}/reply"
+        "url": "http://127.0.0.1:8084/find/message/{id}/reply"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/user/{id}/uploadRegId",
+    "url": "http://127.0.0.1:8084/find/user/{id}/uploadRegId",
     "title": "上报极光推送设备标识接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -4265,7 +4948,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://8.135.36.45:8084/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://127.0.0.1:8084/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a",
           "type": "json"
         }
       ]
@@ -4320,7 +5003,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"返回数据成功\",\n\t\t    \"data\": {\n\t\t        \"UPLOADREGID\": \"OK\",\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功\",\n\"data\": {\n\"UPLOADREGID\": \"OK\",\n}\n}",
           "type": "json"
         }
       ]
@@ -4406,17 +5089,17 @@
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\t\"status\": 403,\n      \t\t\"code\": 199,\n      \t\t\"msg\": \"未找到用户信息\",\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息\",\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500 错误",
-          "content": "{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -4425,13 +5108,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/uploadRegId"
+        "url": "http://127.0.0.1:8084/find/user/{id}/uploadRegId"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/user/{id}/head",
+    "url": "http://127.0.0.1:8084/find/user/{id}/head",
     "title": "修改头像接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -4458,7 +5141,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\n      {\n      \t\t\"headIconFile\":\"D:\\Program\\Resources\\find\\img\\head\\head01.png\"\n      }",
+          "content": "HTTP/1.1 OK\n{\n\"headIconFile\":\"D:\\Program\\Resources\\find\\img\\head\\head01.png\"\n}",
           "type": "json"
         }
       ]
@@ -4516,7 +5199,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"返回数据成功\",\n\t\t    \"data\": {\n\t\t        \"head\": \"http://8.135.36.45:8000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\t\t        \"id\": 1\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功\",\n\"data\": {\n\"head\": \"http://8.135.36.45:8000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\"id\": 1\n}\n}",
           "type": "json"
         }
       ]
@@ -4602,17 +5285,17 @@
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\t\"status\": 403,\n      \t\t\"code\": 199,\n      \t\t\"msg\": \"未找到用户信息\",\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息\",\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500 错误",
-          "content": "{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -4621,13 +5304,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/head"
+        "url": "http://127.0.0.1:8084/find/user/{id}/head"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/user/{id}/background",
+    "url": "http://127.0.0.1:8084/find/user/{id}/background",
     "title": "修改背景图接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -4654,7 +5337,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\n      {\n      \t\t\"backgroundIconFile\":\"D:\\Program\\Resources\\find\\img\\head\\bg02.png\"\n      }",
+          "content": "HTTP/1.1 OK\n{\n\"backgroundIconFile\":\"D:\\Program\\Resources\\find\\img\\head\\bg02.png\"\n}",
           "type": "json"
         }
       ]
@@ -4712,7 +5395,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"返回数据成功\",\n\t\t    \"data\": {\n\t\t        \"bg\": \"http://8.135.36.45:8000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\t\t        \"id\": 1\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功\",\n\"data\": {\n\"bg\": \"http://8.135.36.45:8000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\"id\": 1\n}\n}",
           "type": "json"
         }
       ]
@@ -4798,17 +5481,17 @@
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\t\"status\": 403,\n      \t\t\"code\": 199,\n      \t\t\"msg\": \"未找到用户信息\",\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息\",\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500 错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -4817,13 +5500,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/background"
+        "url": "http://127.0.0.1:8084/find/user/{id}/background"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/user/isreg?phone={手机号码}",
+    "url": "http://127.0.0.1:8084/find/user/isreg?phone={手机号码}",
     "title": "判断手机号是否注册接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -4844,7 +5527,7 @@
       "examples": [
         {
           "title": "请求示例（判断手机号是否注册）",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET http://8.135.36.45:8084/find/user/isreg?phone=18138802541",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET http://127.0.0.1:8084/find/user/isreg?phone=18138802541",
           "type": "json"
         }
       ]
@@ -4899,12 +5582,12 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"SUCCESS，还未注册。\",\n\t\t    \"data\": {\n\t\t        \"isReg\": false\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"SUCCESS，还未注册。\",\n\"data\": {\n\"isReg\": false\n}\n}",
           "type": "json"
         },
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"SUCCESS，已经注册。\",\n\t\t    \"data\": {\n\t\t        \"isReg\": true\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"SUCCESS，已经注册。\",\n\"data\": {\n\"isReg\": true\n}\n}",
           "type": "json"
         }
       ]
@@ -4965,12 +5648,12 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -4979,13 +5662,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/isreg?phone={手机号码}"
+        "url": "http://127.0.0.1:8084/find/user/isreg?phone={手机号码}"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://8.135.36.45:8084/find/user/{id}/pushOrPull",
+    "url": "http://127.0.0.1:8084/find/user/{id}/pushOrPull",
     "title": "拉入推出黑名单接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5019,7 +5702,7 @@
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X POST -v http://8.135.36.45:8084/find/user/1/pushOrPull -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"blackUserId\":2, \"type\":0}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X POST -v http://127.0.0.1:8084/find/user/1/pushOrPull -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"blackUserId\":2, \"type\":0}'",
           "type": "json"
         }
       ]
@@ -5077,12 +5760,12 @@
       "examples": [
         {
           "title": "200响应示例 推出黑名单列表",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"将用户千柳推出黑名单列表成功。\",\n\t\t    \"data\": {\n\t\t        \"PULL\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"将用户千柳推出黑名单列表成功。\",\n\"data\": {\n\"PULL\": \"OK\"\n}\n}",
           "type": "json"
         },
         {
           "title": "200响应示例 拉入黑名单列表",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"将用户千柳拉入黑名单列表成功。\",\n\t\t    \"data\": {\n\t\t        \"PUSH\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"将用户千柳拉入黑名单列表成功。\",\n\"data\": {\n\"PUSH\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -5143,12 +5826,12 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -5157,13 +5840,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/pushOrPull"
+        "url": "http://127.0.0.1:8084/find/user/{id}/pushOrPull"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/user/{id}/update",
+    "url": "http://127.0.0.1:8084/find/user/{id}/update",
     "title": "更新用户资料接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5231,38 +5914,90 @@
             "optional": true,
             "field": "autograph",
             "description": "<p>签名</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": true,
+            "field": "professionId",
+            "description": "<p>职业编号</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": true,
+            "field": "tag1",
+            "description": "<p>标签1</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": true,
+            "field": "tag2",
+            "description": "<p>标签2</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": true,
+            "field": "tag3",
+            "description": "<p>标签3</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": true,
+            "field": "tag4",
+            "description": "<p>标签4</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": true,
+            "field": "tag5",
+            "description": "<p>标签5</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "请求示例 修改昵称",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;;charset=UTF-8\" -d '{\"nickname\":\"王6\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H \"Content-Type: application/json;;charset=UTF-8\" -d '{\"nickname\":\"王6\"}'",
           "type": "json"
         },
         {
           "title": "请求示例 修改微信号",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"weixinId\":\"12622\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"weixinId\":\"12622\"}'",
           "type": "json"
         },
         {
           "title": "请求示例 修改出生年月日和星座",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"双子座\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"双子座\"}'",
           "type": "json"
         },
         {
           "title": "请求示例 修改签名",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"autograph\":\"12622\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"autograph\":\"12622\"}'",
           "type": "json"
         },
         {
           "title": "请求示例 修改签名和出生年月日，星座",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"autograph\":\"126我的2\", \"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"水平座\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"autograph\":\"126我的2\", \"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"水平座\"}'",
           "type": "json"
         },
         {
           "title": "请求示例 修改签名，出生年月日，星座，昵称，微信号",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"nickname\":\"王666\", \"weixinId\":\"12622www\", \"autograph\":\"126我的ss2\", \"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"射手座\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"nickname\":\"王666\", \"weixinId\":\"12622www\", \"autograph\":\"126我的ss2\", \"year\":\"1996\", \"month\":\"08\", \"date\":\"03\", \"constellation\":\"射手座\"}'",
+          "type": "json"
+        },
+        {
+          "title": "请求示例 修改职业",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"professionId\": 20}'",
+          "type": "json"
+        },
+        {
+          "title": "请求示例 修改标签1，标签2，标签3",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://127.0.0.1:8084/find/user/{id}/update -H \"Content-Type: application/json;charset=UTF-8\" -d '\n{\n\"tag1\": \"颜值\",\n\"tag2\": \"音乐\",\n\"tag3\": \"影视\"\n}'",
           "type": "json"
         }
       ]
@@ -5306,7 +6041,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"修改或者更新用户资料成功\",\n\t\t    \"data\": {\n\t\t        \"UPDATE\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"修改或者更新用户资料成功\",\n\"data\": {\n\"UPDATE\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -5367,12 +6102,12 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -5381,13 +6116,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/update"
+        "url": "http://127.0.0.1:8084/find/user/{id}/update"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/user/{id}/queryWeixin",
+    "url": "http://127.0.0.1:8084/find/user/{id}/queryWeixin",
     "title": "查看用户微信号接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5407,7 +6142,7 @@
       "examples": [
         {
           "title": "请求示例 修改昵称",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/queryWeixin",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://127.0.0.1:8084/find/user/1/queryWeixin",
           "type": "json"
         }
       ]
@@ -5465,7 +6200,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"查看用户个人资料成功\",\n\t\t    \"data\": {\n\t\t        \"user\": {\n\t\t            \"weixinId\": 11111111\n\t\t        }\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"查看用户个人资料成功\",\n\"data\": {\n\"user\": {\n\"weixinId\": 11111111\n}\n}\n}",
           "type": "json"
         }
       ]
@@ -5526,12 +6261,12 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -5540,13 +6275,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/queryWeixin"
+        "url": "http://127.0.0.1:8084/find/user/{id}/queryWeixin"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/user/{id}/query",
+    "url": "http://127.0.0.1:8084/find/user/{id}/query",
     "title": "查看用户资料接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5566,7 +6301,7 @@
       "examples": [
         {
           "title": "请求示例 获取用户资料",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/query",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://127.0.0.1:8084/find/user/1/query",
           "type": "json"
         }
       ]
@@ -5682,7 +6417,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"查看用户个人资料成功\",\n\t\t    \"data\": {\n\t\t        \"user\": {\n\t\t            \"id\": 1,\n\t\t            \"nickname\": \"王666\",\n\t\t            \"head\": \"http://8.135.36.45:8000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\t\t            \"bg\": \"http://8.135.36.45:8000/find/img/background/a1bf6181-ebd0-43b4-8e91-761ec8fc83ab_admin055.jpg\",\n\t\t            \"grade\": 0,\n\t\t            \"age\": 24,\n\t\t            \"gender\": \"1\",\n\t\t            \"autograph\": \"126我的ss2\"\n\t\t        }\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"查看用户个人资料成功\",\n\"data\": {\n\"user\": {\n\"id\": 1,\n\"nickname\": \"王666\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\"bg\": \"http://8.135.36.45:8000/find/img/background/a1bf6181-ebd0-43b4-8e91-761ec8fc83ab_admin055.jpg\",\n\"grade\": 0,\n\"age\": 24,\n\"gender\": \"1\",\n\"autograph\": \"126我的ss2\"\n}\n}\n}",
           "type": "json"
         }
       ]
@@ -5743,12 +6478,12 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -5757,13 +6492,179 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/query"
+        "url": "http://127.0.0.1:8084/find/user/{id}/query"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "http://127.0.0.1:8084/find/user/search-tag",
+    "title": "模糊搜索标签接口",
+    "version": "1.0.0",
+    "group": "用户模块API",
+    "name": "模糊搜索标签",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": false,
+            "field": "keywords",
+            "description": "<p>关键词</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://127.0.0.1:8084/find/user/search-tag?keywords=元 -H \"Content-Type: application/json;charset=UTF-8\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": true,
+            "field": "list",
+            "description": "<p>标签列表</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "id",
+            "description": "<p>标签id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "name",
+            "description": "<p>标签名称</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "HTTP/1.1 200 OK",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"模糊搜索标签列表成功\",\n\"data\": {\n\"list\": [\n{\n\"id\": 5,\n\"name\": \"二次元\"\n}\n]\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/UserController.java",
+    "groupTitle": "用户模块API",
+    "sampleRequest": [
+      {
+        "url": "http://127.0.0.1:8084/find/user/search-tag"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://8.135.36.45:8084/find/user/{id}/report",
+    "url": "http://127.0.0.1:8084/find/user/{id}/report",
     "title": "用户举报接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5815,7 +6716,7 @@
       "examples": [
         {
           "title": "请求示例 查看用户举报类型",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X POST -v http://8.135.36.45:8084/find/user/{id}/report -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"categoryId\":1, \"reportType\":1, \"beingReportId\":3, \"reportContent\":\"老是打广告dddddd+++++++！！！！！\"}'",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X POST -v http://127.0.0.1:8084/find/user/{id}/report -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"categoryId\":1, \"reportType\":1, \"beingReportId\":3, \"reportContent\":\"老是打广告dddddd+++++++！！！！！\"}'",
           "type": "json"
         }
       ]
@@ -5866,7 +6767,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"记录用户举报内容成功。\",\n\t\t    \"data\": {\n\t\t        \"REPORTED\": \"OK\"\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"记录用户举报内容成功。\",\n\"data\": {\n\"REPORTED\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]
@@ -5927,12 +6828,12 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -5941,13 +6842,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/report"
+        "url": "http://127.0.0.1:8084/find/user/{id}/report"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://8.135.36.45:8084/find/user/reg",
+    "url": "http://127.0.0.1:8084/find/user/reg",
     "title": "用户注册接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -5962,14 +6863,6 @@
             "optional": false,
             "field": "phone",
             "description": "<p>手机号码</p>"
-          },
-          {
-            "group": "接口请求参数",
-            "type": "string",
-            "size": "16",
-            "optional": true,
-            "field": "ip",
-            "description": "<p>客户端IP不能与定位（国家、省份，城市）同时为空</p>"
           },
           {
             "group": "接口请求参数",
@@ -6095,6 +6988,14 @@
           {
             "group": "接口请求参数",
             "type": "string",
+            "size": "16",
+            "optional": true,
+            "field": "ip",
+            "description": "<p>客户端IP不能与定位（国家、省份，城市、区/县、其它、经度、纬度）同时为空</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
             "size": "0..16",
             "optional": true,
             "field": "country",
@@ -6115,6 +7016,86 @@
             "optional": true,
             "field": "city",
             "description": "<p>定位（城市）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "size": "0..32",
+            "optional": true,
+            "field": "district",
+            "description": "<p>定位（区/县）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "size": "0..32",
+            "optional": true,
+            "field": "other",
+            "description": "<p>定位（其它）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "double",
+            "size": "0..16",
+            "optional": true,
+            "field": "longitude",
+            "description": "<p>定位（经度）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "double",
+            "size": "0..16",
+            "optional": true,
+            "field": "latitude",
+            "description": "<p>定位（纬度）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "size": "0..32",
+            "optional": true,
+            "field": "professionId",
+            "description": "<p>职业编号</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "size": "0..32",
+            "optional": true,
+            "field": "tag1",
+            "description": "<p>标签1</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "size": "0..32",
+            "optional": true,
+            "field": "tag2",
+            "description": "<p>标签2</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "size": "0..32",
+            "optional": true,
+            "field": "tag3",
+            "description": "<p>标签3</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "size": "0..32",
+            "optional": true,
+            "field": "tag4",
+            "description": "<p>标签4</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "size": "0..32",
+            "optional": true,
+            "field": "tag5",
+            "description": "<p>标签5</p>"
           },
           {
             "group": "接口请求参数",
@@ -6136,12 +7117,12 @@
       "examples": [
         {
           "title": "请求示例01（注册01）",
-          "content": "HTTP/1.1 OK 封装表单数据格式01 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\n  \t\t\"phone\" : \"18138812110\",\n  \t\t\"ip\" : \"183.14.29.70\",\n \t\t\"gender\" : \"1\",\n  \t\t\"platform\" : \"Baidu\",\n  \t\t\"nickname\" : \"张三\",\n  \t\t\"weixinId\" : \"wx123456788\",\n  \t\t\"imei\" : \"123456788222\",\n  \t\t\"model\" : \"vivo Y55\",\n  \t\t\"sysName\" : \"Android\",\n  \t\t\"sysCode\" : \"6.0.1\",\n \t\t\"networkMode\" : \"WIFI\",\n  \t\t\"year\" : \"1995\",\n  \t\t\"month\" : \"05\",\n  \t\t\"date\" : \"05\",\n  \t\t\"constellation\" : \"巨蟹座\",\n \t\t\"autograph\" : \"新人来到，多多关照，谢谢！\",\n \t\t\"head\":\"D:\\Program\\Resources\\find\\img\\head\\02.png\"",
+          "content": "HTTP/1.1 OK 封装表单数据格式01 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\n\"phone\" : \"18138812110\",\n\"gender\" : \"1\",\n\"platform\" : \"Baidu\",\n\"nickname\" : \"张三\",\n\"weixinId\" : \"wx123456788\",\n\"imei\" : \"123456788222\",\n\"model\" : \"vivo Y55\",\n\"sysName\" : \"Android\",\n\"sysCode\" : \"6.0.1\",\n\"networkMode\" : \"WIFI\",\n\"year\" : \"1995\",\n\"month\" : \"05\",\n\"date\" : \"05\",\n\"constellation\" : \"巨蟹座\",\n\"ip\" : \"183.14.29.70\",\n\"professionId\" : 15,\n\"tag1\" : \"音乐\",\n\"tag2\" : \"篮球\",\n\"autograph\" : \"新人来到，多多关照，谢谢！\",\n\"head\":\"D:\\Program\\Resources\\find\\img\\head\\02.png\"",
           "type": "json"
         },
         {
           "title": "请求示例02（注册02）",
-          "content": "HTTP/1.1 OK 封装表单数据格式02 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\n  \t\t\"phone\" : \"18138812310\",\n  \t\t\"ip\" : \"123.84.129.170\",\n  \t\t\"gender\" : \"0\",\n  \t\t\"platform\" : \"HUAWEI\",\n  \t\t\"nickname\" : \"李四\",\n  \t\t\"weixinId\" : \"wx123456700\",\n  \t\t\"imei\" : \"123456788111\",\n  \t\t\"model\" : \"vivo Z5\",\n  \t\t\"sysName\" : \"Android\",\n  \t\t\"sysCode\" : \"9.0.1\",\n  \t\t\"networkMode\" : \"WIFI\",\n  \t\t\"year\" : \"1993\",\n  \t\t\"month\" : \"05\",\n  \t\t\"date\" : \"05\",\n  \t\t\"constellation\" : \"巨蟹座\",\n  \t\t\"autograph\" : \"新人来到，多多关照，谢谢！\",\n  \t\t\"country\" : \"中国\",\n  \t\t\"province\" : \"广东\",\n  \t\t\"city\" : \"广州\",\n  \t\t\"head\":\"D:\\Program\\Resources\\find\\img\\head\\02.png\"",
+          "content": "HTTP/1.1 OK 封装表单数据格式02 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\n\"phone\" : \"18138812310\",\n\"gender\" : \"0\",\n\"platform\" : \"HUAWEI\",\n\"nickname\" : \"李四\",\n\"weixinId\" : \"wx123456700\",\n\"imei\" : \"123456788111\",\n\"model\" : \"vivo Z5\",\n\"sysName\" : \"Android\",\n\"sysCode\" : \"9.0.1\",\n\"networkMode\" : \"WIFI\",\n\"year\" : \"1993\",\n\"month\" : \"05\",\n\"date\" : \"05\",\n\"constellation\" : \"巨蟹座\",\n\"professionId\" : 5,\n\"tag1\" : \"学习\",\n\"tag2\" : \"音乐\",\n\"tag3\" : \"足球\",\n\"autograph\" : \"大家好，陌生人报道，多多关照。\",\n\"ip\" : \"123.84.129.170\",\n\"country\" : \"中国\",\n\"province\" : \"广东省\",\n\"city\" : \"深圳市\",\n\"district\" : \"南山区\",\n\"other\" : \"科兴科学园A座\",\n\"longitude\" : 113.862941,\n\"latitude\" : 22.452714,\n\"head\":\"D:\\Program\\Resources\\find\\img\\head\\01.png\"",
           "type": "json"
         }
       ]
@@ -6234,7 +7215,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"登录或者注册成功。\",\n\t\t    \"data\": {\n\t\t        \"user\": {\n\t\t            \"id\": 21,\n\t\t            \"gender\": \"1\",\n\t\t            \"nickname\": \"张三\",\n\t\t            \"head\": \"http://8.135.36.45:8000/find/img/head/head.png\",\n\t\t            \"bg\": \"http://8.135.36.45:8000/find/img/background/bg.png\",\n\t\t            \"autograph\": \"新人小生，初来乍到，请多关照。\"\n\t\t        }\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"登录或者注册成功。\",\n\"data\": {\n\"user\": {\n\"id\": 21,\n\"gender\": \"1\",\n\"nickname\": \"张三\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/head.png\",\n\"bg\": \"http://8.135.36.45:8000/find/img/background/bg.png\",\n\"autograph\": \"新人小生，初来乍到，请多关照。\"\n}\n}\n}",
           "type": "json"
         }
       ]
@@ -6320,17 +7301,17 @@
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\t\"status\": 403,\n      \t\t\"code\": 199,\n      \t\t\"msg\": \"未找到用户信息！\",\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\",\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      {\n      \t\t\"status\": 404,\n     \t\t\"code\": 200,\n      \t\t\"msg\": \"接口未注册！\",\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n      \t\t\"status\": 500,\n      \t\t\"code\": 205,\n      \t\t\"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]
@@ -6339,13 +7320,13 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/reg"
+        "url": "http://127.0.0.1:8084/find/user/reg"
       }
     ]
   },
   {
     "type": "put",
-    "url": "http://8.135.36.45:8084/find/user/login",
+    "url": "http://127.0.0.1:8084/find/user/login",
     "title": "用户登录接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -6367,7 +7348,7 @@
             "size": "16",
             "optional": true,
             "field": "ip",
-            "description": "<p>客户端IP不能与定位（国家、省份，城市）同时为空</p>"
+            "description": "<p>客户端IP不能与定位（国家、省份、城市、区/县、其它、经纬度）同时为空</p>"
           },
           {
             "group": "接口请求参数",
@@ -6392,18 +7373,50 @@
             "optional": true,
             "field": "city",
             "description": "<p>定位（城市）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "size": "0..32",
+            "optional": true,
+            "field": "district",
+            "description": "<p>定位（区/县）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "size": "0..32",
+            "optional": true,
+            "field": "other",
+            "description": "<p>定位（其它）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "double",
+            "size": "0..16",
+            "optional": true,
+            "field": "longitude",
+            "description": "<p>定位（经度）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "double",
+            "size": "0..16",
+            "optional": true,
+            "field": "latitude",
+            "description": "<p>定位（纬度）</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "请求示例01（手机号码和客户端IP登录）",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/login?phone=18138812310&ip=183.14.29.70",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://127.0.0.1:8084/find/user/login?phone=18138812310&ip=183.14.29.70",
           "type": "json"
         },
         {
           "title": "请求示例02（手机号码和定位地址登录）",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://8.135.36.45:8084/find/user/login?phone=18138812236&country=中国&province=广东省&city=深圳市",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X PUT -v http://127.0.0.1:8084/find/user/login?phone=18138812236&country=中国&province=广东省&city=广州市&district=荔湾区&other=荔湾汽车站&longitude=103.962941&latitude=21.462714&ip=181.14.30.190",
           "type": "json"
         }
       ]
@@ -6481,13 +7494,6 @@
             "group": "200",
             "type": "string",
             "optional": true,
-            "field": "bg",
-            "description": "<p>背景图片地址</p>"
-          },
-          {
-            "group": "200",
-            "type": "string",
-            "optional": true,
             "field": "autograph",
             "description": "<p>签名</p>"
           }
@@ -6496,7 +7502,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"登录成功。\",\n\t\t    \"data\": {\n\t\t        \"user\": {\n\t\t            \"id\": 21,\n\t\t            \"gender\": \"1\",\n\t\t            \"nickname\": \"张三\",\n\t\t            \"head\": \"http://8.135.36.45:8000/find/img/head/head.png\",\n\t\t            \"bg\": \"http://8.135.36.45:8000/find/img/background/bg.png\",\n\t\t            \"autograph\": \"新人小生，初来乍到，请多关照。\"\n\t\t        }\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"登录成功。\",\n\"data\": {\n\"user\": {\n\"id\": 21,\n\"gender\": \"1\",\n\"nickname\": \"张三\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/head.png\",\n\"autograph\": \"新人小生，初来乍到，请多关照。\"\n}\n}\n}",
           "type": "json"
         }
       ]
@@ -6582,17 +7588,17 @@
       "examples": [
         {
           "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n      {\n      \t\t\"status\": 403,\n      \t\t\"code\": 199,\n      \t\t\"msg\": \"未找到用户信息！\",\n      }",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\",\n}",
           "type": "json"
         },
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n      {\n      \t\t\"status\": 404,\n     \t\t\"code\": 200,\n      \t\t\"msg\": \"接口未注册！\",\n      }",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n      {\n      \t\t\"status\": 500,\n      \t\t\"code\": 205,\n      \t\t\"msg\": \"服务器未响应！\"\n      }",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
           "type": "json"
         }
       ]
@@ -6601,13 +7607,168 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/login"
+        "url": "http://127.0.0.1:8084/find/user/login"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/user/{id}/report-categories",
+    "url": "http://127.0.0.1:8084/find/user/hot-tags",
+    "title": "获取热门标签列表接口",
+    "version": "1.0.0",
+    "group": "用户模块API",
+    "name": "获取热门标签列表",
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://127.0.0.1:8084/find/user/hot-tags -H \"Content-Type: application/json;charset=UTF-8\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": true,
+            "field": "list",
+            "description": "<p>标签列表</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "id",
+            "description": "<p>标签id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "name",
+            "description": "<p>标签名称</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "HTTP/1.1 200 OK",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"获取热门标签列表成功\",\n\"data\": {\n\"list\": [\n{\n\"id\": 1,\n\"name\": \"颜值\"\n},\n{\n\"id\": 2,\n\"name\": \"吃货\"\n},\n{\n\"id\": 3,\n\"name\": \"篮球\"\n},\n{\n\"id\": 4,\n\"name\": \"学习\"\n},\n{\n\"id\": 5,\n\"name\": \"二次元\"\n},\n{\n\"id\": 6,\n\"name\": \"音乐\"\n},\n{\n\"id\": 7,\n\"name\": \"旅游\"\n},\n{\n\"id\": 8,\n\"name\": \"足球\"\n},\n{\n\"id\": 9,\n\"name\": \"游戏\"\n},\n{\n\"id\": 10,\n\"name\": \"影视\"\n}\n]\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/UserController.java",
+    "groupTitle": "用户模块API",
+    "sampleRequest": [
+      {
+        "url": "http://127.0.0.1:8084/find/user/hot-tags"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "http://127.0.0.1:8084/find/user/{id}/report-categories",
     "title": "获取用户举报类型接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -6627,7 +7788,7 @@
       "examples": [
         {
           "title": "请求示例 查看用户举报类型",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/report-categories",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://127.0.0.1:8084/find/user/1/report-categories",
           "type": "json"
         }
       ]
@@ -6692,7 +7853,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"获取用户举报类型列表成功\",\n\t\t    \"data\": {\n\t\t        \"list\": [\n\t\t            {\n\t\t                \"id\": 1,\n\t\t                \"name\": \"垃圾广告\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 2,\n\t\t                \"name\": \"色情低俗\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 3,\n\t\t                \"name\": \"政治敏感\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 4,\n\t\t                \"name\": \"恐怖暴力\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 5,\n\t\t                \"name\": \"违法暴力\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 6,\n\t\t                \"name\": \"自杀自残\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 7,\n\t\t                \"name\": \"侵犯个人信息\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 8,\n\t\t                \"name\": \"侵犯未成年人权益\"\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"获取用户举报类型列表成功\",\n\"data\": {\n\"list\": [\n{\n\"id\": 1,\n\"name\": \"垃圾广告\"\n},\n{\n\"id\": 2,\n\"name\": \"色情低俗\"\n},\n{\n\"id\": 3,\n\"name\": \"政治敏感\"\n},\n{\n\"id\": 4,\n\"name\": \"恐怖暴力\"\n},\n{\n\"id\": 5,\n\"name\": \"违法暴力\"\n},\n{\n\"id\": 6,\n\"name\": \"自杀自残\"\n},\n{\n\"id\": 7,\n\"name\": \"侵犯个人信息\"\n},\n{\n\"id\": 8,\n\"name\": \"侵犯未成年人权益\"\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -6753,12 +7914,12 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -6767,13 +7928,168 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/report-categories"
+        "url": "http://127.0.0.1:8084/find/user/{id}/report-categories"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/user/{id}/blacklist?pageNum={pageNum}&pageSize={pageSize}",
+    "url": "http://127.0.0.1:8084/find/user/tags",
+    "title": "获取用户注册标签列表接口",
+    "version": "1.0.0",
+    "group": "用户模块API",
+    "name": "获取用户注册标签列表",
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://127.0.0.1:8084/find/user/tags -H \"Content-Type: application/json;charset=UTF-8\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": true,
+            "field": "list",
+            "description": "<p>标签列表</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "id",
+            "description": "<p>标签id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "name",
+            "description": "<p>标签名称</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "HTTP/1.1 200 OK",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"获取用户标签列表成功\",\n\"data\": {\n\"list\": [\n{\n\"id\": 1,\n\"name\": \"颜值\"\n},\n{\n\"id\": 2,\n\"name\": \"吃货\"\n},\n{\n\"id\": 3,\n\"name\": \"篮球\"\n},\n{\n\"id\": 4,\n\"name\": \"学习\"\n},\n{\n\"id\": 5,\n\"name\": \"二次元\"\n},\n{\n\"id\": 6,\n\"name\": \"音乐\"\n},\n{\n\"id\": 7,\n\"name\": \"旅游\"\n},\n{\n\"id\": 8,\n\"name\": \"足球\"\n},\n{\n\"id\": 9,\n\"name\": \"游戏\"\n},\n{\n\"id\": 10,\n\"name\": \"影视\"\n}\n]\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/UserController.java",
+    "groupTitle": "用户模块API",
+    "sampleRequest": [
+      {
+        "url": "http://127.0.0.1:8084/find/user/tags"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "http://127.0.0.1:8084/find/user/{id}/blacklist?pageNum={pageNum}&pageSize={pageSize}",
     "title": "获取用户黑名单列表接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -6807,7 +8123,7 @@
       "examples": [
         {
           "title": "请求示例 查看用户举报类型",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://8.135.36.45:8084/find/user/1/blacklist?pageNum=1&pageSize=10",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://127.0.0.1:8084/find/user/1/blacklist?pageNum=1&pageSize=10",
           "type": "json"
         }
       ]
@@ -6893,7 +8209,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n\t\t{\n\t\t    \"status\": 200,\n\t\t    \"code\": 0,\n\t\t    \"msg\": \"获取用户黑名单列表成功。\",\n\t\t    \"data\": {\n\t\t        \"totalPage\": 2,\n\t\t        \"list\": [\n\t\t            {\n\t\t                \"id\": 12,\n\t\t                \"nickname\": \"陆蕙兰\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/12.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:25:27\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 11,\n\t\t                \"nickname\": \"商梓珊\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/11.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:51\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 10,\n\t\t                \"nickname\": \"赫飞雨\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/10.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:47\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 9,\n\t\t                \"nickname\": \"寒烟\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/09.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:42\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 7,\n\t\t                \"nickname\": \"勾高朗\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/07.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:30\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 6,\n\t\t                \"nickname\": \"慕蕊\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/06.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:24\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 5,\n\t\t                \"nickname\": \"庾音韵\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/05.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:19\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 4,\n\t\t                \"nickname\": \"覃星宇\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/04.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:14\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 3,\n\t\t                \"nickname\": \"致命德毒药\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/03.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:08\"\n\t\t            },\n\t\t            {\n\t\t                \"id\": 2,\n\t\t                \"nickname\": \"千柳\",\n\t\t                \"head\": \"http://8.135.36.45:8000/find/img/head/02.jpg\",\n\t\t                \"time\": \"2021年01月22日 15:24:02\"\n\t\t            }\n\t\t        ]\n\t\t    }\n\t\t}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"获取用户黑名单列表成功。\",\n\"data\": {\n\"totalPage\": 2,\n\"list\": [\n{\n\"id\": 12,\n\"nickname\": \"陆蕙兰\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/12.jpg\",\n\"time\": \"2021年01月22日 15:25:27\"\n},\n{\n\"id\": 11,\n\"nickname\": \"商梓珊\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/11.jpg\",\n\"time\": \"2021年01月22日 15:24:51\"\n},\n{\n\"id\": 10,\n\"nickname\": \"赫飞雨\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/10.jpg\",\n\"time\": \"2021年01月22日 15:24:47\"\n},\n{\n\"id\": 9,\n\"nickname\": \"寒烟\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/09.jpg\",\n\"time\": \"2021年01月22日 15:24:42\"\n},\n{\n\"id\": 7,\n\"nickname\": \"勾高朗\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/07.jpg\",\n\"time\": \"2021年01月22日 15:24:30\"\n},\n{\n\"id\": 6,\n\"nickname\": \"慕蕊\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/06.jpg\",\n\"time\": \"2021年01月22日 15:24:24\"\n},\n{\n\"id\": 5,\n\"nickname\": \"庾音韵\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/05.jpg\",\n\"time\": \"2021年01月22日 15:24:19\"\n},\n{\n\"id\": 4,\n\"nickname\": \"覃星宇\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/04.jpg\",\n\"time\": \"2021年01月22日 15:24:14\"\n},\n{\n\"id\": 3,\n\"nickname\": \"致命德毒药\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/03.jpg\",\n\"time\": \"2021年01月22日 15:24:08\"\n},\n{\n\"id\": 2,\n\"nickname\": \"千柳\",\n\"head\": \"http://8.135.36.45:8000/find/img/head/02.jpg\",\n\"time\": \"2021年01月22日 15:24:02\"\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -6954,12 +8270,12 @@
       "examples": [
         {
           "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\t\t\"status\": 404,\n\t\t\"code\": 200,\n\t\t\"msg\": \"接口未注册\",\n}",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
           "type": "json"
         },
         {
           "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\t\t\"status\": 500,\n\t\t\"code\": 205,\n\t\t\"msg\": \"服务器未响应\"\n}",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
           "type": "json"
         }
       ]
@@ -6968,13 +8284,648 @@
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/user/{id}/blacklist?pageNum={pageNum}&pageSize={pageSize}"
+        "url": "http://127.0.0.1:8084/find/user/{id}/blacklist?pageNum={pageNum}&pageSize={pageSize}"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "http://127.0.0.1:8084/find/user/professions",
+    "title": "获取行业和职业列表接口",
+    "version": "1.0.0",
+    "group": "用户模块API",
+    "name": "获取行业和职业列表接口",
+    "parameter": {
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://127.0.0.1:8084/find/user/professions -H \"Content-Type: application/json;charset=UTF-8\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": true,
+            "field": "list",
+            "description": "<p>行业列表</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "id",
+            "description": "<p>行业id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "name",
+            "description": "<p>行业名称</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例 行业和职业列表",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"获取用户注册行业和岗位信息列表成功\",\n\"data\": {\n\"list\": [\n{\n\"id\": 1,\n\"name\": \"计算机/互联网/通信/电子\",\n\"list\": [\n{\n\"id\": 1,\n\"name\": \"后端开发工程师\"\n},\n{\n\"id\": 2,\n\"name\": \"移动开发工程师\"\n},\n{\n\"id\": 3,\n\"name\": \"前端开发工程师\"\n},\n{\n\"id\": 4,\n\"name\": \"算法工程师\"\n},\n{\n\"id\": 5,\n\"name\": \"测试工程师\"\n},\n{\n\"id\": 6,\n\"name\": \"运维/技术支持\"\n},\n{\n\"id\": 7,\n\"name\": \"产品经理\"\n},\n{\n\"id\": 8,\n\"name\": \"运营\"\n},\n{\n\"id\": 9,\n\"name\": \"技术管理\"\n},\n{\n\"id\": 10,\n\"name\": \"电子商务\"\n},\n{\n\"id\": 11,\n\"name\": \"半导体/芯片\"\n},\n{\n\"id\": 12,\n\"name\": \"电子/电器/仪器仪表\"\n},\n{\n\"id\": 13,\n\"name\": \"通信技术开发及应用\"\n},\n{\n\"id\": 14,\n\"name\": \"项目管理\"\n}\n]\n},\n{\n\"id\": 2,\n\"name\": \"金融/银行/保险\",\n\"list\": [\n{\n\"id\": 15,\n\"name\": \"金融/投资/证券\"\n},\n{\n\"id\": 16,\n\"name\": \"银行\"\n},\n{\n\"id\": 17,\n\"name\": \"保险\"\n},\n{\n\"id\": 18,\n\"name\": \"信托/担保/拍卖/典当\"\n}\n]\n}\n]\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/UserController.java",
+    "groupTitle": "用户模块API",
+    "sampleRequest": [
+      {
+        "url": "http://127.0.0.1:8084/find/user/professions"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "http://127.0.0.1:8084/find/user/{id}/look",
+    "title": "鹿可模块推荐用户数据接口",
+    "version": "1.0.0",
+    "group": "用户模块API",
+    "name": "鹿可模块推荐用户数据",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "string",
+            "optional": false,
+            "field": "ip",
+            "description": "<p>客户端ip</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "double",
+            "optional": false,
+            "field": "longitude",
+            "description": "<p>定位（经度）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "double",
+            "optional": false,
+            "field": "latitude",
+            "description": "<p>定位（纬度）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "int",
+            "optional": true,
+            "field": "count",
+            "description": "<p>推荐用户数量，默认：10</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://127.0.0.1:8084/find/user/35/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&count=10 -H \"Content-Type: application/json;charset=UTF-8\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "object[]",
+            "optional": true,
+            "field": "list",
+            "description": "<p>鹿可用户列表</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "nickname",
+            "description": "<p>用户昵称</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "optional": true,
+            "field": "age",
+            "description": "<p>年龄</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "country",
+            "description": "<p>国家</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "province",
+            "description": "<p>省份</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "city",
+            "description": "<p>城市</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "district",
+            "description": "<p>区/县</p>"
+          },
+          {
+            "group": "200",
+            "type": "double",
+            "optional": true,
+            "field": "distance",
+            "description": "<p>距离（单位：米）</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "img",
+            "description": "<p>动态图片地址</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "HTTP/1.1 200 OK",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"list\": [\n{\n\"id\": 57,\n\"nickname\": \"孤烟丶\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"陕西省\",\n\"city\": \"西安市\",\n\"district\": \"新城区\",\n\"distance\": 1401785.0930982907,\n\"img\": \"http://127.0.0.1:9000/find/res/images/57/20200701/05.png\"\n},\n{\n\"id\": 51,\n\"nickname\": \"暮夏\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"江苏省\",\n\"city\": \"南京市\",\n\"district\": \"秦淮区\",\n\"distance\": 1165271.2196834162,\n\"img\": \"http://127.0.0.1:9000/find/res/images/51/20200503/03.png\"\n},\n{\n\"id\": 22,\n\"nickname\": \"曲终人散\",\n\"age\": 22,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"福田区\",\n\"distance\": 11630.023919958885,\n\"img\": \"http://127.0.0.1:9000/find/res/images/22/20200711/02.png\"\n},\n{\n\"id\": 10,\n\"nickname\": \"澡澡猫\",\n\"age\": 20,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"广州市\",\n\"district\": \"南沙区\",\n\"distance\": 50080.18515040895,\n\"img\": \"http://127.0.0.1:9000/find/res/images/10/20200722/01.png\"\n},\n{\n\"id\": 34,\n\"nickname\": \"白素杉\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"北京市\",\n\"city\": \"北京市\",\n\"district\": \"朝阳区\",\n\"distance\": 1961017.910353171,\n\"img\": \"http://127.0.0.1:9000/find/res/images/34/20200612/01.png\"\n},\n{\n\"id\": 68,\n\"nickname\": \"丶倾城\",\n\"age\": 23,\n\"country\": \"中国\",\n\"province\": \"上海市\",\n\"city\": \"上海市\",\n\"district\": \"普陀区\",\n\"distance\": 1224663.7761815006,\n\"img\": \"http://127.0.0.1:9000/find/res/images/68/20200819/04.png\"\n},\n{\n\"id\": 90,\n\"nickname\": \"黑喵\",\n\"age\": 23,\n\"country\": \"中国\",\n\"province\": \"湖北省\",\n\"city\": \"武汉市\",\n\"district\": \"汉南区\",\n\"distance\": 873505.2168993158,\n\"img\": \"http://127.0.0.1:9000/find/res/images/90/20201007/01.png\"\n},\n{\n\"id\": 37,\n\"nickname\": \"无所谓\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"北京市\",\n\"city\": \"北京市\",\n\"district\": \"海淀区\",\n\"distance\": 1960152.7662839654,\n\"img\": \"http://127.0.0.1:9000/find/res/images/37/20200626/01.png\"\n},\n{\n\"id\": 149,\n\"nickname\": \"洋洋12\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"坪山新区\",\n\"distance\": 46866.36032411066,\n\"img\": \"http://127.0.0.1:9000/find/res/images/149/20210610/1623324450475/28747ba1-d92b-42ef-9bf1-d18a50eecb88.jpg\"\n},\n{\n\"id\": 91,\n\"nickname\": \"桃子\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"四川省\",\n\"city\": \"成都市\",\n\"district\": \"锦江区\",\n\"distance\": 1340238.1195277926,\n\"img\": \"http://127.0.0.1:9000/find/res/images/91/20201117/02.png\"\n}\n]\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/UserController.java",
+    "groupTitle": "用户模块API",
+    "sampleRequest": [
+      {
+        "url": "http://127.0.0.1:8084/find/user/{id}/look"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "http://127.0.0.1:8084/find/user/{id}/look-details",
+    "title": "鹿可模块推荐用户详情接口",
+    "version": "1.0.0",
+    "group": "用户模块API",
+    "name": "鹿可模块推荐用户详情",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "long",
+            "optional": false,
+            "field": "detailsUserId",
+            "description": "<p>用户详情id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://127.0.0.1:8084/find/user/35/look-details?detailsUserId=65 -H \"Content-Type: application/json;charset=UTF-8\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "size": "..255",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "long",
+            "optional": true,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "string[]",
+            "size": "1..6",
+            "optional": true,
+            "field": "attacheList",
+            "description": "<p>动态图片列表，最多6张</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "nickname",
+            "description": "<p>昵称</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "constellation",
+            "description": "<p>星座</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "gender",
+            "description": "<p>性别，0-&gt;女，1-&gt;男</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "optional": true,
+            "field": "age",
+            "description": "<p>年龄</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "industry",
+            "description": "<p>行业</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "profession",
+            "description": "<p>职业</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "country",
+            "description": "<p>国家</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "province",
+            "description": "<p>省份</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "city",
+            "description": "<p>城市</p>"
+          },
+          {
+            "group": "200",
+            "type": "string",
+            "optional": true,
+            "field": "district",
+            "description": "<p>区/县</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "HTTP/1.1 200 OK",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"id\": 65,\n\"attacheList\": [\n\"http://127.0.0.1:9000/find/res/images/65/20201113/04.png\",\n\"http://127.0.0.1:9000/find/res/images/65/20201113/05.png\",\n\"http://127.0.0.1:9000/find/res/images/65/20201107/09.png\",\n\"http://127.0.0.1:9000/find/res/images/65/20201107/010.png\",\n\"http://127.0.0.1:9000/find/res/images/65/20201024/012.png\",\n\"http://127.0.0.1:9000/find/res/images/65/20201024/06.png\"\n],\n\"nickname\": \"兰烬\",\n\"constellation\": \"金牛座\",\n\"gender\": \"0\",\n\"age\": 23,\n\"industry\": \"计算机/互联网/通信/电子\",\n\"profession\": \"后端开发工程师\",\n\"country\": \"中国\",\n\"province\": \"上海市\",\n\"city\": \"上海市\",\n\"district\": \"徐汇区\"\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "int",
+            "size": "0-65535",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "long",
+            "size": "0-500",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/UserController.java",
+    "groupTitle": "用户模块API",
+    "sampleRequest": [
+      {
+        "url": "http://127.0.0.1:8084/find/user/{id}/look-details"
       }
     ]
   },
   {
     "type": "post",
-    "url": "http://8.135.36.45:8084/find/order/{id}/mobile/create",
+    "url": "http://127.0.0.1:8084/find/order/{id}/mobile/create",
     "title": "创建预支付订单接口",
     "version": "1.0.0",
     "group": "订单模块API",
@@ -7015,12 +8966,12 @@
       "examples": [
         {
           "title": "请求示例01（微信支付）",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST http://8.135.36.45:8084/find/order/1/mobile/create -H \"Content-Type:application/json;charset=utf-8\" -d '{\"pid\":1, \"mode\":0, \"ip\":\"127.0.0.1\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST http://127.0.0.1:8084/find/order/1/mobile/create -H \"Content-Type:application/json;charset=utf-8\" -d '{\"pid\":1, \"mode\":0, \"ip\":\"127.0.0.1\"}'",
           "type": "json"
         },
         {
           "title": "请求示例02（支付宝支付）",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST http://8.135.36.45:8084/find/order/1/mobile/create -H \"Content-Type:application/json;charset=utf-8\" -d '{\"pid\":1, \"mode\":1, \"ip\":\"127.0.0.1\"}'",
+          "content": "HTTP/1.1 OK\ncurl -v -X POST http://127.0.0.1:8084/find/order/1/mobile/create -H \"Content-Type:application/json;charset=utf-8\" -d '{\"pid\":1, \"mode\":1, \"ip\":\"127.0.0.1\"}'",
           "type": "json"
         }
       ]
@@ -7272,13 +9223,13 @@
     "groupTitle": "订单模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/order/{id}/mobile/create"
+        "url": "http://127.0.0.1:8084/find/order/{id}/mobile/create"
       }
     ]
   },
   {
     "type": "get",
-    "url": "http://8.135.36.45:8084/find/order/{id}/product/list",
+    "url": "http://127.0.0.1:8084/find/order/{id}/product/list",
     "title": "获取充值商品列表接口",
     "version": "1.0.0",
     "group": "订单模块API",
@@ -7298,7 +9249,7 @@
       "examples": [
         {
           "title": "请求示例03（手机号码和客户端IP登录）",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET http://8.135.36.45:8084/find/order/1/product/list",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET http://127.0.0.1:8084/find/order/1/product/list",
           "type": "json"
         }
       ]
@@ -7489,7 +9440,7 @@
     "groupTitle": "订单模块API",
     "sampleRequest": [
       {
-        "url": "http://8.135.36.45:8084/find/order/{id}/product/list"
+        "url": "http://127.0.0.1:8084/find/order/{id}/product/list"
       }
     ]
   }

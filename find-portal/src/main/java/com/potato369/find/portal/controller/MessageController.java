@@ -25,7 +25,7 @@ public class MessageController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/message/{id}/all 分页获取消息界面点赞和申请加微信消息列表接口
+     * @api {get} http://127.0.0.1:8084/find/message/{id}/all 分页获取消息界面点赞和申请加微信消息列表接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取消息界面点赞和申请加微信消息列表
@@ -34,7 +34,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X GET "http://8.135.36.45:8084/find/message/29/all?pageNum=1&pageSize=20" -H "accept: application/json"
+     * curl -v -X GET "http://127.0.0.1:8084/find/message/29/all?pageNum=1&pageSize=20" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -180,7 +180,7 @@ public class MessageController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/message/{id}/likes 分页获取点赞消息列表接口
+     * @api {get} http://127.0.0.1:8084/find/message/{id}/likes 分页获取点赞消息列表接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取点赞消息列表
@@ -189,7 +189,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X GET "http://8.135.36.45:8084/find/message/29/likes?pageNum=1&pageSize=20" -H "accept: application/json"
+     * curl -v -X GET "http://127.0.0.1:8084/find/message/29/likes?pageNum=1&pageSize=20" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -472,7 +472,7 @@ public class MessageController {
     }
 
     /**
-     * @api {get} http://8.135.36.45:8084/find/message/{id1}/{id2}/messages 分页获取消息历史记录列表接口
+     * @api {get} http://127.0.0.1:8084/find/message/{id1}/{id2}/messages 分页获取消息历史记录列表接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取消息历史记录列表
@@ -482,7 +482,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X GET "http://8.135.36.45:8084/find/message/138/139/messages?pageNum=1&pageSize=20" -H "accept: application/json"
+     * curl -v -X GET "http://127.0.0.1:8084/find/message/138/139/messages?pageNum=1&pageSize=20" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -583,7 +583,7 @@ public class MessageController {
     }
 
     /**
-     * @api {post} http://8.135.36.45:8084/find/message/{id}/send 发送消息接口
+     * @api {post} http://127.0.0.1:8084/find/message/{id}/send 发送消息接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 发送消息
@@ -592,7 +592,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {string} content 消息内容
      * @apiParamExample {json} 请求示例 发送消息
      * HTTP/1.1 OK
-     * curl -v -X POST "http://8.135.36.45:8084/find/message/60/send?messageId=25&content=可以申请加你的微信吗？" -H "accept: application/json"
+     * curl -v -X POST "http://127.0.0.1:8084/find/message/60/send?messageId=25&content=可以申请加你的微信吗？" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -610,7 +610,7 @@ public class MessageController {
      * }
      * @apiParamExample {json} 请求示例 回复消息
      * HTTP/1.1 OK
-     * curl -v -X POST "http://8.135.36.45:8084/find/message/29/send?messageId=2&content=可以申请加你的微信吗？" -H "accept: application/json"
+     * curl -v -X POST "http://127.0.0.1:8084/find/message/29/send?messageId=2&content=可以申请加你的微信吗？" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -667,14 +667,14 @@ public class MessageController {
     }
 
     /**
-     * @api {put} http://8.135.36.45:8084/find/message/{id}/updateAll 全部消息已读接口
+     * @api {put} http://127.0.0.1:8084/find/message/{id}/updateAll 全部消息已读接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 全部消息已读
      * @apiParam (接口请求参数) {long} id 消息接收者用户id
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://8.135.36.45:8084/find/message/60/updateAll" -H "accept: application/json"
+     * curl -v -X PUT "http://127.0.0.1:8084/find/message/60/updateAll" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -730,7 +730,7 @@ public class MessageController {
 
 
     /**
-     * @api {delete} http://8.135.36.45:8084/find/message/{id1}/delete 删除申请加微信消息记录接口
+     * @api {delete} http://127.0.0.1:8084/find/message/{id1}/delete 删除申请加微信消息记录接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 删除申请加微信消息记录
@@ -738,7 +738,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {long} id2 消息发送者用户id
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://8.135.36.45:8084/find/message/60/delete?id2=28" -H "accept: application/json"
+     * curl -v -X PUT "http://127.0.0.1:8084/find/message/60/delete?id2=28" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -794,7 +794,7 @@ public class MessageController {
     }
 
     /**
-     * @api {delete} http://8.135.36.45:8084/find/message/{id}/deleteLikes 删除点赞消息记录接口
+     * @api {delete} http://127.0.0.1:8084/find/message/{id}/deleteLikes 删除点赞消息记录接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 删除点赞消息记录
@@ -802,7 +802,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {long} messageId 消息记录id
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://8.135.36.45:8084/find/message/60/deleteLikes?messageId=28" -H "accept: application/json"
+     * curl -v -X PUT "http://127.0.0.1:8084/find/message/60/deleteLikes?messageId=28" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -858,7 +858,7 @@ public class MessageController {
     }
 
     /**
-     * @api {put} http://8.135.36.45:8084/find/message/{id}/reply 回复申请加微信消息记录接口
+     * @api {put} http://127.0.0.1:8084/find/message/{id}/reply 回复申请加微信消息记录接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 回复申请加微信消息记录
@@ -869,7 +869,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {string} [weChatId] 微信号
      * @apiParamExample {json} 请求示例 回复申请加微信消息（拒绝）
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://8.135.36.45:8084/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！" -H "accept: application/json"
+     * curl -v -X PUT "http://127.0.0.1:8084/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -887,7 +887,7 @@ public class MessageController {
      * }
      * @apiParamExample {json} 请求示例 回复申请加微信消息（同意）
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://8.135.36.45:8084/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a" -H "accept: application/json"
+     * curl -v -X PUT "http://127.0.0.1:8084/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
