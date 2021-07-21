@@ -12,7 +12,7 @@ import java.util.Arrays;
  * <pre>
  * @PackageName com.potato369.answer.basic.config.processor
  * @ClassName FeignBeanFactoryPostProcessor
- * @Desc 	出现异常：org.springframework.beans.factory.BeanCreationNotAllowedException: Error creating bean with name 'eurekaAutoServiceRegistration': Singleton bean creation not allowed while singletons of this factory are in destruction (Do not request a bean from a BeanFactory in a destroy method implementation!)
+ * @Desc 出现异常：org.springframework.beans.factory.BeanCreationNotAllowedException: Error creating bean with name 'eurekaAutoServiceRegistration': Singleton bean creation not allowed while singletons of this factory are in destruction (Do not request a bean from a BeanFactory in a destroy method implementation!)
  * 		 	参考借鉴解决：https://blog.csdn.net/yudianxiaoxiao/article/details/93674293
  * 		  	问题描述：根本原因是当关闭ApplicationContext时，它会销毁所有单例bean，首先销毁eurekaAutoServiceRegistration，然后是feignContext。当破坏feignContext时，它将关闭与每个FeignClient关联的ApplicationContext。由于eurekaAutoServiceRegistration侦听ContextClosedEvent，因此这些事件将被发送到该bean。不幸的是因为它已被破坏，所以我们得到了上述异常（尝试在破坏中创建bean）。
  * @WebSite https://www.potato369.com

@@ -1,11 +1,10 @@
 package com.potato369.find.portal.config;
 
+import com.potato369.find.portal.config.bean.FeignSpringFormEncoder;
 import feign.codec.Encoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
-
-import com.potato369.find.portal.config.bean.FeignSpringFormEncoder;
 
 /**
  * author：YZH
@@ -13,7 +12,7 @@ import com.potato369.find.portal.config.bean.FeignSpringFormEncoder;
  * https://www.cnblogs.com/cq-yangzhou/p/10791008.html
  **/
 public class FeignMultipartSupportConfig {
-	
+
     @Bean
     @Primary
     @Scope("prototype")

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * author：YZH
@@ -21,14 +22,14 @@ import java.util.Map;
  * https://www.cnblogs.com/cq-yangzhou/p/10791008.html
  **/
 public class FeignSpringFormEncoder extends FormEncoder {
-	
+
     public FeignSpringFormEncoder() {
         this(new Default());
     }
-    
+
     public FeignSpringFormEncoder(Encoder delegate) {
         super(delegate);
-        MultipartFormContentProcessor processor = (MultipartFormContentProcessor)this.getContentProcessor(ContentType.MULTIPART);
+        MultipartFormContentProcessor processor = (MultipartFormContentProcessor) this.getContentProcessor(ContentType.MULTIPART);
         processor.addWriter(new SpringSingleMultipartFileWriter());
         processor.addWriter(new SpringManyMultipartFilesWriter());
     }
@@ -39,10 +40,11 @@ public class FeignSpringFormEncoder extends FormEncoder {
             Map<String, Object> data = Collections.singletonMap(file.getName(), object);
             super.encode(data, MAP_STRING_WILDCARD, template);
             return;
-        } else if (bodyType.equals(MultipartFile[].class)) {
+        }
+        if (bodyType.equals(MultipartFile[].class)) {
             MultipartFile[] file = (MultipartFile[]) object;
-            if(file != null) {
-                Map<String, Object> data = Collections.singletonMap(file.length==0?"":file[0].getName(), object);
+            if (!Objects.isNull(file)) {
+                Map<String, Object> data = Collections.singletonMap(file.length == 0 ? "" : file[0].getName(), object);
                 super.encode(data, MAP_STRING_WILDCARD, template);
                 return;
             }
