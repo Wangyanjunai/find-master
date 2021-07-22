@@ -150,7 +150,7 @@ public class DynamicController {
     public CommonResult<Map<String, Object>> release(
             @PathVariable(name = "id") Long userId,
             DynamicDTO dynamicDTO,
-            @RequestPart(name = "files", required = false) MultipartFile[] files) {// 附件列表
+            @RequestPart(value = "files", required = false) MultipartFile[] files) {// 附件列表
         Map<String, Object> result = new ConcurrentHashMap<>();
         result.put("RELEASED", "FAILED");
         try {

@@ -12,39 +12,69 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
- * author：YZH time: 2019/4/29 15:35 description: 多文件上传配置
- * https://www.cnblogs.com/cq-yangzhou/p/10791008.html
- **/
+ * @author nianyu
+ * 支持多文件上传配置
+ * 参考：https://blog.csdn.net/ww_run/article/details/111400739
+ */
 public class FeignSpringFormEncoder extends FormEncoder {
-	public FeignSpringFormEncoder() {
-		this(new Default());
-	}
+    public FeignSpringFormEncoder() {
+        this(new Default());
+    }
 
-	public FeignSpringFormEncoder(Encoder delegate) {
-		super(delegate);
-		MultipartFormContentProcessor processor = (MultipartFormContentProcessor) this
-				.getContentProcessor(ContentType.MULTIPART);
-		processor.addWriter(new SpringSingleMultipartFileWriter());
-		processor.addWriter(new SpringManyMultipartFilesWriter());
-	}
+    public FeignSpringFormEncoder(Encoder delegate) {
+        super(delegate);
+        MultipartFormContentProcessor processor = (MultipartFormContentProcessor) this.getContentProcessor(ContentType.MULTIPART);
+        processor.addFirstWriter(new SpringSingleMultipartFileWriter());
+        processor.addFirstWriter(new SpringManyMultipartFilesWriter());
+    }
 
-	public void encode(Object object, Type bodyType, RequestTemplate template) throws EncodeException {
-		if (bodyType.equals(MultipartFile.class)) {
-			MultipartFile file = (MultipartFile) object;
-			Map<String, Object> data = Collections.singletonMap(file.getName(), object);
-			super.encode(data, MAP_STRING_WILDCARD, template);
-			return;
-		} else if (bodyType.equals(MultipartFile[].class)) {
-			MultipartFile[] file = (MultipartFile[]) object;
-			if (file != null) {
-				Map<String, Object> data = Collections.singletonMap(file.length == 0 ? "" : file[0].getName(), object);
-				super.encode(data, MAP_STRING_WILDCARD, template);
-				return;
-			}
-		}
-		super.encode(object, bodyType, template);
-	}
+    @Override
+    public void encode(Object object, Type bodyType, RequestTemplate template) throws EncodeException {
+        HashMap data;
+        if (bodyType.equals(MultipartFile[].class)) {
+            MultipartFile[] files = (MultipartFile[]) object;
+            data = new HashMap(files.length, 1.0F);
+            //这里也可以写别的处理逻辑
+            if (files != null && files.length > 0) {
+                data.put(files[0].getName(), files);
+                super.encode(data, MAP_STRING_WILDCARD, template);
+            } else {
+                super.encode(object, bodyType, template);
+            }
+
+        } else if (bodyType.equals(MultipartFile.class)) {
+            MultipartFile file = (MultipartFile) object;
+            Map<String, Object> data1 = Collections.singletonMap(file.getName(), object);
+            super.encode(data1, MAP_STRING_WILDCARD, template);
+        } else if (this.isMultipartFileCollection(object)) {
+            Iterable<?> iterable = (Iterable) object;
+            data = new HashMap();
+            Iterator var13 = iterable.iterator();
+
+            while (var13.hasNext()) {
+                Object item = var13.next();
+                MultipartFile file = (MultipartFile) item;
+                data.put(file.getName(), file);
+            }
+            super.encode(data, MAP_STRING_WILDCARD, template);
+        } else {
+            super.encode(object, bodyType, template);
+        }
+    }
+
+    private boolean isMultipartFileCollection(Object object) {
+        if (!(object instanceof Iterable)) {
+            return false;
+        } else {
+            Iterable<?> iterable = (Iterable) object;
+            Iterator<?> iterator = iterable.iterator();
+            return iterator.hasNext() && iterator.next() instanceof MultipartFile;
+        }
+    }
+
 }
