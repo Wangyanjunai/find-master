@@ -99,7 +99,7 @@
     reserve_column03, reserve_column04
     </sql>
     <sql id="Location_Column_List">
-        country, province, city, district, other
+        country, province, city, district, other, longitude, latitude
     </sql>
     <select id="selectByExample" parameterType="com.potato369.find.mbg.model.DynamicExample" resultMap="BaseResultMap">
         select

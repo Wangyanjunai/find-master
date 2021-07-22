@@ -20,7 +20,7 @@ public interface DynamicService {
 
     CommonResult<Map<String, Object>> updateDynamic(LocationDTO locationDTO, DynamicDTO dynamicDTO) throws Exception;
 
-    DynamicDTO getLocation(LocationDTO locationDTO, User user);
+    DynamicDTO getLocation(LocationDTO locationDTO);
 
     DynamicDTO getLocationByIp(LocationDTO locationDTO);
 

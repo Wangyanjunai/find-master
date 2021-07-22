@@ -45,7 +45,7 @@ public class DynamicInfo implements Serializable {
     @ApiModelProperty(value = "分享数")
     private Integer shares;
 
-    @ApiModelProperty(value = "附件类型，0->文本；1->图片；2->音频，默认：0->文本")
+    @ApiModelProperty(value = "动态附件类型：1->图片，2->语音，0->文字（不包含附件的纯文字），必需传参数")
     private String attacheType;
 
     @ApiModelProperty(value = "附件数量")

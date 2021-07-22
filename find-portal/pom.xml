@@ -98,11 +98,6 @@
             <groupId>io.github.openfeign.form</groupId>
             <artifactId>feign-form-spring</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-        </dependency>
     </dependencies>
     <build>
         <finalName>find-portal-8084</finalName>

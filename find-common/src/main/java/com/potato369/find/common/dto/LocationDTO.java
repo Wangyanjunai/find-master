@@ -30,7 +30,7 @@ public class LocationDTO extends AbstractDTO {
     @JsonProperty(value = "userId")
     private Long userId;
 
-    @ApiModelProperty(value = "外网IP")
+    @ApiModelProperty(value = "客户端IP")
     @JSONField(name = "ip")
     @JsonProperty(value = "ip")
     private String ip;

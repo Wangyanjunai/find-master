@@ -418,7 +418,7 @@ public class UserController {
             @RequestParam(name = "tag5", required = false) @ApiParam("标签5") String tag5, // tag5：标签5编号
             @RequestParam(name = "autograph", required = false) @ApiParam("签名/动态内容") String autograph, // autograph：签名/动态内容
             @RequestPart(value = "head", required = true) @ApiParam("头像图片文件") MultipartFile head) { // head：头像图片文件
-        log.info("phone={}, ip={}, gender={}, platform={}, nickname={}, weixinId={}, imei={}, model={}, sysName={}, sysCode={}, networkMode={}, year={}, month={}, date={}, constellation={}, country={}, province={}, city={}, autograph={}, head={}", phone, ip, gender, platform, nickname, weixinId, imei, model, sysName, sysCode, networkMode, year, month, date, constellation, country, province, city, autograph, head);
+//        log.info("phone={}, ip={}, gender={}, platform={}, nickname={}, weixinId={}, imei={}, model={}, sysName={}, sysCode={}, networkMode={}, year={}, month={}, date={}, constellation={}, country={}, province={}, city={}, autograph={}, head={}", phone, ip, gender, platform, nickname, weixinId, imei, model, sysName, sysCode, networkMode, year, month, date, constellation, country, province, city, autograph, head);
         return this.userFeignClient.register(phone, gender, platform, nickname, weixinId, imei, model, sysName, sysCode, networkMode, year, month, date, constellation, ip, country, province, city, district, other, longitude, latitude, professionId, tag1, tag2, tag3, tag4, tag5, autograph, head);
     }
 

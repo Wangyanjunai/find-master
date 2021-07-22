@@ -196,6 +196,7 @@ public class DynamicServiceImpl implements DynamicService {
             } else {
                 dynamicInfo.setAttacheNumber(0);
             }
+            dynamicInfo.setAttacheType(dynamicDTO.getAttacheInfoDataType());
             result2 = this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
             if (!Objects.isNull(files) && files.length > 0) {
                 String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
@@ -328,21 +329,15 @@ public class DynamicServiceImpl implements DynamicService {
     //获取定位地址
     @Override
     @Transactional(readOnly = true)
-    public DynamicDTO getLocation(LocationDTO locationDTO, User user) {
-        DynamicDTO dynamicDTOTmp = this.getLocationByIp(locationDTO);
-        String country2 = dynamicDTOTmp.getCountry();
-        String province2 = dynamicDTOTmp.getProvince();
-        String city2 = dynamicDTOTmp.getCity();
-        if (!StrUtil.isAllEmpty(country2, province2, city2)) {
-            dynamicDTOTmp.setCountry(country2);
-            dynamicDTOTmp.setProvince(province2);
-            dynamicDTOTmp.setCity(city2);
-        } else {
-            dynamicDTOTmp.setCountry(user.getCountry());
-            dynamicDTOTmp.setProvince(user.getProvince());
-            dynamicDTOTmp.setCity(user.getCity());
-        }
+    public DynamicDTO getLocation(LocationDTO locationDTO) {
+        DynamicDTO dynamicDTOTmp = new DynamicDTO();
+        LocationDTO locationDTO02 = this.getLocationByAliyunIP(locationDTO.getIp());
+        BeanUtils.copyProperties(locationDTO02, dynamicDTOTmp);
         return dynamicDTOTmp;
+    }
+
+    public LocationDTO getLocationByAliyunIP(String ip) {
+        return IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), ip);
     }
 
     //根据客户端ip获取定位地址
@@ -420,40 +415,46 @@ public class DynamicServiceImpl implements DynamicService {
         String country = locationDTO.getCountry();
         String province = locationDTO.getProvince();
         String city = locationDTO.getCity();
+        String district = locationDTO.getDistrict();
+        String other = locationDTO.getOther();
+        String longitudeString = null;
+        Double longitude = locationDTO.getLongitude();
+        if (!Objects.isNull(longitude)) {
+            longitudeString = String.valueOf(longitude);
+        }
+        String latitudeString = null;
+        Double latitude = locationDTO.getLatitude();
+        if (!Objects.isNull(latitude)) {
+            latitudeString = String.valueOf(latitude);
+        }
         DynamicDTO dynamicDTOTmp = DynamicDTO.builder().build();
-        if (StrUtil.isAllNotEmpty(ip, country, province, city)) {
+        if (StrUtil.isAllNotEmpty(country, province, city, longitudeString, latitudeString)) {
             dynamicDTOTmp.setCountry(country);
             dynamicDTOTmp.setProvince(province);
             dynamicDTOTmp.setCity(city);
+            dynamicDTOTmp.setDistrict(district);
+            dynamicDTOTmp.setOther(other);
+            dynamicDTOTmp.setLongitude(longitude);
+            dynamicDTOTmp.setLatitude(latitude);
         } else {
             if (StrUtil.isNotEmpty(ip)) {
-                dynamicDTOTmp = this.getLocation(locationDTO, user);
-            }
-            if (StrUtil.isAllNotEmpty(country, province, city)) {
-                dynamicDTOTmp.setCountry(country);
-                dynamicDTOTmp.setProvince(province);
-                dynamicDTOTmp.setCity(city);
+                dynamicDTOTmp = this.getLocation(locationDTO);
             }
         }
-        Long userIdLong = user.getId();
-        // 上一次发布动态定位地址
-        DynamicLocation dynamicLocation = this.dynamicMapperReader.selectByUserId(userIdLong);
-        if (dynamicDTOTmp != null && dynamicLocation != null) {
-            if (StrUtil.isNotEmpty(dynamicLocation.getCountry())
-                    && StrUtil.isNotEmpty(dynamicDTOTmp.getCountry())
-                    && StrUtil.isNotEmpty(dynamicLocation.getProvince())
-                    && StrUtil.isNotEmpty(dynamicDTOTmp.getProvince())
-                    && StrUtil.isNotEmpty(dynamicLocation.getCity())
-                    && StrUtil.isNotEmpty(dynamicDTOTmp.getCity())) {
-                return !dynamicDTOTmp.getCountry().equals(dynamicLocation.getCountry())
-                        || !dynamicDTOTmp.getProvince().equals(dynamicLocation.getProvince())
-                        || !dynamicDTOTmp.getCity().equals(dynamicLocation.getCity());
-            } else {
-                return true;
-            }
-        } else {
-            return dynamicDTOTmp != null || dynamicLocation != null;
+        DynamicLocation newDynamicLocation = DynamicLocation.builder().build();
+        BeanUtils.copyProperties(dynamicDTOTmp, newDynamicLocation);
+
+        DynamicLocation oldDynamicLocation = new DynamicLocation();
+        // 获取上一次发布动态定位地址
+        DynamicInfoExample dynamicInfoExample = new DynamicInfoExample();
+        dynamicInfoExample.setOrderByClause("id DESC, create_time DESC");
+        dynamicInfoExample.createCriteria().andUserIdEqualTo(user.getId());
+        List<DynamicInfo> dynamicInfoList = this.dynamicInfoMapperReader.selectByExample(dynamicInfoExample);
+        if (!Objects.isNull(dynamicInfoList) && !dynamicInfoList.isEmpty()) {
+            DynamicInfo dynamicInfo = dynamicInfoList.get(0);
+            BeanUtils.copyProperties(dynamicInfo, oldDynamicLocation);
         }
+        return !Objects.deepEquals(newDynamicLocation, oldDynamicLocation);
     }
 
     @Override
@@ -489,7 +490,6 @@ public class DynamicServiceImpl implements DynamicService {
     @Transactional(readOnly = true)
     public Map<String, Object> getDynamicInfoData(Long userId, DynamicInfoParam dynamicInfoParam, Integer pageNum, Integer pageSize) {
         Map<String, Object> data = new ConcurrentHashMap<>();
-        log.info("dynamicInfoParam={}", dynamicInfoParam);
         final PageInfo<DynamicInfoData> listPageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectDynamicInfoData(dynamicInfoParam));
         data.put("totalPage", listPageInfo.getPages());

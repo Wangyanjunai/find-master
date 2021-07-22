@@ -8,7 +8,6 @@ import com.potato369.find.common.dto.DynamicDTO;
 import com.potato369.find.common.dto.DynamicLocationDTO;
 import com.potato369.find.common.dto.LocationDTO;
 import com.potato369.find.common.enums.*;
-import com.potato369.find.common.exception.UserAuthorizeException;
 import com.potato369.find.common.utils.CopyUtil;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.utils.FileTypeUtil;
@@ -250,33 +249,38 @@ public class DynamicController {
     //检测用户发布动态定位是否发生改变
     @PostMapping(value = "/{id}/checkLocation.do")
     public CommonResult<Map<String, Object>> checkLocation(
-            @PathVariable(name = "id", required = true) Long userIdLong,
+            @PathVariable(name = "id") Long userIdLong,
             @RequestBody LocationDTO locationDTO) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         try {
             if (log.isDebugEnabled()) {
-                log.debug("开始检查");
+                log.debug("开始检测用户发布动态定位");
             }
-            boolean b = false;
             User user = this.userMapperReader.selectByPrimaryKey(userIdLong);
-            if (user == null) {
-                return CommonResult.validateFailed("检查失败，用户信息不存在。");
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
-            if (StrUtil.isAllEmpty(locationDTO.getIp(), locationDTO.getCountry(), locationDTO.getProvince(), locationDTO.getCity())) {
-                return CommonResult.validateFailed("检查失败，客户端IP，发布动态定位（国）、（省）、（市）不能同时不传或者为空。");
+            String longitudeString = null;
+            Double longitude = locationDTO.getLongitude();
+            if (!Objects.isNull(longitude)) {
+                longitudeString = String.valueOf(longitude);
             }
-            b = this.dynamicService.checkLocationIsUpdate(locationDTO, user);
-            data.put("CHANGED", b);
-            return CommonResult.success(data, "检查成功。");
-        } catch (UserAuthorizeException e) {
-            log.error("检查出错，用户信息不存在或者用户状态异常", e);
-            return CommonResult.failed(ResultCode.USER_IS_NOT_EXIST);
+            String latitudeString = null;
+            Double latitude = locationDTO.getLatitude();
+            if (!Objects.isNull(latitude)) {
+                latitudeString = String.valueOf(latitude);
+            }
+            if (StrUtil.isAllEmpty(locationDTO.getIp(), locationDTO.getCountry(), locationDTO.getProvince(), locationDTO.getCity(), locationDTO.getDistrict(), locationDTO.getOther(), longitudeString, latitudeString)) {
+                return CommonResult.validateFailed("参数校验不通过，客户端IP，发布动态定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）不能同时为空。");
+            }
+            data.put("CHANGED", this.dynamicService.checkLocationIsUpdate(locationDTO, user));
+            return CommonResult.success(data, "检测用户发布动态定位成功。");
         } catch (Exception e) {
-            log.error("检查出错", e);
-            return CommonResult.failed("检查失败。");
+            log.error("检测用户发布动态定位出错", e);
+            return CommonResult.failed("检测用户发布动态定位失败。");
         } finally {
             if (log.isDebugEnabled()) {
-                log.debug("结束检查");
+                log.debug("结束检测用户发布动态定位");
             }
         }
     }

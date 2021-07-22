@@ -40,7 +40,7 @@ public interface DynamicService {
             @RequestParam(name = "content", required = false) String content);
 
     @PostMapping(value = "/find/v1/dynamic/{id}/checkLocation.do")
-    CommonResult<Map<String, Object>> checkLocation(@PathVariable(name = "id") Long userIdLong, @RequestBody(required = false) LocationDTO locationDTO);
+    CommonResult<Map<String, Object>> checkLocation(@PathVariable(name = "id") Long userIdLong, @RequestBody LocationDTO locationDTO);
 
     @PostMapping(value = "/find/v1/dynamic/{id}/updateLocation.do")
     CommonResult<Map<String, Object>> updateLocation(@PathVariable(name = "id") Long userIdLong, @RequestBody LocationDTO locationDTO);
@@ -87,13 +87,13 @@ public interface DynamicService {
     //远程调用发表评论
     @PostMapping("/find/v1/comment/{id}/release.do")
     CommonResult<Map<String, Object>> releaseComment(@PathVariable(name = "id") Long userId,
-                                              @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
-                                              @RequestParam(name = "content") String content);
+                                                     @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
+                                                     @RequestParam(name = "content") String content);
 
     //远程调用删除评论
     @DeleteMapping("/find/v1/comment/{id}/delete.do")
     CommonResult<Map<String, Object>> deleteComment(@PathVariable(name = "id") Long userId,
-                                             @RequestParam(name = "commentId") Long commentId);
+                                                    @RequestParam(name = "commentId") Long commentId);
 
     //远程调用分页查询某条动态内容的所有评论详情数据
     @GetMapping("/find/v1/comment/{id}/query.do")
@@ -106,6 +106,6 @@ public interface DynamicService {
     //远程调用点赞/取消点赞评论（修改评论）
     @PutMapping("/find/v1/comment/{id}/likes.do")
     CommonResult<Map<String, Object>> likesComment(@PathVariable(name = "id") Long userId,
-                                            @RequestParam(name = "commentId") Long commentId,
-                                            @RequestParam(name = "type") String type);
+                                                   @RequestParam(name = "commentId") Long commentId,
+                                                   @RequestParam(name = "type") String type);
 }

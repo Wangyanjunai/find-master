@@ -472,41 +472,28 @@ public class DynamicServiceImpl implements DynamicService {
     @Override
     @Transactional(readOnly = false)
     public int release(User user, DynamicDTO dynamicDTO, String fileName) {
-        // 附件文件数据类型
-        String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
-        // 用户id
-        Long userIdLong = dynamicDTO.getUserId();
         Dynamic dynamic = new Dynamic();
-        String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
-        BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
+        BeanUtils.copyProperties(dynamicDTO, dynamic);
         dynamic.setNickName(user.getNickName());
         dynamic.setUserId(user.getId());
         //动态信息入库
         int a = this.dynamicMapperWriter.insertSelective(dynamic);
-        //动态内容信息
+
         DynamicInfo dynamicInfo = new DynamicInfo();
-        dynamicInfo.setAttacheType(attacheInfoDataType);
-        dynamicInfo.setAttacheNumber(1);
-        dynamicInfo.setDynamicId(dynamic.getId());
-        dynamicInfo.setContent(dynamicDTO.getContent());
-        dynamicInfo.setPublicStatus(dynamicDTO.getPublicStatus());
-        dynamicInfo.setUserId(userIdLong);
-        dynamicInfo.setCountry(dynamicDTO.getCountry());
-        dynamicInfo.setProvince(dynamicDTO.getProvince());
-        dynamicInfo.setCity(dynamicDTO.getCity());
-        dynamicInfo.setDistrict(dynamicDTO.getDistrict());
-        dynamicInfo.setOther(dynamicDTO.getOther());
-        dynamicInfo.setLongitude(dynamicDTO.getLongitude());
-        dynamicInfo.setLatitude(dynamicDTO.getLatitude());
+        BeanUtils.copyProperties(dynamicDTO, dynamicInfo);
+        dynamicInfo.setAttacheType(dynamicDTO.getAttacheInfoDataType());
+        dynamicInfo.setUserId(dynamicDTO.getUserId());
         //动态内容信息入库
         int b = this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
+
         AttacheInfo attacheInfo = new AttacheInfo();
         attacheInfo.setDynamicInfoBy(dynamicInfo.getId());// 动态内容id
-        attacheInfo.setDataType(attacheInfoDataType); // 附件类型
+        attacheInfo.setDataType(dynamicDTO.getAttacheInfoDataType()); // 附件类型
         attacheInfo.setFileName(fileName);// 附件名称
         //动态信息附件信息入库
         int c = this.attacheInfoMapperWriter.insertSelective(attacheInfo);
-        //用户信息入库
+
+        //用户信息更新
         int d = this.userMapperWriter.updateByPrimaryKeySelective(user);
         return a + b + c + d;
     }

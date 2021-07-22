@@ -224,7 +224,7 @@ public class UserServiceImpl implements UserService {
                 DynamicDTO dynamicDTO = DynamicDTO.builder().build();
                 dynamicDTO.setUserId(user.getId());
                 dynamicDTO.setImei(user.getImei());
-                dynamicDTO.setAttacheInfoDataType(AttacheInfoDataTypeEnum.Image.getCode().toString());
+                dynamicDTO.setAttacheInfoDataType(AttacheInfoDataTypeEnum.Image.getCodeStr());
                 dynamicDTO.setModel(user.getModel());
                 dynamicDTO.setSysName(user.getSysName());
                 dynamicDTO.setSysCode(user.getSysCode());
@@ -237,8 +237,10 @@ public class UserServiceImpl implements UserService {
                 dynamicDTO.setOther(user.getOther());
                 dynamicDTO.setLongitude(user.getLongitude());
                 dynamicDTO.setLatitude(user.getLatitude());
-                dynamicDTO.setPublicStatus(PublicStatusEnum.NOPublic.getCode().toString());
+                dynamicDTO.setPublicStatus(PublicStatusEnum.NOPublic.getType());
                 dynamicDTO.setContent(content);
+                dynamicDTO.setIsAnonymous(IsAnonymousEnum.No.getType());
+                dynamicDTO.setIsTopic(IsTopicEnum.No.getType());
                 return this.dynamicService.release(user, dynamicDTO, multipartFileName);
             }
         } catch (Exception e) {

@@ -7,14 +7,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public enum PublicStatusEnum implements CodeEnum<Integer>{
-	
-	NOPublic(0, "未公开"),
+public enum PublicStatusEnum implements CodeEnum<Integer> {
 
-	Public(1, "公开"),
-	;
-	
-	private Integer code;
+    NOPublic(0, "0", "否"),
 
-	private String msg;
+    Public(1, "1", "是"),
+    ;
+
+    private Integer code;
+
+    private String type;
+
+    private String msg;
 }

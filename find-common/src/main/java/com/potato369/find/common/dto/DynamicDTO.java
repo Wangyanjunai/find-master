@@ -36,26 +36,26 @@ public class DynamicDTO extends AbstractDTO {
     @ApiModelProperty("客户端IP")
     private String ip;
 
-    @ApiModelProperty("定位地址（经度）")
+    @ApiModelProperty("定位（经度）")
     private Double longitude;
 
-    @ApiModelProperty("定位地址（纬度）")
+    @ApiModelProperty("定位（纬度）")
     private Double latitude;
 
-    @ApiModelProperty("定位地址（国家）")
+    @ApiModelProperty("定位（国家）")
     @Builder.Default
     private String country = "中国";
 
-    @ApiModelProperty("定位地址（省份）")
+    @ApiModelProperty("定位（省份）")
     private String province;
 
-    @ApiModelProperty("定位地址（城市）")
+    @ApiModelProperty("定位（城市）")
     private String city;
 
-    @ApiModelProperty("定位地址（区/县）")
+    @ApiModelProperty("定位（区/县）")
     private String district;
 
-    @ApiModelProperty("定位地址（其它）")
+    @ApiModelProperty("定位（其它）")
     private String other;
 
     @ApiModelProperty("是否公开定位状态，0->未公开；1->公开，默认：0->未公开")
@@ -65,7 +65,7 @@ public class DynamicDTO extends AbstractDTO {
     @ApiModelProperty("内容")
     private String content;
 
-    @ApiModelProperty("动态内容类型，0->图片，1->语音，2->文字（不包含图片，语音资源）")
+    @ApiModelProperty("动态附件类型，0->文字（不包含图片，语音资源），1->图片，2->语音")
     private String attacheInfoDataType;
 
     @ApiModelProperty("是否话题，0->否，1->是；默认：0->否")
