@@ -1034,7 +1034,15 @@ select *
 from `user`
 where `city` = '深圳市'
   and `district` = '福田区';
-  
-  
-select * from `industrys`;  
-select * from `professions`;  
+
+
+select *
+from `industrys`;
+select *
+from `professions`;
+
+
+create user 'find'@'%' identified by 'XueGod!@#123';
+grant all on *.* to 'find'@'%';
+flush privileges;
+create database if not exists find_dev_test01 default character set utf8 default collate utf8_general_ci;
