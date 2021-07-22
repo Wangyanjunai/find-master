@@ -64,7 +64,11 @@ dev2开发环境swagger-UI: http://192.168.3.4:8084/find/swagger-ui.html
 test测试环境swagger-UI: http://124.71.38.2:8084/find/swagger-ui.html
 prod生产环境swagger-UI: http://8.135.36.45:8084/find/swagger-ui.html
 
-mvn -pl com.potato369.find:find-user -am spring-boot:run mvn -pl com.potato369.find:find-message -am spring-boot:run mvn
--pl com.potato369.find:find-dynamic -am spring-boot:run mvn -pl com.potato369.find:find-portal -am spring-boot:run mvn
--pl com.potato369.find:find-admin -am spring-boot:run mvn -pl com.potato369.find:find-order -am spring-boot:run mvn -pl
-com.potato369.find:find-log -am spring-boot:run mvn -pl com.potato369.find:find-config -am spring-boot:run
+mvn -pl com.potato369.find:find-user -am spring-boot:run 
+mvn -pl com.potato369.find:find-message -am spring-boot:run 
+mvn -pl com.potato369.find:find-dynamic -am spring-boot:run 
+mvn -pl com.potato369.find:find-portal -am spring-boot:run 
+mvn -pl com.potato369.find:find-admin -am spring-boot:run 
+mvn -pl com.potato369.find:find-order -am spring-boot:run 
+mvn -pl com.potato369.find:find-log -am spring-boot:run 
+mvn -pl com.potato369.find:find-config -am spring-boot:run
