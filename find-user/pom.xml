@@ -14,63 +14,63 @@
     <description>User service project for Spring Boot.</description>
 
     <dependencies>
-    
-    	<!-- 支持全栈式Web开发，包括Tomcat和spring-webmvc -->
+
+        <!-- 支持全栈式Web开发，包括Tomcat和spring-webmvc -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        
+
         <!-- 增加了面向产品上线相关的功能，比如测量和监控 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        
+
         <!-- Alibaba-nacos服务发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-               <exclusions>
+            <exclusions>
                 <exclusion>
                     <artifactId>nacos-client</artifactId>
                     <groupId>com.alibaba.nacos</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <!-- nacos-client -->
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
         </dependency>
-        
+
         <!-- hystrix断路器 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
-                              
+
         <!-- openfeign客户端，默认集成并开启了ribbon负载均衡 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-        
+
         <!-- openfeign okhttp 客户端，默认集成并开启了ribbon负载均衡 -->
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
-        </dependency>        
-        
-        <!-- spring为开发者提供了一个名为spring-boot-devtools的模块来使Spring Boot应用支持热部署，提高开发者的开发效率，无需手动重启Spring Boot应用 -->                       
+        </dependency>
+
+        <!-- spring为开发者提供了一个名为spring-boot-devtools的模块来使Spring Boot应用支持热部署，提高开发者的开发效率，无需手动重启Spring Boot应用 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        
+
         <!-- 支持常规的测试依赖，包括JUnit、Hamcrest、Mockito以及spring-test模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -83,18 +83,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <!-- common模块 -->
         <dependency>
             <groupId>com.potato369.find</groupId>
             <artifactId>find-common</artifactId>
         </dependency>
-        
+
         <!-- mbg模块 -->
         <dependency>
             <groupId>com.potato369.find</groupId>
             <artifactId>find-mbg</artifactId>
-        </dependency>        
+        </dependency>
     </dependencies>
     <build>
         <finalName>find-user-8081</finalName>
@@ -110,14 +110,16 @@
                 <includes>
                     <include>**/*.*</include>
                 </includes>
-            </resource>            
+            </resource>
         </resources>
         <plugins>
-			<plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.1.6.RELEASE</version>
                 <configuration>
+                    <fork>true</fork>
+                    <skip>false</skip>
                     <includeSystemScope>true</includeSystemScope>
                     <mainClass>com.potato369.find.user.UserServiceApplication</mainClass>
                 </configuration>
@@ -130,7 +132,7 @@
                 </executions>
             </plugin>
             <!--添加site 插件-->
-			<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.9.0</version>
@@ -140,6 +142,6 @@
                     <relativizeDecorationLinks>false</relativizeDecorationLinks>
                 </configuration>
             </plugin>
-        </plugins>        
+        </plugins>
     </build>
 </project>

@@ -249,6 +249,14 @@
     </dependencyManagement>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.1.6.RELEASE</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <!--添加site 插件-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

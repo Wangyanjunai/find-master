@@ -14,45 +14,45 @@
     <description>Admin service project for Spring Boot</description>
 
     <dependencies>
-    
-		<!-- 支持全栈式Web开发，包括Tomcat和spring-webmvc -->
+
+        <!-- 支持全栈式Web开发，包括Tomcat和spring-webmvc -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        
+
         <!-- 增加了面向产品上线相关的功能，比如测量和监控 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        
+
         <!-- Alibaba-nacos服务发现-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        
+
         <!-- hystrix断路器 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
-        
+
         <!-- openfeign客户端 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-        
-        <!-- spring为开发者提供了一个名为spring-boot-devtools的模块来使Spring Boot应用支持热部署，提高开发者的开发效率，无需手动重启Spring Boot应用 -->                     
+
+        <!-- spring为开发者提供了一个名为spring-boot-devtools的模块来使Spring Boot应用支持热部署，提高开发者的开发效率，无需手动重启Spring Boot应用 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        
+
         <!-- 支持常规的测试依赖，包括JUnit、Hamcrest、Mockito以及spring-test模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -65,73 +65,73 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <!-- common模块 -->
         <dependency>
             <groupId>com.potato369.find</groupId>
             <artifactId>find-common</artifactId>
         </dependency>
-        
-		<!-- mbg模块 -->
-	    <dependency>
-	        <groupId>com.potato369.find</groupId>
-	        <artifactId>find-mbg</artifactId>
-	    </dependency>
-        
-       <!-- apache-poi -->
-         <dependency>
-             <groupId>org.apache.poi</groupId>
-             <artifactId>poi</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>org.apache.poi</groupId>
-             <artifactId>poi-ooxml</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>org.apache.poi</groupId>
-             <artifactId>poi-ooxml-schemas</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>org.apache.poi</groupId>
-             <artifactId>poi-excelant</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>org.apache.poi</groupId>
-             <artifactId>poi-scratchpad</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>org.apache.poi</groupId>
-             <artifactId>poi-examples</artifactId>
-         </dependency>
-			<dependency>
-			    <groupId>dom4j</groupId>
-			    <artifactId>dom4j</artifactId>
-			</dependency>
-			
-         <!-- MyBatis-->
-         <dependency>
-             <groupId>org.mybatis</groupId>
-             <artifactId>mybatis</artifactId>
-         </dependency>
-         
-         <!-- MyBatis分页插件starter -->
-         <dependency>
-             <groupId>com.github.pagehelper</groupId>
-             <artifactId>pagehelper-spring-boot-starter</artifactId>
-         </dependency>
-         
-         <!-- MyBatis分页插件 -->
-         <dependency>
-             <groupId>com.github.pagehelper</groupId>
-             <artifactId>pagehelper</artifactId>
-         </dependency>
-         
-         <dependency>
+
+        <!-- mbg模块 -->
+        <dependency>
+            <groupId>com.potato369.find</groupId>
+            <artifactId>find-mbg</artifactId>
+        </dependency>
+
+        <!-- apache-poi -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-excelant</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-scratchpad</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-examples</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+        </dependency>
+
+        <!-- MyBatis-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+
+        <!-- MyBatis分页插件starter -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- MyBatis分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
     </dependencies>
-    
+
     <build>
         <finalName>find-admin-8085</finalName>
         <!--重要如果不设置resource会导致application.yml中的@找不到pom文件中的配置 -->
@@ -142,14 +142,16 @@
                 <includes>
                     <include>**/*.*</include>
                 </includes>
-            </resource>            
+            </resource>
         </resources>
         <plugins>
-			<plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.1.6.RELEASE</version>
                 <configuration>
+                    <fork>true</fork>
+                    <skip>false</skip>
                     <includeSystemScope>true</includeSystemScope>
                     <mainClass>com.potato369.find.admin.AdminServiceApplication</mainClass>
                 </configuration>
@@ -162,7 +164,7 @@
                 </executions>
             </plugin>
             <!--添加site 插件-->
-			<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.9.0</version>
@@ -173,5 +175,5 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>    
+    </build>
 </project>

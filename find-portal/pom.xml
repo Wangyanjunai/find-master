@@ -117,6 +117,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.1.6.RELEASE</version>
                 <configuration>
+                    <fork>true</fork>
+                    <skip>false</skip>
                     <includeSystemScope>true</includeSystemScope>
                     <mainClass>com.potato369.find.portal.PortalServiceApplication</mainClass>
                 </configuration>

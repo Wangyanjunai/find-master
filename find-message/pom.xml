@@ -12,41 +12,41 @@
     <name>觅鹿陌生人社交消息微服务子模块项目</name>
     <url>https://maven.apache.org</url>
     <description>Message service project for Spring Boot.</description>
-	<dependencies>
-	
-		<!-- 支持全栈式Web开发，包括Tomcat和spring-webmvc -->
+    <dependencies>
+
+        <!-- 支持全栈式Web开发，包括Tomcat和spring-webmvc -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        
+
         <!-- 增加了面向产品上线相关的功能，比如测量和监控 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        
+
         <!-- Alibaba-nacos服务发现-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        
+
         <!-- hystrix断路器 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
-        
-        <!-- spring为开发者提供了一个名为spring-boot-devtools的模块来使Spring Boot应用支持热部署，提高开发者的开发效率，无需手动重启Spring Boot应用 -->		                
+
+        <!-- spring为开发者提供了一个名为spring-boot-devtools的模块来使Spring Boot应用支持热部署，提高开发者的开发效率，无需手动重启Spring Boot应用 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        
-        <!-- 支持常规的测试依赖，包括JUnit、Hamcrest、Mockito以及spring-test模块 -->        
+
+        <!-- 支持常规的测试依赖，包括JUnit、Hamcrest、Mockito以及spring-test模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -58,37 +58,37 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <!-- common模块 -->
         <dependency>
             <groupId>com.potato369.find</groupId>
             <artifactId>find-common</artifactId>
         </dependency>
-        
+
         <!-- mbg模块 -->
         <dependency>
             <groupId>com.potato369.find</groupId>
             <artifactId>find-mbg</artifactId>
         </dependency>
-		<!-- 极光推送测试依赖开始 -->
-		<dependency>
-			<groupId>com.squareup.okhttp</groupId>
-			<artifactId>mockwebserver</artifactId>
-			<version>2.0.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- 极光推送测试依赖结束 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-	</dependencies>
+        <!-- 极光推送测试依赖开始 -->
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <version>2.0.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- 极光推送测试依赖结束 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
     <build>
         <finalName>find-message-8082</finalName>
         <!--重要如果不设置resource会导致application.yml中的@找不到pom文件中的配置 -->
@@ -100,13 +100,15 @@
                     <include>**/*.*</include>
                 </includes>
             </resource>
-        </resources>       
+        </resources>
         <plugins>
-			<plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.1.6.RELEASE</version>
                 <configuration>
+                    <fork>true</fork>
+                    <skip>false</skip>
                     <includeSystemScope>true</includeSystemScope>
                     <mainClass>com.potato369.find.message.MessageServiceApplication</mainClass>
                 </configuration>
@@ -119,7 +121,7 @@
                 </executions>
             </plugin>
             <!--添加site 插件-->
-			<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.9.0</version>
@@ -130,5 +132,5 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>        
+    </build>
 </project>
