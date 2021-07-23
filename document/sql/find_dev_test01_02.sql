@@ -11,7 +11,7 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 22/07/2021 22:25:36
+ Date: 23/07/2021 17:12:51
 */
 
 SET NAMES utf8mb4;
@@ -22,32 +22,32 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `alipay_config`;
 CREATE TABLE `alipay_config`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `app_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '应用ID',
-  `status` enum('1','0') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态：0->启用，1->禁用，默认：0->启用',
-  `charset` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编码',
-  `format` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型 固定格式json',
-  `gateway_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '网关地址',
-  `notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '异步回调',
-  `private_key` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '私钥',
-  `public_key` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '公钥',
-  `return_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '回调地址',
-  `sign_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '签名方式',
-  `sys_service_provider_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户号',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `u_idx_app_id`(`app_id`) USING BTREE,
-  UNIQUE INDEX `u_idx_sys_service_provider_id`(`sys_service_provider_id`) USING BTREE,
-  INDEX `n_idx_charset`(`charset`) USING BTREE,
-  INDEX `n_idx_format`(`format`) USING BTREE,
-  INDEX `n_idx_sign_type`(`sign_type`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                  `app_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '应用ID',
+                                  `status` enum('1','0') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态：0->启用，1->禁用，默认：0->启用',
+                                  `charset` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编码',
+                                  `format` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型 固定格式json',
+                                  `gateway_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '网关地址',
+                                  `notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '异步回调',
+                                  `private_key` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '私钥',
+                                  `public_key` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '公钥',
+                                  `return_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '回调地址',
+                                  `sign_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '签名方式',
+                                  `sys_service_provider_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户号',
+                                  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  UNIQUE INDEX `u_idx_app_id`(`app_id`) USING BTREE,
+                                  UNIQUE INDEX `u_idx_sys_service_provider_id`(`sys_service_provider_id`) USING BTREE,
+                                  INDEX `n_idx_charset`(`charset`) USING BTREE,
+                                  INDEX `n_idx_format`(`format`) USING BTREE,
+                                  INDEX `n_idx_sign_type`(`sign_type`) USING BTREE,
+                                  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                  INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '支付宝配置表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -60,18 +60,18 @@ INSERT INTO `alipay_config` VALUES (1, '2021001183634710', '0', 'UTF-8', 'JSON',
 -- ----------------------------
 DROP TABLE IF EXISTS `application_record`;
 CREATE TABLE `application_record`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
-  `user_id` bigint(20) NOT NULL COMMENT '申请者id',
-  `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '申请时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_user_id`(`user_id`) USING BTREE,
-  INDEX `n_idx_dynamic_info_id`(`dynamic_info_id`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE
+                                       `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
+                                       `user_id` bigint(20) NOT NULL COMMENT '申请者id',
+                                       `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
+                                       `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '申请时间',
+                                       `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                       `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                       `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                       `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                       PRIMARY KEY (`id`) USING BTREE,
+                                       INDEX `n_idx_user_id`(`user_id`) USING BTREE,
+                                       INDEX `n_idx_dynamic_info_id`(`dynamic_info_id`) USING BTREE,
+                                       INDEX `n_idx_create_time`(`create_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 145 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申请加微信记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -113,20 +113,20 @@ INSERT INTO `application_record` VALUES (144, 111, 537, '2021-07-16 10:04:13', '
 -- ----------------------------
 DROP TABLE IF EXISTS `application_setting`;
 CREATE TABLE `application_setting`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '配置id，主键',
-  `times` int(2) NOT NULL COMMENT '次数',
-  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，0->禁用，1->启用，默认：0->禁用',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_times`(`times`) USING BTREE,
-  INDEX `n_idx_status`(`status`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                        `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '配置id，主键',
+                                        `times` int(2) NOT NULL COMMENT '次数',
+                                        `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，0->禁用，1->启用，默认：0->禁用',
+                                        `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                        `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                        `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                        `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                        `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                        `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                        PRIMARY KEY (`id`) USING BTREE,
+                                        INDEX `n_idx_times`(`times`) USING BTREE,
+                                        INDEX `n_idx_status`(`status`) USING BTREE,
+                                        INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                        INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申请加微信次数设置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -139,24 +139,24 @@ INSERT INTO `application_setting` VALUES (2, 5, '1', '2021-03-16 10:32:11', '202
 -- ----------------------------
 DROP TABLE IF EXISTS `attache_info`;
 CREATE TABLE `attache_info`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '附件id，主键',
-  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '状态，0->隐藏，1->显示，默认：1->显示',
-  `dynamic_info_by` bigint(20) NOT NULL COMMENT '动态内容id，对应动态信息表主键id',
-  `file_name` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附件名称',
-  `data_type` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '附件类型，0->图片；1->音频，默认：0->图片',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_status`(`status`) USING BTREE,
-  INDEX `n_idx_dynamic_info_by`(`dynamic_info_by`) USING BTREE,
-  INDEX `n_idx_file_name`(`file_name`) USING BTREE,
-  INDEX `n_idx_data_type`(`data_type`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '附件id，主键',
+                                 `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '状态，0->隐藏，1->显示，默认：1->显示',
+                                 `dynamic_info_by` bigint(20) NOT NULL COMMENT '动态内容id，对应动态信息表主键id',
+                                 `file_name` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附件名称',
+                                 `data_type` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '附件类型，0->图片；1->音频，默认：0->图片',
+                                 `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                 `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                 `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                 `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                 `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 INDEX `n_idx_status`(`status`) USING BTREE,
+                                 INDEX `n_idx_dynamic_info_by`(`dynamic_info_by`) USING BTREE,
+                                 INDEX `n_idx_file_name`(`file_name`) USING BTREE,
+                                 INDEX `n_idx_data_type`(`data_type`) USING BTREE,
+                                 INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                 INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3635 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -912,22 +912,22 @@ INSERT INTO `attache_info` VALUES (3634, '1', 768, '70/20210722/1626934237048/30
 -- ----------------------------
 DROP TABLE IF EXISTS `blacklist_record`;
 CREATE TABLE `blacklist_record`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
-  `owner_user_id` bigint(20) NOT NULL COMMENT '拥有者id',
-  `black_user_id` bigint(20) NOT NULL COMMENT '黑名单用户id',
-  `status` int(8) NOT NULL COMMENT '黑名单状态，5表示拉入黑名单，6表示移出黑名单',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_owner_user_id`(`owner_user_id`) USING BTREE,
-  INDEX `n_idx_black_user_id`(`black_user_id`) USING BTREE,
-  INDEX `n_idx_status`(`status`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                     `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
+                                     `owner_user_id` bigint(20) NOT NULL COMMENT '拥有者id',
+                                     `black_user_id` bigint(20) NOT NULL COMMENT '黑名单用户id',
+                                     `status` int(8) NOT NULL COMMENT '黑名单状态，5表示拉入黑名单，6表示移出黑名单',
+                                     `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                     `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                     `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                     `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                     `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                     `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                     PRIMARY KEY (`id`) USING BTREE,
+                                     INDEX `n_idx_owner_user_id`(`owner_user_id`) USING BTREE,
+                                     INDEX `n_idx_black_user_id`(`black_user_id`) USING BTREE,
+                                     INDEX `n_idx_status`(`status`) USING BTREE,
+                                     INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                     INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '黑名单记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -944,20 +944,20 @@ INSERT INTO `blacklist_record` VALUES (5, 141, 144, 5, '2021-04-22 17:46:12', '2
 -- ----------------------------
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
-  `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
-  `likes` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '评论的点赞数',
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
-  `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是，默认：0->否',
-  `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
-  `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
+                            `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                            `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
+                            `likes` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '评论的点赞数',
+                            `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
+                            `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是，默认：0->否',
+                            `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                            `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                            `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
+                            `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                            `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                            `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                            `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                            PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '评论信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -999,42 +999,42 @@ INSERT INTO `comment` VALUES (30, 35, 1, 0, '好的，会的', '0', '2021-07-21 
 -- ----------------------------
 DROP TABLE IF EXISTS `dynamic`;
 CREATE TABLE `dynamic`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '动态id，主键',
-  `user_id` bigint(20) NOT NULL COMMENT '用户id，对应用户信息表主键id',
-  `nick_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '昵称',
-  `imei` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备串码',
-  `model` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备型号',
-  `sys_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统名称',
-  `sys_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统版本',
-  `network_mode` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '网络方式',
-  `country` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '国',
-  `province` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '省',
-  `city` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '市',
-  `district` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '区/县',
-  `other` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其它地址',
-  `longitude` double(12, 6) NULL DEFAULT NULL COMMENT '经度',
-  `latitude` double(12, 6) NULL DEFAULT NULL COMMENT '纬度',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_user_id`(`user_id`) USING BTREE,
-  INDEX `n_idx_nick_name`(`nick_name`) USING BTREE,
-  INDEX `n_idx_imei`(`imei`) USING BTREE,
-  INDEX `n_idx_model`(`model`) USING BTREE,
-  INDEX `n_idx_sys_name`(`sys_name`) USING BTREE,
-  INDEX `n_idx_sys_code`(`sys_code`) USING BTREE,
-  INDEX `n_idx_network_mode`(`network_mode`) USING BTREE,
-  INDEX `n_idx_country`(`country`) USING BTREE,
-  INDEX `n_idx_province`(`province`) USING BTREE,
-  INDEX `n_idx_city`(`city`) USING BTREE,
-  INDEX `n_idx_district`(`district`) USING BTREE,
-  INDEX `n_idx_other`(`other`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '动态id，主键',
+                            `user_id` bigint(20) NOT NULL COMMENT '用户id，对应用户信息表主键id',
+                            `nick_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '昵称',
+                            `imei` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备串码',
+                            `model` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备型号',
+                            `sys_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统名称',
+                            `sys_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统版本',
+                            `network_mode` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '网络方式',
+                            `country` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '国',
+                            `province` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '省',
+                            `city` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '市',
+                            `district` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '区/县',
+                            `other` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其它地址',
+                            `longitude` double(12, 6) NULL DEFAULT NULL COMMENT '经度',
+                            `latitude` double(12, 6) NULL DEFAULT NULL COMMENT '纬度',
+                            `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                            `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                            `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                            `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                            `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                            `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                            PRIMARY KEY (`id`) USING BTREE,
+                            INDEX `n_idx_user_id`(`user_id`) USING BTREE,
+                            INDEX `n_idx_nick_name`(`nick_name`) USING BTREE,
+                            INDEX `n_idx_imei`(`imei`) USING BTREE,
+                            INDEX `n_idx_model`(`model`) USING BTREE,
+                            INDEX `n_idx_sys_name`(`sys_name`) USING BTREE,
+                            INDEX `n_idx_sys_code`(`sys_code`) USING BTREE,
+                            INDEX `n_idx_network_mode`(`network_mode`) USING BTREE,
+                            INDEX `n_idx_country`(`country`) USING BTREE,
+                            INDEX `n_idx_province`(`province`) USING BTREE,
+                            INDEX `n_idx_city`(`city`) USING BTREE,
+                            INDEX `n_idx_district`(`district`) USING BTREE,
+                            INDEX `n_idx_other`(`other`) USING BTREE,
+                            INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                            INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 592 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动态信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -1197,823 +1197,823 @@ INSERT INTO `dynamic` VALUES (587, 160, '小阳阳4', '87952562515235', '华为P
 INSERT INTO `dynamic` VALUES (588, 161, '小阳阳4', '87952562515235', '华为P40', 'Android', '11', '4G', '中国', '广东省', '深圳市', NULL, NULL, 113.962941, 22.462714, '2021-07-20 17:05:13', '2021-07-20 17:05:13', NULL, NULL, NULL, NULL);
 INSERT INTO `dynamic` VALUES (589, 73, '如风', '107006885731957811', 'HuaWei P40', 'Android', '10', 'WIFI', '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', 113.962941, 22.462714, '2021-07-21 15:24:14', '2021-07-22 11:52:05', NULL, NULL, NULL, NULL);
 INSERT INTO `dynamic` VALUES (590, 72, '竹語嫣', NULL, NULL, NULL, NULL, 'WIFI', '中国', '广东省', '深圳市', NULL, NULL, 113.962941, 22.462714, '2021-07-22 09:24:33', '2021-07-22 11:16:05', NULL, NULL, NULL, NULL);
-INSERT INTO `dynamic` VALUES (591, 70, '阿萌', NULL, NULL, NULL, NULL, 'WIFI', '中国', '广东省', '深圳市', NULL, NULL, 113.962941, 22.462714, '2021-07-22 13:46:01', '2021-07-22 14:10:37', NULL, NULL, NULL, NULL);
+INSERT INTO `dynamic` VALUES (591, 70, '阿萌', NULL, NULL, NULL, NULL, 'WIFI', '中国', '广东省', '广州市', '白云区', '机场T3航站楼三楼', 113.201737, 22.832123, '2021-07-22 13:46:01', '2021-07-23 10:58:22', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for dynamic_info
 -- ----------------------------
 DROP TABLE IF EXISTS `dynamic_info`;
 CREATE TABLE `dynamic_info`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '动态内容id，主键',
-  `user_id` bigint(20) NOT NULL COMMENT '发布者id',
-  `dynamic_id` bigint(20) NOT NULL COMMENT '动态信息id',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
-  `dynamic_status` enum('0','1','2','3') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '动态内容状态，0->显示；1->隐藏；2->小推；3->大推，默认：0->显示',
-  `public_status` enum('0','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '是否公开定位状态，0->未公开；1->公开，默认：0->未公开',
-  `is_topic` enum('0','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '是否是话题，0->否；1->是，默认：0->否',
-  `is_anonymous` enum('0','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '是否匿名，0->否；1->是，默认：0->否',
-  `topic_title` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '话题标题',
-  `likes` int(11) NOT NULL DEFAULT 0 COMMENT '点赞数',
-  `comments` int(11) NOT NULL DEFAULT 0 COMMENT '评论数',
-  `applications` int(11) NOT NULL DEFAULT 0 COMMENT '申请加微信数',
-  `shares` int(11) NOT NULL DEFAULT 0 COMMENT '分享数',
-  `attache_type` enum('0','1','2') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '附件类型，0->文本；1->图片；2->音频，默认：0->文本',
-  `attache_number` int(4) NULL DEFAULT NULL COMMENT '附件数量',
-  `longitude` double(12, 6) NULL DEFAULT NULL COMMENT '经度',
-  `latitude` double(12, 6) NULL DEFAULT NULL COMMENT '纬度',
-  `country` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '中国' COMMENT '国',
-  `province` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '省',
-  `city` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '市',
-  `district` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区/县',
-  `other` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '其它地址',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发布时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column02` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_user_id`(`user_id`) USING BTREE,
-  INDEX `n_idx_dynamic_id`(`dynamic_id`) USING BTREE,
-  INDEX `n_idx_dynamic_status`(`dynamic_status`) USING BTREE,
-  INDEX `n_idx_public_status`(`public_status`) USING BTREE,
-  INDEX `n_idx_likes`(`likes`) USING BTREE,
-  INDEX `n_idx_applications`(`applications`) USING BTREE,
-  INDEX `n_idx_shares`(`shares`) USING BTREE,
-  INDEX `n_idx_attache_type`(`attache_type`) USING BTREE,
-  INDEX `n_idx_attache_number`(`attache_number`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '动态内容id，主键',
+                                 `user_id` bigint(20) NOT NULL COMMENT '发布者id',
+                                 `dynamic_id` bigint(20) NOT NULL COMMENT '动态信息id',
+                                 `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
+                                 `dynamic_status` enum('0','1','2','3') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '动态内容状态，0->显示；1->隐藏；2->小推；3->大推，默认：0->显示',
+                                 `public_status` enum('0','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '是否公开定位状态，0->未公开；1->公开，默认：0->未公开',
+                                 `is_topic` enum('0','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '是否是话题，0->否；1->是，默认：0->否',
+                                 `is_anonymous` enum('0','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '是否匿名，0->否；1->是，默认：0->否',
+                                 `topic_title` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '话题标题',
+                                 `likes` int(11) NOT NULL DEFAULT 0 COMMENT '点赞数',
+                                 `comments` int(11) NOT NULL DEFAULT 0 COMMENT '评论数',
+                                 `applications` int(11) NOT NULL DEFAULT 0 COMMENT '申请加微信数',
+                                 `shares` int(11) NOT NULL DEFAULT 0 COMMENT '分享数',
+                                 `attache_type` enum('0','1','2') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '附件类型，0->文本；1->图片；2->音频，默认：0->文本',
+                                 `attache_number` int(4) NULL DEFAULT NULL COMMENT '附件数量',
+                                 `longitude` double(12, 6) NULL DEFAULT NULL COMMENT '经度',
+                                 `latitude` double(12, 6) NULL DEFAULT NULL COMMENT '纬度',
+                                 `country` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '中国' COMMENT '国',
+                                 `province` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '省',
+                                 `city` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '市',
+                                 `district` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区/县',
+                                 `other` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '其它地址',
+                                 `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发布时间',
+                                 `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                 `reserve_column02` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                 `reserve_column03` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                 `reserve_column04` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 INDEX `n_idx_user_id`(`user_id`) USING BTREE,
+                                 INDEX `n_idx_dynamic_id`(`dynamic_id`) USING BTREE,
+                                 INDEX `n_idx_dynamic_status`(`dynamic_status`) USING BTREE,
+                                 INDEX `n_idx_public_status`(`public_status`) USING BTREE,
+                                 INDEX `n_idx_likes`(`likes`) USING BTREE,
+                                 INDEX `n_idx_applications`(`applications`) USING BTREE,
+                                 INDEX `n_idx_shares`(`shares`) USING BTREE,
+                                 INDEX `n_idx_attache_type`(`attache_type`) USING BTREE,
+                                 INDEX `n_idx_attache_number`(`attache_number`) USING BTREE,
+                                 INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                 INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 769 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '动态内容表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamic_info
 -- ----------------------------
-INSERT INTO `dynamic_info` VALUES (1, 1, 6, '请多关照哦~', '0', '1', '1', '0', '户外', 874, 100, 162, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-18 04:21:04', '2021-07-08 16:34:06', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (2, 1, 6, '哎哟，还不错哦', '0', '1', '1', '0', '哈工程教师挥雨伞制服猥琐男', 772, 100, 42, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-20 12:55:48', '2021-07-08 16:18:51', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (3, 1, 6, '嗯哼', '0', '1', '1', '0', '三农', 807, 120, 232, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-07 03:48:05', '2021-07-08 16:36:12', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (4, 1, 6, '后面有个人在呼风唤雨吗？ 准备溜了', '0', '1', '1', '0', '新农人计划2021', 115, 130, 51, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-01 06:00:38', '2021-07-08 16:39:09', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (5, 1, 6, '准备干饭咯', '0', '1', '1', '0', '我要上热门', 735, 134, 24, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-19 03:32:30', '2021-07-08 16:39:42', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (6, 1, 6, '这滤镜可以', '0', '1', '1', '0', '衡阳网红', 708, 310, 126, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-11 06:01:39', '2021-07-08 16:43:55', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (7, 2, 9, '初来乍到,请多关照', '0', '1', '1', '0', '集福牛开福运', 923, 129, 191, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-19 14:01:17', '2021-07-08 16:50:44', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (8, 2, 9, '来！霍完这杯，再来一杯！', '0', '1', '1', '0', '吴孟达去世', 961, 109, 31, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-04 05:11:58', '2021-07-08 16:52:37', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (9, 2, 9, '略略略', '0', '1', '1', '0', '微博健康锦鲤护体', 210, 209, 63, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-27 15:26:59', '2021-07-08 16:53:49', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (10, 3, 12, '初来乍到,请多关照', '0', '1', '1', '0', '微博送3888元回血基金', 346, 309, 118, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-25 09:43:57', '2021-07-08 16:55:36', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (11, 3, 12, '哈喽~~', '0', '1', '1', '0', '滴滴打车下架', 815, 1009, 168, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-03 12:10:05', '2021-07-08 17:00:25', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (12, 3, 12, '霍霍奶茶', '0', '1', '1', '0', '云南疫情', 226, 309, 75, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-06 07:14:13', '2021-07-08 17:07:39', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (13, 4, 14, '初来乍到,请多关照', '0', '1', '1', '0', '西藏骑行旅游', 872, 509, 60, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-08 15:58:23', '2021-07-08 17:08:38', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (14, 4, 14, '洗脸，耶耶耶', '0', '1', '1', '0', '中国共产党建党100周年', 411, 1090, 29, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-17 11:47:38', '2021-07-08 17:09:27', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (15, 5, 18, '初来乍到,请多关照', '0', '1', '1', '0', '4人被困火海男子救出3人后自责落泪', 710, 189, 178, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-08 13:45:45', '2021-07-08 17:13:26', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (16, 5, 18, '打王者吗，我超菜！', '0', '1', '1', '0', '找男朋友', 849, 109, 86, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-13 13:14:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (17, 5, 18, '这个世界的人好冷漠，为什么没人偷走我的心', '0', '1', '1', '0', '找男朋友', 306, 109, 58, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-17 10:26:42', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (18, 5, 18, '只是一介民女', '0', '1', '1', '0', '找男朋友', 384, 109, 65, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-26 15:38:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (19, 6, 19, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 801, 109, 176, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-15 09:09:25', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (20, 7, 21, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 996, 109, 44, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-15 12:56:18', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (21, 7, 21, '来干饭！', '0', '1', '1', '0', '找男朋友', 260, 109, 51, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-15 16:22:12', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (22, 8, 25, '听说这里有很多帅哥', '0', '1', '1', '0', '找男朋友', 435, 109, 170, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-06 13:26:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (23, 8, 25, '你们相信男女之间有纯洁的友谊吗？', '0', '1', '1', '0', '找男朋友', 675, 109, 147, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-14 09:54:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (24, 8, 25, '自拍一下', '0', '1', '1', '0', '找男朋友', 399, 109, 48, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-19 03:03:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (25, 8, 25, '以前......', '0', '1', '1', '0', '找男朋友', 449, 109, 49, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-24 16:29:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (26, 9, 28, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 358, 109, 61, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-24 09:01:42', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (27, 9, 28, '睡不着，无聊', '0', '1', '1', '0', '找男朋友', 547, 109, 14, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-11 08:22:37', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (28, 9, 28, '有要一起干饭的吗', '0', '1', '1', '0', '找男朋友', 919, 109, 139, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-19 04:40:05', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (29, 10, 29, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 270, 109, 24, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-22 14:48:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (31, 11, 35, '出来霍霍茶', '0', '1', '1', '0', '找男朋友', 333, 109, 58, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-03 03:40:15', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (32, 11, 35, '出去玩咯', '0', '1', '1', '0', '找男朋友', 440, 109, 34, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-07 06:29:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (33, 11, 35, '和闺蜜出来逛', '0', '1', '1', '0', '找男朋友', 687, 20, 200, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-12 09:39:43', '2021-07-08 15:17:21', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (34, 11, 35, '可可爱爱', '0', '1', '1', '0', '信息学习', 523, 21, 138, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-17 15:48:48', '2021-07-08 15:17:44', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (35, 11, 35, '车上等人，臭美一下', '0', '1', '1', '0', '新冠肺炎', 406, 100, 109, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-22 06:55:41', '2021-07-08 15:18:14', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (36, 12, 36, '微风徐徐', '0', '1', '1', '0', '找男朋友', 623, 109, 69, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-05 11:25:40', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (37, 13, 39, '想谈恋爱', '0', '1', '1', '0', '找男朋友', 706, 109, 112, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-06 12:10:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (38, 13, 39, '有没有上海的小哥哥', '0', '1', '1', '0', '找男朋友', 158, 109, 34, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-14 09:36:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (39, 13, 39, '今日份的小可爱', '0', '1', '1', '0', '找男朋友', 364, 109, 28, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-16 06:34:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (40, 14, 41, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 527, 109, 68, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-11 10:09:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (41, 14, 41, '嘿！', '0', '1', '1', '0', '找男朋友', 177, 109, 47, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-14 13:49:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (42, 15, 44, '请多关照', '0', '1', '1', '0', '找男朋友', 918, 109, 341, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-14 13:54:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (43, 15, 44, '喜欢姐姐吗，臭弟弟', '0', '1', '1', '0', '找男朋友', 509, 109, 124, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-15 16:28:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (44, 15, 44, '走，吃宵夜去', '0', '1', '1', '0', '找男朋友', 630, 109, 158, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-18 13:24:40', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (45, 16, 46, '多多关照哟', '0', '1', '1', '0', '找男朋友', 329, 109, 113, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-01 12:57:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (46, 16, 46, '早睡早起，开开心心', '0', '1', '1', '0', '找男朋友', 709, 109, 88, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-02 11:17:18', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (47, 17, 49, '哈喽', '0', '1', '1', '0', '找男朋友', 505, 109, 53, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-02 05:34:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (48, 17, 49, '为啥加我的人头像都不太好看.....', '0', '1', '1', '0', '找男朋友', 922, 109, 161, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-02 10:23:23', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (49, 17, 49, '因为没有想见的人，所以好几天才洗一次头发？', '0', '1', '1', '0', '找男朋友', 828, 109, 171, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-04 08:42:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (50, 18, 51, '听说这里很多小哥哥', '0', '1', '1', '0', '找男朋友', 114, 109, 33, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-25 09:15:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (51, 18, 51, '噜~', '0', '1', '1', '0', '找男朋友', 527, 109, 21, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-02 11:06:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (52, 19, 56, '请多指教', '0', '1', '1', '0', '找男朋友', 677, 109, 129, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-02 07:34:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (53, 19, 56, '你也没出去玩吗?', '0', '1', '1', '0', '找男朋友', 388, 109, 109, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-05 12:27:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (54, 19, 56, '逛逛该', '0', '1', '1', '0', '找男朋友', 769, 109, 109, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-09 14:54:24', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (55, 19, 56, '你会想我吗?', '0', '1', '1', '0', '找男朋友', 588, 109, 118, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-11 12:05:25', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (56, 19, 56, '今天穿粉色！', '0', '1', '1', '0', '找男朋友', 543, 109, 168, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-16 06:07:16', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (57, 20, 59, '哈喽哈喽~', '0', '1', '1', '0', '找男朋友', 130, 109, 38, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-12 03:19:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (58, 20, 59, '有小哥哥不？', '0', '1', '1', '0', '找男朋友', 102, 109, 46, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-18 08:03:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (59, 20, 59, '来商场干嘛？ 当然是买菜啦！哈哈哈', '0', '1', '1', '0', '找男朋友', 752, 109, 125, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-26 10:28:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (60, 21, 62, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 320, 109, 20, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-26 07:30:09', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (61, 21, 62, '不想恋爱了，直接结婚吧，结婚了再培养感情', '0', '1', '1', '0', '找男朋友', 483, 109, 109, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-28 13:58:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (62, 21, 62, '期望未来男友是一个足够成熟的人', '0', '1', '1', '0', '找男朋友', 917, 109, 147, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-01 09:52:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (63, 22, 64, '你好呀，陌生人', '0', '1', '1', '0', '找男朋友', 377, 109, 45, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-05 06:05:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (64, 22, 64, '所谓浪漫，大概就是没有后来吧', '0', '1', '1', '0', '找男朋友', 623, 109, 142, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-11 15:01:38', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (65, 23, 67, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 457, 109, 69, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-28 09:32:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (66, 23, 67, '出来散散心', '0', '1', '1', '0', '找男朋友', 115, 109, 23, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-01 06:52:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (67, 23, 67, '早知道男朋友这么难找，当初他绿我的时候就该假装不知道', '0', '1', '1', '0', '找男朋友', 631, 109, 236, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-12 11:13:46', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (68, 24, 69, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 149, 109, 26, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-11 10:50:38', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (69, 24, 69, '我比较喜欢直男，不喜欢被叫小姐姐', '0', '1', '1', '0', '找男朋友', 728, 109, 39, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-15 10:55:37', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (70, 24, 69, '有点烫嘴', '0', '1', '1', '0', '找男朋友', 537, 109, 45, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-16 08:14:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (71, 25, 74, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 616, 109, 123, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-06 14:52:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (72, 25, 74, '瞅啥 嘻嘻', '0', '1', '1', '0', '找男朋友', 188, 109, 39, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-12 05:00:42', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (73, 25, 74, '想喝奶茶', '0', '1', '1', '0', '找男朋友', 165, 109, 35, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-18 07:11:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (74, 25, 74, '晚安', '0', '1', '1', '0', '找男朋友', 105, 109, 23, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-22 10:07:08', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (75, 26, 76, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 632, 109, 140, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-22 08:22:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (76, 26, 76, '有约饭的吗！', '0', '1', '1', '0', '找男朋友', 553, 109, 214, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-23 13:53:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (77, 26, 76, '我男朋友怎么还不出现', '0', '1', '1', '0', '找男朋友', 470, 109, 155, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-26 11:35:37', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (78, 26, 76, '有人陪我办个婚礼嘛', '0', '1', '1', '0', '找男朋友', 127, 109, 38, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-06 05:39:57', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (79, 27, 81, '听说很多小哥哥', '0', '1', '1', '0', '找男朋友', 602, 109, 108, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-01 12:13:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (80, 27, 81, '不开心', '0', '1', '1', '0', '找男朋友', 771, 109, 66, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-06 13:10:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (81, 27, 81, '去年的~', '0', '1', '1', '0', '找男朋友', 234, 109, 22, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-11 10:53:24', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (82, 28, 87, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 913, 109, 219, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-11 11:57:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (83, 28, 87, '猜猜这是什么，猜中我就加你微信', '0', '1', '1', '0', '找男朋友', 120, 109, 19, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-13 15:29:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (84, 28, 87, '准备开吃啦', '0', '1', '1', '0', '找男朋友', 190, 109, 40, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-18 08:06:15', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (85, 28, 87, '这么晚，还不睡觉在干嘛呢', '0', '1', '1', '0', '找男朋友', 270, 109, 49, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-27 11:58:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (86, 28, 87, '这年头找个靠谱的男朋友可真难', '0', '1', '1', '0', '找男朋友', 250, 109, 44, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-06 16:53:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (87, 28, 87, '都说爱笑的人运气不会差，难道是我笑的不够好看吗', '0', '1', '1', '0', '找男朋友', 421, 109, 111, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-11 09:14:56', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (88, 29, 91, '赐个对象可以吗?', '0', '1', '1', '0', '找男朋友', 671, 109, 27, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-27 06:52:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (89, 29, 91, '摩天轮旋转', '0', '1', '1', '0', '找男朋友', 449, 109, 179, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-02 16:06:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (90, 29, 91, '51出门熏人', '0', '1', '1', '0', '找男朋友', 502, 109, 75, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-03 16:39:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (91, 29, 91, '这组我比较喜欢', '0', '1', '1', '0', '找男朋友', 972, 109, 151, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-05 08:36:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (92, 29, 91, '目涩', '0', '1', '1', '0', '找男朋友', 191, 109, 36, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-07 04:47:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (93, 29, 91, '差点就掉下去了！', '0', '1', '1', '0', '找男朋友', 167, 109, 45, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-08 03:48:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (94, 29, 91, '嘿嘿', '0', '1', '1', '0', '找男朋友', 390, 109, 143, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-15 09:01:15', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (95, 30, 98, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 590, 109, 160, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-15 12:10:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (96, 30, 98, '你错过了凌晨的日出，但可以期待伴晚的夕阳', '0', '1', '1', '0', '找男朋友', 839, 109, 174, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-18 11:11:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (97, 30, 98, '今天穿着，大家有什么建议吗', '0', '1', '1', '0', '找男朋友', 670, 109, 18, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-21 11:19:57', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (98, 30, 98, '没人聊天怎么办', '0', '1', '1', '0', '找男朋友', 245, 109, 40, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-27 06:02:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (99, 31, 102, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 198, 109, 36, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-03-20 16:48:50', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (100, 31, 102, '今年生日我妈让我自己过~~', '0', '1', '1', '0', '找男朋友', 634, 109, 85, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-03-20 12:06:33', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (101, 31, 102, '你要用棒棒糖把我骗走么', '0', '1', '1', '0', '找男朋友', 702, 109, 201, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-03-20 10:25:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (102, 31, 102, '一个人见你一面就喜欢你，那他是.....', '0', '1', '1', '0', '找男朋友', 666, 109, 121, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-03-20 07:24:40', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (103, 32, 577, '哈喽~~儿童节快落', '0', '1', '1', '0', '找男朋友', 162, 109, 50, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-01 15:14:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (104, 32, 577, '你在看天，还是看我', '0', '1', '1', '0', '找男朋友', 328, 109, 37, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-07 08:12:18', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (105, 33, 579, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 874, 109, 52, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-18 08:40:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (106, 33, 579, 'QQ区，王者给我一个好友位吧！', '0', '1', '1', '0', '找男朋友', 126, 109, 42, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-22 04:52:04', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (107, 33, 579, '可爱又迷人的.......', '0', '1', '1', '0', '找男朋友', 203, 109, 65, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-27 11:35:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (108, 34, 110, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 332, 109, 61, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-18 03:42:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (109, 34, 110, '来霍阔落啊', '0', '1', '1', '0', '找男朋友', 486, 109, 32, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-07 06:34:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (110, 34, 110, '91 只聊同城的 在线等一会会', '0', '1', '1', '0', '找男朋友', 540, 109, 101, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-12 08:30:14', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (111, 35, 114, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 392, 109, 61, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-16 04:57:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (112, 35, 114, '被爱让人情绪稳定', '0', '1', '1', '0', '找男朋友', 337, 109, 131, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-18 13:40:04', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (113, 35, 114, '所以我的情绪非常不稳定', '0', '1', '1', '0', '找男朋友', 981, 109, 164, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-20 06:47:33', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (114, 35, 114, '有没有30+的来聊聊天 小哥哥小姐姐都可以', '0', '1', '1', '0', '找男朋友', 90, 109, 16, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-24 06:03:33', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (115, 36, 118, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 393, 109, 41, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-06 06:48:46', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (116, 36, 118, '活受罪', '0', '1', '1', '0', '找男朋友', 197, 109, 51, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-08 05:48:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (117, 36, 118, '我们都怀念过去', '0', '1', '1', '0', '找男朋友', 387, 109, 46, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-08 15:47:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (118, 36, 118, '却又不想回到过去', '0', '1', '1', '0', '找男朋友', 797, 109, 21, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-17 09:21:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (119, 37, 122, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 966, 109, 45, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-09 11:02:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (120, 37, 122, '^^', '0', '1', '1', '0', '找男朋友', 494, 109, 114, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-12 11:18:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (121, 37, 122, '今天风挺大的，我差点就被吹跑了哟', '0', '1', '1', '0', '找男朋友', 940, 109, 141, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-19 13:25:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (122, 37, 122, '小小的我，也想有人陪我去浪', '0', '1', '1', '0', '找男朋友', 983, 109, 57, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-26 11:23:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (123, 38, 126, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 772, 109, 121, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-03-28 14:28:09', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (124, 38, 126, '奶茶真是害人精', '0', '1', '1', '0', '找男朋友', 69, 109, 23, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-07 13:26:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (125, 38, 126, '新雨后', '0', '1', '1', '0', '找男朋友', 427, 109, 101, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-14 10:21:14', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (126, 38, 126, '这个女孩不香吗', '0', '1', '1', '0', '找男朋友', 226, 109, 59, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-19 05:14:09', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (127, 39, 128, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 855, 109, 118, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-11 05:14:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (128, 39, 128, '上班~', '0', '1', '1', '0', '找男朋友', 279, 109, 69, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-18 03:19:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (129, 40, 130, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 395, 109, 16, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-01 06:35:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (130, 40, 130, '偷拍我~~', '0', '1', '1', '0', '找男朋友', 59, 109, 13, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-02 12:37:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (131, 41, 132, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 536, 109, 136, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-27 09:02:20', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (132, 41, 132, '其实，我是个爱笑的丫头', '0', '1', '1', '0', '找男朋友', 330, 109, 36, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-16 09:35:05', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (133, 42, 134, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 682, 109, 72, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-02-03 12:43:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (134, 42, 134, '本人女26岁 身高164 体重97 颜值还可以  谈过2次 想找个南方的男朋友  目前在济南', '0', '1', '1', '0', '找男朋友', 210, 109, 67, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-08 05:58:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (135, 43, 136, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 138, 109, 17, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-08 12:17:38', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (136, 43, 136, '漂亮姐姐找个弟弟打王者！', '0', '1', '1', '0', '找男朋友', 614, 109, 245, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-10 04:27:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (137, 44, 141, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 658, 109, 116, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-19 10:35:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (138, 44, 141, '没人追', '0', '1', '1', '0', '找男朋友', 722, 109, 207, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-21 07:45:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (139, 44, 141, '治愈自己最好的方式就是忙碌和早起', '0', '1', '1', '0', '找男朋友', 358, 109, 58, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-27 14:36:14', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (140, 44, 141, '今天大满足！', '0', '1', '1', '0', '找男朋友', 561, 109, 138, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-02 14:30:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (141, 44, 141, '你们在一起多久了', '0', '1', '1', '0', '找男朋友', 67, 109, 13, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-05 16:11:08', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (142, 45, 145, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 749, 109, 69, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-27 13:35:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (143, 45, 145, '干饭人，干饭魂，一起干饭有灵魂！', '0', '1', '1', '0', '找男朋友', 661, 109, 199, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-02 03:05:23', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (144, 45, 145, '我吃你家大米了,还是喝你家水了吗,我胖关你屁事', '0', '1', '1', '0', '找男朋友', 618, 109, 67, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-03 07:05:16', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (145, 45, 145, '今天也要一起美美哒', '0', '1', '1', '0', '找男朋友', 674, 109, 90, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-10 04:51:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (146, 46, 148, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 381, 109, 54, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-12 10:23:09', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (147, 46, 148, '不发照片就没人理嘛', '0', '1', '1', '0', '找男朋友', 937, 109, 115, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-15 12:31:50', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (148, 46, 148, '唉，不漏脸又没人追', '0', '1', '1', '0', '找男朋友', 295, 109, 62, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-19 12:36:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (149, 47, 150, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 679, 109, 213, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-02 04:40:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (150, 47, 150, '哈哈哈哈', '0', '1', '1', '0', '找男朋友', 420, 109, 52, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-03 04:42:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (151, 47, 150, '有人带我玩剧本杀吗', '0', '1', '1', '0', '找男朋友', 143, 109, 16, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-03 11:41:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (152, 48, 155, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 219, 109, 43, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-03 03:44:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (153, 48, 155, '阿巴阿巴', '0', '1', '1', '0', '找男朋友', 785, 109, 198, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-11 16:56:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (154, 48, 155, '我喜欢高高胖胖的男孩有安全感', '0', '1', '1', '0', '找男朋友', 432, 109, 156, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-16 13:33:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (155, 48, 155, '不干净的人看谁都不干净', '0', '1', '1', '0', '找男朋友', 974, 109, 393, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-21 14:56:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (156, 49, 158, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 63, 109, 15, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-03-16 12:52:54', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (157, 49, 158, '啊哈哈', '0', '1', '1', '0', '找男朋友', 794, 109, 167, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-03-19 04:38:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (158, 49, 158, '别熬夜 别熬夜 别熬夜', '0', '1', '1', '0', '找男朋友', 704, 109, 169, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-03-19 07:17:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (159, 50, 162, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 274, 109, 119, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-12 10:56:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (160, 50, 162, '他不是白马王子  而是   黑骑士', '0', '1', '1', '0', '找男朋友', 901, 109, 340, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-16 03:27:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (161, 50, 162, '不露脸系列', '0', '1', '1', '0', '找男朋友', 112, 109, 22, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-23 12:27:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (162, 50, 162, 'nice', '0', '1', '1', '0', '找男朋友', 234, 109, 81, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-01 13:36:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (163, 51, 167, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 815, 109, 31, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-18 08:40:12', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (164, 51, 167, '不是妹妹  叫姐姐', '0', '1', '1', '0', '找男朋友', 962, 109, 92, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-23 13:00:31', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (165, 51, 167, '抓桂花啦', '0', '1', '1', '0', '找男朋友', 326, 109, 103, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-26 07:44:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (166, 51, 167, '山川遇', '0', '1', '1', '0', '找男朋友', 694, 109, 117, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-27 14:30:20', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (167, 51, 167, 'TOKYO', '0', '1', '1', '0', '找男朋友', 289, 109, 11, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-03 09:24:27', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (168, 52, 172, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 297, 109, 23, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-03 09:36:57', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (169, 52, 172, '忽然有点小后悔', '0', '1', '1', '0', '找男朋友', 797, 109, 106, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-03-05 10:30:33', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (170, 52, 172, '成人的世界就没有容易过', '0', '1', '1', '0', '找男朋友', 209, 109, 21, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-03-07 05:59:50', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (171, 52, 172, '心情不好，找个陌生人聊天', '0', '1', '1', '0', '找男朋友', 140, 109, 21, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-01 10:05:42', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (172, 52, 172, '生活就是这样子吧', '0', '1', '1', '0', '找男朋友', 940, 109, 422, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-18 04:33:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (173, 53, 177, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 508, 109, 92, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-17 12:20:20', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (174, 53, 177, '是旧图啊', '0', '1', '1', '0', '找男朋友', 452, 109, 27, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-21 13:47:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (175, 53, 177, '相册里突然看到', '0', '1', '1', '0', '找男朋友', 330, 109, 113, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-26 09:23:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (176, 53, 177, '把不开心都丢掉，私奔到月球吧！', '0', '1', '1', '0', '找男朋友', 497, 109, 106, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-27 14:09:37', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (177, 53, 177, '抱团干饭！', '0', '1', '1', '0', '找男朋友', 666, 109, 45, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-06 16:15:08', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (178, 54, 180, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 228, 109, 22, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-07 09:41:57', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (179, 54, 180, '有没有眼熟？是不是你也吃过！ 哈哈哈哈', '0', '1', '1', '0', '找男朋友', 282, 109, 91, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-12 12:20:38', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (180, 54, 180, '忽然感觉我又行了！', '0', '1', '1', '0', '找男朋友', 127, 109, 28, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-16 06:11:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (181, 55, 183, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 112, 109, 28, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-10 15:36:26', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (182, 55, 183, '过去', '0', '1', '1', '0', '找男朋友', 163, 109, 39, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-19 07:12:12', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (183, 55, 183, '过去...我淋着雨爱你，你打着伞想她', '0', '1', '1', '0', '找男朋友', 184, 109, 25, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-08 15:44:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (184, 56, 185, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 484, 109, 42, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-16 11:21:54', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (185, 56, 185, '未来心不可得', '0', '1', '1', '0', '找男朋友', 534, 109, 236, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-19 10:10:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (186, 56, 185, '偶尔', '0', '1', '1', '0', '找男朋友', 958, 109, 286, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-26 11:17:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (187, 57, 187, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 823, 109, 129, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-19 16:21:26', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (188, 57, 187, '外面好冷，和坏男人的心一样', '0', '1', '1', '0', '找男朋友', 379, 109, 80, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-16 03:19:08', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (189, 57, 187, '我也会难过', '0', '1', '1', '0', '找男朋友', 556, 109, 62, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-23 15:07:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (190, 57, 187, '老肩巨猾', '0', '1', '1', '0', '找男朋友', 541, 109, 112, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-27 14:09:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (191, 57, 187, '终会遇到一个满眼都是你的人', '0', '1', '1', '0', '找男朋友', 387, 109, 27, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-16 08:21:12', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (192, 57, 187, '王者CPDD', '0', '1', '1', '0', '找男朋友', 398, 109, 44, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-17 08:54:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (193, 57, 187, '来给点点请安', '0', '1', '1', '0', '找男朋友', 855, 109, 204, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-18 12:49:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (194, 57, 187, '如果你也在吃西瓜，那...没事了   哈哈哈哈', '0', '1', '1', '0', '找男朋友', 320, 109, 16, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-25 04:02:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (195, 57, 187, 'new rap new star 魔动闪霸', '0', '1', '1', '0', '找男朋友', 367, 109, 72, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-02 04:24:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (196, 58, 196, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 437, 109, 62, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-05 12:04:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (197, 58, 196, '有点冷', '0', '1', '1', '0', '找男朋友', 324, 109, 91, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-17 12:47:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (198, 58, 196, '包的跟粽子一样', '0', '1', '1', '0', '找男朋友', 771, 109, 220, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-22 09:31:31', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (199, 58, 196, '晚安', '0', '1', '1', '0', '找男朋友', 703, 109, 114, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-31 04:44:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (200, 58, 196, '预热', '0', '1', '1', '0', '找男朋友', 987, 109, 258, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-02 04:05:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (201, 58, 196, '肥仔糖糖', '0', '1', '1', '0', '找男朋友', 977, 109, 214, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-05 09:18:26', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (202, 59, 202, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 903, 109, 150, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-05 06:32:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (203, 59, 202, '你要开心哦', '0', '1', '1', '0', '找男朋友', 963, 109, 270, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-19 12:22:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (204, 59, 202, '装作不认识我好吗 哈哈', '0', '1', '1', '0', '找男朋友', 475, 109, 189, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-26 13:08:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (205, 59, 202, '靓女现身', '0', '1', '1', '0', '找男朋友', 458, 109, 57, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-16 03:02:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (206, 60, 206, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 227, 109, 60, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-08 05:11:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (207, 60, 206, '007老鼠', '0', '1', '1', '0', '找男朋友', 518, 109, 102, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-09 06:54:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (208, 61, 208, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 635, 109, 43, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-09 08:31:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (209, 61, 208, '好一个傻大姐', '0', '1', '1', '0', '找男朋友', 461, 109, 114, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-11 11:39:57', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (210, 61, 208, '有点后悔了', '0', '1', '1', '0', '找男朋友', 695, 109, 165, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-15 04:47:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (211, 61, 208, '下次出门得洗头了', '0', '1', '1', '0', '找男朋友', 989, 109, 54, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-17 12:27:56', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (212, 62, 212, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 875, 109, 90, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-07 08:17:40', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (213, 62, 212, '全都带回家！', '0', '1', '1', '0', '找男朋友', 562, 109, 23, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-14 14:59:30', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (214, 62, 212, '无聊，一个人喝奶茶', '0', '1', '1', '0', '找男朋友', 309, 109, 46, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-17 11:06:46', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (215, 63, 215, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 704, 109, 63, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-27 07:49:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (216, 63, 215, '旧照重发', '0', '1', '1', '0', '找男朋友', 625, 109, 159, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-12 11:36:42', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (217, 63, 215, '沙滩~', '0', '1', '1', '0', '找男朋友', 694, 109, 170, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-10 08:11:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (218, 63, 215, '有一起自拍的吗，没有头的那种', '0', '1', '1', '0', '找男朋友', 565, 109, 140, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-17 03:22:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (219, 63, 215, '这猫咋了，哈哈哈', '0', '1', '1', '0', '找男朋友', 831, 109, 220, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-17 07:43:16', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (220, 64, 220, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 611, 109, 44, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-04 08:03:26', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (221, 64, 220, '有一起连麦上厕所的吗', '0', '1', '1', '0', '找男朋友', 805, 109, 135, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-07 15:48:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (222, 65, 222, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 859, 109, 178, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-27 06:58:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (223, 65, 222, '晚安', '0', '1', '1', '0', '找男朋友', 57, 109, 21, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-11 12:34:37', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (224, 65, 222, '晚安', '0', '1', '1', '0', '找男朋友', 342, 109, 47, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-27 15:20:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (225, 65, 222, '晚安', '0', '1', '1', '0', '找男朋友', 734, 109, 120, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-07 14:46:20', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (226, 65, 222, '晚安', '0', '1', '1', '0', '找男朋友', 973, 109, 122, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-14 10:52:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (227, 65, 222, '谁在想着你', '0', '1', '1', '0', '找男朋友', 239, 109, 24, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-24 14:55:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (228, 65, 222, '你又想着谁', '0', '1', '1', '0', '找男朋友', 729, 109, 283, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-07 14:29:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (229, 65, 222, '加班快乐', '0', '1', '1', '0', '找男朋友', 74, 109, 14, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-14 03:35:31', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (230, 66, 230, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 180, 109, 66, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-14 03:22:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (231, 66, 230, '妹妹拍我的', '0', '1', '1', '0', '找男朋友', 825, 109, 145, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-19 04:38:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (232, 66, 230, '今天你自拍了吗', '0', '1', '1', '0', '找男朋友', 537, 109, 69, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-25 09:58:30', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (233, 66, 230, '今天我差点被抓走30次！', '0', '1', '1', '0', '找男朋友', 374, 109, 103, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-28 12:31:37', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (234, 66, 230, '有点想成为一个冷漠的人', '0', '1', '1', '0', '找男朋友', 659, 109, 161, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-03 11:56:23', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (235, 66, 230, '今天吃椰子鸡了吗！', '0', '1', '1', '0', '找男朋友', 772, 109, 174, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-04 08:15:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (236, 66, 230, '你也爱吃火锅吗', '0', '1', '1', '0', '找男朋友', 113, 109, 34, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-05 10:29:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (237, 66, 230, '暖心', '0', '1', '1', '0', '找男朋友', 804, 109, 140, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-16 06:11:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (238, 66, 230, '最近都是火锅烤肉，哈哈哈', '0', '1', '1', '0', '找男朋友', 149, 109, 25, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-27 08:46:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (239, 66, 230, '要的不是爱,是偏爱！', '0', '1', '1', '0', '找男朋友', 101, 109, 44, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-05 15:18:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (240, 67, 240, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 234, 109, 40, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-18 15:39:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (241, 67, 240, '找个男朋友', '0', '1', '1', '0', '找男朋友', 333, 109, 69, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-23 07:38:30', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (242, 67, 240, '如果你也喜欢我', '0', '1', '1', '0', '找男朋友', 904, 109, 142, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-01 10:05:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (243, 67, 240, '哈哈哈，一脸幽怨的表情', '0', '1', '1', '0', '找男朋友', 585, 109, 51, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-13 11:24:08', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (244, 68, 244, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 744, 109, 216, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-08 12:30:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (245, 68, 244, '碰到不认真,遇到不坚定', '0', '1', '1', '0', '找男朋友', 155, 109, 21, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-15 13:26:05', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (246, 68, 244, '想剪短发了', '0', '1', '1', '0', '找男朋友', 765, 109, 214, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-28 16:09:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (247, 68, 244, '这是一个没有爱情的城市', '0', '1', '1', '0', '找男朋友', 744, 109, 60, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-10 09:46:23', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (248, 68, 244, '我也看到奇怪的建筑了', '0', '1', '1', '0', '找男朋友', 653, 109, 23, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-19 10:49:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (249, 69, 249, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 540, 109, 200, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-02 04:45:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (250, 69, 249, '吃吃喝喝开开心心', '0', '1', '1', '0', '找男朋友', 70, 109, 12, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-08 04:50:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (251, 70, 591, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 101, 109, 19, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-04-21 11:17:39', '2021-07-22 17:03:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (252, 70, 591, '美好终会如期而至', '0', '1', '1', '0', '找男朋友', 890, 109, 229, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-01 09:09:03', '2021-07-22 17:03:20', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (253, 70, 591, '开始并不难，难的是坚持下去的决心', '0', '1', '1', '0', '找男朋友', 921, 109, 375, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-06 13:51:50', '2021-07-22 17:03:19', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (254, 70, 591, '熬夜伤身，建议通宵', '0', '1', '1', '0', '找男朋友', 837, 109, 324, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-19 14:22:52', '2021-07-22 17:03:18', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (255, 70, 591, '乖巧 听话 顺从，其实我不是，但我可以是', '0', '1', '1', '0', '找男朋友', 56, 109, 22, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-05-23 06:49:49', '2021-07-22 17:03:15', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (256, 71, 256, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 811, 109, 127, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-12 05:34:56', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (257, 71, 256, '天气不错', '0', '1', '1', '0', '找男朋友', 126, 109, 14, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-17 10:44:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (258, 71, 256, '^^', '0', '1', '1', '0', '找男朋友', 894, 109, 134, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-19 08:17:37', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (259, 72, 259, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 875, 109, 212, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-03 14:23:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (260, 72, 259, '工作不累，累的是人', '0', '1', '1', '0', '找男朋友', 141, 109, 35, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-09 03:36:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (261, 72, 259, '单身够了，想找个结婚为目的的', '0', '1', '1', '0', '找男朋友', 881, 109, 296, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-12 16:41:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (262, 72, 259, '想去旅游', '0', '1', '1', '0', '找男朋友', 483, 109, 79, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-20 05:26:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (263, 72, 259, '不颜控，那对恋爱是有多失望', '0', '1', '1', '0', '找男朋友', 367, 109, 125, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-21 12:39:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (264, 73, 264, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 612, 109, 17, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-14 03:27:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (265, 73, 264, '你睡觉抢被子吗？', '0', '1', '1', '0', '找男朋友', 704, 109, 101, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-15 07:20:24', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (266, 73, 264, '想做一个快乐没有烦恼的小朋友', '0', '1', '1', '0', '找男朋友', 586, 109, 37, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-21 13:27:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (267, 74, 267, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 513, 109, 98, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-27 09:30:48', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (268, 74, 267, '粗来', '0', '1', '1', '0', '找男朋友', 225, 109, 27, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-30 03:17:27', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (269, 75, 269, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 600, 109, 37, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-19 13:02:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (270, 75, 269, '花花象', '0', '1', '1', '0', '找男朋友', 386, 109, 103, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-23 11:38:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (271, 75, 269, '想脱单了', '0', '1', '1', '0', '找男朋友', 458, 109, 106, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-24 10:44:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (272, 76, 272, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 501, 109, 64, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-08 05:09:40', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (273, 76, 272, '一份三年的感情，一份高薪工作，必定舍弃一个，你会选择哪个？', '0', '1', '1', '0', '找男朋友', 164, 109, 62, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-10 16:22:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (274, 76, 272, '只想做大哥，不想做女朋友', '0', '1', '1', '0', '找男朋友', 61, 109, 26, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-13 12:45:54', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (275, 76, 272, '其实我很凶的 别惹我', '0', '1', '1', '0', '找男朋友', 297, 109, 45, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-17 11:13:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (276, 77, 276, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 298, 109, 27, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-23 13:39:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (277, 77, 276, '有没有兼职呀？', '0', '1', '1', '0', '找男朋友', 234, 109, 23, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-01 15:58:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (278, 77, 276, '滴，早安', '0', '1', '1', '0', '找男朋友', 342, 109, 17, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-04 04:37:30', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (279, 77, 276, '室友介绍对象，我上来就一句：“您好，你也是没人要的吗”然后...就没有然后了....', '0', '1', '1', '0', '找男朋友', 825, 109, 137, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-12 15:26:24', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (280, 77, 276, '滴滴滴', '0', '1', '1', '0', '找男朋友', 815, 109, 313, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-15 14:35:27', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (281, 77, 276, '找甜筒了喂', '0', '1', '1', '0', '找男朋友', 817, 109, 32, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-18 07:02:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (282, 77, 276, '真不太会拍', '0', '1', '1', '0', '找男朋友', 391, 109, 75, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-27 13:56:54', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (283, 77, 276, '滴。', '0', '1', '1', '0', '找男朋友', 82, 109, 15, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-07 10:46:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (284, 77, 276, '滴滴', '0', '1', '1', '0', '找男朋友', 805, 109, 205, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-09 12:36:50', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (285, 78, 285, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 666, 109, 307, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-26 14:46:24', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (286, 78, 285, '皮卡皮卡秋', '0', '1', '1', '0', '找男朋友', 74, 109, 17, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-27 13:31:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (287, 79, 287, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 392, 109, 55, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-28 04:02:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (288, 79, 287, '有面基的吗', '0', '1', '1', '0', '找男朋友', 538, 109, 195, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-03 11:35:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (289, 79, 287, '哼哼哼', '0', '1', '1', '0', '找男朋友', 630, 109, 169, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-14 14:01:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (290, 79, 287, '要送弟弟生日礼物了，有什么推荐的吗', '0', '1', '1', '0', '找男朋友', 193, 109, 39, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-18 04:36:48', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (291, 79, 287, '旧照旧照~', '0', '1', '1', '0', '找男朋友', 827, 109, 57, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-26 15:28:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (292, 79, 287, '。', '0', '1', '1', '0', '找男朋友', 923, 109, 354, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-02 11:24:30', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (293, 79, 287, '疯了', '0', '1', '1', '0', '找男朋友', 597, 109, 176, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-10 03:34:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (294, 79, 287, '。。', '0', '1', '1', '0', '找男朋友', 348, 109, 70, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-11 15:00:18', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (295, 79, 287, '落雪啦', '0', '1', '1', '0', '找男朋友', 497, 109, 160, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-17 07:59:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (296, 79, 287, '都结冰了', '0', '1', '1', '0', '找男朋友', 800, 109, 115, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-20 12:55:26', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (297, 80, 297, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 348, 109, 43, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-20 12:58:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (298, 80, 297, '有没有小哥哥聊聊天', '0', '1', '1', '0', '找男朋友', 991, 109, 144, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-29 15:54:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (299, 81, 299, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 498, 109, 106, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-13 10:42:15', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (300, 81, 299, '帅哥有么', '0', '1', '1', '0', '找男朋友', 273, 109, 64, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-17 03:33:31', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (301, 81, 299, '不想努力了', '0', '1', '1', '0', '找男朋友', 121, 109, 31, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-18 10:57:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (302, 81, 299, '想谈恋爱', '0', '1', '1', '0', '找男朋友', 997, 109, 351, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-19 09:33:18', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (303, 82, 303, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 773, 109, 149, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-12 03:11:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (304, 82, 303, '从一而终的人，才是这个时代的稀缺品', '0', '1', '1', '0', '找男朋友', 562, 109, 95, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-12 10:47:13', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (305, 82, 303, '大概是孤独终老了', '0', '1', '1', '0', '找男朋友', 916, 109, 99, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-17 13:01:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (306, 82, 303, '老照片一张', '0', '1', '1', '0', '找男朋友', 81, 109, 26, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-24 05:21:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (307, 82, 303, '挑战了十级孤独', '0', '1', '1', '0', '找男朋友', 52, 109, 11, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-04 04:23:20', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (308, 82, 303, '继续孤独终老', '0', '1', '1', '0', '找男朋友', 326, 109, 51, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-21 12:35:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (309, 82, 303, '我还在等', '0', '1', '1', '0', '找男朋友', 823, 109, 139, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-08 03:51:54', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (310, 82, 303, '周末我们去看日落吧，事事有着落', '0', '1', '1', '0', '找男朋友', 543, 109, 170, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-15 05:51:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (311, 83, 311, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 749, 109, 102, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-01 12:51:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (312, 83, 311, '一起恰鸡呀', '0', '1', '1', '0', '找男朋友', 237, 109, 59, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-03 15:26:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (313, 84, 313, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 736, 109, 165, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-18 03:48:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (314, 84, 313, '不用怕，我们都只会来一次人间', '0', '1', '1', '0', '找男朋友', 923, 109, 61, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-18 10:34:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (315, 84, 313, '时间会告诉我们，所有东西都会变', '0', '1', '1', '0', '找男朋友', 672, 109, 181, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-19 08:59:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (316, 84, 313, '唯一不变的是改变', '0', '1', '1', '0', '找男朋友', 194, 109, 42, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-21 05:07:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (317, 84, 313, '对成年人来说，死很容易，活着很难，想活的好更难', '0', '1', '1', '0', '找男朋友', 591, 109, 164, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-24 04:56:23', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (318, 84, 313, '羞辱我的方式有很多，你偏偏要问我有没有对象', '0', '1', '1', '0', '找男朋友', 830, 109, 137, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-25 16:26:31', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (319, 85, 319, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 816, 109, 265, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-27 13:54:14', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (320, 85, 319, '取悦自己才是正道！', '0', '1', '1', '0', '找男朋友', 694, 109, 63, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-09 12:10:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (321, 85, 319, '今天也是个“小可爱”呢', '0', '1', '1', '0', '找男朋友', 964, 109, 297, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-10 13:50:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (322, 86, 322, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 995, 109, 49, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-01 06:36:46', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (323, 86, 322, '想跟有趣且浪漫的人聊聊天', '0', '1', '1', '0', '找男朋友', 424, 109, 96, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-09 15:56:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (324, 86, 322, '甜妹', '0', '1', '1', '0', '找男朋友', 172, 109, 33, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-15 13:10:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (325, 86, 322, '被褪成的绿发惊喜到', '0', '1', '1', '0', '找男朋友', 183, 109, 72, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-17 10:01:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (326, 87, 326, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 245, 109, 26, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-30 03:31:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (327, 87, 326, 'nice景色', '0', '1', '1', '0', '找男朋友', 225, 109, 75, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-01-04 11:25:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (328, 87, 326, '我要出框！', '0', '1', '1', '0', '找男朋友', 215, 109, 84, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-01-05 10:23:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (329, 87, 326, '阳光明媚', '0', '1', '1', '0', '找男朋友', 732, 109, 42, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-01-06 08:40:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (330, 87, 326, '还不错吧', '0', '1', '1', '0', '找男朋友', 604, 109, 18, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-01-07 09:46:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (331, 88, 331, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 362, 109, 23, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-03 06:38:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (332, 88, 331, '晚上出来吃个日料，一个人好无聊', '0', '1', '1', '0', '找男朋友', 615, 109, 80, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-10 15:09:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (333, 88, 331, '蔡姐做的菜太好吃了！', '0', '1', '1', '0', '找男朋友', 546, 109, 56, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-15 09:53:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (334, 89, 334, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 87, 109, 17, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-17 11:16:20', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (335, 89, 334, '我在人间，贩卖快了，你要来一份吗', '0', '1', '1', '0', '找男朋友', 553, 109, 97, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-23 05:15:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (336, 89, 334, '野王那么多，就不给我一个嘛', '0', '1', '1', '0', '找男朋友', 802, 109, 198, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-27 15:43:20', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (337, 89, 334, '今天也是元气满满的一天呢', '0', '1', '1', '0', '找男朋友', 902, 109, 121, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-07 04:33:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (338, 89, 334, '爱玩是天性，收心是选择', '0', '1', '1', '0', '找男朋友', 394, 109, 35, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-07 07:51:50', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (339, 90, 339, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 242, 109, 14, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-08 05:55:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (340, 91, 340, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 124, 109, 36, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-10 10:30:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (341, 91, 340, '你的小可爱已上线', '0', '1', '1', '0', '找男朋友', 261, 109, 40, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-14 03:45:26', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (342, 91, 340, '天冷加衣', '0', '1', '1', '0', '找男朋友', 787, 109, 230, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-17 10:20:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (343, 92, 343, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 959, 109, 208, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-14 09:58:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (344, 92, 343, '等一个人', '0', '1', '1', '0', '找男朋友', 228, 109, 19, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-28 12:08:48', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (345, 93, 345, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 183, 109, 69, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-21 07:07:57', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (346, 93, 345, '不去健身房就要废了', '0', '1', '1', '0', '找男朋友', 546, 109, 82, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-27 14:18:24', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (347, 94, 347, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 925, 109, 50, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-25 04:57:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (348, 94, 347, '发一张旧照吧', '0', '1', '1', '0', '找男朋友', 156, 109, 32, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-25 12:12:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (349, 94, 347, '我的小毛驴', '0', '1', '1', '0', '找男朋友', 67, 109, 20, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-27 07:48:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (350, 94, 347, '天也太冷了吧！', '0', '1', '1', '0', '找男朋友', 413, 109, 33, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-03 05:57:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (351, 94, 347, '午餐感觉还不错哦', '0', '1', '1', '0', '找男朋友', 311, 109, 98, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-09 13:32:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (352, 94, 347, '冷冷冷，一起取暖吗', '0', '1', '1', '0', '找男朋友', 734, 109, 155, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-11 16:09:14', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (353, 94, 347, '不喜欢等', '0', '1', '1', '0', '找男朋友', 151, 109, 33, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-17 03:56:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (354, 95, 354, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 985, 109, 127, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-17 15:24:04', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (355, 95, 354, '登山', '0', '1', '1', '0', '找男朋友', 357, 109, 69, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-27 04:35:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (356, 95, 354, '人不如猫系列', '0', '1', '1', '0', '找男朋友', 245, 109, 40, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-01 07:29:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (357, 95, 354, '陪伴即是救赎', '0', '1', '1', '0', '找男朋友', 357, 109, 56, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-12 09:16:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (358, 95, 354, '95后 喜欢喵喵', '0', '1', '1', '0', '找男朋友', 579, 109, 58, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-29 12:24:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (359, 95, 354, '冬帽悄悄登场', '0', '1', '1', '0', '找男朋友', 236, 109, 37, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-20 14:53:26', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (360, 95, 354, '一周做一次人', '0', '1', '1', '0', '找男朋友', 166, 109, 38, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-25 16:36:05', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (361, 96, 361, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 835, 109, 113, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-02 05:04:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (362, 96, 361, '晚上好呀', '0', '1', '1', '0', '找男朋友', 511, 109, 89, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-03 03:04:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (363, 96, 361, '晚上好', '0', '1', '1', '0', '找男朋友', 396, 109, 68, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-07 13:17:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (364, 96, 361, '干杯', '0', '1', '1', '0', '找男朋友', 977, 109, 84, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-13 09:44:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (365, 96, 361, '都那么累了，为什么有的人还有力气犯贱呢', '0', '1', '1', '0', '找男朋友', 166, 109, 35, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-20 16:12:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (366, 97, 366, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 794, 109, 303, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-19 04:05:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (367, 97, 366, '干啥啥不行，熬夜第一名', '0', '1', '1', '0', '找男朋友', 982, 109, 190, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-21 04:33:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (368, 97, 366, '想尝试爱情的苦', '0', '1', '1', '0', '找男朋友', 600, 109, 121, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-21 09:31:12', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (369, 97, 366, '愿快乐如期而至', '0', '1', '1', '0', '找男朋友', 129, 109, 25, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-28 03:57:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (370, 97, 366, '我还顶的居', '0', '1', '1', '0', '找男朋友', 782, 109, 265, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-01 09:20:25', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (371, 97, 366, '给你们介绍个小姐姐', '0', '1', '1', '0', '找男朋友', 518, 109, 166, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-06 05:20:15', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (372, 98, 372, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 514, 109, 36, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-12 06:47:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (373, 98, 372, '回来了', '0', '1', '1', '0', '找男朋友', 450, 109, 164, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-15 06:30:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (374, 98, 372, '黑色永远显瘦', '0', '1', '1', '0', '找男朋友', 140, 109, 29, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-17 13:13:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (375, 98, 372, '在人海里找到我', '0', '1', '1', '0', '找男朋友', 515, 109, 61, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-19 07:52:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (376, 99, 376, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 986, 109, 93, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-25 04:30:38', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (377, 99, 376, '这是一个适合养膘的季节', '0', '1', '1', '0', '找男朋友', 867, 109, 180, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-25 13:30:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (378, 99, 376, '是辣妹么是辣妹么是辣妹么', '0', '1', '1', '0', '找男朋友', 330, 109, 64, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-25 05:50:33', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (379, 99, 376, '所以你在爱别人的时候有没有想起我', '0', '1', '1', '0', '找男朋友', 189, 109, 47, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-25 16:39:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (380, 100, 380, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 429, 109, 72, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-13 05:58:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (381, 100, 380, '旧照', '0', '1', '1', '0', '找男朋友', 539, 109, 19, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-26 03:30:04', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (382, 100, 380, '这天气就跟男人的心一样，说变就变，冷死我了', '0', '1', '1', '0', '找男朋友', 540, 109, 54, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-27 15:09:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (383, 100, 380, '都说手是女人的第二张脸', '0', '1', '1', '0', '找男朋友', 81, 109, 18, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-01 05:32:40', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (384, 101, 384, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 866, 109, 205, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-11 08:54:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (385, 101, 384, '出门就是喝酒', '0', '1', '1', '0', '找男朋友', 54, 109, 20, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-20 14:35:30', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (386, 101, 384, '当你做错的时候，连呼吸都是错的', '0', '1', '1', '0', '找男朋友', 537, 109, 98, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-27 11:46:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (387, 101, 384, '别问照片是不是我，我丑也是你得不到的', '0', '1', '1', '0', '找男朋友', 407, 109, 101, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-28 12:53:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (388, 101, 384, '失眠了，要喝酒才能睡得着', '0', '1', '1', '0', '找男朋友', 177, 109, 39, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-02 15:53:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (389, 102, 389, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 679, 109, 218, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-06 04:23:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (390, 102, 389, '今天的不舒服到此为止吧', '0', '1', '1', '0', '找男朋友', 241, 109, 37, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-07 16:17:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (391, 102, 389, '伢子', '0', '1', '1', '0', '找男朋友', 482, 109, 52, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-13 12:18:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (392, 102, 389, '好啦好啦，出来玩啦', '0', '1', '1', '0', '找男朋友', 258, 109, 69, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-15 13:27:14', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (393, 102, 389, '晚安哟', '0', '1', '1', '0', '找男朋友', 413, 109, 21, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-19 07:13:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (394, 103, 394, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 936, 109, 199, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-07 14:29:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (395, 103, 394, '今日碎片', '0', '1', '1', '0', '找男朋友', 529, 109, 16, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-11 08:07:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (396, 103, 394, '我太可爱了吧', '0', '1', '1', '0', '找男朋友', 136, 109, 45, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-18 04:09:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (397, 104, 397, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 538, 109, 123, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-21 10:03:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (398, 104, 397, '校内读书人，校外都市丽人', '0', '1', '1', '0', '找男朋友', 623, 109, 32, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-27 07:04:48', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (399, 104, 397, '靓女罢了', '0', '1', '1', '0', '找男朋友', 881, 109, 341, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-08 09:33:42', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (400, 104, 397, '02 舞蹈生  身边全是妹子~~~', '0', '1', '1', '0', '找男朋友', 979, 109, 50, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-20 06:28:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (401, 105, 401, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 253, 109, 36, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-12 08:11:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (402, 105, 401, '今天跑民政局结婚，结果人家跟我说结婚要2个人，搞得我一下子迷茫了', '0', '1', '1', '0', '找男朋友', 212, 109, 99, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-13 11:01:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (403, 105, 401, '一转眼，就成了故事', '0', '1', '1', '0', '找男朋友', 637, 109, 116, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-16 05:45:56', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (404, 105, 401, '从此不恋爱', '0', '1', '1', '0', '找男朋友', 118, 109, 32, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-26 14:20:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (405, 106, 405, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 848, 109, 40, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-15 15:25:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (406, 106, 405, '嘘', '0', '1', '1', '0', '找男朋友', 582, 109, 60, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-19 05:24:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (407, 106, 405, '没有文案', '0', '1', '1', '0', '找男朋友', 849, 109, 191, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-24 05:29:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (408, 106, 405, '除了我一直是3岁，其他地方都有很大变化', '0', '1', '1', '0', '找男朋友', 154, 109, 20, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-27 05:34:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (409, 107, 409, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 262, 109, 37, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-08 10:34:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (410, 107, 409, '所以爱会消失,对不对?', '0', '1', '1', '0', '找男朋友', 627, 109, 230, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-09 06:01:23', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (411, 107, 409, '喵喵，想你的人一定会去找你的', '0', '1', '1', '0', '找男朋友', 300, 109, 56, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-18 09:04:09', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (412, 107, 409, '我不应该谈恋爱，我应该去十字路口贴钢化膜', '0', '1', '1', '0', '找男朋友', 714, 109, 180, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-26 12:17:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (413, 107, 409, '阿喵', '0', '1', '1', '0', '找男朋友', 398, 109, 44, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-06 05:55:16', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (414, 107, 409, '今天是不洗头的打工人', '0', '1', '1', '0', '找男朋友', 166, 109, 51, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-07 14:14:20', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (415, 107, 409, '超市里那么多饮料，还是会有人选择矿泉水', '0', '1', '1', '0', '找男朋友', 842, 109, 102, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-13 09:33:26', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (416, 108, 416, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 330, 109, 74, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-01 14:37:54', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (417, 108, 416, '92年的小牛，寻找大一岁的鼠，大两岁的猪^^', '0', '1', '1', '0', '找男朋友', 372, 109, 121, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-03 08:11:27', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (418, 109, 418, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 912, 109, 361, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-16 15:03:56', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (419, 109, 418, '爱上了', '0', '1', '1', '0', '找男朋友', 507, 109, 108, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-19 15:55:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (420, 109, 418, '还是回家早点睡吧', '0', '1', '1', '0', '找男朋友', 919, 109, 107, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-23 15:51:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (421, 110, 421, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 377, 109, 123, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-18 08:19:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (422, 110, 421, '我这胖嘟嘟的手,唉', '0', '1', '1', '0', '找男朋友', 699, 109, 235, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-23 13:56:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (423, 110, 421, '美其名曰出差，实则瞎逛赶行程', '0', '1', '1', '0', '找男朋友', 757, 109, 51, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-03 06:07:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (424, 110, 421, '超可爱', '0', '1', '1', '0', '找男朋友', 851, 109, 111, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-15 14:04:56', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (425, 110, 421, '好看竟被我猜到凶手', '0', '1', '1', '0', '找男朋友', 203, 109, 52, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-18 08:56:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (426, 111, 426, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 73, 109, 22, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-07 14:06:56', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (427, 111, 426, '请问月老在吗，我在家睡不着', '0', '1', '1', '0', '找男朋友', 250, 109, 34, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-12 14:05:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (428, 111, 426, '医生说我湿气太重了，需要亲热解毒', '0', '1', '1', '0', '找男朋友', 844, 109, 15, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-15 15:26:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (429, 111, 426, '我本来长这样，后来看见你......', '0', '1', '1', '0', '找男朋友', 872, 109, 34, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-19 10:15:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (430, 111, 426, '不要抱怨 抱我', '0', '1', '1', '0', '找男朋友', 926, 109, 329, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-25 15:43:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (431, 111, 426, '一天要结束了，我要停止发光了', '0', '1', '1', '0', '找男朋友', 958, 109, 201, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-27 14:52:54', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (432, 111, 426, '无聊，如果我结婚了，这个点应该在打老公了吧', '0', '1', '1', '0', '找男朋友', 398, 109, 70, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-03 11:32:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (433, 112, 433, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 419, 109, 53, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-12 07:21:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (434, 112, 433, '大家好', '0', '1', '1', '0', '找男朋友', 555, 109, 87, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-15 16:57:25', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (435, 112, 433, 'New watch', '0', '1', '1', '0', '找男朋友', 597, 109, 55, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-18 10:50:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (436, 112, 433, '干饭！', '0', '1', '1', '0', '找男朋友', 694, 109, 173, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-24 08:24:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (437, 112, 433, '久违的阳光', '0', '1', '1', '0', '找男朋友', 445, 109, 60, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-26 13:57:12', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (438, 112, 433, '哈哈', '0', '1', '1', '0', '找男朋友', 312, 109, 38, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-11 09:59:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (439, 113, 442, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 796, 109, 145, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-26 07:46:30', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (440, 113, 442, '宁愿被渣男渣，也不愿被直男给气死', '0', '1', '1', '0', '找男朋友', 767, 109, 109, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-29 15:25:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (441, 113, 442, '美女是不需要温度的', '0', '1', '1', '0', '找男朋友', 701, 109, 240, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-13 15:20:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (442, 113, 442, '叮咚，您的圣诞精灵已送达，请注意查收', '0', '1', '1', '0', '找男朋友', 134, 109, 31, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-26 04:17:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (443, 114, 578, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 720, 109, 215, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-21 07:55:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (444, 114, 578, '文案在图里', '0', '1', '1', '0', '找男朋友', 446, 109, 89, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-22 11:28:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (445, 114, 578, '喝凉水', '0', '1', '1', '0', '找男朋友', 914, 109, 256, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-29 03:23:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (446, 114, 578, '特别能吃苦，这五个字，我做到了前四个', '0', '1', '1', '0', '找男朋友', 919, 109, 181, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-03 11:00:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (447, 114, 578, '出门干啥，当然是吃呀', '0', '1', '1', '0', '找男朋友', 522, 109, 33, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-15 15:24:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (448, 115, 450, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 907, 109, 31, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-16 07:51:24', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (449, 115, 450, '总是一个人', '0', '1', '1', '0', '找男朋友', 149, 109, 26, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-18 16:18:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (450, 115, 450, '心累', '0', '1', '1', '0', '找男朋友', 911, 109, 218, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-26 05:31:08', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (451, 116, 455, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 196, 109, 51, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-13 04:54:48', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (452, 116, 455, '只要我回来，你还得靠边站', '0', '1', '1', '0', '找男朋友', 885, 109, 296, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-15 03:26:12', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (453, 116, 455, '来拯救我吧！ 欢迎', '0', '1', '1', '0', '找男朋友', 166, 109, 48, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-17 13:21:37', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (454, 116, 455, '击中你的心了吗', '0', '1', '1', '0', '找男朋友', 273, 109, 99, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-23 10:23:12', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (455, 116, 455, '明明喜欢却假装不在乎，那种感觉真的很难受', '0', '1', '1', '0', '找男朋友', 753, 109, 197, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-30 03:18:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (456, 117, 460, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 244, 109, 80, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-17 10:20:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (457, 117, 460, '我想听春天的故事，你有吗？', '0', '1', '1', '0', '找男朋友', 188, 109, 15, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-27 04:48:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (458, 117, 460, '过好每一天', '0', '1', '1', '0', '找男朋友', 191, 109, 51, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-07 07:44:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (459, 117, 460, '想要的东西，还是该自己去争取', '0', '1', '1', '0', '找男朋友', 507, 109, 22, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-16 04:59:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (460, 117, 460, '窗上的雪花，像极了什么', '0', '1', '1', '0', '找男朋友', 241, 109, 42, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-27 05:16:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (461, 118, 469, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 665, 109, 98, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-14 16:39:27', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (462, 118, 469, '你已经把对方拉黑！', '0', '1', '1', '0', '找男朋友', 599, 109, 71, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-18 06:04:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (463, 118, 469, '这才是我的头盔，爱啦', '0', '1', '1', '0', '找男朋友', 222, 109, 43, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-26 12:10:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (464, 118, 469, '所以啊，哪有什么钢铁直男，爱你的人一定会想尽办法爱你', '0', '1', '1', '0', '找男朋友', 91, 109, 20, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-07 03:39:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (465, 118, 469, '闺蜜生日，大家都是带伴去，我那位怎么还没出现', '0', '1', '1', '0', '找男朋友', 140, 109, 23, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-11 11:37:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (466, 118, 469, '忙忙碌碌，懒得说', '0', '1', '1', '0', '找男朋友', 976, 109, 199, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-18 14:02:20', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (467, 118, 469, '如果你也和我一样', '0', '1', '1', '0', '找男朋友', 607, 109, 62, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-23 14:58:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (468, 118, 469, '只想安心当个美少女', '0', '1', '1', '0', '找男朋友', 323, 109, 19, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-27 04:53:05', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (469, 118, 469, '晚安', '0', '1', '1', '0', '找男朋友', 411, 109, 13, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-03 07:00:18', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (470, 119, 473, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 515, 109, 61, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-17 10:27:27', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (471, 119, 473, '反正没有人要，吃就吃吧', '0', '1', '1', '0', '找男朋友', 603, 109, 142, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-24 09:31:15', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (472, 119, 473, '佛系上线，佛系加微', '0', '1', '1', '0', '找男朋友', 687, 109, 238, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-06 12:27:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (473, 119, 473, '上一秒和小姐姐约好去玩，下一秒客户打电话预约，加班，唉', '0', '1', '1', '0', '找男朋友', 554, 109, 185, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-08 03:48:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (474, 120, 476, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 308, 109, 117, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-13 16:41:15', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (475, 120, 476, '今天有两个男的一直跟着我们，好可怕', '0', '1', '1', '0', '找男朋友', 102, 109, 22, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-17 06:49:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (476, 120, 476, '这个世界好冷漠，为什么没有人偷走我的心', '0', '1', '1', '0', '找男朋友', 56, 109, 19, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-21 10:32:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (477, 121, 478, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 876, 109, 73, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-16 14:46:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (478, 121, 478, '感冒好了，耶', '0', '1', '1', '0', '找男朋友', 466, 109, 96, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-19 14:45:22', '2021-07-15 17:10:06', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (479, 122, 481, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 457, 109, 81, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-09 09:39:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (480, 122, 481, '我是你的白月光', '0', '1', '1', '0', '找男朋友', 371, 109, 82, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-16 10:40:48', '2021-07-15 17:07:27', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (481, 122, 481, '可甜可咸可拽', '0', '1', '1', '0', '找男朋友', 259, 109, 112, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-18 14:16:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (482, 123, 487, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 168, 109, 30, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-04 04:07:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (483, 123, 487, '最喜欢二月了    因为二月只用单身28天', '0', '1', '1', '0', '找男朋友', 668, 109, 86, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-09 07:20:04', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (484, 123, 487, '我的手在干嘛  哈哈', '0', '1', '1', '0', '找男朋友', 145, 109, 60, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-14 03:20:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (485, 123, 487, '旧照片', '0', '1', '1', '0', '找男朋友', 936, 109, 123, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-15 06:11:23', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (486, 123, 487, '阳光明媚的一天', '0', '1', '1', '0', '找男朋友', 113, 109, 37, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-16 16:51:02', '2021-07-15 17:10:33', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (487, 123, 487, '有人来加我聊聊天嘛', '0', '1', '1', '0', '找男朋友', 973, 109, 82, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-18 14:44:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (488, 124, 492, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 838, 109, 138, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-16 07:48:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (489, 124, 492, '许一份现世安稳,潋滟红尘,窃喜清欢', '0', '1', '1', '0', '找男朋友', 319, 109, 83, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-29 05:33:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (490, 124, 492, '留住校园一瞬间', '0', '1', '1', '0', '找男朋友', 144, 109, 20, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-09 12:30:38', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (491, 124, 492, '一朵白云的河 一颗星星的海', '0', '1', '1', '0', '找男朋友', 158, 109, 29, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-11 10:20:12', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (492, 124, 492, '我对奶茶过敏，如果你做我男朋友可以节省一大笔开支呢！', '0', '1', '1', '0', '找男朋友', 252, 109, 67, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-12 09:54:51', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (493, 125, 497, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 380, 109, 46, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-17 12:02:27', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (494, 125, 497, '今日穿搭', '0', '1', '1', '0', '找男朋友', 770, 109, 79, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-18 12:31:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (495, 125, 497, '我很丑可是我很温柔', '0', '1', '1', '0', '找男朋友', 835, 109, 77, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-24 04:28:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (496, 125, 497, '今日份自拍', '0', '1', '1', '0', '找男朋友', 554, 109, 138, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-25 06:43:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (497, 125, 497, '和妹妹在一起', '0', '1', '1', '0', '找男朋友', 166, 109, 35, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-26 11:29:23', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (498, 126, 501, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 494, 109, 71, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-09 11:41:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (499, 126, 501, '耶', '0', '1', '1', '0', '找男朋友', 509, 109, 89, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-13 11:02:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (500, 126, 501, '一起听歌嘛', '0', '1', '1', '0', '找男朋友', 519, 109, 235, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-20 16:09:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (501, 126, 501, '干嘛不找我', '0', '1', '1', '0', '找男朋友', 986, 109, 335, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-25 09:39:10', '2021-07-15 17:10:56', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (502, 127, 507, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 883, 109, 75, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-03 08:04:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (503, 127, 507, '生活碎片', '0', '1', '1', '0', '找男朋友', 938, 109, 56, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-06 10:28:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (504, 127, 507, '书要好好读', '0', '1', '1', '0', '找男朋友', 127, 109, 43, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-16 04:03:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (505, 127, 507, '喜欢的人要好好争取', '0', '1', '1', '0', '找男朋友', 230, 109, 40, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-16 12:11:27', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (506, 127, 507, '一见你就心情好', '0', '1', '1', '0', '找男朋友', 740, 109, 129, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-19 07:18:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (507, 127, 507, '恰饭恰饭', '0', '1', '1', '0', '找男朋友', 509, 109, 30, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-22 03:50:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (508, 128, 513, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 307, 109, 103, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-04 06:49:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (509, 128, 513, '快来祝我打游戏终于没有健康系统了', '0', '1', '1', '0', '找男朋友', 750, 109, 186, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-08 09:05:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (510, 128, 513, '小孩子真是可爱', '0', '1', '1', '0', '找男朋友', 522, 109, 84, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-17 03:39:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (511, 128, 513, '之前的照片，拿来敷衍一下了，嘻嘻', '0', '1', '1', '0', '找男朋友', 872, 109, 189, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-18 05:45:33', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (512, 128, 513, '祝教官孤寡一辈子', '0', '1', '1', '0', '找男朋友', 559, 109, 149, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-18 11:21:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (513, 128, 513, '搓搓手，又要孤身过冬了', '0', '1', '1', '0', '找男朋友', 215, 109, 19, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-12-23 09:10:04', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (514, 129, 517, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 61, 109, 19, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-01 16:00:27', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (515, 129, 517, '要快乐呀', '0', '1', '1', '0', '找男朋友', 441, 109, 63, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-05 12:21:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (516, 129, 517, '陷落美好,满溢温柔', '0', '1', '1', '0', '找男朋友', 630, 109, 259, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-09 12:29:44', '2021-07-15 17:11:35', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (517, 129, 517, '会变成光的，要和未来的那个人互相照亮', '0', '1', '1', '0', '找男朋友', 684, 109, 180, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-11-16 14:20:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (518, 130, 526, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 770, 109, 85, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-10 11:58:37', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (519, 130, 526, '和闺蜜一起', '0', '1', '1', '0', '找男朋友', 833, 109, 90, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-16 16:13:23', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (520, 130, 526, '谢谢家里的亲人们给我过生日', '0', '1', '1', '0', '找男朋友', 895, 109, 58, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-18 08:20:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (521, 130, 526, '你也要去和闺蜜一起拍闺蜜照哦，非常有爱', '0', '1', '1', '0', '找男朋友', 486, 109, 95, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-20 15:01:39', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (522, 130, 526, '不好意思，手机歪了', '0', '1', '1', '0', '找男朋友', 892, 109, 62, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-21 08:14:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (523, 130, 526, '带着我的小熊兄弟', '0', '1', '1', '0', '找男朋友', 944, 109, 146, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-26 13:51:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (524, 130, 526, '还行吧', '0', '1', '1', '0', '找男朋友', 181, 109, 24, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-27 07:37:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (525, 130, 526, '出门咯', '0', '1', '1', '0', '找男朋友', 759, 109, 196, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-28 09:27:26', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (526, 130, 526, '等我有钱了一定要给自己买个头', '0', '1', '1', '0', '找男朋友', 364, 109, 75, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-29 12:47:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (527, 131, 530, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 315, 109, 40, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-20 10:00:25', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (528, 131, 530, '我怎么这么可爱', '0', '1', '1', '0', '找男朋友', 864, 109, 62, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-25 09:53:14', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (529, 131, 530, '今夜 不想睡', '0', '1', '1', '0', '找男朋友', 552, 109, 128, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-26 11:33:26', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (530, 131, 530, '爱情的表现，到底是什么', '0', '1', '1', '0', '找男朋友', 624, 109, 192, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-28 14:56:14', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (531, 131, 530, '天呐，我太可爱了吧', '0', '1', '1', '0', '找男朋友', 368, 109, 96, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-02 15:45:31', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (532, 131, 530, '你也很开心吗', '0', '1', '1', '0', '找男朋友', 262, 109, 23, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-05 10:26:31', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (533, 131, 530, '哈哈，发发旧照片', '0', '1', '1', '0', '找男朋友', 335, 109, 45, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-13 11:23:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (534, 131, 530, '这个造型，还行吧', '0', '1', '1', '0', '找男朋友', 447, 109, 26, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-15 13:03:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (535, 131, 530, '这样的我，你喜欢吗', '0', '1', '1', '0', '找男朋友', 639, 109, 114, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-16 06:08:13', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (536, 131, 530, '123123', '0', '1', '1', '0', '找男朋友', 466, 109, 45, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-27 11:01:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (537, 131, 530, '没啥好说的，就发照片吧！', '0', '1', '1', '0', '找男朋友', 575, 109, 67, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-10-30 03:35:01', '2021-07-16 10:04:13', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (538, 132, 538, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 538, 109, 105, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-11 09:20:25', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (539, 132, 538, '随笔一画，好像有点逗', '0', '1', '1', '0', '找男朋友', 595, 109, 102, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-14 13:46:08', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (540, 132, 538, '看看最后什么样吧', '0', '1', '1', '0', '找男朋友', 556, 109, 27, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-18 11:17:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (541, 132, 538, '1', '0', '1', '1', '0', '找男朋友', 699, 109, 184, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-19 10:39:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (542, 132, 538, '完稿！', '0', '1', '1', '0', '找男朋友', 601, 109, 35, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-20 07:45:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (543, 133, 543, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 656, 109, 186, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-20 07:33:08', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (544, 133, 543, '恰火锅咯', '0', '1', '1', '0', '找男朋友', 294, 109, 48, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-23 12:27:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (545, 134, 561, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 844, 109, 250, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-04 05:28:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (546, 134, 561, '女人既要有勾人的皮囊，也要有引人的灵魂', '0', '1', '1', '0', '找男朋友', 913, 109, 32, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-07 05:14:25', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (547, 134, 561, '今夜,秋名山见', '0', '1', '1', '0', '找男朋友', 998, 109, 294, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-14 11:56:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (548, 134, 561, '吃糖等人', '0', '1', '1', '0', '找男朋友', 452, 109, 49, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-19 03:05:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (549, 134, 561, '率直女性上线！', '0', '1', '1', '0', '找男朋友', 532, 109, 98, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-19 16:14:04', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (550, 134, 561, '说好的礼物呢，人影都没了', '0', '1', '1', '0', '找男朋友', 680, 109, 178, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-25 04:38:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (551, 134, 561, '学习使人进步，自拍使我愉悦，哈哈哈', '0', '1', '1', '0', '找男朋友', 98, 109, 39, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-06-27 10:57:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (552, 134, 561, '嗯，我就发个旧照', '0', '1', '1', '0', '找男朋友', 763, 109, 283, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-08 10:03:13', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (553, 134, 561, '这是木木', '0', '1', '1', '0', '找男朋友', 661, 109, 273, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-13 10:38:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (554, 134, 561, '外边下雨，在这休息一会吧', '0', '1', '1', '0', '找男朋友', 579, 109, 89, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-16 04:04:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (555, 134, 561, '我在人民广场吃炸鸡', '0', '1', '1', '0', '找男朋友', 304, 109, 43, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-18 09:17:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (556, 134, 561, '喔 别吃我', '0', '1', '1', '0', '找男朋友', 370, 109, 76, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-07-26 13:39:30', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (557, 134, 561, '如果晚上睡不着，你们都会做啥呢？', '0', '1', '1', '0', '找男朋友', 274, 109, 26, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-02 05:07:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (558, 134, 561, '天气好好', '0', '1', '1', '0', '找男朋友', 537, 109, 94, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-02 12:48:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (559, 134, 561, '旧照又上线了', '0', '1', '1', '0', '找男朋友', 451, 109, 106, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-10 13:31:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (560, 134, 561, '我猜我怕不怕', '0', '1', '1', '0', '找男朋友', 216, 109, 87, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-08-22 03:32:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (561, 134, 561, '旧照2.0', '0', '1', '1', '0', '找男朋友', 874, 109, 178, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-06 11:54:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (562, 134, 561, '想我了吗', '0', '1', '1', '0', '找男朋友', 446, 109, 51, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2020-09-13 14:26:41', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (567, 135, 563, '刚刚使用，请多关照小妹子！！', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-06 15:57:25', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (568, 136, 564, '刚刚使用，请多关照！！', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-06 15:58:33', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (569, 136, 564, '今天回来，哈哈，从老家带来好多农副产品。', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-09 19:30:04', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (570, 136, 564, '发首歌，早上好！', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '1', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-10 08:21:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (571, 137, 566, '新人来到，多多关照，谢谢！', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-10 16:47:31', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (572, 136, 564, '哈哈哈哈哈', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-10 18:58:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (573, 136, 564, '发布照片', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-10 20:30:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (574, 136, 564, '呵呵，照片来了。', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-10 20:32:13', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (575, 138, 567, '大家好，小妹这厢有礼。', '0', '1', '1', '0', '找男朋友', 2, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-10 20:38:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (576, 138, 567, '哈哈哈哈哈，美女来了。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-10 20:56:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (577, 138, 567, '哈哈，马上过年了。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-11 00:42:48', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (578, 138, 567, '今天除夕夜，今年农历最后一天。', '1', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-11 16:28:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (579, 138, 567, '今天除夕，看春晚', '1', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-11 22:09:57', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (580, 138, 567, '今天大年初一，向大家拜年，祝大家新年快乐，万事如意，心想事成，牛气冲天。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-12 07:47:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (581, 138, 567, '今天个家里亲戚挨个拜年了，沟通沟通感情。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-12 14:58:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (582, 138, 567, '大年初一，给各位长辈、亲人、朋友、同事拜年了，祝大家牛年大吉、牛气冲天……', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-12 20:10:13', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (583, 138, 567, '正在追剧，很幸福快乐开心^_^开心！！', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-12 21:12:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (584, 138, 567, '今天大年初二，早上很早起来了。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-13 08:46:22', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (585, 138, 567, '觉醒年代，动乱时期，讲述共产党第一排领导人建立共产党的历程。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-13 10:03:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (586, 138, 567, '今天一个人在家，很无聊，不知道干啥好了。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-13 16:54:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (587, 138, 567, '今天情人节，祝大家情人节快乐，有情人终成眷属！', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-14 07:47:33', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (588, 138, 567, '今天大年初三，也是西方情人节，祝大家情人节快乐，有情人终成眷属！', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-14 11:38:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (589, 138, 567, '自己在家煮东西吃，从老家带过来的老母鸡，黄焖鸡。很像的。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-14 13:39:27', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (590, 138, 567, '哈哈，今天一个人在家好无聊啊。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-14 15:26:58', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (591, 138, 567, '今天大年初四，今天起来晚了，很懒很懒。', '1', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-15 08:41:05', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (592, 138, 567, '今天天气不错，深圳好天气，每天都是太阳当空照，花儿对我笑小鸟说，早早早。', '1', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-15 12:35:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (593, 138, 567, '今天很早就起来了，我们去银行办理开户。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-16 07:56:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (594, 138, 567, '哈哈，没事发一条动态。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-16 19:50:53', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (595, 138, 567, '我的动态，分享给别人。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-16 20:03:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (596, 138, 567, '今天天气不错，每天都这样就好了。', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-17 09:32:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (597, 138, 567, '斗罗大陆', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '1', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-17 11:37:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (598, 138, 567, '住手。', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '1', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-17 14:27:57', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (599, 139, 568, '新人来到，多多关照，谢谢！', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-18 13:12:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (600, 138, 567, '觉醒年代', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '1', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-18 20:10:48', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (601, 140, 569, '新人来到，多多关照，谢谢！', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-18 23:22:09', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (602, 141, 570, '新人来到', '0', '1', '1', '0', '找男朋友', 1, 109, 7, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-19 09:36:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (603, 139, 568, 'aaa', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '1', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-19 10:03:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (604, 138, 567, '哈哈', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-19 10:25:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (605, 142, 571, '新人来到，多多关照，谢谢！', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-19 10:54:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (606, 142, 571, '。', '0', '1', '1', '0', '找男朋友', 2, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-19 12:14:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (607, 138, 567, '好的', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 4, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-19 12:14:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (608, 143, 572, 'eeeee', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-19 14:02:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (609, 137, 566, '有无聊可以约的不', '0', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-02-26 14:34:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (610, 144, 573, '大家好呀，一起来聊天社交吧！', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-06 18:14:04', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (611, 145, 574, '新人来到，多多关照，谢谢！', '0', '0', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-08 10:39:13', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (612, 145, 574, '🤔🤔🤔', '0', '0', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-08 16:17:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (613, 144, 573, '哈哈', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-09 21:21:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (614, 136, 564, '哈哈', '0', '1', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 3, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-09 21:24:04', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (615, 136, 564, '测试发布', '0', '1', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-10 11:35:18', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (616, 136, 564, '测试发布', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-10 11:35:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (617, 136, 564, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 2, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-10 11:40:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (618, 138, 567, '测试一下', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-10 20:02:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (619, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-10 20:03:48', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (620, 144, 573, '测试', '0', '1', '1', '0', '找男朋友', 1, 109, 2, 0, '0', 2, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-10 20:09:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (621, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-11 14:35:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (622, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-12 18:56:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (623, 138, 567, '测试', '0', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-12 22:22:14', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (624, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-12 22:22:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (625, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-14 19:14:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (626, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-15 09:12:48', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (627, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-15 16:03:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (628, 138, 567, '测试正常', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-17 19:44:08', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (629, 147, 575, '新人来到，多多关照，谢谢！', '0', '0', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-20 18:43:24', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (630, 138, 567, '测试', '0', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-21 19:53:15', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (631, 138, 567, '测试结果', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-21 19:54:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (632, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-22 22:19:30', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (633, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 2, 109, 7, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-23 22:35:43', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (634, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-25 16:20:54', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (635, 144, 573, '测试', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-25 22:32:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (636, 138, 567, '安排', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-26 10:27:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (637, 138, 567, '安排', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-26 19:39:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (638, 138, 567, '安排好了', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-26 19:45:18', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (639, 138, 567, '天气不错', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-27 08:58:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (640, 138, 567, '测试安排', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-28 19:37:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (641, 138, 567, '测试安排', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-28 19:37:28', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (642, 138, 567, '测试一下', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-28 19:37:45', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (643, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 4, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-30 16:37:05', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (644, 144, 573, '测试', '0', '1', '1', '0', '找男朋友', 4, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-30 20:22:25', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (645, 144, 573, '测试一下', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:26:19', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (646, 144, 573, '测试一下', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:26:20', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (647, 141, 570, '测试', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:30:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (648, 144, 573, '测试', '0', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:30:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (649, 144, 573, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:32:38', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (650, 144, 573, '打算', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:33:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (651, 144, 573, '打算', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:33:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (652, 144, 573, '呃呃呃', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:34:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (653, 144, 573, '呃呃呃', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:34:01', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (654, 141, 570, '测试', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:34:23', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (655, 141, 570, '测试', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:34:24', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (656, 144, 573, '二哥', '0', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:35:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (657, 144, 573, '二哥', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:35:07', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (658, 144, 573, '测试', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:36:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (659, 144, 573, '测试', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:36:44', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (660, 147, 575, '阿尔巴', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 15:59:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (661, 139, 568, '测试跑跑', '0', '1', '1', '0', '找男朋友', 1, 109, 3, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 16:00:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (662, 147, 575, '测试', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 16:02:00', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (663, 141, 570, 'help UNINE！！', '0', '0', '1', '0', '找男朋友', 22, 109, 63, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 16:15:21', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (664, 147, 575, '测试', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 16:20:06', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (665, 147, 575, '测试', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-03-31 16:22:52', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (666, 138, 567, '安排', '0', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-01 14:22:47', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (667, 138, 567, '1', '0', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-03 17:16:54', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (668, 138, 567, '2', '0', '1', '1', '0', '找男朋友', 2, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-03 18:30:13', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (669, 138, 567, '3', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-04 07:41:37', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (670, 138, 567, '4', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-04 10:17:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (671, 138, 567, '5', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-04 11:17:48', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (672, 138, 567, '6', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-04 17:30:42', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (673, 138, 567, '7', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-04 20:34:16', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (674, 138, 567, '8', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-04 21:42:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (675, 138, 567, '9', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-05 09:18:11', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (676, 138, 567, '10', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-05 09:53:36', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (677, 138, 567, '11', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-05 12:52:49', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (678, 138, 567, '12', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-05 14:21:05', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (679, 138, 567, '13', '0', '1', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-05 14:30:32', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (680, 138, 567, ' 14', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-05 17:05:17', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (681, 138, 567, '15', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-06 09:34:29', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (682, 138, 567, '16', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-07 16:18:40', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (683, 138, 567, '17', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-07 17:39:05', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (684, 138, 567, '18', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-07 22:37:03', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (685, 138, 567, '19', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-08 11:31:24', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (686, 138, 567, '20', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-08 13:52:42', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (687, 138, 567, '21', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-08 19:14:56', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (688, 138, 567, '22', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-09 11:21:30', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (689, 138, 567, '23', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-09 20:40:35', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (690, 138, 567, '24', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-10 11:03:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (691, 139, 568, '1', '0', '1', '1', '0', '找男朋友', 1, 109, 2, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-10 11:18:10', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (692, 138, 567, '25', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-11 07:16:59', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (693, 138, 567, '27', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-13 15:32:25', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (694, 138, 567, '28', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-14 11:19:02', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (695, 138, 567, '26', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-14 11:50:31', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (696, 138, 567, '29', '0', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-14 15:42:34', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (697, 138, 567, '30', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-15 15:21:15', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (698, 138, 567, '30', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-16 16:15:55', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (699, 138, 567, '31', '0', '1', '1', '0', '找男朋友', 1, 109, 2, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-16 16:16:15', '2021-07-08 16:51:23', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (700, 138, 567, '32', '0', '1', '1', '0', '千古玦尘', 1, 20, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-17 17:41:44', '2021-07-08 16:00:17', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (701, 138, 567, '33', '0', '1', '1', '0', '千古玦尘', 0, 200, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-19 09:58:47', '2021-07-08 16:00:04', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (702, 138, 567, '34', '0', '1', '1', '0', '祖国100华诞', 2, 30, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-20 11:11:49', '2021-07-08 15:58:34', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (703, 138, 567, '33', '0', '1', '1', '0', '祖国100华诞', 1, 200, 1, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-21 10:27:17', '2021-07-08 15:58:21', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (704, 138, 567, '38', '0', '1', '1', '0', '国庆节', 0, 150, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-26 16:04:17', '2021-07-08 15:57:50', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (705, 138, 567, '39', '0', '1', '1', '0', '新疆棉', 0, 20, 2, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-27 15:26:10', '2021-07-08 15:57:30', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (706, 138, 567, '40', '0', '1', '1', '0', '新疆棉', 0, 100, 4, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-28 17:47:41', '2021-07-08 15:57:15', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (707, 138, 567, '41', '0', '1', '1', '0', '健身', 0, 110, 3, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-29 10:27:24', '2021-07-08 15:56:49', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (708, 144, 573, '测试', '0', '1', '1', '0', '找女朋友', 0, 120, 0, 0, '0', 1, NULL, NULL, '中国', NULL, NULL, NULL, NULL, '2021-04-30 17:14:10', '2021-07-08 15:56:29', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (709, 149, 581, '刚刚注册，请多关照小妹子！！', '0', '0', '1', '0', '生产是祸', 0, 55, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-06-10 19:27:30', '2021-07-08 15:45:07', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (710, 150, 582, '刚刚来的豫章王府，请多关照小王妃！！', '0', '0', '1', '0', '信息时代', 0, 30, 0, 0, '0', 1, 121.480000, 31.410000, '中国', '上海市', '上海市', NULL, NULL, '2021-06-10 19:35:32', '2021-07-08 15:44:43', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (711, 152, 583, '刚刚来的豫章王府，请多关照小王妃！！', '0', '0', '1', '0', '懒癌生存守则', 0, 10, 0, 0, '0', 1, 121.480000, 31.410000, '中国', '上海市', '上海市', NULL, NULL, '2021-07-01 11:14:25', '2021-07-08 15:44:24', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (712, 153, 584, '刚刚注册，请多关照！！', '0', '0', '1', '0', '懒癌生存守则', 0, 23, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', '龙华区', '龙华地铁A出口', '2021-07-07 15:49:42', '2021-07-08 15:23:55', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (713, 153, 584, '大家好，推荐大家下载觅鹿社交APP。', '0', '0', '1', '1', '你为什么熬夜', 0, 21, 0, 0, '0', 0, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '龙华地铁C出口', '2021-07-07 17:19:40', '2021-07-08 15:23:22', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (717, 153, 584, '大家好，今天在龙华地铁C出口直播。', '0', '0', '1', '1', '你为什么熬夜', 0, 35, 0, 0, '0', 0, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '龙华地铁C出口', '2021-07-07 17:59:41', '2021-07-08 15:23:08', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (718, 153, 584, '大家好，今天下午三点在龙华地铁C出口直播完毕了。', '0', '0', '1', '1', '球长防骗课堂', 0, 45, 0, 0, '0', 0, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '龙华地铁C出口', '2021-07-07 19:14:03', '2021-07-08 15:21:44', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (719, 153, 584, '大家好，今天发布几张违法抓拍图片。', '0', '1', '1', '1', '球长防骗课堂', 0, 10, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-08 11:59:46', '2021-07-08 15:21:30', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (720, 153, 584, '大家好，今天发布一条语音。', '0', '1', '1', '1', '球长防骗课堂', 0, 30, 0, 0, '0', 1, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁D出口', '2021-07-08 12:03:16', '2021-07-08 15:21:14', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (721, 153, 584, '大家好，今天发布另外一条语音。', '0', '1', '1', '1', '球长防骗课堂', 0, 50, 0, 0, '0', 1, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁D出口', '2021-07-08 14:03:45', '2021-07-08 15:20:56', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (722, 153, 584, '大家好，今天发布几张违法抓拍图片。', '0', '1', '1', '0', '电动车交规', 0, 20, 0, 0, '0', 2, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁D出口', '2021-07-08 14:24:23', '2021-07-08 15:18:36', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (723, 154, 585, '新人妹子，初来乍到，请多关照。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-19 14:24:11', '2021-07-19 14:24:11', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (724, 155, 586, '大家好，陌生人报道，多多关照。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.862941, 22.452714, '中国', '广东省', '深圳市', '南山区', '科兴科学园A座', '2021-07-19 14:45:17', '2021-07-19 14:45:17', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (725, 160, 587, '新人小生，初来乍到，请多关照。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-20 17:02:39', '2021-07-20 17:02:39', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (726, 161, 588, '新人小生，初来乍到，请多关照。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-20 17:05:13', '2021-07-20 17:05:13', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (727, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:24:14', '2021-07-21 15:24:14', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (728, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:26:50', '2021-07-21 15:26:50', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (729, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:32:25', '2021-07-21 15:32:25', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (730, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:40:30', '2021-07-21 15:40:30', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (731, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:44:21', '2021-07-21 15:44:21', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (732, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:50:12', '2021-07-21 15:50:12', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (733, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '1', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:12:52', '2021-07-21 16:12:52', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (734, 73, 589, '今年八月份一日起，骑乘电动车不带头盔罚款200元。', '0', '0', '1', '0', '电动车交规', 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:17:24', '2021-07-21 16:17:24', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (735, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '1', '1', '电动车交规', 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:22:37', '2021-07-21 16:22:37', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (736, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:25:41', '2021-07-21 16:25:41', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (737, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:38:41', '2021-07-21 16:38:41', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (738, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:45:28', '2021-07-21 16:45:28', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (739, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:51:42', '2021-07-21 16:51:42', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (740, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:57:03', '2021-07-21 16:57:03', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (741, 144, 573, '发几张美女照片看看。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 17:01:57', '2021-07-21 17:01:57', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (742, 144, 573, '发几张美女照片看看。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 17:09:42', '2021-07-21 17:09:42', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (743, 153, 584, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 17:32:20', '2021-07-21 17:32:20', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (744, 144, 573, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 17:33:09', '2021-07-21 17:33:09', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (746, 144, 573, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 17:43:58', '2021-07-21 17:43:58', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (747, 144, 573, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 17:46:37', '2021-07-21 17:46:37', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (748, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 17:50:06', '2021-07-21 17:50:06', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (749, 73, 589, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 17:51:11', '2021-07-21 17:51:11', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (750, 73, 589, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 18:04:57', '2021-07-21 18:04:57', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (751, 72, 590, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 09:24:33', '2021-07-22 09:24:33', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (752, 72, 590, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 09:41:05', '2021-07-22 09:41:05', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (753, 72, 590, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 2, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 11:02:27', '2021-07-22 11:02:27', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (754, 72, 590, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 4, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 11:03:07', '2021-07-22 11:03:07', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (755, 72, 590, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 4, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 11:16:04', '2021-07-22 11:16:04', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (756, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 11:22:37', '2021-07-22 11:22:37', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (757, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 11:52:05', '2021-07-22 11:52:05', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (758, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 13:46:01', '2021-07-22 13:46:01', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (759, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '1', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 13:46:19', '2021-07-22 13:46:19', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (760, 70, 591, '今年八月份一日起，骑乘电动车不带头盔罚款200元。', '0', '0', '1', '0', '电动车交规', 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 13:46:35', '2021-07-22 13:46:35', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (761, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '1', '1', '电动车交规', 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 13:47:04', '2021-07-22 13:47:04', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (762, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '2', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 13:47:21', '2021-07-22 13:47:21', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (763, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '1', 4, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 13:47:55', '2021-07-22 13:47:55', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (764, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '1', 3, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 13:55:26', '2021-07-22 13:55:26', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (765, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '1', 2, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 13:58:31', '2021-07-22 13:58:31', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (766, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '2', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 13:59:17', '2021-07-22 13:59:17', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (767, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '2', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 14:10:20', '2021-07-22 14:10:20', NULL, NULL, NULL);
-INSERT INTO `dynamic_info` VALUES (768, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '1', 2, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 14:10:37', '2021-07-22 14:10:37', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (1, 1, 6, '请多关照哦~', '0', '1', '1', '0', '户外', 874, 100, 162, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-04-18 04:21:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (2, 1, 6, '哎哟，还不错哦', '0', '1', '1', '0', '哈工程教师挥雨伞制服猥琐男', 772, 100, 42, 0, '0', 2, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-04-20 12:55:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (3, 1, 6, '嗯哼', '0', '1', '1', '0', '三农', 807, 120, 232, 0, '0', 2, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-07 03:48:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (4, 1, 6, '后面有个人在呼风唤雨吗？ 准备溜了', '0', '1', '1', '0', '新农人计划2021', 115, 130, 51, 0, '0', 3, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-06-01 06:00:38', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (5, 1, 6, '准备干饭咯', '0', '1', '1', '0', '我要上热门', 735, 134, 24, 0, '0', 2, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-07-19 03:32:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (6, 1, 6, '这滤镜可以', '0', '1', '1', '0', '衡阳网红', 708, 310, 126, 0, '0', 2, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-08-11 06:01:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (7, 2, 9, '初来乍到,请多关照', '0', '1', '1', '0', '集福牛开福运', 923, 129, 191, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-04-19 14:01:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (8, 2, 9, '来！霍完这杯，再来一杯！', '0', '1', '1', '0', '吴孟达去世', 961, 109, 31, 0, '0', 2, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-04 05:11:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (9, 2, 9, '略略略', '0', '1', '1', '0', '微博健康锦鲤护体', 210, 209, 63, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-27 15:26:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (10, 3, 12, '初来乍到,请多关照', '0', '1', '1', '0', '微博送3888元回血基金', 346, 309, 118, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-25 09:43:57', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (11, 3, 12, '哈喽~~', '0', '1', '1', '0', '滴滴打车下架', 815, 1009, 168, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-06-03 12:10:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (12, 3, 12, '霍霍奶茶', '0', '1', '1', '0', '云南疫情', 226, 309, 75, 0, '0', 3, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-06-06 07:14:13', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (13, 4, 14, '初来乍到,请多关照', '0', '1', '1', '0', '西藏骑行旅游', 872, 509, 60, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-06-08 15:58:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (14, 4, 14, '洗脸，耶耶耶', '0', '1', '1', '0', '中国共产党建党100周年', 411, 1090, 29, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-06-17 11:47:38', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (15, 5, 18, '初来乍到,请多关照', '0', '1', '1', '0', '4人被困火海男子救出3人后自责落泪', 710, 189, 178, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-08 13:45:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (16, 5, 18, '打王者吗，我超菜！', '0', '1', '1', '0', '找男朋友', 849, 109, 86, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-13 13:14:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (17, 5, 18, '这个世界的人好冷漠，为什么没人偷走我的心', '0', '1', '1', '0', '找男朋友', 306, 109, 58, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-17 10:26:42', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (18, 5, 18, '只是一介民女', '0', '1', '1', '0', '找男朋友', 384, 109, 65, 0, '0', 2, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-26 15:38:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (19, 6, 19, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 801, 109, 176, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-15 09:09:25', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (20, 7, 21, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 996, 109, 44, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-15 12:56:18', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (21, 7, 21, '来干饭！', '0', '1', '1', '0', '找男朋友', 260, 109, 51, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-15 16:22:12', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (22, 8, 25, '听说这里有很多帅哥', '0', '1', '1', '0', '找男朋友', 435, 109, 170, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-06-06 13:26:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (23, 8, 25, '你们相信男女之间有纯洁的友谊吗？', '0', '1', '1', '0', '找男朋友', 675, 109, 147, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-06-14 09:54:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (24, 8, 25, '自拍一下', '0', '1', '1', '0', '找男朋友', 399, 109, 48, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-06-19 03:03:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (25, 8, 25, '以前......', '0', '1', '1', '0', '找男朋友', 449, 109, 49, 0, '0', 2, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-06-24 16:29:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (26, 9, 28, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 358, 109, 61, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-04-24 09:01:42', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (27, 9, 28, '睡不着，无聊', '0', '1', '1', '0', '找男朋友', 547, 109, 14, 0, '0', 2, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-11 08:22:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (28, 9, 28, '有要一起干饭的吗', '0', '1', '1', '0', '找男朋友', 919, 109, 139, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-19 04:40:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (29, 10, 29, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 270, 109, 24, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-07-22 14:48:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (31, 11, 35, '出来霍霍茶', '0', '1', '1', '0', '找男朋友', 333, 109, 58, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-03 03:40:15', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (32, 11, 35, '出去玩咯', '0', '1', '1', '0', '找男朋友', 440, 109, 34, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-07 06:29:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (33, 11, 35, '和闺蜜出来逛', '0', '1', '1', '0', '找男朋友', 687, 20, 200, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-12 09:39:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (34, 11, 35, '可可爱爱', '0', '1', '1', '0', '信息学习', 523, 21, 138, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-17 15:48:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (35, 11, 35, '车上等人，臭美一下', '0', '1', '1', '0', '新冠肺炎', 406, 100, 109, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-22 06:55:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (36, 12, 36, '微风徐徐', '0', '1', '1', '0', '找男朋友', 623, 109, 69, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-05 11:25:40', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (37, 13, 39, '想谈恋爱', '0', '1', '1', '0', '找男朋友', 706, 109, 112, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-07-06 12:10:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (38, 13, 39, '有没有上海的小哥哥', '0', '1', '1', '0', '找男朋友', 158, 109, 34, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-07-14 09:36:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (39, 13, 39, '今日份的小可爱', '0', '1', '1', '0', '找男朋友', 364, 109, 28, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-07-16 06:34:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (40, 14, 41, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 527, 109, 68, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-11 10:09:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (41, 14, 41, '嘿！', '0', '1', '1', '0', '找男朋友', 177, 109, 47, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-14 13:49:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (42, 15, 44, '请多关照', '0', '1', '1', '0', '找男朋友', 918, 109, 341, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-14 13:54:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (43, 15, 44, '喜欢姐姐吗，臭弟弟', '0', '1', '1', '0', '找男朋友', 509, 109, 124, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-15 16:28:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (44, 15, 44, '走，吃宵夜去', '0', '1', '1', '0', '找男朋友', 630, 109, 158, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-18 13:24:40', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (45, 16, 46, '多多关照哟', '0', '1', '1', '0', '找男朋友', 329, 109, 113, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-01 12:57:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (46, 16, 46, '早睡早起，开开心心', '0', '1', '1', '0', '找男朋友', 709, 109, 88, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-02 11:17:18', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (47, 17, 49, '哈喽', '0', '1', '1', '0', '找男朋友', 505, 109, 53, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-02 05:34:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (48, 17, 49, '为啥加我的人头像都不太好看.....', '0', '1', '1', '0', '找男朋友', 922, 109, 161, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-02 10:23:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (49, 17, 49, '因为没有想见的人，所以好几天才洗一次头发？', '0', '1', '1', '0', '找男朋友', 828, 109, 171, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-04 08:42:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (50, 18, 51, '听说这里很多小哥哥', '0', '1', '1', '0', '找男朋友', 114, 109, 33, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-04-25 09:15:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (51, 18, 51, '噜~', '0', '1', '1', '0', '找男朋友', 527, 109, 21, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-02 11:06:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (52, 19, 56, '请多指教', '0', '1', '1', '0', '找男朋友', 677, 109, 129, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-02 07:34:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (53, 19, 56, '你也没出去玩吗?', '0', '1', '1', '0', '找男朋友', 388, 109, 109, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-05 12:27:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (54, 19, 56, '逛逛该', '0', '1', '1', '0', '找男朋友', 769, 109, 109, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-09 14:54:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (55, 19, 56, '你会想我吗?', '0', '1', '1', '0', '找男朋友', 588, 109, 118, 0, '0', 3, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-11 12:05:25', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (56, 19, 56, '今天穿粉色！', '0', '1', '1', '0', '找男朋友', 543, 109, 168, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-16 06:07:16', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (57, 20, 59, '哈喽哈喽~', '0', '1', '1', '0', '找男朋友', 130, 109, 38, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-09-12 03:19:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (58, 20, 59, '有小哥哥不？', '0', '1', '1', '0', '找男朋友', 102, 109, 46, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-09-18 08:03:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (59, 20, 59, '来商场干嘛？ 当然是买菜啦！哈哈哈', '0', '1', '1', '0', '找男朋友', 752, 109, 125, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-09-26 10:28:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (60, 21, 62, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 320, 109, 20, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-26 07:30:09', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (61, 21, 62, '不想恋爱了，直接结婚吧，结婚了再培养感情', '0', '1', '1', '0', '找男朋友', 483, 109, 109, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-05-28 13:58:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (62, 21, 62, '期望未来男友是一个足够成熟的人', '0', '1', '1', '0', '找男朋友', 917, 109, 147, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-06-01 09:52:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (63, 22, 64, '你好呀，陌生人', '0', '1', '1', '0', '找男朋友', 377, 109, 45, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-05 06:05:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (64, 22, 64, '所谓浪漫，大概就是没有后来吧', '0', '1', '1', '0', '找男朋友', 623, 109, 142, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-07-11 15:01:38', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (65, 23, 67, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 457, 109, 69, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-09-28 09:32:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (66, 23, 67, '出来散散心', '0', '1', '1', '0', '找男朋友', 115, 109, 23, 0, '0', 3, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-10-01 06:52:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (67, 23, 67, '早知道男朋友这么难找，当初他绿我的时候就该假装不知道', '0', '1', '1', '0', '找男朋友', 631, 109, 236, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-10-12 11:13:46', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (68, 24, 69, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 149, 109, 26, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-06-11 10:50:38', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (69, 24, 69, '我比较喜欢直男，不喜欢被叫小姐姐', '0', '1', '1', '0', '找男朋友', 728, 109, 39, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-06-15 10:55:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (70, 24, 69, '有点烫嘴', '0', '1', '1', '0', '找男朋友', 537, 109, 45, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-06-16 08:14:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (71, 25, 74, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 616, 109, 123, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-07-06 14:52:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (72, 25, 74, '瞅啥 嘻嘻', '0', '1', '1', '0', '找男朋友', 188, 109, 39, 0, '0', 2, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-07-12 05:00:42', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (73, 25, 74, '想喝奶茶', '0', '1', '1', '0', '找男朋友', 165, 109, 35, 0, '0', 2, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-07-18 07:11:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (74, 25, 74, '晚安', '0', '1', '1', '0', '找男朋友', 105, 109, 23, 0, '0', 2, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-07-22 10:07:08', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (75, 26, 76, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 632, 109, 140, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-05-22 08:22:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (76, 26, 76, '有约饭的吗！', '0', '1', '1', '0', '找男朋友', 553, 109, 214, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-05-23 13:53:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (77, 26, 76, '我男朋友怎么还不出现', '0', '1', '1', '0', '找男朋友', 470, 109, 155, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-05-26 11:35:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (78, 26, 76, '有人陪我办个婚礼嘛', '0', '1', '1', '0', '找男朋友', 127, 109, 38, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-07-06 05:39:57', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (79, 27, 81, '听说很多小哥哥', '0', '1', '1', '0', '找男朋友', 602, 109, 108, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-06-01 12:13:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (80, 27, 81, '不开心', '0', '1', '1', '0', '找男朋友', 771, 109, 66, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-06-06 13:10:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (81, 27, 81, '去年的~', '0', '1', '1', '0', '找男朋友', 234, 109, 22, 0, '0', 2, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-06-11 10:53:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (82, 28, 87, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 913, 109, 219, 0, '0', 1, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-04-11 11:57:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (83, 28, 87, '猜猜这是什么，猜中我就加你微信', '0', '1', '1', '0', '找男朋友', 120, 109, 19, 0, '0', 2, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-04-13 15:29:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (84, 28, 87, '准备开吃啦', '0', '1', '1', '0', '找男朋友', 190, 109, 40, 0, '0', 1, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-04-18 08:06:15', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (85, 28, 87, '这么晚，还不睡觉在干嘛呢', '0', '1', '1', '0', '找男朋友', 270, 109, 49, 0, '0', 1, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-04-27 11:58:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (86, 28, 87, '这年头找个靠谱的男朋友可真难', '0', '1', '1', '0', '找男朋友', 250, 109, 44, 0, '0', 1, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-05-06 16:53:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (87, 28, 87, '都说爱笑的人运气不会差，难道是我笑的不够好看吗', '0', '1', '1', '0', '找男朋友', 421, 109, 111, 0, '0', 1, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-06-11 09:14:56', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (88, 29, 91, '赐个对象可以吗?', '0', '1', '1', '0', '找男朋友', 671, 109, 27, 0, '0', 1, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-04-27 06:52:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (89, 29, 91, '摩天轮旋转', '0', '1', '1', '0', '找男朋友', 449, 109, 179, 0, '0', 2, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-05-02 16:06:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (90, 29, 91, '51出门熏人', '0', '1', '1', '0', '找男朋友', 502, 109, 75, 0, '0', 3, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-05-03 16:39:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (91, 29, 91, '这组我比较喜欢', '0', '1', '1', '0', '找男朋友', 972, 109, 151, 0, '0', 3, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-05-05 08:36:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (92, 29, 91, '目涩', '0', '1', '1', '0', '找男朋友', 191, 109, 36, 0, '0', 2, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-05-07 04:47:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (93, 29, 91, '差点就掉下去了！', '0', '1', '1', '0', '找男朋友', 167, 109, 45, 0, '0', 1, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-05-08 03:48:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (94, 29, 91, '嘿嘿', '0', '1', '1', '0', '找男朋友', 390, 109, 143, 0, '0', 1, NULL, NULL, '中国', '江西省', '南昌市', NULL, NULL, '2020-05-15 09:01:15', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (95, 30, 98, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 590, 109, 160, 0, '0', 1, NULL, NULL, '中国', '江西省', '九江市', NULL, NULL, '2020-06-15 12:10:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (96, 30, 98, '你错过了凌晨的日出，但可以期待伴晚的夕阳', '0', '1', '1', '0', '找男朋友', 839, 109, 174, 0, '0', 2, NULL, NULL, '中国', '江西省', '九江市', NULL, NULL, '2020-06-18 11:11:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (97, 30, 98, '今天穿着，大家有什么建议吗', '0', '1', '1', '0', '找男朋友', 670, 109, 18, 0, '0', 3, NULL, NULL, '中国', '江西省', '九江市', NULL, NULL, '2020-06-21 11:19:57', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (98, 30, 98, '没人聊天怎么办', '0', '1', '1', '0', '找男朋友', 245, 109, 40, 0, '0', 1, NULL, NULL, '中国', '江西省', '九江市', NULL, NULL, '2020-06-27 06:02:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (99, 31, 102, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 198, 109, 36, 0, '0', 1, NULL, NULL, '中国', '江西省', '九江市', NULL, NULL, '2020-03-20 16:48:50', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (100, 31, 102, '今年生日我妈让我自己过~~', '0', '1', '1', '0', '找男朋友', 634, 109, 85, 0, '0', 2, NULL, NULL, '中国', '江西省', '九江市', NULL, NULL, '2020-03-20 12:06:33', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (101, 31, 102, '你要用棒棒糖把我骗走么', '0', '1', '1', '0', '找男朋友', 702, 109, 201, 0, '0', 1, NULL, NULL, '中国', '江西省', '九江市', NULL, NULL, '2020-03-20 10:25:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (102, 31, 102, '一个人见你一面就喜欢你，那他是.....', '0', '1', '1', '0', '找男朋友', 666, 109, 121, 0, '0', 2, NULL, NULL, '中国', '江西省', '九江市', NULL, NULL, '2020-03-20 07:24:40', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (103, 32, 577, '哈喽~~儿童节快落', '0', '1', '1', '0', '找男朋友', 162, 109, 50, 0, '0', 2, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-01 15:14:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (104, 32, 577, '你在看天，还是看我', '0', '1', '1', '0', '找男朋友', 328, 109, 37, 0, '0', 2, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-07 08:12:18', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (105, 33, 579, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 874, 109, 52, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-05-18 08:40:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (106, 33, 579, 'QQ区，王者给我一个好友位吧！', '0', '1', '1', '0', '找男朋友', 126, 109, 42, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-05-22 04:52:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (107, 33, 579, '可爱又迷人的.......', '0', '1', '1', '0', '找男朋友', 203, 109, 65, 0, '0', 2, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-05-27 11:35:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (108, 34, 110, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 332, 109, 61, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-05-18 03:42:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (109, 34, 110, '来霍阔落啊', '0', '1', '1', '0', '找男朋友', 486, 109, 32, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-07 06:34:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (110, 34, 110, '91 只聊同城的 在线等一会会', '0', '1', '1', '0', '找男朋友', 540, 109, 101, 0, '0', 2, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-12 08:30:14', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (111, 35, 114, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 392, 109, 61, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-16 04:57:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (112, 35, 114, '被爱让人情绪稳定', '0', '1', '1', '0', '找男朋友', 337, 109, 131, 0, '0', 2, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-18 13:40:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (113, 35, 114, '所以我的情绪非常不稳定', '0', '1', '1', '0', '找男朋友', 981, 109, 164, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-20 06:47:33', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (114, 35, 114, '有没有30+的来聊聊天 小哥哥小姐姐都可以', '0', '1', '1', '0', '找男朋友', 90, 109, 16, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-24 06:03:33', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (115, 36, 118, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 393, 109, 41, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-06 06:48:46', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (116, 36, 118, '活受罪', '0', '1', '1', '0', '找男朋友', 197, 109, 51, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-08 05:48:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (117, 36, 118, '我们都怀念过去', '0', '1', '1', '0', '找男朋友', 387, 109, 46, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-08 15:47:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (118, 36, 118, '却又不想回到过去', '0', '1', '1', '0', '找男朋友', 797, 109, 21, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-17 09:21:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (119, 37, 122, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 966, 109, 45, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-09 11:02:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (120, 37, 122, '^^', '0', '1', '1', '0', '找男朋友', 494, 109, 114, 0, '0', 2, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-12 11:18:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (121, 37, 122, '今天风挺大的，我差点就被吹跑了哟', '0', '1', '1', '0', '找男朋友', 940, 109, 141, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-19 13:25:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (122, 37, 122, '小小的我，也想有人陪我去浪', '0', '1', '1', '0', '找男朋友', 983, 109, 57, 0, '0', 2, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-06-26 11:23:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (123, 38, 126, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 772, 109, 121, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-03-28 14:28:09', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (124, 38, 126, '奶茶真是害人精', '0', '1', '1', '0', '找男朋友', 69, 109, 23, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-04-07 13:26:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (125, 38, 126, '新雨后', '0', '1', '1', '0', '找男朋友', 427, 109, 101, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-04-14 10:21:14', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (126, 38, 126, '这个女孩不香吗', '0', '1', '1', '0', '找男朋友', 226, 109, 59, 0, '0', 2, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-04-19 05:14:09', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (127, 39, 128, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 855, 109, 118, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-07-11 05:14:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (128, 39, 128, '上班~', '0', '1', '1', '0', '找男朋友', 279, 109, 69, 0, '0', 1, NULL, NULL, '中国', '北京市', '北京市', NULL, NULL, '2020-07-18 03:19:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (129, 40, 130, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 395, 109, 16, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-06-01 06:35:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (130, 40, 130, '偷拍我~~', '0', '1', '1', '0', '找男朋友', 59, 109, 13, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-06-02 12:37:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (131, 41, 132, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 536, 109, 136, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-04-27 09:02:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (132, 41, 132, '其实，我是个爱笑的丫头', '0', '1', '1', '0', '找男朋友', 330, 109, 36, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-06-16 09:35:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (133, 42, 134, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 682, 109, 72, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-02-03 12:43:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (134, 42, 134, '本人女26岁 身高164 体重97 颜值还可以  谈过2次 想找个南方的男朋友  目前在济南', '0', '1', '1', '0', '找男朋友', 210, 109, 67, 0, '0', 2, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-05-08 05:58:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (135, 43, 136, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 138, 109, 17, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-04-08 12:17:38', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (136, 43, 136, '漂亮姐姐找个弟弟打王者！', '0', '1', '1', '0', '找男朋友', 614, 109, 245, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-04-10 04:27:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (137, 44, 141, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 658, 109, 116, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-06-19 10:35:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (138, 44, 141, '没人追', '0', '1', '1', '0', '找男朋友', 722, 109, 207, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-06-21 07:45:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (139, 44, 141, '治愈自己最好的方式就是忙碌和早起', '0', '1', '1', '0', '找男朋友', 358, 109, 58, 0, '0', 3, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-06-27 14:36:14', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (140, 44, 141, '今天大满足！', '0', '1', '1', '0', '找男朋友', 561, 109, 138, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-07-02 14:30:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (141, 44, 141, '你们在一起多久了', '0', '1', '1', '0', '找男朋友', 67, 109, 13, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-07-05 16:11:08', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (142, 45, 145, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 749, 109, 69, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-06-27 13:35:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (143, 45, 145, '干饭人，干饭魂，一起干饭有灵魂！', '0', '1', '1', '0', '找男朋友', 661, 109, 199, 0, '0', 3, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-07-02 03:05:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (144, 45, 145, '我吃你家大米了,还是喝你家水了吗,我胖关你屁事', '0', '1', '1', '0', '找男朋友', 618, 109, 67, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-07-03 07:05:16', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (145, 45, 145, '今天也要一起美美哒', '0', '1', '1', '0', '找男朋友', 674, 109, 90, 0, '0', 3, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-07-10 04:51:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (146, 46, 148, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 381, 109, 54, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-07-12 10:23:09', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (147, 46, 148, '不发照片就没人理嘛', '0', '1', '1', '0', '找男朋友', 937, 109, 115, 0, '0', 2, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-07-15 12:31:50', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (148, 46, 148, '唉，不漏脸又没人追', '0', '1', '1', '0', '找男朋友', 295, 109, 62, 0, '0', 2, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-07-19 12:36:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (149, 47, 150, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 679, 109, 213, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-04-02 04:40:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (150, 47, 150, '哈哈哈哈', '0', '1', '1', '0', '找男朋友', 420, 109, 52, 0, '0', 2, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-04-03 04:42:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (151, 47, 150, '有人带我玩剧本杀吗', '0', '1', '1', '0', '找男朋友', 143, 109, 16, 0, '0', 2, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-04-03 11:41:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (152, 48, 155, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 219, 109, 43, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-05-03 03:44:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (153, 48, 155, '阿巴阿巴', '0', '1', '1', '0', '找男朋友', 785, 109, 198, 0, '0', 2, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-05-11 16:56:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (154, 48, 155, '我喜欢高高胖胖的男孩有安全感', '0', '1', '1', '0', '找男朋友', 432, 109, 156, 0, '0', 2, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-05-16 13:33:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (155, 48, 155, '不干净的人看谁都不干净', '0', '1', '1', '0', '找男朋友', 974, 109, 393, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-05-21 14:56:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (156, 49, 158, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 63, 109, 15, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-03-16 12:52:54', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (157, 49, 158, '啊哈哈', '0', '1', '1', '0', '找男朋友', 794, 109, 167, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-03-19 04:38:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (158, 49, 158, '别熬夜 别熬夜 别熬夜', '0', '1', '1', '0', '找男朋友', 704, 109, 169, 0, '0', 1, NULL, NULL, '中国', '山东省', '济南市', NULL, NULL, '2020-03-19 07:17:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (159, 50, 162, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 274, 109, 119, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-12 10:56:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (160, 50, 162, '他不是白马王子  而是   黑骑士', '0', '1', '1', '0', '找男朋友', 901, 109, 340, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-16 03:27:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (161, 50, 162, '不露脸系列', '0', '1', '1', '0', '找男朋友', 112, 109, 22, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-23 12:27:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (162, 50, 162, 'nice', '0', '1', '1', '0', '找男朋友', 234, 109, 81, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-05-01 13:36:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (163, 51, 167, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 815, 109, 31, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-18 08:40:12', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (164, 51, 167, '不是妹妹  叫姐姐', '0', '1', '1', '0', '找男朋友', 962, 109, 92, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-23 13:00:31', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (165, 51, 167, '抓桂花啦', '0', '1', '1', '0', '找男朋友', 326, 109, 103, 0, '0', 4, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-26 07:44:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (166, 51, 167, '山川遇', '0', '1', '1', '0', '找男朋友', 694, 109, 117, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-27 14:30:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (167, 51, 167, 'TOKYO', '0', '1', '1', '0', '找男朋友', 289, 109, 11, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-05-03 09:24:27', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (168, 52, 172, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 297, 109, 23, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-05-03 09:36:57', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (169, 52, 172, '忽然有点小后悔', '0', '1', '1', '0', '找男朋友', 797, 109, 106, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-03-05 10:30:33', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (170, 52, 172, '成人的世界就没有容易过', '0', '1', '1', '0', '找男朋友', 209, 109, 21, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-03-07 05:59:50', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (171, 52, 172, '心情不好，找个陌生人聊天', '0', '1', '1', '0', '找男朋友', 140, 109, 21, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-01 10:05:42', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (172, 52, 172, '生活就是这样子吧', '0', '1', '1', '0', '找男朋友', 940, 109, 422, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-18 04:33:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (173, 53, 177, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 508, 109, 92, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-06-17 12:20:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (174, 53, 177, '是旧图啊', '0', '1', '1', '0', '找男朋友', 452, 109, 27, 0, '0', 4, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-06-21 13:47:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (175, 53, 177, '相册里突然看到', '0', '1', '1', '0', '找男朋友', 330, 109, 113, 0, '0', 3, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-06-26 09:23:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (176, 53, 177, '把不开心都丢掉，私奔到月球吧！', '0', '1', '1', '0', '找男朋友', 497, 109, 106, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-06-27 14:09:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (177, 53, 177, '抱团干饭！', '0', '1', '1', '0', '找男朋友', 666, 109, 45, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-07-06 16:15:08', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (178, 54, 180, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 228, 109, 22, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-07 09:41:57', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (179, 54, 180, '有没有眼熟？是不是你也吃过！ 哈哈哈哈', '0', '1', '1', '0', '找男朋友', 282, 109, 91, 0, '0', 4, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-12 12:20:38', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (180, 54, 180, '忽然感觉我又行了！', '0', '1', '1', '0', '找男朋友', 127, 109, 28, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-16 06:11:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (181, 55, 183, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 112, 109, 28, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-10 15:36:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (182, 55, 183, '过去', '0', '1', '1', '0', '找男朋友', 163, 109, 39, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-04-19 07:12:12', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (183, 55, 183, '过去...我淋着雨爱你，你打着伞想她', '0', '1', '1', '0', '找男朋友', 184, 109, 25, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-05-08 15:44:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (184, 56, 185, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 484, 109, 42, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-05-16 11:21:54', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (185, 56, 185, '未来心不可得', '0', '1', '1', '0', '找男朋友', 534, 109, 236, 0, '0', 3, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-05-19 10:10:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (186, 56, 185, '偶尔', '0', '1', '1', '0', '找男朋友', 958, 109, 286, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南京市', NULL, NULL, '2020-05-26 11:17:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (187, 57, 187, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 823, 109, 129, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-04-19 16:21:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (188, 57, 187, '外面好冷，和坏男人的心一样', '0', '1', '1', '0', '找男朋友', 379, 109, 80, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-05-16 03:19:08', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (189, 57, 187, '我也会难过', '0', '1', '1', '0', '找男朋友', 556, 109, 62, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-05-23 15:07:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (190, 57, 187, '老肩巨猾', '0', '1', '1', '0', '找男朋友', 541, 109, 112, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-05-27 14:09:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (191, 57, 187, '终会遇到一个满眼都是你的人', '0', '1', '1', '0', '找男朋友', 387, 109, 27, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-06-16 08:21:12', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (192, 57, 187, '王者CPDD', '0', '1', '1', '0', '找男朋友', 398, 109, 44, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-06-17 08:54:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (193, 57, 187, '来给点点请安', '0', '1', '1', '0', '找男朋友', 855, 109, 204, 0, '0', 3, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-06-18 12:49:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (194, 57, 187, '如果你也在吃西瓜，那...没事了   哈哈哈哈', '0', '1', '1', '0', '找男朋友', 320, 109, 16, 0, '0', 4, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-06-25 04:02:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (195, 57, 187, 'new rap new star 魔动闪霸', '0', '1', '1', '0', '找男朋友', 367, 109, 72, 0, '0', 3, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-07-02 04:24:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (196, 58, 196, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 437, 109, 62, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-07-05 12:04:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (197, 58, 196, '有点冷', '0', '1', '1', '0', '找男朋友', 324, 109, 91, 0, '0', 4, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-07-17 12:47:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (198, 58, 196, '包的跟粽子一样', '0', '1', '1', '0', '找男朋友', 771, 109, 220, 0, '0', 2, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-07-22 09:31:31', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (199, 58, 196, '晚安', '0', '1', '1', '0', '找男朋友', 703, 109, 114, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-07-31 04:44:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (200, 58, 196, '预热', '0', '1', '1', '0', '找男朋友', 987, 109, 258, 0, '0', 2, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-06-02 04:05:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (201, 58, 196, '肥仔糖糖', '0', '1', '1', '0', '找男朋友', 977, 109, 214, 0, '0', 2, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-06-05 09:18:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (202, 59, 202, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 903, 109, 150, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-04-05 06:32:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (203, 59, 202, '你要开心哦', '0', '1', '1', '0', '找男朋友', 963, 109, 270, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-04-19 12:22:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (204, 59, 202, '装作不认识我好吗 哈哈', '0', '1', '1', '0', '找男朋友', 475, 109, 189, 0, '0', 2, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-04-26 13:08:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (205, 59, 202, '靓女现身', '0', '1', '1', '0', '找男朋友', 458, 109, 57, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-05-16 03:02:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (206, 60, 206, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 227, 109, 60, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-06-08 05:11:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (207, 60, 206, '007老鼠', '0', '1', '1', '0', '找男朋友', 518, 109, 102, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-06-09 06:54:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (208, 61, 208, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 635, 109, 43, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-12-09 08:31:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (209, 61, 208, '好一个傻大姐', '0', '1', '1', '0', '找男朋友', 461, 109, 114, 0, '0', 2, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-12-11 11:39:57', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (210, 61, 208, '有点后悔了', '0', '1', '1', '0', '找男朋友', 695, 109, 165, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-12-15 04:47:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (211, 61, 208, '下次出门得洗头了', '0', '1', '1', '0', '找男朋友', 989, 109, 54, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-12-17 12:27:56', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (212, 62, 212, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 875, 109, 90, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-07-07 08:17:40', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (213, 62, 212, '全都带回家！', '0', '1', '1', '0', '找男朋友', 562, 109, 23, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-07-14 14:59:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (214, 62, 212, '无聊，一个人喝奶茶', '0', '1', '1', '0', '找男朋友', 309, 109, 46, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-07-17 11:06:46', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (215, 63, 215, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 704, 109, 63, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-04-27 07:49:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (216, 63, 215, '旧照重发', '0', '1', '1', '0', '找男朋友', 625, 109, 159, 0, '0', 3, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-05-12 11:36:42', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (217, 63, 215, '沙滩~', '0', '1', '1', '0', '找男朋友', 694, 109, 170, 0, '0', 4, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-07-10 08:11:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (218, 63, 215, '有一起自拍的吗，没有头的那种', '0', '1', '1', '0', '找男朋友', 565, 109, 140, 0, '0', 2, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-07-17 03:22:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (219, 63, 215, '这猫咋了，哈哈哈', '0', '1', '1', '0', '找男朋友', 831, 109, 220, 0, '0', 3, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-08-17 07:43:16', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (220, 64, 220, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 611, 109, 44, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-06-04 08:03:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (221, 64, 220, '有一起连麦上厕所的吗', '0', '1', '1', '0', '找男朋友', 805, 109, 135, 0, '0', 1, NULL, NULL, '中国', '陕西省', '西安市', NULL, NULL, '2020-06-07 15:48:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (222, 65, 222, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 859, 109, 178, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-08-27 06:58:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (223, 65, 222, '晚安', '0', '1', '1', '0', '找男朋友', 57, 109, 21, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-09-11 12:34:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (224, 65, 222, '晚安', '0', '1', '1', '0', '找男朋友', 342, 109, 47, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-09-27 15:20:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (225, 65, 222, '晚安', '0', '1', '1', '0', '找男朋友', 734, 109, 120, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-10-07 14:46:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (226, 65, 222, '晚安', '0', '1', '1', '0', '找男朋友', 973, 109, 122, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-10-14 10:52:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (227, 65, 222, '谁在想着你', '0', '1', '1', '0', '找男朋友', 239, 109, 24, 0, '0', 3, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-10-24 14:55:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (228, 65, 222, '你又想着谁', '0', '1', '1', '0', '找男朋友', 729, 109, 283, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-11-07 14:29:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (229, 65, 222, '加班快乐', '0', '1', '1', '0', '找男朋友', 74, 109, 14, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-11-14 03:35:31', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (230, 66, 230, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 180, 109, 66, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-09-14 03:22:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (231, 66, 230, '妹妹拍我的', '0', '1', '1', '0', '找男朋友', 825, 109, 145, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-09-19 04:38:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (232, 66, 230, '今天你自拍了吗', '0', '1', '1', '0', '找男朋友', 537, 109, 69, 0, '0', 4, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-09-25 09:58:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (233, 66, 230, '今天我差点被抓走30次！', '0', '1', '1', '0', '找男朋友', 374, 109, 103, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-09-28 12:31:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (234, 66, 230, '有点想成为一个冷漠的人', '0', '1', '1', '0', '找男朋友', 659, 109, 161, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-10-03 11:56:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (235, 66, 230, '今天吃椰子鸡了吗！', '0', '1', '1', '0', '找男朋友', 772, 109, 174, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-10-04 08:15:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (236, 66, 230, '你也爱吃火锅吗', '0', '1', '1', '0', '找男朋友', 113, 109, 34, 0, '0', 3, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-10-05 10:29:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (237, 66, 230, '暖心', '0', '1', '1', '0', '找男朋友', 804, 109, 140, 0, '0', 3, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-10-16 06:11:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (238, 66, 230, '最近都是火锅烤肉，哈哈哈', '0', '1', '1', '0', '找男朋友', 149, 109, 25, 0, '0', 3, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-10-27 08:46:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (239, 66, 230, '要的不是爱,是偏爱！', '0', '1', '1', '0', '找男朋友', 101, 109, 44, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-11-05 15:18:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (240, 67, 240, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 234, 109, 40, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-10-18 15:39:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (241, 67, 240, '找个男朋友', '0', '1', '1', '0', '找男朋友', 333, 109, 69, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-10-23 07:38:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (242, 67, 240, '如果你也喜欢我', '0', '1', '1', '0', '找男朋友', 904, 109, 142, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-11-01 10:05:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (243, 67, 240, '哈哈哈，一脸幽怨的表情', '0', '1', '1', '0', '找男朋友', 585, 109, 51, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-11-13 11:24:08', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (244, 68, 244, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 744, 109, 216, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-07-08 12:30:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (245, 68, 244, '碰到不认真,遇到不坚定', '0', '1', '1', '0', '找男朋友', 155, 109, 21, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-07-15 13:26:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (246, 68, 244, '想剪短发了', '0', '1', '1', '0', '找男朋友', 765, 109, 214, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-07-28 16:09:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (247, 68, 244, '这是一个没有爱情的城市', '0', '1', '1', '0', '找男朋友', 744, 109, 60, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-08-10 09:46:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (248, 68, 244, '我也看到奇怪的建筑了', '0', '1', '1', '0', '找男朋友', 653, 109, 23, 0, '0', 2, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-08-19 10:49:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (249, 69, 249, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 540, 109, 200, 0, '0', 3, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-09-02 04:45:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (250, 69, 249, '吃吃喝喝开开心心', '0', '1', '1', '0', '找男朋友', 70, 109, 12, 0, '0', 1, NULL, NULL, '中国', '上海市', '上海市', NULL, NULL, '2020-09-08 04:50:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (251, 70, 591, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 101, 109, 19, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-04-21 11:17:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (252, 70, 591, '美好终会如期而至', '0', '1', '1', '0', '找男朋友', 890, 109, 229, 0, '0', 2, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-01 09:09:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (253, 70, 591, '开始并不难，难的是坚持下去的决心', '0', '1', '1', '0', '找男朋友', 921, 109, 375, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-06 13:51:50', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (254, 70, 591, '熬夜伤身，建议通宵', '0', '1', '1', '0', '找男朋友', 837, 109, 324, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-19 14:22:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (255, 70, 591, '乖巧 听话 顺从，其实我不是，但我可以是', '0', '1', '1', '0', '找男朋友', 56, 109, 22, 0, '0', 1, NULL, NULL, '中国', '广东省', '广州市', NULL, NULL, '2020-05-23 06:49:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (256, 71, 256, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 811, 109, 127, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-12 05:34:56', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (257, 71, 256, '天气不错', '0', '1', '1', '0', '找男朋友', 126, 109, 14, 0, '0', 3, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-17 10:44:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (258, 71, 256, '^^', '0', '1', '1', '0', '找男朋友', 894, 109, 134, 0, '0', 3, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-19 08:17:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (259, 72, 259, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 875, 109, 212, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-07-03 14:23:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (260, 72, 259, '工作不累，累的是人', '0', '1', '1', '0', '找男朋友', 141, 109, 35, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-07-09 03:36:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (261, 72, 259, '单身够了，想找个结婚为目的的', '0', '1', '1', '0', '找男朋友', 881, 109, 296, 0, '0', 2, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-07-12 16:41:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (262, 72, 259, '想去旅游', '0', '1', '1', '0', '找男朋友', 483, 109, 79, 0, '0', 2, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-07-20 05:26:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (263, 72, 259, '不颜控，那对恋爱是有多失望', '0', '1', '1', '0', '找男朋友', 367, 109, 125, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-07-21 12:39:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (264, 73, 264, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 612, 109, 17, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-06-14 03:27:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (265, 73, 264, '你睡觉抢被子吗？', '0', '1', '1', '0', '找男朋友', 704, 109, 101, 0, '0', 2, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-06-15 07:20:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (266, 73, 264, '想做一个快乐没有烦恼的小朋友', '0', '1', '1', '0', '找男朋友', 586, 109, 37, 0, '0', 2, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-06-21 13:27:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (267, 74, 267, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 513, 109, 98, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-27 09:30:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (268, 74, 267, '粗来', '0', '1', '1', '0', '找男朋友', 225, 109, 27, 0, '0', 4, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-30 03:17:27', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (269, 75, 269, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 600, 109, 37, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-10-19 13:02:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (270, 75, 269, '花花象', '0', '1', '1', '0', '找男朋友', 386, 109, 103, 0, '0', 2, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-10-23 11:38:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (271, 75, 269, '想脱单了', '0', '1', '1', '0', '找男朋友', 458, 109, 106, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-10-24 10:44:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (272, 76, 272, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 501, 109, 64, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-08-08 05:09:40', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (273, 76, 272, '一份三年的感情，一份高薪工作，必定舍弃一个，你会选择哪个？', '0', '1', '1', '0', '找男朋友', 164, 109, 62, 0, '0', 4, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-08-10 16:22:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (274, 76, 272, '只想做大哥，不想做女朋友', '0', '1', '1', '0', '找男朋友', 61, 109, 26, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-08-13 12:45:54', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (275, 76, 272, '其实我很凶的 别惹我', '0', '1', '1', '0', '找男朋友', 297, 109, 45, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-08-17 11:13:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (276, 77, 276, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 298, 109, 27, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-08-23 13:39:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (277, 77, 276, '有没有兼职呀？', '0', '1', '1', '0', '找男朋友', 234, 109, 23, 0, '0', 3, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-01 15:58:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (278, 77, 276, '滴，早安', '0', '1', '1', '0', '找男朋友', 342, 109, 17, 0, '0', 3, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-04 04:37:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (279, 77, 276, '室友介绍对象，我上来就一句：“您好，你也是没人要的吗”然后...就没有然后了....', '0', '1', '1', '0', '找男朋友', 825, 109, 137, 0, '0', 2, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-12 15:26:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (280, 77, 276, '滴滴滴', '0', '1', '1', '0', '找男朋友', 815, 109, 313, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-15 14:35:27', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (281, 77, 276, '找甜筒了喂', '0', '1', '1', '0', '找男朋友', 817, 109, 32, 0, '0', 2, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-18 07:02:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (282, 77, 276, '真不太会拍', '0', '1', '1', '0', '找男朋友', 391, 109, 75, 0, '0', 2, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-09-27 13:56:54', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (283, 77, 276, '滴。', '0', '1', '1', '0', '找男朋友', 82, 109, 15, 0, '0', 2, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-10-07 10:46:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (284, 77, 276, '滴滴', '0', '1', '1', '0', '找男朋友', 805, 109, 205, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-10-09 12:36:50', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (285, 78, 285, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 666, 109, 307, 0, '0', 1, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-07-26 14:46:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (286, 78, 285, '皮卡皮卡秋', '0', '1', '1', '0', '找男朋友', 74, 109, 17, 0, '0', 2, NULL, NULL, '中国', '河南省', '郑州市', NULL, NULL, '2020-07-27 13:31:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (287, 79, 287, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 392, 109, 55, 0, '0', 1, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-10-28 04:02:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (288, 79, 287, '有面基的吗', '0', '1', '1', '0', '找男朋友', 538, 109, 195, 0, '0', 1, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-11-03 11:35:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (289, 79, 287, '哼哼哼', '0', '1', '1', '0', '找男朋友', 630, 109, 169, 0, '0', 2, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-11-14 14:01:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (290, 79, 287, '要送弟弟生日礼物了，有什么推荐的吗', '0', '1', '1', '0', '找男朋友', 193, 109, 39, 0, '0', 2, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-11-18 04:36:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (291, 79, 287, '旧照旧照~', '0', '1', '1', '0', '找男朋友', 827, 109, 57, 0, '0', 1, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-11-26 15:28:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (292, 79, 287, '。', '0', '1', '1', '0', '找男朋友', 923, 109, 354, 0, '0', 1, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-12-02 11:24:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (293, 79, 287, '疯了', '0', '1', '1', '0', '找男朋友', 597, 109, 176, 0, '0', 2, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-12-10 03:34:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (294, 79, 287, '。。', '0', '1', '1', '0', '找男朋友', 348, 109, 70, 0, '0', 1, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-12-11 15:00:18', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (295, 79, 287, '落雪啦', '0', '1', '1', '0', '找男朋友', 497, 109, 160, 0, '0', 4, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-12-17 07:59:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (296, 79, 287, '都结冰了', '0', '1', '1', '0', '找男朋友', 800, 109, 115, 0, '0', 4, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-12-20 12:55:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (297, 80, 297, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 348, 109, 43, 0, '0', 1, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-07-20 12:58:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (298, 80, 297, '有没有小哥哥聊聊天', '0', '1', '1', '0', '找男朋友', 991, 109, 144, 0, '0', 1, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-07-29 15:54:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (299, 81, 299, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 498, 109, 106, 0, '0', 1, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-11-13 10:42:15', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (300, 81, 299, '帅哥有么', '0', '1', '1', '0', '找男朋友', 273, 109, 64, 0, '0', 1, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-11-17 03:33:31', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (301, 81, 299, '不想努力了', '0', '1', '1', '0', '找男朋友', 121, 109, 31, 0, '0', 2, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-11-18 10:57:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (302, 81, 299, '想谈恋爱', '0', '1', '1', '0', '找男朋友', 997, 109, 351, 0, '0', 1, NULL, NULL, '中国', '安徽省', '合肥市', NULL, NULL, '2020-11-19 09:33:18', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (303, 82, 303, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 773, 109, 149, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-09-12 03:11:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (304, 82, 303, '从一而终的人，才是这个时代的稀缺品', '0', '1', '1', '0', '找男朋友', 562, 109, 95, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-09-12 10:47:13', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (305, 82, 303, '大概是孤独终老了', '0', '1', '1', '0', '找男朋友', 916, 109, 99, 0, '0', 3, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-09-17 13:01:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (306, 82, 303, '老照片一张', '0', '1', '1', '0', '找男朋友', 81, 109, 26, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-09-24 05:21:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (307, 82, 303, '挑战了十级孤独', '0', '1', '1', '0', '找男朋友', 52, 109, 11, 0, '0', 3, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-10-04 04:23:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (308, 82, 303, '继续孤独终老', '0', '1', '1', '0', '找男朋友', 326, 109, 51, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-10-21 12:35:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (309, 82, 303, '我还在等', '0', '1', '1', '0', '找男朋友', 823, 109, 139, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-08 03:51:54', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (310, 82, 303, '周末我们去看日落吧，事事有着落', '0', '1', '1', '0', '找男朋友', 543, 109, 170, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-15 05:51:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (311, 83, 311, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 749, 109, 102, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-01 12:51:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (312, 83, 311, '一起恰鸡呀', '0', '1', '1', '0', '找男朋友', 237, 109, 59, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-03 15:26:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (313, 84, 313, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 736, 109, 165, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-18 03:48:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (314, 84, 313, '不用怕，我们都只会来一次人间', '0', '1', '1', '0', '找男朋友', 923, 109, 61, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-18 10:34:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (315, 84, 313, '时间会告诉我们，所有东西都会变', '0', '1', '1', '0', '找男朋友', 672, 109, 181, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-19 08:59:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (316, 84, 313, '唯一不变的是改变', '0', '1', '1', '0', '找男朋友', 194, 109, 42, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-21 05:07:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (317, 84, 313, '对成年人来说，死很容易，活着很难，想活的好更难', '0', '1', '1', '0', '找男朋友', 591, 109, 164, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-24 04:56:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (318, 84, 313, '羞辱我的方式有很多，你偏偏要问我有没有对象', '0', '1', '1', '0', '找男朋友', 830, 109, 137, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-25 16:26:31', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (319, 85, 319, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 816, 109, 265, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-10-27 13:54:14', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (320, 85, 319, '取悦自己才是正道！', '0', '1', '1', '0', '找男朋友', 694, 109, 63, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-09 12:10:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (321, 85, 319, '今天也是个“小可爱”呢', '0', '1', '1', '0', '找男朋友', 964, 109, 297, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-10 13:50:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (322, 86, 322, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 995, 109, 49, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-01 06:36:46', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (323, 86, 322, '想跟有趣且浪漫的人聊聊天', '0', '1', '1', '0', '找男朋友', 424, 109, 96, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-09 15:56:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (324, 86, 322, '甜妹', '0', '1', '1', '0', '找男朋友', 172, 109, 33, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-15 13:10:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (325, 86, 322, '被褪成的绿发惊喜到', '0', '1', '1', '0', '找男朋友', 183, 109, 72, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-17 10:01:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (326, 87, 326, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 245, 109, 26, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-09-30 03:31:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (327, 87, 326, 'nice景色', '0', '1', '1', '0', '找男朋友', 225, 109, 75, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-01-04 11:25:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (328, 87, 326, '我要出框！', '0', '1', '1', '0', '找男朋友', 215, 109, 84, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-01-05 10:23:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (329, 87, 326, '阳光明媚', '0', '1', '1', '0', '找男朋友', 732, 109, 42, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-01-06 08:40:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (330, 87, 326, '还不错吧', '0', '1', '1', '0', '找男朋友', 604, 109, 18, 0, '0', 3, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-01-07 09:46:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (331, 88, 331, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 362, 109, 23, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-03 06:38:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (332, 88, 331, '晚上出来吃个日料，一个人好无聊', '0', '1', '1', '0', '找男朋友', 615, 109, 80, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-10 15:09:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (333, 88, 331, '蔡姐做的菜太好吃了！', '0', '1', '1', '0', '找男朋友', 546, 109, 56, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-15 09:53:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (334, 89, 334, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 87, 109, 17, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-09-17 11:16:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (335, 89, 334, '我在人间，贩卖快了，你要来一份吗', '0', '1', '1', '0', '找男朋友', 553, 109, 97, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-09-23 05:15:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (336, 89, 334, '野王那么多，就不给我一个嘛', '0', '1', '1', '0', '找男朋友', 802, 109, 198, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-09-27 15:43:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (337, 89, 334, '今天也是元气满满的一天呢', '0', '1', '1', '0', '找男朋友', 902, 109, 121, 0, '0', 4, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-10-07 04:33:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (338, 89, 334, '爱玩是天性，收心是选择', '0', '1', '1', '0', '找男朋友', 394, 109, 35, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-10-07 07:51:50', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (339, 90, 339, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 242, 109, 14, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-10-08 05:55:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (340, 91, 340, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 124, 109, 36, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-10 10:30:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (341, 91, 340, '你的小可爱已上线', '0', '1', '1', '0', '找男朋友', 261, 109, 40, 0, '0', 1, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-14 03:45:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (342, 91, 340, '天冷加衣', '0', '1', '1', '0', '找男朋友', 787, 109, 230, 0, '0', 2, NULL, NULL, '中国', '湖北省', '武汉市', NULL, NULL, '2020-11-17 10:20:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (343, 92, 343, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 959, 109, 208, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-12-14 09:58:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (344, 92, 343, '等一个人', '0', '1', '1', '0', '找男朋友', 228, 109, 19, 0, '0', 2, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-12-28 12:08:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (345, 93, 345, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 183, 109, 69, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-06-21 07:07:57', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (346, 93, 345, '不去健身房就要废了', '0', '1', '1', '0', '找男朋友', 546, 109, 82, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-06-27 14:18:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (347, 94, 347, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 925, 109, 50, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-10-25 04:57:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (348, 94, 347, '发一张旧照吧', '0', '1', '1', '0', '找男朋友', 156, 109, 32, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-10-25 12:12:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (349, 94, 347, '我的小毛驴', '0', '1', '1', '0', '找男朋友', 67, 109, 20, 0, '0', 2, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-10-27 07:48:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (350, 94, 347, '天也太冷了吧！', '0', '1', '1', '0', '找男朋友', 413, 109, 33, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-11-03 05:57:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (351, 94, 347, '午餐感觉还不错哦', '0', '1', '1', '0', '找男朋友', 311, 109, 98, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-11-09 13:32:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (352, 94, 347, '冷冷冷，一起取暖吗', '0', '1', '1', '0', '找男朋友', 734, 109, 155, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-11-11 16:09:14', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (353, 94, 347, '不喜欢等', '0', '1', '1', '0', '找男朋友', 151, 109, 33, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-11-17 03:56:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (354, 95, 354, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 985, 109, 127, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-10-17 15:24:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (355, 95, 354, '登山', '0', '1', '1', '0', '找男朋友', 357, 109, 69, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-10-27 04:35:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (356, 95, 354, '人不如猫系列', '0', '1', '1', '0', '找男朋友', 245, 109, 40, 0, '0', 2, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-11-01 07:29:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (357, 95, 354, '陪伴即是救赎', '0', '1', '1', '0', '找男朋友', 357, 109, 56, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-11-12 09:16:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (358, 95, 354, '95后 喜欢喵喵', '0', '1', '1', '0', '找男朋友', 579, 109, 58, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-11-29 12:24:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (359, 95, 354, '冬帽悄悄登场', '0', '1', '1', '0', '找男朋友', 236, 109, 37, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-12-20 14:53:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (360, 95, 354, '一周做一次人', '0', '1', '1', '0', '找男朋友', 166, 109, 38, 0, '0', 2, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-12-25 16:36:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (361, 96, 361, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 835, 109, 113, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-12-02 05:04:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (362, 96, 361, '晚上好呀', '0', '1', '1', '0', '找男朋友', 511, 109, 89, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-12-03 03:04:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (363, 96, 361, '晚上好', '0', '1', '1', '0', '找男朋友', 396, 109, 68, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-12-07 13:17:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (364, 96, 361, '干杯', '0', '1', '1', '0', '找男朋友', 977, 109, 84, 0, '0', 2, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-12-13 09:44:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (365, 96, 361, '都那么累了，为什么有的人还有力气犯贱呢', '0', '1', '1', '0', '找男朋友', 166, 109, 35, 0, '0', 2, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-12-20 16:12:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (366, 97, 366, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 794, 109, 303, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-07-19 04:05:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (367, 97, 366, '干啥啥不行，熬夜第一名', '0', '1', '1', '0', '找男朋友', 982, 109, 190, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-07-21 04:33:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (368, 97, 366, '想尝试爱情的苦', '0', '1', '1', '0', '找男朋友', 600, 109, 121, 0, '0', 3, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-07-21 09:31:12', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (369, 97, 366, '愿快乐如期而至', '0', '1', '1', '0', '找男朋友', 129, 109, 25, 0, '0', 2, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-07-28 03:57:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (370, 97, 366, '我还顶的居', '0', '1', '1', '0', '找男朋友', 782, 109, 265, 0, '0', 1, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-08-01 09:20:25', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (371, 97, 366, '给你们介绍个小姐姐', '0', '1', '1', '0', '找男朋友', 518, 109, 166, 0, '0', 4, NULL, NULL, '中国', '四川省', '成都市', NULL, NULL, '2020-08-06 05:20:15', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (372, 98, 372, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 514, 109, 36, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-08-12 06:47:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (373, 98, 372, '回来了', '0', '1', '1', '0', '找男朋友', 450, 109, 164, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-08-15 06:30:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (374, 98, 372, '黑色永远显瘦', '0', '1', '1', '0', '找男朋友', 140, 109, 29, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-08-17 13:13:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (375, 98, 372, '在人海里找到我', '0', '1', '1', '0', '找男朋友', 515, 109, 61, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-08-19 07:52:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (376, 99, 376, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 986, 109, 93, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-09-25 04:30:38', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (377, 99, 376, '这是一个适合养膘的季节', '0', '1', '1', '0', '找男朋友', 867, 109, 180, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-09-25 13:30:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (378, 99, 376, '是辣妹么是辣妹么是辣妹么', '0', '1', '1', '0', '找男朋友', 330, 109, 64, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-09-25 05:50:33', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (379, 99, 376, '所以你在爱别人的时候有没有想起我', '0', '1', '1', '0', '找男朋友', 189, 109, 47, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-09-25 16:39:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (380, 100, 380, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 429, 109, 72, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-11-13 05:58:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (381, 100, 380, '旧照', '0', '1', '1', '0', '找男朋友', 539, 109, 19, 0, '0', 2, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-11-26 03:30:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (382, 100, 380, '这天气就跟男人的心一样，说变就变，冷死我了', '0', '1', '1', '0', '找男朋友', 540, 109, 54, 0, '0', 2, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-11-27 15:09:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (383, 100, 380, '都说手是女人的第二张脸', '0', '1', '1', '0', '找男朋友', 81, 109, 18, 0, '0', 2, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-12-01 05:32:40', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (384, 101, 384, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 866, 109, 205, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-10-11 08:54:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (385, 101, 384, '出门就是喝酒', '0', '1', '1', '0', '找男朋友', 54, 109, 20, 0, '0', 2, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-10-20 14:35:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (386, 101, 384, '当你做错的时候，连呼吸都是错的', '0', '1', '1', '0', '找男朋友', 537, 109, 98, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-10-27 11:46:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (387, 101, 384, '别问照片是不是我，我丑也是你得不到的', '0', '1', '1', '0', '找男朋友', 407, 109, 101, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-10-28 12:53:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (388, 101, 384, '失眠了，要喝酒才能睡得着', '0', '1', '1', '0', '找男朋友', 177, 109, 39, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-11-02 15:53:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (389, 102, 389, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 679, 109, 218, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-06-06 04:23:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (390, 102, 389, '今天的不舒服到此为止吧', '0', '1', '1', '0', '找男朋友', 241, 109, 37, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-06-07 16:17:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (391, 102, 389, '伢子', '0', '1', '1', '0', '找男朋友', 482, 109, 52, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-06-13 12:18:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (392, 102, 389, '好啦好啦，出来玩啦', '0', '1', '1', '0', '找男朋友', 258, 109, 69, 0, '0', 4, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-06-15 13:27:14', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (393, 102, 389, '晚安哟', '0', '1', '1', '0', '找男朋友', 413, 109, 21, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-06-19 07:13:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (394, 103, 394, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 936, 109, 199, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-12-07 14:29:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (395, 103, 394, '今日碎片', '0', '1', '1', '0', '找男朋友', 529, 109, 16, 0, '0', 2, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-12-11 08:07:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (396, 103, 394, '我太可爱了吧', '0', '1', '1', '0', '找男朋友', 136, 109, 45, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-12-18 04:09:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (397, 104, 397, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 538, 109, 123, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-06-21 10:03:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (398, 104, 397, '校内读书人，校外都市丽人', '0', '1', '1', '0', '找男朋友', 623, 109, 32, 0, '0', 2, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-06-27 07:04:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (399, 104, 397, '靓女罢了', '0', '1', '1', '0', '找男朋友', 881, 109, 341, 0, '0', 1, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-07-08 09:33:42', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (400, 104, 397, '02 舞蹈生  身边全是妹子~~~', '0', '1', '1', '0', '找男朋友', 979, 109, 50, 0, '0', 3, NULL, NULL, '中国', '重庆市', '重庆市', NULL, NULL, '2020-07-20 06:28:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (401, 105, 401, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 253, 109, 36, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-12 08:11:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (402, 105, 401, '今天跑民政局结婚，结果人家跟我说结婚要2个人，搞得我一下子迷茫了', '0', '1', '1', '0', '找男朋友', 212, 109, 99, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-13 11:01:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (403, 105, 401, '一转眼，就成了故事', '0', '1', '1', '0', '找男朋友', 637, 109, 116, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-16 05:45:56', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (404, 105, 401, '从此不恋爱', '0', '1', '1', '0', '找男朋友', 118, 109, 32, 0, '0', 2, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-26 14:20:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (405, 106, 405, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 848, 109, 40, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-12-15 15:25:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (406, 106, 405, '嘘', '0', '1', '1', '0', '找男朋友', 582, 109, 60, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-12-19 05:24:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (407, 106, 405, '没有文案', '0', '1', '1', '0', '找男朋友', 849, 109, 191, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-12-24 05:29:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (408, 106, 405, '除了我一直是3岁，其他地方都有很大变化', '0', '1', '1', '0', '找男朋友', 154, 109, 20, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2020-12-27 05:34:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (409, 107, 409, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 262, 109, 37, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-08 10:34:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (410, 107, 409, '所以爱会消失,对不对?', '0', '1', '1', '0', '找男朋友', 627, 109, 230, 0, '0', 4, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-09 06:01:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (411, 107, 409, '喵喵，想你的人一定会去找你的', '0', '1', '1', '0', '找男朋友', 300, 109, 56, 0, '0', 3, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-18 09:04:09', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (412, 107, 409, '我不应该谈恋爱，我应该去十字路口贴钢化膜', '0', '1', '1', '0', '找男朋友', 714, 109, 180, 0, '0', 2, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-26 12:17:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (413, 107, 409, '阿喵', '0', '1', '1', '0', '找男朋友', 398, 109, 44, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-11-06 05:55:16', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (414, 107, 409, '今天是不洗头的打工人', '0', '1', '1', '0', '找男朋友', 166, 109, 51, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-11-07 14:14:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (415, 107, 409, '超市里那么多饮料，还是会有人选择矿泉水', '0', '1', '1', '0', '找男朋友', 842, 109, 102, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-11-13 09:33:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (416, 108, 416, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 330, 109, 74, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-12-01 14:37:54', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (417, 108, 416, '92年的小牛，寻找大一岁的鼠，大两岁的猪^^', '0', '1', '1', '0', '找男朋友', 372, 109, 121, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-12-03 08:11:27', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (418, 109, 418, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 912, 109, 361, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-16 15:03:56', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (419, 109, 418, '爱上了', '0', '1', '1', '0', '找男朋友', 507, 109, 108, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-19 15:55:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (420, 109, 418, '还是回家早点睡吧', '0', '1', '1', '0', '找男朋友', 919, 109, 107, 0, '0', 2, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-23 15:51:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (421, 110, 421, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 377, 109, 123, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-09-18 08:19:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (422, 110, 421, '我这胖嘟嘟的手,唉', '0', '1', '1', '0', '找男朋友', 699, 109, 235, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-09-23 13:56:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (423, 110, 421, '美其名曰出差，实则瞎逛赶行程', '0', '1', '1', '0', '找男朋友', 757, 109, 51, 0, '0', 2, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-03 06:07:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (424, 110, 421, '超可爱', '0', '1', '1', '0', '找男朋友', 851, 109, 111, 0, '0', 2, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-15 14:04:56', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (425, 110, 421, '好看竟被我猜到凶手', '0', '1', '1', '0', '找男朋友', 203, 109, 52, 0, '0', 1, NULL, NULL, '中国', '江苏省', '苏州市', NULL, NULL, '2020-10-18 08:56:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (426, 111, 426, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 73, 109, 22, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-07 14:06:56', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (427, 111, 426, '请问月老在吗，我在家睡不着', '0', '1', '1', '0', '找男朋友', 250, 109, 34, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-12 14:05:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (428, 111, 426, '医生说我湿气太重了，需要亲热解毒', '0', '1', '1', '0', '找男朋友', 844, 109, 15, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-15 15:26:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (429, 111, 426, '我本来长这样，后来看见你......', '0', '1', '1', '0', '找男朋友', 872, 109, 34, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-19 10:15:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (430, 111, 426, '不要抱怨 抱我', '0', '1', '1', '0', '找男朋友', 926, 109, 329, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-25 15:43:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (431, 111, 426, '一天要结束了，我要停止发光了', '0', '1', '1', '0', '找男朋友', 958, 109, 201, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-27 14:52:54', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (432, 111, 426, '无聊，如果我结婚了，这个点应该在打老公了吧', '0', '1', '1', '0', '找男朋友', 398, 109, 70, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-12-03 11:32:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (433, 112, 433, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 419, 109, 53, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-12 07:21:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (434, 112, 433, '大家好', '0', '1', '1', '0', '找男朋友', 555, 109, 87, 0, '0', 3, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-15 16:57:25', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (435, 112, 433, 'New watch', '0', '1', '1', '0', '找男朋友', 597, 109, 55, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-18 10:50:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (436, 112, 433, '干饭！', '0', '1', '1', '0', '找男朋友', 694, 109, 173, 0, '0', 4, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-24 08:24:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (437, 112, 433, '久违的阳光', '0', '1', '1', '0', '找男朋友', 445, 109, 60, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-26 13:57:12', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (438, 112, 433, '哈哈', '0', '1', '1', '0', '找男朋友', 312, 109, 38, 0, '0', 3, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-12-11 09:59:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (439, 113, 442, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 796, 109, 145, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-26 07:46:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (440, 113, 442, '宁愿被渣男渣，也不愿被直男给气死', '0', '1', '1', '0', '找男朋友', 767, 109, 109, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-29 15:25:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (441, 113, 442, '美女是不需要温度的', '0', '1', '1', '0', '找男朋友', 701, 109, 240, 0, '0', 3, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-12-13 15:20:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (442, 113, 442, '叮咚，您的圣诞精灵已送达，请注意查收', '0', '1', '1', '0', '找男朋友', 134, 109, 31, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-12-26 04:17:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (443, 114, 578, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 720, 109, 215, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-07-21 07:55:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (444, 114, 578, '文案在图里', '0', '1', '1', '0', '找男朋友', 446, 109, 89, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-07-22 11:28:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (445, 114, 578, '喝凉水', '0', '1', '1', '0', '找男朋友', 914, 109, 256, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-07-29 03:23:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (446, 114, 578, '特别能吃苦，这五个字，我做到了前四个', '0', '1', '1', '0', '找男朋友', 919, 109, 181, 0, '0', 4, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-08-03 11:00:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (447, 114, 578, '出门干啥，当然是吃呀', '0', '1', '1', '0', '找男朋友', 522, 109, 33, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-08-15 15:24:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (448, 115, 450, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 907, 109, 31, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-09-16 07:51:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (449, 115, 450, '总是一个人', '0', '1', '1', '0', '找男朋友', 149, 109, 26, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-09-18 16:18:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (450, 115, 450, '心累', '0', '1', '1', '0', '找男朋友', 911, 109, 218, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-09-26 05:31:08', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (451, 116, 455, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 196, 109, 51, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-09-13 04:54:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (452, 116, 455, '只要我回来，你还得靠边站', '0', '1', '1', '0', '找男朋友', 885, 109, 296, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-09-15 03:26:12', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (453, 116, 455, '来拯救我吧！ 欢迎', '0', '1', '1', '0', '找男朋友', 166, 109, 48, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-09-17 13:21:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (454, 116, 455, '击中你的心了吗', '0', '1', '1', '0', '找男朋友', 273, 109, 99, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-09-23 10:23:12', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (455, 116, 455, '明明喜欢却假装不在乎，那种感觉真的很难受', '0', '1', '1', '0', '找男朋友', 753, 109, 197, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-09-30 03:18:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (456, 117, 460, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 244, 109, 80, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-17 10:20:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (457, 117, 460, '我想听春天的故事，你有吗？', '0', '1', '1', '0', '找男朋友', 188, 109, 15, 0, '0', 1, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-11-27 04:48:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (458, 117, 460, '过好每一天', '0', '1', '1', '0', '找男朋友', 191, 109, 51, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-12-07 07:44:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (459, 117, 460, '想要的东西，还是该自己去争取', '0', '1', '1', '0', '找男朋友', 507, 109, 22, 0, '0', 2, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-12-16 04:59:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (460, 117, 460, '窗上的雪花，像极了什么', '0', '1', '1', '0', '找男朋友', 241, 109, 42, 0, '0', 3, NULL, NULL, '中国', '江苏省', '南通市', NULL, NULL, '2020-12-27 05:16:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (461, 118, 469, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 665, 109, 98, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-09-14 16:39:27', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (462, 118, 469, '你已经把对方拉黑！', '0', '1', '1', '0', '找男朋友', 599, 109, 71, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-09-18 06:04:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (463, 118, 469, '这才是我的头盔，爱啦', '0', '1', '1', '0', '找男朋友', 222, 109, 43, 0, '0', 2, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-09-26 12:10:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (464, 118, 469, '所以啊，哪有什么钢铁直男，爱你的人一定会想尽办法爱你', '0', '1', '1', '0', '找男朋友', 91, 109, 20, 0, '0', 2, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-07 03:39:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (465, 118, 469, '闺蜜生日，大家都是带伴去，我那位怎么还没出现', '0', '1', '1', '0', '找男朋友', 140, 109, 23, 0, '0', 3, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-11 11:37:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (466, 118, 469, '忙忙碌碌，懒得说', '0', '1', '1', '0', '找男朋友', 976, 109, 199, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-18 14:02:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (467, 118, 469, '如果你也和我一样', '0', '1', '1', '0', '找男朋友', 607, 109, 62, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-23 14:58:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (468, 118, 469, '只想安心当个美少女', '0', '1', '1', '0', '找男朋友', 323, 109, 19, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-27 04:53:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (469, 118, 469, '晚安', '0', '1', '1', '0', '找男朋友', 411, 109, 13, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-11-03 07:00:18', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (470, 119, 473, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 515, 109, 61, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-09-17 10:27:27', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (471, 119, 473, '反正没有人要，吃就吃吧', '0', '1', '1', '0', '找男朋友', 603, 109, 142, 0, '0', 2, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-09-24 09:31:15', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (472, 119, 473, '佛系上线，佛系加微', '0', '1', '1', '0', '找男朋友', 687, 109, 238, 0, '0', 3, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-06 12:27:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (473, 119, 473, '上一秒和小姐姐约好去玩，下一秒客户打电话预约，加班，唉', '0', '1', '1', '0', '找男朋友', 554, 109, 185, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-08 03:48:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (474, 120, 476, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 308, 109, 117, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-11-13 16:41:15', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (475, 120, 476, '今天有两个男的一直跟着我们，好可怕', '0', '1', '1', '0', '找男朋友', 102, 109, 22, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-11-17 06:49:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (476, 120, 476, '这个世界好冷漠，为什么没有人偷走我的心', '0', '1', '1', '0', '找男朋友', 56, 109, 19, 0, '0', 2, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-11-21 10:32:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (477, 121, 478, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 876, 109, 73, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-16 14:46:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (478, 121, 478, '感冒好了，耶', '0', '1', '1', '0', '找男朋友', 466, 109, 96, 0, '0', 2, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-19 14:45:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (479, 122, 481, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 457, 109, 81, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-09 09:39:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (480, 122, 481, '我是你的白月光', '0', '1', '1', '0', '找男朋友', 371, 109, 82, 0, '0', 2, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-16 10:40:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (481, 122, 481, '可甜可咸可拽', '0', '1', '1', '0', '找男朋友', 259, 109, 112, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-10-18 14:16:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (482, 123, 487, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 168, 109, 30, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-12-04 04:07:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (483, 123, 487, '最喜欢二月了    因为二月只用单身28天', '0', '1', '1', '0', '找男朋友', 668, 109, 86, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-12-09 07:20:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (484, 123, 487, '我的手在干嘛  哈哈', '0', '1', '1', '0', '找男朋友', 145, 109, 60, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-12-14 03:20:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (485, 123, 487, '旧照片', '0', '1', '1', '0', '找男朋友', 936, 109, 123, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-12-15 06:11:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (486, 123, 487, '阳光明媚的一天', '0', '1', '1', '0', '找男朋友', 113, 109, 37, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-12-16 16:51:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (487, 123, 487, '有人来加我聊聊天嘛', '0', '1', '1', '0', '找男朋友', 973, 109, 82, 0, '0', 1, NULL, NULL, '中国', '江苏省', '常州市', NULL, NULL, '2020-12-18 14:44:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (488, 124, 492, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 838, 109, 138, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-09-16 07:48:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (489, 124, 492, '许一份现世安稳,潋滟红尘,窃喜清欢', '0', '1', '1', '0', '找男朋友', 319, 109, 83, 0, '0', 2, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-09-29 05:33:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (490, 124, 492, '留住校园一瞬间', '0', '1', '1', '0', '找男朋友', 144, 109, 20, 0, '0', 2, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-10-09 12:30:38', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (491, 124, 492, '一朵白云的河 一颗星星的海', '0', '1', '1', '0', '找男朋友', 158, 109, 29, 0, '0', 3, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-10-11 10:20:12', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (492, 124, 492, '我对奶茶过敏，如果你做我男朋友可以节省一大笔开支呢！', '0', '1', '1', '0', '找男朋友', 252, 109, 67, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-10-12 09:54:51', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (493, 125, 497, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 380, 109, 46, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-11-17 12:02:27', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (494, 125, 497, '今日穿搭', '0', '1', '1', '0', '找男朋友', 770, 109, 79, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-11-18 12:31:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (495, 125, 497, '我很丑可是我很温柔', '0', '1', '1', '0', '找男朋友', 835, 109, 77, 0, '0', 2, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-11-24 04:28:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (496, 125, 497, '今日份自拍', '0', '1', '1', '0', '找男朋友', 554, 109, 138, 0, '0', 3, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-11-25 06:43:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (497, 125, 497, '和妹妹在一起', '0', '1', '1', '0', '找男朋友', 166, 109, 35, 0, '0', 3, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-11-26 11:29:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (498, 126, 501, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 494, 109, 71, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-10-09 11:41:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (499, 126, 501, '耶', '0', '1', '1', '0', '找男朋友', 509, 109, 89, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-10-13 11:02:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (500, 126, 501, '一起听歌嘛', '0', '1', '1', '0', '找男朋友', 519, 109, 235, 0, '0', 3, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-10-20 16:09:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (501, 126, 501, '干嘛不找我', '0', '1', '1', '0', '找男朋友', 986, 109, 335, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-10-25 09:39:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (502, 127, 507, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 883, 109, 75, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-03 08:04:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (503, 127, 507, '生活碎片', '0', '1', '1', '0', '找男朋友', 938, 109, 56, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-06 10:28:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (504, 127, 507, '书要好好读', '0', '1', '1', '0', '找男朋友', 127, 109, 43, 0, '0', 2, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-16 04:03:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (505, 127, 507, '喜欢的人要好好争取', '0', '1', '1', '0', '找男朋友', 230, 109, 40, 0, '0', 2, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-16 12:11:27', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (506, 127, 507, '一见你就心情好', '0', '1', '1', '0', '找男朋友', 740, 109, 129, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-19 07:18:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (507, 127, 507, '恰饭恰饭', '0', '1', '1', '0', '找男朋友', 509, 109, 30, 0, '0', 4, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-22 03:50:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (508, 128, 513, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 307, 109, 103, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-04 06:49:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (509, 128, 513, '快来祝我打游戏终于没有健康系统了', '0', '1', '1', '0', '找男朋友', 750, 109, 186, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-08 09:05:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (510, 128, 513, '小孩子真是可爱', '0', '1', '1', '0', '找男朋友', 522, 109, 84, 0, '0', 2, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-17 03:39:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (511, 128, 513, '之前的照片，拿来敷衍一下了，嘻嘻', '0', '1', '1', '0', '找男朋友', 872, 109, 189, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-18 05:45:33', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (512, 128, 513, '祝教官孤寡一辈子', '0', '1', '1', '0', '找男朋友', 559, 109, 149, 0, '0', 1, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-18 11:21:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (513, 128, 513, '搓搓手，又要孤身过冬了', '0', '1', '1', '0', '找男朋友', 215, 109, 19, 0, '0', 3, NULL, NULL, '中国', '浙江省', '杭州市', NULL, NULL, '2020-12-23 09:10:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (514, 129, 517, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 61, 109, 19, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-11-01 16:00:27', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (515, 129, 517, '要快乐呀', '0', '1', '1', '0', '找男朋友', 441, 109, 63, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-11-05 12:21:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (516, 129, 517, '陷落美好,满溢温柔', '0', '1', '1', '0', '找男朋友', 630, 109, 259, 0, '0', 2, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-11-09 12:29:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (517, 129, 517, '会变成光的，要和未来的那个人互相照亮', '0', '1', '1', '0', '找男朋友', 684, 109, 180, 0, '0', 3, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-11-16 14:20:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (518, 130, 526, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 770, 109, 85, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-10 11:58:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (519, 130, 526, '和闺蜜一起', '0', '1', '1', '0', '找男朋友', 833, 109, 90, 0, '0', 2, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-16 16:13:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (520, 130, 526, '谢谢家里的亲人们给我过生日', '0', '1', '1', '0', '找男朋友', 895, 109, 58, 0, '0', 2, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-18 08:20:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (521, 130, 526, '你也要去和闺蜜一起拍闺蜜照哦，非常有爱', '0', '1', '1', '0', '找男朋友', 486, 109, 95, 0, '0', 3, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-20 15:01:39', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (522, 130, 526, '不好意思，手机歪了', '0', '1', '1', '0', '找男朋友', 892, 109, 62, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-21 08:14:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (523, 130, 526, '带着我的小熊兄弟', '0', '1', '1', '0', '找男朋友', 944, 109, 146, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-26 13:51:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (524, 130, 526, '还行吧', '0', '1', '1', '0', '找男朋友', 181, 109, 24, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-27 07:37:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (525, 130, 526, '出门咯', '0', '1', '1', '0', '找男朋友', 759, 109, 196, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-28 09:27:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (526, 130, 526, '等我有钱了一定要给自己买个头', '0', '1', '1', '0', '找男朋友', 364, 109, 75, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-29 12:47:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (527, 131, 530, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 315, 109, 40, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-09-20 10:00:25', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (528, 131, 530, '我怎么这么可爱', '0', '1', '1', '0', '找男朋友', 864, 109, 62, 0, '0', 2, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-09-25 09:53:14', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (529, 131, 530, '今夜 不想睡', '0', '1', '1', '0', '找男朋友', 552, 109, 128, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-09-26 11:33:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (530, 131, 530, '爱情的表现，到底是什么', '0', '1', '1', '0', '找男朋友', 624, 109, 192, 0, '0', 2, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-09-28 14:56:14', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (531, 131, 530, '天呐，我太可爱了吧', '0', '1', '1', '0', '找男朋友', 368, 109, 96, 0, '0', 2, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-02 15:45:31', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (532, 131, 530, '你也很开心吗', '0', '1', '1', '0', '找男朋友', 262, 109, 23, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-05 10:26:31', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (533, 131, 530, '哈哈，发发旧照片', '0', '1', '1', '0', '找男朋友', 335, 109, 45, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-13 11:23:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (534, 131, 530, '这个造型，还行吧', '0', '1', '1', '0', '找男朋友', 447, 109, 26, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-15 13:03:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (535, 131, 530, '这样的我，你喜欢吗', '0', '1', '1', '0', '找男朋友', 639, 109, 114, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-16 06:08:13', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (536, 131, 530, '123123', '0', '1', '1', '0', '找男朋友', 466, 109, 45, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-27 11:01:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (537, 131, 530, '没啥好说的，就发照片吧！', '0', '1', '1', '0', '找男朋友', 575, 109, 67, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-10-30 03:35:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (538, 132, 538, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 538, 109, 105, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-09-11 09:20:25', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (539, 132, 538, '随笔一画，好像有点逗', '0', '1', '1', '0', '找男朋友', 595, 109, 102, 0, '0', 2, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-09-14 13:46:08', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (540, 132, 538, '看看最后什么样吧', '0', '1', '1', '0', '找男朋友', 556, 109, 27, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-09-18 11:17:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (541, 132, 538, '1', '0', '1', '1', '0', '找男朋友', 699, 109, 184, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-09-19 10:39:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (542, 132, 538, '完稿！', '0', '1', '1', '0', '找男朋友', 601, 109, 35, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-09-20 07:45:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (543, 133, 543, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 656, 109, 186, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-06-20 07:33:08', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (544, 133, 543, '恰火锅咯', '0', '1', '1', '0', '找男朋友', 294, 109, 48, 0, '0', 1, NULL, NULL, '中国', '浙江省', '温州市', NULL, NULL, '2020-06-23 12:27:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (545, 134, 561, '初来乍到,请多关照', '0', '1', '1', '0', '找男朋友', 844, 109, 250, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-06-04 05:28:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (546, 134, 561, '女人既要有勾人的皮囊，也要有引人的灵魂', '0', '1', '1', '0', '找男朋友', 913, 109, 32, 0, '0', 2, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-06-07 05:14:25', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (547, 134, 561, '今夜,秋名山见', '0', '1', '1', '0', '找男朋友', 998, 109, 294, 0, '0', 2, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-06-14 11:56:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (548, 134, 561, '吃糖等人', '0', '1', '1', '0', '找男朋友', 452, 109, 49, 0, '0', 2, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-06-19 03:05:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (549, 134, 561, '率直女性上线！', '0', '1', '1', '0', '找男朋友', 532, 109, 98, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-06-19 16:14:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (550, 134, 561, '说好的礼物呢，人影都没了', '0', '1', '1', '0', '找男朋友', 680, 109, 178, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-06-25 04:38:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (551, 134, 561, '学习使人进步，自拍使我愉悦，哈哈哈', '0', '1', '1', '0', '找男朋友', 98, 109, 39, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-06-27 10:57:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (552, 134, 561, '嗯，我就发个旧照', '0', '1', '1', '0', '找男朋友', 763, 109, 283, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-07-08 10:03:13', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (553, 134, 561, '这是木木', '0', '1', '1', '0', '找男朋友', 661, 109, 273, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-07-13 10:38:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (554, 134, 561, '外边下雨，在这休息一会吧', '0', '1', '1', '0', '找男朋友', 579, 109, 89, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-07-16 04:04:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (555, 134, 561, '我在人民广场吃炸鸡', '0', '1', '1', '0', '找男朋友', 304, 109, 43, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-07-18 09:17:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (556, 134, 561, '喔 别吃我', '0', '1', '1', '0', '找男朋友', 370, 109, 76, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-07-26 13:39:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (557, 134, 561, '如果晚上睡不着，你们都会做啥呢？', '0', '1', '1', '0', '找男朋友', 274, 109, 26, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-08-02 05:07:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (558, 134, 561, '天气好好', '0', '1', '1', '0', '找男朋友', 537, 109, 94, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-08-02 12:48:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (559, 134, 561, '旧照又上线了', '0', '1', '1', '0', '找男朋友', 451, 109, 106, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-08-10 13:31:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (560, 134, 561, '我猜我怕不怕', '0', '1', '1', '0', '找男朋友', 216, 109, 87, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-08-22 03:32:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (561, 134, 561, '旧照2.0', '0', '1', '1', '0', '找男朋友', 874, 109, 178, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-09-06 11:54:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (562, 134, 561, '想我了吗', '0', '1', '1', '0', '找男朋友', 446, 109, 51, 0, '0', 1, NULL, NULL, '中国', '浙江省', '宁波市', NULL, NULL, '2020-09-13 14:26:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (567, 135, 563, '刚刚使用，请多关照小妹子！！', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-06 15:57:25', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (568, 136, 564, '刚刚使用，请多关照！！', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-06 15:58:33', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (569, 136, 564, '今天回来，哈哈，从老家带来好多农副产品。', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-09 19:30:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (570, 136, 564, '发首歌，早上好！', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '1', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-10 08:21:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (571, 137, 566, '新人来到，多多关照，谢谢！', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-10 16:47:31', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (572, 136, 564, '哈哈哈哈哈', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-10 18:58:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (573, 136, 564, '发布照片', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 3, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-10 20:30:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (574, 136, 564, '呵呵，照片来了。', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 3, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-10 20:32:13', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (575, 138, 567, '大家好，小妹这厢有礼。', '0', '1', '1', '0', '找男朋友', 2, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-10 20:38:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (576, 138, 567, '哈哈哈哈哈，美女来了。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 3, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-10 20:56:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (577, 138, 567, '哈哈，马上过年了。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-11 00:42:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (578, 138, 567, '今天除夕夜，今年农历最后一天。', '1', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-11 16:28:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (579, 138, 567, '今天除夕，看春晚', '1', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-11 22:09:57', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (580, 138, 567, '今天大年初一，向大家拜年，祝大家新年快乐，万事如意，心想事成，牛气冲天。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-12 07:47:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (581, 138, 567, '今天个家里亲戚挨个拜年了，沟通沟通感情。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-12 14:58:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (582, 138, 567, '大年初一，给各位长辈、亲人、朋友、同事拜年了，祝大家牛年大吉、牛气冲天……', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-12 20:10:13', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (583, 138, 567, '正在追剧，很幸福快乐开心^_^开心！！', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-12 21:12:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (584, 138, 567, '今天大年初二，早上很早起来了。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-13 08:46:22', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (585, 138, 567, '觉醒年代，动乱时期，讲述共产党第一排领导人建立共产党的历程。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-13 10:03:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (586, 138, 567, '今天一个人在家，很无聊，不知道干啥好了。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-13 16:54:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (587, 138, 567, '今天情人节，祝大家情人节快乐，有情人终成眷属！', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-14 07:47:33', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (588, 138, 567, '今天大年初三，也是西方情人节，祝大家情人节快乐，有情人终成眷属！', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-14 11:38:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (589, 138, 567, '自己在家煮东西吃，从老家带过来的老母鸡，黄焖鸡。很像的。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-14 13:39:27', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (590, 138, 567, '哈哈，今天一个人在家好无聊啊。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-14 15:26:58', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (591, 138, 567, '今天大年初四，今天起来晚了，很懒很懒。', '1', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-15 08:41:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (592, 138, 567, '今天天气不错，深圳好天气，每天都是太阳当空照，花儿对我笑小鸟说，早早早。', '1', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-15 12:35:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (593, 138, 567, '今天很早就起来了，我们去银行办理开户。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-16 07:56:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (594, 138, 567, '哈哈，没事发一条动态。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-16 19:50:53', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (595, 138, 567, '我的动态，分享给别人。', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-16 20:03:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (596, 138, 567, '今天天气不错，每天都这样就好了。', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-17 09:32:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (597, 138, 567, '斗罗大陆', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '1', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-17 11:37:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (598, 138, 567, '住手。', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '1', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-17 14:27:57', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (599, 139, 568, '新人来到，多多关照，谢谢！', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-18 13:12:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (600, 138, 567, '觉醒年代', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '1', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-18 20:10:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (601, 140, 569, '新人来到，多多关照，谢谢！', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-18 23:22:09', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (602, 141, 570, '新人来到', '0', '1', '1', '0', '找男朋友', 1, 109, 7, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-19 09:36:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (603, 139, 568, 'aaa', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '1', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-19 10:03:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (604, 138, 567, '哈哈', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-19 10:25:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (605, 142, 571, '新人来到，多多关照，谢谢！', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-19 10:54:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (606, 142, 571, '。', '0', '1', '1', '0', '找男朋友', 2, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-19 12:14:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (607, 138, 567, '好的', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 4, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-19 12:14:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (608, 143, 572, 'eeeee', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-19 14:02:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (609, 137, 566, '有无聊可以约的不', '0', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-02-26 14:34:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (610, 144, 573, '大家好呀，一起来聊天社交吧！', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-06 18:14:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (611, 145, 574, '新人来到，多多关照，谢谢！', '0', '0', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-08 10:39:13', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (612, 145, 574, '🤔🤔🤔', '0', '0', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-08 16:17:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (613, 144, 573, '哈哈', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-09 21:21:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (614, 136, 564, '哈哈', '0', '1', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 3, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-09 21:24:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (615, 136, 564, '测试发布', '0', '1', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-10 11:35:18', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (616, 136, 564, '测试发布', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-10 11:35:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (617, 136, 564, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 2, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-10 11:40:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (618, 138, 567, '测试一下', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-10 20:02:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (619, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-10 20:03:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (620, 144, 573, '测试', '0', '1', '1', '0', '找男朋友', 1, 109, 2, 0, '0', 2, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-10 20:09:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (621, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-11 14:35:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (622, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-12 18:56:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (623, 138, 567, '测试', '0', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-12 22:22:14', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (624, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-12 22:22:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (625, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-14 19:14:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (626, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-15 09:12:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (627, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-15 16:03:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (628, 138, 567, '测试正常', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-17 19:44:08', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (629, 147, 575, '新人来到，多多关照，谢谢！', '0', '0', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-20 18:43:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (630, 138, 567, '测试', '0', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-21 19:53:15', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (631, 138, 567, '测试结果', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-21 19:54:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (632, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-22 22:19:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (633, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 2, 109, 7, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-23 22:35:43', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (634, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-25 16:20:54', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (635, 144, 573, '测试', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-25 22:32:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (636, 138, 567, '安排', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-26 10:27:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (637, 138, 567, '安排', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-26 19:39:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (638, 138, 567, '安排好了', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-26 19:45:18', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (639, 138, 567, '天气不错', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-27 08:58:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (640, 138, 567, '测试安排', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-28 19:37:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (641, 138, 567, '测试安排', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-28 19:37:28', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (642, 138, 567, '测试一下', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-28 19:37:45', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (643, 138, 567, '测试', '0', '1', '1', '0', '找男朋友', 4, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-30 16:37:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (644, 144, 573, '测试', '0', '1', '1', '0', '找男朋友', 4, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-30 20:22:25', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (645, 144, 573, '测试一下', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:26:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (646, 144, 573, '测试一下', '1', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:26:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (647, 141, 570, '测试', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:30:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (648, 144, 573, '测试', '0', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:30:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (649, 144, 573, '测试', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:32:38', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (650, 144, 573, '打算', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:33:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (651, 144, 573, '打算', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:33:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (652, 144, 573, '呃呃呃', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:34:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (653, 144, 573, '呃呃呃', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:34:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (654, 141, 570, '测试', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:34:23', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (655, 141, 570, '测试', '1', '0', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:34:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (656, 144, 573, '二哥', '0', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:35:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (657, 144, 573, '二哥', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:35:07', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (658, 144, 573, '测试', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:36:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (659, 144, 573, '测试', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:36:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (660, 147, 575, '阿尔巴', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 15:59:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (661, 139, 568, '测试跑跑', '0', '1', '1', '0', '找男朋友', 1, 109, 3, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 16:00:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (662, 147, 575, '测试', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 16:02:00', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (663, 141, 570, 'help UNINE！！', '0', '0', '1', '0', '找男朋友', 22, 109, 63, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 16:15:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (664, 147, 575, '测试', '1', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 16:20:06', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (665, 147, 575, '测试', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-03-31 16:22:52', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (666, 138, 567, '安排', '0', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-01 14:22:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (667, 138, 567, '1', '0', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-03 17:16:54', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (668, 138, 567, '2', '0', '1', '1', '0', '找男朋友', 2, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-03 18:30:13', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (669, 138, 567, '3', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-04 07:41:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (670, 138, 567, '4', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-04 10:17:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (671, 138, 567, '5', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-04 11:17:48', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (672, 138, 567, '6', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-04 17:30:42', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (673, 138, 567, '7', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-04 20:34:16', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (674, 138, 567, '8', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-04 21:42:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (675, 138, 567, '9', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-05 09:18:11', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (676, 138, 567, '10', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-05 09:53:36', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (677, 138, 567, '11', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-05 12:52:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (678, 138, 567, '12', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-05 14:21:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (679, 138, 567, '13', '0', '1', '1', '0', '找男朋友', 0, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-05 14:30:32', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (680, 138, 567, ' 14', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-05 17:05:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (681, 138, 567, '15', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-06 09:34:29', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (682, 138, 567, '16', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-07 16:18:40', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (683, 138, 567, '17', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-07 17:39:05', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (684, 138, 567, '18', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-07 22:37:03', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (685, 138, 567, '19', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-08 11:31:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (686, 138, 567, '20', '0', '1', '1', '0', '找男朋友', 0, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-08 13:52:42', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (687, 138, 567, '21', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-08 19:14:56', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (688, 138, 567, '22', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-09 11:21:30', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (689, 138, 567, '23', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-09 20:40:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (690, 138, 567, '24', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-10 11:03:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (691, 139, 568, '1', '0', '1', '1', '0', '找男朋友', 1, 109, 2, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-10 11:18:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (692, 138, 567, '25', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-11 07:16:59', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (693, 138, 567, '27', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-13 15:32:25', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (694, 138, 567, '28', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-14 11:19:02', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (695, 138, 567, '26', '0', '1', '1', '0', '找男朋友', 1, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-14 11:50:31', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (696, 138, 567, '29', '0', '1', '1', '0', '找男朋友', 1, 109, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-14 15:42:34', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (697, 138, 567, '30', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-15 15:21:15', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (698, 138, 567, '30', '0', '1', '1', '0', '找男朋友', 2, 109, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-16 16:15:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (699, 138, 567, '31', '0', '1', '1', '0', '找男朋友', 1, 109, 2, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-16 16:16:15', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (700, 138, 567, '32', '0', '1', '1', '0', '千古玦尘', 1, 20, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-17 17:41:44', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (701, 138, 567, '33', '0', '1', '1', '0', '千古玦尘', 0, 200, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-19 09:58:47', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (702, 138, 567, '34', '0', '1', '1', '0', '祖国100华诞', 2, 30, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-20 11:11:49', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (703, 138, 567, '33', '0', '1', '1', '0', '祖国100华诞', 1, 200, 1, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-21 10:27:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (704, 138, 567, '38', '0', '1', '1', '0', '国庆节', 0, 150, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-26 16:04:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (705, 138, 567, '39', '0', '1', '1', '0', '新疆棉', 0, 20, 2, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-27 15:26:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (706, 138, 567, '40', '0', '1', '1', '0', '新疆棉', 0, 100, 4, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-28 17:47:41', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (707, 138, 567, '41', '0', '1', '1', '0', '健身', 0, 110, 3, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-29 10:27:24', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (708, 144, 573, '测试', '0', '1', '1', '0', '找女朋友', 0, 120, 0, 0, '0', 1, NULL, NULL, '中国', '广东省', '深圳市', NULL, NULL, '2021-04-30 17:14:10', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (709, 149, 581, '刚刚注册，请多关照小妹子！！', '0', '0', '1', '0', '生产是祸', 0, 55, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-06-10 19:27:30', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (710, 150, 582, '刚刚来的豫章王府，请多关照小王妃！！', '0', '0', '1', '0', '信息时代', 0, 30, 0, 0, '0', 1, 121.480000, 31.410000, '中国', '上海市', '上海市', NULL, NULL, '2021-06-10 19:35:32', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (711, 152, 583, '刚刚来的豫章王府，请多关照小王妃！！', '0', '0', '1', '0', '懒癌生存守则', 0, 10, 0, 0, '0', 1, 121.480000, 31.410000, '中国', '上海市', '上海市', NULL, NULL, '2021-07-01 11:14:25', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (712, 153, 584, '刚刚注册，请多关照！！', '0', '0', '1', '0', '懒癌生存守则', 0, 23, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', '龙华区', '龙华地铁A出口', '2021-07-07 15:49:42', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (713, 153, 584, '大家好，推荐大家下载觅鹿社交APP。', '0', '0', '1', '1', '你为什么熬夜', 0, 21, 0, 0, '0', 0, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '龙华地铁C出口', '2021-07-07 17:19:40', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (717, 153, 584, '大家好，今天在龙华地铁C出口直播。', '0', '0', '1', '1', '你为什么熬夜', 0, 35, 0, 0, '0', 0, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '龙华地铁C出口', '2021-07-07 17:59:41', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (718, 153, 584, '大家好，今天下午三点在龙华地铁C出口直播完毕了。', '0', '0', '1', '1', '球长防骗课堂', 0, 45, 0, 0, '0', 0, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '龙华地铁C出口', '2021-07-07 19:14:03', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (719, 153, 584, '大家好，今天发布几张违法抓拍图片。', '0', '1', '1', '1', '球长防骗课堂', 0, 10, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-08 11:59:46', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (720, 153, 584, '大家好，今天发布一条语音。', '0', '1', '1', '1', '球长防骗课堂', 0, 30, 0, 0, '0', 1, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁D出口', '2021-07-08 12:03:16', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (721, 153, 584, '大家好，今天发布另外一条语音。', '0', '1', '1', '1', '球长防骗课堂', 0, 50, 0, 0, '0', 1, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁D出口', '2021-07-08 14:03:45', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (722, 153, 584, '大家好，今天发布几张违法抓拍图片。', '0', '1', '1', '0', '电动车交规', 0, 20, 0, 0, '0', 2, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁D出口', '2021-07-08 14:24:23', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (723, 154, 585, '新人妹子，初来乍到，请多关照。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-19 14:24:11', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (724, 155, 586, '大家好，陌生人报道，多多关照。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.862941, 22.452714, '中国', '广东省', '深圳市', '南山区', '科兴科学园A座', '2021-07-19 14:45:17', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (725, 160, 587, '新人小生，初来乍到，请多关照。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-20 17:02:39', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (726, 161, 588, '新人小生，初来乍到，请多关照。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-20 17:05:13', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (727, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:24:14', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (728, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:26:50', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (729, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:32:25', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (730, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:40:30', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (731, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:44:21', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (732, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 15:50:12', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (733, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '1', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:12:52', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (734, 73, 589, '今年八月份一日起，骑乘电动车不带头盔罚款200元。', '0', '0', '1', '0', '电动车交规', 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:17:24', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (735, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '1', '1', '电动车交规', 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:22:37', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (736, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:25:41', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (737, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:38:41', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (738, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:45:28', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (739, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:51:42', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (740, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 16:57:03', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (741, 144, 573, '发几张美女照片看看。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 17:01:57', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (742, 144, 573, '发几张美女照片看看。', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 17:09:42', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (743, 153, 584, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 17:32:20', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (744, 144, 573, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 17:33:09', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (746, 144, 573, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 17:43:58', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (747, 144, 573, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 17:46:37', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (748, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-21 17:50:06', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (749, 73, 589, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 17:51:11', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (750, 73, 589, '大家好，今天发布几张违法抓拍图片。', '0', '1', '0', '1', NULL, 0, 0, 0, 0, '0', 4, 114.036585, 22.686950, '中国', '广东省', '深圳市', '龙华区', '深圳北地铁C出口', '2021-07-21 18:04:57', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (751, 72, 590, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 09:24:33', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (752, 72, 590, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 09:41:05', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (753, 72, 590, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 2, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 11:02:27', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (754, 72, 590, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 4, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 11:03:07', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (755, 72, 590, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 4, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 11:16:04', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (756, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 11:22:37', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (757, 73, 589, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 1, 113.962941, 22.462714, '中国', '广东省', '深圳市', NULL, NULL, '2021-07-22 11:52:05', '2021-07-23 15:22:09', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (758, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 13:46:01', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (759, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '1', NULL, 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 13:46:19', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (760, 70, 591, '今年八月份一日起，骑乘电动车不带头盔罚款200元。', '0', '0', '1', '0', '电动车交规', 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 13:46:35', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (761, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '1', '1', '电动车交规', 0, 0, 0, 0, '0', 0, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 13:47:04', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (762, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '2', 1, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 13:47:21', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (763, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '1', 4, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 13:47:55', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (764, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '1', 3, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 13:55:26', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (765, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '1', 2, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 13:58:31', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (766, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '2', 1, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 13:59:17', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (767, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '2', 1, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 14:10:20', '2021-07-23 15:23:20', NULL, NULL, NULL);
+INSERT INTO `dynamic_info` VALUES (768, 70, 591, '今天心情很烦躁的，不知道为什么？', '0', '0', '0', '0', NULL, 0, 0, 0, 0, '1', 2, 113.962941, 22.462714, '中国', '广东省', '广州市', NULL, NULL, '2021-07-22 14:10:37', '2021-07-23 15:23:20', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for hibernate_sequence
 -- ----------------------------
 DROP TABLE IF EXISTS `hibernate_sequence`;
 CREATE TABLE `hibernate_sequence`  (
-  `next_val` bigint(20) NULL DEFAULT NULL
+    `next_val` bigint(20) NULL DEFAULT NULL
 ) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
@@ -2021,18 +2021,18 @@ CREATE TABLE `hibernate_sequence`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `industrys`;
 CREATE TABLE `industrys`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
-  `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '行业名称',
-  `parent_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '父级编号',
-  `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是',
-  `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
-  `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE
+                              `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
+                              `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '行业名称',
+                              `parent_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '父级编号',
+                              `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是',
+                              `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                              `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                              `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
+                              `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                              `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                              `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                              `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                              PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '行业信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -2064,22 +2064,22 @@ INSERT INTO `industrys` VALUES (20, '销售', 0, '0', '2021-03-31 17:57:47', '20
 -- ----------------------------
 DROP TABLE IF EXISTS `is_debug`;
 CREATE TABLE `is_debug`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
-  `is_debug` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否支付测试，0->否；1->是，默认：0->否',
-  `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `price` decimal(4, 2) NOT NULL DEFAULT 0.01 COMMENT '测试金额',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_is_debug`(`is_debug`) USING BTREE,
-  INDEX `n_idx_user_id`(`user_id`) USING BTREE,
-  INDEX `n_idx_price`(`price`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                             `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
+                             `is_debug` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否支付测试，0->否；1->是，默认：0->否',
+                             `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                             `price` decimal(4, 2) NOT NULL DEFAULT 0.01 COMMENT '测试金额',
+                             `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                             `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                             `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                             `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                             `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                             `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                             PRIMARY KEY (`id`) USING BTREE,
+                             INDEX `n_idx_is_debug`(`is_debug`) USING BTREE,
+                             INDEX `n_idx_user_id`(`user_id`) USING BTREE,
+                             INDEX `n_idx_price`(`price`) USING BTREE,
+                             INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                             INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '支付调测表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -2092,23 +2092,23 @@ INSERT INTO `is_debug` VALUES (1, '1', 1, 0.01, '2021-03-18 23:48:32', '2021-03-
 -- ----------------------------
 DROP TABLE IF EXISTS `like_record`;
 CREATE TABLE `like_record`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
-  `user_id` bigint(20) NOT NULL COMMENT '点赞者id',
-  `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
-  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '状态，0->取消；1->点赞，默认：1->点赞',
-  `type` enum('0','1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '类型，0->动态，1->评论，2->其它，默认：0，动态',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_user_id`(`user_id`) USING BTREE,
-  INDEX `n_idx_dynamic_info_id`(`dynamic_info_id`) USING BTREE,
-  INDEX `n_idx_status`(`status`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
+                                `user_id` bigint(20) NOT NULL COMMENT '点赞者id',
+                                `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
+                                `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '状态，0->取消；1->点赞，默认：1->点赞',
+                                `type` enum('0','1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '类型，0->动态，1->评论，2->其它，默认：0，动态',
+                                `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                PRIMARY KEY (`id`) USING BTREE,
+                                INDEX `n_idx_user_id`(`user_id`) USING BTREE,
+                                INDEX `n_idx_dynamic_info_id`(`dynamic_info_id`) USING BTREE,
+                                INDEX `n_idx_status`(`status`) USING BTREE,
+                                INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 188 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '点赞记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -2132,24 +2132,24 @@ INSERT INTO `like_record` VALUES (187, 35, 16, '0', '1', '2021-07-21 14:19:56', 
 -- ----------------------------
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息id，主键',
-  `send_user_id` bigint(20) NOT NULL COMMENT '发送者id',
-  `recipient_user_id` bigint(20) NOT NULL COMMENT '接收者id',
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
-  `send_mode` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '发送方式：0->系统自动；1->用户主动，默认：0->系统自动',
-  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，0->未读；1->已读，默认：0->未读',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消息类型，likes->点赞，applications->申请加微信，commons->普通消息',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02，消息发送或者回复，0->发送，1->回复',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03，是否删除，0->否,1-删除，默认：0',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04，消息id',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_send_user_id`(`send_user_id`) USING BTREE,
-  INDEX `n_idx_recipient_user_id`(`recipient_user_id`) USING BTREE,
-  INDEX `n_idx_send_mode`(`send_mode`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息id，主键',
+                            `send_user_id` bigint(20) NOT NULL COMMENT '发送者id',
+                            `recipient_user_id` bigint(20) NOT NULL COMMENT '接收者id',
+                            `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
+                            `send_mode` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '发送方式：0->系统自动；1->用户主动，默认：0->系统自动',
+                            `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，0->未读；1->已读，默认：0->未读',
+                            `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                            `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                            `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消息类型，likes->点赞，applications->申请加微信，commons->普通消息',
+                            `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02，消息发送或者回复，0->发送，1->回复',
+                            `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03，是否删除，0->否,1-删除，默认：0',
+                            `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04，消息id',
+                            PRIMARY KEY (`id`) USING BTREE,
+                            INDEX `n_idx_send_user_id`(`send_user_id`) USING BTREE,
+                            INDEX `n_idx_recipient_user_id`(`recipient_user_id`) USING BTREE,
+                            INDEX `n_idx_send_mode`(`send_mode`) USING BTREE,
+                            INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                            INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 406 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '消息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -2238,18 +2238,18 @@ INSERT INTO `message` VALUES (405, 131, 101, '我同意|wx123123212', '1', '0', 
 -- ----------------------------
 DROP TABLE IF EXISTS `operate_record`;
 CREATE TABLE `operate_record`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
-  `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '状态：0->失败，1->成功，默认：1->成功',
-  `type` int(2) NOT NULL COMMENT '类型：0->发布动态，1->删除动态，2->点赞动态，3->申请加微信，4->分享动态，5->拉黑用户，6->举报动态，7-创建用户，8->修改资料',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 707 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户操作记录表' ROW_FORMAT = Dynamic;
+                                   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
+                                   `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                                   `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '状态：0->失败，1->成功，默认：1->成功',
+                                   `type` int(2) NOT NULL COMMENT '类型：0->发布动态，1->删除动态，2->点赞动态，3->申请加微信，4->分享动态，5->拉黑用户，6->举报动态，7-创建用户，8->修改资料',
+                                   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                   `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                   `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                   `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                   `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                   PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 710 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户操作记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of operate_record
@@ -2753,34 +2753,37 @@ INSERT INTO `operate_record` VALUES (703, 70, '1', 0, '2021-07-22 13:58:32', '20
 INSERT INTO `operate_record` VALUES (704, 70, '1', 0, '2021-07-22 13:59:17', '2021-07-22 13:59:17', NULL, NULL, NULL, NULL);
 INSERT INTO `operate_record` VALUES (705, 70, '1', 0, '2021-07-22 14:10:20', '2021-07-22 14:10:20', NULL, NULL, NULL, NULL);
 INSERT INTO `operate_record` VALUES (706, 70, '1', 0, '2021-07-22 14:10:37', '2021-07-22 14:10:37', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (707, 70, '0', 15, '2021-07-23 10:51:04', '2021-07-23 10:51:04', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (708, 70, '1', 15, '2021-07-23 10:52:39', '2021-07-23 10:52:39', NULL, NULL, NULL, NULL);
+INSERT INTO `operate_record` VALUES (709, 70, '1', 15, '2021-07-23 10:58:21', '2021-07-23 10:58:21', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for order_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `order_detail`;
 CREATE TABLE `order_detail`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
-  `detail_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '详情id',
-  `order_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
-  `product_id` bigint(20) NOT NULL COMMENT '商品id',
-  `buyer_user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `product_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
-  `product_price` decimal(8, 2) NOT NULL DEFAULT 0.01 COMMENT '商品价格',
-  `product_quantity` int(8) NOT NULL DEFAULT 1 COMMENT '购买数量',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `u_idx_detail_id`(`detail_id`) USING BTREE,
-  UNIQUE INDEX `u_idx_order_id`(`order_id`) USING BTREE,
-  INDEX `u_idx_product_id`(`product_id`) USING BTREE,
-  INDEX `n_idx_buyer_user_id`(`buyer_user_id`) USING BTREE,
-  INDEX `n_idx_product_name`(`product_name`) USING BTREE,
-  INDEX `n_idx_product_quantity`(`product_quantity`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
+                                 `detail_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '详情id',
+                                 `order_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
+                                 `product_id` bigint(20) NOT NULL COMMENT '商品id',
+                                 `buyer_user_id` bigint(20) NOT NULL COMMENT '用户id',
+                                 `product_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
+                                 `product_price` decimal(8, 2) NOT NULL DEFAULT 0.01 COMMENT '商品价格',
+                                 `product_quantity` int(8) NOT NULL DEFAULT 1 COMMENT '购买数量',
+                                 `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                 `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                 `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                 `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 UNIQUE INDEX `u_idx_detail_id`(`detail_id`) USING BTREE,
+                                 UNIQUE INDEX `u_idx_order_id`(`order_id`) USING BTREE,
+                                 INDEX `u_idx_product_id`(`product_id`) USING BTREE,
+                                 INDEX `n_idx_buyer_user_id`(`buyer_user_id`) USING BTREE,
+                                 INDEX `n_idx_product_name`(`product_name`) USING BTREE,
+                                 INDEX `n_idx_product_quantity`(`product_quantity`) USING BTREE,
+                                 INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                 INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单详情表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -2798,41 +2801,41 @@ INSERT INTO `order_detail` VALUES (6, '2c530b9bdeff4b2fb636ae38d894c2e3', '20210
 -- ----------------------------
 DROP TABLE IF EXISTS `order_master`;
 CREATE TABLE `order_master`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
-  `order_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
-  `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `transaction_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单支付交易流水号',
-  `product_id` bigint(20) NOT NULL COMMENT '商品id',
-  `buyer_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '买家昵称',
-  `buyer_phone` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '买家手机号码',
-  `buyer_ip` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'IP',
-  `order_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单名称',
-  `order_amount` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '订单金额',
-  `order_status` enum('0','1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '订单状态：0->新订单；1->已完结；2->已取消，默认：0->新订单',
-  `pay_status` enum('0','1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '支付状态：0->等待支付；1->支付成功；2->关闭支付，默认：0->等待支付',
-  `pay_mode` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '支付方式：0->微信支付；1->支付宝支付，默认：0->微信支付',
-  `pay_time` datetime(0) NULL DEFAULT NULL COMMENT '支付时间',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `u_idx_order_id`(`order_id`) USING BTREE,
-  INDEX `n_idx_user_id`(`user_id`) USING BTREE,
-  INDEX `n_idx_transaction_id`(`transaction_id`) USING BTREE,
-  INDEX `n_idx_product_id`(`product_id`) USING BTREE,
-  INDEX `n_idx_buyer_name`(`buyer_name`) USING BTREE,
-  INDEX `n_idx_buyer_phone`(`buyer_phone`) USING BTREE,
-  INDEX `n_idx_buyer_ip`(`buyer_ip`) USING BTREE,
-  INDEX `n_idx_order_name`(`order_name`) USING BTREE,
-  INDEX `n_idx_order_amount`(`order_amount`) USING BTREE,
-  INDEX `n_idx_order_status`(`order_status`) USING BTREE,
-  INDEX `n_idx_pay_status`(`pay_status`) USING BTREE,
-  INDEX `n_idx_pay_mode`(`pay_mode`) USING BTREE,
-  INDEX `n_idx_pay_time`(`pay_time`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
+                                 `order_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
+                                 `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                                 `transaction_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单支付交易流水号',
+                                 `product_id` bigint(20) NOT NULL COMMENT '商品id',
+                                 `buyer_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '买家昵称',
+                                 `buyer_phone` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '买家手机号码',
+                                 `buyer_ip` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'IP',
+                                 `order_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单名称',
+                                 `order_amount` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '订单金额',
+                                 `order_status` enum('0','1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '订单状态：0->新订单；1->已完结；2->已取消，默认：0->新订单',
+                                 `pay_status` enum('0','1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '支付状态：0->等待支付；1->支付成功；2->关闭支付，默认：0->等待支付',
+                                 `pay_mode` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '支付方式：0->微信支付；1->支付宝支付，默认：0->微信支付',
+                                 `pay_time` datetime(0) NULL DEFAULT NULL COMMENT '支付时间',
+                                 `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                 `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                 `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                 `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 UNIQUE INDEX `u_idx_order_id`(`order_id`) USING BTREE,
+                                 INDEX `n_idx_user_id`(`user_id`) USING BTREE,
+                                 INDEX `n_idx_transaction_id`(`transaction_id`) USING BTREE,
+                                 INDEX `n_idx_product_id`(`product_id`) USING BTREE,
+                                 INDEX `n_idx_buyer_name`(`buyer_name`) USING BTREE,
+                                 INDEX `n_idx_buyer_phone`(`buyer_phone`) USING BTREE,
+                                 INDEX `n_idx_buyer_ip`(`buyer_ip`) USING BTREE,
+                                 INDEX `n_idx_order_name`(`order_name`) USING BTREE,
+                                 INDEX `n_idx_order_amount`(`order_amount`) USING BTREE,
+                                 INDEX `n_idx_order_status`(`order_status`) USING BTREE,
+                                 INDEX `n_idx_pay_status`(`pay_status`) USING BTREE,
+                                 INDEX `n_idx_pay_mode`(`pay_mode`) USING BTREE,
+                                 INDEX `n_idx_pay_time`(`pay_time`) USING BTREE,
+                                 INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                 INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -2850,20 +2853,20 @@ INSERT INTO `order_master` VALUES (6, '2021031910482618572c4a9ccab6a44f', 1, NUL
 -- ----------------------------
 DROP TABLE IF EXISTS `order_setting`;
 CREATE TABLE `order_setting`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '设置id，主键',
-  `normal_order_overtime` int(8) NULL DEFAULT NULL COMMENT '正常订单超时时间(分)',
-  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，0->启用，1->禁用，默认：0->启用',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_normal_order_overtime`(`normal_order_overtime`) USING BTREE,
-  INDEX `n_idx_status`(`status`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '设置id，主键',
+                                  `normal_order_overtime` int(8) NULL DEFAULT NULL COMMENT '正常订单超时时间(分)',
+                                  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，0->启用，1->禁用，默认：0->启用',
+                                  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  INDEX `n_idx_normal_order_overtime`(`normal_order_overtime`) USING BTREE,
+                                  INDEX `n_idx_status`(`status`) USING BTREE,
+                                  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                  INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单设置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -2876,27 +2879,27 @@ INSERT INTO `order_setting` VALUES (1, 30, '0', '2020-12-22 16:48:54', '2021-03-
 -- ----------------------------
 DROP TABLE IF EXISTS `product_info`;
 CREATE TABLE `product_info`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品id，主键',
-  `product_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
-  `product_description` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品描述',
-  `product_icon` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品小图',
-  `product_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '状态，0->下架，1->上架，默认：1->上架',
-  `product_unit_price` decimal(8, 2) NOT NULL DEFAULT 0.01 COMMENT '商品单价',
-  `vip_charge_time` int(2) NOT NULL DEFAULT 2 COMMENT 'VIP时长(月)',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_product_name`(`product_name`) USING BTREE,
-  INDEX `n_idx_product_description`(`product_description`) USING BTREE,
-  INDEX `n_idx_product_status`(`product_status`) USING BTREE,
-  INDEX `n_idx_product_unit_price`(`product_unit_price`) USING BTREE,
-  INDEX `n_idx_vip_charge_time`(`vip_charge_time`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '商品id，主键',
+                                 `product_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
+                                 `product_description` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品描述',
+                                 `product_icon` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品小图',
+                                 `product_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '状态，0->下架，1->上架，默认：1->上架',
+                                 `product_unit_price` decimal(8, 2) NOT NULL DEFAULT 0.01 COMMENT '商品单价',
+                                 `vip_charge_time` int(2) NOT NULL DEFAULT 2 COMMENT 'VIP时长(月)',
+                                 `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                 `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                 `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                 `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                 `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 INDEX `n_idx_product_name`(`product_name`) USING BTREE,
+                                 INDEX `n_idx_product_description`(`product_description`) USING BTREE,
+                                 INDEX `n_idx_product_status`(`product_status`) USING BTREE,
+                                 INDEX `n_idx_product_unit_price`(`product_unit_price`) USING BTREE,
+                                 INDEX `n_idx_vip_charge_time`(`vip_charge_time`) USING BTREE,
+                                 INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                 INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -2912,18 +2915,18 @@ INSERT INTO `product_info` VALUES (4, '12个月', '33元/月', '04.png', '1', 36
 -- ----------------------------
 DROP TABLE IF EXISTS `professions`;
 CREATE TABLE `professions`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
-  `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '职业名称',
-  `industry_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '所属行业编号',
-  `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是',
-  `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
-  `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE
+                                `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
+                                `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '职业名称',
+                                `industry_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '所属行业编号',
+                                `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是',
+                                `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
+                                `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 164 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '职业信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -3098,20 +3101,20 @@ INSERT INTO `professions` VALUES (163, '客户代表', 20, '0', '2021-06-02 15:4
 -- ----------------------------
 DROP TABLE IF EXISTS `report_category`;
 CREATE TABLE `report_category`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '类目id，主键',
-  `content` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
-  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态，0->启用，1->禁用，默认：0->启用',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_content`(`content`) USING BTREE,
-  INDEX `n_idx_status`(`status`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '类目id，主键',
+                                    `content` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
+                                    `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态，0->启用，1->禁用，默认：0->启用',
+                                    `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                    `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                    `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                    `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                    `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                    `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                    PRIMARY KEY (`id`) USING BTREE,
+                                    INDEX `n_idx_content`(`content`) USING BTREE,
+                                    INDEX `n_idx_status`(`status`) USING BTREE,
+                                    INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                    INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '举报类目表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -3131,27 +3134,27 @@ INSERT INTO `report_category` VALUES (8, '侵犯未成年人权益', '0', '2020-
 -- ----------------------------
 DROP TABLE IF EXISTS `report_info`;
 CREATE TABLE `report_info`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '举报信息id，主键',
-  `category_type` bigint(20) NOT NULL COMMENT '类目id，对应举报类目表主键id',
-  `report_type` enum('1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '举报类型，1->动态，2->用户，默认：1-动态',
-  `suggest_type` enum('0','1','2','3','4') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '处理建议类型，0->默认，1->已忽略，2->已隐藏（针对动态），3—>已禁用（针对用户。亦可做其他方式处理）），默认：0->默认',
-  `report_user_id` bigint(20) NOT NULL COMMENT '举报用户id',
-  `being_report_user_id` bigint(20) NOT NULL COMMENT '被举报动态id',
-  `report_content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '举报内容',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_category_type`(`category_type`) USING BTREE,
-  INDEX `n_idx_report_type`(`report_type`) USING BTREE,
-  INDEX `n_idx_suggest_type`(`suggest_type`) USING BTREE,
-  INDEX `n_idx_report_user_id`(`report_user_id`) USING BTREE,
-  INDEX `n_idx_being_report_user_id`(`being_report_user_id`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '举报信息id，主键',
+                                `category_type` bigint(20) NOT NULL COMMENT '类目id，对应举报类目表主键id',
+                                `report_type` enum('1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '举报类型，1->动态，2->用户，默认：1-动态',
+                                `suggest_type` enum('0','1','2','3','4') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '处理建议类型，0->默认，1->已忽略，2->已隐藏（针对动态），3—>已禁用（针对用户。亦可做其他方式处理）），默认：0->默认',
+                                `report_user_id` bigint(20) NOT NULL COMMENT '举报用户id',
+                                `being_report_user_id` bigint(20) NOT NULL COMMENT '被举报动态id',
+                                `report_content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '举报内容',
+                                `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                PRIMARY KEY (`id`) USING BTREE,
+                                INDEX `n_idx_category_type`(`category_type`) USING BTREE,
+                                INDEX `n_idx_report_type`(`report_type`) USING BTREE,
+                                INDEX `n_idx_suggest_type`(`suggest_type`) USING BTREE,
+                                INDEX `n_idx_report_user_id`(`report_user_id`) USING BTREE,
+                                INDEX `n_idx_being_report_user_id`(`being_report_user_id`) USING BTREE,
+                                INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '举报信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -3164,18 +3167,18 @@ INSERT INTO `report_info` VALUES (1, 1, '1', '0', 136, 575, '垃圾', '2021-03-0
 -- ----------------------------
 DROP TABLE IF EXISTS `screen_setting`;
 CREATE TABLE `screen_setting`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
-  `type` enum('0','1','2','3') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '类型，0->鹿可女生年龄筛选条件；1->鹿可男生年龄筛选条件；2->动态年龄范围筛选条件最小值；3->动态年龄范围筛选条件最大值，默认：0->鹿可女生年龄筛选条件',
-  `value` int(4) NOT NULL DEFAULT 0 COMMENT '值',
-  `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是，默认：0->否',
-  `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
-  `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE
+                                   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
+                                   `type` enum('0','1','2','3') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '类型，0->鹿可女生年龄筛选条件；1->鹿可男生年龄筛选条件；2->动态年龄范围筛选条件最小值；3->动态年龄范围筛选条件最大值，默认：0->鹿可女生年龄筛选条件',
+                                   `value` int(4) NOT NULL DEFAULT 0 COMMENT '值',
+                                   `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是，默认：0->否',
+                                   `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                   `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                   `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
+                                   `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                   `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                   `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                   `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '筛选条件配置信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -3191,18 +3194,18 @@ INSERT INTO `screen_setting` VALUES (4, '3', 50, '0', '2021-05-28 10:57:44', '20
 -- ----------------------------
 DROP TABLE IF EXISTS `sensitive_words`;
 CREATE TABLE `sensitive_words`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
-  `type_name` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型名称',
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
-  `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是，默认：0->否',
-  `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
-  `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
+                                    `type_name` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型名称',
+                                    `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
+                                    `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是，默认：0->否',
+                                    `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                    `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                    `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
+                                    `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                    `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                    `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                    `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4038 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '敏感词汇表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -7251,20 +7254,20 @@ INSERT INTO `sensitive_words` VALUES (4037, '其他', '唑仑', '0', '2021-07-06
 -- ----------------------------
 DROP TABLE IF EXISTS `share_record`;
 CREATE TABLE `share_record`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
-  `user_id` bigint(20) NOT NULL COMMENT '分享者id',
-  `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
-  `mode` enum('0','1','2','3','4') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '分享方式，0->微信好友；1->QQ好友；2->微信朋友圈；3->QQ空间，4->微信收藏；',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `n_idx_user_id`(`user_id`) USING BTREE,
-  INDEX `n_idx_dynamic_info_id`(`dynamic_info_id`) USING BTREE,
-  INDEX `n_idx_mode`(`mode`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE
+                                 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
+                                 `user_id` bigint(20) NOT NULL COMMENT '分享者id',
+                                 `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
+                                 `mode` enum('0','1','2','3','4') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '分享方式，0->微信好友；1->QQ好友；2->微信朋友圈；3->QQ空间，4->微信收藏；',
+                                 `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                 `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                 `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                 `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 INDEX `n_idx_user_id`(`user_id`) USING BTREE,
+                                 INDEX `n_idx_dynamic_info_id`(`dynamic_info_id`) USING BTREE,
+                                 INDEX `n_idx_mode`(`mode`) USING BTREE,
+                                 INDEX `n_idx_create_time`(`create_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分享记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -7272,20 +7275,20 @@ CREATE TABLE `share_record`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
-  `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标签名称',
-  `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是',
-  `hot_value` int(11) NOT NULL DEFAULT 0 COMMENT '热门值',
-  `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
-  `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `u_idx_name`(`name`) USING BTREE,
-  UNIQUE INDEX `uq_name`(`name`) USING BTREE
+                        `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
+                        `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标签名称',
+                        `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是',
+                        `hot_value` int(11) NOT NULL DEFAULT 0 COMMENT '热门值',
+                        `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                        `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                        `deleted_time` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
+                        `reserve_column01` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                        `reserve_column02` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                        `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                        `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                        PRIMARY KEY (`id`) USING BTREE,
+                        UNIQUE INDEX `u_idx_name`(`name`) USING BTREE,
+                        UNIQUE INDEX `uq_name`(`name`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '标签信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -7309,74 +7312,74 @@ INSERT INTO `tag` VALUES (12, '小众艺术爱好者', '0', 1, '2021-06-30 16:35
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户id，主键',
-  `phone` char(12) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机号码',
-  `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '账号状态，0->正常；1->异常，默认：0->正常',
-  `is_test` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否测试用户，0->否；1->是，默认：0->否',
-  `nick_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '昵称',
-  `weixin_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '微信号码',
-  `imei` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备串码',
-  `model` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备型号',
-  `sys_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统名称',
-  `sys_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统版本',
-  `network_mode` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '网络方式',
-  `gender` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '性别，0->女生；1->男生，默认：0->女生',
-  `year` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出生年代',
-  `month` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出生月份',
-  `date` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出生日期',
-  `constellation` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '星座',
-  `head_icon` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像小图',
-  `country` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '国',
-  `province` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '省',
-  `city` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '市',
-  `district` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '区/县',
-  `other` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其它地址',
-  `longitude` double(20, 6) NULL DEFAULT NULL COMMENT '经度',
-  `latitude` double(20, 6) NULL DEFAULT NULL COMMENT '纬度',
-  `platform` char(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '平台',
-  `ip` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'IP',
-  `grade` enum('0','1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT 'VIP等级，0->VIP0，普通用户；1->VIP1，VIP用户；2->SVIP，超级VIP；默认：0->VIP0，普通用户',
-  `autograph` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '这位靓妹/靓仔还未填写签名。' COMMENT '签名，默认：这位靓妹/靓仔还未填写签名。',
-  `vip_start_time` datetime(0) NULL DEFAULT NULL COMMENT 'VIP开始时间',
-  `vip_end_time` datetime(0) NULL DEFAULT NULL COMMENT 'VIP结束时间',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `background_icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '背景图片',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '极光推送唯一设备的标识',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  `profession_id` bigint(20) NOT NULL DEFAULT 1 COMMENT '职业编号',
-  `tag1` bigint(20) NULL DEFAULT NULL COMMENT '标签1编号，对应标签表id',
-  `tag2` bigint(20) NULL DEFAULT NULL COMMENT '标签2编号，对应标签表id',
-  `tag3` bigint(20) NULL DEFAULT NULL COMMENT '标签3编号，对应标签表id',
-  `tag4` bigint(20) NULL DEFAULT NULL COMMENT '标签4编号，对应标签表id',
-  `tag5` bigint(20) NULL DEFAULT NULL COMMENT '标签5编号，对应标签表id',
-  `reserve_column05` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段05',
-  `reserve_column06` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段06',
-  `reserve_column07` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段07',
-  `reserve_column08` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段08',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `u_idx_phone`(`phone`) USING BTREE,
-  INDEX `n_idx_status`(`status`) USING BTREE,
-  INDEX `n_idx_is_test`(`is_test`) USING BTREE,
-  INDEX `n_idx_nick_name`(`nick_name`) USING BTREE,
-  INDEX `n_idx_imei`(`imei`) USING BTREE,
-  INDEX `n_idx_sys_code`(`sys_code`) USING BTREE,
-  INDEX `n_idx_network_mode`(`network_mode`) USING BTREE,
-  INDEX `n_idx_gender`(`gender`) USING BTREE,
-  INDEX `n_idx_year`(`year`) USING BTREE,
-  INDEX `n_idx_month`(`month`) USING BTREE,
-  INDEX `n_idx_date`(`date`) USING BTREE,
-  INDEX `n_idx_constellation`(`constellation`) USING BTREE,
-  INDEX `n_idx_country`(`country`) USING BTREE,
-  INDEX `n_idx_province`(`province`) USING BTREE,
-  INDEX `n_idx_city`(`city`) USING BTREE,
-  INDEX `n_idx_district`(`district`) USING BTREE,
-  INDEX `n_idx_platform`(`platform`) USING BTREE,
-  INDEX `n_idx_ip`(`ip`) USING BTREE,
-  INDEX `n_idx_grade`(`grade`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE,
-  INDEX `u_idx_weixin_id`(`weixin_id`) USING BTREE
+                         `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户id，主键',
+                         `phone` char(12) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机号码',
+                         `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '账号状态，0->正常；1->异常，默认：0->正常',
+                         `is_test` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否测试用户，0->否；1->是，默认：0->否',
+                         `nick_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '昵称',
+                         `weixin_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '微信号码',
+                         `imei` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备串码',
+                         `model` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设备型号',
+                         `sys_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统名称',
+                         `sys_code` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统版本',
+                         `network_mode` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '网络方式',
+                         `gender` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '性别，0->女生；1->男生，默认：0->女生',
+                         `year` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出生年代',
+                         `month` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出生月份',
+                         `date` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出生日期',
+                         `constellation` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '星座',
+                         `head_icon` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像小图',
+                         `country` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '国',
+                         `province` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '省',
+                         `city` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '市',
+                         `district` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '区/县',
+                         `other` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其它地址',
+                         `longitude` double(20, 6) NULL DEFAULT NULL COMMENT '经度',
+                         `latitude` double(20, 6) NULL DEFAULT NULL COMMENT '纬度',
+                         `platform` char(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '平台',
+                         `ip` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'IP',
+                         `grade` enum('0','1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT 'VIP等级，0->VIP0，普通用户；1->VIP1，VIP用户；2->SVIP，超级VIP；默认：0->VIP0，普通用户',
+                         `autograph` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '这位靓妹/靓仔还未填写签名。' COMMENT '签名，默认：这位靓妹/靓仔还未填写签名。',
+                         `vip_start_time` datetime(0) NULL DEFAULT NULL COMMENT 'VIP开始时间',
+                         `vip_end_time` datetime(0) NULL DEFAULT NULL COMMENT 'VIP结束时间',
+                         `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                         `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                         `background_icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '背景图片',
+                         `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '极光推送唯一设备的标识',
+                         `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                         `profession_id` bigint(20) NOT NULL DEFAULT 1 COMMENT '职业编号',
+                         `tag1` bigint(20) NULL DEFAULT NULL COMMENT '标签1编号，对应标签表id',
+                         `tag2` bigint(20) NULL DEFAULT NULL COMMENT '标签2编号，对应标签表id',
+                         `tag3` bigint(20) NULL DEFAULT NULL COMMENT '标签3编号，对应标签表id',
+                         `tag4` bigint(20) NULL DEFAULT NULL COMMENT '标签4编号，对应标签表id',
+                         `tag5` bigint(20) NULL DEFAULT NULL COMMENT '标签5编号，对应标签表id',
+                         `reserve_column05` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段05',
+                         `reserve_column06` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段06',
+                         `reserve_column07` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段07',
+                         `reserve_column08` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段08',
+                         PRIMARY KEY (`id`) USING BTREE,
+                         UNIQUE INDEX `u_idx_phone`(`phone`) USING BTREE,
+                         INDEX `n_idx_status`(`status`) USING BTREE,
+                         INDEX `n_idx_is_test`(`is_test`) USING BTREE,
+                         INDEX `n_idx_nick_name`(`nick_name`) USING BTREE,
+                         INDEX `n_idx_imei`(`imei`) USING BTREE,
+                         INDEX `n_idx_sys_code`(`sys_code`) USING BTREE,
+                         INDEX `n_idx_network_mode`(`network_mode`) USING BTREE,
+                         INDEX `n_idx_gender`(`gender`) USING BTREE,
+                         INDEX `n_idx_year`(`year`) USING BTREE,
+                         INDEX `n_idx_month`(`month`) USING BTREE,
+                         INDEX `n_idx_date`(`date`) USING BTREE,
+                         INDEX `n_idx_constellation`(`constellation`) USING BTREE,
+                         INDEX `n_idx_country`(`country`) USING BTREE,
+                         INDEX `n_idx_province`(`province`) USING BTREE,
+                         INDEX `n_idx_city`(`city`) USING BTREE,
+                         INDEX `n_idx_district`(`district`) USING BTREE,
+                         INDEX `n_idx_platform`(`platform`) USING BTREE,
+                         INDEX `n_idx_ip`(`ip`) USING BTREE,
+                         INDEX `n_idx_grade`(`grade`) USING BTREE,
+                         INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                         INDEX `n_idx_update_time`(`update_time`) USING BTREE,
+                         INDEX `u_idx_weixin_id`(`weixin_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 162 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -7549,29 +7552,29 @@ INSERT INTO `user` VALUES (161, '13689895628', '0', '0', '小阳阳6', 'wxnaza12
 -- ----------------------------
 DROP TABLE IF EXISTS `weixin_config`;
 CREATE TABLE `weixin_config`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '配置id，主键',
-  `app_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '应用ID',
-  `status` enum('1','0') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，1->禁用，0->启用，默认：0->启用',
-  `app_secret` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '应用secret',
-  `sys_service_provider_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户号',
-  `sys_service_provider_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户Key',
-  `api_v3_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'APIv3密钥',
-  `key_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '证书路径',
-  `notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '异步回调',
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
-  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
-  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
-  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `u_idx_app_id`(`app_id`) USING BTREE,
-  UNIQUE INDEX `u_idx_app_secret`(`app_secret`) USING BTREE,
-  UNIQUE INDEX `u_idx_sys_service_provider_id`(`sys_service_provider_id`) USING BTREE,
-  UNIQUE INDEX `u_idx_sys_service_provider_key`(`sys_service_provider_key`) USING BTREE,
-  UNIQUE INDEX `u_idx_api_v3_key`(`api_v3_key`) USING BTREE,
-  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
-  INDEX `n_idx_update_time`(`update_time`) USING BTREE
+                                  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '配置id，主键',
+                                  `app_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '应用ID',
+                                  `status` enum('1','0') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，1->禁用，0->启用，默认：0->启用',
+                                  `app_secret` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '应用secret',
+                                  `sys_service_provider_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户号',
+                                  `sys_service_provider_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户Key',
+                                  `api_v3_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'APIv3密钥',
+                                  `key_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '证书路径',
+                                  `notify_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '异步回调',
+                                  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                                  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+                                  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+                                  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+                                  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  UNIQUE INDEX `u_idx_app_id`(`app_id`) USING BTREE,
+                                  UNIQUE INDEX `u_idx_app_secret`(`app_secret`) USING BTREE,
+                                  UNIQUE INDEX `u_idx_sys_service_provider_id`(`sys_service_provider_id`) USING BTREE,
+                                  UNIQUE INDEX `u_idx_sys_service_provider_key`(`sys_service_provider_key`) USING BTREE,
+                                  UNIQUE INDEX `u_idx_api_v3_key`(`api_v3_key`) USING BTREE,
+                                  INDEX `n_idx_create_time`(`create_time`) USING BTREE,
+                                  INDEX `n_idx_update_time`(`update_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '微信配置表' ROW_FORMAT = Compact;
 
 -- ----------------------------
