@@ -542,7 +542,12 @@ public class DynamicServiceImpl implements DynamicService {
                     if (!"省".equals(dynamicInfoData.getProvince())) {
                         stringBuilder.append(dynamicInfoData.getProvince());
                     }
-                    stringBuilder.append(dynamicInfoData.getCity());
+                    if (!Objects.isNull(dynamicInfoData.getCity())) {
+                        stringBuilder.append(dynamicInfoData.getCity());
+                    }
+                    if (!Objects.isNull(dynamicInfoData.getDistrict())) {
+                        stringBuilder.append(dynamicInfoData.getDistrict());
+                    }
                     dynamicInfoVO.setAddress(stringBuilder.toString());
                 }
                 String[] fileNameList01 = StrUtil.split(dynamicInfoData.getFileName(), "||");
