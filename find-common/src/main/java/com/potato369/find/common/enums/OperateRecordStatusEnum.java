@@ -8,12 +8,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public enum OperateRecordStatusEnum implements CodeEnum<Integer>{
-	
-	Fail(0, "失败"),
-	Success(1, "成功"),
-	;
-	private Integer code;
+public enum OperateRecordStatusEnum implements CodeEnum<Integer> {
+
+    Fail(0, "0", "失败"),
+    Success(1, "1", "成功"),
+    ;
+    private Integer code;
 
     private String status;
+
+    private String message;
 }

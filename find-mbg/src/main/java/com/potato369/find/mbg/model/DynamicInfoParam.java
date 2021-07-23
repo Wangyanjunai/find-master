@@ -62,6 +62,12 @@ public class DynamicInfoParam implements Serializable {
     @ApiModelProperty(value = "定位地址（城市）列表")
     private List<String> cityLocations;
 
+    @ApiModelProperty(value = "定位地址（经度）列表")
+    private Double longitude;
+
+    @ApiModelProperty(value = "定位地址（纬度）列表")
+    private Double latitude;
+
     @ApiModelProperty(value = "黑名单用户id列表")
     private List<Long> blackRecordUserIdLongList;
 }

@@ -18,6 +18,7 @@ import com.potato369.find.mbg.mapper.*;
 import com.potato369.find.mbg.model.*;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -288,56 +289,81 @@ public class DynamicController {
     //更新用户发布动态定位
     @PostMapping(value = "/{id}/updateLocation.do")
     public CommonResult<Map<String, Object>> updateLocation(
-            @PathVariable(name = "id", required = true) Long userIdLong,
+            @PathVariable(name = "id") Long userIdLong,
             @RequestBody LocationDTO locationDTO) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String b = "ERROR";
+        OperateRecord operateRecord = new OperateRecord();
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始更新用户发布动态定位");
             }
+            operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+            operateRecord.setUserId(userIdLong);
+            operateRecord.setType(OperateRecordTypeEnum.UpdateLocation.getCode());
             User user = this.userMapperReader.selectByPrimaryKey(userIdLong);
-            if (user == null) {
-                return CommonResult.validateFailed("更新失败，用户信息不存在");
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
             String ipString = locationDTO.getIp();
             String countryString = locationDTO.getCountry();
             String provinceString = locationDTO.getProvince();
             String cityString = locationDTO.getCity();
-            if (StrUtil.isAllEmpty(ipString, countryString, provinceString, cityString)) {
-                return CommonResult.validateFailed("检查失败，客户端IP，发布动态定位（国）、（省）、（市）不能同时不传或者为空。");
+            String districtString = locationDTO.getDistrict();
+            String otherString = locationDTO.getOther();
+            String longitudeString = null;
+            Double longitude = locationDTO.getLongitude();
+            if (!Objects.isNull(longitude)) {
+                longitudeString = String.valueOf(longitude);
             }
-            if (StrUtil.isAllEmpty(countryString, provinceString, cityString)) {
+            String latitudeString = null;
+            Double latitude = locationDTO.getLatitude();
+            if (!Objects.isNull(longitude)) {
+                latitudeString = String.valueOf(latitude);
+            }
+            if (StrUtil.isAllEmpty(ipString, countryString, provinceString, cityString, districtString, otherString, longitudeString, latitudeString)) {
+                return CommonResult.validateFailed("参数校验不通过，客户端IP，定位（国家）、（省份）、（城市）、（区/县）、（经纬度）不能同时为空。");
+            }
+            if (StrUtil.isAllEmpty(countryString, provinceString, cityString, longitudeString, latitudeString)) {
                 if (StrUtil.isNotEmpty(ipString)) {
-                    LocationDTO locationDTO2 = new LocationDTO();
-                    locationDTO2.setIp(ipString);
-                    DynamicDTO dynamicDTO = this.dynamicService.getLocationByIp(locationDTO2);
-                    if (dynamicDTO != null) {
-                        countryString = dynamicDTO.getCountry();
-                        provinceString = dynamicDTO.getProvince();
-                        cityString = dynamicDTO.getCity();
+                    LocationDTO locationDTO1 = this.dynamicService.getLocationByAliyunIP(ipString);
+                    if (!Objects.isNull(locationDTO1)) {
+                        countryString = locationDTO1.getCountry();
+                        provinceString = locationDTO1.getProvince();
+                        cityString = locationDTO1.getCity();
+                        districtString = locationDTO1.getDistrict();
+                        otherString = locationDTO1.getOther();
+                        longitude = locationDTO1.getLongitude();
+                        latitude = locationDTO1.getLatitude();
                     }
                 }
             }
             Dynamic record = null;
             DynamicExample example = new DynamicExample();
-            example.setDistinct(true);
             example.createCriteria().andUserIdEqualTo(userIdLong);
             List<Dynamic> dynamicList = this.dynamicMapperReader.selectByExample(example);
-            if (!dynamicList.isEmpty()) {
+            if (!Objects.isNull(dynamicList) && !dynamicList.isEmpty()) {
                 record = dynamicList.get(0);
             }
-            if (record != null) {
-                if ((StrUtil.isNotEmpty(countryString) && StrUtil.isNotEmpty(record.getCountry()) || !countryString.equals(record.getCountry()))
-                        || StrUtil.isNotEmpty(provinceString) && StrUtil.isNotEmpty(record.getProvince()) || !provinceString.equals(record.getProvince())
-                        || StrUtil.isNotEmpty(cityString) && StrUtil.isNotEmpty(record.getCity()) || !countryString.equals(record.getCity())) {
-                    record.setCountry(countryString);
-                    record.setProvince(provinceString);
-                    record.setCity(cityString);
+            LocationDTO locationDTO1 = LocationDTO.builder().build();
+            locationDTO1.setIp(ipString);
+            locationDTO1.setCountry(countryString);
+            locationDTO1.setProvince(provinceString);
+            locationDTO1.setCity(cityString);
+            locationDTO1.setDistrict(districtString);
+            locationDTO1.setOther(otherString);
+            locationDTO1.setLongitude(longitude);
+            locationDTO1.setLatitude(latitude);
+            LocationDTO locationDTO2 = LocationDTO.builder().build();
+            if (!Objects.isNull(record)) {
+                BeanUtils.copyProperties(record, locationDTO2);
+                if (!Objects.deepEquals(locationDTO1, locationDTO2)) {
+                    BeanUtils.copyProperties(locationDTO1, record);
                     record.setUpdateTime(new Date());
                     int result = dynamicMapperWriter.updateByPrimaryKeySelective(record);
                     if (result > 0) {
                         b = "OK";
+                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                     }
                 }
             }
@@ -347,6 +373,7 @@ public class DynamicController {
             log.error("更新用户发布动态定位出错", e);
             return CommonResult.failed("更新用户发布动态定位失败。");
         } finally {
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             if (log.isDebugEnabled()) {
                 log.debug("结束更新用户发布动态定位");
             }
@@ -356,41 +383,58 @@ public class DynamicController {
     // 注册进入觅鹿界面获取发布动态内容信息列表
     @GetMapping(value = "/{id}/list.do")
     public CommonResult<Map<String, Object>> list(
-            @PathVariable(name = "id", required = true) Long userId, // 用户id
+            @PathVariable(name = "id", required = true) long userId, // 用户id
+            @RequestParam(name = "ip", required = false) String ip,//客户端IP
+            @RequestParam(name = "longitude", required = false) Double longitude,//经度
+            @RequestParam(name = "latitude", required = false) Double latitude,//纬度
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum, // 当前页数，默认：当前第1页
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize) {// 每页条数，默认：每页20条)
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取觅鹿界面发布的动态内容信息列表");
             }
-            Map<String, Object> data;
             User user = this.userMapperReader.selectByPrimaryKey(userId);
-            if (user == null) {
-                return CommonResult.validateFailed("用户id参数校验不通过，用户信息不存在。");
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
-            String ip = user.getIp();
+            String longitudeString = null;
+            if (!Objects.isNull(longitude)) {
+                longitudeString = Double.toString(longitude);
+            }
+            String latitudeString = null;
+            if (!Objects.isNull(latitude)) {
+                latitudeString = Double.toString(latitude);
+            }
+            if (StrUtil.isAllEmpty(ip, longitudeString, latitudeString)) {
+                return CommonResult.validateFailed("参数校验不通过，客户端IP，定位地址经纬度不能同时为空。");
+            }
+            if (!Objects.isNull(ip)) {
+                LocationDTO locationDTO = dynamicService.getLocationByAliyunIP(ip);
+                longitude = locationDTO.getLongitude();//经度
+                latitude = locationDTO.getLatitude();//纬度
+            }
             String country = user.getCountry();
             String province = user.getProvince();
             String city = user.getCity();
-            if (StrUtil.isNotEmpty(ip) && StrUtil.isAllEmpty(country, province, city)) {
-                LocationDTO locationDTO = new LocationDTO();
-                locationDTO.setIp(ip);
-                DynamicDTO dynamicDTO = dynamicService.getLocationByIp(locationDTO);
-                if (dynamicDTO != null) {
-                    country = dynamicDTO.getCountry(); // 国家
-                    province = dynamicDTO.getProvince();// 省份
-                    city = dynamicDTO.getCity(); // 城市
+            if (StrUtil.isNotEmpty(ip) && StrUtil.isAllEmpty(country, province, city, longitudeString, latitudeString)) {
+                LocationDTO locationDTO = dynamicService.getLocationByAliyunIP(ip);
+                if (!Objects.isNull(locationDTO)) {
+                    country = locationDTO.getCountry(); // 国家
+                    province = locationDTO.getProvince();// 省份
+                    city = locationDTO.getCity(); // 城市
+                    longitude = locationDTO.getLongitude();//经度
+                    latitude = locationDTO.getLatitude();//纬度
                 }
             }
 
             DynamicLocationDTO dynamicLocationDTO = new DynamicLocationDTO();
             String gender = user.getGender();
             //3、将“性别”加入筛选条件
-            if (UserGenderEnum.Female.getCode().toString().equals(gender)) {
-                dynamicLocationDTO.setGender(UserGenderEnum.Male.getCode().toString());
+            if (Objects.equals(UserGenderEnum.Female.getGender(), gender)) {
+                dynamicLocationDTO.setGender(UserGenderEnum.Male.getGender());
             }
-            if (UserGenderEnum.Male.getCode().toString().equals(gender)) {
-                dynamicLocationDTO.setGender(UserGenderEnum.Female.getCode().toString());
+            if (Objects.equals(UserGenderEnum.Male.getGender(), gender)) {
+                dynamicLocationDTO.setGender(UserGenderEnum.Female.getGender());
             }
             Date minDate = DateUtil.fomatDate(DateUtil.getBeforeYearByAge(this.dynamicDefaultAgeProps.getMinDefaultAge()));
             Date maxDate = DateUtil.fomatDate(DateUtil.getBeforeYearByAge(this.dynamicDefaultAgeProps.getMaxDefaultAge()));
@@ -420,31 +464,23 @@ public class DynamicController {
             example.createCriteria().andOwnerUserIdEqualTo(userId);
             List<BlacklistRecord> blacklistRecordList = this.blacklistRecordMapperReader.selectByExample(example).stream().filter((BlacklistRecord b) -> (b.getStatus() % 2) != 0).collect(Collectors.toList());
             List<Long> blackUserIdList = blacklistRecordList.stream().map(BlacklistRecord::getBlackUserId).collect(Collectors.toList());
-            // 1、将“黑名单列表”加入筛选条件
-//            dynamicLocationDTO.setList(blackUserIdList);
-//            // 第一步：筛选出不在黑名单列表，符合性别，年龄，或者星座的用户信息列表
-//            List<User> userList = this.userMapperReader.selectByUserIdList(dynamicLocationDTO);
-//            List<Long> userIdList = userList.stream().map(User::getId).collect(Collectors.toList());
-//            userIdList.add(userId);
-//            userIdList = CopyUtil.removeLongDuplicate(userIdList);
-//            log.info("白名单用户列表userIdList={}", userIdList);
             DynamicInfoParam dynamicInfoParam = new DynamicInfoParam();
             dynamicInfoParam.setBlackRecordUserIdLongList(blackUserIdList);
             dynamicInfoParam.setCountryLocations(countryList);
             dynamicInfoParam.setProvinceLocations(provinceList);
             dynamicInfoParam.setCityLocations(cityList);
-//          dynamicInfoParam.setAfterTimeHour(this.dynamicDefaultAgeProps.getTimeRangeAfterHour());
-//            log.info("筛选条件dynamicInfoParam={}", dynamicInfoParam);
-            data = this.dynamicService.getDynamicInfoData(userId, dynamicInfoParam, pageNum, pageSize);
-            return CommonResult.success(data, "获取觅鹿界面发布的动态内容信息列表成功");
+            dynamicInfoParam.setLongitude(longitude);
+            dynamicInfoParam.setLatitude(latitude);
+            Map<String, Object> data = this.dynamicService.getDynamicInfoData(userId, dynamicInfoParam, pageNum, pageSize);
+            return CommonResult.success(data, "获取觅鹿界面发布的动态内容信息列表成功。");
         } catch (Exception e) {
             log.error("获取觅鹿界面发布的动态内容信息列表出错", e);
+            return CommonResult.failed("获取觅鹿界面发布的动态内容信息列表失败。");
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束获取觅鹿界面发布的动态内容信息列表");
             }
         }
-        return null;
     }
 
     // 筛选发布动态内容信息列表
@@ -467,25 +503,27 @@ public class DynamicController {
 
             // 1、校验用户id参数，根据用户id查询用户信息是否存在
             User user = this.userMapperReader.selectByPrimaryKey(userId);
-            if (user == null) {
-                return CommonResult.validateFailed("用户id参数校验不通过，用户信息不存在。");
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
 
             // 2、校验性别参数，性别参数可选值，0->女生，1->男生
-            if (StrUtil.isNotEmpty(gender)) {
-                if (!(UserGenderEnum.Female.getCode().toString().equals(gender) || UserGenderEnum.Male.getCode().toString().equals(gender) || UserGenderEnum.ALL.getCode().toString().equals(gender))) {
-                    return CommonResult.validateFailed("性别参数校验不通过，性别参数值非法。");
+            if (!Objects.isNull(gender)) {
+                if (!Objects.equals(UserGenderEnum.Female.getGender(), gender)
+                        || !Objects.equals(UserGenderEnum.Male.getGender(), gender)
+                        || !Objects.equals(UserGenderEnum.ALL.getGender(), gender)) {
+                    return CommonResult.validateFailed("参数校验不通过，性别参数值不符合要求。");
                 }
             }
 
             // 3、 校验年龄最小值范围参数，是否大于等于16岁
             if (minAge < 0 || minAge < this.dynamicDefaultAgeProps.getMinRangeAge()) {
-                return CommonResult.validateFailed("年龄最小值范围参数校验不通过，最小值为16岁。");
+                return CommonResult.validateFailed("参数校验不通过，年龄范围最小值为16岁。");
             }
 
             // 4、 校验年龄最大值范围参数，是否小于等于150岁
             if (maxAge > this.dynamicDefaultAgeProps.getMaxRangeAge()) {
-                return CommonResult.validateFailed("年龄最大值范围参数校验不通过，最大值为150岁。");
+                return CommonResult.validateFailed("参数校验不通过，年龄范围最大值为150岁。");
             }
 
             // 5、 校验星座数组参数，星座值是否在十二星座中选择
@@ -493,37 +531,27 @@ public class DynamicController {
             if (constellations != null && constellations.size() > 0) {
                 for (String constellation : constellations) {
                     if (!constellationConstant.getConstellationList().contains(constellation)) {
-                        return CommonResult.validateFailed("星座参数校验不通过，星座值：" + constellation + "非法！");
+                        return CommonResult.validateFailed("参数校验不通过，星座值“" + constellation + "”不符合要求。");
                     }
                 }
             }
             // 6、校验附件类型参数，附件文件类型，0->全部，1->图片或图片+文字，2->语音或语音+文字
             if (StrUtil.isNotEmpty(dataType)) {
-                if ("0".equals(dataType)) {
+                if (Objects.equals(AttacheInfoDataTypeEnum.Text.getCodeStr(), dataType)) {
                     dataType = null; //null 全部
                 }
-                if ("1".equals(dataType)) {
-                    dataType = "0";    // 0->只有图片
+                if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), dataType)) {
+                    dataType = "0";    // 0->图片或图片+文字
                 }
-                if ("2".equals(dataType)) {
-                    dataType = "1";    // 1->只有语音
+                if (Objects.equals(AttacheInfoDataTypeEnum.Audio.getCodeStr(), dataType)) {
+                    dataType = "1";    // 1->语音或语音+文字
                 }
             }
             DynamicInfoParam dynamicInfoParam = new DynamicInfoParam();
-
-            // 如果前端传过来的筛选条件为空，则按照默认筛选条件筛选，
-            //（普通用户+VIP用户）默认条件一：性别，如果用户是男生，则筛选女生，反之，如果用户是女生，则筛选男生；
-            if (StrUtil.isEmpty(gender)) {
-                gender = user.getGender();
-                if (UserGenderEnum.Female.getCode().toString().equals(gender)) {
-                    gender = UserGenderEnum.Male.getGender();
-                } else if (UserGenderEnum.Male.getCode().toString().equals(gender)) {
-                    gender = UserGenderEnum.Female.getGender();
-                }
-            } else if (StrUtil.isNotEmpty(gender) && UserGenderEnum.ALL.getCode().toString().equals(gender)) {
+            // 如果前端传过来的筛选条件值为2
+            if (Objects.equals(UserGenderEnum.ALL.getGender(), gender)) {
                 gender = null;
             }
-
             // 设置性别筛选条件
             dynamicInfoParam.setGender(gender);
             // dynamicLocationDTO.setGender(gender);
@@ -531,24 +559,16 @@ public class DynamicController {
             // 如果前端传过来的年龄范围最小值为空或等于0
             //（普通用户+VIP用户）默认条件二：设置默认最小年龄范围->16岁
             // 设置年龄范围最小值筛选条件
-            // dynamicLocationDTO.setMinAge(DateUtil.formatDate(DateUtil.getBeforeYearByAge(minAge)));
             dynamicInfoParam.setMinAge(DateUtil.fomatDate(DateUtil.getBeforeYearByAge(minAge)));
 
             // 如果前端传过来的年龄范围最大值为空或等于0
             //（普通用户+VIP用户）默认条件二：设置默认最大年龄范围->35岁
             // 设置年龄范围最大值筛选条件
-            // dynamicLocationDTO.setMaxAge(DateUtil.formatDate(DateUtil.getBeforeYearByAge(maxAge)));
-            // 7、 年龄最大值范围参数，是否大于等于50岁，是否是50+，则查询条件查询所有的大于最小年龄范围的用户
+            // 年龄最大值范围参数，是否大于等于50岁，是否是50+，则查询条件查询所有的大于最小年龄范围的用户
             if (maxAge >= 50) {
                 dynamicInfoParam.setMaxAge(null);
             }
             dynamicInfoParam.setMaxAge(DateUtil.fomatDate(DateUtil.getBeforeYearByAge(maxAge)));
-
-//            log.info("minAge={}, maxAge={}", minAge, maxAge);
-
-            //（普通用户+VIP用户）默认条件四：设置发布时间配置
-            // int timeAfterHour = this.dynamicDefaultAgeProps.getTimeRangeAfterHour(); // 发布时间配置（小时）
-            // dynamicInfoParam.setAfterTimeHour(timeAfterHour);
 
             // 态发布时定位（国家、省份，城市），如果为空，则按照用户注册时的定位筛选
             List<String> countryList = new ArrayList<>();
@@ -569,12 +589,10 @@ public class DynamicController {
             String city = user.getCity(); // 城市
             if (StrUtil.isNotEmpty(ip)) {
                 if (StrUtil.isAllEmpty(country, province, city)) {
-                    LocationDTO locationDTOTmp = new LocationDTO();
-                    locationDTOTmp.setIp(ip);
-                    DynamicDTO dynamicDTO = this.dynamicService.getLocationByIp(locationDTOTmp);
-                    country = dynamicDTO.getCountry();
-                    province = dynamicDTO.getProvince();
-                    city = dynamicDTO.getCity();
+                    LocationDTO location = this.dynamicService.getLocationByAliyunIP(ip);
+                    country = location.getCountry();
+                    province = location.getProvince();
+                    city = location.getCity();
                 }
             }
             if (provinceList.isEmpty() && cityList.isEmpty()) {
@@ -604,21 +622,8 @@ public class DynamicController {
             example.setOrderByClause("id DESC, update_time DESC, create_time DESC");
             example.createCriteria().andOwnerUserIdEqualTo(userId);
             List<BlacklistRecord> blacklistRecordList = this.blacklistRecordMapperReader.selectByExample(example).stream().filter((BlacklistRecord b) -> (b.getStatus() % 2) != 0).collect(Collectors.toList());
-
             List<Long> blackUserIdList = blacklistRecordList.stream().map(BlacklistRecord::getBlackUserId).collect(Collectors.toList());
-            // 1、将“黑名单列表”加入筛选条件
-//            dynamicLocationDTO.setList(blackUserIdList);
-            // 第一步：筛选出不在黑名单列表，符合性别，年龄，或者星座的用户信息列表
-//            List<User> userList = this.userMapperReader.selectByUserIdList(dynamicLocationDTO);
-//            List<Long> userIdList = new ArrayList<>();
-//            for(User user2 : userList) {
-//            	userIdList.add(user2.getId());
-//            }
-//            log.info("blackUserIdList={}", blackUserIdList);
-            // 将自己加入到白名单或者筛选的用户列表中
-            // userIdList.add(userId);
             CopyUtil.removeLongDuplicate(blackUserIdList);
-//            log.info("userIdList={}", userIdList);
             dynamicInfoParam.setBlackRecordUserIdLongList(blackUserIdList);
             Map<String, Object> data = this.dynamicService.getDynamicInfoData(userId, dynamicInfoParam, pageNum, pageSize);
             return CommonResult.success(data, "筛选发布动态内容信息列表成功");

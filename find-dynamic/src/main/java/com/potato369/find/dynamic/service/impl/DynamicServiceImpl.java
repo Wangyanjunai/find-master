@@ -16,10 +16,7 @@ import com.potato369.find.common.constants.MunicipalityConstant;
 import com.potato369.find.common.dto.DynamicDTO;
 import com.potato369.find.common.dto.LocationDTO;
 import com.potato369.find.common.enums.*;
-import com.potato369.find.common.utils.CopyUtil;
-import com.potato369.find.common.utils.DateUtil;
-import com.potato369.find.common.utils.ErrorMessageUtil;
-import com.potato369.find.common.utils.IPLocationUtil;
+import com.potato369.find.common.utils.*;
 import com.potato369.find.common.vo.DynamicInfoVO;
 import com.potato369.find.dynamic.config.props.AliyunProps;
 import com.potato369.find.dynamic.config.props.BaiduProps;
@@ -336,6 +333,7 @@ public class DynamicServiceImpl implements DynamicService {
         return dynamicDTOTmp;
     }
 
+    @Override
     public LocationDTO getLocationByAliyunIP(String ip) {
         return IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), ip);
     }
@@ -490,12 +488,11 @@ public class DynamicServiceImpl implements DynamicService {
     @Transactional(readOnly = true)
     public Map<String, Object> getDynamicInfoData(Long userId, DynamicInfoParam dynamicInfoParam, Integer pageNum, Integer pageSize) {
         Map<String, Object> data = new ConcurrentHashMap<>();
-        final PageInfo<DynamicInfoData> listPageInfo = PageHelper.startPage(pageNum, pageSize)
-                .doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectDynamicInfoData(dynamicInfoParam));
+        final PageInfo<DynamicInfoData> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectDynamicInfoData(dynamicInfoParam));
         data.put("totalPage", listPageInfo.getPages());
         List<DynamicInfoData> list = listPageInfo.getList();
         List<DynamicInfoVO> list2 = new ArrayList<>();
-        if (!list.isEmpty()) {
+        if (!Objects.isNull(list) && !list.isEmpty()) {
             for (DynamicInfoData dynamicInfoData : list) {
                 DynamicInfoVO dynamicInfoVO = DynamicInfoVO.builder().build();
                 dynamicInfoData.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()
@@ -523,9 +520,9 @@ public class DynamicServiceImpl implements DynamicService {
                 likeRecordExample.setOrderByClause("create_time DESC, id DESC");
                 likeRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId);
                 List<LikeRecord> likeRecordList = this.likeRecordMapperReader.selectByExample(likeRecordExample);
-                if (likeRecordList != null && !likeRecordList.isEmpty()) {
+                if (!Objects.isNull(likeRecordList) && !likeRecordList.isEmpty()) {
                     LikeRecord likeRecord = likeRecordList.get(0);
-                    if (likeRecord != null) {
+                    if (!Objects.isNull(likeRecord)) {
                         if (likeRecord.getStatus().equals(LikeStatusEnum.YES.getStatus())) {
                             dynamicInfoVO.setLikeStatus(true);
                         }
@@ -537,10 +534,10 @@ public class DynamicServiceImpl implements DynamicService {
                     dynamicInfoVO.setLikeStatus(false);
                 }
 
-                if (PublicStatusEnum.NOPublic.getCode().toString().equals(dynamicInfoData.getPublishStatus())) {
+                if (PublicStatusEnum.NOPublic.getType().equals(dynamicInfoData.getPublishStatus())) {
                     dynamicInfoVO.setAddress(null);
                 }
-                if (PublicStatusEnum.Public.getCode().toString().equals(dynamicInfoData.getPublishStatus())) {
+                if (PublicStatusEnum.Public.getType().equals(dynamicInfoData.getPublishStatus())) {
                     StringBuilder stringBuilder = new StringBuilder();
                     if (!"省".equals(dynamicInfoData.getProvince())) {
                         stringBuilder.append(dynamicInfoData.getProvince());
@@ -553,8 +550,7 @@ public class DynamicServiceImpl implements DynamicService {
                 List<String> fileNameList03 = new ArrayList<>();
                 for (String fileName : fileNameList02) {
                     StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain()))
-                            .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
                     if (StrUtil.isNotEmpty(dynamicInfoData.getAttacheFileDataType()) && AttacheInfoDataTypeEnum.Image.getCode().toString().equals(dynamicInfoData.getAttacheFileDataType())) {
                         stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
                     }
@@ -565,9 +561,30 @@ public class DynamicServiceImpl implements DynamicService {
                     fileNameList03.add(stringBuilder.toString());
                     dynamicInfoVO.setFileName(fileNameList03);
                 }
+                if (Objects.equals(IsAnonymousEnum.No.getType(), dynamicInfoData.getIsAnonymous())) {
+                    dynamicInfoVO.setAnonymous(false);
+                }
+                if (Objects.equals(IsAnonymousEnum.Yes.getType(), dynamicInfoData.getIsAnonymous())) {
+                    dynamicInfoVO.setAnonymous(true);
+                }
+                if (Objects.equals(IsTopicEnum.No.getType(), dynamicInfoData.getIsTopic())) {
+                    dynamicInfoVO.setTopic(false);
+                }
+                if (Objects.equals(IsTopicEnum.Yes.getType(), dynamicInfoData.getIsTopic())) {
+                    dynamicInfoVO.setTopic(true);
+                    dynamicInfoVO.setTopicTitle("#" + dynamicInfoData.getTopicTitle());
+                }
+                dynamicInfoVO.setComments(dynamicInfoData.getComments());
+                log.info("dynamicInfoData={}", dynamicInfoData);
+                log.info("dynamicInfoParam={}", dynamicInfoParam);
+                if (!Objects.isNull(dynamicInfoData.getLongitude()) && !Objects.isNull(dynamicInfoData.getLatitude())) {
+                    dynamicInfoVO.setDistance(DistanceUtil.getDistance(dynamicInfoData.getLongitude(), dynamicInfoData.getLatitude(), dynamicInfoParam.getLongitude(), dynamicInfoParam.getLatitude()));
+                }
                 list2.add(dynamicInfoVO);
             }
         }
+        List<HotTopic> hotTopicList = this.dynamicInfoMapperReader.selectHotTopicTitle();
+        data.put("hots", hotTopicList);
         data.put("list", list2);
         return data;
     }
@@ -595,5 +612,11 @@ public class DynamicServiceImpl implements DynamicService {
             dynamic = dynamicList.get(0);
         }
         return dynamic;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<HotTopic> findHotTopicList() {
+        return this.dynamicInfoMapperReader.selectHotTopicTitle();
     }
 }

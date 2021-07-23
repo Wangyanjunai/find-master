@@ -1,9 +1,6 @@
 package com.potato369.find.mbg.mapper;
 
-import com.potato369.find.mbg.model.DynamicInfo;
-import com.potato369.find.mbg.model.DynamicInfoData;
-import com.potato369.find.mbg.model.DynamicInfoExample;
-import com.potato369.find.mbg.model.DynamicInfoParam;
+import com.potato369.find.mbg.model.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -33,6 +30,8 @@ public interface DynamicInfoMapper {
     List<DynamicInfoData> selectMyDynamicInfoData(Long userId);
 
     List<String> selectHotTopic(@Param("userId") Long userId);
+
+    List<HotTopic> selectHotTopicTitle();
 
     String getFileNameByUserId(@Param("userId") Long userId);
 

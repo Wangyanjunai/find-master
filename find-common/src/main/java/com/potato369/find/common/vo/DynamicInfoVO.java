@@ -73,11 +73,31 @@ public class DynamicInfoVO {
     @JsonProperty(value = "applicationStatus")
     private boolean applicationStatus; // 申请加微信状态，true->已申请添加微信，false->未申请添加微信
 
+    @JSONField(name = "isTopic")
+    @JsonProperty(value = "isTopic")
+    private boolean isTopic;//是否话题
+
+    @JSONField(name = "topicTitle")
+    @JsonProperty(value = "topicTitle")
+    private String topicTitle;//话题标题
+
+    @JSONField(name = "comments")
+    @JsonProperty(value = "comments")
+    private Integer comments;//评论数
+
+    @JSONField(name = "isAnonymous")
+    @JsonProperty(value = "isAnonymous")
+    private boolean isAnonymous;//是否匿名发布
+
+    @JSONField(name = "distance")
+    @JsonProperty(value = "distance")
+    private Double distance;//distance：距离（单位米）
+
     @ApiModelProperty(value = "附件存储文件类型")
     @JSONField(name = "dataType")
     @JsonProperty(value = "dataType")
     private String attacheFileDataType;
-    
+
     @JSONField(name = "attacheFileUrlList")
     @JsonProperty(value = "attacheFileUrlList")
     private List<String> fileName;// 附件内容列表

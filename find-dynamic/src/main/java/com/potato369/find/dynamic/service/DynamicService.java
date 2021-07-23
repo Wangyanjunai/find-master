@@ -5,22 +5,26 @@ import com.potato369.find.common.dto.DynamicDTO;
 import com.potato369.find.common.dto.LocationDTO;
 import com.potato369.find.mbg.model.Dynamic;
 import com.potato369.find.mbg.model.DynamicInfoParam;
+import com.potato369.find.mbg.model.HotTopic;
 import com.potato369.find.mbg.model.User;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 public interface DynamicService {
 
-	int save(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception;
+    int save(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception;
 
-	int update(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception;
+    int update(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception;
 
     void find(Long userId) throws Exception;
 
     CommonResult<Map<String, Object>> updateDynamic(LocationDTO locationDTO, DynamicDTO dynamicDTO) throws Exception;
 
     DynamicDTO getLocation(LocationDTO locationDTO);
+
+    LocationDTO getLocationByAliyunIP(String ip);
 
     DynamicDTO getLocationByIp(LocationDTO locationDTO);
 
@@ -37,4 +41,6 @@ public interface DynamicService {
      * @return 动态信息
      */
     Dynamic findDynamicByUserId(Long userId, String country, String province, String city);
+
+    List<HotTopic> findHotTopicList();
 }

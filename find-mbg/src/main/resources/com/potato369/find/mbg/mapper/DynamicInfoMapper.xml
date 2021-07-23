@@ -37,9 +37,17 @@
         <result column="dynamic_info_id" jdbcType="BIGINT" property="dynamicInfoId"/><!-- 动态内容id -->
         <result column="content" jdbcType="LONGVARCHAR" property="content"/><!-- 动态内容 -->
         <result column="public_status" jdbcType="VARCHAR" property="publishStatus"/><!-- 是否公开定位 -->
+        <result column="is_topic" jdbcType="VARCHAR" property="isTopic"/><!-- 是否话题 -->
+        <result column="topic_title" jdbcType="VARCHAR" property="topicTitle"/><!-- 话题标题 -->
+        <result column="is_anonymous" jdbcType="VARCHAR" property="isAnonymous"/><!-- 是否匿名 -->
+        <result column="comments" jdbcType="INTEGER" property="comments"/><!-- 评论数 -->
         <result column="country" jdbcType="VARCHAR" property="country"/><!-- 定位地址（国家） -->
         <result column="province" jdbcType="VARCHAR" property="province"/><!-- 定位地址（省份）-->
         <result column="city" jdbcType="VARCHAR" property="city"/><!-- 定位地址（城市） -->
+        <result column="district" jdbcType="VARCHAR" property="district"/><!-- 定位地址（区/县） -->
+        <result column="other" jdbcType="VARCHAR" property="other"/><!-- 定位地址（其它） -->
+        <result column="longitude" jdbcType="DOUBLE" property="longitude"/><!-- 定位地址（经度） -->
+        <result column="latitude" jdbcType="DOUBLE" property="latitude"/><!-- 定位地址（纬度） -->
         <result column="likes" jdbcType="INTEGER" property="likes"/><!-- 点赞数 -->
         <result column="applications" jdbcType="INTEGER" property="applications"/><!-- 申请加微信数 -->
         <result column="attache_file_data_type" jdbcType="VARCHAR" property="attacheFileDataType"/><!-- 附件存储文件类型 -->
@@ -388,31 +396,37 @@
     </select>
     <select id="selectDynamicInfoData" parameterType="com.potato369.find.mbg.model.DynamicInfoParam"
             resultMap="BaseResultMap2">
-        SELECT DISTINCT
-        ur.`id` AS `user_id`,
-        ur.`head_icon` AS `head_icon`,
-        ur.`nick_name` AS `nick_name`,
-        di.`create_time` AS `create_time`,
+        SELECT
+        ur.`id`,
+        ur.`head_icon`,
+        ur.`nick_name`,
+        di.`create_time`,
         di.`id` AS `dynamic_info_id`,
-        di.`content` AS `content`,
-        di.`public_status` AS `public_status`,
-        CONCAT( dy.`country`, '·' ) AS `country`,
-        CONCAT( dy.`province`, '·' ) AS `province`,
-        CONCAT( dy.`city`) AS `city`,
-        di.`likes` AS `likes`,
-        di.`applications` AS `applications`,
-        ai.`data_type` AS `attache_file_data_type`,
-        ai.`file_name` AS `attache_file_name_list`,
+        di.`content`,
+        di.`public_status`,
+        CONCAT( di.`country`, '·' ) AS `country`,
+        CONCAT( di.`province`, '·' ) AS `province`,
+        CONCAT( di.`city`, '·' ) AS `city`,
+        CONCAT( di.`district`, '·' ) AS `district`,
+        di.`other`,
+        di.`longitude`,
+        di.latitude,
+        di.`likes`,
+        di.`applications`,
         di.`dynamic_status`,
-        di.`update_time`
+        di.`is_topic`,
+        di.`topic_title`,
+        di.`is_anonymous`,
+        di.`comments`,
+        ai.`data_type` AS `attache_file_data_type`,
+        ai.`file_name` AS `attache_file_name_list`
         FROM
+        `user` ur,
         `dynamic_info` di,
-        `dynamic` dy,
-        `attache_info` ai,
-        `user` ur
-        WHERE dy.`id` = di.`dynamic_id`
+        `attache_info` ai
+        WHERE
+        di.`user_id` = ur.`id`
         AND di.`id` = ai.`dynamic_info_by`
-        AND dy.`user_id` = ur.`id`
         AND di.`dynamic_status`<![CDATA[!=]]>'1'
         <if test="param != null">
             <if test="param.gender != null">
@@ -434,8 +448,7 @@
             </if>
             <if test="param.blackRecordUserIdLongList != null and param.blackRecordUserIdLongList.size() > 0">
                 AND ur.`id` NOT IN (
-                <foreach collection="param.blackRecordUserIdLongList" item="uid" index="index"
-                         separator=",">
+                <foreach collection="param.blackRecordUserIdLongList" item="uid" index="index" separator=",">
                     #{uid}
                 </foreach>
                 )
@@ -444,19 +457,19 @@
                 AND ai.`data_type`<![CDATA[=]]>#{param.dataType, jdbcType=CHAR}
             </if>
             <if test="param.countryLocations != null and param.countryLocations.size() > 0">
-                AND dy.`country` IN (
+                AND di.`country` IN (
                 <foreach collection="param.countryLocations" item="country" index="index" separator=",">
                     #{country}
                 </foreach>)
             </if>
             <if test="param.provinceLocations != null and param.provinceLocations.size() > 0">
-                AND dy.`province` IN (
+                AND di.`province` IN (
                 <foreach collection="param.provinceLocations" item="province" index="index" separator=",">
                     #{province}
                 </foreach>)
             </if>
             <if test="param.cityLocations != null and param.cityLocations.size() > 0">
-                AND dy.`city` IN (
+                AND di.`city` IN (
                 <foreach collection="param.cityLocations" item="city" index="index" separator=",">
                     #{city}
                 </foreach>)
@@ -471,6 +484,23 @@
         GROUP BY `topic_title`
         HAVING SUM(`comments`) > 0
         ORDER BY SUM(`comments`) DESC
+    </select>
+
+    <resultMap id="hotTopicResultMap" type="com.potato369.find.mbg.model.HotTopic">
+        <result column="total_count" jdbcType="INTEGER" property="totalCount"/>
+        <result column="topic_title" jdbcType="VARCHAR" property="topicTitle"/>
+    </resultMap>
+
+    <select id="selectHotTopicTitle" resultMap="hotTopicResultMap">
+        SELECT COUNT(`id`)                AS `total_count`,
+               CONCAT('#', `topic_title`) AS `topic_title`
+        FROM `dynamic_info`
+        WHERE `is_topic` = '1'
+          AND `create_time` BETWEEN (SELECT DATE_ADD(now(), INTERVAL - 1 MONTH))
+            AND now()
+        GROUP BY `topic_title`
+        ORDER BY `total_count` DESC
+        LIMIT 0, 3
     </select>
 
     <select id="selectMyDynamicInfoData" parameterType="java.lang.Long" resultMap="BaseResultMap2">

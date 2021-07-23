@@ -36,9 +36,11 @@ public class UserAuthorizeAspect {
     @SuppressWarnings("unchecked")
     public CommonResult<Map<String, Object>> doVerify() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
         NativeWebRequest webRequest = new ServletWebRequest(request);
         Map<String, Object> map = (Map<String, Object>) webRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
+        assert map != null;
         Long userIdLong = Long.valueOf((String) map.get("id"));
         User user = this.userMapperReader.selectByPrimaryKey(userIdLong);
         if (user == null) {

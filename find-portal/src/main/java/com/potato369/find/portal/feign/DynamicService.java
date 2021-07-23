@@ -65,7 +65,12 @@ public interface DynamicService {
 
 
     @GetMapping(value = "/find/v1/dynamic/{id}/list.do")
-    CommonResult<Map<String, Object>> list(@PathVariable(name = "id") Long userId, @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum, @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize);
+    CommonResult<Map<String, Object>> list(@PathVariable(name = "id") Long userId,
+                                           @RequestParam(name = "ip", required = false) String ip,//客户端IP
+                                           @RequestParam(name = "longitude", required = false) Double longitude,//经度
+                                           @RequestParam(name = "latitude", required = false) Double latitude,//纬度
+                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                           @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize);
 
 
     @GetMapping(value = "/find/v1/dynamic/{id}/screen.do")

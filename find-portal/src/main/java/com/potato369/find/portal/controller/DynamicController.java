@@ -288,10 +288,14 @@ public class DynamicController {
      * @apiGroup 动态模块API
      * @apiName 更新动态地址定位
      * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} [ip] 客户端IP，说明：不能与定位（国家）、（省份）、（城市）同时为空，如果同时都不为空，以定位（国家）、（省份）、（城市）为准
+     * @apiParam (接口请求参数) {string} [ip] 客户端IP，说明：不能与定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）同时为空，如果同时都不为空，以定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）为准
      * @apiParam (接口请求参数) {string} [country] 定位（国家）
      * @apiParam (接口请求参数) {string} [province] 定位（省份）
      * @apiParam (接口请求参数) {string} [city] 定位（城市）
+     * @apiParam (接口请求参数) {string} [district] 定位（区/县）
+     * @apiParam (接口请求参数) {string} [other] 定位（其它）
+     * @apiParam (接口请求参数) {double} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {double} [latitude] 定位（纬度）
      * @apiParamExample {json} 请求示例01（有客户端IP）
      * HTTP/1.1 OK
      * curl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/updateLocation -d '{"ip":"183.14.133.239"}'
@@ -311,13 +315,23 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例02（有定位（国家）、（省份）、（城市））
      * HTTP/1.1 OK
-     * curl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/updateLocation -d '{"country": "中国", "province": "广东", "city": "深圳"}'
+     * curl -v -X POST -H 'application/json;charset=utf-8' http://127.0.0.1:8084/find/dynamic/1/updateLocation -d '
+     * {
+     * "ip": "14.150.175.209",
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "广州市",
+     * "district": "白云区",
+     * "other": "机场T3航站楼三楼",
+     * "longitude": 113.201737,
+     * "latitude": 22.832123
+     * }'
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
      * @apiSuccess (200) {object} [data] 数据
      * @apiSuccess (200) {string} [UPDATE] 更新状态，OK->成功，ERROR->失败
-     * @apiSuccessExample {json} 200 响应示例02（有有定位（国家）、（省份）、（城市））
+     * @apiSuccessExample {json} 200 响应示例02（有客户端IP，具体定位地址（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度））
      * HTTP/1.1 200 OK
      * {
      * "status": 200,
@@ -902,9 +916,12 @@ public class DynamicController {
     @GetMapping(value = "/{id}/list")
     public CommonResult<Map<String, Object>> list(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
+            @RequestParam(name = "ip", required = false) @ApiParam(name = "ip", value = "客户端IP", example = "183.14.135.215") String ip,//客户端IP
+            @RequestParam(name = "longitude", required = false) @ApiParam(name = "longitude", value = "经度", example = "113.962941") Double longitude,//经度
+            @RequestParam(name = "latitude", required = false) @ApiParam(name = "latitude", value = "纬度", example = "22.462714") Double latitude,//纬度
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码", example = "1") Integer pageNum,
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
-        return this.dynamicFeignClient.list(userId, pageNum, pageSize);
+        return this.dynamicFeignClient.list(userId, ip, longitude, latitude, pageNum, pageSize);
     }
 
     /**

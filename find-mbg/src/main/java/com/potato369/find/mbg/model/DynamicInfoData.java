@@ -2,6 +2,7 @@ package com.potato369.find.mbg.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,6 +19,11 @@ import java.util.Date;
  * @Copyright Copyright (c) 2016 ~ 2028 版权所有 (C) 土豆互联科技(深圳)有限公司 https://www.potato369.com All Rights Reserved。
  * </pre>
  */
+@Data
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DynamicInfoData implements Serializable {
 
@@ -44,17 +50,41 @@ public class DynamicInfoData implements Serializable {
     @ApiModelProperty(value = "动态内容")
     private String content;
 
-    @ApiModelProperty(value = "是否公开定位")
+    @ApiModelProperty(value = "是否公开定位，0->否，1->是")
     private String publishStatus;
 
-    @ApiModelProperty(value = "定位地址（国家）")
+    @ApiModelProperty(value = "是否话题，0->否,1->是")
+    private String isTopic;
+
+    @ApiModelProperty(value = "话题标题")
+    private String topicTitle;
+
+    @ApiModelProperty(value = "是否匿名，0->否，1->是")
+    private String isAnonymous;
+
+    @ApiModelProperty(value = "评论数")
+    private Integer comments;
+
+    @ApiModelProperty(value = "定位（国家）")
     private String country;
 
-    @ApiModelProperty(value = "定位地址（省份）")
+    @ApiModelProperty(value = "定位（省份）")
     private String province;
 
-    @ApiModelProperty(value = "定位地址（城市）")
+    @ApiModelProperty(value = "定位（城市）")
     private String city;
+
+    @ApiModelProperty(value = "定位（区/县）")
+    private String district;
+
+    @ApiModelProperty(value = "定位（其它）")
+    private String other;
+
+    @ApiModelProperty(value = "定位（经度）")
+    private Double longitude;
+
+    @ApiModelProperty(value = "定位（纬度）")
+    private Double latitude;
 
     @ApiModelProperty(value = "点赞数")
     private Integer likes;
@@ -70,146 +100,5 @@ public class DynamicInfoData implements Serializable {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getHeadIcon() {
-        return headIcon;
-    }
-
-    public void setHeadIcon(String headIcon) {
-        this.headIcon = headIcon;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getPublishTime() {
-        return publishTime;
-    }
-
-    public void setPublishTime(String publishTime) {
-        this.publishTime = publishTime;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public Long getDynamicInfoId() {
-        return dynamicInfoId;
-    }
-
-    public void setDynamicInfoId(Long dynamicInfoId) {
-        this.dynamicInfoId = dynamicInfoId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getPublishStatus() {
-        return publishStatus;
-    }
-
-    public void setPublishStatus(String publishStatus) {
-        this.publishStatus = publishStatus;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getAttacheFileDataType() {
-        return attacheFileDataType;
-    }
-
-    public void setAttacheFileDataType(String attacheFileDataType) {
-        this.attacheFileDataType = attacheFileDataType;
-    }
-
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
-    }
-
-    public Integer getApplications() {
-        return applications;
-    }
-
-    public void setApplications(Integer applications) {
-        this.applications = applications;
-    }
-
-    @Override
-    public String toString() {
-        return "DynamicInfoData{" +
-                "userId=" + userId +
-                ", headIcon='" + headIcon + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", createTime=" + createTime +
-                ", createTime=" + publishTime +
-                ", dynamicInfoId=" + dynamicInfoId +
-                ", content='" + content + '\'' +
-                ", publishStatus='" + publishStatus + '\'' +
-                ", country='" + country + '\'' +
-                ", province='" + province + '\'' +
-                ", city='" + city + '\'' +
-                ", likes=" + likes +
-                ", applications=" + applications +
-                ", attacheFileDataType='" + attacheFileDataType + '\'' +
-                ", fileName='" + fileName + '\'' +
-                '}';
     }
 }
