@@ -556,10 +556,10 @@ public class DynamicServiceImpl implements DynamicService {
                 for (String fileName : fileNameList02) {
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
-                    if (StrUtil.isNotEmpty(dynamicInfoData.getAttacheFileDataType()) && AttacheInfoDataTypeEnum.Image.getCode().toString().equals(dynamicInfoData.getAttacheFileDataType())) {
+                    if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), dynamicInfoData.getAttacheFileDataType())) {
                         stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
                     }
-                    if (StrUtil.isNotEmpty(dynamicInfoData.getAttacheFileDataType()) && AttacheInfoDataTypeEnum.Audio.getCode().toString().equals(dynamicInfoData.getAttacheFileDataType())) {
+                    if (Objects.equals(AttacheInfoDataTypeEnum.Audio.getCodeStr(), dynamicInfoData.getAttacheFileDataType())) {
                         stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
                     }
                     stringBuilder.append(fileName);

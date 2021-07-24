@@ -397,7 +397,7 @@
     <select id="selectDynamicInfoData" parameterType="com.potato369.find.mbg.model.DynamicInfoParam"
             resultMap="BaseResultMap2">
         SELECT
-        ur.`id`,
+        ur.`id` AS `user_id`,
         ur.`head_icon`,
         ur.`nick_name`,
         di.`create_time`,

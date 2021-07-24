@@ -289,7 +289,7 @@ public class DynamicController {
     //更新用户发布动态定位
     @PostMapping(value = "/{id}/updateLocation.do")
     public CommonResult<Map<String, Object>> updateLocation(
-            @PathVariable(name = "id") Long userIdLong,
+            @PathVariable(name = "id", required = true) Long userIdLong,
             @RequestBody LocationDTO locationDTO) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String b = "ERROR";
@@ -426,7 +426,6 @@ public class DynamicController {
                     latitude = locationDTO.getLatitude();//纬度
                 }
             }
-
             DynamicLocationDTO dynamicLocationDTO = new DynamicLocationDTO();
             String gender = user.getGender();
             //3、将“性别”加入筛选条件
