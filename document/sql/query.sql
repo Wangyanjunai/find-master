@@ -14,64 +14,25 @@ SELECT
 	di.`shares` AS '分享数',
 	ai.id AS '附件id',
 	ai.data_type AS '附件类型',
-	ai.file_name AS '附件名称列表' 
+	ai.file_name AS '附件名称列表'
 FROM
 	`dynamic_info` di,
 	`dynamic` dy,
 	`attache_info` ai,
-	`user` ur 
+	`user` ur
 WHERE
-	dy.`id` = di.`dynamic_id` 
-	AND di.`id` = ai.`dynamic_info_by` 
-	AND dy.`user_id` = ur.`id` 
-	AND ur.`id` IN ( 70 ) 
-	AND di.`dynamic_status` != '1' 
-	AND dy.`country` IN ( '中国' ) 
-	AND dy.`province` IN ( '广东省', '广西省' ) 
-	AND dy.`city` IN ( '广州市', '深圳市', '南宁市' ) 
-	AND di.`create_time` >= DATE_SUB( NOW( ), INTERVAL 720 HOUR );	
-	
-SELECT date_sub( now( ), INTERVAL 720 HOUR );	
-	
-SELECT
-	ur.`id` AS user_id,
-	ur.`head_icon` AS head_icon,
-	ur.`nick_name` AS nick_name,
-	di.`create_time` AS create_time,
-	di.`id` AS dynamic_info_id,
-	di.`content` AS content,
-	di.`public_status` AS public_status,
-	dy.`country` AS country,
-	CONCAT( dy.`province`, '省' ) AS province,
-	CONCAT( dy.`city`, '市' ) AS city,
-	di.`likes` AS likes,
-	di.`applications` AS applications,
-	di.`shares` AS shares,
-	ai.id AS attache_file_id,
-	ai.data_type AS attache_file_data_type,
-	ai.file_name AS attache_file_name_list 
-FROM
-	`dynamic_info` di,
-	`dynamic` dy,
-	`attache_info` ai,
-	`user` ur 
-WHERE
-	dy.`id` = di.`dynamic_id` 
-	AND di.`id` = ai.`dynamic_info_by` 
-	AND dy.`user_id` = ur.`id` 
-	AND ur.`id` IN ( 70 ) 
-	AND di.`dynamic_status` != '1' 
+	dy.`id` = di.`dynamic_id`
+	AND di.`id` = ai.`dynamic_info_by`
+	AND dy.`user_id` = ur.`id`
+	AND ur.`id` IN ( 70 )
+	AND di.`dynamic_status` != '1'
 	AND dy.`country` IN ( '中国' ) 
 	AND dy.`province` IN ( '广东省', '广西省' ) 
 	AND dy.`city` IN ( '广州市', '深圳市', '南宁市' ) 
 	AND di.`create_time` >= DATE_SUB( NOW( ), INTERVAL 720 HOUR );
-	
-	
-SELECT
-	NOW( ) 
-FROM
-	DUAL;
-	
+
+SELECT date_sub( now( ), INTERVAL 720 HOUR );
+
 SELECT
 	ur.`id` AS user_id,
 	ur.`head_icon` AS head_icon,
@@ -88,24 +49,63 @@ SELECT
 	di.`shares` AS shares,
 	ai.id AS attache_file_id,
 	ai.data_type AS attache_file_data_type,
-	ai.file_name AS attache_file_name_list 
+	ai.file_name AS attache_file_name_list
 FROM
 	`dynamic_info` di,
 	`dynamic` dy,
 	`attache_info` ai,
-	`user` ur 
+	`user` ur
 WHERE
-	dy.`id` = di.`dynamic_id` 
-	AND di.`id` = ai.`dynamic_info_by` 
-	AND dy.`user_id` = ur.`id` 
-	AND di.`create_time` >= DATE_SUB( NOW( ), INTERVAL 720 HOUR ) 
+	dy.`id` = di.`dynamic_id`
+	AND di.`id` = ai.`dynamic_info_by`
+	AND dy.`user_id` = ur.`id`
+	AND ur.`id` IN ( 70 )
+	AND di.`dynamic_status` != '1'
+	AND dy.`country` IN ( '中国' ) 
+	AND dy.`province` IN ( '广东省', '广西省' ) 
+	AND dy.`city` IN ( '广州市', '深圳市', '南宁市' ) 
+	AND di.`create_time` >= DATE_SUB( NOW( ), INTERVAL 720 HOUR );
+
+
+SELECT
+	NOW( )
+FROM
+	DUAL;
+
+SELECT
+	ur.`id` AS user_id,
+	ur.`head_icon` AS head_icon,
+	ur.`nick_name` AS nick_name,
+	di.`create_time` AS create_time,
+	di.`id` AS dynamic_info_id,
+	di.`content` AS content,
+	di.`public_status` AS public_status,
+	dy.`country` AS country,
+	CONCAT( dy.`province`, '省' ) AS province,
+	CONCAT( dy.`city`, '市' ) AS city,
+	di.`likes` AS likes,
+	di.`applications` AS applications,
+	di.`shares` AS shares,
+	ai.id AS attache_file_id,
+	ai.data_type AS attache_file_data_type,
+	ai.file_name AS attache_file_name_list
+FROM
+	`dynamic_info` di,
+	`dynamic` dy,
+	`attache_info` ai,
+	`user` ur
+WHERE
+	dy.`id` = di.`dynamic_id`
+	AND di.`id` = ai.`dynamic_info_by`
+	AND dy.`user_id` = ur.`id`
+	AND di.`create_time` >= DATE_SUB( NOW( ), INTERVAL 720 HOUR )
 	AND di.`dynamic_status` != '1'
 	AND ur.`id` = 70;
-	
+
 SELECT
-	* 
+	*
 FROM
-	`dynamic_info` di 
+	`dynamic_info` di
 WHERE
 	di.`user_id` = 70;
 
@@ -192,15 +192,15 @@ FROM
 	`dynamic_info` di,
 	`user` ur
 WHERE
-	lr.`dynamic_info_id` = di.`id` 
+	lr.`dynamic_info_id` = di.`id`
 	AND di.`user_id` = ur.`id`
 	AND ur.`id` = 18
 ORDER BY
 	lr.`create_time` DESC;
-	
-ALTER TABLE `find_dev_test01`.`message` 
+
+ALTER TABLE `find_dev_test01`.`message`
 ADD COLUMN `status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态，0->未读；1->已读，默认：0->未读' AFTER `send_mode`;
-	
+
 
 
 SELECT
@@ -210,12 +210,12 @@ SELECT
 	ur.`nick_name`
 FROM
 	`message` me,
-	`user` ur 
+	`user` ur
 WHERE
-	me.`send_user_id` = ur.`id` 
-	AND me.`reserve_column01` != 'likes' 
+	me.`send_user_id` = ur.`id`
+	AND me.`reserve_column01` != 'likes'
 	AND me.`recipient_user_id` = 29 
-	AND me.`status` = '0' 
+	AND me.`status` = '0'
 ORDER BY
 	me.`create_time` DESC;
 
@@ -237,12 +237,12 @@ FROM
 	`content`,
 	`send_mode`,
 	`status`,
-	`create_time` 
+	`create_time`
 	FROM
-		`message` 
+		`message`
 	WHERE
-		`reserve_column01` = 'applications' 
-		AND `send_user_id` = 29 
+		`reserve_column01` = 'applications'
+		AND `send_user_id` = 29
 UNION
 	SELECT
 	`id`,
@@ -251,19 +251,19 @@ UNION
 	`content`,
 	`send_mode`,
 	`status`,
-	`create_time` 
+	`create_time`
 	FROM
-		`message` 
+		`message`
 	WHERE
-		`reserve_column01` = 'applications' 
-		AND `recipient_user_id` = 29 
-		) AS a 
+		`reserve_column01` = 'applications'
+		AND `recipient_user_id` = 29
+		) AS a
 	GROUP BY
 		a.`send_user_id`,
-		a.`recipient_user_id` 
+		a.`recipient_user_id`
 	ORDER BY
 		a.`create_time` DESC;
-	
+
 -- 查询点赞消息记录	
 SELECT
 	a.`id`,
@@ -272,7 +272,7 @@ SELECT
 	a.`content`,
 	a.`send_mode`,
 	a.`status`,
-	a.`create_time` 
+	a.`create_time`
 FROM
 	(
 SELECT
@@ -282,12 +282,12 @@ SELECT
 	`content`,
 	`send_mode`,
 	`status`,
-	`create_time` 
+	`create_time`
 FROM
-	`message` 
+	`message`
 WHERE
-	`reserve_column01` = 'applications' 
-	AND `send_user_id` = 60 
+	`reserve_column01` = 'applications'
+	AND `send_user_id` = 60
 	AND `recipient_user_id` = 29 UNION
 SELECT
 	`id`,
@@ -296,20 +296,20 @@ SELECT
 	`content`,
 	`send_mode`,
 	`status`,
-	`create_time` 
+	`create_time`
 FROM
-	`message` 
+	`message`
 WHERE
-	`reserve_column01` = 'applications' 
-	AND `send_user_id` = 29 
-	AND `recipient_user_id` = 60 
-	) AS a 
+	`reserve_column01` = 'applications'
+	AND `send_user_id` = 29
+	AND `recipient_user_id` = 60
+	) AS a
 ORDER BY
 	a.`create_time` DESC;
-		
+
 -- 查询点赞消息记录条数	
 SELECT
-	COUNT( 1 ) 
+	COUNT( 1 )
 FROM
 	(
 SELECT
@@ -319,12 +319,12 @@ SELECT
 	`content`,
 	`send_mode`,
 	`status`,
-	`create_time` 
+	`create_time`
 FROM
-	`message` 
+	`message`
 WHERE
-	`reserve_column01` = 'applications' 
-	AND `send_user_id` = 60 
+	`reserve_column01` = 'applications'
+	AND `send_user_id` = 60
 	AND `recipient_user_id` = 29 UNION
 SELECT
 	`id`,
@@ -333,40 +333,40 @@ SELECT
 	`content`,
 	`send_mode`,
 	`status`,
-	`create_time` 
+	`create_time`
 FROM
-	`message` 
+	`message`
 WHERE
-	`reserve_column01` = 'applications' 
-	AND `send_user_id` = 29 
-	AND `recipient_user_id` = 60 
-	) AS a 
+	`reserve_column01` = 'applications'
+	AND `send_user_id` = 29
+	AND `recipient_user_id` = 60
+	) AS a
 WHERE
-	a.`status` = '0' 
+	a.`status` = '0'
 ORDER BY
 	a.`create_time` DESC;
-	
-	
+
+
 SELECT
-	count( 1 ) 
+	count( 1 )
 FROM
 	(
 SELECT
-	`user_id` 
+	`user_id`
 FROM
-	`dynamic_info` 
+	`dynamic_info`
 WHERE
 	`id` IN (
 SELECT
-	`dynamic_info_id` 
+	`dynamic_info_id`
 FROM
-	`application_record` 
+	`application_record`
 WHERE
-	`create_time` >= STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' ) 
-	AND `create_time` <= DATE_ADD( DATE_ADD( STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' ), INTERVAL 1 DAY ), INTERVAL - 1 SECOND ) 
+	`create_time` >= STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' )
+	AND `create_time` <= DATE_ADD( DATE_ADD( STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' ), INTERVAL 1 DAY ), INTERVAL - 1 SECOND )
 GROUP BY
 	`dynamic_info_id`
-	) 
+	)
 GROUP BY `user_id`
     ) AS a
 WHERE a.`user_id` = 8;
@@ -1046,3 +1046,20 @@ create user 'find'@'%' identified by 'XueGod!@#123';
 grant all on *.* to 'find'@'%';
 flush privileges;
 create database if not exists find_dev_test01 default character set utf8 default collate utf8_general_ci;
+create database if not exists nacos_config  default character set utf8 default collate utf8_general_ci;
+
+select now() from dual;
+select count(1) from dynamic;
+select count(1) from user;
+select * from user where id not in (select user_id from dynamic);
+select * from dynamic where user_id not in (select id from user);
+
+insert into dynamic(user_id, nick_name, imei, model, sys_name, sys_code, network_mode, country, province, city, district, other, longitude, latitude, create_time, update_time, reserve_column01, reserve_column02, reserve_column03, reserve_column04)
+    (select id, nick_name,imei,model,sys_name,sys_code,network_mode,country,province,city,district,other,longitude,latitude,create_time,update_time,null, null,null,null from user where id not in (select user_id from dynamic));
+
+
+select id, nick_name,imei,model,sys_name,sys_code,
+       network_mode,country,province,
+       city,district,other,longitude,
+       latitude,create_time,update_time,null, null,null,null from
+    user where id not in (select user_id from dynamic);
