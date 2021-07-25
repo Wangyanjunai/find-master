@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,7 +30,7 @@ public class UserLogController {
     //记录用户操作日志接口
     @PostMapping(value = "/{id}/record.do")
     public CommonResult<Map<String, Object>> record(
-            @PathVariable(name = "id") Long userIdLong,
+            @PathVariable(name = "id") Long userId,
             OperateRecordDTO operateRecordDTO) {
         if (log.isDebugEnabled()) {
             log.debug("开始记录用户操作日志");
@@ -43,7 +40,8 @@ public class UserLogController {
         try {
             OperateRecord operateRecord = new OperateRecord();
             BeanUtils.copyProperties(operateRecordDTO, operateRecord);
-            int row = this.userLogService.record(userIdLong, operateRecord);
+            log.info("operateRecordDTO={},operateRecord={}", operateRecordDTO, operateRecord);
+            int row = this.userLogService.record(operateRecord);
             if (row > 0) {
                 result.put("LOGGER", "OK");
             }

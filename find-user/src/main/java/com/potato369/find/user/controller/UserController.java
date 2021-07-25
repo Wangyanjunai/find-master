@@ -29,6 +29,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
@@ -216,14 +217,17 @@ public class UserController {
         Map<String, Object> result = new ConcurrentHashMap<>();
         String data = "UPLOADREGID";
         String message = "FAILED";
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
+        operateRecord.setUserId(id);
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.UploadUserRegId.getCode());
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始上报或者更新极光推送唯一设备的标识");
             }
             User user = this.userDaoUseJdbcTemplate.getById(id);
-            if (user == null) {
-                result.put(data, message);
-                return CommonResult.failed(result, ResultCode.USER_IS_NOT_EXIST);
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
             String regIdOld = user.getReserveColumn03();
             if (StrUtil.isNotEmpty(regId) && !regId.equals(regIdOld)) {
@@ -231,18 +235,22 @@ public class UserController {
                 user.setUpdateTime(new Date());
                 int row = this.userMapperWriter.updateByPrimaryKeySelective(user);
                 if (row > 0) {
+                    operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                     message = "OK";
                 }
             }
+            result.put(data, message);
+            this.userLogOpenFeign.record(id, operateRecord);
+            return CommonResult.success(result);
         } catch (Exception e) {
             log.error("上报或者更新极光推送唯一设备的标识出现错误", e);
+            this.userLogOpenFeign.record(id, operateRecord);
+            return CommonResult.failed("上报或者更新极光推送唯一设备的标识失败。");
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束上报或者更新极光推送唯一设备的标识");
             }
         }
-        result.put(data, message);
-        return CommonResult.success(result);
     }
 
     //上传或者修改头像小图接口
@@ -262,8 +270,8 @@ public class UserController {
         }
         OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setUserId(id);
-        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
-        operateRecord.setType(OperateRecordTypeEnum.UploadHeadIcon.getCode());
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.UpdateHeadIcon.getCode());
         try {
             // 头像图片上传服务器
             String headIconFileName;
@@ -281,11 +289,6 @@ public class UserController {
                     + user1.getId();
             if (!Objects.isNull(headIconFile01) && !headIconFile01.isEmpty()) {
                 if (!FileTypeUtil.isImageType(headIconFile01.getContentType(), Objects.requireNonNull(headIconFile01.getOriginalFilename()))) {
-                    try {
-                        this.userLogOpenFeign.record(id, operateRecord);
-                    } catch (Exception e) {
-                        log.error("记录用户操作记录失败", e);
-                    }
                     return CommonResult.validateFailed("上传头像文件类型不符合要求。");
                 }
                 String oldFileName = headIconFile01.getOriginalFilename();
@@ -315,7 +318,7 @@ public class UserController {
                         user1.setUpdateTime(new Date());
                         operateRecord.setType(OperateRecordTypeEnum.UpdateHeadIcon.getCode());
                         this.userMapperWriter.updateByPrimaryKeySelective(user1);
-                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
+                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                     }
                     headIconFileUrlBf.append(headIconFileName);
                 } catch (Exception e) {
@@ -327,20 +330,17 @@ public class UserController {
                 }
             }
             data.put("head", headIconFileUrlBf);
-            try {
-                this.userLogOpenFeign.record(id, operateRecord);
-            } catch (Exception e) {
-                log.error("记录用户操作记录失败", e);
-            }
+            this.userLogOpenFeign.record(id, operateRecord);
+            return CommonResult.success(data);
         } catch (Exception e) {
             log.error("上传头像小图到Nginx服务器失败", e);
+            this.userLogOpenFeign.record(id, operateRecord);
             return CommonResult.failed("上传头像小图到Nginx服务器失败");
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束上传头像小图片");
             }
         }
-        return CommonResult.success(data);
     }
 
     //上传或者修改背景图片接口
@@ -358,7 +358,8 @@ public class UserController {
         User user1 = this.userMapperReader.selectByPrimaryKey(id);
         OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setUserId(id);
-        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
+        operateRecord.setType(OperateRecordTypeEnum.UpdateBackgroundIcon.getCode());
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
         try {
             // 背景图片上传服务器
             String bgIconFileName;
@@ -376,11 +377,6 @@ public class UserController {
                     + user1.getId();
             if (!Objects.isNull(backgroundIconFile02) && !backgroundIconFile02.isEmpty()) {
                 if (!FileTypeUtil.isImageType(backgroundIconFile02.getContentType(), Objects.requireNonNull(backgroundIconFile02.getOriginalFilename()))) {
-                    try {
-                        this.userLogOpenFeign.record(id, operateRecord);
-                    } catch (Exception e) {
-                        log.error("记录用户操作记录失败", e);
-                    }
                     return CommonResult.validateFailed("上传背景图片文件类型不符合要求。");
                 }
                 String oldFileName = backgroundIconFile02.getOriginalFilename();
@@ -410,7 +406,7 @@ public class UserController {
                         user1.setUpdateTime(new Date());
                         operateRecord.setType(OperateRecordTypeEnum.UpdateBackgroundIcon.getCode());
                         this.userMapperWriter.updateByPrimaryKeySelective(user1);
-                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
+                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                     }
                     bgIconFileUrlBf.append(bgIconFileName);
                 } catch (Exception e) {
@@ -421,21 +417,18 @@ public class UserController {
                     log.debug("上传用户头像小图到Nginx服务器成功，file={}", bgIconFile.getAbsolutePath() + bgIconFile.getName());
                 }
             }
-            try {
-                this.userLogOpenFeign.record(id, operateRecord);
-            } catch (Exception e) {
-                log.error("记录用户操作记录失败", e);
-            }
             data.put("bg", bgIconFileUrlBf);
+            this.userLogOpenFeign.record(id, operateRecord);
+            return CommonResult.success(data);
         } catch (Exception e) {
             log.error("上传背景图片到Nginx服务器失败", e);
+            this.userLogOpenFeign.record(id, operateRecord);
             return CommonResult.failed("上传背景图片到Nginx服务器失败");
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束上传背景图片");
             }
         }
-        return CommonResult.success(data);
     }
 
     //注册接口
@@ -443,14 +436,15 @@ public class UserController {
     @PostMapping(value = "/reg.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, UserVO2>> register(
             UserDTO userDTO,
-            @RequestPart(value = "head", required = true) MultipartFile head) { // head：头像图片文件
+            @RequestPart(value = "head") MultipartFile head) { // head：头像图片文件
         Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
         String message = "注册失败。";
+        Long userId = 0L;
         OperateRecordDTO operateRecord = new OperateRecordDTO();
-        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
         operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
-        operateRecord.setUserId(0L);
+        operateRecord.setUserId(userId);
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始注册");
@@ -593,8 +587,9 @@ public class UserController {
                             //log.info("result02={}", result02);
                             if (Objects.equals(result02, 4)) {
                                 message = "注册成功。";
-                                operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
+                                operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                                 operateRecord.setUserId(user.getId());
+                                userId = user.getId();
                             }
                         } catch (Exception e) {
                             log.error("上传用户头像小图到Nginx服务器出现错误", e);
@@ -612,11 +607,12 @@ public class UserController {
                     + user.getId()
                     + "/"
                     + user.getHeadIcon());
-            this.userLogOpenFeign.record(user.getId(), operateRecord);
             map.put("userDTO", userVO2);
+            this.userLogOpenFeign.record(userId, operateRecord);
             return CommonResult.success(map, message);
         } catch (Exception e) {
             log.error("注册出现错误", e);
+            this.userLogOpenFeign.record(userId, operateRecord);
             return CommonResult.failed(message);
         } finally {
             if (log.isDebugEnabled()) {
@@ -636,25 +632,16 @@ public class UserController {
         Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
         String message = "登录失败。";
+        Long userId = 0L;
         OperateRecordDTO operateRecord = new OperateRecordDTO();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
-        operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
-        operateRecord.setUserId(0L);
+        operateRecord.setType(OperateRecordTypeEnum.LoginUser.getCode());
+        operateRecord.setUserId(userId);
         try {
             if (bindingResult.hasErrors()) {
-                try {
-                    this.userLogOpenFeign.record(0L, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
                 return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
             if (!RegexUtil.isMathPhone(userDTO.getPhone())) {
-                try {
-                    this.userLogOpenFeign.record(0L, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
                 return CommonResult.validateFailed("参数校验不通过，手机号码格式不正确。");
             }
             Double longitude = userDTO.getLongitude();//经度
@@ -668,19 +655,9 @@ public class UserController {
                 latitudeString = String.valueOf(latitude);
             }
             if (StrUtil.isAllEmpty(userDTO.getIp(), userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeString, latitudeString)) {
-                try {
-                    this.userLogOpenFeign.record(0L, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
                 return CommonResult.validateFailed("参数校验失败，客户端IP，定位（国家、省份、城市、区/县、其它、经度、纬度）不能同时为空。");
             }
             if (StrUtil.isNotEmpty(userDTO.getIp()) && !RegexUtil.isMathIp(userDTO.getIp())) {
-                try {
-                    this.userLogOpenFeign.record(0L, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
                 return CommonResult.validateFailed("客户端IP参数校验失败，客户端IP格式不正确。");
             }
             User user = this.userDaoUseJdbcTemplate.getByPhone(userDTO.getPhone());
@@ -783,17 +760,14 @@ public class UserController {
                         + user.getId()
                         + "/"
                         + user.getHeadIcon());
-                try {
-                    this.userLogOpenFeign.record(user.getId(), operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                    return CommonResult.failed("记录用户操作记录失败");
-                }
                 map.put("user", userVO2);
+                userId = user.getId();
             }
+            this.userLogOpenFeign.record(userId, operateRecord);
             return CommonResult.success(map, message);
         } catch (Exception e) {
             log.error("登录出现错误", e);
+            this.userLogOpenFeign.record(userId, operateRecord);
             return CommonResult.failed(message);
         } finally {
             if (log.isDebugEnabled()) {
@@ -804,7 +778,7 @@ public class UserController {
 
     //判断用户是否已经注册接口
     @GetMapping(value = "/isreg.do")
-    public CommonResult<Map<String, Boolean>> isregister(@RequestParam(name = "phone", required = true) String phone) {
+    public CommonResult<Map<String, Boolean>> isregister(@RequestParam(name = "phone") String phone) {
         if (log.isDebugEnabled()) {
             log.debug("前端传输过来的用户手机号码={}", phone);
         }
@@ -816,7 +790,7 @@ public class UserController {
                 return CommonResult.failed("手机号码格式不正确");
             }
             User user = this.userDaoUseJdbcTemplate.getByPhone(phone);
-            Map<String, Boolean> map = new HashMap<>();
+            Map<String, Boolean> map = new ConcurrentHashMap<>();
             if (user == null) {
                 map.put("isReg", false);
                 return CommonResult.success(map, "SUCCESS，还未注册。");
@@ -865,36 +839,23 @@ public class UserController {
             if (StrUtil.isNotEmpty(updateUserDTO.getConstellation())) {
                 ConstellationConstant ConstellationConstant = new ConstellationConstant();
                 if (!ConstellationConstant.getConstellationList().contains(updateUserDTO.getConstellation())) {
-                    try {
-                        this.userLogOpenFeign.record(0L, operateRecord);
-                    } catch (Exception e) {
-                        log.error("记录用户操作记录失败", e);
-                    }
                     return CommonResult.validateFailed("参数校验不通过，星座值非法。");
                 }
             }
-            if (!Objects.isNull(user) && !Objects.isNull(updateUserDTO)) {
+            if (!Objects.isNull(user)) {
                 this.copy(updateUserDTO, user);
                 user.setUpdateTime(new Date());
                 int a = this.userMapperWriter.updateByPrimaryKeySelective(user);
                 if (a > 0) {
                     data.put("UPDATE", "OK");
-                }
-                try {
-                    operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
-                    this.userLogOpenFeign.record(id, operateRecord);
-                } catch (Exception e2) {
-                    log.error("记录用户操作记录失败", e2);
+                    operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                 }
             }
+            this.userLogOpenFeign.record(id, operateRecord);
             return CommonResult.success(data, "修改或者更新用户资料成功");
         } catch (Exception e) {
             log.error("修改或者更新用户资料出现错误", e);
-            try {
-                this.userLogOpenFeign.record(id, operateRecord);
-            } catch (Exception e2) {
-                log.error("记录用户操作记录失败", e2);
-            }
+            this.userLogOpenFeign.record(id, operateRecord);
             return CommonResult.failed("修改或者更新用户资料失败");
         } finally {
             if (log.isDebugEnabled()) {
@@ -912,44 +873,50 @@ public class UserController {
         if (log.isDebugEnabled()) {
             log.debug("前端传输过来的用户信息id={}", id);
         }
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.QueryUser.getCode());
+        operateRecord.setUserId(id);
         Map<String, Object> data = new ConcurrentHashMap<>();
         try {
             User user = this.userMapperReader.selectByPrimaryKey(id);
-            if (user != null) {
-                UserVO userVO = UserVO.builder().build();
-                BeanUtils.copyProperties(user, userVO);
-                userVO.setGrade(user.getGrade());
-                if (StrUtil.isNotEmpty(user.getHeadIcon())) {
-                    userVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
-                            StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
-                            StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) +
-                            user.getId() +
-                            "/" +
-                            user.getHeadIcon());
-                }
-                if (StrUtil.isNotEmpty(user.getBackgroundIcon())) {
-                    userVO.setBgIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
-                            StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
-                            StrUtil.trimToNull(this.projectUrlProps.getResBackgroundIcon()) +
-                            user.getId() +
-                            "/" +
-                            user.getBackgroundIcon());
-                }
-                userVO.setGender(user.getGender());
-                userVO.setYear(user.getYear());
-                userVO.setMonth(user.getMonth());
-                userVO.setDate(user.getDate());
-                String birthDate = user.getYear() + "-" + user.getMonth() + "-" + user.getDate();
-                Date birthDay = DateUtil.fomatDate(birthDate);
-                userVO.setAge(AgeUtil.getAge(birthDay));
-                this.setUserVO(userVO, user);
-                data.put("user", userVO);
-                return CommonResult.success(data, "查看用户个人资料成功");
-            } else {
-                return CommonResult.validateFailed("用户信息不存在，查询用户个人资料失败。");
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
+            UserVO userVO = UserVO.builder().build();
+            BeanUtils.copyProperties(user, userVO);
+            userVO.setGrade(user.getGrade());
+            if (StrUtil.isNotEmpty(user.getHeadIcon())) {
+                userVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) +
+                        user.getId() +
+                        "/" +
+                        user.getHeadIcon());
+            }
+            if (StrUtil.isNotEmpty(user.getBackgroundIcon())) {
+                userVO.setBgIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getResBackgroundIcon()) +
+                        user.getId() +
+                        "/" +
+                        user.getBackgroundIcon());
+            }
+            userVO.setGender(user.getGender());
+            userVO.setYear(user.getYear());
+            userVO.setMonth(user.getMonth());
+            userVO.setDate(user.getDate());
+            String birthDate = user.getYear() + "-" + user.getMonth() + "-" + user.getDate();
+            Date birthDay = DateUtil.fomatDate(birthDate);
+            userVO.setAge(AgeUtil.getAge(birthDay));
+            this.setUserVO(userVO, user);
+            data.put("user", userVO);
+            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+            this.userLogOpenFeign.record(id, operateRecord);
+            return CommonResult.success(data, "查看用户个人资料成功");
         } catch (Exception e) {
             log.error("查看用户个人资料出现错误", e);
+            this.userLogOpenFeign.record(id, operateRecord);
             return CommonResult.failed("查看用户个人资料失败");
         } finally {
             if (log.isDebugEnabled()) {
@@ -967,15 +934,23 @@ public class UserController {
         if (log.isDebugEnabled()) {
             log.debug("前端传输过来的用户信息id={}", id);
         }
-        Map<String, Object> data = new HashMap<>();
+        OperateRecordDTO operateRecord = new OperateRecordDTO();
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.QueryUserWeChat.getCode());
+        operateRecord.setUserId(id);
+        Map<String, Object> data = new ConcurrentHashMap<>();
         try {
-            User user2 = this.userDaoUseJdbcTemplate.getweixinIdById(id);
-            if (user2 != null) {
-                data.put("user", user2);
+            User user = this.userDaoUseJdbcTemplate.getweixinIdById(id);
+            if (!Objects.isNull(user)) {
+                data.put("user", user);
             }
+            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+            log.info("operateRecord={}", operateRecord);
+            this.userLogOpenFeign.record(id, operateRecord);
             return CommonResult.success(data, "查看用户微信号资料成功");
         } catch (Exception e) {
             log.error("查看用户微信号资料出现错误", e);
+            this.userLogOpenFeign.record(id, operateRecord);
             return CommonResult.failed("查看用户微信号资料失败");
         } finally {
             if (log.isDebugEnabled()) {

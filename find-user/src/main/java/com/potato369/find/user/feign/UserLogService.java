@@ -16,5 +16,5 @@ public interface UserLogService {
 
     // 调用记录用户操作日志接口
     @PostMapping("/find/v1/log/{id}/record.do")
-    CommonResult<Map<String, Object>> record(@PathVariable(name = "id") Long userIdLong, @RequestBody OperateRecordDTO operateRecordDTO);
+    CommonResult<Map<String, Object>> record(@PathVariable(name = "id") Long userId, OperateRecordDTO operateRecordDTO);
 }

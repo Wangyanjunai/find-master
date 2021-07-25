@@ -13,7 +13,7 @@ import java.util.Map;
 public class UserLogServiceFeignFallback implements UserLogService {
 
     @Override
-    public CommonResult<Map<String, Object>> record(Long userIdLong, OperateRecordDTO operateRecordDTO) {
+    public CommonResult<Map<String, Object>> record(Long userId, OperateRecordDTO operateRecordDTO) {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }
