@@ -1,6 +1,5 @@
 package com.potato369.find.user.service;
 
-import com.potato369.find.common.dto.OperateRecordDTO;
 import com.potato369.find.mbg.model.Dynamic;
 import com.potato369.find.mbg.model.OperateRecord;
 import com.potato369.find.mbg.model.User;
@@ -69,9 +68,8 @@ public interface UserService {
      * @param user              用户信息
      * @param content           动态内容
      * @param multipartFileName 头像图片文件，动态内容图片
-     * @param operateRecord     操作记录
      */
-    int register(User user, String content, String multipartFileName, OperateRecordDTO operateRecord);
+    int register(User user, String content, String multipartFileName);
 
     /**
      * 更新用户VIP等级

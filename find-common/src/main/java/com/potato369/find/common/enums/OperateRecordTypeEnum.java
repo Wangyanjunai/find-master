@@ -35,7 +35,7 @@ public enum OperateRecordTypeEnum implements CodeEnum<Integer> {
 
     QueryUser(11, "11", "查看用户资料"),
 
-    UpdateHeadIcon(12, "12", "修改用户头像小图"),
+    UpdateHeadIcon(12, "12", "修改用户头像图片"),
 
     UpdateBackgroundIcon(13, "13", "修改用户背景图片"),
 
@@ -43,9 +43,21 @@ public enum OperateRecordTypeEnum implements CodeEnum<Integer> {
 
     UpdateLocation(15, "15", "更新动态定位"),
 
-    QueryUserWeChat(16, "16","查看用户微信号"),
+    QueryUserWeChat(16, "16", "查看用户微信号"),
 
-    UploadUserRegId(17, "17","上报极光推送唯一设备Id"),
+    UploadUserRegId(17, "17", "上报极光推送唯一设备Id"),
+
+    ReleaseComment(18, "18", "发布评论"),
+
+    DeleteComment(19, "19", "删除评论"),
+
+    QueryComment(20, "20", "查询评论"),
+
+    LikesComment(21, "21", "点赞/取消点赞评论"),
+
+    ScreenDynamic(22, "22", "筛选动态"),
+
+    QueryOwnerDynamic(23, "23", "获取自己的动态"),
 
     ;
     private Integer code;

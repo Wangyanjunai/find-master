@@ -1058,8 +1058,8 @@ insert into dynamic(user_id, nick_name, imei, model, sys_name, sys_code, network
     (select id, nick_name,imei,model,sys_name,sys_code,network_mode,country,province,city,district,other,longitude,latitude,create_time,update_time,null, null,null,null from user where id not in (select user_id from dynamic));
 
 
-select id, nick_name,imei,model,sys_name,sys_code,
-       network_mode,country,province,
-       city,district,other,longitude,
-       latitude,create_time,update_time,null, null,null,null from
-    user where id not in (select user_id from dynamic);
+select `id`, `nick_name`,`imei`,`model`,
+       `sys_name`,`sys_code`, `network_mode`, `country`,
+       `province`, `city`,`district`,`other`,`longitude`,
+       `latitude`,`create_time`,`update_time`,null, null,null,null from
+    `user` where `id` not in (select `user_id` from `dynamic`);

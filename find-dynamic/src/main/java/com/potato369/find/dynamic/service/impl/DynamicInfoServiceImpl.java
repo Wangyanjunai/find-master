@@ -3,9 +3,7 @@ package com.potato369.find.dynamic.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.potato369.find.common.enums.AttacheInfoDataTypeEnum;
-import com.potato369.find.common.enums.LikeStatusEnum;
-import com.potato369.find.common.enums.PublicStatusEnum;
+import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.vo.DynamicInfoVO;
 import com.potato369.find.dynamic.config.props.ProjectUrlProps;
@@ -19,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -114,7 +109,7 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
         data.put("totalPage", listPageInfo.getPages());
         List<DynamicInfoData> list = listPageInfo.getList();
         List<DynamicInfoVO> list2 = new ArrayList<>();
-        if (!list.isEmpty()) {
+        if (!Objects.isNull(list) && !list.isEmpty()) {
             for (DynamicInfoData dynamicInfoData : list) {
                 DynamicInfoVO dynamicInfoVO = DynamicInfoVO.builder().build();
                 if (StrUtil.isNotEmpty(dynamicInfoData.getHeadIcon())) {
@@ -145,9 +140,9 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
                 likeRecordExample.setOrderByClause("create_time DESC, id DESC");
                 likeRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId);
                 List<LikeRecord> likeRecordList = this.likeRecordMapperReader.selectByExample(likeRecordExample);
-                if (likeRecordList != null && !likeRecordList.isEmpty()) {
+                if (!Objects.isNull(likeRecordList) && !likeRecordList.isEmpty()) {
                     LikeRecord likeRecord = likeRecordList.get(0);
-                    if (likeRecord != null) {
+                    if (!Objects.isNull(likeRecord)) {
                         if (likeRecord.getStatus().equals(LikeStatusEnum.YES.getStatus())) {
                             dynamicInfoVO.setLikeStatus(true);
                         }
@@ -187,6 +182,21 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
                     fileNameList03.add(stringBuilder.toString());
                     dynamicInfoVO.setFileName(fileNameList03);
                 }
+                if (Objects.equals(IsAnonymousEnum.No.getType(), dynamicInfoData.getIsAnonymous())) {
+                    dynamicInfoVO.setAnonymous(false);
+                }
+                if (Objects.equals(IsAnonymousEnum.Yes.getType(), dynamicInfoData.getIsAnonymous())) {
+                    dynamicInfoVO.setAnonymous(true);
+                }
+                if (Objects.equals(IsTopicEnum.No.getType(), dynamicInfoData.getIsTopic())) {
+                    dynamicInfoVO.setTopic(false);
+                }
+                if (Objects.equals(IsTopicEnum.Yes.getType(), dynamicInfoData.getIsTopic())) {
+                    dynamicInfoVO.setTopic(true);
+                    dynamicInfoVO.setTopicTitle("#" + dynamicInfoData.getTopicTitle());
+                }
+                dynamicInfoVO.setApplicationStatus(false);
+                dynamicInfoVO.setComments(dynamicInfoData.getComments());
                 list2.add(dynamicInfoVO);
             }
         }

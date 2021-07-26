@@ -98,8 +98,10 @@ public class DynamicServiceFeignFallback implements DynamicService {
     }
 
     @Override
-    public CommonResult<Map<String, Object>> screen(Long userId, int pageNum, int pageSize, String gender, int minAge,
-                                                    int maxAge, List<String> constellations, String dataType, List<String> provinceList, List<String> cityList) {
+    public CommonResult<Map<String, Object>> screen(Long userId, String ip, Double longitude, Double latitude,
+                                                    int pageNum, int pageSize, String gender, int minAge,
+                                                    int maxAge, List<String> constellations, String dataType, List<String> provinceList, List<String> cityList,
+                                                    Long industryId, Long professionId, List<String> tagsList) {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }

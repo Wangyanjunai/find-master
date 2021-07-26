@@ -76,6 +76,9 @@ public interface DynamicService {
     @GetMapping(value = "/find/v1/dynamic/{id}/screen.do")
     CommonResult<Map<String, Object>> screen(
             @PathVariable(name = "id") Long userId, // 用户id
+            @RequestParam(name = "ip", required = false) String ip,//客户端ip
+            @RequestParam(name = "longitude", required = false) Double longitude,//经度
+            @RequestParam(name = "latitude", required = false) Double latitude,//纬度
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum, // 当前页数，默认：当前第1页
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize, // 每页条数，默认：每页20条
             @RequestParam(name = "gender", required = false) String gender, // 性别，0->女生，1->男生
@@ -84,7 +87,10 @@ public interface DynamicService {
             @RequestParam(name = "constellation", required = false) List<String> constellations, // 星座
             @RequestParam(name = "dataType", required = false) String dataType, // 附件类型，默认：1，图片或者图片+文字；0->文字，1->图片或者图片+文字，2->语音或者语音+文字
             @RequestParam(name = "provinceList", required = false) List<String> provinceList, // 发布动态定位（省份列表）
-            @RequestParam(name = "cityList", required = false) List<String> cityList);
+            @RequestParam(name = "cityList", required = false) List<String> cityList,//发布动态定位（城市列表）
+            @RequestParam(name = "industryId") Long industryId, //行业Id
+            @RequestParam(name = "professionId", required = false) Long profession, //职业Id
+            @RequestParam(name = "tags", required = false) List<String> tagsList); //标签列表
 
     @GetMapping(value = "/find/v1/dynamic/{id}/mylist.do")
     CommonResult<Map<String, Object>> mylist(@PathVariable(name = "id") Long userId, @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum, @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize);

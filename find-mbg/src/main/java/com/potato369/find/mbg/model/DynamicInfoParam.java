@@ -41,7 +41,7 @@ public class DynamicInfoParam implements Serializable {
     @JsonProperty(value = "minAge")
     @JSONField(name = "minAge")
     private Date minAge;
-    
+
     @ApiModelProperty(value = "年龄范围最大值")
     @JsonProperty(value = "maxAge")
     @JSONField(name = "maxAge")
@@ -70,4 +70,10 @@ public class DynamicInfoParam implements Serializable {
 
     @ApiModelProperty(value = "黑名单用户id列表")
     private List<Long> blackRecordUserIdLongList;
+
+    @ApiModelProperty(value = "职业id列表")
+    private List<Long> professionIds;
+
+    @ApiModelProperty(value = "标签列表")
+    private List<Long> tagsList;
 }

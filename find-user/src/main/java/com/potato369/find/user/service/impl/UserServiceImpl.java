@@ -3,7 +3,6 @@ package com.potato369.find.user.service.impl;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import com.potato369.find.common.dto.DynamicDTO;
-import com.potato369.find.common.dto.OperateRecordDTO;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.CopyUtil;
 import com.potato369.find.mbg.mapper.DynamicMapper;
@@ -218,7 +217,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = false)
-    public int register(User user, String content, String multipartFileName, OperateRecordDTO operateRecord) {
+    public int register(User user, String content, String multipartFileName) {
         try {
             if (StrUtil.isNotEmpty(content)) {
                 DynamicDTO dynamicDTO = DynamicDTO.builder().build();

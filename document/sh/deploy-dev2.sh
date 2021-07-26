@@ -11,7 +11,6 @@ rm -rf ~/jar/*.jar
 mv find-admin/target/*.jar ~/jar/
 mv find-config/target/*.jar ~/jar/
 mv find-dynamic/target/*.jar ~/jar/
-mv find-log/target/*.jar ~/jar/
 mv find-message/target/*.jar ~/jar/
 mv find-order/target/*.jar ~/jar/
 mv find-portal/target/*.jar ~/jar/

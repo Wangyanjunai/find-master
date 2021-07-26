@@ -3,8 +3,6 @@ package com.potato369.find.common.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -14,7 +12,6 @@ import javax.validation.constraints.NotNull;
 public class OperateRecordDTO extends AbstractDTO {
 
     @ApiModelProperty(value = "用户id")
-    @NotNull(message = "用户Id不能为空")
     private Long userId;
 
     @ApiModelProperty(value = "状态：0->失败，1->成功，默认：1->成功")

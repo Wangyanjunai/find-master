@@ -533,7 +533,6 @@ public class DynamicServiceImpl implements DynamicService {
                 } else {
                     dynamicInfoVO.setLikeStatus(false);
                 }
-
                 if (PublicStatusEnum.NOPublic.getType().equals(dynamicInfoData.getPublishStatus())) {
                     dynamicInfoVO.setAddress(null);
                 }
@@ -580,8 +579,6 @@ public class DynamicServiceImpl implements DynamicService {
                     dynamicInfoVO.setTopicTitle("#" + dynamicInfoData.getTopicTitle());
                 }
                 dynamicInfoVO.setComments(dynamicInfoData.getComments());
-                log.info("dynamicInfoData={}", dynamicInfoData);
-                log.info("dynamicInfoParam={}", dynamicInfoParam);
                 if (!Objects.isNull(dynamicInfoData.getLongitude()) && !Objects.isNull(dynamicInfoData.getLatitude())) {
                     dynamicInfoVO.setDistance(DistanceUtil.getDistance(dynamicInfoData.getLongitude(), dynamicInfoData.getLatitude(), dynamicInfoParam.getLongitude(), dynamicInfoParam.getLatitude()));
                 }

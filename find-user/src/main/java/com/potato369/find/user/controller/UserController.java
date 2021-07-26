@@ -19,7 +19,6 @@ import com.potato369.find.user.dao.DynamicDaoUseJdbcTemplate;
 import com.potato369.find.user.dao.DynamicInfoDaoUseJdbcTemplate;
 import com.potato369.find.user.dao.ReportCategoryDaoUseJdbcTemplate;
 import com.potato369.find.user.dao.UserDaoUseJdbcTemplate;
-import com.potato369.find.user.feign.UserLogService;
 import com.potato369.find.user.service.SensitiveWordsService;
 import com.potato369.find.user.service.TagService;
 import com.potato369.find.user.service.UserService;
@@ -29,7 +28,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
@@ -72,8 +70,6 @@ public class UserController {
 
     private AliyunProps aliyunProps;
 
-    private UserLogService userLogOpenFeign;
-
     private UserService userService;
 
     private ProjectUrlProps projectUrlProps;
@@ -93,6 +89,8 @@ public class UserController {
     private TagMapper tagMapperReader;
 
     private SensitiveWordsService sensitiveWordsService;
+
+    private OperateRecordMapper operateRecordMapperWriter;
 
     @Autowired
     public void setUserMapperWriter(UserMapper userMapperWriter) {
@@ -165,11 +163,6 @@ public class UserController {
     }
 
     @Autowired
-    public void setUserLogOpenFeign(UserLogService userLogOpenFeign) {
-        this.userLogOpenFeign = userLogOpenFeign;
-    }
-
-    @Autowired
     public void setProjectUrlProps(ProjectUrlProps projectUrlProps) {
         this.projectUrlProps = projectUrlProps;
     }
@@ -209,6 +202,11 @@ public class UserController {
         this.sensitiveWordsService = sensitiveWordsService;
     }
 
+    @Autowired
+    public void setOperateRecordMapperWriter(OperateRecordMapper operateRecordMapperWriter) {
+        this.operateRecordMapperWriter = operateRecordMapperWriter;
+    }
+
     //上报或者更新极光推送唯一设备的标识接口
     @ApiOperation(value = "上报或者更新极光推送唯一设备的标识接口", notes = "上报或者更新极光推送唯一设备的标识接口", response = CommonResult.class)
     @PutMapping(value = "/{id}/uploadRegId.do")
@@ -217,10 +215,10 @@ public class UserController {
         Map<String, Object> result = new ConcurrentHashMap<>();
         String data = "UPLOADREGID";
         String message = "FAILED";
-        OperateRecordDTO operateRecord = new OperateRecordDTO();
-        operateRecord.setUserId(id);
-        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
-        operateRecord.setType(OperateRecordTypeEnum.UploadUserRegId.getCode());
+        OperateRecord operateRecordResult = new OperateRecord();
+        operateRecordResult.setUserId(id);
+        operateRecordResult.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecordResult.setType(OperateRecordTypeEnum.UploadUserRegId.getCode());
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始上报或者更新极光推送唯一设备的标识");
@@ -235,16 +233,16 @@ public class UserController {
                 user.setUpdateTime(new Date());
                 int row = this.userMapperWriter.updateByPrimaryKeySelective(user);
                 if (row > 0) {
-                    operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+                    operateRecordResult.setStatus(OperateRecordStatusEnum.Success.getStatus());
                     message = "OK";
                 }
             }
             result.put(data, message);
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecordResult);
             return CommonResult.success(result);
         } catch (Exception e) {
             log.error("上报或者更新极光推送唯一设备的标识出现错误", e);
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecordResult);
             return CommonResult.failed("上报或者更新极光推送唯一设备的标识失败。");
         } finally {
             if (log.isDebugEnabled()) {
@@ -268,10 +266,10 @@ public class UserController {
         if (Objects.isNull(user1)) {
             return CommonResult.validateFailed("用户信息不存在");
         }
-        OperateRecordDTO operateRecord = new OperateRecordDTO();
-        operateRecord.setUserId(id);
-        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
-        operateRecord.setType(OperateRecordTypeEnum.UpdateHeadIcon.getCode());
+        OperateRecord operateRecordResult = new OperateRecord();
+        operateRecordResult.setUserId(id);
+        operateRecordResult.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecordResult.setType(OperateRecordTypeEnum.UpdateHeadIcon.getCode());
         try {
             // 头像图片上传服务器
             String headIconFileName;
@@ -316,9 +314,8 @@ public class UserController {
                         headIconFile01.transferTo(headIconFile);
                         user1.setHeadIcon(headIconFileName);
                         user1.setUpdateTime(new Date());
-                        operateRecord.setType(OperateRecordTypeEnum.UpdateHeadIcon.getCode());
                         this.userMapperWriter.updateByPrimaryKeySelective(user1);
-                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+                        operateRecordResult.setStatus(OperateRecordStatusEnum.Success.getStatus());
                     }
                     headIconFileUrlBf.append(headIconFileName);
                 } catch (Exception e) {
@@ -330,11 +327,11 @@ public class UserController {
                 }
             }
             data.put("head", headIconFileUrlBf);
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecordResult);
             return CommonResult.success(data);
         } catch (Exception e) {
             log.error("上传头像小图到Nginx服务器失败", e);
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecordResult);
             return CommonResult.failed("上传头像小图到Nginx服务器失败");
         } finally {
             if (log.isDebugEnabled()) {
@@ -356,10 +353,10 @@ public class UserController {
         Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("id", id);
         User user1 = this.userMapperReader.selectByPrimaryKey(id);
-        OperateRecordDTO operateRecord = new OperateRecordDTO();
+        OperateRecord operateRecord = new OperateRecord();
         operateRecord.setUserId(id);
-        operateRecord.setType(OperateRecordTypeEnum.UpdateBackgroundIcon.getCode());
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.UpdateBackgroundIcon.getCode());
         try {
             // 背景图片上传服务器
             String bgIconFileName;
@@ -418,11 +415,11 @@ public class UserController {
                 }
             }
             data.put("bg", bgIconFileUrlBf);
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data);
         } catch (Exception e) {
             log.error("上传背景图片到Nginx服务器失败", e);
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("上传背景图片到Nginx服务器失败");
         } finally {
             if (log.isDebugEnabled()) {
@@ -441,7 +438,7 @@ public class UserController {
         UserVO2 userVO2 = UserVO2.builder().build();
         String message = "注册失败。";
         Long userId = 0L;
-        OperateRecordDTO operateRecord = new OperateRecordDTO();
+        OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
         operateRecord.setType(OperateRecordTypeEnum.CreateUser.getCode());
         operateRecord.setUserId(userId);
@@ -583,8 +580,7 @@ public class UserController {
                             }
                             user.setHeadIcon(newHeadIconFile.getName());
                             user.setUpdateTime(new Date());
-                            int result02 = this.userService.register(user, autograph, fileString + newHeadIconFile.getName(), operateRecord);
-                            //log.info("result02={}", result02);
+                            int result02 = this.userService.register(user, autograph, fileString + newHeadIconFile.getName());
                             if (Objects.equals(result02, 4)) {
                                 message = "注册成功。";
                                 operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
@@ -608,11 +604,11 @@ public class UserController {
                     + "/"
                     + user.getHeadIcon());
             map.put("userDTO", userVO2);
-            this.userLogOpenFeign.record(userId, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(map, message);
         } catch (Exception e) {
             log.error("注册出现错误", e);
-            this.userLogOpenFeign.record(userId, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed(message);
         } finally {
             if (log.isDebugEnabled()) {
@@ -633,7 +629,7 @@ public class UserController {
         UserVO2 userVO2 = UserVO2.builder().build();
         String message = "登录失败。";
         Long userId = 0L;
-        OperateRecordDTO operateRecord = new OperateRecordDTO();
+        OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.LoginUser.getCode());
         operateRecord.setUserId(userId);
@@ -763,11 +759,11 @@ public class UserController {
                 map.put("user", userVO2);
                 userId = user.getId();
             }
-            this.userLogOpenFeign.record(userId, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(map, message);
         } catch (Exception e) {
             log.error("登录出现错误", e);
-            this.userLogOpenFeign.record(userId, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed(message);
         } finally {
             if (log.isDebugEnabled()) {
@@ -819,7 +815,7 @@ public class UserController {
             log.debug("前端传输过来的用户信息id={}，updateUserDTO={}", id, updateUserDTO);
         }
         Map<String, Object> data = new ConcurrentHashMap<>();
-        OperateRecordDTO operateRecord = new OperateRecordDTO();
+        OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.UpdateUser.getCode());
         operateRecord.setUserId(id);
@@ -851,11 +847,11 @@ public class UserController {
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                 }
             }
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, "修改或者更新用户资料成功");
         } catch (Exception e) {
             log.error("修改或者更新用户资料出现错误", e);
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("修改或者更新用户资料失败");
         } finally {
             if (log.isDebugEnabled()) {
@@ -873,7 +869,7 @@ public class UserController {
         if (log.isDebugEnabled()) {
             log.debug("前端传输过来的用户信息id={}", id);
         }
-        OperateRecordDTO operateRecord = new OperateRecordDTO();
+        OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
         operateRecord.setType(OperateRecordTypeEnum.QueryUser.getCode());
         operateRecord.setUserId(id);
@@ -912,11 +908,11 @@ public class UserController {
             this.setUserVO(userVO, user);
             data.put("user", userVO);
             operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, "查看用户个人资料成功");
         } catch (Exception e) {
             log.error("查看用户个人资料出现错误", e);
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("查看用户个人资料失败");
         } finally {
             if (log.isDebugEnabled()) {
@@ -934,7 +930,7 @@ public class UserController {
         if (log.isDebugEnabled()) {
             log.debug("前端传输过来的用户信息id={}", id);
         }
-        OperateRecordDTO operateRecord = new OperateRecordDTO();
+        OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
         operateRecord.setType(OperateRecordTypeEnum.QueryUserWeChat.getCode());
         operateRecord.setUserId(id);
@@ -946,11 +942,11 @@ public class UserController {
             }
             operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
             log.info("operateRecord={}", operateRecord);
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, "查看用户微信号资料成功");
         } catch (Exception e) {
             log.error("查看用户微信号资料出现错误", e);
-            this.userLogOpenFeign.record(id, operateRecord);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("查看用户微信号资料失败");
         } finally {
             if (log.isDebugEnabled()) {
@@ -967,10 +963,10 @@ public class UserController {
                 log.debug("开始获取用户举报类型列表");
             }
             User user = this.userMapperReader.selectByPrimaryKey(userId);
-            if (user == null) {
-                return CommonResult.failed("用户信息不存在");
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
-            Map<String, List<ReportCategoryVO>> list = new HashMap<>();
+            Map<String, List<ReportCategoryVO>> list = new ConcurrentHashMap<>();
             ReportCategoryExample example = new ReportCategoryExample();
             example.setDistinct(true);
             example.setOrderByClause("id ASC, create_time DESC, update_time DESC");
@@ -1000,31 +996,23 @@ public class UserController {
     //记录用户举报内容接口
     @PostMapping(value = "/{id}/report.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CommonResult<Map<String, Object>> report(@PathVariable(name = "id") Long userId, @RequestBody @Valid ReportInfoDTO reportInfoDTO, BindingResult bindingResult) {
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.ReportDynamic.getCode());
+        operateRecord.setUserId(userId);
+        Map<String, Object> data = new ConcurrentHashMap<>();
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始记录用户举报内容。");
             }
-            OperateRecordDTO operateRecord = new OperateRecordDTO();
-            operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
-            operateRecord.setUserId(userId);
+
             if (bindingResult.hasErrors()) {
-                try {
-                    this.userLogOpenFeign.record(userId, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
                 return CommonResult.failed(HttpStatus.NOT_ACCEPTABLE.value(), ErrorMessageUtil.messageBuild(bindingResult.getAllErrors()));
             }
-            Map<String, Object> data = new HashMap<>();
             Long categoryId = reportInfoDTO.getCategoryId();                //举报类目id
             ReportCategory reportCategory = this.reportCategoryDaoUseJdbcTemplate.getById(categoryId);
-            if (reportCategory == null) {
-                try {
-                    this.userLogOpenFeign.record(userId, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
-                return CommonResult.failed("举报类目信息不存在，记录用户举报内容失败。");
+            if (Objects.isNull(reportCategory)) {
+                return CommonResult.failed("参数校验不通过，举报类目信息不存在。");
             }
             String reportType = reportInfoDTO.getReportType();          //举报类型，1->动态，2->用户，默认：1-动态
             Long reportUserId = reportInfoDTO.getBeingReportId();       //被举报用户id或者动态id
@@ -1037,37 +1025,17 @@ public class UserController {
                 }
             }
             User reportUser = this.userDaoUseJdbcTemplate.getById(userId);
-            if (reportUser == null) {
-                try {
-                    this.userLogOpenFeign.record(userId, operateRecord);
-                } catch (Exception e) {
-                    log.error("记录用户操作记录失败", e);
-                }
-                return CommonResult.failed("举报用户不存在，记录用户举报内容失败。");
+            if (Objects.isNull(reportUser)) {
+                return CommonResult.validateFailed("参数校验不通过，举报用户不存在。");
             }
-
             ReportInfo reportInfo = new ReportInfo();
             if (ReportTypeEnum.User.getCode().toString().equals(reportType)) {
-                //自己不能举报自己
-                if (userId.equals(reportUserId)) {
-                    try {
-                        this.userLogOpenFeign.record(userId, operateRecord);
-                    } catch (Exception e) {
-                        log.error("记录用户操作记录失败", e);
-                    }
-                    return CommonResult.failed("你不能举报自己，记录用户举报内容失败。");
-                }
                 reportInfo.setReportType(ReportTypeEnum.User.getCode().toString());
                 operateRecord.setType(OperateRecordTypeEnum.ReportUser.getCode());
                 //根据举报的用户id，判断用户信息是否存在
                 User beingReportUser = this.userDaoUseJdbcTemplate.getById(reportUserId);
-                if (beingReportUser == null) {
-                    try {
-                        this.userLogOpenFeign.record(userId, operateRecord);
-                    } catch (Exception e) {
-                        log.error("记录用户操作记录失败", e);
-                    }
-                    return CommonResult.failed("被举报用户不存在，记录用户举报内容失败。");
+                if (Objects.isNull(beingReportUser)) {
+                    return CommonResult.validateFailed("参数校验不通过，被举报用户不存在。");
                 }
             } else {
                 DynamicInfoExample dynamicInfoExample = new DynamicInfoExample();
@@ -1077,37 +1045,14 @@ public class UserController {
                 if (dynamicInfoList != null && !dynamicInfoList.isEmpty()) {
                     List<Long> dynamicInfoIdList = dynamicInfoList.stream().map(DynamicInfo::getId).collect(Collectors.toList());
                     if (dynamicInfoIdList.contains(reportUserId)) {
-                        try {
-                            this.userLogOpenFeign.record(userId, operateRecord);
-                        } catch (Exception e) {
-                            log.error("记录用户操作记录失败", e);
-                        }
-                        return CommonResult.failed("你不能举报自己发布的动态内容，记录用户举报内容失败。");
+                        return CommonResult.validateFailed("参数校验不通过，自己不能举报自己发布的动态内容。");
                     }
                 }
                 //根据被举报的动态内容id，判断举报内容是否存在
                 DynamicInfo dynamicInfo = this.dynamicInfoDaoUseJdbcTemplate.getById(reportUserId);
-                if (dynamicInfo == null) {
-                    try {
-                        this.userLogOpenFeign.record(userId, operateRecord);
-                    } catch (Exception e) {
-                        log.error("记录用户操作记录失败", e);
-                    }
-                    return CommonResult.failed("被举报动态内容不存在，记录用户举报内容失败。");
+                if (Objects.isNull(dynamicInfo)) {
+                    return CommonResult.validateFailed("参数校验不通过，被举报动态内容不存在。");
                 }
-                //根据被举报的动态信息id，判断举报信息是否存在
-                Long dynamicId = dynamicInfo.getDynamicId();
-                Dynamic dynamic = this.dynamicDaoUseJdbcTemplate.getById(dynamicId);
-                if (dynamic == null) {
-                    try {
-                        this.userLogOpenFeign.record(userId, operateRecord);
-                    } catch (Exception e) {
-                        log.error("记录用户操作记录失败", e);
-                    }
-                    return CommonResult.failed("被举报动态信息不存在，记录用户举报内容失败。");
-                }
-                reportInfo.setReportType(ReportTypeEnum.Dynamic.getCode().toString());
-                operateRecord.setType(OperateRecordTypeEnum.ReportDynamic.getCode());
             }
             reportInfo.setReportUserId(userId);
             reportInfo.setBeingReportUserId(reportUserId);
@@ -1118,15 +1063,12 @@ public class UserController {
             if (result01 > 0) {
                 operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
             }
-            try {
-                this.userLogOpenFeign.record(userId, operateRecord);
-            } catch (Exception e2) {
-                log.error("记录用户操作记录失败", e2);
-            }
             data.put("REPORTED", "OK");
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, "记录用户举报内容成功。");
         } catch (Exception e) {
             log.error("记录用户举报内容出错。", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("记录用户举报内容失败。");
         } finally {
             if (log.isDebugEnabled()) {
@@ -1146,8 +1088,8 @@ public class UserController {
                 log.debug("开始根据用户id={}，查询用户黑名单列表。", userId);
             }
             User user = this.userDaoUseJdbcTemplate.getUserInfoById(userId);
-            if (user == null) {
-                return CommonResult.failed("用户信息不存在，获取用户黑名单列表失败。");
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
             Map<String, Object> data = new HashMap<>();
             BlacklistRecordExample example = new BlacklistRecordExample();
@@ -1159,9 +1101,7 @@ public class UserController {
                     .doSelectPageInfo(() -> this.blacklistRecordMapperReader
                             .selectByExample(example).stream()
                             .filter((BlacklistRecord b) -> (b.getStatus() % 2) != 0).collect(Collectors.toList()));
-            //log.info("listPageInfo={}", listPageInfo);
             int totalPage = 0;
-//            List<BlacklistRecord> blacklistRecordList = this.blacklistRecordMapperRead.selectByExample(example).stream().filter((BlacklistRecord b) -> (b.getStatus() % 2) != 0).collect(Collectors.toList());
             List<BlacklistRecord> blacklistRecordList = new ArrayList<>();
             if (listPageInfo != null && listPageInfo.getList() != null && !listPageInfo.getList().isEmpty()) {
                 blacklistRecordList = listPageInfo.getList();
@@ -1187,7 +1127,7 @@ public class UserController {
             data.put("list", userVOList);
             return CommonResult.success(data, "获取用户黑名单列表成功。");
         } catch (Exception e) {
-            log.error("根据用户id={}，查询用户黑名单列表出错。", userId, e);
+            log.error("根据用户查询用户黑名单列表出错", e);
             return CommonResult.failed("获取用户黑名单列表失败。");
         } finally {
             if (log.isDebugEnabled()) {
@@ -1200,7 +1140,8 @@ public class UserController {
     @PostMapping(value = "/{id}/pushblacklist.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CommonResult<Map<String, String>> pushBlackList(@PathVariable(name = "id") Long userId,
                                                            @RequestBody @Valid BlacklistDTO blacklistDTO, BindingResult bindingResult) {
-        OperateRecordDTO operateRecord = new OperateRecordDTO();
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setUserId(userId);
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         Integer type = blacklistDTO.getType();
         Map<String, String> data = new HashMap<>();
@@ -1210,10 +1151,12 @@ public class UserController {
             if (type % 2 != 0) {
                 message = "拉入";
                 status = "PUSH";
+                operateRecord.setType(OperateRecordTypeEnum.PushBlackList.getCode());
             }
             if (type % 2 == 0) {
                 message = "推出";
                 status = "PULL";
+                operateRecord.setType(OperateRecordTypeEnum.PullBlackList.getCode());
             }
             if (bindingResult.hasErrors()) {
                 return CommonResult.failed(HttpStatus.UNAUTHORIZED.value(), ErrorMessageUtil.messageBuild(bindingResult.getAllErrors()));
@@ -1228,12 +1171,12 @@ public class UserController {
                 return CommonResult.failed(data, ResultCode.NOT_PULL_OR_PUSH_OWNER_BLACKLIST_ERROR);
             }
             User ownerUser = this.userDaoUseJdbcTemplate.getById(userId);
-            if (ownerUser == null) {
+            if (Objects.isNull(ownerUser)) {
                 data.put(status, "ERROR");
                 return CommonResult.failed(data, ResultCode.USER_IS_NOT_EXIST);
             }
             User blackUser = this.userDaoUseJdbcTemplate.getById(blackUserId);
-            if (blackUser == null) {
+            if (Objects.isNull(blackUser)) {
                 data.put(status, "ERROR");
                 return CommonResult.failed(data, ResultCode.USER_IS_NOT_EXIST);
             }
@@ -1249,12 +1192,6 @@ public class UserController {
             blacklistRecord.setOwnerUserId(userId);
             blacklistRecord.setBlackUserId(blackUserId);
             if (type % 2 != 0) {
-                operateRecord.setType(OperateRecordTypeEnum.PushBlackList.getCode());
-                try {
-                    this.userLogOpenFeign.record(userId, operateRecord);
-                } catch (Exception e2) {
-                    log.error("记录用户操作记录失败", e2);
-                }
                 if (blacklistRecords != null && !blacklistRecords.isEmpty()) {
                     data.put(status, "ERROR");
                     return CommonResult.failed(data, ResultCode.USER_EXIST_BLACKLIST_ERROR);
@@ -1268,12 +1205,6 @@ public class UserController {
                     return CommonResult.success(data, "将用户" + blackUserNickName + message + "黑名单列表成功。");
                 }
             } else {
-                operateRecord.setType(OperateRecordTypeEnum.PullBlackList.getCode());
-                try {
-                    this.userLogOpenFeign.record(userId, operateRecord);
-                } catch (Exception e2) {
-                    log.error("记录用户操作记录失败", e2);
-                }
                 if (blacklistRecords != null && !blacklistRecords.isEmpty()) {
                     BlacklistRecord blacklistRecord2 = blacklistRecords.get(0);
                     BlacklistRecordExample example2 = new BlacklistRecordExample();
@@ -1288,15 +1219,14 @@ public class UserController {
                         operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
                     }
                     data.put(status, "OK");
+                    this.operateRecordMapperWriter.insertSelective(operateRecord);
                     return CommonResult.success(data, "将用户" + blackUserNickName + message + "黑名单列表成功。");
-                } else {
-                    data.put(status, "ERROR");
-                    return CommonResult.failed(data, ResultCode.USER_NOT_EXIST_BLACKLIST_ERROR);
                 }
             }
         } catch (Exception e) {
             log.error("将用户拉入拉出黑名单列表出错。", e);
             data.put(status, "ERROR");
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed(data, ResultCode.FAILED);
         } finally {
             if (log.isDebugEnabled()) {
@@ -1305,6 +1235,7 @@ public class UserController {
                 }
             }
         }
+        return null;
     }
 
     //鹿可模块推荐用户数据接口

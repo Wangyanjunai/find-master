@@ -19,7 +19,6 @@
         <module>find-dynamic</module>   <!-- 移动端觅鹿陌生人社交动态微服务-->
         <module>find-message</module>   <!-- 移动端觅鹿陌生人社交消息微服务-->
         <module>find-portal</module>    <!-- 移动端觅鹿陌生人社交系统微服务-->
-        <module>find-log</module>       <!-- 移动端觅鹿陌生人社交日志微服务-->
         <module>find-admin</module>     <!-- 后台管理系统服务-->
         <module>find-config</module>    <!-- 配置中心系统服务-->
     </modules>

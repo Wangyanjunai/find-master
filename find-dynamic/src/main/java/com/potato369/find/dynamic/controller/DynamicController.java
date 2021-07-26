@@ -65,6 +65,10 @@ public class DynamicController {
 
     private SensitiveWordsService sensitiveWordsService;
 
+    private ProfessionsMapper professionsMapperReader;
+
+    private TagMapper tagMapperReader;
+
     @Autowired
     public void setDynamicService(DynamicService dynamicService) {
         this.dynamicService = dynamicService;
@@ -143,6 +147,16 @@ public class DynamicController {
     @Autowired
     public void setSensitiveWordsService(SensitiveWordsService sensitiveWordsService) {
         this.sensitiveWordsService = sensitiveWordsService;
+    }
+
+    @Autowired
+    public void setProfessionsMapperReader(ProfessionsMapper professionsMapperReader) {
+        this.professionsMapperReader = professionsMapperReader;
+    }
+
+    @Autowired
+    public void setTagMapperReader(TagMapper tagMapperReader) {
+        this.tagMapperReader = tagMapperReader;
     }
 
     // 用户发布动态附件（包括图片和语音）
@@ -289,18 +303,18 @@ public class DynamicController {
     //更新用户发布动态定位
     @PostMapping(value = "/{id}/updateLocation.do")
     public CommonResult<Map<String, Object>> updateLocation(
-            @PathVariable(name = "id", required = true) Long userIdLong,
+            @PathVariable(name = "id") Long userIdLong,
             @RequestBody LocationDTO locationDTO) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String b = "ERROR";
         OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setUserId(userIdLong);
+        operateRecord.setType(OperateRecordTypeEnum.UpdateLocation.getCode());
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始更新用户发布动态定位");
             }
-            operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
-            operateRecord.setUserId(userIdLong);
-            operateRecord.setType(OperateRecordTypeEnum.UpdateLocation.getCode());
             User user = this.userMapperReader.selectByPrimaryKey(userIdLong);
             if (Objects.isNull(user)) {
                 return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
@@ -368,12 +382,13 @@ public class DynamicController {
                 }
             }
             data.put("UPDATE", b);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, "更新用户发布动态定位成功。");
         } catch (Exception e) {
             log.error("更新用户发布动态定位出错", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("更新用户发布动态定位失败。");
         } finally {
-            this.operateRecordMapperWriter.insertSelective(operateRecord);
             if (log.isDebugEnabled()) {
                 log.debug("结束更新用户发布动态定位");
             }
@@ -383,7 +398,7 @@ public class DynamicController {
     // 注册进入觅鹿界面获取发布动态内容信息列表
     @GetMapping(value = "/{id}/list.do")
     public CommonResult<Map<String, Object>> list(
-            @PathVariable(name = "id", required = true) long userId, // 用户id
+            @PathVariable(name = "id") Long userId, // 用户id
             @RequestParam(name = "ip", required = false) String ip,//客户端IP
             @RequestParam(name = "longitude", required = false) Double longitude,//经度
             @RequestParam(name = "latitude", required = false) Double latitude,//纬度
@@ -485,7 +500,10 @@ public class DynamicController {
     // 筛选发布动态内容信息列表
     @GetMapping(value = "/{id}/screen.do")
     public CommonResult<Map<String, Object>> screen(
-            @PathVariable(name = "id", required = true) Long userId, // 用户id
+            @PathVariable(name = "id") Long userId, // 用户id
+            @RequestParam(name = "ip", required = false) String ip,//客户端ip
+            @RequestParam(name = "longitude", required = false) Double longitude,//经度
+            @RequestParam(name = "latitude", required = false) Double latitude,//纬度
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum, // 当前页数，默认：当前第1页
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize, // 每页条数，默认：每页20条
             @RequestParam(name = "gender", required = false) String gender, // 性别，0->女生，1->男生，2->全部
@@ -494,10 +512,34 @@ public class DynamicController {
             @RequestParam(name = "constellation", required = false) List<String> constellations, // 星座
             @RequestParam(name = "dataType", required = false, defaultValue = "0") String dataType, // 附件类型，默认：0，全部；0->全部，1->图片或者图片+文字，2->语音或者语音+文字
             @RequestParam(name = "provinceList", required = false) List<String> provinceList, // 发布动态定位（省份列表）
-            @RequestParam(name = "cityList", required = false) List<String> cityList) { // 发布动态定位（城市列表）
+            @RequestParam(name = "cityList", required = false) List<String> cityList,// 发布动态定位（城市列表）
+            @RequestParam(name = "industryId") Long industryId, //行业Id
+            @RequestParam(name = "professionId", required = false) Long professionId, //职业Id
+            @RequestParam(name = "tags", required = false) List<String> tagsList) {   //标签列表
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.ScreenDynamic.getCode());
+        operateRecord.setUserId(userId);
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始筛选发布动态内容信息列表");
+            }
+
+            String longitudeString = null;
+            if (!Objects.isNull(longitude)) {
+                longitudeString = Double.toString(longitude);
+            }
+            String latitudeString = null;
+            if (!Objects.isNull(latitude)) {
+                latitudeString = Double.toString(latitude);
+            }
+            if (StrUtil.isAllEmpty(ip, longitudeString, latitudeString)) {
+                return CommonResult.validateFailed("参数校验不通过，客户端IP，定位地址经纬度不能同时为空。");
+            }
+            if (!Objects.isNull(ip)) {
+                LocationDTO locationDTO = dynamicService.getLocationByAliyunIP(ip);
+                longitude = locationDTO.getLongitude();//经度
+                latitude = locationDTO.getLatitude();//纬度
             }
 
             // 1、校验用户id参数，根据用户id查询用户信息是否存在
@@ -506,11 +548,9 @@ public class DynamicController {
                 return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
 
-            // 2、校验性别参数，性别参数可选值，0->女生，1->男生
+            // 2、校验性别参数，性别参数可选值，0->女生，1->男生,2->男生+女生
             if (!Objects.isNull(gender)) {
-                if (!Objects.equals(UserGenderEnum.Female.getGender(), gender)
-                        || !Objects.equals(UserGenderEnum.Male.getGender(), gender)
-                        || !Objects.equals(UserGenderEnum.ALL.getGender(), gender)) {
+                if (!Objects.equals(UserGenderEnum.Female.getGender(), gender) && !Objects.equals(UserGenderEnum.Male.getGender(), gender) && !Objects.equals(UserGenderEnum.ALL.getGender(), gender)) {
                     return CommonResult.validateFailed("参数校验不通过，性别参数值不符合要求。");
                 }
             }
@@ -553,42 +593,41 @@ public class DynamicController {
             }
             // 设置性别筛选条件
             dynamicInfoParam.setGender(gender);
-            // dynamicLocationDTO.setGender(gender);
 
             // 如果前端传过来的年龄范围最小值为空或等于0
             //（普通用户+VIP用户）默认条件二：设置默认最小年龄范围->16岁
             // 设置年龄范围最小值筛选条件
             dynamicInfoParam.setMinAge(DateUtil.fomatDate(DateUtil.getBeforeYearByAge(minAge)));
 
+
             // 如果前端传过来的年龄范围最大值为空或等于0
             //（普通用户+VIP用户）默认条件二：设置默认最大年龄范围->35岁
             // 设置年龄范围最大值筛选条件
             // 年龄最大值范围参数，是否大于等于50岁，是否是50+，则查询条件查询所有的大于最小年龄范围的用户
+            dynamicInfoParam.setMaxAge(DateUtil.fomatDate(DateUtil.getBeforeYearByAge(maxAge)));
             if (maxAge >= 50) {
                 dynamicInfoParam.setMaxAge(null);
             }
-            dynamicInfoParam.setMaxAge(DateUtil.fomatDate(DateUtil.getBeforeYearByAge(maxAge)));
-
             // 态发布时定位（国家、省份，城市），如果为空，则按照用户注册时的定位筛选
             List<String> countryList = new ArrayList<>();
             countryList.add("中国");
 
-            if (provinceList == null) {
+            if (Objects.isNull(provinceList)) {
                 provinceList = new ArrayList<>();
             }
 
-            if (cityList == null) {
+            if (Objects.isNull(cityList)) {
                 cityList = new ArrayList<>();
             }
 
             //默认条件三：按照定位地址列表进行筛选， 如果前端传输过来的参数或者省份，城市地址定位列表为空，则获取用户注册时候填写的信息
-            String ip = user.getIp(); // 用户注册时获取的客户端IP
+            String ip2 = user.getIp(); // 用户注册时获取的客户端IP
             String country = user.getCountry(); // 国家
             String province = user.getProvince(); // 省份
             String city = user.getCity(); // 城市
-            if (StrUtil.isNotEmpty(ip)) {
+            if (StrUtil.isNotEmpty(ip2)) {
                 if (StrUtil.isAllEmpty(country, province, city)) {
-                    LocationDTO location = this.dynamicService.getLocationByAliyunIP(ip);
+                    LocationDTO location = this.dynamicService.getLocationByAliyunIP(ip2);
                     country = location.getCountry();
                     province = location.getProvince();
                     city = location.getCity();
@@ -612,9 +651,33 @@ public class DynamicController {
             //设置筛选条件：附件类型
             dynamicInfoParam.setDataType(dataType);
             //设置筛选条件：星座列表
-            if (constellations != null && constellations.size() > 0) {
+            if (!Objects.isNull(constellations) && constellations.size() > 0) {
                 dynamicInfoParam.setConstellations(constellations);
             }
+            //行业id，查询所有的职业id
+            List<Long> professionIdList = Collections.singletonList(professionId);
+            if (Objects.isNull(professionId)) {
+                ProfessionsExample example = new ProfessionsExample();
+                example.createCriteria().andIndustryIdEqualTo(industryId).andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());
+                List<Professions> professionsList = this.professionsMapperReader.selectByExample(example);
+                if (!Objects.isNull(professionsList) && !professionsList.isEmpty()) {
+                    professionIdList = professionsList.stream().map(Professions::getId).collect(Collectors.toList());
+                }
+            }
+            dynamicInfoParam.setProfessionIds(professionIdList);
+
+            List<Long> tagsIdList = new ArrayList<>();
+            if (!Objects.isNull(tagsList) && !tagsList.isEmpty()) {
+                for (String tag : tagsList) {
+                    List<Tag> tagRecord = this.tagMapperReader.selectByKeywords(tag);
+                    if (!Objects.isNull(tagRecord) && !tagRecord.isEmpty()) {
+                        List<Long> longList = tagRecord.stream().map(Tag::getId).collect(Collectors.toList());
+                        tagsIdList.addAll(longList);
+                    }
+                }
+            }
+            dynamicInfoParam.setTagsList(CopyUtil.removeLongDuplicate(tagsIdList));
+
             // 获取当前用户的黑名单用户列表
             BlacklistRecordExample example = new BlacklistRecordExample();
             example.setDistinct(true);
@@ -624,10 +687,15 @@ public class DynamicController {
             List<Long> blackUserIdList = blacklistRecordList.stream().map(BlacklistRecord::getBlackUserId).collect(Collectors.toList());
             CopyUtil.removeLongDuplicate(blackUserIdList);
             dynamicInfoParam.setBlackRecordUserIdLongList(blackUserIdList);
+            dynamicInfoParam.setLongitude(longitude);
+            dynamicInfoParam.setLatitude(latitude);
             Map<String, Object> data = this.dynamicService.getDynamicInfoData(userId, dynamicInfoParam, pageNum, pageSize);
-            return CommonResult.success(data, "筛选发布动态内容信息列表成功");
+            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.success(data, "筛选发布动态内容信息列表成功。");
         } catch (Exception e) {
             log.error("筛选发布动态内容信息列表出错", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("筛选发布动态内容信息列表出错");
         } finally {
             if (log.isDebugEnabled()) {
@@ -638,16 +706,20 @@ public class DynamicController {
 
     // 用户分享动态
     @PutMapping(value = "/{id}/share.do")
-    public CommonResult<Map<String, Object>> shareDynamic(@PathVariable(name = "id", required = true) Long userId,
-                                                          @RequestParam(name = "dynamicInfoId", required = true) Long dynamicInfoId,
-                                                          @RequestParam(name = "mode", required = true) String shareMode) {
+    public CommonResult<Map<String, Object>> shareDynamic(@PathVariable(name = "id") Long userId,
+                                                          @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
+                                                          @RequestParam(name = "mode") String shareMode) {
         Map<String, Object> data = new ConcurrentHashMap<>();
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setType(OperateRecordTypeEnum.shareDynamic.getCode());
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
+        operateRecord.setUserId(userId);
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始用户分享动态内容");
             }
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
-            if (dynamicInfo == null) {
+            if (Objects.isNull(dynamicInfo)) {
                 return CommonResult.validateFailed("分享动态内容出错，动态内容不存在。");
             }
             ShareRecord shareRecord = new ShareRecord();
@@ -655,11 +727,6 @@ public class DynamicController {
             shareRecord.setMode(shareMode);
             shareRecord.setUserId(userId);
             int shareResult = shareRecordMapperWriter.insertSelective(shareRecord);
-
-            OperateRecord operateRecord = new OperateRecord();
-            operateRecord.setType(OperateRecordTypeEnum.shareDynamic.getCode());
-            operateRecord.setUserId(userId);
-
             int shares = dynamicInfo.getShares() + 1;
             dynamicInfo.setShares(shares);
             dynamicInfo.setUpdateTime(new Date());
@@ -671,13 +738,13 @@ public class DynamicController {
                 return CommonResult.success(data, "分享动态内容成功。");
             } else {
                 data.put("SHARED", "ERROR");
-                operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
                 this.operateRecordMapperWriter.insertSelective(operateRecord);
                 return CommonResult.success(data, "分享动态内容失败。");
             }
         } catch (Exception e) {
             log.error("用户分享动态内容出错", e);
             data.put("SHARED", "ERROR");
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed(data, ResultCode.FAILED);
         } finally {
             if (log.isDebugEnabled()) {
@@ -688,10 +755,14 @@ public class DynamicController {
 
     // 用户点赞/取消点赞动态内容
     @PutMapping(value = "/{id}/likes.do")
-    public CommonResult<Map<String, Object>> likes(@PathVariable(name = "id", required = true) Long userId,
-                                                   @RequestParam(name = "dynamicInfoId", required = true) Long dynamicInfoId,
-                                                   @RequestParam(name = "type", required = true) String type) {
+    public CommonResult<Map<String, Object>> likes(@PathVariable(name = "id") Long userId,
+                                                   @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
+                                                   @RequestParam(name = "type") String type) {
         Map<String, Object> data = new ConcurrentHashMap<>();
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setUserId(userId);
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.LikeDynamic.getCode());
         data.put("LIKED", "ERROR");
         try {
             if (log.isDebugEnabled()) {
@@ -727,6 +798,8 @@ public class DynamicController {
                 int result = this.likeRecordService.update(likeRecord, dynamicInfo);
                 if (result > 0) {
                     data.put("LIKED", "OK");
+                    operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+                    this.operateRecordMapperWriter.insertSelective(operateRecord);
                     return CommonResult.success(data, "取消点赞成功。");
                 }
             }
@@ -741,11 +814,14 @@ public class DynamicController {
                     pushBean.setAlert(content);
                     pushBean.setTitle(title);
                     this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
+                    operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+                    this.operateRecordMapperWriter.insertSelective(operateRecord);
                     return CommonResult.success(data, "点赞成功。");
                 }
             }
         } catch (Exception e) {
             log.error("点赞当前动态内容出现错误", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("点赞当前动态内容出现错误。");
         } finally {
             if (log.isDebugEnabled()) {
@@ -761,13 +837,16 @@ public class DynamicController {
      * @param applicantUserId 申请加微信者的用户id
      * @param dynamicInfoId   被申请加微信者的动态内容信息id
      * @param message         申请加微信发送的消息
-     * @return
      */
     @PutMapping(value = "/{id}/application.do")
-    public CommonResult<Map<String, Object>> application(@PathVariable(name = "id", required = true) Long applicantUserId,
-                                                         @RequestParam(name = "dynamicInfoId", required = true) Long dynamicInfoId,
+    public CommonResult<Map<String, Object>> application(@PathVariable(name = "id") Long applicantUserId,
+                                                         @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
                                                          @RequestParam(name = "message", required = false) String message) {
         Map<String, Object> data = new ConcurrentHashMap<>();
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setUserId(applicantUserId);
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.ApplyForWechat.getCode());
         data.put("APPLICATION", "ERROR");
         try {
             if (log.isDebugEnabled()) {
@@ -856,9 +935,12 @@ public class DynamicController {
                 data.put("APPLICATION", "ERROR");
                 msg = "申请加微信失败。";
             }
+            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, msg);
         } catch (Exception e) {
             log.error("申请加微信出现错误", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("申请加微信出现错误。");
         } finally {
             if (log.isDebugEnabled()) {
@@ -869,9 +951,13 @@ public class DynamicController {
 
     // 用户删除动态内容
     @PutMapping(value = "/{id}/delete.do")
-    public CommonResult<Map<String, Object>> delete(@PathVariable(name = "id", required = true) Long userId,
-                                                    @RequestParam(name = "dynamicInfoId", required = true) Long dynamicInfoId) {
+    public CommonResult<Map<String, Object>> delete(@PathVariable(name = "id") Long userId,
+                                                    @RequestParam(name = "dynamicInfoId") Long dynamicInfoId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setUserId(userId);
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.DeleteDynamic.getCode());
         data.put("DELETED", "ERROR");
         try {
             if (log.isDebugEnabled()) {
@@ -882,7 +968,7 @@ public class DynamicController {
                 return CommonResult.success(data, "删除动态内容出错，动态内容不存在。");
             }
             long dynamicInfoUserId = dynamicInfo.getUserId();
-            String message = "";
+            String message;
             if (dynamicInfoUserId == userId) {
                 dynamicInfo.setDynamicStatus(DynamicInfoStatusEnum.HIDE.getCode().toString());
                 dynamicInfo.setUpdateTime(new Date());
@@ -896,9 +982,12 @@ public class DynamicController {
             } else {
                 message = "删除动态内容失败。";
             }
+            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, message);
         } catch (Exception e) {
             log.error("删除动态内容出现错误", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("删除动态内容出现错误。");
         } finally {
             if (log.isDebugEnabled()) {
@@ -909,9 +998,13 @@ public class DynamicController {
 
     // 分页获取用户自己发布的所有动态内容列表
     @GetMapping(value = "/{id}/mylist.do")
-    public CommonResult<Map<String, Object>> myList(@PathVariable(name = "id", required = true) Long userId,
+    public CommonResult<Map<String, Object>> myList(@PathVariable(name = "id") Long userId,
                                                     @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
                                                     @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize) {
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setUserId(userId);
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.QueryOwnerDynamic.getCode());
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始分页获取用户自己发布的所有动态内容列表");
@@ -920,9 +1013,12 @@ public class DynamicController {
             if (user == null) {
                 return CommonResult.validateFailed("获取自己发布的所有动态内容列表出错，用户信息不存在。");
             }
+            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(this.dynamicInfoService.getMyDynamicInfoDataList(userId, pageNum, pageSize), "分页获取用户自己发布的所有动态内容列表成功。");
         } catch (Exception e) {
             log.error("分页获取用户自己发布的所有动态内容列表出现错误", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed("分页获取用户自己发布的所有动态内容列表出现错误。");
         } finally {
             if (log.isDebugEnabled()) {
@@ -933,7 +1029,7 @@ public class DynamicController {
 
     //分页获取热门话题
     @GetMapping(value = "/{id}/hotTopics.do")
-    public CommonResult<Map<String, Object>> hotTopics(@PathVariable(name = "id", required = true) Long userId,
+    public CommonResult<Map<String, Object>> hotTopics(@PathVariable(name = "id") Long userId,
                                                        @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
                                                        @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
 
@@ -951,5 +1047,4 @@ public class DynamicController {
             }
         }
     }
-
 }
