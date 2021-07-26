@@ -1010,8 +1010,8 @@ public class DynamicController {
                 log.debug("开始分页获取用户自己发布的所有动态内容列表");
             }
             User user = this.userMapperReader.selectByPrimaryKey(userId);
-            if (user == null) {
-                return CommonResult.validateFailed("获取自己发布的所有动态内容列表出错，用户信息不存在。");
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
             operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
             this.operateRecordMapperWriter.insertSelective(operateRecord);

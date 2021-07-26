@@ -570,6 +570,10 @@ public class DynamicServiceImpl implements DynamicService {
                 }
                 if (Objects.equals(IsAnonymousEnum.Yes.getType(), dynamicInfoData.getIsAnonymous())) {
                     dynamicInfoVO.setAnonymous(true);
+                    dynamicInfoVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()
+                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
+                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon() + "default.png"));
+                    dynamicInfoVO.setNickName("匿名");
                 }
                 if (Objects.equals(IsTopicEnum.No.getType(), dynamicInfoData.getIsTopic())) {
                     dynamicInfoVO.setTopic(false);
