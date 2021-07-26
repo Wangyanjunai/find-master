@@ -1933,8 +1933,8 @@ public class DynamicController {
      * },
      * {
      * "userId": 73,
-     * "headUrl": "http://127.0.0.1:9000/find/img/head/73/05.png",
-     * "nickname": "如风",
+     * "headUrl": "http://127.0.0.1:9000/find/img/head/default.png",
+     * "nickname": "匿名",
      * "publishTime": "2021-07-21 18:04:57",
      * "dynamicInfoId": 750,
      * "content": "大家好，今天发布几张违法抓拍图片。",
@@ -1957,8 +1957,8 @@ public class DynamicController {
      * },
      * {
      * "userId": 73,
-     * "headUrl": "http://127.0.0.1:9000/find/img/head/73/05.png",
-     * "nickname": "如风",
+     * "headUrl": "http://127.0.0.1:9000/find/img/head/default.png",
+     * "nickname": "匿名",
      * "publishTime": "2021-07-21 17:51:11",
      * "dynamicInfoId": 749,
      * "content": "大家好，今天发布几张违法抓拍图片。",
