@@ -26,14 +26,14 @@ public class OrderController {
     }
 
     /**
-     * @api {get} http://127.0.0.1:8084/find/order/{id}/product/list 获取充值商品列表接口
+     * @api {get} /find/order/{id}/product/list 获取充值商品列表接口
      * @apiVersion 1.0.0
      * @apiGroup 订单模块API
      * @apiName 获取充值商品列表
      * @apiParam (接口请求参数) {long} id 用户id
      * @apiParamExample {json} 请求示例03（手机号码和客户端IP登录）
      * HTTP/1.1 OK
-     * curl -v -X GET http://127.0.0.1:8084/find/order/1/product/list
+     * curl -v -X GET http://w168428j19.51mypc.cn/find/order/1/product/list
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -54,28 +54,28 @@ public class OrderController {
      * "list": [
      * {
      * "desc": "60元/月",
-     * "icon": "http://8.135.36.45:8000/find/img/app/product/01.png",
+     * "icon": "http://192.168.31.31:9000/find/img/app/product/01.png",
      * "name": "2个月",
      * "pid": 1,
      * "price": 120.00
      * },
      * {
      * "desc": "50元/月",
-     * "icon": "http://8.135.36.45:8000/find/img/app/product/02.png",
+     * "icon": "http://192.168.31.31:9000/find/img/app/product/02.png",
      * "name": "3个月",
      * "pid": 2,
      * "price": 180.00
      * },
      * {
      * "desc": "41.3元/月",
-     * "icon": "http://8.135.36.45:8000/find/img/app/product/03.png",
+     * "icon": "http://192.168.31.31:9000/find/img/app/product/03.png",
      * "name": "6个月",
      * "pid": 3,
      * "price": 248.00
      * },
      * {
      * "desc": "33元/月",
-     * "icon": "http://8.135.36.45:8000/find/img/app/product/04.png",
+     * "icon": "http://192.168.31.31:9000/find/img/app/product/04.png",
      * "name": "12个月",
      * "pid": 4,
      * "price": 369.00
@@ -122,7 +122,7 @@ public class OrderController {
     }
 
     /**
-     * @api {post} http://127.0.0.1:8084/find/order/{id}/mobile/create 创建预支付订单接口
+     * @api {post} /find/order/{id}/mobile/create 创建预支付订单接口
      * @apiVersion 1.0.0
      * @apiGroup 订单模块API
      * @apiName 创建预支付订单
@@ -132,7 +132,7 @@ public class OrderController {
      * @apiParam (请求参数) {string} [ip] 客户端IP
      * @apiParamExample {json} 请求示例01（微信支付）
      * HTTP/1.1 OK
-     * curl -v -X POST http://127.0.0.1:8084/find/order/1/mobile/create -H "Content-Type:application/json;charset=utf-8" -d '{"pid":1, "mode":0, "ip":"127.0.0.1"}'
+     * curl -v -X POST http://w168428j19.51mypc.cn/find/order/1/mobile/create -H "Content-Type:application/json;charset=utf-8" -d '{"pid":1, "mode":0, "ip":"192.168.31.31"}'
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -176,7 +176,7 @@ public class OrderController {
      * }
      * @apiParamExample {json} 请求示例02（支付宝支付）
      * HTTP/1.1 OK
-     * curl -v -X POST http://127.0.0.1:8084/find/order/1/mobile/create -H "Content-Type:application/json;charset=utf-8" -d '{"pid":1, "mode":1, "ip":"127.0.0.1"}'
+     * curl -v -X POST http://w168428j19.51mypc.cn/find/order/1/mobile/create -H "Content-Type:application/json;charset=utf-8" -d '{"pid":1, "mode":1, "ip":"192.168.31.31"}'
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码

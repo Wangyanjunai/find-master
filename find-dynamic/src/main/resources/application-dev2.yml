@@ -10,13 +10,9 @@ spring:
      multipart:
         location: ~/tmp/
   datasource:
-    druid:
-      url: jdbc:mysql://potato369.com:31306/find_dev_test02?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true  #数据库连接URL
-      username: find                                          #数据库连接用户名
-      password: XueGod!@#123                                  #数据库连接密码
-      initial-size: 2                                         #数据库初始化连接大小
-      min-idle: 5                                             #数据库最小连接池数量
-      max-active: 20                                          #数据库最大连接池数量                  
+    url: jdbc:mysql://potato369.com:31306/find_dev_test02?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true  #数据库连接URL
+    username: find                                          #数据库连接用户名
+    password: XueGod!@#123                                  #数据库连接密码
 #项目相关配置
 project-url:
   domain: http://127.0.0.1:8083 #项目网关域名前缀

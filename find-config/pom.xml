@@ -49,7 +49,7 @@
     </dependencies>
 
     <build>
-        <finalName>find-config-8088</finalName>
+        <finalName>find-config-8087</finalName>
         <!--重要如果不设置resource会导致application.yml中的@找不到pom文件中的配置 -->
         <resources>
             <resource>

@@ -25,7 +25,7 @@ public class MessageController {
     }
 
     /**
-     * @api {get} http://127.0.0.1:8084/find/message/{id}/all 分页获取消息界面点赞和申请加微信消息列表接口
+     * @api {get} /find/message/{id}/all 分页获取消息界面点赞和申请加微信消息列表接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取消息界面点赞和申请加微信消息列表
@@ -34,7 +34,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X GET "http://127.0.0.1:8084/find/message/29/all?pageNum=1&pageSize=20" -H "accept: application/json"
+     * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/29/all?pageNum=1&pageSize=20" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -72,7 +72,7 @@ public class MessageController {
      * {
      * "messageId": 7,
      * "userId":60,
-     * "head":"http://8.135.36.45:8000/find/img/head/60/01.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/60/01.png",
      * "nickname":"尘埃",
      * "content2":"需要加您的微信?",
      * "count2":5,
@@ -83,7 +83,7 @@ public class MessageController {
      * {
      * "messageId": 2,
      * "userId":62,
-     * "head":"http://8.135.36.45:8000/find/img/head/62/02.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/62/02.png",
      * "nickname":"蓝梧桐",
      * "content2":"需要加您的微信?",
      * "count2":5,
@@ -94,7 +94,7 @@ public class MessageController {
      * {
      * "messageId": 3,
      * "userId":61,
-     * "head":"http://8.135.36.45:8000/find/img/head/61/01.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/61/01.png",
      * "nickname":"长安",
      * "content2":"需要加您的微信?",
      * "count2":6
@@ -105,7 +105,7 @@ public class MessageController {
      * {
      * "messageId": 4,
      * "userId":71,
-     * "head":"http://8.135.36.45:8000/find/img/head/71/07.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/71/07.png",
      * "nickname":"弦雨晴",
      * "content2":"需要加您的微信?",
      * "count2":6
@@ -116,7 +116,7 @@ public class MessageController {
      * {
      * "messageId": 5,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "nickname":"阿萌",
      * "content2":"需要加您的微信?",
      * "createTime": "2021年04月22日 16:40:40",
@@ -127,7 +127,7 @@ public class MessageController {
      * {
      * "messageId": 86,
      * "userId": 137,
-     * "head": "http://8.135.36.45:8000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg",
+     * "head": "http://192.168.31.31:9000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg",
      * "nickname": "jack",
      * "content2": "已同意添加微信，我的微信号是：",
      * "createTime": "2021年04月22日 16:40:40",
@@ -180,7 +180,7 @@ public class MessageController {
     }
 
     /**
-     * @api {get} http://127.0.0.1:8084/find/message/{id}/likes 分页获取点赞消息列表接口
+     * @api {get} /find/message/{id}/likes 分页获取点赞消息列表接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取点赞消息列表
@@ -189,7 +189,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X GET "http://127.0.0.1:8084/find/message/29/likes?pageNum=1&pageSize=20" -H "accept: application/json"
+     * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/29/likes?pageNum=1&pageSize=20" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -216,216 +216,216 @@ public class MessageController {
      * {
      * "messageId":90,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/28/20200611/03.png"
+     * "http://192.168.31.31:9000/find/res/images/28/20200611/03.png"
      * ]
      * },
      * {
      * "messageId":89,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200427/014.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200427/014.png"
      * ]
      * },
      * {
      * "messageId":88,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200502/07.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200502/09.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200502/07.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200502/09.png"
      * ]
      * },
      * {
      * "messageId":87,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200503/03.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200503/05.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200503/08.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200503/03.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200503/05.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200503/08.png"
      * ]
      * },
      * {
      * "messageId":86,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200505/12.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200505/13.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200505/15.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200505/12.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200505/13.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200505/15.png"
      * ]
      * },
      * {
      * "messageId":85,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200507/04.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200507/04.png"
      * ]
      * },
      * {
      * "messageId":84,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/28/20200611/03.png"
+     * "http://192.168.31.31:9000/find/res/images/28/20200611/03.png"
      * ]
      * },
      * {
      * "messageId":83,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200427/014.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200427/014.png"
      * ]
      * },
      * {
      * "messageId":82,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200502/07.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200502/09.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200502/07.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200502/09.png"
      * ]
      * },
      * {
      * "messageId":81,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200503/03.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200503/05.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200503/08.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200503/03.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200503/05.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200503/08.png"
      * ]
      * },
      * {
      * "messageId":80,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200505/12.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200505/13.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200505/15.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200505/12.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200505/13.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200505/15.png"
      * ]
      * },
      * {
      * "messageId":79,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200507/04.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200507/04.png"
      * ]
      * },
      * {
      * "messageId":78,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/28/20200611/03.png"
+     * "http://192.168.31.31:9000/find/res/images/28/20200611/03.png"
      * ]
      * },
      * {
      * "messageId":77,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200427/014.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200427/014.png"
      * ]
      * },
      * {
      * "messageId":76,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200502/07.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200502/09.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200502/07.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200502/09.png"
      * ]
      * },
      * {
      * "messageId":75,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200503/03.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200503/05.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200503/08.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200503/03.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200503/05.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200503/08.png"
      * ]
      * },
      * {
      * "messageId":74,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200505/12.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200505/13.png",
-     * "http://8.135.36.45:8000/find/res/images/29/20200505/15.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200505/12.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200505/13.png",
+     * "http://192.168.31.31:9000/find/res/images/29/20200505/15.png"
      * ]
      * },
      * {
      * "messageId":73,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200507/04.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200507/04.png"
      * ]
      * },
      * {
      * "messageId":72,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态摩天轮旋转",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/28/20200611/03.png"
+     * "http://192.168.31.31:9000/find/res/images/28/20200611/03.png"
      * ]
      * },
      * {
      * "messageId":71,
      * "userId":70,
-     * "head":"http://8.135.36.45:8000/find/img/head/70/03.png",
+     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态摩天轮旋转",
      * "attacheType":"0",
      * "filenameList":[
-     * "http://8.135.36.45:8000/find/res/images/29/20200427/014.png"
+     * "http://192.168.31.31:9000/find/res/images/29/20200427/014.png"
      * ]
      * }
      * ]
@@ -472,7 +472,7 @@ public class MessageController {
     }
 
     /**
-     * @api {get} http://127.0.0.1:8084/find/message/{id1}/{id2}/messages 分页获取消息历史记录列表接口
+     * @api {get} /find/message/{id1}/{id2}/messages 分页获取消息历史记录列表接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取消息历史记录列表
@@ -482,7 +482,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X GET "http://127.0.0.1:8084/find/message/138/139/messages?pageNum=1&pageSize=20" -H "accept: application/json"
+     * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/138/139/messages?pageNum=1&pageSize=20" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -509,7 +509,7 @@ public class MessageController {
      * {
      * "messageId": 8,
      * "sendUserId": 139,
-     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
+     * "sendUserHead": "http://192.168.31.31:9000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
      * "sendUserNickname": "9527",
      * "sendDateTime": "2021年04月06日 11:50:30",
      * "content": "申请加您的微信，麻烦通过一下，谢谢！"
@@ -517,7 +517,7 @@ public class MessageController {
      * {
      * "messageId": 9,
      * "sendUserId": 138,
-     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg",
+     * "sendUserHead": "http://192.168.31.31:9000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg",
      * "sendUserNickname": "阿珂",
      * "sendDateTime": "2021年04月06日 11:52:00",
      * "content": "我同意。好的，我的微信号是：wx123123212"
@@ -525,7 +525,7 @@ public class MessageController {
      * {
      * "messageId": 18,
      * "sendUserId": 139,
-     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
+     * "sendUserHead": "http://192.168.31.31:9000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
      * "sendUserNickname": "9527",
      * "sendDateTime": "2021年04月06日 15:24:43",
      * "content": "添加微信聊聊"
@@ -533,7 +533,7 @@ public class MessageController {
      * {
      * "messageId": 32,
      * "sendUserId": 138,
-     * "sendUserHead": "http://8.135.36.45:8000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg",
+     * "sendUserHead": "http://192.168.31.31:9000/find/img/head/138/644406af-ebc4-4c85-b793-33e6f563d847.jpg",
      * "sendUserNickname": "阿珂",
      * "sendDateTime": "2021年04月06日 18:16:09",
      * "content": "好啊"
@@ -583,7 +583,7 @@ public class MessageController {
     }
 
     /**
-     * @api {post} http://127.0.0.1:8084/find/message/{id}/send 发送消息接口
+     * @api {post} /find/message/{id}/send 发送消息接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 发送消息
@@ -592,7 +592,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {string} content 消息内容
      * @apiParamExample {json} 请求示例 发送消息
      * HTTP/1.1 OK
-     * curl -v -X POST "http://127.0.0.1:8084/find/message/60/send?messageId=25&content=可以申请加你的微信吗？" -H "accept: application/json"
+     * curl -v -X POST "http://w168428j19.51mypc.cn/find/message/60/send?messageId=25&content=可以申请加你的微信吗？" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -610,7 +610,7 @@ public class MessageController {
      * }
      * @apiParamExample {json} 请求示例 回复消息
      * HTTP/1.1 OK
-     * curl -v -X POST "http://127.0.0.1:8084/find/message/29/send?messageId=2&content=可以申请加你的微信吗？" -H "accept: application/json"
+     * curl -v -X POST "http://w168428j19.51mypc.cn/find/message/29/send?messageId=2&content=可以申请加你的微信吗？" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -667,14 +667,14 @@ public class MessageController {
     }
 
     /**
-     * @api {put} http://127.0.0.1:8084/find/message/{id}/updateAll 全部消息已读接口
+     * @api {put} /find/message/{id}/updateAll 全部消息已读接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 全部消息已读
      * @apiParam (接口请求参数) {long} id 消息接收者用户id
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://127.0.0.1:8084/find/message/60/updateAll" -H "accept: application/json"
+     * curl -v -X PUT "http://w168428j19.51mypc.cn/find/message/60/updateAll" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -730,7 +730,7 @@ public class MessageController {
 
 
     /**
-     * @api {delete} http://127.0.0.1:8084/find/message/{id1}/delete 删除申请加微信消息记录接口
+     * @api {delete} /find/message/{id1}/delete 删除申请加微信消息记录接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 删除申请加微信消息记录
@@ -738,7 +738,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {long} id2 消息发送者用户id
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://127.0.0.1:8084/find/message/60/delete?id2=28" -H "accept: application/json"
+     * curl -v -X PUT "http://w168428j19.51mypc.cn/find/message/60/delete?id2=28" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -794,7 +794,7 @@ public class MessageController {
     }
 
     /**
-     * @api {delete} http://127.0.0.1:8084/find/message/{id}/deleteLikes 删除点赞消息记录接口
+     * @api {delete} /find/message/{id}/deleteLikes 删除点赞消息记录接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 删除点赞消息记录
@@ -802,7 +802,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {long} messageId 消息记录id
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://127.0.0.1:8084/find/message/60/deleteLikes?messageId=28" -H "accept: application/json"
+     * curl -v -X PUT "http://w168428j19.51mypc.cn/find/message/60/deleteLikes?messageId=28" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -858,7 +858,7 @@ public class MessageController {
     }
 
     /**
-     * @api {put} http://127.0.0.1:8084/find/message/{id}/reply 回复申请加微信消息记录接口
+     * @api {put} /find/message/{id}/reply 回复申请加微信消息记录接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 回复申请加微信消息记录
@@ -869,7 +869,7 @@ public class MessageController {
      * @apiParam (接口请求参数) {string} [weChatId] 微信号
      * @apiParamExample {json} 请求示例 回复申请加微信消息（拒绝）
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://127.0.0.1:8084/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！" -H "accept: application/json"
+     * curl -v -X PUT "http://w168428j19.51mypc.cn/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
@@ -887,7 +887,7 @@ public class MessageController {
      * }
      * @apiParamExample {json} 请求示例 回复申请加微信消息（同意）
      * HTTP/1.1 OK
-     * curl -v -X PUT "http://127.0.0.1:8084/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a" -H "accept: application/json"
+     * curl -v -X PUT "http://w168428j19.51mypc.cn/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a" -H "accept: application/json"
      * @apiSuccess (200) {long{0-500}} code 信息码
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {int{0-65535}} status 响应状态码
