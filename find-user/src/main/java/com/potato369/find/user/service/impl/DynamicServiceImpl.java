@@ -481,7 +481,9 @@ public class DynamicServiceImpl implements DynamicService {
 
         DynamicInfo dynamicInfo = new DynamicInfo();
         BeanUtils.copyProperties(dynamicDTO, dynamicInfo);
-        dynamicInfo.setAttacheType(dynamicDTO.getAttacheInfoDataType());
+        dynamicInfo.setDynamicId(dynamic.getId());
+        dynamicInfo.setAttacheType(dynamicDTO.getAttacheInfoDataType());//设置动态id
+        dynamicInfo.setAttacheNumber(1);//设置附件数量，注册后用户发布一条动态，用头像发布第一条动态内容
         dynamicInfo.setUserId(dynamicDTO.getUserId());
         //动态内容信息入库
         int b = this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);

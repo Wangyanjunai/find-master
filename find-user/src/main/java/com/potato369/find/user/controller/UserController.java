@@ -603,7 +603,7 @@ public class UserController {
                     + user.getId()
                     + "/"
                     + user.getHeadIcon());
-            map.put("userDTO", userVO2);
+            map.put("user", userVO2);
             this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(map, message);
         } catch (Exception e) {

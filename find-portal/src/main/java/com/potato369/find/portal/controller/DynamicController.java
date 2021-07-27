@@ -837,9 +837,6 @@ public class DynamicController {
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {object} [data] 数据
      * @apiSuccess (200) {int} [totalPage] 总页数
-     * @apiSuccess (200) {object[]} [hots] 三条热门话题列表
-     * @apiSuccess (200) {int} [totalCount] 参与话题的动态数量
-     * @apiSuccess (200) {string} [topicTitle] 话题标题
      * @apiSuccess (200) {object} [list] 动态内容数据列表
      * @apiSuccess (200) {string} [userId] 用户id
      * @apiSuccess (200) {string} [headUrl] 头像图片地址
@@ -866,20 +863,6 @@ public class DynamicController {
      * "msg": "获取觅鹿界面发布的动态内容信息列表成功。",
      * "data": {
      * "totalPage": 11,
-     * "hots": [
-     * {
-     * "totalCount": 5,
-     * "topicTitle": "#电动车交规"
-     * },
-     * {
-     * "totalCount": 4,
-     * "topicTitle": "#球长防骗课堂"
-     * },
-     * {
-     * "totalCount": 2,
-     * "topicTitle": "#懒癌生存守则"
-     * }
-     * ],
      * "list": [
      * {
      * "userId": 70,
@@ -1327,20 +1310,6 @@ public class DynamicController {
      * "msg": "获取觅鹿界面发布的动态内容信息列表成功。",
      * "data": {
      * "totalPage": 11,
-     * "hots": [
-     * {
-     * "totalCount": 5,
-     * "topicTitle": "#电动车交规"
-     * },
-     * {
-     * "totalCount": 4,
-     * "topicTitle": "#球长防骗课堂"
-     * },
-     * {
-     * "totalCount": 2,
-     * "topicTitle": "#懒癌生存守则"
-     * }
-     * ],
      * "list": [
      * {
      * "userId": 70,
@@ -1846,9 +1815,6 @@ public class DynamicController {
      * @apiSuccess (200) {string{..255}} msg 说明
      * @apiSuccess (200) {object} [data] 数据
      * @apiSuccess (200) {int} [totalPage] 总页数
-     * @apiSuccess (200) {object[]} [hots] 三条热门话题列表
-     * @apiSuccess (200) {int} [totalCount] 参与话题的动态数量
-     * @apiSuccess (200) {string} [topicTitle] 话题标题
      * @apiSuccess (200) {object} [list] 动态内容数据列表
      * @apiSuccess (200) {string} [userId] 用户id
      * @apiSuccess (200) {string} [headUrl] 头像图片地址
@@ -1876,20 +1842,6 @@ public class DynamicController {
      * "msg": "筛选发布动态内容信息列表成功。",
      * "data": {
      * "totalPage": 5,
-     * "hots": [
-     * {
-     * "totalCount": 5,
-     * "topicTitle": "#电动车交规"
-     * },
-     * {
-     * "totalCount": 4,
-     * "topicTitle": "#球长防骗课堂"
-     * },
-     * {
-     * "totalCount": 2,
-     * "topicTitle": "#懒癌生存守则"
-     * }
-     * ],
      * "list": [
      * {
      * "userId": 73,
@@ -2819,5 +2771,75 @@ public class DynamicController {
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码，默认：当前第1页", example = "1") Integer pageNum,    // 当前页码，默认：当前第1页
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量，默认：每页20条", example = "20") Integer pageSize) {// 每页数量，默认：每页20条
         return this.dynamicFeignClient.mylist(userId, pageNum, pageSize);
+    }
+    
+    /**
+     * @api {get} /find/dynamic/{id}/hots 获取三个热门话题接口
+     * @apiVersion 1.0.0
+     * @apiGroup 动态模块API
+     * @apiName 获取三个热门话题
+     * @apiParam (接口请求参数) {long} id 用户id
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {long{0-500}} code 信息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {object} [data] 数据
+     * @apiSuccess (200) {object[]} [hots] 三条热门话题
+     * @apiSuccess (200) {int} [totalCount] 参与话题的动态数量
+     * @apiSuccess (200) {string} [topicTitle] 话题标题
+     * @apiParamExample {json} 请求示例
+     * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/156/hots
+     * @apiSuccessExample {json} 200响应示例
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "获取三个热门话题成功。",
+     * "data": {
+     * "hots": [
+     * {
+     * "totalCount": 5,
+     * "topicTitle": "#电动车交规"
+     * },
+     * {
+     * "totalCount": 4,
+     * "topicTitle": "#球长防骗课堂"
+     * },
+     * {
+     * "totalCount": 2,
+     * "topicTitle": "#懒癌生存守则"
+     * }
+     * ]
+     * }
+     * }
+     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
+     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {String} error 错误说明
+     * @apiError (404) {String} message 返回说明
+     * @apiError (404) {String} path 路径
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应 接口未注册
+     * {
+     * "timestamp": 1611558682334,
+     * "status": 404,
+     * "error": "Not Found",
+     * "message": "No message available",
+     * "path": "/find/dynamic/70/hots"
+     * }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！",
+     * "data": null
+     * }
+     */
+    @ApiOperation(value = "获取三个热门话题接口", notes = "获取三个热门话题内容")
+    @GetMapping(value = "/{id}/hots")
+    public CommonResult<Map<String, Object>> hots(
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId) {
+        return this.dynamicFeignClient.hots(userId);
     }
 }

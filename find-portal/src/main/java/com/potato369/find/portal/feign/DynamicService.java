@@ -119,4 +119,8 @@ public interface DynamicService {
     CommonResult<Map<String, Object>> likesComment(@PathVariable(name = "id") Long userId,
                                                    @RequestParam(name = "commentId") Long commentId,
                                                    @RequestParam(name = "type") String type);
+    
+    //远程调用获取三个热门话题接口
+    @GetMapping("/find/v1/dynamic/{id}/hots.do")
+    CommonResult<Map<String, Object>> hots(@PathVariable(name = "id") Long userId);    
 }

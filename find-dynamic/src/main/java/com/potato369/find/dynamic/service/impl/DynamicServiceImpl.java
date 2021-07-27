@@ -589,8 +589,6 @@ public class DynamicServiceImpl implements DynamicService {
                 list2.add(dynamicInfoVO);
             }
         }
-        List<HotTopic> hotTopicList = this.dynamicInfoMapperReader.selectHotTopicTitle();
-        data.put("hots", hotTopicList);
         data.put("list", list2);
         return data;
     }

@@ -68,6 +68,8 @@ public class DynamicController {
     private ProfessionsMapper professionsMapperReader;
 
     private TagMapper tagMapperReader;
+    
+    private DynamicInfoMapper dynamicInfoMapperReader;
 
     @Autowired
     public void setDynamicService(DynamicService dynamicService) {
@@ -159,7 +161,12 @@ public class DynamicController {
         this.tagMapperReader = tagMapperReader;
     }
 
-    // 用户发布动态附件（包括图片和语音）
+    @Autowired
+    public void setDynamicInfoMapperReader(DynamicInfoMapper dynamicInfoMapperReader) {
+		this.dynamicInfoMapperReader = dynamicInfoMapperReader;
+	}
+
+	// 用户发布动态附件（包括图片和语音）
     @PostMapping(value = "/{id}/release.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
     public CommonResult<Map<String, Object>> release(
             @PathVariable(name = "id") Long userId,
@@ -1047,4 +1054,25 @@ public class DynamicController {
             }
         }
     }
+    
+    //获取三个热门话题
+    @GetMapping(value = "/{id}/hots.do")
+    public CommonResult<Map<String, Object>> hots(@PathVariable(name = "id") Long userId) {
+    	Map<String, Object> data = new ConcurrentHashMap<>();
+    	try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始获取三个热门话题");
+            }
+            List<HotTopic> hotTopicList = this.dynamicInfoMapperReader.selectHotTopicTitle();
+            data.put("hots", hotTopicList);
+            return CommonResult.success(data, "获取三个热门话题成功");
+        } catch (Exception e) {
+            log.error("获取三个热门话题出错", e);
+            return CommonResult.failed("获取三个热门话题出现错误。");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束获取三个热门话题");
+            }
+        }
+	}
 }
