@@ -472,10 +472,11 @@ public class DynamicServiceImpl implements DynamicService {
                 + user.getId();
         // 头像图片上传服务器
         String oldHeadFileName = head.getOriginalFilename();
+        assert oldHeadFileName != null;
         String newHeadFileName = cn.hutool.core.lang.UUID.randomUUID() + oldHeadFileName.substring(oldHeadFileName.lastIndexOf("."));
         File newHeadIconFile = new File(headIconFilePath, newHeadFileName);
-        if (!newHeadIconFile.getParentFile().exists()) {
-            newHeadIconFile.getParentFile().mkdirs();
+        if (!newHeadIconFile.exists()) {
+            newHeadIconFile.mkdirs();
         }
         //重新上传新的头像到服务器，并更新用户数据库头像信息
         head.transferTo(newHeadIconFile);
@@ -483,14 +484,14 @@ public class DynamicServiceImpl implements DynamicService {
         String dynamicIconFilePath = StrUtil.trimToNull(this.projectUrlProps.getUploadRes()) +
                 StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
                 StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile());
-        String fileString = user.getId() + "/" + DateUtil.getDays() + "/" + System.currentTimeMillis();
+        String fileString = user.getId() + "/" + DateUtil.getDays() + "/" + System.currentTimeMillis() + "/";
         //发布一条动态
         File newHeadIconFileDy = new File(dynamicIconFilePath + fileString);
-        if (!newHeadIconFileDy.getParentFile().exists()) {
-            newHeadIconFileDy.getParentFile().mkdirs();
+        if (!newHeadIconFileDy.exists()) {
+            newHeadIconFileDy.mkdirs();
         }
         //头像图片复制到动态目录
-        FileUtil.copyDir(newHeadIconFile.getParent(), newHeadIconFileDy.getParent());
+        FileUtil.copyDir(newHeadIconFile.getParent(), newHeadIconFileDy.getAbsolutePath());
         user.setHeadIcon(newHeadIconFile.getName());
         int a = this.userMapperWriter.updateByPrimaryKeySelective(user);
 
