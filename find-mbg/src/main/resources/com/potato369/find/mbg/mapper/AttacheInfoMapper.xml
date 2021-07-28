@@ -107,7 +107,7 @@
                 from `dynamic_info` di
                 where di.`user_id` = #{userId,jdbcType=BIGINT}
                 order by di.`create_time` desc)
-          and ai.`data_type` = '0'
+          and ai.`data_type` = '1'
           and ai.`status` = '1'
         order by ai.`create_time` desc
     </select>

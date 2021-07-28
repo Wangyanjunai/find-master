@@ -3,6 +3,7 @@ package com.potato369.find.user.service.impl;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import com.potato369.find.common.dto.DynamicDTO;
+import com.potato369.find.common.dto.UserDTO;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.CopyUtil;
 import com.potato369.find.mbg.mapper.DynamicMapper;
@@ -216,46 +217,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = false)
-    public int register(User user, String content, String multipartFileName) {
-        try {
-            if (StrUtil.isNotEmpty(content)) {
-                DynamicDTO dynamicDTO = DynamicDTO.builder().build();
-                dynamicDTO.setUserId(user.getId());
-                dynamicDTO.setImei(user.getImei());
-                dynamicDTO.setAttacheInfoDataType(AttacheInfoDataTypeEnum.Image.getCodeStr());
-                dynamicDTO.setModel(user.getModel());
-                dynamicDTO.setSysName(user.getSysName());
-                dynamicDTO.setSysCode(user.getSysCode());
-                dynamicDTO.setNetworkMode(user.getNetworkMode());
-                dynamicDTO.setIp(user.getIp());
-                dynamicDTO.setCountry(user.getCountry());
-                dynamicDTO.setProvince(user.getProvince());
-                dynamicDTO.setCity(user.getCity());
-                dynamicDTO.setDistrict(user.getDistrict());
-                dynamicDTO.setOther(user.getOther());
-                dynamicDTO.setLongitude(user.getLongitude());
-                dynamicDTO.setLatitude(user.getLatitude());
-                dynamicDTO.setPublicStatus(PublicStatusEnum.NOPublic.getType());
-                dynamicDTO.setContent(content);
-                dynamicDTO.setIsAnonymous(IsAnonymousEnum.No.getType());
-                dynamicDTO.setIsTopic(IsTopicEnum.No.getType());
-                return this.dynamicService.release(user, dynamicDTO, multipartFileName);
-            }
-        } catch (Exception e) {
-            log.error("上传用户头像小图到Nginx服务器出现错误", e);
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("上传用户头像小图到Nginx服务器成功，file={}", multipartFileName);
-        }
-        return 0;
+    @Transactional
+    public int register(User user, String content, UserDTO userDTO, MultipartFile head) throws Exception {
+        //用户信息入库
+        this.userMapperWriter.insertSelective(user);
+        DynamicDTO dynamicDTO = DynamicDTO.builder().build();
+        dynamicDTO.setImei(user.getImei());
+        dynamicDTO.setAttacheInfoDataType(AttacheInfoDataTypeEnum.Image.getCodeStr());
+        dynamicDTO.setModel(user.getModel());
+        dynamicDTO.setSysName(user.getSysName());
+        dynamicDTO.setSysCode(user.getSysCode());
+        dynamicDTO.setNetworkMode(user.getNetworkMode());
+        dynamicDTO.setIp(user.getIp());
+        dynamicDTO.setCountry(user.getCountry());
+        dynamicDTO.setProvince(user.getProvince());
+        dynamicDTO.setCity(user.getCity());
+        dynamicDTO.setDistrict(user.getDistrict());
+        dynamicDTO.setOther(user.getOther());
+        dynamicDTO.setLongitude(user.getLongitude());
+        dynamicDTO.setLatitude(user.getLatitude());
+        dynamicDTO.setPublicStatus(PublicStatusEnum.NOPublic.getType());
+        dynamicDTO.setContent(content);
+        dynamicDTO.setIsAnonymous(IsAnonymousEnum.No.getType());
+        dynamicDTO.setIsTopic(IsTopicEnum.No.getType());
+        return this.dynamicService.release(user, dynamicDTO, head);
     }
 
     /**
      * 更新用户VIP等级
      */
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public void updateUserGrade() {
         List<User> userList = this.userMapperReader.selectVIPExpireUser();
         for (User user : userList) {

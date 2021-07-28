@@ -15,7 +15,7 @@ public interface DynamicService {
 
     CommonResult<Map<String, Object>> update(User user, DynamicDTO dynamicDTO, MultipartFile[] files, String message) throws Exception;
 
-    int release(User user, DynamicDTO dynamicDTO, String fileName) throws Exception;
+    int release(User user, DynamicDTO dynamicDTO, MultipartFile head) throws Exception;
 
     void find(Long userId) throws Exception;
 

@@ -508,104 +508,57 @@ public class UserController {
                     return CommonResult.validateFailed("参数校验不通过，签名包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
                 }
             }
-            User user = this.userDaoUseJdbcTemplate.getByPhone(userDTO.getPhone());
-            if (Objects.isNull(user)) {
-                user = new User();
-                BeanUtils.copyProperties(userDTO, user);
-                UpdateUserDTO updateUserDTO = UpdateUserDTO.builder().build();
-                BeanUtils.copyProperties(userDTO, updateUserDTO);
-                this.copy(updateUserDTO, user);
-                user.setNickName(nickname);
-                if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeStr, latitudeStr)) {
-                    // 根据IP调用百度定位获取地址
-                    if (StrUtil.isNotEmpty(userDTO.getIp())) {
-                        LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), userDTO.getIp());
-                        user.setIp(locationDTO.getIp());
-                        user.setCountry(locationDTO.getCountry());
-                        user.setProvince(locationDTO.getProvince());
-                        user.setCity(locationDTO.getCity());
-                        user.setDistrict(locationDTO.getDistrict());
-                        user.setOther(locationDTO.getOther());
-                        user.setLongitude(locationDTO.getLongitude());
-                        user.setLatitude(locationDTO.getLatitude());
-                    }
-                }
-                if (StrUtil.isEmpty(autograph)) {
-                    if (Objects.equals(UserGenderEnum.Female.getGender(), user.getGender())) {
-                        autograph = StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent());
-                    }
-                    if (Objects.equals(UserGenderEnum.Male.getGender(), user.getGender())) {
-                        autograph = StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent());
-                    }
-                }
-                user.setAutograph(autograph);
-                // 保存用户信息到数据库
-                int result = this.userMapperWriter.insertSelective(user);
-//                log.info("result={}", result);
-                if (result > 0) {
-                    this.updateTagHotValue(userDTO);
-                    // 头像图片存储本地路径
-                    String headIconFilePath = StrUtil.trimToNull(this.projectUrlProps.getUploadRes())
-                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                            + user.getId();
-                    // 头像图片上传服务器
-                    String oldHeadFileName = head.getOriginalFilename();
-                    if (!Objects.isNull(oldHeadFileName)) {
-//                        log.info("oldHeadFileName={}", oldHeadFileName);
-                        try {
-                            String newHeadFileName = UUID.randomUUID() + oldHeadFileName.substring(oldHeadFileName.lastIndexOf("."));
-                            File newHeadIconFile = new File(headIconFilePath, newHeadFileName);
-                            if (!newHeadIconFile.getParentFile().exists()) {
-                                newHeadIconFile.getParentFile().mkdirs();
-                            }
-                            //重新上传新的头像到服务器，并更新用户数据库头像信息
-                            head.transferTo(newHeadIconFile);
-                            // 附件文件存放路径
-                            String dynamicIconFilePath = StrUtil.trimToNull(this.projectUrlProps.getUploadRes()) +
-                                    StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
-                                    StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile());
-                            String fileString = user.getId() + "/" + DateUtil.getDays() + "/" + System.currentTimeMillis() + "";
-                            //发布一条动态
-                            File newHeadIconFileDy = new File(dynamicIconFilePath + fileString);
-//                            log.info("aaaa={}", newHeadIconFileDy.getName());
-                            try {
-                                if (!newHeadIconFileDy.getParentFile().exists()) {
-                                    newHeadIconFileDy.getParentFile().mkdirs();
-                                }
-                                //复制到动态目录
-                                FileUtil.copyDir(newHeadIconFile.getParent(), newHeadIconFileDy.getParent());
-                            } catch (Exception e) {
-                                log.error("用头像发布一条动态到服务器出现错误", e);
-                            }
-                            user.setHeadIcon(newHeadIconFile.getName());
-                            user.setUpdateTime(new Date());
-                            int result02 = this.userService.register(user, autograph, fileString + newHeadIconFile.getName());
-                            if (Objects.equals(result02, 4)) {
-                                message = "注册成功。";
-                                operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
-                                operateRecord.setUserId(user.getId());
-                                userId = user.getId();
-                            }
-                        } catch (Exception e) {
-                            log.error("上传用户头像小图到Nginx服务器出现错误", e);
-                        }
-                    }
+            User user = new User();
+            BeanUtils.copyProperties(userDTO, user);
+            UpdateUserDTO updateUserDTO = UpdateUserDTO.builder().build();
+            BeanUtils.copyProperties(userDTO, updateUserDTO);
+            this.copy(updateUserDTO, user);
+            user.setNickName(nickname);
+            if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeStr, latitudeStr)) {
+                // 根据IP调用百度定位获取地址
+                if (StrUtil.isNotEmpty(userDTO.getIp())) {
+                    LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), userDTO.getIp());
+                    user.setIp(locationDTO.getIp());
+                    user.setCountry(locationDTO.getCountry());
+                    user.setProvince(locationDTO.getProvince());
+                    user.setCity(locationDTO.getCity());
+                    user.setDistrict(locationDTO.getDistrict());
+                    user.setOther(locationDTO.getOther());
+                    user.setLongitude(locationDTO.getLongitude());
+                    user.setLatitude(locationDTO.getLatitude());
                 }
             }
-            userVO2.setId(user.getId());
-            userVO2.setNickname(user.getNickName());
-            userVO2.setAutograph(user.getAutograph());
-            userVO2.setGender(user.getGender());
-            userVO2.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
-                    StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
-                    StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
-                    + user.getId()
-                    + "/"
-                    + user.getHeadIcon());
-            map.put("user", userVO2);
-            this.operateRecordMapperWriter.insertSelective(operateRecord);
-            return CommonResult.success(map, message);
+            if (StrUtil.isEmpty(autograph)) {
+                if (Objects.equals(UserGenderEnum.Female.getGender(), user.getGender())) {
+                    autograph = StrUtil.trimToNull(this.projectUrlProps.getDefaultFemaleContent());
+                }
+                if (Objects.equals(UserGenderEnum.Male.getGender(), user.getGender())) {
+                    autograph = StrUtil.trimToNull(this.projectUrlProps.getDefaultMaleContent());
+                }
+            }
+            user.setAutograph(autograph);
+            int result02 = this.userService.register(user, autograph, userDTO, head);
+            if (Objects.equals(result02, 5)) {
+                message = "注册成功。";
+                operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+                operateRecord.setUserId(user.getId());
+                userVO2.setId(user.getId());
+                userVO2.setNickname(user.getNickName());
+                userVO2.setAutograph(user.getAutograph());
+                userVO2.setGender(user.getGender());
+                userVO2.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                        + user.getId()
+                        + "/"
+                        + user.getHeadIcon());
+                map.put("user", userVO2);
+                this.operateRecordMapperWriter.insertSelective(operateRecord);
+                return CommonResult.success(map, message);
+            } else {
+                this.operateRecordMapperWriter.insertSelective(operateRecord);
+                return CommonResult.failed(message);
+            }
         } catch (Exception e) {
             log.error("注册出现错误", e);
             this.operateRecordMapperWriter.insertSelective(operateRecord);
@@ -1249,7 +1202,6 @@ public class UserController {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取鹿可模块用户数据");
             }
-            //log.info("前端提交过来的请求参数：id={}, userDTO={}, count={}", id, userDTO, count);
             if (bindingResult != null && bindingResult.hasErrors()) {
                 return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
@@ -1298,7 +1250,6 @@ public class UserController {
             lookInfoParam.setMinAge(min);
             lookInfoParam.setMaxAge(max);
             lookInfoParam.setUserId(id);
-            //log.info("screenGender={}, screenAgeMin={}, screenAgeMax={}", lookInfoParam.getGender(), DateUtil.strFormat(lookInfoParam.getMinAge(), DateUtil.sdfTimeFmt), DateUtil.strFormat(lookInfoParam.getMaxAge(), DateUtil.sdfTimeFmt));
             List<User> userList = this.userMapperReader.selectLookUserList(lookInfoParam);
             List<User> userList1 = new LinkedList<>();
             List<UserVO3> userVO3List = new LinkedList<>();
@@ -1322,6 +1273,7 @@ public class UserController {
                     } else {
                         filenameTemp = this.dynamicInfoMapperReader.getFileNameByUserId(userTmp.getId());
                     }
+//                    log.info("filenameTemp={}", filenameTemp);
                     String filename = StrUtil.trimToNull(this.projectUrlProps.getResDomain()) + StrUtil.trimToNull(this.projectUrlProps.getProjectName()) + StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()) + filenameTemp;
                     userVO3.setImg(filename);
                     userVO3.setDistance(DistanceUtil.getDistance(userDTO.getLongitude(), userDTO.getLatitude(), userTmp.getLongitude(), userTmp.getLatitude()));
@@ -1534,16 +1486,6 @@ public class UserController {
             userVO4.setTag3(this.getTagNameById(user.getTag3()));
             userVO4.setTag4(this.getTagNameById(user.getTag4()));
             userVO4.setTag5(this.getTagNameById(user.getTag5()));
-        }
-    }
-
-    private void updateTagHotValue(UserDTO userDTO) {
-        if (!Objects.isNull(userDTO)) {
-            this.updateByTagId(this.getTagIdByName(userDTO.getTag1()));
-            this.updateByTagId(this.getTagIdByName(userDTO.getTag2()));
-            this.updateByTagId(this.getTagIdByName(userDTO.getTag3()));
-            this.updateByTagId(this.getTagIdByName(userDTO.getTag4()));
-            this.updateByTagId(this.getTagIdByName(userDTO.getTag5()));
         }
     }
 

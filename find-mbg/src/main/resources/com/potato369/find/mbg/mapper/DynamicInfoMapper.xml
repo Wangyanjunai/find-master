@@ -586,11 +586,11 @@
               (select dy.`id`
                from `dynamic_info` dy
                where dy.`user_id` <![CDATA[=]]> #{userId, jdbcType=BIGINT}
-                 and dy.`attache_type` <![CDATA[=]]> '0'
+                 and dy.`attache_type` <![CDATA[=]]> '1'
                  and dy.`attache_number` <![CDATA[>]]> 0
                order by dy.`create_time` desc
                limit 1)
-          and ai.`data_type` <![CDATA[=]]> '0'
+          and ai.`data_type` <![CDATA[=]]> '1'
           and ai.`file_name` is not null
         limit 1
     </select>

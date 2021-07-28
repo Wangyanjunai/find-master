@@ -1,5 +1,6 @@
 package com.potato369.find.user.service;
 
+import com.potato369.find.common.dto.UserDTO;
 import com.potato369.find.mbg.model.Dynamic;
 import com.potato369.find.mbg.model.OperateRecord;
 import com.potato369.find.mbg.model.User;
@@ -65,11 +66,12 @@ public interface UserService {
     /**
      * 用户个人上传或者修改头像图片资料
      *
-     * @param user              用户信息
-     * @param content           动态内容
-     * @param multipartFileName 头像图片文件，动态内容图片
+     * @param user    用户信息
+     * @param content 动态内容
+     * @param userDTO
+     * @param head
      */
-    int register(User user, String content, String multipartFileName);
+    int register(User user, String content, UserDTO userDTO, MultipartFile head) throws Exception;
 
     /**
      * 更新用户VIP等级
