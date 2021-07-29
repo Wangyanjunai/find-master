@@ -689,8 +689,8 @@ public class DynamicController {
             BlacklistRecordExample example = new BlacklistRecordExample();
             example.setDistinct(true);
             example.setOrderByClause("id DESC, update_time DESC, create_time DESC");
-            example.createCriteria().andOwnerUserIdEqualTo(userId);
-            List<BlacklistRecord> blacklistRecordList = this.blacklistRecordMapperReader.selectByExample(example).stream().filter((BlacklistRecord b) -> (b.getStatus() % 2) != 0).collect(Collectors.toList());
+            example.createCriteria().andOwnerUserIdEqualTo(userId).andStatusEqualTo(BlacklistRecordStatusEnum.PUSH.getCode());
+            List<BlacklistRecord> blacklistRecordList = this.blacklistRecordMapperReader.selectByExample(example).stream().collect(Collectors.toList());
             List<Long> blackUserIdList = blacklistRecordList.stream().map(BlacklistRecord::getBlackUserId).collect(Collectors.toList());
             CopyUtil.removeLongDuplicate(blackUserIdList);
             dynamicInfoParam.setBlackRecordUserIdLongList(blackUserIdList);

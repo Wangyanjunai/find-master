@@ -340,7 +340,7 @@ public class UserController {
      * {
      * "status": 200,
      * "code": 0,
-     * "msg": "登录或者注册成功。",
+     * "msg": "注册成功。",
      * "data": {
      * "user": {
      * "id": 21,
@@ -515,7 +515,7 @@ public class UserController {
     }
 
     /**
-     * @api {get} /find/user/isreg?phone={手机号码} 判断手机号是否注册接口
+     * @api {get} /find/user/isreg?phone={phone} 判断手机号是否注册接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 判断手机号是否注册
@@ -785,8 +785,8 @@ public class UserController {
      */
     @ApiOperation(value = "查看用户微信号接口", notes = "用于用户查看微信号信息。")
     @GetMapping(value = "/{id}/queryWeixin")
-    public CommonResult<Map<String, Object>> queryWeixin(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", example = "1", required = true) Long userId) {
-        return this.userFeignClient.queryWeixin(userId);
+    public CommonResult<Map<String, Object>> queryWeChat(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", example = "1", required = true) Long userId) {
+        return this.userFeignClient.queryWeChat(userId);
     }
 
     /**

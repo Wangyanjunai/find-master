@@ -17,10 +17,10 @@ public class AttacheInfo implements Serializable {
     @ApiModelProperty(value = "动态内容id，对应动态信息表主键id")
     private Long dynamicInfoBy;
 
-    @ApiModelProperty(value = "附件名称")
+    @ApiModelProperty(value = "附件名称列表，以“||”分割")
     private String fileName;
 
-    @ApiModelProperty(value = "附件类型，0->图片；1->音频，默认：0->图片")
+    @ApiModelProperty(value = "附件类型，1->图片；2->音频，默认：1->图片")
     private String dataType;
 
     @ApiModelProperty(value = "创建时间")

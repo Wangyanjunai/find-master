@@ -33,13 +33,13 @@ public interface UserService {
     CommonResult<Map<String, Object>> background(@PathVariable(name = "id") Long id, @RequestPart(value = "backgroundIconFile") MultipartFile backgroundIconFile);
 
     // 远程调用判断用户是否已经注册接口
-    @GetMapping(value = "/find/v1/user/isreg.do")
+    @GetMapping(value = "/find/v1/user/is-reg.do")
     CommonResult<Map<String, Boolean>> isRegister(@RequestParam(name = "phone") String phone);
 
     // 远程调用登录或者注册接口
     @PostMapping(value = "/find/v1/user/reg.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     CommonResult<Map<String, Object>> register(
-            @RequestParam(name = "phone", required = true) String phone, // phone：手机号
+            @RequestParam(name = "phone") String phone, // phone：手机号
             @RequestParam(name = "gender", required = false) String gender, // gender：性别
             @RequestParam(name = "platform", required = false) String platform, // platform：平台
             @RequestParam(name = "nickname", required = false) String nickname, // nickname：昵称
@@ -68,7 +68,7 @@ public interface UserService {
             @RequestParam(name = "tag4", required = false) String tag4, // tag4：标签4
             @RequestParam(name = "tag5", required = false) String tag5, // tag5：标签5
             @RequestParam(name = "autograph", required = false) String autograph, // autograph：签名/动态内容
-            @RequestPart(value = "head", required = true) MultipartFile head); // head：头像图片文件
+            @RequestPart(value = "head") MultipartFile head); // head：头像图片文件
 
     @PutMapping(value = "/find/v1/user/login.do")
     CommonResult<Map<String, UserVO2>> login(
@@ -91,10 +91,10 @@ public interface UserService {
     CommonResult<Map<String, Object>> query(@PathVariable(name = "id") Long userId);
 
     // 远程调用查看用户微信接口
-    @GetMapping(value = "/find/v1/user/{id}/queryWeixin.do")
-    CommonResult<Map<String, Object>> queryWeixin(@PathVariable(name = "id") Long userId);
+    @GetMapping(value = "/find/v1/user/{id}/query-weChat.do")
+    CommonResult<Map<String, Object>> queryWeChat(@PathVariable(name = "id") Long userId);
 
-    @GetMapping(value = "/find/v1/user/{id}/reportcategories.do")
+    @GetMapping(value = "/find/v1/user/{id}/report-categories.do")
     CommonResult<Map<String, List<ReportCategoryVO>>> reportCategoryList(@PathVariable(name = "id") Long userId);
 
     // 远程调用记录用户举报内容接口
@@ -102,11 +102,11 @@ public interface UserService {
     CommonResult<Map<String, Object>> reportDynamic(@PathVariable(name = "id") Long userId, @RequestBody @Valid ReportInfoDTO reportInfoDTO);
 
     // 远程调用获取用户黑名单列表接口
-    @GetMapping(value = "/find/v1/user/{id}/blacklist.do")
+    @GetMapping(value = "/find/v1/user/{id}/black-list.do")
     CommonResult<Map<String, Object>> blackList(@PathVariable(name = "id") Long userId);
 
     // 远程调用拉入推出用户黑名单列表接口
-    @PostMapping(value = "/find/v1/user/{id}/pushblacklist.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/find/v1/user/{id}/pushOrPull-blacklist.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     CommonResult<Map<String, String>> pushBlackList(@PathVariable(name = "id") Long userId, @RequestBody @Valid BlacklistDTO blacklistDTO);
 
     // 远程调用行业和职业列表接口

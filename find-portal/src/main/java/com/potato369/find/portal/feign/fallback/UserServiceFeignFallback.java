@@ -8,6 +8,7 @@ import com.potato369.find.common.vo.*;
 import com.potato369.find.portal.feign.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,7 +76,7 @@ public class UserServiceFeignFallback implements UserService {
     }
 
     @Override
-    public CommonResult<Map<String, Object>> queryWeixin(Long userId) {
+    public CommonResult<Map<String, Object>> queryWeChat(Long userId) {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }
@@ -99,7 +100,7 @@ public class UserServiceFeignFallback implements UserService {
     }
 
     @Override
-    public CommonResult<Map<String, String>> pushBlackList(Long userId, @Valid BlacklistDTO blacklistDTO) {
+    public CommonResult<Map<String, String>> pushBlackList(Long userId, @RequestBody @Valid BlacklistDTO blacklistDTO) {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }

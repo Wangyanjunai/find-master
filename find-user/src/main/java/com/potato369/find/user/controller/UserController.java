@@ -385,7 +385,6 @@ public class UserController {
                 File bgIconFile = new File(bgIconFilePath, newFileName);
                 bgIconFileName = bgIconFile.getName();
                 try {
-                    //log.info("h1={}, h2={}", bgIconFileName, user1.getBackgroundIcon());
                     if (!Objects.equals(bgIconFileName, user1.getBackgroundIcon())) {
                         if (!Objects.isNull(user1.getBackgroundIcon())) {
                             // 删除之前服务器的背景
@@ -576,7 +575,6 @@ public class UserController {
     public CommonResult<Map<String, UserVO2>> login(@Valid UserDTO userDTO, BindingResult bindingResult) {
         if (log.isDebugEnabled()) {
             log.debug("开始登录");
-            log.debug("前端传输过来的用户信息userDTO={}", userDTO);
         }
         Map<String, UserVO2> map = new ConcurrentHashMap<>();
         UserVO2 userVO2 = UserVO2.builder().build();
@@ -669,7 +667,6 @@ public class UserController {
                 }
             }
             user.setUpdateTime(new Date());
-            //this.userMapperWriter.updateByPrimaryKeySelective(user);
             Dynamic dynamic = this.dynamicDaoUseJdbcTemplate.getByUserId(user.getId());
             if (Objects.isNull(dynamic)) {
                 return CommonResult.failed("该注册用户动态不存在，请注册后再试。");
@@ -698,7 +695,6 @@ public class UserController {
             dynamic.setUpdateTime(new Date());
             int a = this.userService.update(user, dynamic);
             if (a > 0) {
-                message = "登录成功。";
                 userVO2.setId(user.getId());
                 userVO2.setNickname(user.getNickName());
                 userVO2.setAutograph(user.getAutograph());
@@ -711,6 +707,9 @@ public class UserController {
                         + user.getHeadIcon());
                 map.put("user", userVO2);
                 userId = user.getId();
+                message = "登录成功。";
+                operateRecord.setUserId(userId);
+                operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
             }
             this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(map, message);
@@ -726,7 +725,7 @@ public class UserController {
     }
 
     //判断用户是否已经注册接口
-    @GetMapping(value = "/isreg.do")
+    @GetMapping(value = "/is-reg.do")
     public CommonResult<Map<String, Boolean>> isregister(@RequestParam(name = "phone") String phone) {
         if (log.isDebugEnabled()) {
             log.debug("前端传输过来的用户手机号码={}", phone);
@@ -875,7 +874,7 @@ public class UserController {
     }
 
     //查看用户微信接口
-    @GetMapping(value = "/{id}/queryWeixin.do")
+    @GetMapping(value = "/{id}/query-weChat.do")
     public CommonResult<Map<String, Object>> queryWeixin(@PathVariable(name = "id") Long id) {
         if (log.isDebugEnabled()) {
             log.debug("开始查看用户微信号");
@@ -894,7 +893,6 @@ public class UserController {
                 data.put("user", user);
             }
             operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
-            log.info("operateRecord={}", operateRecord);
             this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, "查看用户微信号资料成功");
         } catch (Exception e) {
@@ -909,7 +907,7 @@ public class UserController {
     }
 
     //获取用户举报类型列表接口
-    @GetMapping(value = "/{id}/reportcategories.do")
+    @GetMapping(value = "/{id}/report-categories.do")
     public CommonResult<Map<String, List<ReportCategoryVO>>> reportCategoryList(@PathVariable(name = "id") Long userId) {
         try {
             if (log.isDebugEnabled()) {
@@ -1015,8 +1013,8 @@ public class UserController {
             int result01 = this.reportInfoMapper.insertSelective(reportInfo);
             if (result01 > 0) {
                 operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
+                data.put("REPORTED", "OK");
             }
-            data.put("REPORTED", "OK");
             this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, "记录用户举报内容成功。");
         } catch (Exception e) {
@@ -1031,7 +1029,7 @@ public class UserController {
     }
 
     //获取用户黑名单列表接口
-    @GetMapping(value = "/{id}/blacklist.do")
+    @GetMapping(value = "/{id}/black-list.do")
     public CommonResult<Map<String, Object>> blackList(
             @PathVariable(name = "id") Long userId,
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
@@ -1044,16 +1042,13 @@ public class UserController {
             if (Objects.isNull(user)) {
                 return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
-            Map<String, Object> data = new HashMap<>();
+            Map<String, Object> data = new ConcurrentHashMap<>();
             BlacklistRecordExample example = new BlacklistRecordExample();
             example.setDistinct(true);
             example.setOrderByClause("id DESC, update_time DESC, create_time DESC");
-            example.createCriteria().andOwnerUserIdEqualTo(userId);
-            final PageInfo<BlacklistRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
-                    .setOrderBy("create_time DESC, update_time DESC")
-                    .doSelectPageInfo(() -> this.blacklistRecordMapperReader
-                            .selectByExample(example).stream()
-                            .filter((BlacklistRecord b) -> (b.getStatus() % 2) != 0).collect(Collectors.toList()));
+            example.createCriteria().andOwnerUserIdEqualTo(userId).andStatusEqualTo(BlacklistRecordStatusEnum.PUSH.getCode());
+            final PageInfo<BlacklistRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).setOrderBy("create_time DESC, update_time DESC")
+                  .doSelectPageInfo(() -> this.blacklistRecordMapperReader.selectByExample(example).stream().collect(Collectors.toList()));
             int totalPage = 0;
             List<BlacklistRecord> blacklistRecordList = new ArrayList<>();
             if (listPageInfo != null && listPageInfo.getList() != null && !listPageInfo.getList().isEmpty()) {
@@ -1090,105 +1085,122 @@ public class UserController {
     }
 
     //拉入拉出用户黑名单列表接口
-    @PostMapping(value = "/{id}/pushblacklist.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/{id}/pushOrPull-blacklist.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CommonResult<Map<String, String>> pushBlackList(@PathVariable(name = "id") Long userId,
                                                            @RequestBody @Valid BlacklistDTO blacklistDTO, BindingResult bindingResult) {
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setUserId(userId);
-        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
-        Integer type = blacklistDTO.getType();
-        Map<String, String> data = new HashMap<>();
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.PullBlackList.getCode());
+        Map<String, String> data = new ConcurrentHashMap<>();
         String status = "PUSH";
-        String message = "拉入";
+        String statusStr = "ERROR";
         try {
-            if (type % 2 != 0) {
-                message = "拉入";
-                status = "PUSH";
-                operateRecord.setType(OperateRecordTypeEnum.PushBlackList.getCode());
-            }
-            if (type % 2 == 0) {
-                message = "推出";
-                status = "PULL";
-                operateRecord.setType(OperateRecordTypeEnum.PullBlackList.getCode());
+            if (log.isDebugEnabled()) {
+                log.debug("开始将用户拉入推出黑名单列表");
             }
             if (bindingResult.hasErrors()) {
-                return CommonResult.failed(HttpStatus.UNAUTHORIZED.value(), ErrorMessageUtil.messageBuild(bindingResult.getAllErrors()));
+                return CommonResult.validateFailed(ErrorMessageUtil.messageBuild(bindingResult.getAllErrors()));
             }
-            if (log.isDebugEnabled()) {
-                log.debug("开始将用户{}黑名单列表。", message);
+            Long blackUserId = blacklistDTO.getBlackUserId();//黑名单列表用户id
+            if (Objects.equals(blackUserId, userId)) {//不能把自己添加到自己的黑名单列表中
+                return CommonResult.validateFailed(ResultCode.NOT_PULL_OR_PUSH_OWNER_BLACKLIST_ERROR.getMessage());
             }
-            operateRecord.setUserId(userId);
-            Long blackUserId = blacklistDTO.getBlackUserId();
-            if (blackUserId.equals(userId)) {
-                data.put(status, "ERROR");
-                return CommonResult.failed(data, ResultCode.NOT_PULL_OR_PUSH_OWNER_BLACKLIST_ERROR);
-            }
-            User ownerUser = this.userDaoUseJdbcTemplate.getById(userId);
-            if (Objects.isNull(ownerUser)) {
-                data.put(status, "ERROR");
-                return CommonResult.failed(data, ResultCode.USER_IS_NOT_EXIST);
-            }
-            User blackUser = this.userDaoUseJdbcTemplate.getById(blackUserId);
+            User blackUser = this.userDaoUseJdbcTemplate.getById(blackUserId);//黑名单列表被拥有者
             if (Objects.isNull(blackUser)) {
-                data.put(status, "ERROR");
-                return CommonResult.failed(data, ResultCode.USER_IS_NOT_EXIST);
+                return CommonResult.validateFailed(ResultCode.USER_IS_NOT_EXIST.getMessage());
             }
-            String blackUserNickName = blackUser.getNickName();
+            User ownerUser = this.userDaoUseJdbcTemplate.getById(userId);//黑名单列表拥有者
+            if (Objects.isNull(ownerUser)) {
+                return CommonResult.validateFailed(ResultCode.USER_IS_NOT_EXIST.getMessage());
+            }
+            //查询黑名单列表记录是否存在
             BlacklistRecordExample example = new BlacklistRecordExample();
-            example.setDistinct(true);
-            example.setOrderByClause("id DESC, update_time DESC, create_time DESC");
-            example.createCriteria()
-                    .andOwnerUserIdEqualTo(userId)
-                    .andBlackUserIdEqualTo(blackUserId);
+            example.createCriteria().andOwnerUserIdEqualTo(userId).andBlackUserIdEqualTo(blackUserId);
             List<BlacklistRecord> blacklistRecords = this.blacklistRecordMapperReader.selectByExample(example);
-            BlacklistRecord blacklistRecord = new BlacklistRecord();
-            blacklistRecord.setOwnerUserId(userId);
-            blacklistRecord.setBlackUserId(blackUserId);
-            if (type % 2 != 0) {
-                if (blacklistRecords != null && !blacklistRecords.isEmpty()) {
-                    data.put(status, "ERROR");
-                    return CommonResult.failed(data, ResultCode.USER_EXIST_BLACKLIST_ERROR);
-                } else {
-                    blacklistRecord.setStatus(OperateRecordTypeEnum.PushBlackList.getCode());
+            Integer type = blacklistDTO.getType();
+            String blackUserNickName = blackUser.getNickName();
+            if (!Objects.isNull(blacklistRecords) && blacklistRecords.isEmpty()) {
+                if (type % 2 != 0) {
+                    operateRecord.setType(OperateRecordTypeEnum.PushBlackList.getCode());
+                    BlacklistRecord blacklistRecord = new BlacklistRecord();
+                    blacklistRecord.setOwnerUserId(userId);
+                    blacklistRecord.setBlackUserId(blackUserId);
+                    blacklistRecord.setStatus(BlacklistRecordStatusEnum.PUSH.getCode());
                     int result = this.blacklistRecordMapperWriter.insertSelective(blacklistRecord);
                     if (result > 0) {
-                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
+                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                     }
-                    data.put(status, "OK");
-                    return CommonResult.success(data, "将用户" + blackUserNickName + message + "黑名单列表成功。");
-                }
-            } else {
-                if (blacklistRecords != null && !blacklistRecords.isEmpty()) {
-                    BlacklistRecord blacklistRecord2 = blacklistRecords.get(0);
-                    BlacklistRecordExample example2 = new BlacklistRecordExample();
-                    example2.setDistinct(true);
-                    example2.setOrderByClause("id DESC, update_time DESC, create_time DESC");
-                    example2.createCriteria()
-                            .andIdEqualTo(blacklistRecord2.getId())
-                            .andOwnerUserIdEqualTo(blacklistRecord2.getOwnerUserId())
-                            .andBlackUserIdEqualTo(blacklistRecord2.getBlackUserId());
-                    int result = this.blacklistRecordMapperWriter.deleteByExample(example2);
-                    if (result > 0) {
-                        operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
-                    }
-                    data.put(status, "OK");
+                    operateRecord.setType(OperateRecordTypeEnum.PushBlackList.getCode());
                     this.operateRecordMapperWriter.insertSelective(operateRecord);
-                    return CommonResult.success(data, "将用户" + blackUserNickName + message + "黑名单列表成功。");
+                    statusStr = "OK";
+                    data.put(status, statusStr);
+                    return CommonResult.success(data, "将用户“" + blackUserNickName + "”拉入黑名单列表成功");
+                }
+                status = "PULL";
+                operateRecord.setType(OperateRecordTypeEnum.PullBlackList.getCode());
+                this.operateRecordMapperWriter.insertSelective(operateRecord);
+                data.put(status, statusStr);
+                return CommonResult.failed(data, ResultCode.USER_NOT_EXIST_BLACKLIST_ERROR);
+            }
+            if (!Objects.isNull(blacklistRecords) && !blacklistRecords.isEmpty()) {
+                BlacklistRecord blacklistRecord = blacklistRecords.get(0);
+                if (!Objects.isNull(blacklistRecord)) {
+                    Integer typeTemp = blacklistRecord.getStatus();
+                    if (Objects.equals(BlacklistRecordStatusEnum.PUSH.getCode(), typeTemp)) {
+                        if (type % 2 != 0) {
+                            operateRecord.setType(OperateRecordTypeEnum.PushBlackList.getCode());
+                            this.operateRecordMapperWriter.insertSelective(operateRecord);
+                            data.put(status, statusStr);
+                            return CommonResult.failed(data, ResultCode.USER_EXIST_BLACKLIST_ERROR);
+                        }
+                        status = "PULL";
+                        blacklistRecord.setStatus(BlacklistRecordStatusEnum.PULL.getCode());
+                        int result = this.blacklistRecordMapperWriter.updateByPrimaryKeySelective(blacklistRecord);
+                        if (result > 0) {
+                            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+                            operateRecord.setType(OperateRecordTypeEnum.PullBlackList.getCode());
+                            this.operateRecordMapperWriter.insertSelective(operateRecord);
+                            statusStr = "OK";
+                            data.put(status, statusStr);
+                            return CommonResult.success(data, "将用户“" + blackUserNickName + "”推出黑名单列表成功");
+                        }
+                    }
+                    if (Objects.equals(BlacklistRecordStatusEnum.PULL.getCode(), typeTemp)) {
+                        if (type % 2 != 0) {
+                        	blacklistRecord.setStatus(BlacklistRecordStatusEnum.PUSH.getCode());
+                        	int result = this.blacklistRecordMapperWriter.updateByPrimaryKeySelective(blacklistRecord);
+                        	if(result > 0) {
+                        		operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+                                operateRecord.setType(OperateRecordTypeEnum.PushBlackList.getCode());
+                                this.operateRecordMapperWriter.insertSelective(operateRecord);
+                                statusStr = "OK";
+                                data.put(status, statusStr);
+                                return CommonResult.success(data, "将用户“" + blackUserNickName + "”拉入黑名单列表成功");
+                        	}
+                        }
+                        status = "PULL";
+                        operateRecord.setType(OperateRecordTypeEnum.PullBlackList.getCode());
+                        this.operateRecordMapperWriter.insertSelective(operateRecord);
+                        data.put(status, statusStr);
+                        return CommonResult.failed(data, ResultCode.USER_NOT_EXIST_BLACKLIST_ERROR);
+                    }
                 }
             }
+            data.put(status, statusStr);
+            return CommonResult.success(data);
         } catch (Exception e) {
-            log.error("将用户拉入拉出黑名单列表出错。", e);
-            data.put(status, "ERROR");
+            log.error("将用户拉入推出黑名单列表出错", e);
+            data.put(status, statusStr);
             this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.failed(data, ResultCode.FAILED);
         } finally {
             if (log.isDebugEnabled()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("结束将用户{}黑名单列表。", message);
+                    log.debug("结束将用户拉入推出黑名单列表");
                 }
             }
         }
-        return null;
     }
 
     //鹿可模块推荐用户数据接口

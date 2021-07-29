@@ -20,7 +20,7 @@ public enum ResultCode implements IErrorCode {
 
     USER_NOT_EXIST_BLACKLIST_ERROR(301, "将用户推出黑名单列表失败，用户不存在黑名单列表中。"),
 
-    NOT_PULL_OR_PUSH_OWNER_BLACKLIST_ERROR(302, "不能将自己推入拉出黑名单列表。"),
+    NOT_PULL_OR_PUSH_OWNER_BLACKLIST_ERROR(302, "不能把自己添加到自己的黑名单列表中。"),
 
     VALIDATE_FAILED(400, "参数校验失败。"),
 
