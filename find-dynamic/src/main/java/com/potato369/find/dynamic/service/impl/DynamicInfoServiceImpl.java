@@ -9,6 +9,7 @@ import com.potato369.find.common.vo.DynamicInfoVO;
 import com.potato369.find.dynamic.config.props.ProjectUrlProps;
 import com.potato369.find.dynamic.service.DynamicInfoService;
 import com.potato369.find.mbg.mapper.ApplicationRecordMapper;
+import com.potato369.find.mbg.mapper.AttacheInfoMapper;
 import com.potato369.find.mbg.mapper.DynamicInfoMapper;
 import com.potato369.find.mbg.mapper.LikeRecordMapper;
 import com.potato369.find.mbg.model.*;
@@ -46,6 +47,8 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
 
     private ProjectUrlProps projectUrlProps;
 
+    private AttacheInfoMapper attacheInfoMapperReader;
+
     @Autowired
     public void setDynamicInfoMapperReader(DynamicInfoMapper dynamicInfoMapperReader) {
         this.dynamicInfoMapperReader = dynamicInfoMapperReader;
@@ -69,6 +72,11 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
     @Autowired
     public void setProjectUrlProps(ProjectUrlProps projectUrlProps) {
         this.projectUrlProps = projectUrlProps;
+    }
+
+    @Autowired
+    public void setAttacheInfoMapperReader(AttacheInfoMapper attacheInfoMapperReader) {
+        this.attacheInfoMapperReader = attacheInfoMapperReader;
     }
 
     /**
@@ -165,22 +173,25 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
                     stringBuilder.append(dynamicInfoData.getCity());
                     dynamicInfoVO.setAddress(stringBuilder.toString());
                 }
-                String[] fileNameList01 = StrUtil.split(dynamicInfoData.getFileName(), "||");
-                List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
-                List<String> fileNameList03 = new ArrayList<>();
-                for (String fileName : fileNameList02) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain()))
-                            .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
-                    if (StrUtil.isNotEmpty(dynamicInfoData.getAttacheFileDataType()) && AttacheInfoDataTypeEnum.Image.getCode().toString().equals(dynamicInfoData.getAttacheFileDataType())) {
-                        stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+                AttacheInfo attacheInfo = this.attacheInfoMapperReader.selectByDynamicInfoId(dynamicInfoId);
+                if (!Objects.isNull(attacheInfo)) {
+                    String[] fileNameList01 = StrUtil.split(attacheInfo.getFileName(), "||");
+                    List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
+                    List<String> fileNameList03 = new ArrayList<>();
+                    for (String fileName : fileNameList02) {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain()))
+                                .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                        if (StrUtil.isNotEmpty(dynamicInfoData.getAttacheFileDataType()) && AttacheInfoDataTypeEnum.Image.getCode().toString().equals(dynamicInfoData.getAttacheFileDataType())) {
+                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+                        }
+                        if (StrUtil.isNotEmpty(dynamicInfoData.getAttacheFileDataType()) && AttacheInfoDataTypeEnum.Audio.getCode().toString().equals(dynamicInfoData.getAttacheFileDataType())) {
+                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
+                        }
+                        stringBuilder.append(fileName);
+                        fileNameList03.add(stringBuilder.toString());
+                        dynamicInfoVO.setFileName(fileNameList03);
                     }
-                    if (StrUtil.isNotEmpty(dynamicInfoData.getAttacheFileDataType()) && AttacheInfoDataTypeEnum.Audio.getCode().toString().equals(dynamicInfoData.getAttacheFileDataType())) {
-                        stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
-                    }
-                    stringBuilder.append(fileName);
-                    fileNameList03.add(stringBuilder.toString());
-                    dynamicInfoVO.setFileName(fileNameList03);
                 }
                 if (Objects.equals(IsAnonymousEnum.No.getType(), dynamicInfoData.getIsAnonymous())) {
                     dynamicInfoVO.setAnonymous(false);

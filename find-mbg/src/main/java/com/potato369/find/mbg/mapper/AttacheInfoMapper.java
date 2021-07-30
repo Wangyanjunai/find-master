@@ -23,6 +23,8 @@ public interface AttacheInfoMapper {
 
     List<AttacheInfo> getAttacheInfoByUserId(@Param("userId") Long userId);
 
+    AttacheInfo selectByDynamicInfoId(@Param("dynamicInfoId") Long dynamicInfoId);
+
     int updateByExampleSelective(@Param("record") AttacheInfo record, @Param("example") AttacheInfoExample example);
 
     int updateByExample(@Param("record") AttacheInfo record, @Param("example") AttacheInfoExample example);

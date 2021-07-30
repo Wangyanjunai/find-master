@@ -93,6 +93,11 @@
             order by ${orderByClause}
         </if>
     </select>
+    <select id="selectByDynamicInfoId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from attache_info where dynamic_info_by = #{dynamicInfoId,jdbcType=BIGINT}
+    </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
