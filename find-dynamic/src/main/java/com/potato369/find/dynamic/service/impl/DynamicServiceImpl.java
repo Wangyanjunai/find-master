@@ -29,7 +29,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -124,14 +123,13 @@ public class DynamicServiceImpl implements DynamicService {
 
     //保存动态内容信息
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public int save(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception {
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setUserId(user.getId());
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
         operateRecord.setType(OperateRecordTypeEnum.ReleaseDynamic.getCode());
         Long userId2 = user.getId();
-        String nickname2 = user.getNickName();
         String imei2 = dynamicDTO.getImei();
         String model2 = dynamicDTO.getModel();
         String sysName2 = dynamicDTO.getSysName();
@@ -164,25 +162,8 @@ public class DynamicServiceImpl implements DynamicService {
         }
         int result1 = 0;
         int result2 = 0;
-        int result3 = 0;
-        int result4 = 0;
-        Dynamic dynamic = this.findDynamicByUserId(userId2, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
+        Dynamic dynamic = this.findDynamicByUserId(userId2);
         if (!Objects.isNull(dynamic)) {
-            String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
-            BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
-            dynamic.setUserId(userId2);
-            dynamic.setNickName(nickname2);
-            dynamic.setUpdateTime(new Date());
-            result1 = this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
-        } else {
-            dynamic = new Dynamic();
-            String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
-            BeanUtils.copyProperties(dynamicDTO, dynamic, nullPropertyNames);
-            dynamic.setUserId(userId2);
-            dynamic.setNickName(nickname2);
-            result1 = this.dynamicMapperWriter.insertSelective(dynamic);
-        }
-        if (result1 > 0) {
             DynamicInfo dynamicInfo = new DynamicInfo();
             String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
             BeanUtils.copyProperties(dynamicDTO, dynamicInfo, nullPropertyNames);
@@ -194,7 +175,7 @@ public class DynamicServiceImpl implements DynamicService {
                 dynamicInfo.setAttacheNumber(0);
             }
             dynamicInfo.setAttacheType(dynamicDTO.getAttacheInfoDataType());
-            result2 = this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
+            result1 = this.dynamicInfoMapperWriter.insertSelective(dynamicInfo);
             if (!Objects.isNull(files) && files.length > 0) {
                 String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
                 StringBuilder filePath = new StringBuilder().append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
@@ -228,14 +209,14 @@ public class DynamicServiceImpl implements DynamicService {
                 }
                 String fileNames = ErrorMessageUtil.fileNameBuild(files02, fileString);
                 attacheInfo.setFileName(fileNames);// 附件名称
-                result3 = this.attacheInfoMapperWriter.insertSelective(attacheInfo);
+                result2 = this.attacheInfoMapperWriter.insertSelective(attacheInfo);
             }
             if (result2 > 0) {
                 operateRecord.setStatus(OperateRecordStatusEnum.Success.getCode().toString());
             }
         }
-        result4 = this.operateRecordMapperWriter.insertSelective(operateRecord);
-        return result1 + result2 + result3 + result4;
+        int result3 = this.operateRecordMapperWriter.insertSelective(operateRecord);
+        return result1 + result2 + result3;
     }
 
     //筛选动态内容信息
@@ -256,7 +237,7 @@ public class DynamicServiceImpl implements DynamicService {
 
     //更新动态内容信息
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public int update(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception {
         String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
         StringBuilder filePath = new StringBuilder().append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
@@ -267,7 +248,7 @@ public class DynamicServiceImpl implements DynamicService {
             filePath.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
         }
         Long userIdLong = dynamicDTO.getUserId();
-        Dynamic dynamic = this.findDynamicByUserId(userIdLong, dynamicDTO.getCountry(), dynamicDTO.getProvince(), dynamicDTO.getCity());
+        Dynamic dynamic = this.findDynamicByUserId(userIdLong);
         if (user != null) {
             if (dynamic != null) {
                 String[] nullPropertyNames = CopyUtil.getNullPropertyNames(dynamicDTO);
@@ -601,21 +582,11 @@ public class DynamicServiceImpl implements DynamicService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Dynamic findDynamicByUserId(Long userId, String country, String province, String city) {
+    public Dynamic findDynamicByUserId(Long userId) {
         DynamicExample example = new DynamicExample();
-        example.setDistinct(true);
-        example.setOrderByClause("id ASC, create_time DESC, update_time DESC");
-        if (StrUtil.isAllNotEmpty(country, province, city)) {
-            example.createCriteria().andUserIdEqualTo(userId).andCountryEqualTo(country).andProvinceEqualTo(province).andCityEqualTo(city);
-        } else {
-            example.createCriteria().andUserIdEqualTo(userId);
-        }
+        example.createCriteria().andUserIdEqualTo(userId);
         List<Dynamic> dynamicList = this.dynamicMapperReader.selectByExample(example);
-        Dynamic dynamic = null;
-        if (!CollectionUtils.isEmpty(dynamicList)) {
-            dynamic = dynamicList.get(0);
-        }
-        return dynamic;
+        return dynamicList.get(0);
     }
 
     @Override

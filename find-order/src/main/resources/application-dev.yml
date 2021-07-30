@@ -6,9 +6,6 @@ spring:
       discovery:
         server-addr: 192.168.31.31:8848
         namespace: 174f115e-55dd-486a-90e8-a96fe1a63965
-  servlet:
-    multipart:
-      location: D://temp//
   datasource:
     url: mysql://192.168.31.31:3306/find_dev_test01?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: find

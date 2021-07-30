@@ -40,7 +40,7 @@ public interface DynamicService {
      * @param userId 用户id
      * @return 动态信息
      */
-    Dynamic findDynamicByUserId(Long userId, String country, String province, String city);
+    Dynamic findDynamicByUserId(Long userId);
 
     List<HotTopic> findHotTopicList();
 }

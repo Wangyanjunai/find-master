@@ -84,25 +84,22 @@ public class CommentController {
         operateRecord.setUserId(userId);
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
         operateRecord.setType(OperateRecordTypeEnum.ReleaseComment.getCode());
+        data.put("RELEASE", "ERROR");
         try {
             if (log.isDebugEnabled()) {
                 log.error("开始发布评论");
             }
-            data.put("RELEASE", "ERROR");
-            if (Objects.isNull(commentDTO)) {
-                return CommonResult.validateFailed("发布评论，参数校验失败。");
-            }
             if (bindingResult.hasErrors()) {
-                return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+                return CommonResult.validateFailed("参数校验不通过，" + Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(commentDTO.getDynamicInfoId());
             if (Objects.isNull(dynamicInfo)) {
-                return CommonResult.validateFailed("发布评论，动态内容不存在。");
+                return CommonResult.validateFailed("参数校验不通过，动态内容信息不存在。");
             }
             //校验发布的内容是否包含敏感词汇
             SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(commentDTO.getContent());
             if (!Objects.isNull(sensitiveWords)) {
-                return CommonResult.validateFailed("发布评论，评论内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，不允许发布。");
+                return CommonResult.validateFailed("参数校验不通过，评论内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，不允许发布。");
             }
             Comment comment = new Comment();
             BeanUtils.copyProperties(commentDTO, comment);
@@ -137,11 +134,11 @@ public class CommentController {
         operateRecord.setUserId(userId);
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
         operateRecord.setType(OperateRecordTypeEnum.DeleteComment.getCode());
+        data.put("DELETE", "ERROR");
         try {
             if (log.isDebugEnabled()) {
                 log.error("开始删除评论");
             }
-            data.put("DELETE", "ERROR");
             Comment comment = this.commentService.findById(commentId);
             if (Objects.isNull(comment)) {
                 return CommonResult.validateFailed("参数校验不通过，评论不存在。");

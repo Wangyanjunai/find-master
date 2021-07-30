@@ -20,6 +20,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,7 +69,7 @@ public class DynamicController {
     private ProfessionsMapper professionsMapperReader;
 
     private TagMapper tagMapperReader;
-    
+
     private DynamicInfoMapper dynamicInfoMapperReader;
 
     @Autowired
@@ -163,11 +164,11 @@ public class DynamicController {
 
     @Autowired
     public void setDynamicInfoMapperReader(DynamicInfoMapper dynamicInfoMapperReader) {
-		this.dynamicInfoMapperReader = dynamicInfoMapperReader;
-	}
+        this.dynamicInfoMapperReader = dynamicInfoMapperReader;
+    }
 
-	// 用户发布动态附件（包括图片和语音）
-    @PostMapping(value = "/{id}/release.do", consumes = {"multipart/form-data;charset=utf-8"}, produces = {"application/json;charset=utf-8"})
+    // 用户发布动态附件（包括图片和语音）
+    @PostMapping(value = "/{id}/release.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResult<Map<String, Object>> release(
             @PathVariable(name = "id") Long userId,
             DynamicDTO dynamicDTO,
@@ -192,17 +193,21 @@ public class DynamicController {
                 return CommonResult.validateFailed("参数校验不通过，不允许此动态内容类型。");
             }
             //校验发布的内容是否包含敏感词汇
-            SensitiveWords sensitiveWords01 = this.sensitiveWordsService.checkHasSensitiveWords(dynamicDTO.getContent());
-            if (!Objects.isNull(sensitiveWords01)) {
-                return CommonResult.validateFailed("参数校验不通过，动态内容包含" + sensitiveWords01.getTypeName() + "类型敏感词汇，禁止发布。");
+            String content = dynamicDTO.getContent();
+            if (StrUtil.isNotEmpty(content)) {
+                SensitiveWords sensitiveWords01 = this.sensitiveWordsService.checkHasSensitiveWords(content);
+                if (!Objects.isNull(sensitiveWords01)) {
+                    return CommonResult.validateFailed("参数校验不通过，动态内容包含" + sensitiveWords01.getTypeName() + "类型敏感词汇，禁止发布。");
+                }
             }
             //校验发布话题的话题标题是否为空
             if (Objects.equals(IsTopicEnum.Yes.getType(), dynamicDTO.getIsTopic())) {
-                if (StrUtil.isEmpty(dynamicDTO.getTopicTitle())) {
+                String topicTitle = dynamicDTO.getTopicTitle();
+                if (StrUtil.isEmpty(topicTitle)) {
                     return CommonResult.validateFailed("参数校验不通过，发布话题时，话题标题不能为空。");
                 }
                 //校验发布的内容是否包含敏感词汇
-                SensitiveWords sensitiveWords02 = this.sensitiveWordsService.checkHasSensitiveWords(dynamicDTO.getTopicTitle());
+                SensitiveWords sensitiveWords02 = this.sensitiveWordsService.checkHasSensitiveWords(topicTitle);
                 if (!Objects.isNull(sensitiveWords02)) {
                     return CommonResult.validateFailed("参数校验不通过，话题标题包含" + sensitiveWords02.getTypeName() + "类型敏感词汇，禁止发布。");
                 }
@@ -219,7 +224,6 @@ public class DynamicController {
             if (StrUtil.isAllEmpty(dynamicDTO.getIp(), dynamicDTO.getProvince(), dynamicDTO.getCity(), dynamicDTO.getDistrict(), dynamicDTO.getOther(), longitudeString, latitudeString)) {
                 return CommonResult.validateFailed("参数校验不通过，动态定位客户端IP和动态定位地址不能同时为空。");
             }
-
             if (Objects.isNull(files) || files.length <= 0) {
                 //发布不带附件的动态内容
                 if (Objects.equals(AttacheInfoDataTypeEnum.Text.getCodeStr(), attacheInfoDataType)) {
@@ -236,7 +240,7 @@ public class DynamicController {
                     //判断图片资源文件类型是否正确
                     for (MultipartFile multipartFile : files) {
                         if (!FileTypeUtil.isImageType(multipartFile.getContentType(), Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
-                            return CommonResult.failed("参数校验不通过，发布动态内容图片资源文件类型不正确。");
+                            return CommonResult.validateFailed("参数校验不通过，发布动态内容图片资源文件类型不正确。");
                         }
                     }
                 }
@@ -247,25 +251,24 @@ public class DynamicController {
                     //判断图片资源文件类型是否正确
                     for (MultipartFile multipartFile : files) {
                         if (!FileTypeUtil.isAudioType(multipartFile.getContentType(), Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
-                            return CommonResult.failed("参数校验不通过，发布动态内容语音资源文件类型不正确。");
+                            return CommonResult.validateFailed("参数校验不通过，发布动态内容语音资源文件类型不正确。");
                         }
                     }
                 }
             }
             int result2 = this.dynamicService.save(user, dynamicDTO, files);
-            if (result2 >= 3) {
+            if (result2 >= 2) {
                 result.put("RELEASED", "OK");
-                return CommonResult.success(result, "发布动态内容成功。");
             }
+            return CommonResult.success(result, "发布动态内容成功。");
         } catch (Exception e) {
             log.error("发布动态内容出错", e);
-            return CommonResult.failed("发布动态内容出错。");
+            return CommonResult.failed("发布动态内容失败。");
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束发布动态内容");
             }
         }
-        return CommonResult.success(result, "发布动态内容失败。");
     }
 
     //检测用户发布动态定位是否发生改变
@@ -1054,12 +1057,12 @@ public class DynamicController {
             }
         }
     }
-    
+
     //获取三个热门话题
     @GetMapping(value = "/{id}/hots.do")
     public CommonResult<Map<String, Object>> hots(@PathVariable(name = "id") Long userId) {
-    	Map<String, Object> data = new ConcurrentHashMap<>();
-    	try {
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        try {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取三个热门话题");
             }
@@ -1074,5 +1077,5 @@ public class DynamicController {
                 log.debug("结束获取三个热门话题");
             }
         }
-	}
+    }
 }

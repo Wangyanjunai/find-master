@@ -298,7 +298,6 @@ public class UserController {
                 File headIconFile = new File(headIconFilePath, newFileName);
                 headIconFileName = headIconFile.getName();
                 try {
-                    // log.info("h1={}, h2={}", headIconFileName, user1.getHeadIcon());
                     if (!Objects.equals(headIconFileName, user1.getHeadIcon())) {
                         if (!Objects.isNull(user1.getHeadIcon())) {
                             File oldHeadIconFile = new File(headIconFilePath, user1.getHeadIcon());
@@ -1048,7 +1047,7 @@ public class UserController {
             example.setOrderByClause("id DESC, update_time DESC, create_time DESC");
             example.createCriteria().andOwnerUserIdEqualTo(userId).andStatusEqualTo(BlacklistRecordStatusEnum.PUSH.getCode());
             final PageInfo<BlacklistRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).setOrderBy("create_time DESC, update_time DESC")
-                  .doSelectPageInfo(() -> this.blacklistRecordMapperReader.selectByExample(example).stream().collect(Collectors.toList()));
+                    .doSelectPageInfo(() -> this.blacklistRecordMapperReader.selectByExample(example).stream().collect(Collectors.toList()));
             int totalPage = 0;
             List<BlacklistRecord> blacklistRecordList = new ArrayList<>();
             if (listPageInfo != null && listPageInfo.getList() != null && !listPageInfo.getList().isEmpty()) {
@@ -1067,7 +1066,7 @@ public class UserController {
                             StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) +
                             e.getId() + "/" +
                             e.getHeadIcon());
-                    userVO.setCreateTime(DateUtil.fomateDate(blacklistRecord.getCreateTime(), DateUtil.sdfTimeCNFmt));
+                    userVO.setCreateTime(DateUtil.fomateDate(blacklistRecord.getUpdateTime(), DateUtil.sdfTimeCNFmt));
                 }
                 userVOList.add(userVO);
             }
@@ -1156,6 +1155,7 @@ public class UserController {
                         }
                         status = "PULL";
                         blacklistRecord.setStatus(BlacklistRecordStatusEnum.PULL.getCode());
+                        blacklistRecord.setUpdateTime(new Date());
                         int result = this.blacklistRecordMapperWriter.updateByPrimaryKeySelective(blacklistRecord);
                         if (result > 0) {
                             operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
@@ -1168,16 +1168,17 @@ public class UserController {
                     }
                     if (Objects.equals(BlacklistRecordStatusEnum.PULL.getCode(), typeTemp)) {
                         if (type % 2 != 0) {
-                        	blacklistRecord.setStatus(BlacklistRecordStatusEnum.PUSH.getCode());
-                        	int result = this.blacklistRecordMapperWriter.updateByPrimaryKeySelective(blacklistRecord);
-                        	if(result > 0) {
-                        		operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+                            blacklistRecord.setStatus(BlacklistRecordStatusEnum.PUSH.getCode());
+                            blacklistRecord.setUpdateTime(new Date());
+                            int result = this.blacklistRecordMapperWriter.updateByPrimaryKeySelective(blacklistRecord);
+                            if (result > 0) {
+                                operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                                 operateRecord.setType(OperateRecordTypeEnum.PushBlackList.getCode());
                                 this.operateRecordMapperWriter.insertSelective(operateRecord);
                                 statusStr = "OK";
                                 data.put(status, statusStr);
                                 return CommonResult.success(data, "将用户“" + blackUserNickName + "”拉入黑名单列表成功");
-                        	}
+                            }
                         }
                         status = "PULL";
                         operateRecord.setType(OperateRecordTypeEnum.PullBlackList.getCode());
@@ -1214,12 +1215,12 @@ public class UserController {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取鹿可模块用户数据");
             }
-            if (bindingResult != null && bindingResult.hasErrors()) {
-                return CommonResult.validateFailed(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+            if (bindingResult.hasErrors()) {
+                return CommonResult.validateFailed("参数校验不通过，" + Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
             User user = this.userMapperReader.selectByPrimaryKey(id);
-            if (user == null) {
-                return CommonResult.failed("用户信息不存在");
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
             String screenGender = user.getGender();//鹿可性别筛选条件一
             ScreenSettingExample example = new ScreenSettingExample();
@@ -1235,10 +1236,10 @@ public class UserController {
                 age = 10;//默认+10
             }
             List<ScreenSetting> screenSettings = this.screenSettingMapperReader.selectByExample(example);
-            if (screenSettings != null && !screenSettings.isEmpty()) {
+            if (!Objects.isNull(screenSettings) && !screenSettings.isEmpty()) {
                 screenSetting = screenSettings.get(0);
             }
-            if (screenSetting != null) {
+            if (!Objects.isNull(screenSetting)) {
                 age = screenSetting.getValue();
             }
             String birthDate = user.getYear() + "-" + user.getMonth() + "-" + user.getDate();
@@ -1285,7 +1286,6 @@ public class UserController {
                     } else {
                         filenameTemp = this.dynamicInfoMapperReader.getFileNameByUserId(userTmp.getId());
                     }
-//                    log.info("filenameTemp={}", filenameTemp);
                     String filename = StrUtil.trimToNull(this.projectUrlProps.getResDomain()) + StrUtil.trimToNull(this.projectUrlProps.getProjectName()) + StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()) + filenameTemp;
                     userVO3.setImg(filename);
                     userVO3.setDistance(DistanceUtil.getDistance(userDTO.getLongitude(), userDTO.getLatitude(), userTmp.getLongitude(), userTmp.getLatitude()));
@@ -1296,12 +1296,12 @@ public class UserController {
             return CommonResult.success(data);
         } catch (Exception e) {
             log.error("获取鹿可模块用户数据出现错误", e);
+            return CommonResult.failed("获取鹿可模块用户数据失败");
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束获取鹿可模块用户数据");
             }
         }
-        return null;
     }
 
     //鹿可模块推荐用户详情数据接口
@@ -1316,11 +1316,11 @@ public class UserController {
             //log.info("前端提交过来的请求参数：id={}, detailsUserId={}", id, detailsUserId);
             User user = this.userMapperReader.selectByPrimaryKey(id);
             if (Objects.isNull(user)) {
-                return CommonResult.failed("当前用户信息不存在");
+                return CommonResult.validateFailed("参数校验不通过，当前用户信息不存在。");
             }
             User userDetails = this.userMapperReader.selectByPrimaryKey(detailsUserId);
             if (Objects.isNull(userDetails)) {
-                return CommonResult.failed("鹿可用户信息不存在");
+                return CommonResult.validateFailed("参数校验不通过，鹿可用户信息不存在。");
             }
             UserVO4 userVO4 = UserVO4.builder().build();
             BeanUtils.copyProperties(userDetails, userVO4);
@@ -1352,15 +1352,15 @@ public class UserController {
             Date birthDay = DateUtil.fomatDate(birthDate);
             userVO4.setAge(AgeUtil.getAge(birthDay));
             setUserVO4(userVO4, userDetails);
-            return CommonResult.success(userVO4);
+            return CommonResult.success(userVO4, "获取鹿可模块用户详情数据成功。");
         } catch (Exception e) {
-            log.error("获取鹿可模块用户数据列表出现错误", e);
+            log.error("获取鹿可模块用户详情数据出现错误", e);
+            return CommonResult.failed("获取鹿可模块用户详情数据失败。");
         } finally {
             if (log.isDebugEnabled()) {
-                log.debug("结束获取鹿可模块用户数据列表");
+                log.debug("结束获取鹿可模块用户详情数据");
             }
         }
-        return null;
     }
 
 

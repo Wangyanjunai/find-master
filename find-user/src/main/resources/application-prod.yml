@@ -6,9 +6,6 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         namespace: 6e2d06b6-0a8b-4a0c-a306-78fc564aeb8b
-  servlet:
-   multipart:
-     location: ~/temp/        
   datasource:
     url: jdbc:mysql://potato369.com:31306/find_dev_test01?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: find

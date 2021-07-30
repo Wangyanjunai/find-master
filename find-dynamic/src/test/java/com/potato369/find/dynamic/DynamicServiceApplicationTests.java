@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DynamicServiceApplicationTests {
 
     private MockMvc mockMvc;
@@ -29,7 +29,7 @@ public class DynamicServiceApplicationTests {
     @Test
     public void hello() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/find/v1/hello/say.do")
-                .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().string(equalTo("Hello World !")));
     }
