@@ -5,4 +5,4 @@ spring:
     nacos:
       discovery:
         server-addr: 8.135.36.45:8848
-        namespace: bb0e196a-546f-48b8-af0f-ae445d63c0bd
+        namespace: bb0e196a-546f-48b8-af0f-ae445d63c0ad
