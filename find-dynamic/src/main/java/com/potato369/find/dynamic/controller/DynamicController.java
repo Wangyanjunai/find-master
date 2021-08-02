@@ -1066,9 +1066,13 @@ public class DynamicController {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取三个热门话题");
             }
+            User user = this.userMapperReader.selectByPrimaryKey(userId);
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验失败，用户信息不存在。");
+            }
             List<HotTopic> hotTopicList = this.dynamicInfoMapperReader.selectHotTopicTitle();
             data.put("hots", hotTopicList);
-            return CommonResult.success(data, "获取三个热门话题成功");
+            return CommonResult.success(data, "获取三个热门话题成功。");
         } catch (Exception e) {
             log.error("获取三个热门话题出错", e);
             return CommonResult.failed("获取三个热门话题出现错误。");

@@ -22,13 +22,13 @@ FROM
 	`user` ur
 WHERE
 	dy.`id` = di.`dynamic_id`
-	AND di.`id` = ai.`dynamic_info_by`
-	AND dy.`user_id` = ur.`id`
-	AND ur.`id` IN ( 70 )
-	AND di.`dynamic_status` != '1'
-	AND dy.`country` IN ( '中国' ) 
-	AND dy.`province` IN ( '广东省', '广西省' ) 
-	AND dy.`city` IN ( '广州市', '深圳市', '南宁市' ) 
+  AND di.`id` = ai.`dynamic_info_by`
+  AND dy.`user_id` = ur.`id`
+  AND ur.`id` IN (70)
+  AND di.`dynamic_status` != '1'
+  AND dy.`country` IN ('中国')
+  AND dy.`province` IN ('广东省', '广西省')
+  AND dy.`city` IN ('广州市', '深圳市', '南宁市')
 	AND di.`create_time` >= DATE_SUB( NOW( ), INTERVAL 720 HOUR );
 
 SELECT date_sub( now( ), INTERVAL 720 HOUR );
@@ -55,15 +55,14 @@ FROM
 	`dynamic` dy,
 	`attache_info` ai,
 	`user` ur
-WHERE
-	dy.`id` = di.`dynamic_id`
-	AND di.`id` = ai.`dynamic_info_by`
-	AND dy.`user_id` = ur.`id`
-	AND ur.`id` IN ( 70 )
-	AND di.`dynamic_status` != '1'
-	AND dy.`country` IN ( '中国' ) 
-	AND dy.`province` IN ( '广东省', '广西省' ) 
-	AND dy.`city` IN ( '广州市', '深圳市', '南宁市' ) 
+WHERE dy.`id` = di.`dynamic_id`
+  AND di.`id` = ai.`dynamic_info_by`
+  AND dy.`user_id` = ur.`id`
+  AND ur.`id` IN (70)
+  AND di.`dynamic_status` != '1'
+  AND dy.`country` IN ('中国')
+  AND dy.`province` IN ('广东省', '广西省')
+  AND dy.`city` IN ('广州市', '深圳市', '南宁市')
 	AND di.`create_time` >= DATE_SUB( NOW( ), INTERVAL 720 HOUR );
 
 
@@ -211,10 +210,9 @@ SELECT
 FROM
 	`message` me,
 	`user` ur
-WHERE
-	me.`send_user_id` = ur.`id`
-	AND me.`reserve_column01` != 'likes'
-	AND me.`recipient_user_id` = 29 
+WHERE me.`send_user_id` = ur.`id`
+  AND me.`reserve_column01` != 'likes'
+  AND me.`recipient_user_id` = 29
 	AND me.`status` = '0'
 ORDER BY
 	me.`create_time` DESC;
@@ -1063,25 +1061,24 @@ select `id`, `nick_name`,`imei`,`model`,
        `province`, `city`,`district`,`other`,`longitude`,
        `latitude`,`create_time`,`update_time`,null, null,null,null from
     `user` where `id` not in (select `user_id` from `dynamic`);
-    
-    
-    
-SELECT
-	COUNT( 0 ) 
-FROM
-	`application_record` 
-WHERE
-	`user_id` = 10 
-	AND `reserve_column01` = 11 
-	AND `create_time` >= STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' ) 
-	AND `create_time` <= DATE_ADD( DATE_ADD( STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' ), INTERVAL 1 DAY ), INTERVAL - 1 SECOND );
-	
-	
+
+
+
+SELECT COUNT(0)
+FROM `application_record`
+WHERE `user_id` = 10
+  AND `reserve_column01` = 11
+  AND `create_time` >= STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
+  AND `create_time` <=
+      DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY), INTERVAL - 1
+               SECOND);
+
+
 SELECT STR_TO_DATE( DATE_FORMAT( NOW( ), '%Y-%m-%d' ), '%Y-%m-%d %H:%i:%s' );
-	
+
 SELECT DATE_ADD(
-DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW( ),'%Y-%m-%d'), '%Y-%m-%d %H:%i:%s' ), INTERVAL 1 DAY), 
-INTERVAL - 1 SECOND);
+               DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY),
+               INTERVAL - 1 SECOND);
 
 
 SELECT * FROM `dynamic_info` WHERE `user_id` = 131 AND `id` = 537;
@@ -1115,21 +1112,17 @@ SELECT * from `dynamic` where id = 251;
 
 
 SELECT
-	COUNT( `id` ) AS `total_count`,
-	`topic_title` AS `topic_title` 
-FROM
-	`dynamic_info` 
-WHERE
-	`is_topic` = '1' 
-	AND `create_time` BETWEEN ( SELECT DATE_ADD( now( ), INTERVAL - 1 MONTH ) ) 
-	AND now( ) 
-GROUP BY
-	`topic_title` 
-ORDER BY
-	`total_count` DESC,
-	`create_time` DESC 
-	LIMIT 0, 3;
-	
+    COUNT( `id` ) AS `total_count`,
+    `topic_title` AS `topic_title`
+FROM `dynamic_info`
+WHERE `is_topic` = '1'
+  AND `create_time` BETWEEN (SELECT DATE_ADD(now(), INTERVAL - 1 MONTH))
+    AND now()
+GROUP BY `topic_title`
+ORDER BY `total_count` DESC,
+         `create_time` DESC
+LIMIT 0, 3;
+
 SELECT COUNT(1)	FROM `dynamic_info` WHERE `topic_title` = '新农人计划2021';
 
 SELECT DATE_ADD( now( ), INTERVAL - 1 MONTH );
@@ -1142,88 +1135,109 @@ SELECT DATE_ADD( now( ), INTERVAL - 1 MONTH );
 
 
 SELECT
-	COUNT( `id` ) AS `total_count`,
-	CONCAT('#', `topic_title` ) AS `topic_title` 
-FROM
-	`dynamic_info` 
-WHERE
-	`is_topic` = '1' 
-	AND `create_time` BETWEEN ( SELECT DATE_ADD( now( ), INTERVAL - 1 MONTH ) ) 
-	AND now( ) 
-GROUP BY
-	`topic_title` 
-ORDER BY
-	`total_count` DESC 
-	LIMIT 0, 3;
-	
-	
-	
-	
-	
-SELECT
-	ur.`id`,
-	ur.`head_icon`,
-	ur.`nick_name`,
-	di.`create_time`,
-	di.`id` AS `dynamic_info_id`,
-	di.`content`,
-	di.`public_status`,
-	CONCAT( di.`country`, '·' ) AS `country`,
-	CONCAT( di.`province`, '·' ) AS `province`,
-	CONCAT( di.`city`, '·' ) AS `city`,
-	CONCAT( di.`district`, '·' ) AS `district`,
-	di.`other`,
-	di.`longitude`,
-	di.latitude,
-	di.`likes`,
-	di.`applications`,
-	di.`dynamic_status`,
-	di.`is_topic`,
-	di.`topic_title`,
-	di.`is_anonymous`,
-	di.`comments`,
-	ai.`data_type` AS `attache_file_data_type`,
-	ai.`file_name` AS `attache_file_name_list` 
-FROM
-	`user` ur,
-	`dynamic_info` di,
-	`attache_info` ai 
-WHERE
-	di.`user_id` = ur.`id` 
-	AND di.`id` = ai.`dynamic_info_by` 
-	AND di.`dynamic_status` != '1';
-	
-UPDATE `dynamic_info` di 
-SET di.`city` = ( SELECT dy.`city` FROM `dynamic` dy WHERE di.`dynamic_id` = dy.`id` );
+    COUNT( `id` ) AS `total_count`,
+    CONCAT('#', `topic_title`) AS `topic_title`
+FROM `dynamic_info`
+WHERE `is_topic` = '1'
+  AND `create_time` BETWEEN (SELECT DATE_ADD(now(), INTERVAL - 1 MONTH))
+    AND now()
+GROUP BY `topic_title`
+ORDER BY `total_count` DESC
+LIMIT 0, 3;
 
 
-UPDATE attache_info SET attache_type = 1 WHERE file_name CONTAINS '.png'
-
-SELECT *FROM attache_info WHERE file_name CONTAINS '.png'
-
-
-SELECT data_type FROM attache_info WHERE file_name like "%jpeg%";
-UPDATE attache_info SET data_type = '1' WHERE file_name like "%jpg%";
-
-select * from attache_info where data_type != '2' and data_type != '1';
-
-
-SELECT * FROM dynamic_info WHERE user_id =144;
-SELECT * FROM attache_info;
-
-SELECT id, file_name FROM `attache_info` WHERE `file_name` LIKE "144%" for update;
-
-SELECT * FROM `operate_record`ORDER BY `create_time` DESC;
-
-SELECT `file_name` FROM `attache_info` WHERE `file_name` LIKE 
 
 SELECT
-	* 
-FROM
-	`user` 
-WHERE
-	`tag1` IN ( 1, 2, 3 ) 
-	OR `tag2` IN ( 1, 2, 3 ) 
-	OR `tag3` IN ( 1, 2, 3 ) 
-	OR `tag4` IN ( 1, 2, 3 ) 
-	OR `tag5` IN ( 1, 2, 3 );    
+    ur.`id`,
+    ur.`head_icon`,
+    ur.`nick_name`,
+    di.`create_time`,
+    di.`id` AS `dynamic_info_id`,
+    di.`content`,
+    di.`public_status`,
+    CONCAT( di.`country`, '·' ) AS `country`,
+    CONCAT( di.`province`, '·' ) AS `province`,
+    CONCAT( di.`city`, '·' ) AS `city`,
+    CONCAT( di.`district`, '·' ) AS `district`,
+    di.`other`,
+    di.`longitude`,
+    di.latitude,
+    di.`likes`,
+    di.`applications`,
+    di.`dynamic_status`,
+    di.`is_topic`,
+    di.`topic_title`,
+    di.`is_anonymous`,
+    di.`comments`,
+    ai.`data_type` AS `attache_file_data_type`,
+    ai.`file_name` AS `attache_file_name_list`
+FROM `user` ur,
+     `dynamic_info` di,
+     `attache_info` ai
+WHERE di.`user_id` = ur.`id`
+  AND di.`id` = ai.`dynamic_info_by`
+  AND di.`dynamic_status` != '1';
+
+UPDATE `dynamic_info` di
+SET di.`city` = (SELECT dy.`city` FROM `dynamic` dy WHERE di.`dynamic_id` = dy.`id`);
+
+
+SELECT data_type
+FROM attache_info
+WHERE file_name like "%jpeg%";
+UPDATE attache_info
+SET data_type = '1'
+WHERE file_name like "%jpg%";
+
+select *
+from attache_info
+where data_type != '2'
+  and data_type != '1';
+
+
+SELECT *
+FROM dynamic_info
+WHERE user_id = 144;
+SELECT *
+FROM attache_info;
+
+SELECT id, file_name
+FROM `attache_info`
+WHERE `file_name` LIKE "144%" for
+update;
+
+SELECT *
+FROM `operate_record`
+ORDER BY `create_time` DESC;
+
+SELECT `file_name`
+FROM `attache_info`
+WHERE `file_name` LIKE "143/%";
+
+SELECT *
+FROM `user`
+WHERE `tag1` IN (1, 2, 3)
+   OR `tag2` IN (1, 2, 3)
+   OR `tag3` IN (1, 2, 3)
+   OR `tag4` IN (1, 2, 3)
+   OR `tag5` IN (1, 2, 3);
+
+
+
+create user 'find'@'%' identified by 'XueGod!@#123';
+create user 'nacos'@'%' identified by 'XueGod!@#123';
+create user 'subtlechat'@'%' identified by 'XueGod!@#123';
+create database if not exists find_dev_test01 default character set utf8 default collate utf8_general_ci;
+create database if not exists nacos_config default character set utf8 default collate utf8_general_ci;
+create database if not exists subtlechat default character set utf8 default collate utf8_general_ci;
+grant all on find_dev_test01.* to 'find'@'%' identified by 'XueGod!@#123';
+grant all on nacos_config.* to 'nacos'@'%' identified by 'XueGod!@#123';
+grant all on subtlechat.* to 'subtlechat'@'%' identified by 'XueGod!@#123';
+-- source E:\Program\Resources\find\find_dev_test01.sql;
+-- source E:\Program\Resources\find\nacos_config.sql;
+-- source G:\IdeaProjects\subtlechat\subtlechat\subtlechat.sql;
+flush privileges;
+
+-- mysql -u root -p'MyNewPassword4!' -h potato369.com -P 31306
+-- mysql -u nacos -p'XueGod!@#123' -h potato369.com -P 31306
+-- mysql -u subtlechat -p'XueGod!@#123' -h 127.0.0.1 -P 3306

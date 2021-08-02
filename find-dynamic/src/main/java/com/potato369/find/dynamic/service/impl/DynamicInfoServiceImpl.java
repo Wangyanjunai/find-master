@@ -98,7 +98,7 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
      * @return 更新条数
      */
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public Integer updateDynamicInfoByPrimaryKey(DynamicInfo dynamicInfo) {
         return this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
     }
