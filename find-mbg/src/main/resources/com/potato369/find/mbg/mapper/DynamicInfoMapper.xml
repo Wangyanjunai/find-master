@@ -51,7 +51,6 @@
         <result column="likes" jdbcType="INTEGER" property="likes"/><!-- 点赞数 -->
         <result column="applications" jdbcType="INTEGER" property="applications"/><!-- 申请加微信数 -->
         <result column="attache_file_data_type" jdbcType="VARCHAR" property="attacheFileDataType"/><!-- 附件存储文件类型 -->
-        <result column="attache_file_name_list" jdbcType="VARCHAR" property="fileName"/><!-- 附件存储文件名称列表 -->
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.potato369.find.mbg.model.DynamicInfo">
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>

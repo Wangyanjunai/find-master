@@ -95,9 +95,6 @@ public class DynamicInfoData implements Serializable {
     @ApiModelProperty(value = "附件存储文件类型")
     private String attacheFileDataType;
 
-    @ApiModelProperty(value = "附件存储文件名称列表")
-    private String fileName;
-
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

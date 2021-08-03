@@ -537,7 +537,7 @@ public class DynamicServiceImpl implements DynamicService {
                     dynamicInfoVO.setAddress(stringBuilder.toString());
                 }
                 AttacheInfo attacheInfo = this.attacheInfoMapperReader.selectByDynamicInfoId(dynamicInfoId);
-                if (Objects.isNull(attacheInfo)) {
+                if (!Objects.isNull(attacheInfo)) {
                     String[] fileNameList01 = StrUtil.split(attacheInfo.getFileName(), "||");
                     List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
                     List<String> fileNameList03 = new ArrayList<>();
