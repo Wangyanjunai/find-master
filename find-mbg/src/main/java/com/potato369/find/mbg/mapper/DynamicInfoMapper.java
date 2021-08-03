@@ -33,6 +33,8 @@ public interface DynamicInfoMapper {
 
     List<HotTopic> selectHotTopicTitle();
 
+    List<DynamicInfo> selectHotDynamicInfoByTopicTitle(@Param("topicTitle") String topicTitle);
+
     String getFileNameByUserId(@Param("userId") Long userId);
 
     int updateByExampleSelective(@Param("record") DynamicInfo record, @Param("example") DynamicInfoExample example);

@@ -15,6 +15,7 @@ import com.potato369.find.mbg.mapper.AttacheInfoMapper;
 import com.potato369.find.mbg.mapper.DynamicInfoMapper;
 import com.potato369.find.mbg.mapper.LikeRecordMapper;
 import com.potato369.find.mbg.model.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Copyright Copyright (c) 2016 ~ 2028 版权所有 (C) 土豆互联科技(深圳)有限公司 https://www.potato369.com All Rights Reserved。
  * </pre>
  */
+@Slf4j
 @Service
 @Transactional
 public class DynamicInfoServiceImpl implements DynamicInfoService {
@@ -239,6 +241,34 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
             for (HotTopic hotTopic : listPageInfo.getList()) {
                 HotTopicInfoVO hotTopicInfoVO = HotTopicInfoVO.builder().build();
                 BeanUtils.copyProperties(hotTopic, hotTopicInfoVO);
+                List<DynamicInfo> dynamicInfoList = this.dynamicInfoMapperReader.selectHotDynamicInfoByTopicTitle(hotTopic.getTopicTitle());
+                if (!Objects.isNull(dynamicInfoList) && !dynamicInfoList.isEmpty() && dynamicInfoList.size() > 0) {
+                    List<String> fileList = new ArrayList<>();
+                    for (DynamicInfo dynamicInfo : dynamicInfoList) {
+//                        log.info("dynamicInfo={}", dynamicInfo);
+                        AttacheInfo attacheInfo = this.attacheInfoMapperReader.selectByDynamicInfoId(dynamicInfo.getId());
+//                        log.info("attache={}", attacheInfo);
+                        if (!Objects.isNull(attacheInfo)) {
+                            String filename = attacheInfo.getFileName();
+                            String[] fileNameList01 = StrUtil.split(attacheInfo.getFileName(), "||");
+                            if (!Objects.isNull(fileNameList01) && fileNameList01.length > 1) {
+                                filename = fileNameList01[0];
+                            }
+                            StringBuilder stringBuilder = new StringBuilder();
+                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain()))
+                                    .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                            if (StrUtil.isNotEmpty(attacheInfo.getDataType()) && AttacheInfoDataTypeEnum.Image.getCode().toString().equals(attacheInfo.getDataType())) {
+                                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+                            }
+                            if (StrUtil.isNotEmpty(attacheInfo.getDataType()) && AttacheInfoDataTypeEnum.Audio.getCode().toString().equals(attacheInfo.getDataType())) {
+                                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
+                            }
+                            stringBuilder.append(filename);
+                            fileList.add(stringBuilder.toString());
+                        }
+                    }
+                    hotTopicInfoVO.setAttacheFileList(fileList);
+                }
                 hotTopicInfoVOList.add(hotTopicInfoVO);
             }
         }

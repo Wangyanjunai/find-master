@@ -530,8 +530,6 @@
         GROUP BY `topic_title`
         ORDER BY total_count DESC
     </select>
-    
-    <select id="select"
 
     <resultMap id="hotTopicResultMap" type="com.potato369.find.mbg.model.HotTopic">
         <result column="total_count" jdbcType="INTEGER" property="totalCount"/>
@@ -547,6 +545,16 @@
             AND now()
         GROUP BY `topic_title`
         ORDER BY `total_count` DESC LIMIT 0, 3
+    </select>
+
+    <select id="selectHotDynamicInfoByTopicTitle" resultMap="BaseResultMap" parameterType="string">
+        SELECT `id`
+        FROM `dynamic_info`
+        WHERE `attache_type` = '1'
+          AND topic_title = #{topicTitle, jdbcType=VARCHAR}
+        ORDER BY `likes` DESC,
+                 `create_time` DESC,
+                 `update_time` DESC LIMIT 0, 4
     </select>
 
     <select id="selectMyDynamicInfoData" parameterType="java.lang.Long" resultMap="BaseResultMap2">
