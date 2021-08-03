@@ -29,7 +29,7 @@ public interface DynamicInfoMapper {
 
     List<DynamicInfoData> selectMyDynamicInfoData(Long userId);
 
-    List<String> selectHotTopic(@Param("userId") Long userId);
+    List<HotTopic> selectHotTopic();
 
     List<HotTopic> selectHotTopicTitle();
 

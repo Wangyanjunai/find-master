@@ -11,6 +11,7 @@ import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.CopyUtil;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.utils.FileTypeUtil;
+import com.potato369.find.common.vo.HotTopicVO;
 import com.potato369.find.dynamic.config.bean.PushBean;
 import com.potato369.find.dynamic.config.props.DynamicDefaultAgeProps;
 import com.potato369.find.dynamic.service.*;
@@ -1040,9 +1041,9 @@ public class DynamicController {
 
     //分页获取热门话题
     @GetMapping(value = "/{id}/hotTopics.do")
-    public CommonResult<Map<String, Object>> hotTopics(@PathVariable(name = "id") Long userId,
-                                                       @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
-                                                       @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
+    public CommonResult<HotTopicVO> hotTopics(@PathVariable(name = "id") Long userId,
+                                              @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                              @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
 
         try {
             if (log.isDebugEnabled()) {

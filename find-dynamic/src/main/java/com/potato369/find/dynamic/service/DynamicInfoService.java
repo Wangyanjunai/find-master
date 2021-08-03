@@ -1,5 +1,6 @@
 package com.potato369.find.dynamic.service;
 
+import com.potato369.find.common.vo.HotTopicVO;
 import com.potato369.find.mbg.model.DynamicInfo;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,5 +55,5 @@ public interface DynamicInfoService {
      * @param pageSize 每页条数
      * @return 热门话题数据
      */
-    Map<String, Object> findHotTopicList(Long userId, Integer pageNum, Integer pageSize);
+    HotTopicVO findHotTopicList(Long userId, Integer pageNum, Integer pageSize);
 }

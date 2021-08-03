@@ -14,7 +14,6 @@ import com.potato369.find.mbg.mapper.CommentMapper;
 import com.potato369.find.mbg.mapper.LikeRecordMapper;
 import com.potato369.find.mbg.mapper.UserMapper;
 import com.potato369.find.mbg.model.*;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Slf4j
 @Service
 @Transactional
 public class CommentServiceImpl implements CommentService {

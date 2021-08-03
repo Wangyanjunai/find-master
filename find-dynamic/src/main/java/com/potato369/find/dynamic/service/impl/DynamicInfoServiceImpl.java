@@ -6,6 +6,8 @@ import com.github.pagehelper.PageInfo;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.vo.DynamicInfoVO;
+import com.potato369.find.common.vo.HotTopicInfoVO;
+import com.potato369.find.common.vo.HotTopicVO;
 import com.potato369.find.dynamic.config.props.ProjectUrlProps;
 import com.potato369.find.dynamic.service.DynamicInfoService;
 import com.potato369.find.mbg.mapper.ApplicationRecordMapper;
@@ -229,12 +231,20 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Map<String, Object> findHotTopicList(Long userId, Integer pageNum, Integer pageSize) {
-        Map<String, Object> data = new ConcurrentHashMap<>();
-        final PageInfo<String> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectHotTopic(userId));
-        data.put("totalSize", listPageInfo.getTotal());
-        data.put("totalPage", listPageInfo.getPages());
-        data.put("list", listPageInfo.getList());
-        return data;
+    public HotTopicVO findHotTopicList(Long userId, Integer pageNum, Integer pageSize) {
+        final PageInfo<HotTopic> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectHotTopic());
+        HotTopicVO hotTopicVO = HotTopicVO.builder().build();
+        List<HotTopicInfoVO> hotTopicInfoVOList = new ArrayList<>();
+        if (!Objects.isNull(listPageInfo) && !Objects.isNull(listPageInfo.getList()) && listPageInfo.getTotal() > 0) {
+            for (HotTopic hotTopic : listPageInfo.getList()) {
+                HotTopicInfoVO hotTopicInfoVO = HotTopicInfoVO.builder().build();
+                BeanUtils.copyProperties(hotTopic, hotTopicInfoVO);
+                hotTopicInfoVOList.add(hotTopicInfoVO);
+            }
+        }
+        hotTopicVO.setTotalPage(listPageInfo.getPages());
+        hotTopicVO.setTotalSize(listPageInfo.getTotal());
+        hotTopicVO.setTopicTitleList(hotTopicInfoVOList);
+        return hotTopicVO;
     }
 }

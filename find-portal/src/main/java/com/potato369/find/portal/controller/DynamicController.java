@@ -2836,10 +2836,82 @@ public class DynamicController {
      * "data": null
      * }
      */
-    @ApiOperation(value = "获取三个热门话题接口", notes = "获取三个热门话题内容")
+    @ApiOperation(value = "获取三个热门话题接口", notes = "获取三个热门话题内容列表")
     @GetMapping(value = "/{id}/hots")
     public CommonResult<Map<String, Object>> hots(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId) {
         return this.dynamicFeignClient.hots(userId);
+    }
+
+    /**
+     * @api {get} /find/dynamic/{id}/hot-topics 分页获取热门话题列表接口
+     * @apiVersion 1.0.0
+     * @apiGroup 动态模块API
+     * @apiName 分页获取热门话题列表
+     * @apiParam (接口请求参数) {long} id 用户id
+     * @apiSuccess (200) {int{0-65535}} status 响应状态码
+     * @apiSuccess (200) {long{0-500}} code 信息码
+     * @apiSuccess (200) {string{..255}} msg 说明
+     * @apiSuccess (200) {object} [data] 数据
+     * @apiSuccess (200) {object[]} [hots] 三条热门话题
+     * @apiSuccess (200) {int} [totalCount] 参与话题的动态数量
+     * @apiSuccess (200) {string} [topicTitle] 话题标题
+     * @apiParamExample {json} 请求示例
+     * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/156/hot-topics
+     * @apiSuccessExample {json} 200响应示例
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "获取三个热门话题成功。",
+     * "data": {
+     * "hots": [
+     * {
+     * "totalCount": 5,
+     * "topicTitle": "#电动车交规"
+     * },
+     * {
+     * "totalCount": 4,
+     * "topicTitle": "#球长防骗课堂"
+     * },
+     * {
+     * "totalCount": 2,
+     * "topicTitle": "#懒癌生存守则"
+     * }
+     * ]
+     * }
+     * }
+     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
+     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {String} error 错误说明
+     * @apiError (404) {String} message 返回说明
+     * @apiError (404) {String} path 路径
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应 接口未注册
+     * {
+     * "timestamp": 1611558682334,
+     * "status": 404,
+     * "error": "Not Found",
+     * "message": "No message available",
+     * "path": "/find/dynamic/70/hots"
+     * }
+     * @apiError (500) {int{0-65535}} status 响应状态码
+     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！",
+     * "data": null
+     * }
+     */
+    //分页获取热门话题
+    @ApiOperation(value = "分页获取热门话题列表接口", notes = "分页获取热门话题列表")
+    @GetMapping(value = "/{id}/hot-topics")
+    public CommonResult<Map<String, Object>> hotTopics(@PathVariable(name = "id") Long userId,
+                                                       @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                                       @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
+        return this.dynamicFeignClient.hotTopics(userId, pageNum, pageSize);
     }
 }

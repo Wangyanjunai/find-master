@@ -517,13 +517,21 @@
         ORDER BY di.`dynamic_status` DESC, di.`create_time` DESC, di.`update_time` DESC
     </select>
 
-    <select id="selectHotTopic" resultType="string" parameterType="java.lang.Long">
-        SELECT `topic_title`
+    <resultMap id="hotTopicDataMap" type="com.potato369.find.mbg.model.HotTopic">
+        <result column="total_count" property="totalCount" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="topic_title" property="topicTitle" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    </resultMap>
+
+    <select id="selectHotTopic" resultMap="hotTopicDataMap" parameterType="java.lang.Long">
+        SELECT `topic_title`,
+               count(1) AS `total_count`
         FROM `dynamic_info`
+        WHERE `is_topic` = '1'
         GROUP BY `topic_title`
-        HAVING SUM(`comments`) > 0
-        ORDER BY SUM(`comments`) DESC
+        ORDER BY total_count DESC
     </select>
+    
+    <select id="select"
 
     <resultMap id="hotTopicResultMap" type="com.potato369.find.mbg.model.HotTopic">
         <result column="total_count" jdbcType="INTEGER" property="totalCount"/>
