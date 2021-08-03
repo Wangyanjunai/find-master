@@ -523,7 +523,7 @@ public class DynamicController {
             @RequestParam(name = "dataType", required = false, defaultValue = "0") String dataType, // 附件类型，默认：0，全部；0->全部，1->图片或者图片+文字，2->语音或者语音+文字
             @RequestParam(name = "provinceList", required = false) List<String> provinceList, // 发布动态定位（省份列表）
             @RequestParam(name = "cityList", required = false) List<String> cityList,// 发布动态定位（城市列表）
-            @RequestParam(name = "industryId") Long industryId, //行业Id
+            @RequestParam(name = "industryId", required = false) Long industryId, //行业Id
             @RequestParam(name = "professionId", required = false) Long professionId, //职业Id
             @RequestParam(name = "tags", required = false) List<String> tagsList) {   //标签列表
         OperateRecord operateRecord = new OperateRecord();
@@ -588,12 +588,6 @@ public class DynamicController {
             if (StrUtil.isNotEmpty(dataType)) {
                 if (Objects.equals(AttacheInfoDataTypeEnum.Text.getCodeStr(), dataType)) {
                     dataType = null; //null 全部
-                }
-                if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), dataType)) {
-                    dataType = "0";    // 0->图片或图片+文字
-                }
-                if (Objects.equals(AttacheInfoDataTypeEnum.Audio.getCodeStr(), dataType)) {
-                    dataType = "1";    // 1->语音或语音+文字
                 }
             }
             DynamicInfoParam dynamicInfoParam = new DynamicInfoParam();
@@ -664,16 +658,23 @@ public class DynamicController {
             if (!Objects.isNull(constellations) && constellations.size() > 0) {
                 dynamicInfoParam.setConstellations(constellations);
             }
-            //行业id，查询所有的职业id
-            List<Long> professionIdList = Collections.singletonList(professionId);
-            if (Objects.isNull(professionId)) {
-                ProfessionsExample example = new ProfessionsExample();
-                example.createCriteria().andIndustryIdEqualTo(industryId).andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());
-                List<Professions> professionsList = this.professionsMapperReader.selectByExample(example);
-                if (!Objects.isNull(professionsList) && !professionsList.isEmpty()) {
-                    professionIdList = professionsList.stream().map(Professions::getId).collect(Collectors.toList());
+            List<Long> professionIdList = new ArrayList<>();
+            if (Objects.isNull(industryId)) {
+                professionId = user.getProfessionId();
+                professionIdList.add(professionId);
+            } else {
+                if (Objects.isNull(professionId)) {
+                    ProfessionsExample example = new ProfessionsExample();
+                    example.createCriteria().andIndustryIdEqualTo(industryId).andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());
+                    List<Professions> professionsList = this.professionsMapperReader.selectByExample(example);
+                    if (!Objects.isNull(professionsList) && !professionsList.isEmpty()) {
+                        professionIdList = professionsList.stream().map(Professions::getId).collect(Collectors.toList());
+                    }
+                } else {
+                    professionIdList.add(professionId);
                 }
             }
+            //行业id，查询所有的职业id
             dynamicInfoParam.setProfessionIds(professionIdList);
 
             List<Long> tagsIdList = new ArrayList<>();

@@ -117,7 +117,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, user_id, dynamic_id, dynamic_status,
+        id
+        , user_id, dynamic_id, dynamic_status,
         public_status, is_topic, is_anonymous, topic_title, likes,
         comments, applications, shares, attache_type,
     	attache_number, longitude, latitude, country, 
@@ -418,15 +419,12 @@
         di.`topic_title`,
         di.`is_anonymous`,
         di.`comments`,
-        ai.`data_type` AS `attache_file_data_type`,
-        ai.`file_name` AS `attache_file_name_list`
+        di.`attache_type` AS `attache_file_data_type`
         FROM
         `user` ur,
-        `dynamic_info` di,
-        `attache_info` ai
+        `dynamic_info` di
         WHERE
         di.`user_id` = ur.`id`
-        AND di.`id` = ai.`dynamic_info_by`
         AND di.`dynamic_status`<![CDATA[!=]]>'1'
         <if test="param != null">
             <if test="param.gender != null">
@@ -496,7 +494,7 @@
                 )
             </if>
             <if test="param.dataType != null">
-                AND ai.`data_type`<![CDATA[=]]>#{param.dataType, jdbcType=CHAR}
+                AND di.`attache_type`<![CDATA[=]]>#{param.dataType, jdbcType=CHAR}
             </if>
             <if test="param.countryLocations != null and param.countryLocations.size() > 0">
                 AND di.`country` IN (
@@ -541,8 +539,7 @@
           AND `create_time` BETWEEN (SELECT DATE_ADD(now(), INTERVAL - 1 MONTH))
             AND now()
         GROUP BY `topic_title`
-        ORDER BY `total_count` DESC
-        LIMIT 0, 3
+        ORDER BY `total_count` DESC LIMIT 0, 3
     </select>
 
     <select id="selectMyDynamicInfoData" parameterType="java.lang.Long" resultMap="BaseResultMap2">
@@ -585,10 +582,10 @@
                  and dy.`attache_type` <![CDATA[=]]> '1'
                  and dy.`attache_number` <![CDATA[>]]> 0
                order by dy.`create_time` desc
-               limit 1)
+            limit 1)
           and ai.`data_type` <![CDATA[=]]> '1'
           and ai.`file_name` is not null
-        limit 1
+            limit 1
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update dynamic_info

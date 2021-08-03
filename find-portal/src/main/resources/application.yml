@@ -1,7 +1,7 @@
 spring:
   profiles:
     active:
-      - dev3
+      - dev1
   application:
     name: portal-service
   jackson:

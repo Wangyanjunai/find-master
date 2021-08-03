@@ -188,9 +188,11 @@ public class CommentController {
                 log.debug("开始分页查询某条动态内容的所有评论详情数据");
             }
             PageCommentVOs commentsPage = this.commentService.pageCommentsByDynamicId(userId, dynamicInfoId, pageNum, pageSize);
-            data.put("totalSize", commentsPage.getTotalSize());
-            data.put("totalPage", commentsPage.getTotalPage());
-            data.put("list", commentsPage.getList());
+            if (commentsPage.getTotalSize() > 0) {
+                data.put("totalSize", commentsPage.getTotalSize());
+                data.put("totalPage", commentsPage.getTotalPage());
+                data.put("list", commentsPage.getList());
+            }
             this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, "分页查询某条动态内容的所有评论详情数据成功。");
         } catch (Exception e) {

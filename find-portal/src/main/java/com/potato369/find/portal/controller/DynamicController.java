@@ -2306,7 +2306,7 @@ public class DynamicController {
             @RequestParam(name = "dataType", required = false) @ApiParam(name = "dataType", value = "附件类型，0->全部，1->图片或者图片+文字，2->语音或者语音+文字，默认：0", allowableValues = "0,1,2", example = "0") String dataType, // 0->全部，1->图片或者图片+文字，2->语音或者语音+文字，默认：0
             @RequestParam(name = "provinceList", required = false) @ApiParam(name = "provinceList", value = "定位（省份）列表") List<String> provinceList, // 发布动态定位（省份）列表
             @RequestParam(name = "cityList", required = false) @ApiParam(name = "cityList", value = "定位（城市）列表") List<String> cityList,// 发布动态定位（城市）列表
-            @RequestParam(name = "industryId") @ApiParam(name = "industryId", value = "行业Id") Long industryId, //行业Id
+            @RequestParam(name = "industryId", required = false) @ApiParam(name = "industryId", value = "行业Id") Long industryId, //行业Id
             @RequestParam(name = "professionId", required = false) @ApiParam(name = "professionId", value = "职业Id") Long professionId, //职业Id
             @RequestParam(name = "tags", required = false) @ApiParam(name = "tags", value = "标签列表") List<String> tagsList) { //标签列表
         return this.dynamicFeignClient.screen(userId, ip, longitude, latitude, pageNum, pageSize, gender, minAge, maxAge, constellations, dataType, provinceList, cityList, industryId, professionId, tagsList);
@@ -2772,7 +2772,7 @@ public class DynamicController {
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量，默认：每页20条", example = "20") Integer pageSize) {// 每页数量，默认：每页20条
         return this.dynamicFeignClient.mylist(userId, pageNum, pageSize);
     }
-    
+
     /**
      * @api {get} /find/dynamic/{id}/hots 获取三个热门话题接口
      * @apiVersion 1.0.0

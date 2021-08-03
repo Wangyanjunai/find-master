@@ -65,6 +65,8 @@ public class DynamicServiceImpl implements DynamicService {
 
     private OperateRecordMapper operateRecordMapperWriter;
 
+    private AttacheInfoMapper attacheInfoMapperReader;
+
     @Autowired
     public void setDynamicMapperReader(DynamicMapper dynamicMapperReader) {
         this.dynamicMapperReader = dynamicMapperReader;
@@ -120,6 +122,10 @@ public class DynamicServiceImpl implements DynamicService {
         this.operateRecordMapperWriter = operateRecordMapperWriter;
     }
 
+    @Autowired
+    public void setAttacheInfoMapperReader(AttacheInfoMapper attacheInfoMapperReader) {
+        this.attacheInfoMapperReader = attacheInfoMapperReader;
+    }
 
     //保存动态内容信息
     @Override
@@ -530,21 +536,24 @@ public class DynamicServiceImpl implements DynamicService {
                     }
                     dynamicInfoVO.setAddress(stringBuilder.toString());
                 }
-                String[] fileNameList01 = StrUtil.split(dynamicInfoData.getFileName(), "||");
-                List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
-                List<String> fileNameList03 = new ArrayList<>();
-                for (String fileName : fileNameList02) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
-                    if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), dynamicInfoData.getAttacheFileDataType())) {
-                        stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+                AttacheInfo attacheInfo = this.attacheInfoMapperReader.selectByDynamicInfoId(dynamicInfoId);
+                if (Objects.isNull(attacheInfo)) {
+                    String[] fileNameList01 = StrUtil.split(attacheInfo.getFileName(), "||");
+                    List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
+                    List<String> fileNameList03 = new ArrayList<>();
+                    for (String fileName : fileNameList02) {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                        if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), attacheInfo.getDataType())) {
+                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+                        }
+                        if (Objects.equals(AttacheInfoDataTypeEnum.Audio.getCodeStr(), attacheInfo.getDataType())) {
+                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
+                        }
+                        stringBuilder.append(fileName);
+                        fileNameList03.add(stringBuilder.toString());
+                        dynamicInfoVO.setFileName(fileNameList03);
                     }
-                    if (Objects.equals(AttacheInfoDataTypeEnum.Audio.getCodeStr(), dynamicInfoData.getAttacheFileDataType())) {
-                        stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
-                    }
-                    stringBuilder.append(fileName);
-                    fileNameList03.add(stringBuilder.toString());
-                    dynamicInfoVO.setFileName(fileNameList03);
                 }
                 if (Objects.equals(IsAnonymousEnum.No.getType(), dynamicInfoData.getIsAnonymous())) {
                     dynamicInfoVO.setAnonymous(false);

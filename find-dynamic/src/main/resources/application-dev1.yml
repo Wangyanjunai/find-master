@@ -7,14 +7,14 @@ spring:
         server-addr: 8.135.36.45:8848
         namespace: bb0e196a-546f-48b8-af0f-ae445d63c0ad
   datasource:
-    url: jdbc:mysql://192.168.31.31:3306/find_dev_test01?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://192.168.31.37:3306/find_dev_test01?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: find
     password: XueGod!@#123
 #项目相关配置
 project-url:
-  domain: http://192.168.31.31:8083       #项目网关域名前缀
+  domain: http://192.168.31.37:8083       #项目网关域名前缀
   upload-res: D:/Program/Resources        #资源文件上传存放服务器路径
-  res-domain: http://192.168.31.31:9000   #Nginx服务器路径网关域名
+  res-domain: http://192.168.31.37:9000   #Nginx服务器路径网关域名
 
 #集成极光推送配置
 jpush:
