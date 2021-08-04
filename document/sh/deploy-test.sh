@@ -1,6 +1,6 @@
 #!/bin/bash
 kill -9 $(ps -ef | grep java | grep find | awk '{print $2}')
-cd ~/code/find-master || exit
+cd ~/code/find-master
 git pull
 mvn clean package
 rm -rf ~/jar/*.jar
@@ -10,7 +10,7 @@ mv find-message/target/*.jar ~/jar
 mv find-order/target/*.jar ~/jar
 mv find-portal/target/*.jar ~/jar
 mv find-user/target/*.jar ~/jar
-cd ~/jar || exit
+cd ~/jar
 nohup java -jar -server -Xmx64m -Xss8m -Xms1m -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC -Dcom.alibaba.nacos.client.naming.ctimeout=5000 -Dspring.profiles.active=test -Dserver.port=8081 find-user-8081.jar >find-user-8081.log 2>&1 &
 nohup java -jar -server -Xmx64m -Xss8m -Xms1m -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC -Dcom.alibaba.nacos.client.naming.ctimeout=5000 -Dspring.profiles.active=test -Dserver.port=8082 find-message-8082.jar >find-message-8082.log 2>&1 &
 nohup java -jar -server -Xmx64m -Xss8m -Xms1m -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC -Dcom.alibaba.nacos.client.naming.ctimeout=5000 -Dspring.profiles.active=test -Dserver.port=8083 find-dynamic-8083.jar >find-dynamic-8083.log 2>&1 &
