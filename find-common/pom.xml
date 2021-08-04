@@ -9,7 +9,7 @@
         <relativePath>../../find-master</relativePath>
     </parent>
     <artifactId>find-common</artifactId>
-    <name>觅鹿陌生人社交公共微服务子模块项目</name>
+    <name>觅鹿工具及通用模块</name>
     <url>https://maven.apache.org</url>
     <description>Common service project for Spring Boot</description>
     <dependencies>

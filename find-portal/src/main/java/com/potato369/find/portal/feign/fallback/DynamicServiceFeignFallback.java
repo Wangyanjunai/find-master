@@ -149,4 +149,16 @@ public class DynamicServiceFeignFallback implements DynamicService {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }
+
+    @Override
+    public CommonResult<Map<String, Object>> searchLikeByTitle(Long userId, String keywords) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
+
+    @Override
+    public CommonResult<Map<String, Object>> findDynamicInfoByTitle(Long userId, String topicTitle, String ip, Double longitude, Double latitude, int pageNum, int pageSize) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 }

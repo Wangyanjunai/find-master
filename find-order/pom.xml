@@ -9,7 +9,7 @@
         <relativePath>../../find-master</relativePath>
     </parent>
     <artifactId>find-order</artifactId>
-    <name>觅鹿陌生人社交订单微服务子模块项目</name>
+    <name>觅鹿订单微服务模块</name>
     <url>https://maven.apache.org</url>
     <description>Order service project for Spring Boot</description>
     <dependencies>

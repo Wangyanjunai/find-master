@@ -35,6 +35,10 @@ public interface DynamicInfoMapper {
 
     List<DynamicInfo> selectHotDynamicInfoByTopicTitle(@Param("topicTitle") String topicTitle);
 
+    List<DynamicInfo> selectByKeywords(@Param("keywords") String keywords);
+
+    List<DynamicInfoData> selectByTopicTitle(@Param("topicTitle") String topicTitle);
+
     String getFileNameByUserId(@Param("userId") Long userId);
 
     int updateByExampleSelective(@Param("record") DynamicInfo record, @Param("example") DynamicInfoExample example);

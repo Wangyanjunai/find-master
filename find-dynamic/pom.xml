@@ -9,7 +9,7 @@
         <relativePath>../../find-master</relativePath>
     </parent>
     <artifactId>find-dynamic</artifactId>
-    <name>觅鹿陌生人社交动态微服务子模块项目</name>
+    <name>觅鹿动态微服务模块</name>
     <url>https://maven.apache.org</url>
     <description>Dynamic service project for Spring Boot.</description>
 

@@ -126,7 +126,21 @@ public interface DynamicService {
 
     //分页获取热门话题
     @GetMapping(value = "/find/v1/dynamic/{id}/hotTopics.do")
-    public CommonResult<Map<String, Object>> hotTopics(@PathVariable(name = "id") Long userId,
-                                                       @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
-                                                       @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize);
+    CommonResult<Map<String, Object>> hotTopics(@PathVariable(name = "id") Long userId,
+                                                @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                                @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize);
+
+    //模糊搜索话题
+    @GetMapping(value = "/find/v1/dynamic/{id}/search-title.do")
+    CommonResult<Map<String, Object>> searchLikeByTitle(@PathVariable(name = "id") Long userId, @RequestParam(name = "keywords") String keywords);
+
+    //根据话题名称查询所有话题列表
+    @GetMapping(value = "/find/v1/dynamic/{id}/find-title.do")
+    CommonResult<Map<String, Object>> findDynamicInfoByTitle(@PathVariable(name = "id") Long userId,
+                                                             @RequestParam(name = "topicTitle") String topicTitle,
+                                                             @RequestParam(name = "ip") String ip,
+                                                             @RequestParam(name = "longitude") Double longitude,
+                                                             @RequestParam(name = "latitude") Double latitude,
+                                                             @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                                             @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize);
 }

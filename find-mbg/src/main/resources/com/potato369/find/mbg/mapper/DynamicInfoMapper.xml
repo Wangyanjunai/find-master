@@ -522,7 +522,7 @@
         <result column="topic_title" property="topicTitle" jdbcType="VARCHAR" javaType="java.lang.String"/>
     </resultMap>
 
-    <select id="selectHotTopic" resultMap="hotTopicDataMap" parameterType="java.lang.Long">
+    <select id="selectHotTopic" resultMap="hotTopicDataMap">
         SELECT `topic_title`,
                count(1) AS `total_count`
         FROM `dynamic_info`
@@ -531,12 +531,7 @@
         ORDER BY total_count DESC
     </select>
 
-    <resultMap id="hotTopicResultMap" type="com.potato369.find.mbg.model.HotTopic">
-        <result column="total_count" jdbcType="INTEGER" property="totalCount"/>
-        <result column="topic_title" jdbcType="VARCHAR" property="topicTitle"/>
-    </resultMap>
-
-    <select id="selectHotTopicTitle" resultMap="hotTopicResultMap">
+    <select id="selectHotTopicTitle" resultMap="hotTopicDataMap">
         SELECT COUNT(`id`)                AS `total_count`,
                CONCAT('#', `topic_title`) AS `topic_title`
         FROM `dynamic_info`
@@ -544,7 +539,17 @@
           AND `create_time` BETWEEN (SELECT DATE_ADD(now(), INTERVAL - 1 MONTH))
             AND now()
         GROUP BY `topic_title`
-        ORDER BY `total_count` DESC LIMIT 0, 3
+        ORDER BY `total_count` DESC
+        LIMIT 3
+    </select>
+    <select id="selectByKeywords" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select distinct `topic_title`, `id`
+        from `dynamic_info`
+        where `topic_title` like concat(concat('%', #{keywords,jdbcType=VARCHAR}), '%')
+        group by `topic_title`
+        order by `likes` desc,
+                 `create_time` desc,
+                 `update_time` desc
     </select>
 
     <select id="selectHotDynamicInfoByTopicTitle" resultMap="BaseResultMap" parameterType="string">
@@ -554,7 +559,8 @@
           AND topic_title = #{topicTitle, jdbcType=VARCHAR}
         ORDER BY `likes` DESC,
                  `create_time` DESC,
-                 `update_time` DESC LIMIT 0, 4
+                 `update_time` DESC
+        LIMIT 4
     </select>
 
     <select id="selectMyDynamicInfoData" parameterType="java.lang.Long" resultMap="BaseResultMap2">
@@ -567,7 +573,7 @@
                di.`public_status`,
                CONCAT(di.`country`, '·')  AS country,
                CONCAT(di.`province`, '·') AS province,
-               CONCAT(di.`city`)          AS city,
+               CONCAT(di.`city`, '.')     AS city,
                CONCAT(di.`district`, '·') AS district,
                di.`other`,
                di.`likes`,
@@ -587,6 +593,38 @@
           AND ur.`id` = #{userId, jdbcType=BIGINT}
         ORDER BY di.`dynamic_status` DESC, di.`create_time` DESC, di.`update_time` DESC
     </select>
+
+    <select id="selectByTopicTitle" parameterType="java.lang.String" resultMap="BaseResultMap2">
+        SELECT ur.`id`                    AS user_id,
+               ur.`head_icon`,
+               ur.`nick_name`,
+               di.`id`                    AS dynamic_info_id,
+               di.`create_time`,
+               di.`content`,
+               di.`public_status`,
+               CONCAT(di.`country`, '·')  AS country,
+               CONCAT(di.`province`, '·') AS province,
+               CONCAT(di.`city`, '.')     AS city,
+               CONCAT(di.`district`, '·') AS district,
+               di.`other`,
+               di.`likes`,
+               di.`applications`,
+               di.`shares`,
+               di.attache_type            AS attache_file_data_type,
+               di.`dynamic_status`,
+               di.`is_topic`,
+               di.`topic_title`,
+               di.`is_anonymous`,
+               di.`comments`,
+               di.`update_time`
+        FROM `dynamic_info` di,
+             `user` ur
+        WHERE di.`user_id` = ur.`id`
+          AND di.`dynamic_status`<![CDATA[ !=]]> '1'
+          AND di.`topic_title` = #{topicTitle, jdbcType=VARCHAR}
+        ORDER BY di.`likes` DESC, di.`create_time` DESC, di.`update_time` DESC
+    </select>
+
     <select id="getFileNameByUserId" parameterType="java.lang.Long" resultType="string">
         select ai.`file_name`
         from `attache_info` ai
@@ -597,10 +635,10 @@
                  and dy.`attache_type` <![CDATA[=]]> '1'
                  and dy.`attache_number` <![CDATA[>]]> 0
                order by dy.`create_time` desc
-            limit 1)
+               limit 1)
           and ai.`data_type` <![CDATA[=]]> '1'
           and ai.`file_name` is not null
-            limit 1
+        limit 1
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update dynamic_info

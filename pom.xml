@@ -6,20 +6,20 @@
     <groupId>com.potato369.find</groupId>
     <artifactId>find-master</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>觅鹿陌生人社交主配微服务父模块项目</name>
+    <name>觅鹿主配微服务模块</name>
     <url>https://maven.apache.org</url>
     <packaging>pom</packaging>
     <description>Find master project for Spring Boot.</description>
 
     <modules>
-        <module>find-common</module>    <!-- 工具类及通用代码模块-->
-        <module>find-mbg</module>       <!-- MyBatisGenerator生成的数据库操作代码模块-->
-        <module>find-user</module>      <!-- 移动端觅鹿陌生人社交用户微服务-->
-        <module>find-order</module>     <!-- 移动端觅鹿陌生人社交动态微服务-->
-        <module>find-dynamic</module>   <!-- 移动端觅鹿陌生人社交动态微服务-->
-        <module>find-message</module>   <!-- 移动端觅鹿陌生人社交消息微服务-->
-        <module>find-portal</module>    <!-- 移动端觅鹿陌生人社交系统微服务-->
-        <module>find-admin</module>     <!-- 后台管理系统服务-->
+        <module>find-common</module>    <!-- 觅鹿工具及通用模块-->
+        <module>find-mbg</module>       <!-- 觅鹿数据库操作模块-->
+        <module>find-user</module>      <!-- 觅鹿用户微服务模块-->
+        <module>find-order</module>     <!-- 觅鹿订单微服务模块-->
+        <module>find-dynamic</module>   <!-- 觅鹿动态微服务模块-->
+        <module>find-message</module>   <!-- 觅鹿消息微服务模块-->
+        <module>find-portal</module>    <!-- 觅鹿前端微服务模块-->
+        <module>find-admin</module>     <!-- 觅鹿后台微服务模块-->
     </modules>
 
     <properties>

@@ -9,7 +9,7 @@
         <relativePath>../../find-master</relativePath>
     </parent>
     <artifactId>find-user</artifactId>
-    <name>觅鹿陌生人社交用户微服务子模块项目</name>
+    <name>觅鹿用户微服务模块</name>
     <url>https://maven.apache.org</url>
     <description>User service project for Spring Boot.</description>
 
