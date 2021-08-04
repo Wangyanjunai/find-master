@@ -7,7 +7,7 @@ spring:
         server-addr: 8.135.36.45:8848
         namespace: ff16f08d-13a1-481f-a01c-fefc6d33cb74
   datasource:
-    url: jdbc:mysql://188.131.154.96:3306/find_dev_test01?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/find_dev_test01?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: find
     password: XueGod!@#123
 #项目相关配置
