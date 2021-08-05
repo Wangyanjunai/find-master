@@ -1,16 +1,16 @@
 {
   "name": "觅鹿项目二期",
-  "version": "1.2.0",
+  "version": "1.1.0",
   "description": "觅鹿项目二期接口文档",
   "title": "觅鹿项目二期",
   "url": "http://w168428j19.51mypc.cn",
   "sampleUrl": "http://w168428j19.51mypc.cn",
   "header": {
-    "title": "觅鹿项目二期Header",
+    "title": "接口文档开头",
     "filename": "header.md"
   },
   "footer": {
-    "title": "觅鹿项目二期Footer",
+    "title": "接口文档结尾",
     "filename": "footer.md"
   },
   "order": [

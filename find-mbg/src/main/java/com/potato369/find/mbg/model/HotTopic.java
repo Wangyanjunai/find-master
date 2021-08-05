@@ -23,7 +23,7 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class HotTopic {
-    //话题总数量
+    //话题总数量，动态总数量
     private long totalCount;
     //话题标题
     private String topicTitle;

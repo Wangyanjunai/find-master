@@ -29,32 +29,31 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取消息界面点赞和申请加微信消息列表
-     * @apiParam (接口请求参数) {long} id 接收者用户id
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页码，默认：1
-     * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
-     * @apiParamExample {json} 请求示例
-     * HTTP/1.1 OK
+     * @apiParam (接口请求参数){Number} id 接收者用户id
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页码
+     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页数量
+     * @apiParamExample 请求示例
      * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/29/all?pageNum=1&pageSize=20" -H "accept: application/json"
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 消息数据
-     * @apiSuccess (200) {object} [likes] 最新点赞消息
-     * @apiSuccess (200) {string} [content1] 最新一条未读点赞消息内容
-     * @apiSuccess (200) {int} [count1] 未读点赞消息数量
-     * @apiSuccess (200) {long} [totalCount] 申请加微信消息总条数
-     * @apiSuccess (200) {int} [totalPage] 申请加微信消息总页数
-     * @apiSuccess (200) {object[]} [list] 申请加微信消息数据
-     * @apiSuccess (200) {long} [messageId] 申请加微信消息记录id
-     * @apiSuccess (200) {long} [userId] 申请加微信发送者用户id
-     * @apiSuccess (200) {string} [head] 申请加微信发送者用户头像
-     * @apiSuccess (200) {string} [nickname] 申请加微信发送者用户昵称
-     * @apiSuccess (200) {string} [content2] 申请加微信发送消息内容
-     * @apiSuccess (200) {long} [count2] 申请加微信未读消息数量
-     * @apiSuccess (200) {string} [createTime] 消息发送时间
-     * @apiSuccess (200) {string} [type] 消息类型，0->普通消息，1->申请加微信消息
-     * @apiSuccess (200) {int} [flag] 是否展示复制微信，0->否，1->是
-     * @apiSuccess (200) {string} [weixinId] 微信号
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 消息数据
+     * @apiSuccess (200) {Object} [likes] 最新点赞消息
+     * @apiSuccess (200) {String} [content1] 最新一条未读点赞消息内容
+     * @apiSuccess (200) {Number} [count1] 未读点赞消息数量
+     * @apiSuccess (200){Number} [totalCount] 申请加微信消息总条数
+     * @apiSuccess (200) {Number} [totalPage] 申请加微信消息总页数
+     * @apiSuccess (200) {Object[]} [list] 申请加微信消息数据
+     * @apiSuccess (200){Number} [messageId] 申请加微信消息记录id
+     * @apiSuccess (200){Number} [userId] 申请加微信发送者用户id
+     * @apiSuccess (200) {String} [head] 申请加微信发送者用户头像
+     * @apiSuccess (200) {String} [nickname] 申请加微信发送者用户昵称
+     * @apiSuccess (200) {String} [content2] 申请加微信发送消息内容
+     * @apiSuccess (200){Number} [count2] 申请加微信未读消息数量
+     * @apiSuccess (200) {String} [createTime] 消息发送时间
+     * @apiSuccess (200) {String} [type] 消息类型，0->普通消息，1->申请加微信消息
+     * @apiSuccess (200) {Number} [flag] 是否展示复制微信，0->否，1->是
+     * @apiSuccess (200) {String} [weixinId] 微信号
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -139,8 +138,8 @@ public class MessageController {
      * ]
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -149,8 +148,8 @@ public class MessageController {
      * "code": 199,
      * "msg": "未找到用户信息！"
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -159,8 +158,8 @@ public class MessageController {
      * "code": 200,
      * "msg": "接口未注册！"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -184,25 +183,24 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取点赞消息列表
-     * @apiParam (接口请求参数) {long} id 消息接收者用户id
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页码，默认：1
-     * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
-     * @apiParamExample {json} 请求示例
-     * HTTP/1.1 OK
+     * @apiParam (接口请求参数){Number} id 消息接收者用户id
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页码
+     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页数量
+     * @apiParamExample 请求示例
      * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/29/likes?pageNum=1&pageSize=20" -H "accept: application/json"
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 消息数据
-     * @apiSuccess (200) {long} [totalCount] 点赞消息总条数
-     * @apiSuccess (200) {int} [totalPage] 点赞消息总页数
-     * @apiSuccess (200) {object[]} [list] 点赞消息数据
-     * @apiSuccess (200) {long} [userId] 点赞者用户id
-     * @apiSuccess (200) {long} [messageId] 点赞消息记录id
-     * @apiSuccess (200) {string} [head] 点赞者用户头像
-     * @apiSuccess (200) {string} [content] 点赞者发送消息内容
-     * @apiSuccess (200) {string} [attacheType] 点赞的动态内容类型，0->图片，1->语音
-     * @apiSuccess (200) {string[]} [filenameList] 点赞的动态文件名称列表
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 消息数据
+     * @apiSuccess (200){Number} [totalCount] 点赞消息总条数
+     * @apiSuccess (200) {Number} [totalPage] 点赞消息总页数
+     * @apiSuccess (200) {Object[]} [list] 点赞消息数据
+     * @apiSuccess (200){Number} [userId] 点赞者用户id
+     * @apiSuccess (200){Number} [messageId] 点赞消息记录id
+     * @apiSuccess (200) {String} [head] 点赞者用户头像
+     * @apiSuccess (200) {String} [content] 点赞者发送消息内容
+     * @apiSuccess (200) {String} [attacheType] 点赞的动态内容类型，0->图片，1->语音
+     * @apiSuccess (200) {String[]} [filenameList] 点赞的动态文件名称列表
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -431,8 +429,8 @@ public class MessageController {
      * ]
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -441,8 +439,8 @@ public class MessageController {
      * "code": 199,
      * "msg": "未找到用户信息！"
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -451,8 +449,8 @@ public class MessageController {
      * "code": 200,
      * "msg": "接口未注册！"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -476,26 +474,26 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 分页获取消息历史记录列表
-     * @apiParam (接口请求参数) {long} id1 消息发送者用户id
-     * @apiParam (接口请求参数) {long} id2 消息接收者用户id
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页码，默认：1
-     * @apiParam (接口请求参数) {int} [pageSize] 每页数量，默认：20
-     * @apiParamExample {json} 请求示例
+     * @apiParam (接口请求参数){Number} id1 消息发送者用户id
+     * @apiParam (接口请求参数){Number} id2 消息接收者用户id
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页码
+     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页数量
+     * @apiParamExample 请求示例
      * HTTP/1.1 OK
      * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/138/139/messages?pageNum=1&pageSize=20" -H "accept: application/json"
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 消息历史记录数据
-     * @apiSuccess (200) {long} [totalCount] 消息记录总条数
-     * @apiSuccess (200) {int} [totalPage] 消息记录总页数
-     * @apiSuccess (200) {object[]} [list] 消息记录数据列表
-     * @apiSuccess (200) {long} [messageId] 消息记录id
-     * @apiSuccess (200) {long} [sendUserId] 消息发送者用户id
-     * @apiSuccess (200) {string} [sendUserHead] 消息发送者用户头像
-     * @apiSuccess (200) {string} [sendUserNickname] 消息发送者用户昵称
-     * @apiSuccess (200) {string} [sendDateTime] 消息发送时间
-     * @apiSuccess (200) {string} [content] 消息内容
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 消息历史记录数据
+     * @apiSuccess (200){Number} [totalCount] 消息记录总条数
+     * @apiSuccess (200) {Number} [totalPage] 消息记录总页数
+     * @apiSuccess (200) {Object[]} [list] 消息记录数据列表
+     * @apiSuccess (200){Number} [messageId] 消息记录id
+     * @apiSuccess (200){Number} [sendUserId] 消息发送者用户id
+     * @apiSuccess (200) {String} [sendUserHead] 消息发送者用户头像
+     * @apiSuccess (200) {String} [sendUserNickname] 消息发送者用户昵称
+     * @apiSuccess (200) {String} [sendDateTime] 消息发送时间
+     * @apiSuccess (200) {String} [content] 消息内容
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -541,8 +539,8 @@ public class MessageController {
      * ]
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -551,8 +549,8 @@ public class MessageController {
      * "code": 199,
      * "msg": "未找到用户信息！"
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -561,8 +559,8 @@ public class MessageController {
      * "code": 200,
      * "msg": "接口未注册！"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -587,17 +585,16 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 发送消息
-     * @apiParam (接口请求参数) {long} id 发送者用户id
-     * @apiParam (接口请求参数) {long} messageId 回复的消息id
-     * @apiParam (接口请求参数) {string} content 消息内容
-     * @apiParamExample {json} 请求示例 发送消息
-     * HTTP/1.1 OK
+     * @apiParam (接口请求参数) {Number} id 发送者用户id
+     * @apiParam (接口请求参数) {Number} messageId 回复的消息id
+     * @apiParam (接口请求参数) {String} content 消息内容
+     * @apiParamExample 请求示例 发送消息
      * curl -v -X POST "http://w168428j19.51mypc.cn/find/message/60/send?messageId=25&content=可以申请加你的微信吗？" -H "accept: application/json"
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 发送状态数据
-     * @apiSuccess (200) {string} [SEND] OK->发送成功，ERROR->发送失败
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 发送状态数据
+     * @apiSuccess (200) {String} [SEND] OK->发送成功，ERROR->发送失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -608,14 +605,13 @@ public class MessageController {
      * "SEND": "OK"
      * }
      * }
-     * @apiParamExample {json} 请求示例 回复消息
-     * HTTP/1.1 OK
+     * @apiParamExample 请求示例 回复消息
      * curl -v -X POST "http://w168428j19.51mypc.cn/find/message/29/send?messageId=2&content=可以申请加你的微信吗？" -H "accept: application/json"
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 发送状态数据
-     * @apiSuccess (200) {string} [SEND] OK->发送成功，ERROR->发送失败
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 发送状态数据
+     * @apiSuccess (200) {String} [SEND] OK->发送成功，ERROR->发送失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -626,8 +622,8 @@ public class MessageController {
      * "SEND": "OK"
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -636,8 +632,8 @@ public class MessageController {
      * "code": 199,
      * "msg": "未找到用户信息！"
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -646,8 +642,8 @@ public class MessageController {
      * "code": 200,
      * "msg": "接口未注册！"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -671,15 +667,15 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 全部消息已读
-     * @apiParam (接口请求参数) {long} id 消息接收者用户id
-     * @apiParamExample {json} 请求示例
+     * @apiParam (接口请求参数){Number} id 消息接收者用户id
+     * @apiParamExample 请求示例
      * HTTP/1.1 OK
      * curl -v -X PUT "http://w168428j19.51mypc.cn/find/message/60/updateAll" -H "accept: application/json"
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 标记已读状态数据
-     * @apiSuccess (200) {string} [UPDATE] OK->标记已读成功，ERROR->标记已读失败
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 标记已读状态数据
+     * @apiSuccess (200) {String} [UPDATE] OK->标记已读成功，ERROR->标记已读失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -690,8 +686,8 @@ public class MessageController {
      * "UPDATE": "OK"
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -700,8 +696,8 @@ public class MessageController {
      * "code": 199,
      * "msg": "未找到用户信息！"
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -710,8 +706,8 @@ public class MessageController {
      * "code": 200,
      * "msg": "接口未注册！"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -734,16 +730,15 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 删除申请加微信消息记录
-     * @apiParam (接口请求参数) {long} id1 消息接收者用户id
-     * @apiParam (接口请求参数) {long} id2 消息发送者用户id
-     * @apiParamExample {json} 请求示例
-     * HTTP/1.1 OK
+     * @apiParam (接口请求参数){Number} id1 消息接收者用户id
+     * @apiParam (接口请求参数){Number} id2 消息发送者用户id
+     * @apiParamExample 请求示例
      * curl -v -X PUT "http://w168428j19.51mypc.cn/find/message/60/delete?id2=28" -H "accept: application/json"
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 删除消息状态数据
-     * @apiSuccess (200) {string} [DELETE] OK->删除消息记录成功，ERROR->删除消息记录失败
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 删除消息状态数据
+     * @apiSuccess (200) {String} [DELETE] OK->删除消息记录成功，ERROR->删除消息记录失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -754,8 +749,8 @@ public class MessageController {
      * "DELETE": "OK"
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -764,8 +759,8 @@ public class MessageController {
      * "code": 199,
      * "msg": "未找到用户信息！"
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -774,8 +769,8 @@ public class MessageController {
      * "code": 200,
      * "msg": "接口未注册！"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -798,16 +793,15 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 删除点赞消息记录
-     * @apiParam (接口请求参数) {long} id 消息接收者用户id
-     * @apiParam (接口请求参数) {long} messageId 消息记录id
-     * @apiParamExample {json} 请求示例
-     * HTTP/1.1 OK
+     * @apiParam (接口请求参数){Number} id 消息接收者用户id
+     * @apiParam (接口请求参数){Number} messageId 消息记录id
+     * @apiParamExample 请求示例
      * curl -v -X PUT "http://w168428j19.51mypc.cn/find/message/60/deleteLikes?messageId=28" -H "accept: application/json"
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 删除消息状态数据
-     * @apiSuccess (200) {string} [DELETE] OK->删除消息记录成功，ERROR->删除消息记录失败
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 删除消息状态数据
+     * @apiSuccess (200) {String} [DELETE] OK->删除消息记录成功，ERROR->删除消息记录失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -818,8 +812,8 @@ public class MessageController {
      * "DELETE": "OK"
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -828,8 +822,8 @@ public class MessageController {
      * "code": 199,
      * "msg": "未找到用户信息！"
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -838,8 +832,8 @@ public class MessageController {
      * "code": 200,
      * "msg": "接口未注册！"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -862,19 +856,19 @@ public class MessageController {
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
      * @apiName 回复申请加微信消息记录
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {long} messageId 消息id
+     * @apiParam (接口请求参数){Number} id 用户id
+     * @apiParam (接口请求参数){Number} messageId 消息id
      * @apiParam (接口请求参数) {string={"0", "1"}} type 类型，0->拒绝，1->同意
-     * @apiParam (接口请求参数) {string} [content] 消息内容
-     * @apiParam (接口请求参数) {string} [weChatId] 微信号
+     * @apiParam (接口请求参数) {String} [content] 消息内容
+     * @apiParam (接口请求参数) {String} [weChatId] 微信号
      * @apiParamExample {json} 请求示例 回复申请加微信消息（拒绝）
      * HTTP/1.1 OK
      * curl -v -X PUT "http://w168428j19.51mypc.cn/find/message/138/reply?messageId=37&type=0&content=非常抱歉，我不想加你！" -H "accept: application/json"
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 回复消息状态数据
-     * @apiSuccess (200) {string} [REPLY] OK->回复成功，ERROR->回复失败
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 回复消息状态数据
+     * @apiSuccess (200) {String} [REPLY] OK->回复成功，ERROR->回复失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -888,11 +882,11 @@ public class MessageController {
      * @apiParamExample {json} 请求示例 回复申请加微信消息（同意）
      * HTTP/1.1 OK
      * curl -v -X PUT "http://w168428j19.51mypc.cn/find/144/reply?messageId=42&type=1&content=我乐意&weChatId=wx406151651a" -H "accept: application/json"
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 回复消息状态数据
-     * @apiSuccess (200) {string} [REPLY] OK->回复成功，ERROR->回复失败
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 回复消息状态数据
+     * @apiSuccess (200) {String} [REPLY] OK->回复成功，ERROR->回复失败
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -903,8 +897,8 @@ public class MessageController {
      * "REPLY": "OK"
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -913,8 +907,8 @@ public class MessageController {
      * "code": 199,
      * "msg": "未找到用户信息！"
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -923,8 +917,8 @@ public class MessageController {
      * "code": 200,
      * "msg": "接口未注册！"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应

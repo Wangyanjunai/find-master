@@ -640,6 +640,19 @@
           and ai.`file_name` is not null
         limit 1
     </select>
+
+    <select id="findHotByDynamicInfoCount" resultMap="hotTopicDataMap">
+        SELECT COUNT(1)                   AS `total_count`,
+               CONCAT('#', `topic_title`) AS `topic_title`
+        FROM `dynamic_info`
+        WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) <![CDATA[<= ]]> date(`create_time`)
+          AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) <![CDATA[<= ]]> date(`update_time`)
+          AND `is_topic` = '1'
+        GROUP BY `topic_title`
+        ORDER BY `total_count` DESC,
+                 `create_time` DESC,
+                 `update_time` DESC
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
         update dynamic_info
         <set>

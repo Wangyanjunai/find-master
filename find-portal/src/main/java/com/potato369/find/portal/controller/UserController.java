@@ -21,7 +21,7 @@ import java.util.Map;
 @Api(value = "user-controller", tags = "用户信息模块Restful API")
 @RestController
 @RequestMapping("/user")
-//@Profile({"dev", "dev2", "test", "prod"})
+//@ProFile({"dev", "dev2", "test", "prod"})
 public class UserController {
 
     private UserService userFeignClient;
@@ -38,16 +38,16 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 上报极光推送设备标识
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} regId 极光推送唯一设备标识
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} regId 极光推送唯一设备标识
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string={"OK", "FAILED"}} [UPLOADREGID] 上报状态，OK->“成功”，FAILED->“失败”
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String={"OK", "FAILED"}} [UPLOADREGID] 上报状态，OK->“成功”，FAILED->“失败”
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -58,8 +58,8 @@ public class UserController {
      * "UPLOADREGID": "OK",
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -68,8 +68,8 @@ public class UserController {
      * "code": 199,
      * "msg": "未找到用户信息",
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -78,8 +78,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500 错误
      * {
@@ -103,19 +103,19 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 修改头像
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {file} headIconFile 头像图片文件
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {File} headIconFile 头像图片文件
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
      * {
      * "headIconFile":"D:\Program\Resources\find\img\head\head01.png"
      * }
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {file} [head] 头像图片地址
-     * @apiSuccess (200) {long} [id] 用户id
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {File} [head] 头像图片地址
+     * @apiSuccess (200) {Number} [id] 用户id
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -127,8 +127,8 @@ public class UserController {
      * "id": 1
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -137,8 +137,8 @@ public class UserController {
      * "code": 199,
      * "msg": "未找到用户信息",
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -147,8 +147,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500 错误
      * {
@@ -172,19 +172,19 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 修改背景图
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {file} backgroundIconFile 背景图片文件
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {File} backgroundIconFile 背景图片文件
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
      * {
      * "backgroundIconFile":"D:\Program\Resources\find\img\head\bg02.png"
      * }
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [head] 背景图片地址
-     * @apiSuccess (200) {long} [id] 用户id
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [head] 背景图片地址
+     * @apiSuccess (200) {Number} [id] 用户id
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -196,8 +196,8 @@ public class UserController {
      * "id": 1
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -206,8 +206,8 @@ public class UserController {
      * "code": 199,
      * "msg": "未找到用户信息",
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -216,8 +216,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500 错误
      * HTTP/1.1 500 500响应
@@ -242,36 +242,36 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 用户注册
-     * @apiParam (接口请求参数) {string {11}} phone 手机号码
-     * @apiParam (接口请求参数) {string {1} ="0", "1"}} gender 性别，0->女生；1->男生
-     * @apiParam (接口请求参数) {string {1..16}} [platform] 平台
-     * @apiParam (接口请求参数) {string {0..32}} nickname 昵称
-     * @apiParam (接口请求参数) {string {0..128}} weixinId 微信号
-     * @apiParam (接口请求参数) {string {0..64}} [imei] 设备串码
-     * @apiParam (接口请求参数) {string {0..64}} [model] 设备型号
-     * @apiParam (接口请求参数) {string {0..16}} [sysName] 系统名称
-     * @apiParam (接口请求参数) {string {0..16}} [sysCode] 系统版本
-     * @apiParam (接口请求参数) {string {0..4}} [networkMode] 网络方式
-     * @apiParam (接口请求参数) {string {0..4}} year 出生年份
-     * @apiParam (接口请求参数) {string {0..2}} month 出生月份
-     * @apiParam (接口请求参数) {string {0..2}} date 出生日期
-     * @apiParam (接口请求参数) {string={"水瓶座","双鱼座","白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座"}} constellation 星座
-     * @apiParam (接口请求参数) {string {16}} [ip] 客户端IP不能与定位（国家、省份，城市、区/县、其它、经度、纬度）同时为空
-     * @apiParam (接口请求参数) {string {0..16}} [country] 定位（国家）
-     * @apiParam (接口请求参数) {string {0..32}} [province] 定位（省份）
-     * @apiParam (接口请求参数) {string {0..32}} [city] 定位（城市）
-     * @apiParam (接口请求参数) {string {0..32}} [district] 定位（区/县）
-     * @apiParam (接口请求参数) {string {0..32}} [other] 定位（其它）
-     * @apiParam (接口请求参数) {double {0..16}} [longitude] 定位（经度）
-     * @apiParam (接口请求参数) {double {0..16}} [latitude] 定位（纬度）
-     * @apiParam (接口请求参数) {long {0..32}} [professionId] 职业编号
-     * @apiParam (接口请求参数) {string {0..32}} [tag1] 标签1
-     * @apiParam (接口请求参数) {string {0..32}} [tag2] 标签2
-     * @apiParam (接口请求参数) {string {0..32}} [tag3] 标签3
-     * @apiParam (接口请求参数) {string {0..32}} [tag4] 标签4
-     * @apiParam (接口请求参数) {string {0..32}} [tag5] 标签5
-     * @apiParam (接口请求参数) {string {0..255}} [autograph] 签名/发布动态内容
-     * @apiParam (接口请求参数) {file} head 头像图片文件
+     * @apiParam (接口请求参数) {String {11}} phone 手机号码
+     * @apiParam (接口请求参数) {String {1} ="0", "1"}} gender 性别，0->女生；1->男生
+     * @apiParam (接口请求参数) {String {1..16}} [platform] 平台
+     * @apiParam (接口请求参数) {String {0..32}} nickname 昵称
+     * @apiParam (接口请求参数) {String {0..128}} weixinId 微信号
+     * @apiParam (接口请求参数) {String {0..64}} [imei] 设备串码
+     * @apiParam (接口请求参数) {String {0..64}} [model] 设备型号
+     * @apiParam (接口请求参数) {String {0..16}} [sysName] 系统名称
+     * @apiParam (接口请求参数) {String {0..16}} [sysCode] 系统版本
+     * @apiParam (接口请求参数) {String {0..4}} [networkMode] 网络方式
+     * @apiParam (接口请求参数) {String {0..4}} year 出生年份
+     * @apiParam (接口请求参数) {String {0..2}} month 出生月份
+     * @apiParam (接口请求参数) {String {0..2}} date 出生日期
+     * @apiParam (接口请求参数) {String={"水瓶座","双鱼座","白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座"}} constellation 星座
+     * @apiParam (接口请求参数) {String {16}} [ip] 客户端IP不能与定位（国家、省份，城市、区/县、其它、经度、纬度）同时为空
+     * @apiParam (接口请求参数) {String {0..16}} [country] 定位（国家）
+     * @apiParam (接口请求参数) {String {0..32}} [province] 定位（省份）
+     * @apiParam (接口请求参数) {String {0..32}} [city] 定位（城市）
+     * @apiParam (接口请求参数) {String {0..32}} [district] 定位（区/县）
+     * @apiParam (接口请求参数) {String {0..32}} [other] 定位（其它）
+     * @apiParam (接口请求参数) {Double {0..16}} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {Double {0..16}} [latitude] 定位（纬度）
+     * @apiParam (接口请求参数) {Number {0..32}} [professionId] 职业编号
+     * @apiParam (接口请求参数) {String {0..32}} [tag1] 标签1
+     * @apiParam (接口请求参数) {String {0..32}} [tag2] 标签2
+     * @apiParam (接口请求参数) {String {0..32}} [tag3] 标签3
+     * @apiParam (接口请求参数) {String {0..32}} [tag4] 标签4
+     * @apiParam (接口请求参数) {String {0..32}} [tag5] 标签5
+     * @apiParam (接口请求参数) {String {0..255}} [autograph] 签名/发布动态内容
+     * @apiParam (接口请求参数) {File} head 头像图片文件
      * @apiParamExample {json} 请求示例01（注册01）
      * HTTP/1.1 OK 封装表单数据格式01 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
      * "phone" : "18138812110",
@@ -324,17 +324,17 @@ public class UserController {
      * "longitude" : 113.862941,
      * "latitude" : 22.452714,
      * "head":"D:\Program\Resources\find\img\head\01.png"
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object} [user] 用户数据
-     * @apiSuccess (200) {long} [id] 用户id
-     * @apiSuccess (200) {string} [gender] 性别
-     * @apiSuccess (200) {string} [nickname] 昵称
-     * @apiSuccess (200) {string} [head] 头像图片地址
-     * @apiSuccess (200) {string} [bg] 背景图片地址
-     * @apiSuccess (200) {string} [autograph] 签名
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object} [user] 用户数据
+     * @apiSuccess (200) {Number} [id] 用户id
+     * @apiSuccess (200) {String} [gender] 性别
+     * @apiSuccess (200) {String} [nickname] 昵称
+     * @apiSuccess (200) {String} [head] 头像图片地址
+     * @apiSuccess (200) {String} [bg] 背景图片地址
+     * @apiSuccess (200) {String} [autograph] 签名
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -352,8 +352,8 @@ public class UserController {
      * }
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -362,8 +362,8 @@ public class UserController {
      * "code": 199,
      * "msg": "未找到用户信息！",
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -372,8 +372,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册！",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -427,31 +427,31 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 用户登录
-     * @apiParam (接口请求参数) {string {11}} phone 手机号码
-     * @apiParam (接口请求参数) {string {16}} [ip] 客户端IP不能与定位（国家、省份、城市、区/县、其它、经纬度）同时为空
-     * @apiParam (接口请求参数) {string {0..16}} [country] 定位（国家）
-     * @apiParam (接口请求参数) {string {0..32}} [province] 定位（省份）
-     * @apiParam (接口请求参数) {string {0..32}} [city] 定位（城市）
-     * @apiParam (接口请求参数) {string {0..32}} [district] 定位（区/县）
-     * @apiParam (接口请求参数) {string {0..32}} [other] 定位（其它）
-     * @apiParam (接口请求参数) {double {0..16}} [longitude] 定位（经度）
-     * @apiParam (接口请求参数) {double {0..16}} [latitude] 定位（纬度）
+     * @apiParam (接口请求参数) {String {11}} phone 手机号码
+     * @apiParam (接口请求参数) {String {16}} [ip] 客户端IP不能与定位（国家、省份、城市、区/县、其它、经纬度）同时为空
+     * @apiParam (接口请求参数) {String {0..16}} [country] 定位（国家）
+     * @apiParam (接口请求参数) {String {0..32}} [province] 定位（省份）
+     * @apiParam (接口请求参数) {String {0..32}} [city] 定位（城市）
+     * @apiParam (接口请求参数) {String {0..32}} [district] 定位（区/县）
+     * @apiParam (接口请求参数) {String {0..32}} [other] 定位（其它）
+     * @apiParam (接口请求参数) {Double {0..16}} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {Double {0..16}} [latitude] 定位（纬度）
      * @apiParamExample {json} 请求示例01（手机号码和客户端IP登录）
      * HTTP/1.1 OK
      * curl --insecure -X PUT -v http://w168428j19.51mypc.cn/find/user/login?phone=18138812310&ip=183.14.29.70
      * @apiParamExample {json} 请求示例02（手机号码和定位地址登录）
      * HTTP/1.1 OK
      * curl --insecure -X PUT -v http://w168428j19.51mypc.cn/find/user/login?phone=18138812236&country=中国&province=广东省&city=广州市&district=荔湾区&other=荔湾汽车站&longitude=103.962941&latitude=21.462714&ip=181.14.30.190
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object} [user] 用户数据
-     * @apiSuccess (200) {long} [id] 用户id
-     * @apiSuccess (200) {string} [gender] 性别
-     * @apiSuccess (200) {string} [nickname] 昵称
-     * @apiSuccess (200) {string} [head] 头像图片地址
-     * @apiSuccess (200) {string} [autograph] 签名
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object} [user] 用户数据
+     * @apiSuccess (200) {Number} [id] 用户id
+     * @apiSuccess (200) {String} [gender] 性别
+     * @apiSuccess (200) {String} [nickname] 昵称
+     * @apiSuccess (200) {String} [head] 头像图片地址
+     * @apiSuccess (200) {String} [autograph] 签名
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -468,8 +468,8 @@ public class UserController {
      * }
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -478,8 +478,8 @@ public class UserController {
      * "code": 199,
      * "msg": "未找到用户信息！",
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -488,8 +488,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册！",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -519,14 +519,14 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 判断手机号是否注册
-     * @apiParam (接口请求参数) {string {11}} phone 手机号码，必须是11位数字符合要求的手机号码
+     * @apiParam (接口请求参数) {String {11}} phone 手机号码，必须是11位数字符合要求的手机号码
      * @apiParamExample {json} 请求示例（判断手机号是否注册）
      * HTTP/1.1 OK
      * curl -v -X GET http://w168428j19.51mypc.cn/find/user/isreg?phone=18138802541
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
      * @apiSuccess (200) {boolean="true", "false"} [isReg] 用户是否已经注册，true->已经注册，false->还未注册
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
@@ -548,8 +548,8 @@ public class UserController {
      * "isReg": true
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -558,8 +558,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -581,20 +581,20 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 更新用户资料
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} [nickname] 昵称
-     * @apiParam (接口请求参数) {string} [weixinId] 微信号
-     * @apiParam (接口请求参数) {string {0..4}} [year] 出生年代
-     * @apiParam (接口请求参数) {string {0..2}} [month] 出生月份
-     * @apiParam (接口请求参数) {string {0..2}} [date] 出生日期
-     * @apiParam (接口请求参数) {string {0..4}} [constellation={"水瓶座","双鱼座","白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座"}] 星座
-     * @apiParam (接口请求参数) {string} [autograph] 签名
-     * @apiParam (接口请求参数) {long} [professionId] 职业编号
-     * @apiParam (接口请求参数) {string} [tag1] 标签1
-     * @apiParam (接口请求参数) {string} [tag2] 标签2
-     * @apiParam (接口请求参数) {string} [tag3] 标签3
-     * @apiParam (接口请求参数) {string} [tag4] 标签4
-     * @apiParam (接口请求参数) {string} [tag5] 标签5
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} [nickname] 昵称
+     * @apiParam (接口请求参数) {String} [weixinId] 微信号
+     * @apiParam (接口请求参数) {String {0..4}} [year] 出生年代
+     * @apiParam (接口请求参数) {String {0..2}} [month] 出生月份
+     * @apiParam (接口请求参数) {String {0..2}} [date] 出生日期
+     * @apiParam (接口请求参数) {String {0..4}} [constellation={"水瓶座","双鱼座","白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座"}] 星座
+     * @apiParam (接口请求参数) {String} [autograph] 签名
+     * @apiParam (接口请求参数) {Number} [professionId] 职业编号
+     * @apiParam (接口请求参数) {String} [tag1] 标签1
+     * @apiParam (接口请求参数) {String} [tag2] 标签2
+     * @apiParam (接口请求参数) {String} [tag3] 标签3
+     * @apiParam (接口请求参数) {String} [tag4] 标签4
+     * @apiParam (接口请求参数) {String} [tag5] 标签5
      * @apiParamExample {json} 请求示例 修改昵称
      * HTTP/1.1 OK
      * curl --insecure -X PUT -v http://w168428j19.51mypc.cn/find/user/{id}/update -H "Content-Type: application/json;;charset=UTF-8" -d '{"nickname":"王6"}'
@@ -624,10 +624,10 @@ public class UserController {
      * "tag2": "音乐",
      * "tag3": "影视"
      * }'
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -638,8 +638,8 @@ public class UserController {
      * "UPDATE": "OK"
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -648,8 +648,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -672,44 +672,60 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 查看用户资料
-     * @apiParam (接口请求参数) {long} id 用户id
+     * @apiParam (接口请求参数) {Number} id 用户id
      * @apiParamExample {json} 请求示例 获取用户资料
-     * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/query
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object} [user] 用户数据
-     * @apiSuccess (200) {long} [id] 用户id
-     * @apiSuccess (200) {string} [nickname] 昵称
+     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/70/query
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object} [user] 用户数据
+     * @apiSuccess (200) {Number} [id] 用户id
+     * @apiSuccess (200) {String} [nickname] 昵称
      * @apiSuccess (200) {int={"0", "1", "2"}} [grade] VIP等级，0->普通用户，1->VIP1等级用户，2->VIP2等级用户
-     * @apiSuccess (200) {int} [age] 年龄
-     * @apiSuccess (200) {string={"0", "1"}} [gender] 性别，"0"->女生，"1"->男生
-     * @apiSuccess (200) {string} [head] 头像
-     * @apiSuccess (200) {string} [bg] 背景图片
-     * @apiSuccess (200) {string} [autograph] 签名
+     * @apiSuccess (200) {Number} [age] 年龄
+     * @apiSuccess (200) {String={"0", "1"}} [gender] 性别，"0"->女生，"1"->男生
+     * @apiSuccess (200) {String} [head] 头像
+     * @apiSuccess (200) {String} [bg] 背景图片
+     * @apiSuccess (200) {String} [tag1] 标签1
+     * @apiSuccess (200) {String} [tag2] 标签2
+     * @apiSuccess (200) {String} [tag3] 标签3
+     * @apiSuccess (200) {String} [tag4] 标签4
+     * @apiSuccess (200) {String} [tag5] 标签5
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "查看用户个人资料成功",
-     * "data": {
-     * "user": {
-     * "id": 1,
-     * "nickname": "王666",
-     * "head": "http://192.168.31.31:9000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg",
-     * "bg": "http://192.168.31.31:9000/find/img/background/a1bf6181-ebd0-43b4-8e91-761ec8fc83ab_admin055.jpg",
-     * "grade": 0,
-     * "age": 24,
-     * "gender": "1",
-     * "autograph": "126我的ss2"
+     *     "status": 200,
+     *     "code": 0,
+     *     "msg": "查看用户个人资料成功",
+     *     "data": {
+     *         "user": {
+     *             "id": 70,
+     *             "nickname": "阿萌",
+     *             "head": "http://192.168.31.38:9000/find/img/head/70/b150c5e3-bf2d-4c2f-b6cd-f586cd65183b.jpg",
+     *             "grade": "0",
+     *             "age": 27,
+     *             "year": "1994",
+     *             "month": "05",
+     *             "date": "23",
+     *             "gender": "0",
+     *             "autograph": "初次见面，大家请多多关照！！",
+     *             "industry": "计算机/互联网/通信/电子",
+     *             "profession": "测试工程师",
+     *             "country": "中国",
+     *             "province": "河南省",
+     *             "city": "郑州市",
+     *             "district": "中原区",
+     *             "tag1": "颜值",
+     *             "tag2": "吃货",
+     *             "tag3": "篮球",
+     *             "tag4": "足球",
+     *             "tag5": "打碟DJ"
+     *         }
+     *     }
      * }
-     * }
-     * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -718,8 +734,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -740,16 +756,15 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 查看用户微信号
-     * @apiParam (接口请求参数) {long} id 用户id
+     * @apiParam (接口请求参数) {Number} id 用户id
      * @apiParamExample {json} 请求示例 修改昵称
-     * HTTP/1.1 OK
      * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/queryWeixin
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object} [user] 数据
-     * @apiSuccess (200) {string} [weixinId] 微信号
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object} [user] 数据
+     * @apiSuccess (200) {String} [weixinId] 微信号
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -762,8 +777,8 @@ public class UserController {
      * }
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -772,8 +787,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -794,17 +809,16 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 获取用户举报类型
-     * @apiParam (接口请求参数) {long} id 用户id
+     * @apiParam (接口请求参数) {Number} id 用户id
      * @apiParamExample {json} 请求示例 查看用户举报类型
-     * HTTP/1.1 OK
      * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/report-categories
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object[]} [list] 举报类型数据列表
-     * @apiSuccess (200) {long} [id] 类型id
-     * @apiSuccess (200) {string} [name] 类型名称
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object[]} [list] 举报类型数据列表
+     * @apiSuccess (200) {Number} [id] 类型id
+     * @apiSuccess (200) {String} [name] 类型名称
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -848,8 +862,8 @@ public class UserController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -858,8 +872,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -880,19 +894,18 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 用户举报
-     * @apiParam (接口请求参数) {long} id 举报用户id
-     * @apiParam (接口请求参数) {long} categoryId 举报类目id
+     * @apiParam (接口请求参数) {Number} id 举报用户id
+     * @apiParam (接口请求参数) {Number} categoryId 举报类目id
      * @apiParam (接口请求参数) {int="1", "2"} reportType 举报类型，1->动态，2->用户
-     * @apiParam (接口请求参数) {long} beingReportId 被举报用户id或者动态id
-     * @apiParam (接口请求参数) {string} reportContent 举报内容
+     * @apiParam (接口请求参数) {Number} beingReportId 被举报用户id或者动态id
+     * @apiParam (接口请求参数) {String} reportContent 举报内容
      * @apiParamExample {json} 请求示例 查看用户举报类型
-     * HTTP/1.1 OK
      * curl --insecure -X POST -v http://w168428j19.51mypc.cn/find/user/{id}/report -H "Content-Type: application/json;charset=UTF-8" -d '{"categoryId":1, "reportType":1, "beingReportId":3, "reportContent":"老是打广告dddddd+++++++！！！！！"}'
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [REPORTED] 举报消息
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [REPORTED] 举报消息
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -903,8 +916,8 @@ public class UserController {
      * "REPORTED": "OK"
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -913,8 +926,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -937,22 +950,21 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 获取用户黑名单列表接口
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页数，默认值：1
-     * @apiParam (接口请求参数) {int} [pageSize] 每页条数，默认值：10
-     * @apiParamExample {json} 请求示例 查看用户举报类型
-     * HTTP/1.1 OK
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} [pageNum] 当前页数，默认值：1
+     * @apiParam (接口请求参数) {Number} [pageSize] 每页条数，默认值：10
+     * @apiParamExample 请求示例 查看用户举报类型
      * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/blacklist?pageNum=1&pageSize=10
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {int} [totalPage] 总页数
-     * @apiSuccess (200) {object[]} [list] 黑名单数据列表
-     * @apiSuccess (200) {long} [id] 用户id
-     * @apiSuccess (200) {string} [nickname] 昵称
-     * @apiSuccess (200) {string} [head] 头像图片地址
-     * @apiSuccess (200) {string} [time] 加入时间
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Number} [totalPage] 总页数
+     * @apiSuccess (200) {Object[]} [list] 黑名单数据列表
+     * @apiSuccess (200) {Number} [id] 用户id
+     * @apiSuccess (200) {String} [nickname] 昵称
+     * @apiSuccess (200) {String} [head] 头像图片地址
+     * @apiSuccess (200) {String} [time] 加入时间
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -1025,8 +1037,8 @@ public class UserController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -1035,8 +1047,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -1058,18 +1070,17 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 拉入推出黑名单接口
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {long} blackUserId 黑名单用户id
-     * @apiParam (接口请求参数) {int} type 奇数->拉入，偶数->推出
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} blackUserId 黑名单用户id
+     * @apiParam (接口请求参数) {Number} type 奇数->拉入，偶数->推出
      * @apiParamExample {json} 请求示例
-     * HTTP/1.1 OK
      * curl --insecure -X POST -v http://w168428j19.51mypc.cn/find/user/1/pushOrPull -H "Content-Type: application/json;charset=UTF-8" -d '{"blackUserId":2, "type":0}'
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object} [PULL] 推出状态
-     * @apiSuccess (200) {object} [PUSH] 拉入状态
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object} [PULL] 推出状态
+     * @apiSuccess (200) {Object} [PUSH] 拉入状态
      * @apiSuccessExample {json} 200响应示例 推出黑名单列表
      * HTTP/1.1 200 OK
      * {
@@ -1090,8 +1101,8 @@ public class UserController {
      * "PUSH": "OK"
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -1100,8 +1111,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -1127,16 +1138,16 @@ public class UserController {
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
      * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/professions -H "Content-Type: application/json;charset=UTF-8"
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object[]} [list] 行业列表
-     * @apiSuccess (200) {long} [id] 行业id
-     * @apiSuccess (200) {string} [name] 行业名称
-     * @apiSuccess (200) {object[]} [list] 职业列表
-     * @apiSuccess (200) {long} [id] 职业id
-     * @apiSuccess (200) {string} [name] 职业名称
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object[]} [list] 行业列表
+     * @apiSuccess (200) {Number} [id] 行业id
+     * @apiSuccess (200) {String} [name] 行业名称
+     * @apiSuccess (200) {Object[]} [list] 职业列表
+     * @apiSuccess (200) {Number} [id] 职业id
+     * @apiSuccess (200) {String} [name] 职业名称
      * @apiSuccessExample {json} 200响应示例 行业和职业列表
      * HTTP/1.1 200 OK
      * {
@@ -1232,8 +1243,8 @@ public class UserController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -1242,8 +1253,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -1267,13 +1278,13 @@ public class UserController {
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
      * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/tags -H "Content-Type: application/json;charset=UTF-8"
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object[]} [list] 标签列表
-     * @apiSuccess (200) {long} [id] 标签id
-     * @apiSuccess (200) {string} [name] 标签名称
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object[]} [list] 标签列表
+     * @apiSuccess (200) {Number} [id] 标签id
+     * @apiSuccess (200) {String} [name] 标签名称
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
@@ -1324,8 +1335,8 @@ public class UserController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -1334,8 +1345,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -1359,13 +1370,13 @@ public class UserController {
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
      * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/hot-tags -H "Content-Type: application/json;charset=UTF-8"
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object[]} [list] 标签列表
-     * @apiSuccess (200) {long} [id] 标签id
-     * @apiSuccess (200) {string} [name] 标签名称
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object[]} [list] 标签列表
+     * @apiSuccess (200) {Number} [id] 标签id
+     * @apiSuccess (200) {String} [name] 标签名称
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
@@ -1416,8 +1427,8 @@ public class UserController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -1426,8 +1437,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -1448,17 +1459,17 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 模糊搜索标签
-     * @apiParam (接口请求参数) {string} keywords 关键词
+     * @apiParam (接口请求参数) {String} keywords 关键词
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
      * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/search-tag?keywords=元 -H "Content-Type: application/json;charset=UTF-8"
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object[]} [list] 标签列表
-     * @apiSuccess (200) {long} [id] 标签id
-     * @apiSuccess (200) {string} [name] 标签名称
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object[]} [list] 标签列表
+     * @apiSuccess (200) {Number} [id] 标签id
+     * @apiSuccess (200) {String} [name] 标签名称
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
@@ -1473,8 +1484,8 @@ public class UserController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -1483,8 +1494,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -1505,28 +1516,27 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 鹿可模块推荐用户数据
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} ip 客户端ip
-     * @apiParam (接口请求参数) {double} longitude 定位（经度）
-     * @apiParam (接口请求参数) {double} latitude 定位（纬度）
-     * @apiParam (接口请求参数) {int} [count] 推荐用户数量，默认：10
-     * @apiParamExample {json} 请求示例
-     * HTTP/1.1 OK
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} ip 客户端ip
+     * @apiParam (接口请求参数) {Double} longitude 定位（经度）
+     * @apiParam (接口请求参数) {Double} latitude 定位（纬度）
+     * @apiParam (接口请求参数) {Number} [count] 推荐用户数量，默认：10
+     * @apiParamExample 请求示例
      * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&count=10 -H "Content-Type: application/json;charset=UTF-8"
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object[]} [list] 鹿可用户列表
-     * @apiSuccess (200) {long} [id] 用户id
-     * @apiSuccess (200) {string} [nickname] 用户昵称
-     * @apiSuccess (200) {int} [age] 年龄
-     * @apiSuccess (200) {string} [country] 国家
-     * @apiSuccess (200) {string} [province] 省份
-     * @apiSuccess (200) {string} [city] 城市
-     * @apiSuccess (200) {string} [district] 区/县
-     * @apiSuccess (200) {double} [distance] 距离（单位：米）
-     * @apiSuccess (200) {string} [img] 动态图片地址
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object[]} [list] 鹿可用户列表
+     * @apiSuccess (200) {Number} [id] 用户id
+     * @apiSuccess (200) {String} [nickname] 用户昵称
+     * @apiSuccess (200) {Number} [age] 年龄
+     * @apiSuccess (200) {String} [country] 国家
+     * @apiSuccess (200) {String} [province] 省份
+     * @apiSuccess (200) {String} [city] 城市
+     * @apiSuccess (200) {String} [district] 区/县
+     * @apiSuccess (200) {Double} [distance] 距离（单位：米）
+     * @apiSuccess (200) {String} [img] 动态图片地址
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
@@ -1647,8 +1657,8 @@ public class UserController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -1657,8 +1667,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -1682,56 +1692,65 @@ public class UserController {
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 鹿可模块推荐用户详情
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {long} detailsUserId 用户详情id
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} detailsUserId 用户详情id
      * @apiParamExample {json} 请求示例
-     * HTTP/1.1 OK
-     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look-details?detailsUserId=65 -H "Content-Type: application/json;charset=UTF-8"
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 消息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {long} [id] 用户id
-     * @apiSuccess (200) {string[]{1..6}} [attacheList] 动态图片列表，最多6张
-     * @apiSuccess (200) {string} [nickname] 昵称
-     * @apiSuccess (200) {string} [constellation] 星座
-     * @apiSuccess (200) {string} [gender] 性别，0->女，1->男
-     * @apiSuccess (200) {int} [age] 年龄
-     * @apiSuccess (200) {string} [industry] 行业
-     * @apiSuccess (200) {string} [profession] 职业
-     * @apiSuccess (200) {string} [country] 国家
-     * @apiSuccess (200) {string} [province] 省份
-     * @apiSuccess (200) {string} [city] 城市
-     * @apiSuccess (200) {string} [district] 区/县
+     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look-details?detailsUserId=70 -H "Content-Type: application/json;charset=UTF-8"
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Number} [id] 用户id
+     * @apiSuccess (200) {String[]{1..4}} [attacheList] 动态图片列表，最多4张
+     * @apiSuccess (200) {String} [tag1] 标签1
+     * @apiSuccess (200) {String} [tag2] 标签2
+     * @apiSuccess (200) {String} [tag3] 标签3
+     * @apiSuccess (200) {String} [tag4] 标签4
+     * @apiSuccess (200) {String} [tag5] 标签5
+     * @apiSuccess (200) {String} [nickname] 昵称
+     * @apiSuccess (200) {String} [constellation] 星座
+     * @apiSuccess (200) {String} [gender] 性别，0->女，1->男
+     * @apiSuccess (200) {Number} [age] 年龄
+     * @apiSuccess (200) {String} [industry] 行业
+     * @apiSuccess (200) {String} [profession] 职业
+     * @apiSuccess (200) {String} [country] 国家
+     * @apiSuccess (200) {String} [province] 省份
+     * @apiSuccess (200) {String} [city] 城市
+     * @apiSuccess (200) {String} [district] 区/县
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "返回数据成功。",
-     * "data": {
-     * "id": 65,
-     * "attacheList": [
-     * "http://192.168.31.31:9000/find/res/images/65/20201113/04.png",
-     * "http://192.168.31.31:9000/find/res/images/65/20201113/05.png",
-     * "http://192.168.31.31:9000/find/res/images/65/20201107/09.png",
-     * "http://192.168.31.31:9000/find/res/images/65/20201107/010.png",
-     * "http://192.168.31.31:9000/find/res/images/65/20201024/012.png",
-     * "http://192.168.31.31:9000/find/res/images/65/20201024/06.png"
-     * ],
-     * "nickname": "兰烬",
-     * "constellation": "金牛座",
-     * "gender": "0",
-     * "age": 23,
-     * "industry": "计算机/互联网/通信/电子",
-     * "profession": "后端开发工程师",
-     * "country": "中国",
-     * "province": "上海市",
-     * "city": "上海市",
-     * "district": "徐汇区"
+     *     "status": 200,
+     *     "code": 0,
+     *     "msg": "获取鹿可模块用户详情数据成功。",
+     *     "data": {
+     *         "id": 70,
+     *         "attacheList": [
+     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/308f48ad-ce12-49ab-92f2-eb4ef7dcd649.jpg",
+     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/72517b7c-a808-445e-9a3d-3f15ee66e341.jpg",
+     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/2d5f85de-e2b1-4b96-a8c5-f3a6814c3c50.jpg",
+     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/fb92d519-e29c-4c80-b7cc-acfa2f6eaf47.jpg",
+     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/4872593b-e7d2-496a-a52c-897cafda2bb5.jpg",
+     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/d7319235-dfee-42e3-a089-50cec9ae5a1f.jpg"
+     *         ],
+     *         "tag1": "颜值",
+     *         "tag2": "吃货",
+     *         "tag3": "篮球",
+     *         "tag4": "足球",
+     *         "tag5": "打碟DJ",
+     *         "nickname": "阿萌",
+     *         "constellation": "双子座",
+     *         "gender": "0",
+     *         "age": 27,
+     *         "industry": "计算机/互联网/通信/电子",
+     *         "profession": "测试工程师",
+     *         "country": "中国",
+     *         "province": "河南省",
+     *         "city": "郑州市",
+     *         "district": "中原区"
+     *     }
      * }
-     * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -1740,8 +1759,8 @@ public class UserController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应

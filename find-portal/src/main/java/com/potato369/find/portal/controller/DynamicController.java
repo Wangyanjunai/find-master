@@ -32,27 +32,27 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 发布动态内容
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} [imei] 设备串码
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} [imei] 设备串码
      * @apiParam (接口请求参数) {string={"0", "1", "2"}} attacheInfoDataType 动态包含附件类型：0->文字（不包含图片，语音的纯文字），1->图片，2->语音
      * @apiParam (接口请求参数) {file[]={1..4}} [files] 附件数组，说明：图片文件不能超过4张包括4张，语音文件不能超过1个包括1个
-     * @apiParam (接口请求参数) {string} [model] 设备型号
-     * @apiParam (接口请求参数) {string} [sysName] 系统名称
-     * @apiParam (接口请求参数) {string} [sysCode] 系统版本
+     * @apiParam (接口请求参数) {String} [model] 设备型号
+     * @apiParam (接口请求参数) {String} [sysName] 系统名称
+     * @apiParam (接口请求参数) {String} [sysCode] 系统版本
      * @apiParam (接口请求参数) {string={"2G","3G","4G","5G","WIFI"} [networkMode] 上网方式
-     * @apiParam (接口请求参数) {string} [ip] 客户端IP
-     * @apiParam (接口请求参数) {double} [longitude] 定位（经度）
-     * @apiParam (接口请求参数) {double} [latitude] 定位（纬度）
-     * @apiParam (接口请求参数) {string} [country] 定位（国家）
-     * @apiParam (接口请求参数) {string} [province] 定位（省份）
-     * @apiParam (接口请求参数) {string} [city] 定位（城市）
-     * @apiParam (接口请求参数) {string} [district] 定位（区/县）
-     * @apiParam (接口请求参数) {string} [other] 定位（其它）
+     * @apiParam (接口请求参数) {String} [ip] 客户端IP
+     * @apiParam (接口请求参数) {Double} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {Double} [latitude] 定位（纬度）
+     * @apiParam (接口请求参数) {String} [country] 定位（国家）
+     * @apiParam (接口请求参数) {String} [province] 定位（省份）
+     * @apiParam (接口请求参数) {String} [city] 定位（城市）
+     * @apiParam (接口请求参数) {String} [district] 定位（区/县）
+     * @apiParam (接口请求参数) {String} [other] 定位（其它）
      * @apiParam (接口请求参数) {string={"0", "1"}} [publicStatus] 是否公开定位，0->否，1->是，默认：0
      * @apiParam (接口请求参数) {string={"0", "1"}} [isTopic] 是否话题，0->否，1->是，默认：0
-     * @apiParam (接口请求参数) {string} [topicTitle] 话题标题
+     * @apiParam (接口请求参数) {String} [topicTitle] 话题标题
      * @apiParam (接口请求参数) {string={"0", "1"}} [isAnonymous] 是否匿名，0->否，1->是，默认：0
-     * @apiParam (接口请求参数) {string} [content] 动态内容
+     * @apiParam (接口请求参数) {String} [content] 动态内容
      * @apiParamExample {json} 请求示例01（发布图片有具体发布定位地址的动态）
      * HTTP/1.1 OK 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
      * curl -v -X POST -H 'multipart/form-data;charset=utf-8' http://w168428j19.51mypc.cn/find/dynamic/3/release
@@ -75,11 +75,11 @@ public class DynamicController {
      * "publicStatus": "0",
      * "content": "发布照片。"
      * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [RELEASED] 发布状态
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [RELEASED] 发布状态
      * @apiSuccessExample {json} 200响应示例01（发布图片有具体发布定位地址）
      * HTTP/1.1 200 OK
      * {
@@ -108,11 +108,11 @@ public class DynamicController {
      * "publicStatus": "0",
      * "content": "发布照片。"
      * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [RELEASED] 发布状态
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [RELEASED] 发布状态
      * @apiSuccessExample {json} 200响应示例02（发布图片有客户端IP）
      * HTTP/1.1 200 OK
      * {
@@ -138,11 +138,11 @@ public class DynamicController {
      * "publicStatus": "0",
      * "content": "发布语音。"
      * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [RELEASED] 发布状态
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [RELEASED] 发布状态
      * @apiSuccessExample {json} 200响应示例03（发布语音有客户端IP）
      * HTTP/1.1 200 OK
      * {
@@ -167,11 +167,11 @@ public class DynamicController {
      * "publicStatus": "0",
      * "content": "今天天气很好。"
      * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [RELEASED] 发布状态
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [RELEASED] 发布状态
      * @apiSuccessExample {json} 200响应示例04（发布纯文字有客户端IP）
      * HTTP/1.1 200 OK
      * {
@@ -200,11 +200,11 @@ public class DynamicController {
      * "isAnonymous": "1",
      * "publicStatus":"0"
      * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [RELEASED] 发布状态
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [RELEASED] 发布状态
      * @apiSuccessExample {json} 200响应示例04（发布纯文字有客户端IP）
      * HTTP/1.1 200 OK
      * {
@@ -215,8 +215,8 @@ public class DynamicController {
      * "RELEASED": "OK"
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -225,8 +225,8 @@ public class DynamicController {
      * "code": 199,
      * "msg": "未找到用户信息！"
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -235,8 +235,8 @@ public class DynamicController {
      * "code": 200,
      * "msg": "接口未注册！"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -279,22 +279,22 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 更新动态地址定位
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} [ip] 客户端IP，说明：不能与定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）同时为空，如果同时都不为空，以定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）为准
-     * @apiParam (接口请求参数) {string} [country] 定位（国家）
-     * @apiParam (接口请求参数) {string} [province] 定位（省份）
-     * @apiParam (接口请求参数) {string} [city] 定位（城市）
-     * @apiParam (接口请求参数) {string} [district] 定位（区/县）
-     * @apiParam (接口请求参数) {string} [other] 定位（其它）
-     * @apiParam (接口请求参数) {double} [longitude] 定位（经度）
-     * @apiParam (接口请求参数) {double} [latitude] 定位（纬度）
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} [ip] 客户端IP，说明：不能与定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）同时为空，如果同时都不为空，以定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）为准
+     * @apiParam (接口请求参数) {String} [country] 定位（国家）
+     * @apiParam (接口请求参数) {String} [province] 定位（省份）
+     * @apiParam (接口请求参数) {String} [city] 定位（城市）
+     * @apiParam (接口请求参数) {String} [district] 定位（区/县）
+     * @apiParam (接口请求参数) {String} [other] 定位（其它）
+     * @apiParam (接口请求参数) {Double} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {Double} [latitude] 定位（纬度）
      * @apiParamExample {json} 请求示例01（有客户端IP）
      * HTTP/1.1 OK
      * curl -v -X POST -H 'application/json;charset=utf-8' http://w168428j19.51mypc.cn/find/dynamic/1/updateLocation -d '{"ip":"183.14.133.239"}'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {string} [UPDATE] 更新状态，OK->成功，ERROR->失败
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {String} [UPDATE] 更新状态，OK->成功，ERROR->失败
      * @apiSuccessExample {json} 200响应示例01（有客户端IP）
      * HTTP/1.1 200 OK
      * {
@@ -318,11 +318,11 @@ public class DynamicController {
      * "longitude": 113.201737,
      * "latitude": 22.832123
      * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [UPDATE] 更新状态，OK->成功，ERROR->失败
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [UPDATE] 更新状态，OK->成功，ERROR->失败
      * @apiSuccessExample {json} 200 响应示例02（有客户端IP，具体定位地址（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度））
      * HTTP/1.1 200 OK
      * {
@@ -342,11 +342,11 @@ public class DynamicController {
      * "province": "广东",
      * "city": "深圳"
      * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {boolean} [CHANGED] 是否发生更改，true->是，false->否
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Boolean} [CHANGED] 是否发生更改，true->是，false->否
      * @apiSuccessExample {json} 200响应示例03（有客户端IP，发布定位地址（国）、（省）、（市））
      * HTTP/1.1 200 OK
      * curl -v -X POST -H 'application/json;charset=utf-8' http://w168428j19.51mypc.cn/find/dynamic/1/updateLocation
@@ -358,8 +358,8 @@ public class DynamicController {
      * "msg": "检查失败，客户端IP，发布动态定位（国）、（省）、（市）不能同时不传或者为空。",
      * "data": null
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -372,8 +372,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/dynamic/1/updateLocation1"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -398,23 +398,23 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 检查定位地址是否更改
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} [ip] 客户端IP，不能与发布动态定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）同时为空，如果同时都不为空，以传的发布动态定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）为准
-     * @apiParam (接口请求参数) {string} [country] 发布动态定位（国家）
-     * @apiParam (接口请求参数) {string} [province] 发布动态定位（省份）
-     * @apiParam (接口请求参数) {string} [city] 发布动态定位（城市）
-     * @apiParam (接口请求参数) {string} [district] 发布动态定位（区/县）
-     * @apiParam (接口请求参数) {string} [other] 发布动态定位（其它）
-     * @apiParam (接口请求参数) {double} [longitude] 发布动态定位（经度）
-     * @apiParam (接口请求参数) {double} [latitude] 发布动态定位（纬度）
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} [ip] 客户端IP，不能与发布动态定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）同时为空，如果同时都不为空，以传的发布动态定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）为准
+     * @apiParam (接口请求参数) {String} [country] 发布动态定位（国家）
+     * @apiParam (接口请求参数) {String} [province] 发布动态定位（省份）
+     * @apiParam (接口请求参数) {String} [city] 发布动态定位（城市）
+     * @apiParam (接口请求参数) {String} [district] 发布动态定位（区/县）
+     * @apiParam (接口请求参数) {String} [other] 发布动态定位（其它）
+     * @apiParam (接口请求参数) {Double} [longitude] 发布动态定位（经度）
+     * @apiParam (接口请求参数) {Double} [latitude] 发布动态定位（纬度）
      * @apiParamExample {json} 请求示例01（有客户端IP）
      * HTTP/1.1 OK
      * curl -v -X POST -H 'application/json;charset=utf-8' http://w168428j19.51mypc.cn/find/dynamic/1/checkLocation -d '{"ip":"183.14.133.239"}'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {boolean} [CHANGED] 是否发生更改，true->是，false->否
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Boolean} [CHANGED] 是否发生更改，true->是，false->否
      * @apiSuccessExample {json} 200响应示例01（有客户端IP）
      * HTTP/1.1 200 OK
      * {
@@ -428,11 +428,11 @@ public class DynamicController {
      * @apiParamExample {json} 请求示例02（有发布定位地址（国）、省、市）
      * HTTP/1.1 OK
      * curl -v -X POST -H 'application/json;charset=utf-8' http://w168428j19.51mypc.cn/find/dynamic/1/checkLocation -d '{"country": "中国", "province": "广东省", "city": "深圳市"}'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {boolean} [CHANGED] 是否发生更改，true->是，false->否
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Boolean} [CHANGED] 是否发生更改，true->是，false->否
      * @apiSuccessExample {json} 200 响应示例02（有发布定位地址（国家）、（省份）、（城市））
      * HTTP/1.1 200 OK
      * {
@@ -452,11 +452,11 @@ public class DynamicController {
      * "province": "广东省",
      * "city": "深圳市"
      * }'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {boolean} [CHANGED] 是否发生更改，true->是，false->否
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Boolean} [CHANGED] 是否发生更改，true->是，false->否
      * @apiSuccessExample {json} 200响应示例03（有客户端IP，发布定位地址（国家）、（省份）、（城市））
      * HTTP/1.1 200 OK
      * curl -v -X POST -H 'application/json;charset=utf-8' http://w168428j19.51mypc.cn/find/dynamic/1/checkLocation -d '{}'
@@ -468,8 +468,8 @@ public class DynamicController {
      * "msg": "检查失败，客户端IP，发布动态定位（国家）、（省份）、（城市）不能同时不传或者为空。",
      * "data": null
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -482,8 +482,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/v1/dynamic/1/checkLocation1"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -508,16 +508,16 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 删除动态内容
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {long} dynamicInfoId 动态内容id
-     * @apiParamExample {json} 请求示例01（是自己发布的动态内容， 删除成功）
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} dynamicInfoId 动态内容id
+     * @apiParamExample 请求示例01（是自己发布的动态内容， 删除成功）
      * HTTP/1.1 OK
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/delete?dynamicInfoId=85
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [DELETED] 删除状态，OK->成功，ERROR->失败
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [DELETED] 删除状态，OK->成功，ERROR->失败
      * @apiSuccessExample {json} 200响应示例01（是自己发布的动态内容， 删除成功）
      * HTTP/1.1 200 OK
      * {
@@ -531,11 +531,11 @@ public class DynamicController {
      * @apiParamExample {json} 请求示例02（非自己发布的动态内容， 删除失败）
      * HTTP/1.1 OK
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/delete?dynamicInfoId=86
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [DELETED] 删除状态，OK->成功，ERROR->失败
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [DELETED] 删除状态，OK->成功，ERROR->失败
      * @apiSuccessExample {json} 200 响应示例02（非自己发布的动态内容， 删除失败）
      * HTTP/1.1 200 OK
      * {
@@ -546,8 +546,8 @@ public class DynamicController {
      * "DELETED": "ERROR"
      * }
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -560,8 +560,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/dynamic/1/delete1"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -587,17 +587,17 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 申请加微信
-     * @apiParam (接口请求参数) {long} id 申请者用户id，说明：普通用户每天只允许申请最多5次添加微信，VIP用户申请加微信次数没有限制
-     * @apiParam (接口请求参数) {long} dynamicInfoId 动态内容id
-     * @apiParam (接口请求参数) {string{..255}} [message] 发送的消息
-     * @apiParamExample {json} 请求示例01（第1次申请加微信）
+     * @apiParam (接口请求参数) {Number} id 申请者用户id，说明：普通用户每天只允许申请最多5次添加微信，VIP用户申请加微信次数没有限制
+     * @apiParam (接口请求参数) {Number} dynamicInfoId 动态内容id
+     * @apiParam (接口请求参数) {String} [message] 发送的消息
+     * @apiParamExample 请求示例01（第1次申请加微信）
      * HTTP/1.1 OK
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信，请发送微信号码过来
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [APPLICATION] 申请加微信状态，OK->成功，ERROR->失败
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [APPLICATION] 申请加微信状态，OK->成功，ERROR->失败
      * @apiSuccessExample {json} 200响应示例01（第1次申请加微信）
      * HTTP/1.1 200 OK
      * {
@@ -611,11 +611,11 @@ public class DynamicController {
      * @apiParamExample {json} 请求示例02（第6次申请加微信）
      * HTTP/1.1 OK
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信16
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [APPLICATION] 申请加微信状态，OK->成功，ERROR->失败
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [APPLICATION] 申请加微信状态，OK->成功，ERROR->失败
      * @apiSuccessExample {json} 200 响应示例02（第6次申请加微信）
      * HTTP/1.1 200 OK
      * {
@@ -626,8 +626,8 @@ public class DynamicController {
      * "APPLICATION": "ERROR"
      * }
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -640,8 +640,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "find/dynamic/70/application1"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -666,17 +666,17 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 点赞或取消点赞
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {long} dynamicInfoId 动态内容id
-     * @apiParam (接口请求参数) {string{"0", "1"}} type 类型，0->取消，1->点赞
-     * @apiParamExample {json} 请求示例01（取消，点赞记录不存在）
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} dynamicInfoId 动态内容id
+     * @apiParam (接口请求参数) {String{"0", "1"}} type 类型，0->取消，1->点赞
+     * @apiParamExample 请求示例01（取消，点赞记录不存在）
      * HTTP/1.1 OK
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/likes?dynamicInfoId=86&type=0
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [LIKED] 点赞或取消点赞状态，OK->成功，ERROR->失败
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [LIKED] 点赞或取消点赞状态，OK->成功，ERROR->失败
      * @apiSuccessExample {json} 200响应示例01（取消，点赞记录不存在）
      * HTTP/1.1 200 OK
      * {
@@ -687,14 +687,14 @@ public class DynamicController {
      * "LIKED": "ERROR"
      * }
      * }
-     * @apiParamExample {json} 请求示例02（取消点赞，点赞记录存在）
+     * @apiParamExample 请求示例02（取消点赞，点赞记录存在）
      * HTTP/1.1 OK
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/likes?dynamicInfoId=86&type=0
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [LIKED] 点赞或取消点赞状态，OK->成功，ERROR->失败
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [LIKED] 点赞或取消点赞状态，OK->成功，ERROR->失败
      * @apiSuccessExample {json} 200 响应示例02（取消，点赞记录存在）
      * HTTP/1.1 200 OK
      * {
@@ -708,11 +708,11 @@ public class DynamicController {
      * @apiParamExample {json} 请求示例03（点赞，点赞记录不存在）
      * HTTP/1.1 OK
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/likes?dynamicInfoId=86&type=1
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [LIKED] 点赞或取消点赞状态，OK->成功，ERROR->失败
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [LIKED] 点赞或取消点赞状态，OK->成功，ERROR->失败
      * @apiSuccessExample {json} 200 响应示例03（点赞，点赞记录不存在）
      * HTTP/1.1 200 OK
      * {
@@ -723,8 +723,8 @@ public class DynamicController {
      * "LIKED": "OK"
      * }
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -737,8 +737,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/dynamic/70/likes1"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -763,17 +763,17 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 分享内容动态
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {long} dynamicInfoId 动态内容id
-     * @apiParam (接口请求参数) {string={"0", "1", "2", "3", "4"}} mode 分享方式：0->微信好友，1->QQ好友，2->微信朋友圈，3->QQ空间，4->微信收藏
-     * @apiParamExample {json} 请求示例
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} dynamicInfoId 动态内容id
+     * @apiParam (接口请求参数) {String={"0", "1", "2", "3", "4"}} mode 分享方式：0->微信好友，1->QQ好友，2->微信朋友圈，3->QQ空间，4->微信收藏
+     * @apiParamExample 请求示例
      * HTTP/1.1 OK
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/share?dynamicInfoId=86&mode=0
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string} [SHARED] 分享状态，OK->成功，ERROR->失败，说明：成功，分享数+1，失败，不处理
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [SHARED] 分享状态，OK->成功，ERROR->失败，说明：成功，分享数+1，失败，不处理
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -784,8 +784,8 @@ public class DynamicController {
      * "SHARED": "OK"
      * }
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -798,8 +798,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/dynamic/70/share1"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -824,38 +824,38 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 觅鹿主界面动态内容列表
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} ip 客户端IP，不能与定位（经纬度）同时为空，否则获取不到距离
-     * @apiParam (接口请求参数) {double} longitude 定位（经度）
-     * @apiParam (接口请求参数) {double} latitude 定位（纬度）
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页数，默认：第1页
-     * @apiParam (接口请求参数) {int} [pageSize] 每页条数，默认：每页20条
-     * @apiParamExample {json} 请求示例01（有客户端IP）
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} ip 客户端IP，不能与定位（经纬度）同时为空，否则获取不到距离
+     * @apiParam (接口请求参数) {Double} longitude 定位（经度）
+     * @apiParam (接口请求参数) {Double} latitude 定位（纬度）
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页数
+     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页条数
+     * @apiParamExample 请求示例01（有客户端IP）
      * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/156/list?ip=183.14.135.215&pageNum=1&pageSize=20
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {int} [totalPage] 总页数
-     * @apiSuccess (200) {object} [list] 动态内容数据列表
-     * @apiSuccess (200) {string} [userId] 用户id
-     * @apiSuccess (200) {string} [headUrl] 头像图片地址
-     * @apiSuccess (200) {string} [nickname] 昵称
-     * @apiSuccess (200) {string} [publishTime] 发布时间
-     * @apiSuccess (200) {long} [dynamicInfoId] 动态内容id
-     * @apiSuccess (200) {string} [content] 动态内容
-     * @apiSuccess (200) {string} [address] 定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回
-     * @apiSuccess (200) {int} [likes] 点赞数
-     * @apiSuccess (200) {boolean} [likeStatus] 点赞状态，true->已点赞，false->未点赞
-     * @apiSuccess (200) {int} [applications] 申请加微信数
-     * @apiSuccess (200) {boolean} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
-     * @apiSuccess (200) {boolean} [isTopic] 是否话题，true->是，false->否
-     * @apiSuccess (200) {string} [topicTitle] 话题标题
-     * @apiSuccess (200) {int} [comments] 评论数
-     * @apiSuccess (200) {boolean} [isAnonymous] 是否匿名发布，true->是，false->否
-     * @apiSuccess (200) {double} [distance] 当前位置距发布动态定位的距离（单位（米））
-     * @apiSuccess (200) {string} [dataTye] 附件文件类型，1->图片，2->语音
-     * @apiSuccess (200) {string[]} [attacheFileUrlList] 附件文件地址列表
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Number} [totalPage] 总页数
+     * @apiSuccess (200) {Object} [list] 动态内容数据列表
+     * @apiSuccess (200) {String} [userId] 用户id
+     * @apiSuccess (200) {String} [headUrl] 头像图片地址
+     * @apiSuccess (200) {String} [nickname] 昵称
+     * @apiSuccess (200) {String} [publishTime] 发布时间
+     * @apiSuccess (200) {Number} [dynamicInfoId] 动态内容id
+     * @apiSuccess (200) {String} [content] 动态内容
+     * @apiSuccess (200) {String} [address] 定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回
+     * @apiSuccess (200) {Number} [likes] 点赞数
+     * @apiSuccess (200) {Boolean} [likeStatus] 点赞状态，true->已点赞，false->未点赞
+     * @apiSuccess (200) {Number} [applications] 申请加微信数
+     * @apiSuccess (200) {Boolean} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
+     * @apiSuccess (200) {Boolean} [isTopic] 是否话题，true->是，false->否
+     * @apiSuccess (200) {String} [topicTitle] 话题标题
+     * @apiSuccess (200) {Number} [comments] 评论数
+     * @apiSuccess (200) {Boolean} [isAnonymous] 是否匿名发布，true->是，false->否
+     * @apiSuccess (200) {Double} [distance] 当前位置距发布动态定位的距离（单位（米））
+     * @apiSuccess (200) {String} [dataTye] 附件文件类型，1->图片，2->语音
+     * @apiSuccess (200) {String[]} [attacheFileUrlList] 附件文件地址列表
      * @apiSuccessExample {json} 200响应示例01（有客户端IP）
      * {
      * "status": 200,
@@ -1748,8 +1748,8 @@ public class DynamicController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -1762,8 +1762,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/dynamic/70/list"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -1791,49 +1791,49 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 筛选动态内容列表
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} [ip] 客户端IP，不能与定位（经纬度）同时为空，否则获取不到距离
-     * @apiParam (接口请求参数) {double} [longitude] 定位（经度）
-     * @apiParam (接口请求参数) {double} [latitude] 定位（纬度）
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页数，默认：第1页
-     * @apiParam (接口请求参数) {int} [pageSize] 每页条数，默认：每页20条
-     * @apiParam (接口请求参数) {string={"0", "1", "2"}} [gender] 性别，0->女生，1->男生，2->全部，默认：如果用户注册选择是0->男生，则筛选值：1->女生，反之，如果用户注册选择是1->女生，则筛选值为：0->男生
-     * @apiParam (接口请求参数) {int} [minAge] 年龄范围（最小值），默认：16
-     * @apiParam (接口请求参数) {int} [maxAge] 年龄范围（最大值），默认：35
-     * @apiParam (接口请求参数) {string[]={"水瓶座","双鱼座","白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座"}} [constellation] 星座列表，默认：null，不限->不传此参数，此参数为：null，全部->不传此参数，此参数为：null
-     * @apiParam (接口请求参数) {string={"0","1","2"}} [dataType] 附件类型，默认：0->全部，1->图片或者图片+文字，2->语音或者语音+文字
-     * @apiParam (接口请求参数) {string[]} [provinceList] 省份列表，例如：广东省, 四川省
-     * @apiParam (接口请求参数) {string[]} [cityList] 城市列表，例如：深圳市, 广州市, 成都市, 攀枝花市
-     * @apiParam (接口请求参数) {long} industryId 行业id
-     * @apiParam (接口请求参数) {long} [professionId] 职业id
-     * @apiParam (接口请求参数) {string[]} [tags] 标签列表，例如：音乐, 篮球, 二次元
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} [ip] 客户端IP，不能与定位（经纬度）同时为空，否则获取不到距离
+     * @apiParam (接口请求参数) {Double} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {Double} [latitude] 定位（纬度）
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页数
+     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页条数
+     * @apiParam (接口请求参数) {String={"0", "1", "2"}} [gender] 性别，0->女生，1->男生，2->全部，默认：如果用户注册选择是0->男生，则筛选值：1->女生，反之，如果用户注册选择是1->女生，则筛选值为：0->男生
+     * @apiParam (接口请求参数) {Number} [minAge] 年龄范围（最小值），默认：16
+     * @apiParam (接口请求参数) {Number} [maxAge] 年龄范围（最大值），默认：35
+     * @apiParam (接口请求参数) {String[]={"水瓶座","双鱼座","白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座"}} [constellation] 星座列表，默认：null，不限->不传此参数，此参数为：null，全部->不传此参数，此参数为：null
+     * @apiParam (接口请求参数) {String={"0","1","2"}} [dataType] 附件类型，默认：0->全部，1->图片或者图片+文字，2->语音或者语音+文字
+     * @apiParam (接口请求参数) {String[]} [provinceList] 省份列表，例如：广东省, 四川省
+     * @apiParam (接口请求参数) {String[]} [cityList] 城市列表，例如：深圳市, 广州市, 成都市, 攀枝花市
+     * @apiParam (接口请求参数) {Number} industryId 行业id
+     * @apiParam (接口请求参数) {Number} [professionId] 职业id
+     * @apiParam (接口请求参数) {String[]} [tags] 标签列表，例如：音乐, 篮球, 二次元
      * @apiParamExample {json} 请求示例01
      * HTTP/1.1 OK
      * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/71/screen?industryId=1&ip=183.14.134.172&pageNum=1&pageSize=20&gender=0&minAge=16&maxAge=39&constellation=巨蟹座,水瓶座&dataType=0&provinceList=广东省,广西省,湖南省&cityList=深圳市,广州市,南宁市,长沙市
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {int} [totalPage] 总页数
-     * @apiSuccess (200) {object} [list] 动态内容数据列表
-     * @apiSuccess (200) {string} [userId] 用户id
-     * @apiSuccess (200) {string} [headUrl] 头像图片地址
-     * @apiSuccess (200) {string} [nickname] 昵称
-     * @apiSuccess (200) {string} [publishTime] 发布时间
-     * @apiSuccess (200) {long} [dynamicInfoId] 动态内容id
-     * @apiSuccess (200) {string} [content] 动态内容
-     * @apiSuccess (200) {string} [address] 定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回
-     * @apiSuccess (200) {int} [likes] 点赞数
-     * @apiSuccess (200) {boolean} [likeStatus] 点赞状态，true->已点赞，false->未点赞
-     * @apiSuccess (200) {int} [applications] 申请加微信数
-     * @apiSuccess (200) {boolean} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
-     * @apiSuccess (200) {boolean} [isTopic] 是否话题，true->是，false->否
-     * @apiSuccess (200) {string} [topicTitle] 话题标题
-     * @apiSuccess (200) {int} [comments] 评论数
-     * @apiSuccess (200) {boolean} [isAnonymous] 是否匿名发布，true->是，false->否
-     * @apiSuccess (200) {double} [distance] 当前位置距发布动态定位的距离（单位（米））
-     * @apiSuccess (200) {string} [dataTye] 附件文件类型，1->图片，2->语音
-     * @apiSuccess (200) {string[]} [attacheFileUrlList] 附件文件地址列表
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Number} [totalPage] 总页数
+     * @apiSuccess (200) {Object} [list] 动态内容数据列表
+     * @apiSuccess (200) {String} [userId] 用户id
+     * @apiSuccess (200) {String} [headUrl] 头像图片地址
+     * @apiSuccess (200) {String} [nickname] 昵称
+     * @apiSuccess (200) {String} [publishTime] 发布时间
+     * @apiSuccess (200) {Number} [dynamicInfoId] 动态内容id
+     * @apiSuccess (200) {String} [content] 动态内容
+     * @apiSuccess (200) {String} [address] 定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回
+     * @apiSuccess (200) {Number} [likes] 点赞数
+     * @apiSuccess (200) {Boolean} [likeStatus] 点赞状态，true->已点赞，false->未点赞
+     * @apiSuccess (200) {Number} [applications] 申请加微信数
+     * @apiSuccess (200) {Boolean} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
+     * @apiSuccess (200) {Boolean} [isTopic] 是否话题，true->是，false->否
+     * @apiSuccess (200) {String} [topicTitle] 话题标题
+     * @apiSuccess (200) {Number} [comments] 评论数
+     * @apiSuccess (200) {Boolean} [isAnonymous] 是否匿名发布，true->是，false->否
+     * @apiSuccess (200) {Double} [distance] 当前位置距发布动态定位的距离（单位（米））
+     * @apiSuccess (200) {String} [dataTye] 附件文件类型，1->图片，2->语音
+     * @apiSuccess (200) {String[]} [attacheFileUrlList] 附件文件地址列表
      * @apiSuccessExample {json} 200响应示例01
      * HTTP/1.1 200 OK
      * {
@@ -2264,8 +2264,8 @@ public class DynamicController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -2278,8 +2278,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/dynamic/70/screen1"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -2317,35 +2317,35 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 获取自己的动态内容列表
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页数，默认：第1页
-     * @apiParam (接口请求参数) {int} [pageSize] 每页条数，默认：每页20条
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页数
+     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页条数
      * @apiParamExample {json} 请求示例
      * HTTP/1.1 OK
      * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/144/mylist?pageNum=1&pageSize=20
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {int} [totalPage] 总页数
-     * @apiSuccess (200) {object} [list] 动态内容数据列表
-     * @apiSuccess (200) {string} [userId] 用户id
-     * @apiSuccess (200) {string} [headUrl] 头像图片地址
-     * @apiSuccess (200) {string} [nickname] 昵称
-     * @apiSuccess (200) {string} [publishTime] 发布时间
-     * @apiSuccess (200) {long} [dynamicInfoId] 动态内容id
-     * @apiSuccess (200) {string} [content] 动态内容
-     * @apiSuccess (200) {string} [address] 定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回
-     * @apiSuccess (200) {int} [likes] 点赞数
-     * @apiSuccess (200) {boolean} [likeStatus] 点赞状态，true->已点赞，false->未点赞
-     * @apiSuccess (200) {int} [applications] 申请加微信数
-     * @apiSuccess (200) {boolean} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
-     * @apiSuccess (200) {boolean} [isTopic] 是否话题，true->是，false->否
-     * @apiSuccess (200) {string} [topicTitle] 话题标题
-     * @apiSuccess (200) {int} [comments] 评论数
-     * @apiSuccess (200) {boolean} [isAnonymous] 是否匿名发布，true->是，false->否
-     * @apiSuccess (200) {string} [dataTye] 附件文件类型，1->图片，2->语音
-     * @apiSuccess (200) {list} [attacheFileUrlList] 附件文件地址列表
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Number} [totalPage] 总页数
+     * @apiSuccess (200) {Object} [list] 动态内容数据列表
+     * @apiSuccess (200) {Number} [userId] 用户id
+     * @apiSuccess (200) {String} [headUrl] 头像图片地址
+     * @apiSuccess (200) {String} [nickname] 昵称
+     * @apiSuccess (200) {String} [publishTime] 发布时间
+     * @apiSuccess (200) {Number} [dynamicInfoId] 动态内容id
+     * @apiSuccess (200) {String} [content] 动态内容
+     * @apiSuccess (200) {String} [address] 定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回
+     * @apiSuccess (200) {Number} [likes] 点赞数
+     * @apiSuccess (200) {Boolean} [likeStatus] 点赞状态，true->已点赞，false->未点赞
+     * @apiSuccess (200) {Number} [applications] 申请加微信数
+     * @apiSuccess (200) {Boolean} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
+     * @apiSuccess (200) {Boolean} [isTopic] 是否话题，true->是，false->否
+     * @apiSuccess (200) {String} [topicTitle] 话题标题
+     * @apiSuccess (200) {Number} [comments] 评论数
+     * @apiSuccess (200) {Boolean} [isAnonymous] 是否匿名发布，true->是，false->否
+     * @apiSuccess (200) {String} [dataTye] 附件文件类型，1->图片，2->语音
+     * @apiSuccess (200) {String[]} [attacheFileUrlList] 附件文件地址列表
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -2738,8 +2738,8 @@ public class DynamicController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -2752,8 +2752,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "find/dynamic/71/mylist1"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -2778,14 +2778,14 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 获取三个热门话题
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object[]} [hots] 三条热门话题
-     * @apiSuccess (200) {int} [totalCount] 参与话题的动态数量
-     * @apiSuccess (200) {string} [topicTitle] 话题标题
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object[]} [hots] 三条热门话题
+     * @apiSuccess (200) {Number} [totalCount] 参与话题的动态数量
+     * @apiSuccess (200) {String} [topicTitle] 话题标题
      * @apiParamExample {json} 请求示例
      * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/156/hots
      * @apiSuccessExample {json} 200响应示例
@@ -2810,8 +2810,8 @@ public class DynamicController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -2824,8 +2824,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/dynamic/70/hots"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -2848,19 +2848,20 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 分页获取热门话题列表
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页面，默认：1
-     * @apiParam (接口请求参数) {int} [pageSize] 每页条数，默认：10
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {long} [totalSize] 总条数
-     * @apiSuccess (200) {int} [totalPage] 总页数
-     * @apiSuccess (200) {object[]} [list] 话题数据
-     * @apiSuccess (200) {int} [totalCount] 参与此话题的动态总数量
-     * @apiSuccess (200) {string} [topicTitle] 话题标题
-     * @apiSuccess (200) {string[]} [attacheFileList] 参与此话题的动态附件文件路径列表
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页面
+     * @apiParam (接口请求参数) {Number} [pageSize=10] 每页条数
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Number} [totalSize] 总条数
+     * @apiSuccess (200) {Number} [totalPage] 总页数
+     * @apiSuccess (200) {Object[]} [list] 话题数据
+     * @apiSuccess (200) {Number} [totalCount] 参与此话题的动态总数量
+     * @apiSuccess (200) {String} [topicTitle] 话题标题
+     * @apiSuccess (200) {String[]} [attacheFileList] 参与此话题的动态附件文件路径列表
+     * @apiParamExample  请求示例
      * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/hot-topics?pageNum=1&pageSize=10
      * @apiSuccessExample {json} 200响应示例
      * {
@@ -2974,8 +2975,8 @@ public class DynamicController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -2988,8 +2989,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/dynamic/70/hots"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -3014,17 +3015,18 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 模糊搜索话题
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} keywords 搜索关键词
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object[]} [results] 总条数
-     * @apiSuccess (200) {int} [totalPage] 总页数
-     * @apiSuccess (200) {object[]} [list] 搜索结果数据列表
-     * @apiSuccess (200) {long} [id] 动态内容id
-     * @apiSuccess (200) {string} [name] 话题标题
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} keywords 搜索关键词
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object[]} [results] 总条数
+     * @apiSuccess (200) {Number} [totalPage] 总页数
+     * @apiSuccess (200) {Object[]} [list] 搜索结果数据列表
+     * @apiSuccess (200) {Number} [id] 动态内容id
+     * @apiSuccess (200) {String} [name] 话题标题
+     * @apiParamExample 请求示例
      * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/search-title?keywords=找
      * @apiSuccessExample {json} 200响应示例
      * {
@@ -3044,8 +3046,8 @@ public class DynamicController {
      * ]
      * }
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -3058,8 +3060,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/dynamic/70/hots1"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -3080,472 +3082,473 @@ public class DynamicController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 根据话题名称分页查询所有话题列表
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {string} topicTitle 话题标题（名称）
-     * @apiParam (接口请求参数) {string} [ip] 客户端ip
-     * @apiParam (接口请求参数) {double} [longitude] 定位（经度）
-     * @apiParam (接口请求参数) {double} [latitude] 定位（纬度）
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页码，默认：1
-     * @apiParam (接口请求参数) {int} [pageSize] 每页条数，默认：20
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {int} [totalPage] 总页数
-     * @apiSuccess (200) {object} [list] 动态内容数据列表
-     * @apiSuccess (200) {string} [userId] 用户id
-     * @apiSuccess (200) {string} [headUrl] 头像图片地址
-     * @apiSuccess (200) {string} [nickname] 昵称
-     * @apiSuccess (200) {string} [publishTime] 发布时间
-     * @apiSuccess (200) {long} [dynamicInfoId] 动态内容id
-     * @apiSuccess (200) {string} [content] 动态内容
-     * @apiSuccess (200) {string} [address] 定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回
-     * @apiSuccess (200) {int} [likes] 点赞数
-     * @apiSuccess (200) {boolean} [likeStatus] 点赞状态，true->已点赞，false->未点赞
-     * @apiSuccess (200) {int} [applications] 申请加微信数
-     * @apiSuccess (200) {boolean} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
-     * @apiSuccess (200) {boolean} [isTopic] 是否话题，true->是，false->否
-     * @apiSuccess (200) {string} [topicTitle] 话题标题
-     * @apiSuccess (200) {int} [comments] 评论数
-     * @apiSuccess (200) {boolean} [isAnonymous] 是否匿名发布，true->是，false->否
-     * @apiSuccess (200) {double} [distance] 当前位置距发布动态定位的距离（单位（米））
-     * @apiSuccess (200) {string} [dataTye] 附件文件类型，1->图片，2->语音
-     * @apiSuccess (200) {string[]} [attacheFileUrlList] 附件文件地址列表
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} topicTitle 话题标题（名称）
+     * @apiParam (接口请求参数) {String} [ip] 客户端ip
+     * @apiParam (接口请求参数) {Double} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {Double} [latitude] 定位（纬度）
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页码
+     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页条数
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Number} [totalPage] 总页数
+     * @apiSuccess (200) {Object[]} [list] 动态内容数据列表
+     * @apiSuccess (200) {String} [userId] 用户id
+     * @apiSuccess (200) {String} [headUrl] 头像图片地址
+     * @apiSuccess (200) {String} [nickname] 昵称
+     * @apiSuccess (200) {String} [publishTime] 发布时间
+     * @apiSuccess (200) {Number} [dynamicInfoId] 动态内容id
+     * @apiSuccess (200) {String} [content] 动态内容
+     * @apiSuccess (200) {String} [address] 定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回
+     * @apiSuccess (200) {Number} [likes] 点赞数
+     * @apiSuccess (200) {Boolean} [likeStatus] 点赞状态，true->已点赞，false->未点赞
+     * @apiSuccess (200) {Number} [applications] 申请加微信数
+     * @apiSuccess (200) {Boolean} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
+     * @apiSuccess (200) {Boolean} [isTopic] 是否话题，true->是，false->否
+     * @apiSuccess (200) {String} [topicTitle] 话题标题
+     * @apiSuccess (200) {Number} [comments] 评论数
+     * @apiSuccess (200) {Boolean} [isAnonymous] 是否匿名发布，true->是，false->否
+     * @apiSuccess (200) {Double} [distance] 当前位置距发布动态定位的距离（单位（米））
+     * @apiSuccess (200) {String} [dataTye] 附件文件类型，1->图片，2->语音
+     * @apiSuccess (200) {String[]} [attacheFileUrlList] 附件文件地址列表
+     * @apiParamExample 请求示例
      * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/find-title?topicTitle=找男朋友&ip=183.14.134.90&pageNum=1&pageSize=20
      * @apiSuccessExample {json} 200响应示例
      * {
-     *     "status": 200,
-     *     "code": 0,
-     *     "msg": "根据话题名称查询所有话题列表成功。",
-     *     "data": {
-     *         "totalPage": 2,
-     *         "list": [
-     *             {
-     *                 "userId": 1,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/1/01.png",
-     *                 "nickname": "墨落",
-     *                 "publishTime": "2020-07-19 03:32:30",
-     *                 "dynamicInfoId": 5,
-     *                 "content": "准备干饭咯",
-     *                 "address": "广东省·广州市.",
-     *                 "likes": 735,
-     *                 "likeStatus": false,
-     *                 "applications": 24,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 134,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/1/20200718/01.png",
-     *                     "http://192.168.31.38:9000/find/res/images/1/20200718/02.png"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-03-10 20:02:43",
-     *                 "dynamicInfoId": 618,
-     *                 "content": "测试一下",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 2,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210310/1615377763889/181757bd-8680-4ea5-92cb-f662a4ca29f7.jpeg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 142,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/142/331e380a-73da-4592-9bd6-6c79f539c4e4.jpeg",
-     *                 "nickname": "qqq",
-     *                 "publishTime": "2021-02-19 12:14:11",
-     *                 "dynamicInfoId": 606,
-     *                 "content": "。",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 2,
-     *                 "likeStatus": false,
-     *                 "applications": 1,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/142/20210219/1613708051916/e8bd88f6-e238-4848-a977-a9c6cb0b4270.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-02-10 20:38:06",
-     *                 "dynamicInfoId": 575,
-     *                 "content": "大家好，小妹这厢有礼。",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 2,
-     *                 "likeStatus": false,
-     *                 "applications": 1,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210210/1612960686753/990bf136-42f7-4a87-80f1-8cf464c433c2.jpeg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-16 16:16:15",
-     *                 "dynamicInfoId": 699,
-     *                 "content": "31",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 2,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210416/1618560975204/bd9463ce-2e85-4e1e-9244-8301ac2b5c8f.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-14 15:42:34",
-     *                 "dynamicInfoId": 696,
-     *                 "content": "29",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 1,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210414/1618386154220/edb9f9c5-54e3-4b0c-a756-e98ce495d31d.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-14 11:50:31",
-     *                 "dynamicInfoId": 695,
-     *                 "content": "26",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210414/1618372231157/67247c89-e2bb-4648-b3d2-ea29be0b6bdc.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-14 11:19:02",
-     *                 "dynamicInfoId": 694,
-     *                 "content": "28",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210414/1618370342448/b39c07e9-f810-4559-8f00-9d55a92d3197.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-13 15:32:25",
-     *                 "dynamicInfoId": 693,
-     *                 "content": "27",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210413/1618299145687/eac8e343-3a7e-4557-b958-5dfae3e79968.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-11 07:16:59",
-     *                 "dynamicInfoId": 692,
-     *                 "content": "25",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210411/1618096619022/28c09f39-4e1c-4d01-85b1-6dd867a0e3fc.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 139,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
-     *                 "nickname": "9527",
-     *                 "publishTime": "2021-04-10 11:18:10",
-     *                 "dynamicInfoId": 691,
-     *                 "content": "1",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 2,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/139/20210410/1618024690657/e611eb81-bcd8-4917-8fb2-d7c6c20b77cd.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-10 11:03:59",
-     *                 "dynamicInfoId": 690,
-     *                 "content": "24",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210410/1618023839769/20fe4527-aa75-4b5b-9859-9aa018236e9f.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-09 20:40:35",
-     *                 "dynamicInfoId": 689,
-     *                 "content": "23",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210409/1617972036000/bb723c3c-88ce-44a2-a4a8-69c3626a67eb.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-08 19:14:56",
-     *                 "dynamicInfoId": 687,
-     *                 "content": "21",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210408/1617880496704/747cda89-1d37-4ca0-a7db-edb14130deec.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-07 17:39:05",
-     *                 "dynamicInfoId": 683,
-     *                 "content": "17",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210407/1617788345163/47071b5d-e933-4485-9882-21c7c4f3b212.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-03 17:16:54",
-     *                 "dynamicInfoId": 667,
-     *                 "content": "1",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 1,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210403/1617441414228/b0c0fbe2-e425-4bff-9a90-a2c805bd11cf.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 138,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
-     *                 "nickname": "阿妩",
-     *                 "publishTime": "2021-04-01 14:22:47",
-     *                 "dynamicInfoId": 666,
-     *                 "content": "安排",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 1,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/138/20210401/1617258167541/ac45c323-f302-486e-abcd-290213554992.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 147,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/147/98a03483-2fea-40cd-994a-f7522db50d66.jpeg",
-     *                 "nickname": "花花世界",
-     *                 "publishTime": "2021-03-31 16:02:00",
-     *                 "dynamicInfoId": 662,
-     *                 "content": "测试",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/147/20210331/1617177720174/d5013ba1-7d46-499c-a5c7-e3242a4f7a50.jpeg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 139,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
-     *                 "nickname": "9527",
-     *                 "publishTime": "2021-03-31 16:00:36",
-     *                 "dynamicInfoId": 661,
-     *                 "content": "测试跑跑",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 3,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/139/20210331/1617177636261/9943de20-6b35-4296-a68a-4424bae7c7ea.jpg"
-     *                 ]
-     *             },
-     *             {
-     *                 "userId": 144,
-     *                 "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
-     *                 "nickname": "季婉",
-     *                 "publishTime": "2021-03-31 15:36:44",
-     *                 "dynamicInfoId": 658,
-     *                 "content": "测试",
-     *                 "address": "广东省·深圳市.",
-     *                 "likes": 1,
-     *                 "likeStatus": false,
-     *                 "applications": 0,
-     *                 "applicationStatus": false,
-     *                 "isTopic": true,
-     *                 "topicTitle": "#找男朋友",
-     *                 "comments": 109,
-     *                 "isAnonymous": false,
-     *                 "dataType": "1",
-     *                 "attacheFileUrlList": [
-     *                     "http://192.168.31.38:9000/find/res/images/144/20210331/1617176204339/a76d12a2-d430-4155-9a79-a5f6485b0544.jpeg"
-     *                 ]
-     *             }
-     *         ]
-     *     }
+     * "status": 200,
+     * "code": 0,
+     * "msg": "根据话题名称查询所有话题列表成功。",
+     * "data": {
+     * "totalPage": 2,
+     * "list": [
+     * {
+     * "userId": 1,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/1/01.png",
+     * "nickname": "墨落",
+     * "publishTime": "2020-07-19 03:32:30",
+     * "dynamicInfoId": 5,
+     * "content": "准备干饭咯",
+     * "address": "广东省·广州市.",
+     * "likes": 735,
+     * "likeStatus": false,
+     * "applications": 24,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 134,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/1/20200718/01.png",
+     * "http://192.168.31.38:9000/find/res/images/1/20200718/02.png"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-03-10 20:02:43",
+     * "dynamicInfoId": 618,
+     * "content": "测试一下",
+     * "address": "广东省·深圳市.",
+     * "likes": 2,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210310/1615377763889/181757bd-8680-4ea5-92cb-f662a4ca29f7.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 142,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/142/331e380a-73da-4592-9bd6-6c79f539c4e4.jpeg",
+     * "nickname": "qqq",
+     * "publishTime": "2021-02-19 12:14:11",
+     * "dynamicInfoId": 606,
+     * "content": "。",
+     * "address": "广东省·深圳市.",
+     * "likes": 2,
+     * "likeStatus": false,
+     * "applications": 1,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/142/20210219/1613708051916/e8bd88f6-e238-4848-a977-a9c6cb0b4270.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-02-10 20:38:06",
+     * "dynamicInfoId": 575,
+     * "content": "大家好，小妹这厢有礼。",
+     * "address": "广东省·深圳市.",
+     * "likes": 2,
+     * "likeStatus": false,
+     * "applications": 1,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210210/1612960686753/990bf136-42f7-4a87-80f1-8cf464c433c2.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-16 16:16:15",
+     * "dynamicInfoId": 699,
+     * "content": "31",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 2,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210416/1618560975204/bd9463ce-2e85-4e1e-9244-8301ac2b5c8f.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-14 15:42:34",
+     * "dynamicInfoId": 696,
+     * "content": "29",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 1,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210414/1618386154220/edb9f9c5-54e3-4b0c-a756-e98ce495d31d.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-14 11:50:31",
+     * "dynamicInfoId": 695,
+     * "content": "26",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210414/1618372231157/67247c89-e2bb-4648-b3d2-ea29be0b6bdc.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-14 11:19:02",
+     * "dynamicInfoId": 694,
+     * "content": "28",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210414/1618370342448/b39c07e9-f810-4559-8f00-9d55a92d3197.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-13 15:32:25",
+     * "dynamicInfoId": 693,
+     * "content": "27",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210413/1618299145687/eac8e343-3a7e-4557-b958-5dfae3e79968.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-11 07:16:59",
+     * "dynamicInfoId": 692,
+     * "content": "25",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210411/1618096619022/28c09f39-4e1c-4d01-85b1-6dd867a0e3fc.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 139,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
+     * "nickname": "9527",
+     * "publishTime": "2021-04-10 11:18:10",
+     * "dynamicInfoId": 691,
+     * "content": "1",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 2,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/139/20210410/1618024690657/e611eb81-bcd8-4917-8fb2-d7c6c20b77cd.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-10 11:03:59",
+     * "dynamicInfoId": 690,
+     * "content": "24",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210410/1618023839769/20fe4527-aa75-4b5b-9859-9aa018236e9f.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-09 20:40:35",
+     * "dynamicInfoId": 689,
+     * "content": "23",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210409/1617972036000/bb723c3c-88ce-44a2-a4a8-69c3626a67eb.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-08 19:14:56",
+     * "dynamicInfoId": 687,
+     * "content": "21",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210408/1617880496704/747cda89-1d37-4ca0-a7db-edb14130deec.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-07 17:39:05",
+     * "dynamicInfoId": 683,
+     * "content": "17",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210407/1617788345163/47071b5d-e933-4485-9882-21c7c4f3b212.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-03 17:16:54",
+     * "dynamicInfoId": 667,
+     * "content": "1",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 1,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210403/1617441414228/b0c0fbe2-e425-4bff-9a90-a2c805bd11cf.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
+     * "publishTime": "2021-04-01 14:22:47",
+     * "dynamicInfoId": 666,
+     * "content": "安排",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 1,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210401/1617258167541/ac45c323-f302-486e-abcd-290213554992.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 147,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/147/98a03483-2fea-40cd-994a-f7522db50d66.jpeg",
+     * "nickname": "花花世界",
+     * "publishTime": "2021-03-31 16:02:00",
+     * "dynamicInfoId": 662,
+     * "content": "测试",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/147/20210331/1617177720174/d5013ba1-7d46-499c-a5c7-e3242a4f7a50.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 139,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg",
+     * "nickname": "9527",
+     * "publishTime": "2021-03-31 16:00:36",
+     * "dynamicInfoId": 661,
+     * "content": "测试跑跑",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 3,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/139/20210331/1617177636261/9943de20-6b35-4296-a68a-4424bae7c7ea.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:36:44",
+     * "dynamicInfoId": 658,
+     * "content": "测试",
+     * "address": "广东省·深圳市.",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617176204339/a76d12a2-d430-4155-9a79-a5f6485b0544.jpeg"
+     * ]
      * }
-     * @apiError (404) {int{0-65535}} timestamp 响应时间戳
-     * @apiError (404) {long{0-500}} status 消息码
+     * ]
+     * }
+     * }
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
      * @apiError (404) {String} error 错误说明
      * @apiError (404) {String} message 返回说明
      * @apiError (404) {String} path 路径
@@ -3558,8 +3561,8 @@ public class DynamicController {
      * "message": "No message available",
      * "path": "/find/dynamic/70/hots1"
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
@@ -3579,5 +3582,77 @@ public class DynamicController {
                                                                     @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
                                                                     @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
         return this.dynamicFeignClient.findDynamicInfoByTitle(userId, topicTitle, ip, longitude, latitude, pageNum, pageSize);
+    }
+
+    /**
+     * @api {get} /find/dynamic/{id}/hot-topic 热门推荐话题列表接口
+     * @apiVersion 1.0.0
+     * @apiGroup 动态模块API
+     * @apiName 热门推荐话题列表
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object[]} [list] 动态内容数据列表
+     * @apiSuccess (200) {Number} [totalCount] 用户id
+     * @apiSuccess (200) {String} [topicTitle] 话题名称
+     * @apiParamExample 请求示例
+     * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/hot-topic
+     * @apiSuccessExample {json} 200响应示例
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "查询热门推荐话题成功。",
+     * "data": {
+     * "list": [
+     * {
+     * "totalCount": 7,
+     * "topicTitle": "#电动车交规"
+     * },
+     * {
+     * "totalCount": 4,
+     * "topicTitle": "#球长防骗课堂"
+     * },
+     * {
+     * "totalCount": 2,
+     * "topicTitle": "#你为什么熬夜"
+     * },
+     * {
+     * "totalCount": 1,
+     * "topicTitle": "#懒癌生存守则"
+     * }
+     * ]
+     * }
+     * }
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
+     * @apiError (404) {String} error 错误说明
+     * @apiError (404) {String} message 返回说明
+     * @apiError (404) {String} path 路径
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应 接口未注册
+     * {
+     * "timestamp": 1611558682334,
+     * "status": 404,
+     * "error": "Not Found",
+     * "message": "No message available",
+     * "path": "/find/dynamic/70/hots1"
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！",
+     * "data": null
+     * }
+     */
+    //热门推荐话题列表
+    @GetMapping(value = "/{id}/hot-topic")
+    public CommonResult<Map<String, Object>> findHotByDynamicInfoCount(@PathVariable(name = "id") Long userId) {
+        return this.dynamicFeignClient.findHotByDynamicInfoCount(userId);
     }
 }

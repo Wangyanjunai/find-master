@@ -41,6 +41,8 @@ public interface DynamicInfoMapper {
 
     String getFileNameByUserId(@Param("userId") Long userId);
 
+    List<HotTopic> findHotByDynamicInfoCount();
+
     int updateByExampleSelective(@Param("record") DynamicInfo record, @Param("example") DynamicInfoExample example);
 
     int updateByExampleWithBLOBs(@Param("record") DynamicInfo record, @Param("example") DynamicInfoExample example);

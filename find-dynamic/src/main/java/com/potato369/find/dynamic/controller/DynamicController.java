@@ -15,6 +15,7 @@ import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.utils.DistanceUtil;
 import com.potato369.find.common.utils.FileTypeUtil;
 import com.potato369.find.common.vo.DynamicInfoVO;
+import com.potato369.find.common.vo.HotTopicInfoVO;
 import com.potato369.find.common.vo.HotTopicVO;
 import com.potato369.find.common.vo.TagVO;
 import com.potato369.find.dynamic.config.bean.PushBean;
@@ -1298,6 +1299,39 @@ public class DynamicController {
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束根据话题名称查询所有话题列表");
+            }
+        }
+    }
+
+    //热门推荐话题
+    @GetMapping(value = "/{id}/hot-topic.do")
+    public CommonResult<Map<String, Object>> findHotByDynamicInfoCount(@PathVariable(name = "id") Long userId) {
+        Map<String, Object> commonResult = new ConcurrentHashMap<>();
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始查询热门推荐话题列表");
+            }
+            User user = this.userMapperReader.selectByPrimaryKey(userId);
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
+            }
+            List<HotTopicInfoVO> hotTopicInfoVOList = new ArrayList<>();
+            List<HotTopic> hotTopicList = this.dynamicInfoMapperReader.findHotByDynamicInfoCount();
+            if (!Objects.isNull(hotTopicList) && !hotTopicList.isEmpty()) {
+                hotTopicInfoVOList = hotTopicList.stream().map(hotTopic -> {
+                    HotTopicInfoVO hotTopicInfoVO = HotTopicInfoVO.builder().build();
+                    BeanUtils.copyProperties(hotTopic, hotTopicInfoVO);
+                    return hotTopicInfoVO;
+                }).collect(Collectors.toList());
+            }
+            commonResult.put("list", hotTopicInfoVOList);
+            return CommonResult.success(commonResult, "查询热门推荐话题成功。");
+        } catch (Exception e) {
+            log.error("查询热门推荐话题出现错误", e);
+            return CommonResult.failed("查询热门推荐话题失败。");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束查询热门推荐话题列表");
             }
         }
     }

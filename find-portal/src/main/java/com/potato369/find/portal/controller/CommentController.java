@@ -34,20 +34,19 @@ public class CommentController {
 
     /**
      * @api {post} /find/comment/{id}/release 发表评论接口
-     * @apiVersion 1.0.0
+     * @apiVersion 1.2.0
      * @apiGroup 动态模块API
      * @apiName 发表评论
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {long} dynamicInfoId 动态内容id
-     * @apiParam (接口请求参数) {string} content 评论内容
-     * @apiParamExample {json} 请求示例
-     * HTTP/1.1 OK
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} dynamicInfoId 动态内容id
+     * @apiParam (接口请求参数) {String} content 评论内容
+     * @apiParamExample 请求示例
      * curl -v -X POST http://w168428j19.51mypc.cn/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string={"OK", "FAILED"}} [RELEASE] 发布状态，OK->“成功”，FAILED->“失败”
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String={"OK", "FAILED"}} [RELEASE] 发布状态，OK->“成功”，FAILED->“失败”
      * @apiSuccessExample {json} 200响应示例
      * {
      * "status": 200,
@@ -57,8 +56,8 @@ public class CommentController {
      * "RELEASE": "OK"
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -67,8 +66,8 @@ public class CommentController {
      * "code": 199,
      * "msg": "未找到用户信息",
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -77,8 +76,8 @@ public class CommentController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500 错误
      * {
@@ -99,28 +98,27 @@ public class CommentController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 分页查询评论接口
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {long} dynamicInfoId 动态内容id
-     * @apiParam (接口请求参数) {int} [pageNum] 当前页数，默认：1
-     * @apiParam (接口请求参数) {int} [pageSize] 每页条数，默认：20
-     * @apiParamExample {json} 请求示例
-     * HTTP/1.1 OK
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} dynamicInfoId 动态内容id
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页数
+     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页条数
+     * @apiParamExample 请求示例
      * curl -v -X GET http://w168428j19.51mypc.cn/find/comment/35/query?dynamicInfoId=1&pageNum=1&pageSize=20
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {long} [totalSize] 总条数
-     * @apiSuccess (200) {int} [totalPage] 总页数
-     * @apiSuccess (200) {object[]} [list] 评论数据列表
-     * @apiSuccess (200) {long} [userId] 评论的用户id
-     * @apiSuccess (200) {long} [commentId] 评论id
-     * @apiSuccess (200) {string} [nickname] 评论的用户昵称
-     * @apiSuccess (200) {string} [head] 评论的用户头像URL
-     * @apiSuccess (200) {string} [content] 评论内容
-     * @apiSuccess (200) {string} [dateTime] 评论时间
-     * @apiSuccess (200) {string} [isOrNotLikes] 当前用户是否点赞，0->点赞，1->未点赞
-     * @apiSuccess (200) {int} [likes] 当前评论点赞数
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Number} [totalSize] 总条数
+     * @apiSuccess (200) {Number} [totalPage] 总页数
+     * @apiSuccess (200) {Object[]} [list] 评论数据列表
+     * @apiSuccess (200) {Number} [userId] 评论的用户id
+     * @apiSuccess (200) {Number} [commentId] 评论id
+     * @apiSuccess (200) {String} [nickname] 评论的用户昵称
+     * @apiSuccess (200) {String} [head] 评论的用户头像URL
+     * @apiSuccess (200) {String} [content] 评论内容
+     * @apiSuccess (200) {String} [dateTime] 评论时间
+     * @apiSuccess (200) {String} [isOrNotLikes] 当前用户是否点赞，0->点赞，1->未点赞
+     * @apiSuccess (200) {Number} [likes] 当前评论点赞数
      * @apiSuccessExample {json} 200响应示例
      * {
      * "status": 200,
@@ -283,8 +281,8 @@ public class CommentController {
      * ]
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -293,8 +291,8 @@ public class CommentController {
      * "code": 199,
      * "msg": "未找到用户信息",
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -303,8 +301,8 @@ public class CommentController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500 错误
      * {
@@ -327,16 +325,16 @@ public class CommentController {
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 点赞/取消评论接口
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParam (接口请求参数) {long} commentId 评论id
-     * @apiParam (接口请求参数) {string} type 类型，0->取消，1->点赞
-     * @apiParamExample {json} 请求示例（点赞）
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} commentId 评论id
+     * @apiParam (接口请求参数) {String} type 类型，0->取消，1->点赞
+     * @apiParamExample 请求示例（点赞）
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/comment/35/likes?commentId=16&type=1
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string={"OK", "FAILED"}} [LIKES] 点赞状态，OK->“成功”，FAILED->“失败”
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String={"OK", "FAILED"}} [LIKES] 点赞状态，OK->“成功”，FAILED->“失败”
      * @apiSuccessExample {json} 200响应示例（点赞）
      * {
      * "status": 200,
@@ -346,13 +344,13 @@ public class CommentController {
      * "LIKES": "OK"
      * }
      * }
-     * @apiParamExample {json} 请求示例（取消）
+     * @apiParamExample 请求示例（取消）
      * curl -v -X PUT http://w168428j19.51mypc.cn/find/comment/35/likes?commentId=16&type=0
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {string={"OK", "FAILED"}} [LIKES] 点赞状态，OK->“成功”，FAILED->“失败”
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String={"OK", "FAILED"}} [LIKES] 点赞状态，OK->“成功”，FAILED->“失败”
      * @apiSuccessExample {json} 200响应示例（取消）
      * {
      * "status": 200,
@@ -362,8 +360,8 @@ public class CommentController {
      * "LIKES": "OK"
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
      * @apiError (403) {String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
@@ -372,8 +370,8 @@ public class CommentController {
      * "code": 199,
      * "msg": "未找到用户信息",
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
      * @apiError (404) {String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
@@ -382,8 +380,8 @@ public class CommentController {
      * "code": 200,
      * "msg": "接口未注册",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
      * @apiError (500) {String} msg 说明
      * @apiErrorExample {json} 500 错误
      * {

@@ -11,21 +11,21 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "dynamicInfoId",
             "description": "<p>动态内容id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "allowedValues": [
               "{\"0\"",
               "\"1\"",
@@ -52,38 +52,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "SHARED",
             "description": "<p>分享状态，OK-&gt;成功，ERROR-&gt;失败，说明：成功，分享数+1，失败，不处理</p>"
@@ -103,16 +100,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -142,16 +137,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -198,38 +191,40 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "dynamicInfoId",
             "description": "<p>动态内容id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageNum",
-            "description": "<p>当前页数，默认：1</p>"
+            "defaultValue": "1",
+            "description": "<p>当前页数</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageSize",
-            "description": "<p>每页条数，默认：20</p>"
+            "defaultValue": "20",
+            "description": "<p>每页条数</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET http://w168428j19.51mypc.cn/find/comment/35/query?dynamicInfoId=1&pageNum=1&pageSize=20",
+          "content": "curl -v -X GET http://w168428j19.51mypc.cn/find/comment/35/query?dynamicInfoId=1&pageNum=1&pageSize=20",
           "type": "json"
         }
       ]
@@ -239,108 +234,105 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "totalSize",
             "description": "<p>总条数</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>总页数</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>评论数据列表</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "userId",
             "description": "<p>评论的用户id</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "commentId",
             "description": "<p>评论id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>评论的用户昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "head",
             "description": "<p>评论的用户头像URL</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content",
             "description": "<p>评论内容</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "dateTime",
             "description": "<p>评论时间</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "isOrNotLikes",
             "description": "<p>当前用户是否点赞，0-&gt;点赞，1-&gt;未点赞</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "likes",
             "description": "<p>当前评论点赞数</p>"
@@ -360,16 +352,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -385,16 +375,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -410,16 +398,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -471,103 +457,109 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageNum",
-            "description": "<p>当前页面，默认：1</p>"
+            "defaultValue": "1",
+            "description": "<p>当前页面</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageSize",
-            "description": "<p>每页条数，默认：10</p>"
+            "defaultValue": "10",
+            "description": "<p>每页条数</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/hot-topics?pageNum=1&pageSize=10",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "fields": {
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "totalSize",
             "description": "<p>总条数</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>总页数</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>话题数据</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalCount",
             "description": "<p>参与此话题的动态总数量</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "topicTitle",
             "description": "<p>话题标题</p>"
           },
           {
             "group": "200",
-            "type": "string[]",
+            "type": "String[]",
             "optional": true,
             "field": "attacheFileList",
-            "description": "<p>参与此话题的动态附件文件路径列表 curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/hot-topics?pageNum=1&amp;pageSize=10</p>"
+            "description": "<p>参与此话题的动态附件文件路径列表</p>"
           }
         ]
       },
@@ -584,16 +576,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -623,16 +613,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -679,14 +667,14 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "dynamicInfoId",
             "description": "<p>动态内容id</p>"
@@ -711,38 +699,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "DELETED",
             "description": "<p>删除状态，OK-&gt;成功，ERROR-&gt;失败</p>"
@@ -767,16 +752,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -806,16 +789,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -862,14 +843,14 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "imei",
             "description": "<p>设备串码</p>"
@@ -898,21 +879,21 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "model",
             "description": "<p>设备型号</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "sysName",
             "description": "<p>系统名称</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "sysCode",
             "description": "<p>系统版本</p>"
@@ -933,56 +914,56 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "ip",
             "description": "<p>客户端IP</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "longitude",
             "description": "<p>定位（经度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "latitude",
             "description": "<p>定位（纬度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "country",
             "description": "<p>定位（国家）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "province",
             "description": "<p>定位（省份）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "city",
             "description": "<p>定位（城市）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "district",
             "description": "<p>定位（区/县）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "other",
             "description": "<p>定位（其它）</p>"
@@ -1011,7 +992,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "topicTitle",
             "description": "<p>话题标题</p>"
@@ -1029,7 +1010,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content",
             "description": "<p>动态内容</p>"
@@ -1069,38 +1050,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "RELEASED",
             "description": "<p>发布状态</p>"
@@ -1140,16 +1118,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -1165,16 +1141,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -1190,16 +1164,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -1243,7 +1215,7 @@ define({ "api": [
     "type": "post",
     "url": "/find/comment/{id}/release",
     "title": "发表评论接口",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "group": "动态模块API",
     "name": "发表评论",
     "parameter": {
@@ -1251,21 +1223,21 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "dynamicInfoId",
             "description": "<p>动态内容id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": false,
             "field": "content",
             "description": "<p>评论内容</p>"
@@ -1275,7 +1247,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST http://w168428j19.51mypc.cn/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a",
+          "content": "curl -v -X POST http://w168428j19.51mypc.cn/find/user/70/uploadRegId?regId=1507bfd3f76139cd43a",
           "type": "json"
         }
       ]
@@ -1285,38 +1257,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "allowedValues": [
               "{\"OK\"",
               "\"FAILED\"}"
@@ -1340,16 +1309,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -1365,16 +1332,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -1390,16 +1355,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -1451,63 +1414,63 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "ip",
             "description": "<p>客户端IP，说明：不能与定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）同时为空，如果同时都不为空，以定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）为准</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "country",
             "description": "<p>定位（国家）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "province",
             "description": "<p>定位（省份）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "city",
             "description": "<p>定位（城市）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "district",
             "description": "<p>定位（区/县）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "other",
             "description": "<p>定位（其它）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "longitude",
             "description": "<p>定位（经度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "latitude",
             "description": "<p>定位（纬度）</p>"
@@ -1537,45 +1500,42 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "UPDATE",
             "description": "<p>更新状态，OK-&gt;成功，ERROR-&gt;失败</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "CHANGED",
             "description": "<p>是否发生更改，true-&gt;是，false-&gt;否</p>"
@@ -1622,16 +1582,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -1661,16 +1619,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -1705,236 +1661,242 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": false,
             "field": "topicTitle",
             "description": "<p>话题标题（名称）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "ip",
             "description": "<p>客户端ip</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "longitude",
             "description": "<p>定位（经度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "latitude",
             "description": "<p>定位（纬度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageNum",
-            "description": "<p>当前页码，默认：1</p>"
+            "defaultValue": "1",
+            "description": "<p>当前页码</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageSize",
-            "description": "<p>每页条数，默认：20</p>"
+            "defaultValue": "20",
+            "description": "<p>每页条数</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/find-title?topicTitle=找男朋友&ip=183.14.134.90&pageNum=1&pageSize=20",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "fields": {
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>总页数</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>动态内容数据列表</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "userId",
             "description": "<p>用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "headUrl",
             "description": "<p>头像图片地址</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "publishTime",
             "description": "<p>发布时间</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "dynamicInfoId",
             "description": "<p>动态内容id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content",
             "description": "<p>动态内容</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "address",
             "description": "<p>定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "likes",
             "description": "<p>点赞数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "likeStatus",
             "description": "<p>点赞状态，true-&gt;已点赞，false-&gt;未点赞</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "applications",
             "description": "<p>申请加微信数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "applicationStatus",
             "description": "<p>申请加微信状态，true-&gt;已申请，false-&gt;未申请</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "isTopic",
             "description": "<p>是否话题，true-&gt;是，false-&gt;否</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "topicTitle",
             "description": "<p>话题标题</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "comments",
             "description": "<p>评论数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "isAnonymous",
             "description": "<p>是否匿名发布，true-&gt;是，false-&gt;否</p>"
           },
           {
             "group": "200",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "distance",
             "description": "<p>当前位置距发布动态定位的距离（单位（米））</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "dataTye",
             "description": "<p>附件文件类型，1-&gt;图片，2-&gt;语音</p>"
           },
           {
             "group": "200",
-            "type": "string[]",
+            "type": "String[]",
             "optional": true,
             "field": "attacheFileUrlList",
-            "description": "<p>附件文件地址列表 curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/find-title?topicTitle=找男朋友&amp;ip=183.14.134.90&amp;pageNum=1&amp;pageSize=20</p>"
+            "description": "<p>附件文件地址列表</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "200响应示例",
-          "content": "{\n    \"status\": 200,\n    \"code\": 0,\n    \"msg\": \"根据话题名称查询所有话题列表成功。\",\n    \"data\": {\n        \"totalPage\": 2,\n        \"list\": [\n            {\n                \"userId\": 1,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/1/01.png\",\n                \"nickname\": \"墨落\",\n                \"publishTime\": \"2020-07-19 03:32:30\",\n                \"dynamicInfoId\": 5,\n                \"content\": \"准备干饭咯\",\n                \"address\": \"广东省·广州市.\",\n                \"likes\": 735,\n                \"likeStatus\": false,\n                \"applications\": 24,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 134,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/1/20200718/01.png\",\n                    \"http://192.168.31.38:9000/find/res/images/1/20200718/02.png\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-03-10 20:02:43\",\n                \"dynamicInfoId\": 618,\n                \"content\": \"测试一下\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 2,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210310/1615377763889/181757bd-8680-4ea5-92cb-f662a4ca29f7.jpeg\"\n                ]\n            },\n            {\n                \"userId\": 142,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/142/331e380a-73da-4592-9bd6-6c79f539c4e4.jpeg\",\n                \"nickname\": \"qqq\",\n                \"publishTime\": \"2021-02-19 12:14:11\",\n                \"dynamicInfoId\": 606,\n                \"content\": \"。\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 2,\n                \"likeStatus\": false,\n                \"applications\": 1,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/142/20210219/1613708051916/e8bd88f6-e238-4848-a977-a9c6cb0b4270.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-02-10 20:38:06\",\n                \"dynamicInfoId\": 575,\n                \"content\": \"大家好，小妹这厢有礼。\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 2,\n                \"likeStatus\": false,\n                \"applications\": 1,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210210/1612960686753/990bf136-42f7-4a87-80f1-8cf464c433c2.jpeg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-16 16:16:15\",\n                \"dynamicInfoId\": 699,\n                \"content\": \"31\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 2,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210416/1618560975204/bd9463ce-2e85-4e1e-9244-8301ac2b5c8f.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-14 15:42:34\",\n                \"dynamicInfoId\": 696,\n                \"content\": \"29\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 1,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210414/1618386154220/edb9f9c5-54e3-4b0c-a756-e98ce495d31d.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-14 11:50:31\",\n                \"dynamicInfoId\": 695,\n                \"content\": \"26\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210414/1618372231157/67247c89-e2bb-4648-b3d2-ea29be0b6bdc.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-14 11:19:02\",\n                \"dynamicInfoId\": 694,\n                \"content\": \"28\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210414/1618370342448/b39c07e9-f810-4559-8f00-9d55a92d3197.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-13 15:32:25\",\n                \"dynamicInfoId\": 693,\n                \"content\": \"27\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210413/1618299145687/eac8e343-3a7e-4557-b958-5dfae3e79968.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-11 07:16:59\",\n                \"dynamicInfoId\": 692,\n                \"content\": \"25\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210411/1618096619022/28c09f39-4e1c-4d01-85b1-6dd867a0e3fc.jpg\"\n                ]\n            },\n            {\n                \"userId\": 139,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg\",\n                \"nickname\": \"9527\",\n                \"publishTime\": \"2021-04-10 11:18:10\",\n                \"dynamicInfoId\": 691,\n                \"content\": \"1\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 2,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/139/20210410/1618024690657/e611eb81-bcd8-4917-8fb2-d7c6c20b77cd.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-10 11:03:59\",\n                \"dynamicInfoId\": 690,\n                \"content\": \"24\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210410/1618023839769/20fe4527-aa75-4b5b-9859-9aa018236e9f.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-09 20:40:35\",\n                \"dynamicInfoId\": 689,\n                \"content\": \"23\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210409/1617972036000/bb723c3c-88ce-44a2-a4a8-69c3626a67eb.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-08 19:14:56\",\n                \"dynamicInfoId\": 687,\n                \"content\": \"21\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210408/1617880496704/747cda89-1d37-4ca0-a7db-edb14130deec.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-07 17:39:05\",\n                \"dynamicInfoId\": 683,\n                \"content\": \"17\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210407/1617788345163/47071b5d-e933-4485-9882-21c7c4f3b212.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-03 17:16:54\",\n                \"dynamicInfoId\": 667,\n                \"content\": \"1\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 1,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210403/1617441414228/b0c0fbe2-e425-4bff-9a90-a2c805bd11cf.jpg\"\n                ]\n            },\n            {\n                \"userId\": 138,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n                \"nickname\": \"阿妩\",\n                \"publishTime\": \"2021-04-01 14:22:47\",\n                \"dynamicInfoId\": 666,\n                \"content\": \"安排\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 1,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/138/20210401/1617258167541/ac45c323-f302-486e-abcd-290213554992.jpg\"\n                ]\n            },\n            {\n                \"userId\": 147,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/147/98a03483-2fea-40cd-994a-f7522db50d66.jpeg\",\n                \"nickname\": \"花花世界\",\n                \"publishTime\": \"2021-03-31 16:02:00\",\n                \"dynamicInfoId\": 662,\n                \"content\": \"测试\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/147/20210331/1617177720174/d5013ba1-7d46-499c-a5c7-e3242a4f7a50.jpeg\"\n                ]\n            },\n            {\n                \"userId\": 139,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg\",\n                \"nickname\": \"9527\",\n                \"publishTime\": \"2021-03-31 16:00:36\",\n                \"dynamicInfoId\": 661,\n                \"content\": \"测试跑跑\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 3,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/139/20210331/1617177636261/9943de20-6b35-4296-a68a-4424bae7c7ea.jpg\"\n                ]\n            },\n            {\n                \"userId\": 144,\n                \"headUrl\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n                \"nickname\": \"季婉\",\n                \"publishTime\": \"2021-03-31 15:36:44\",\n                \"dynamicInfoId\": 658,\n                \"content\": \"测试\",\n                \"address\": \"广东省·深圳市.\",\n                \"likes\": 1,\n                \"likeStatus\": false,\n                \"applications\": 0,\n                \"applicationStatus\": false,\n                \"isTopic\": true,\n                \"topicTitle\": \"#找男朋友\",\n                \"comments\": 109,\n                \"isAnonymous\": false,\n                \"dataType\": \"1\",\n                \"attacheFileUrlList\": [\n                    \"http://192.168.31.38:9000/find/res/images/144/20210331/1617176204339/a76d12a2-d430-4155-9a79-a5f6485b0544.jpeg\"\n                ]\n            }\n        ]\n    }\n}",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"根据话题名称查询所有话题列表成功。\",\n\"data\": {\n\"totalPage\": 2,\n\"list\": [\n{\n\"userId\": 1,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/1/01.png\",\n\"nickname\": \"墨落\",\n\"publishTime\": \"2020-07-19 03:32:30\",\n\"dynamicInfoId\": 5,\n\"content\": \"准备干饭咯\",\n\"address\": \"广东省·广州市.\",\n\"likes\": 735,\n\"likeStatus\": false,\n\"applications\": 24,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 134,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/1/20200718/01.png\",\n\"http://192.168.31.38:9000/find/res/images/1/20200718/02.png\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-03-10 20:02:43\",\n\"dynamicInfoId\": 618,\n\"content\": \"测试一下\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 2,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210310/1615377763889/181757bd-8680-4ea5-92cb-f662a4ca29f7.jpeg\"\n]\n},\n{\n\"userId\": 142,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/142/331e380a-73da-4592-9bd6-6c79f539c4e4.jpeg\",\n\"nickname\": \"qqq\",\n\"publishTime\": \"2021-02-19 12:14:11\",\n\"dynamicInfoId\": 606,\n\"content\": \"。\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 2,\n\"likeStatus\": false,\n\"applications\": 1,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/142/20210219/1613708051916/e8bd88f6-e238-4848-a977-a9c6cb0b4270.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-02-10 20:38:06\",\n\"dynamicInfoId\": 575,\n\"content\": \"大家好，小妹这厢有礼。\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 2,\n\"likeStatus\": false,\n\"applications\": 1,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210210/1612960686753/990bf136-42f7-4a87-80f1-8cf464c433c2.jpeg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-16 16:16:15\",\n\"dynamicInfoId\": 699,\n\"content\": \"31\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 2,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210416/1618560975204/bd9463ce-2e85-4e1e-9244-8301ac2b5c8f.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-14 15:42:34\",\n\"dynamicInfoId\": 696,\n\"content\": \"29\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 1,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210414/1618386154220/edb9f9c5-54e3-4b0c-a756-e98ce495d31d.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-14 11:50:31\",\n\"dynamicInfoId\": 695,\n\"content\": \"26\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210414/1618372231157/67247c89-e2bb-4648-b3d2-ea29be0b6bdc.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-14 11:19:02\",\n\"dynamicInfoId\": 694,\n\"content\": \"28\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210414/1618370342448/b39c07e9-f810-4559-8f00-9d55a92d3197.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-13 15:32:25\",\n\"dynamicInfoId\": 693,\n\"content\": \"27\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210413/1618299145687/eac8e343-3a7e-4557-b958-5dfae3e79968.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-11 07:16:59\",\n\"dynamicInfoId\": 692,\n\"content\": \"25\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210411/1618096619022/28c09f39-4e1c-4d01-85b1-6dd867a0e3fc.jpg\"\n]\n},\n{\n\"userId\": 139,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg\",\n\"nickname\": \"9527\",\n\"publishTime\": \"2021-04-10 11:18:10\",\n\"dynamicInfoId\": 691,\n\"content\": \"1\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 2,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/139/20210410/1618024690657/e611eb81-bcd8-4917-8fb2-d7c6c20b77cd.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-10 11:03:59\",\n\"dynamicInfoId\": 690,\n\"content\": \"24\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210410/1618023839769/20fe4527-aa75-4b5b-9859-9aa018236e9f.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-09 20:40:35\",\n\"dynamicInfoId\": 689,\n\"content\": \"23\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210409/1617972036000/bb723c3c-88ce-44a2-a4a8-69c3626a67eb.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-08 19:14:56\",\n\"dynamicInfoId\": 687,\n\"content\": \"21\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210408/1617880496704/747cda89-1d37-4ca0-a7db-edb14130deec.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-07 17:39:05\",\n\"dynamicInfoId\": 683,\n\"content\": \"17\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210407/1617788345163/47071b5d-e933-4485-9882-21c7c4f3b212.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-03 17:16:54\",\n\"dynamicInfoId\": 667,\n\"content\": \"1\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 1,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210403/1617441414228/b0c0fbe2-e425-4bff-9a90-a2c805bd11cf.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-01 14:22:47\",\n\"dynamicInfoId\": 666,\n\"content\": \"安排\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 1,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210401/1617258167541/ac45c323-f302-486e-abcd-290213554992.jpg\"\n]\n},\n{\n\"userId\": 147,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/147/98a03483-2fea-40cd-994a-f7522db50d66.jpeg\",\n\"nickname\": \"花花世界\",\n\"publishTime\": \"2021-03-31 16:02:00\",\n\"dynamicInfoId\": 662,\n\"content\": \"测试\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/147/20210331/1617177720174/d5013ba1-7d46-499c-a5c7-e3242a4f7a50.jpeg\"\n]\n},\n{\n\"userId\": 139,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/139/e2a31a97-c64d-467e-9df8-b0ed5b1cc09b.jpeg\",\n\"nickname\": \"9527\",\n\"publishTime\": \"2021-03-31 16:00:36\",\n\"dynamicInfoId\": 661,\n\"content\": \"测试跑跑\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 3,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/139/20210331/1617177636261/9943de20-6b35-4296-a68a-4424bae7c7ea.jpg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:36:44\",\n\"dynamicInfoId\": 658,\n\"content\": \"测试\",\n\"address\": \"广东省·深圳市.\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/144/20210331/1617176204339/a76d12a2-d430-4155-9a79-a5f6485b0544.jpeg\"\n]\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -1944,16 +1906,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -1983,16 +1943,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -2039,63 +1997,63 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "ip",
             "description": "<p>客户端IP，不能与发布动态定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）同时为空，如果同时都不为空，以传的发布动态定位（国家）、（省份）、（城市）、（区/县）、（其它）、（经纬度）为准</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "country",
             "description": "<p>发布动态定位（国家）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "province",
             "description": "<p>发布动态定位（省份）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "city",
             "description": "<p>发布动态定位（城市）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "district",
             "description": "<p>发布动态定位（区/县）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "other",
             "description": "<p>发布动态定位（其它）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "longitude",
             "description": "<p>发布动态定位（经度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "latitude",
             "description": "<p>发布动态定位（纬度）</p>"
@@ -2125,38 +2083,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "CHANGED",
             "description": "<p>是否发生更改，true-&gt;是，false-&gt;否</p>"
@@ -2203,16 +2158,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -2242,16 +2195,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -2286,89 +2237,93 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": false,
             "field": "keywords",
             "description": "<p>搜索关键词</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/search-title?keywords=找",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "fields": {
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "results",
             "description": "<p>总条数</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>总页数</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>搜索结果数据列表</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>动态内容id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "name",
-            "description": "<p>话题标题 curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/search-title?keywords=找</p>"
+            "description": "<p>话题标题</p>"
           }
         ]
       },
@@ -2385,16 +2340,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -2424,16 +2377,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -2480,21 +2431,21 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "commentId",
             "description": "<p>评论id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": false,
             "field": "type",
             "description": "<p>类型，0-&gt;取消，1-&gt;点赞</p>"
@@ -2519,38 +2470,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "allowedValues": [
               "{\"OK\"",
               "\"FAILED\"}"
@@ -2579,16 +2527,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -2604,16 +2550,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -2629,16 +2573,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -2690,21 +2632,21 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "dynamicInfoId",
             "description": "<p>动态内容id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "\"0\", \"1\"",
             "optional": false,
             "field": "type",
@@ -2735,38 +2677,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "LIKED",
             "description": "<p>点赞或取消点赞状态，OK-&gt;成功，ERROR-&gt;失败</p>"
@@ -2796,16 +2735,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -2835,16 +2772,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -2880,48 +2815,28 @@ define({ "api": [
     ]
   },
   {
-    "type": "put",
-    "url": "/find/dynamic/{id}/application",
-    "title": "申请加微信接口",
+    "type": "get",
+    "url": "/find/dynamic/{id}/hot-topic",
+    "title": "热门推荐话题列表接口",
     "version": "1.0.0",
     "group": "动态模块API",
-    "name": "申请加微信",
+    "name": "热门推荐话题列表",
     "parameter": {
       "fields": {
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
-            "description": "<p>申请者用户id，说明：普通用户每天只允许申请最多5次添加微信，VIP用户申请加微信次数没有限制</p>"
-          },
-          {
-            "group": "接口请求参数",
-            "type": "long",
-            "optional": false,
-            "field": "dynamicInfoId",
-            "description": "<p>动态内容id</p>"
-          },
-          {
-            "group": "接口请求参数",
-            "type": "string",
-            "size": "..255",
-            "optional": true,
-            "field": "message",
-            "description": "<p>发送的消息</p>"
+            "description": "<p>用户id</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "请求示例01（第1次申请加微信）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信，请发送微信号码过来",
-          "type": "json"
-        },
-        {
-          "title": "请求示例02（第6次申请加微信）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信16",
+          "title": "请求示例",
+          "content": "curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/hot-topic",
           "type": "json"
         }
       ]
@@ -2931,53 +2846,52 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
-            "optional": false,
-            "field": "status",
-            "description": "<p>响应状态码</p>"
-          },
-          {
-            "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "Object[]",
             "optional": true,
-            "field": "APPLICATION",
-            "description": "<p>申请加微信状态，OK-&gt;成功，ERROR-&gt;失败</p>"
+            "field": "list",
+            "description": "<p>动态内容数据列表</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "totalCount",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "topicTitle",
+            "description": "<p>话题名称</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "200响应示例01（第1次申请加微信）",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"申请加微信成功。\",\n\"data\": {\n\"APPLICATION\": \"OK\"\n}\n}",
-          "type": "json"
-        },
-        {
-          "title": "200 响应示例02（第6次申请加微信）",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"申请加微信出错，当天申请加微信次数超限。\",\n\"data\": {\n\"APPLICATION\": \"ERROR\"\n}\n}",
+          "title": "200响应示例",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"查询热门推荐话题成功。\",\n\"data\": {\n\"list\": [\n{\n\"totalCount\": 7,\n\"topicTitle\": \"#电动车交规\"\n},\n{\n\"totalCount\": 4,\n\"topicTitle\": \"#球长防骗课堂\"\n},\n{\n\"totalCount\": 2,\n\"topicTitle\": \"#你为什么熬夜\"\n},\n{\n\"totalCount\": 1,\n\"topicTitle\": \"#懒癌生存守则\"\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -2987,16 +2901,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -3026,16 +2938,197 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/dynamic/70/hots1\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\",\n\"data\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/DynamicController.java",
+    "groupTitle": "动态模块API",
+    "sampleRequest": [
+      {
+        "url": "http://w168428j19.51mypc.cn/find/dynamic/{id}/hot-topic"
+      }
+    ]
+  },
+  {
+    "type": "put",
+    "url": "/find/dynamic/{id}/application",
+    "title": "申请加微信接口",
+    "version": "1.0.0",
+    "group": "动态模块API",
+    "name": "申请加微信",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>申请者用户id，说明：普通用户每天只允许申请最多5次添加微信，VIP用户申请加微信次数没有限制</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "dynamicInfoId",
+            "description": "<p>动态内容id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "String",
+            "optional": true,
+            "field": "message",
+            "description": "<p>发送的消息</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例01（第1次申请加微信）",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信，请发送微信号码过来",
+          "type": "json"
+        },
+        {
+          "title": "请求示例02（第6次申请加微信）",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/application?dynamicInfoId=86&message=需要加您的微信16",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "APPLICATION",
+            "description": "<p>申请加微信状态，OK-&gt;成功，ERROR-&gt;失败</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例01（第1次申请加微信）",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"申请加微信成功。\",\n\"data\": {\n\"APPLICATION\": \"OK\"\n}\n}",
+          "type": "json"
+        },
+        {
+          "title": "200 响应示例02（第6次申请加微信）",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"申请加微信出错，当天申请加微信次数超限。\",\n\"data\": {\n\"APPLICATION\": \"ERROR\"\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "timestamp",
+            "description": "<p>响应时间戳</p>"
+          },
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>错误说明</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>返回说明</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "path",
+            "description": "<p>路径</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -3082,49 +3175,51 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "ip",
             "description": "<p>客户端IP，不能与定位（经纬度）同时为空，否则获取不到距离</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "longitude",
             "description": "<p>定位（经度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "latitude",
             "description": "<p>定位（纬度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageNum",
-            "description": "<p>当前页数，默认：第1页</p>"
+            "defaultValue": "1",
+            "description": "<p>当前页数</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageSize",
-            "description": "<p>每页条数，默认：每页20条</p>"
+            "defaultValue": "20",
+            "description": "<p>每页条数</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "allowedValues": [
               "{\"0\"",
               "\"1\"",
@@ -3136,21 +3231,21 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "minAge",
             "description": "<p>年龄范围（最小值），默认：16</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "maxAge",
             "description": "<p>年龄范围（最大值），默认：35</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string[]",
+            "type": "String[]",
             "allowedValues": [
               "{\"水瓶座\"",
               "\"双鱼座\"",
@@ -3171,7 +3266,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "allowedValues": [
               "{\"0\"",
               "\"1\"",
@@ -3183,35 +3278,35 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string[]",
+            "type": "String[]",
             "optional": true,
             "field": "provinceList",
             "description": "<p>省份列表，例如：广东省, 四川省</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string[]",
+            "type": "String[]",
             "optional": true,
             "field": "cityList",
             "description": "<p>城市列表，例如：深圳市, 广州市, 成都市, 攀枝花市</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "industryId",
             "description": "<p>行业id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "professionId",
             "description": "<p>职业id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string[]",
+            "type": "String[]",
             "optional": true,
             "field": "tags",
             "description": "<p>标签列表，例如：音乐, 篮球, 二次元</p>"
@@ -3231,171 +3326,168 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>总页数</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "list",
             "description": "<p>动态内容数据列表</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "userId",
             "description": "<p>用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "headUrl",
             "description": "<p>头像图片地址</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "publishTime",
             "description": "<p>发布时间</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "dynamicInfoId",
             "description": "<p>动态内容id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content",
             "description": "<p>动态内容</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "address",
             "description": "<p>定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "likes",
             "description": "<p>点赞数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "likeStatus",
             "description": "<p>点赞状态，true-&gt;已点赞，false-&gt;未点赞</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "applications",
             "description": "<p>申请加微信数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "applicationStatus",
             "description": "<p>申请加微信状态，true-&gt;已申请，false-&gt;未申请</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "isTopic",
             "description": "<p>是否话题，true-&gt;是，false-&gt;否</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "topicTitle",
             "description": "<p>话题标题</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "comments",
             "description": "<p>评论数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "isAnonymous",
             "description": "<p>是否匿名发布，true-&gt;是，false-&gt;否</p>"
           },
           {
             "group": "200",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "distance",
             "description": "<p>当前位置距发布动态定位的距离（单位（米））</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "dataTye",
             "description": "<p>附件文件类型，1-&gt;图片，2-&gt;语音</p>"
           },
           {
             "group": "200",
-            "type": "string[]",
+            "type": "String[]",
             "optional": true,
             "field": "attacheFileUrlList",
             "description": "<p>附件文件地址列表</p>"
@@ -3415,16 +3507,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -3454,16 +3544,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -3510,7 +3598,7 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
@@ -3530,52 +3618,49 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "hots",
             "description": "<p>三条热门话题</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalCount",
             "description": "<p>参与话题的动态数量</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "topicTitle",
             "description": "<p>话题标题</p>"
@@ -3595,16 +3680,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -3634,16 +3717,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -3690,24 +3771,26 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageNum",
-            "description": "<p>当前页数，默认：第1页</p>"
+            "defaultValue": "1",
+            "description": "<p>当前页数</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageSize",
-            "description": "<p>每页条数，默认：每页20条</p>"
+            "defaultValue": "20",
+            "description": "<p>每页条数</p>"
           }
         ]
       },
@@ -3724,164 +3807,161 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>总页数</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "list",
             "description": "<p>动态内容数据列表</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "Number",
             "optional": true,
             "field": "userId",
             "description": "<p>用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "headUrl",
             "description": "<p>头像图片地址</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "publishTime",
             "description": "<p>发布时间</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "dynamicInfoId",
             "description": "<p>动态内容id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content",
             "description": "<p>动态内容</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "address",
             "description": "<p>定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "likes",
             "description": "<p>点赞数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "likeStatus",
             "description": "<p>点赞状态，true-&gt;已点赞，false-&gt;未点赞</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "applications",
             "description": "<p>申请加微信数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "applicationStatus",
             "description": "<p>申请加微信状态，true-&gt;已申请，false-&gt;未申请</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "isTopic",
             "description": "<p>是否话题，true-&gt;是，false-&gt;否</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "topicTitle",
             "description": "<p>话题标题</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "comments",
             "description": "<p>评论数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "isAnonymous",
             "description": "<p>是否匿名发布，true-&gt;是，false-&gt;否</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "dataTye",
             "description": "<p>附件文件类型，1-&gt;图片，2-&gt;语音</p>"
           },
           {
             "group": "200",
-            "type": "list",
+            "type": "String[]",
             "optional": true,
             "field": "attacheFileUrlList",
             "description": "<p>附件文件地址列表</p>"
@@ -3901,16 +3981,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -3940,16 +4018,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -3996,45 +4072,47 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": false,
             "field": "ip",
             "description": "<p>客户端IP，不能与定位（经纬度）同时为空，否则获取不到距离</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": false,
             "field": "longitude",
             "description": "<p>定位（经度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": false,
             "field": "latitude",
             "description": "<p>定位（纬度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageNum",
-            "description": "<p>当前页数，默认：第1页</p>"
+            "defaultValue": "1",
+            "description": "<p>当前页数</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageSize",
-            "description": "<p>每页条数，默认：每页20条</p>"
+            "defaultValue": "20",
+            "description": "<p>每页条数</p>"
           }
         ]
       },
@@ -4056,171 +4134,168 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>总页数</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "list",
             "description": "<p>动态内容数据列表</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "userId",
             "description": "<p>用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "headUrl",
             "description": "<p>头像图片地址</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "publishTime",
             "description": "<p>发布时间</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "dynamicInfoId",
             "description": "<p>动态内容id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content",
             "description": "<p>动态内容</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "address",
             "description": "<p>定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "likes",
             "description": "<p>点赞数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "likeStatus",
             "description": "<p>点赞状态，true-&gt;已点赞，false-&gt;未点赞</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "applications",
             "description": "<p>申请加微信数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "applicationStatus",
             "description": "<p>申请加微信状态，true-&gt;已申请，false-&gt;未申请</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "isTopic",
             "description": "<p>是否话题，true-&gt;是，false-&gt;否</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "topicTitle",
             "description": "<p>话题标题</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "comments",
             "description": "<p>评论数</p>"
           },
           {
             "group": "200",
-            "type": "boolean",
+            "type": "Boolean",
             "optional": true,
             "field": "isAnonymous",
             "description": "<p>是否匿名发布，true-&gt;是，false-&gt;否</p>"
           },
           {
             "group": "200",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "distance",
             "description": "<p>当前位置距发布动态定位的距离（单位（米））</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "dataTye",
             "description": "<p>附件文件类型，1-&gt;图片，2-&gt;语音</p>"
           },
           {
             "group": "200",
-            "type": "string[]",
+            "type": "String[]",
             "optional": true,
             "field": "attacheFileUrlList",
             "description": "<p>附件文件地址列表</p>"
@@ -4245,16 +4320,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "timestamp",
             "description": "<p>响应时间戳</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>消息码</p>"
@@ -4284,16 +4357,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -4340,7 +4411,7 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>消息接收者用户id</p>"
@@ -4360,38 +4431,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>标记已读状态数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "UPDATE",
             "description": "<p>OK-&gt;标记已读成功，ERROR-&gt;标记已读失败</p>"
@@ -4411,16 +4479,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -4436,16 +4502,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -4461,16 +4525,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -4522,31 +4584,33 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id1",
             "description": "<p>消息发送者用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id2",
             "description": "<p>消息接收者用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageNum",
-            "description": "<p>当前页码，默认：1</p>"
+            "defaultValue": "1",
+            "description": "<p>当前页码</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageSize",
-            "description": "<p>每页数量，默认：20</p>"
+            "defaultValue": "20",
+            "description": "<p>每页数量</p>"
           }
         ]
       },
@@ -4563,94 +4627,91 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>消息历史记录数据</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "totalCount",
             "description": "<p>消息记录总条数</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>消息记录总页数</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>消息记录数据列表</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "messageId",
             "description": "<p>消息记录id</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "sendUserId",
             "description": "<p>消息发送者用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "sendUserHead",
             "description": "<p>消息发送者用户头像</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "sendUserNickname",
             "description": "<p>消息发送者用户昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "sendDateTime",
             "description": "<p>消息发送时间</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content",
             "description": "<p>消息内容</p>"
@@ -4670,16 +4731,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -4695,16 +4754,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -4720,16 +4777,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -4781,31 +4836,33 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>接收者用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageNum",
-            "description": "<p>当前页码，默认：1</p>"
+            "defaultValue": "1",
+            "description": "<p>当前页码</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageSize",
-            "description": "<p>每页数量，默认：20</p>"
+            "defaultValue": "20",
+            "description": "<p>每页数量</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://w168428j19.51mypc.cn/find/message/29/all?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
+          "content": "curl -v -X GET \"http://w168428j19.51mypc.cn/find/message/29/all?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -4815,143 +4872,140 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>消息数据</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "likes",
             "description": "<p>最新点赞消息</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content1",
             "description": "<p>最新一条未读点赞消息内容</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "count1",
             "description": "<p>未读点赞消息数量</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "totalCount",
             "description": "<p>申请加微信消息总条数</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>申请加微信消息总页数</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>申请加微信消息数据</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "messageId",
             "description": "<p>申请加微信消息记录id</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "userId",
             "description": "<p>申请加微信发送者用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "head",
             "description": "<p>申请加微信发送者用户头像</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>申请加微信发送者用户昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content2",
             "description": "<p>申请加微信发送消息内容</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "count2",
             "description": "<p>申请加微信未读消息数量</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "createTime",
             "description": "<p>消息发送时间</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "type",
             "description": "<p>消息类型，0-&gt;普通消息，1-&gt;申请加微信消息</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "flag",
             "description": "<p>是否展示复制微信，0-&gt;否，1-&gt;是</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "weixinId",
             "description": "<p>微信号</p>"
@@ -4971,16 +5025,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -4996,16 +5048,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5021,16 +5071,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5082,31 +5130,33 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>消息接收者用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageNum",
-            "description": "<p>当前页码，默认：1</p>"
+            "defaultValue": "1",
+            "description": "<p>当前页码</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageSize",
-            "description": "<p>每页数量，默认：20</p>"
+            "defaultValue": "20",
+            "description": "<p>每页数量</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET \"http://w168428j19.51mypc.cn/find/message/29/likes?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
+          "content": "curl -v -X GET \"http://w168428j19.51mypc.cn/find/message/29/likes?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -5116,94 +5166,91 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>消息数据</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "totalCount",
             "description": "<p>点赞消息总条数</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>点赞消息总页数</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>点赞消息数据</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "userId",
             "description": "<p>点赞者用户id</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "messageId",
             "description": "<p>点赞消息记录id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "head",
             "description": "<p>点赞者用户头像</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content",
             "description": "<p>点赞者发送消息内容</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "attacheType",
             "description": "<p>点赞的动态内容类型，0-&gt;图片，1-&gt;语音</p>"
           },
           {
             "group": "200",
-            "type": "string[]",
+            "type": "String[]",
             "optional": true,
             "field": "filenameList",
             "description": "<p>点赞的动态文件名称列表</p>"
@@ -5223,16 +5270,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5248,16 +5293,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5273,16 +5316,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5334,14 +5375,14 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>消息接收者用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "messageId",
             "description": "<p>消息记录id</p>"
@@ -5351,7 +5392,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://w168428j19.51mypc.cn/find/message/60/deleteLikes?messageId=28\" -H \"accept: application/json\"",
+          "content": "curl -v -X PUT \"http://w168428j19.51mypc.cn/find/message/60/deleteLikes?messageId=28\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -5361,38 +5402,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>删除消息状态数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "DELETE",
             "description": "<p>OK-&gt;删除消息记录成功，ERROR-&gt;删除消息记录失败</p>"
@@ -5412,16 +5450,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5437,16 +5473,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5462,16 +5496,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5523,14 +5555,14 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id1",
             "description": "<p>消息接收者用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id2",
             "description": "<p>消息发送者用户id</p>"
@@ -5540,7 +5572,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT \"http://w168428j19.51mypc.cn/find/message/60/delete?id2=28\" -H \"accept: application/json\"",
+          "content": "curl -v -X PUT \"http://w168428j19.51mypc.cn/find/message/60/delete?id2=28\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -5550,38 +5582,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>删除消息状态数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "DELETE",
             "description": "<p>OK-&gt;删除消息记录成功，ERROR-&gt;删除消息记录失败</p>"
@@ -5601,16 +5630,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5626,16 +5653,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5651,16 +5676,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5712,21 +5735,21 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>发送者用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "messageId",
             "description": "<p>回复的消息id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": false,
             "field": "content",
             "description": "<p>消息内容</p>"
@@ -5736,12 +5759,12 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例 发送消息",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://w168428j19.51mypc.cn/find/message/60/send?messageId=25&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+          "content": "curl -v -X POST \"http://w168428j19.51mypc.cn/find/message/60/send?messageId=25&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
           "type": "json"
         },
         {
           "title": "请求示例 回复消息",
-          "content": "HTTP/1.1 OK\ncurl -v -X POST \"http://w168428j19.51mypc.cn/find/message/29/send?messageId=2&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
+          "content": "curl -v -X POST \"http://w168428j19.51mypc.cn/find/message/29/send?messageId=2&content=可以申请加你的微信吗？\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -5751,38 +5774,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>发送状态数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "SEND",
             "description": "<p>OK-&gt;发送成功，ERROR-&gt;发送失败</p>"
@@ -5807,16 +5827,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5832,16 +5850,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5857,16 +5873,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -5918,14 +5932,14 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "messageId",
             "description": "<p>消息id</p>"
@@ -5943,14 +5957,14 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "content",
             "description": "<p>消息内容</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "weChatId",
             "description": "<p>微信号</p>"
@@ -5975,38 +5989,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>回复消息状态数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "REPLY",
             "description": "<p>OK-&gt;回复成功，ERROR-&gt;回复失败</p>"
@@ -6031,16 +6042,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6056,16 +6065,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6081,16 +6088,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6142,14 +6147,14 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": false,
             "field": "regId",
             "description": "<p>极光推送唯一设备标识</p>"
@@ -6169,38 +6174,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "allowedValues": [
               "{\"OK\"",
               "\"FAILED\"}"
@@ -6224,16 +6226,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6249,16 +6249,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6274,16 +6272,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6335,14 +6331,14 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "file",
+            "type": "File",
             "optional": false,
             "field": "headIconFile",
             "description": "<p>头像图片文件</p>"
@@ -6362,45 +6358,42 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "file",
+            "type": "File",
             "optional": true,
             "field": "head",
             "description": "<p>头像图片地址</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>用户id</p>"
@@ -6420,16 +6413,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6445,16 +6436,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6470,16 +6459,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6531,14 +6518,14 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "file",
+            "type": "File",
             "optional": false,
             "field": "backgroundIconFile",
             "description": "<p>背景图片文件</p>"
@@ -6558,45 +6545,42 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "head",
             "description": "<p>背景图片地址</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>用户id</p>"
@@ -6616,16 +6600,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6641,16 +6623,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6666,16 +6646,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6727,7 +6705,7 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "11",
             "optional": false,
             "field": "phone",
@@ -6748,31 +6726,28 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
@@ -6808,16 +6783,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6833,16 +6806,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -6889,21 +6860,21 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "blackUserId",
             "description": "<p>黑名单用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": false,
             "field": "type",
             "description": "<p>奇数-&gt;拉入，偶数-&gt;推出</p>"
@@ -6913,7 +6884,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X POST -v http://w168428j19.51mypc.cn/find/user/1/pushOrPull -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"blackUserId\":2, \"type\":0}'",
+          "content": "curl --insecure -X POST -v http://w168428j19.51mypc.cn/find/user/1/pushOrPull -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"blackUserId\":2, \"type\":0}'",
           "type": "json"
         }
       ]
@@ -6923,45 +6894,42 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "PULL",
             "description": "<p>推出状态</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "PUSH",
             "description": "<p>拉入状态</p>"
@@ -6986,16 +6954,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -7011,16 +6977,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -7067,28 +7031,28 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>昵称</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "weixinId",
             "description": "<p>微信号</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..4",
             "optional": true,
             "field": "year",
@@ -7096,7 +7060,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..2",
             "optional": true,
             "field": "month",
@@ -7104,7 +7068,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..2",
             "optional": true,
             "field": "date",
@@ -7112,7 +7076,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..4",
             "optional": true,
             "field": "constellation",
@@ -7121,49 +7085,49 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "autograph",
             "description": "<p>签名</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "professionId",
             "description": "<p>职业编号</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "tag1",
             "description": "<p>标签1</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "tag2",
             "description": "<p>标签2</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "tag3",
             "description": "<p>标签3</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "tag4",
             "description": "<p>标签4</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "tag5",
             "description": "<p>标签5</p>"
@@ -7218,31 +7182,28 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
@@ -7262,16 +7223,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -7287,16 +7246,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -7343,7 +7300,7 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
@@ -7353,7 +7310,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例 修改昵称",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/queryWeixin",
+          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/queryWeixin",
           "type": "json"
         }
       ]
@@ -7363,45 +7320,42 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "user",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "weixinId",
             "description": "<p>微信号</p>"
@@ -7421,16 +7375,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -7446,16 +7398,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -7502,7 +7452,7 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
@@ -7512,7 +7462,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例 获取用户资料",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/query",
+          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/70/query",
           "type": "json"
         }
       ]
@@ -7522,52 +7472,49 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "user",
             "description": "<p>用户数据</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>昵称</p>"
@@ -7586,14 +7533,14 @@ define({ "api": [
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "age",
             "description": "<p>年龄</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "allowedValues": [
               "{\"0\"",
               "\"1\"}"
@@ -7604,31 +7551,59 @@ define({ "api": [
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "head",
             "description": "<p>头像</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "bg",
             "description": "<p>背景图片</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
-            "field": "autograph",
-            "description": "<p>签名</p>"
+            "field": "tag1",
+            "description": "<p>标签1</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag2",
+            "description": "<p>标签2</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag3",
+            "description": "<p>标签3</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag4",
+            "description": "<p>标签4</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag5",
+            "description": "<p>标签5</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"查看用户个人资料成功\",\n\"data\": {\n\"user\": {\n\"id\": 1,\n\"nickname\": \"王666\",\n\"head\": \"http://192.168.31.31:9000/find/img/head/2b9c022d-ec00-497c-9626-813add17b877_admin069.jpg\",\n\"bg\": \"http://192.168.31.31:9000/find/img/background/a1bf6181-ebd0-43b4-8e91-761ec8fc83ab_admin055.jpg\",\n\"grade\": 0,\n\"age\": 24,\n\"gender\": \"1\",\n\"autograph\": \"126我的ss2\"\n}\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n    \"status\": 200,\n    \"code\": 0,\n    \"msg\": \"查看用户个人资料成功\",\n    \"data\": {\n        \"user\": {\n            \"id\": 70,\n            \"nickname\": \"阿萌\",\n            \"head\": \"http://192.168.31.38:9000/find/img/head/70/b150c5e3-bf2d-4c2f-b6cd-f586cd65183b.jpg\",\n            \"grade\": \"0\",\n            \"age\": 27,\n            \"year\": \"1994\",\n            \"month\": \"05\",\n            \"date\": \"23\",\n            \"gender\": \"0\",\n            \"autograph\": \"初次见面，大家请多多关照！！\",\n            \"industry\": \"计算机/互联网/通信/电子\",\n            \"profession\": \"测试工程师\",\n            \"country\": \"中国\",\n            \"province\": \"河南省\",\n            \"city\": \"郑州市\",\n            \"district\": \"中原区\",\n            \"tag1\": \"颜值\",\n            \"tag2\": \"吃货\",\n            \"tag3\": \"篮球\",\n            \"tag4\": \"足球\",\n            \"tag5\": \"打碟DJ\"\n        }\n    }\n}",
           "type": "json"
         }
       ]
@@ -7638,16 +7613,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -7663,16 +7636,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -7719,7 +7690,7 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": false,
             "field": "keywords",
             "description": "<p>关键词</p>"
@@ -7739,52 +7710,49 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>标签列表</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>标签id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "name",
             "description": "<p>标签名称</p>"
@@ -7804,16 +7772,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -7829,16 +7795,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -7885,14 +7849,14 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>举报用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "categoryId",
             "description": "<p>举报类目id</p>"
@@ -7910,14 +7874,14 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "beingReportId",
             "description": "<p>被举报用户id或者动态id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": false,
             "field": "reportContent",
             "description": "<p>举报内容</p>"
@@ -7927,7 +7891,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例 查看用户举报类型",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X POST -v http://w168428j19.51mypc.cn/find/user/{id}/report -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"categoryId\":1, \"reportType\":1, \"beingReportId\":3, \"reportContent\":\"老是打广告dddddd+++++++！！！！！\"}'",
+          "content": "curl --insecure -X POST -v http://w168428j19.51mypc.cn/find/user/{id}/report -H \"Content-Type: application/json;charset=UTF-8\" -d '{\"categoryId\":1, \"reportType\":1, \"beingReportId\":3, \"reportContent\":\"老是打广告dddddd+++++++！！！！！\"}'",
           "type": "json"
         }
       ]
@@ -7937,38 +7901,35 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "REPORTED",
             "description": "<p>举报消息</p>"
@@ -7988,16 +7949,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -8013,16 +7972,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -8069,7 +8026,7 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "11",
             "optional": false,
             "field": "phone",
@@ -8077,7 +8034,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "1",
             "allowedValues": [
               "\"0\"",
@@ -8089,7 +8046,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "1..16",
             "optional": true,
             "field": "platform",
@@ -8097,7 +8054,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": false,
             "field": "nickname",
@@ -8105,7 +8062,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..128",
             "optional": false,
             "field": "weixinId",
@@ -8113,7 +8070,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..64",
             "optional": true,
             "field": "imei",
@@ -8121,7 +8078,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..64",
             "optional": true,
             "field": "model",
@@ -8129,7 +8086,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..16",
             "optional": true,
             "field": "sysName",
@@ -8137,7 +8094,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..16",
             "optional": true,
             "field": "sysCode",
@@ -8145,7 +8102,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..4",
             "optional": true,
             "field": "networkMode",
@@ -8153,7 +8110,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..4",
             "optional": false,
             "field": "year",
@@ -8161,7 +8118,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..2",
             "optional": false,
             "field": "month",
@@ -8169,7 +8126,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..2",
             "optional": false,
             "field": "date",
@@ -8177,7 +8134,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "allowedValues": [
               "{\"水瓶座\"",
               "\"双鱼座\"",
@@ -8198,7 +8155,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "16",
             "optional": true,
             "field": "ip",
@@ -8206,7 +8163,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..16",
             "optional": true,
             "field": "country",
@@ -8214,7 +8171,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "province",
@@ -8222,7 +8179,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "city",
@@ -8230,7 +8187,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "district",
@@ -8238,7 +8195,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "other",
@@ -8246,7 +8203,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "size": "0..16",
             "optional": true,
             "field": "longitude",
@@ -8254,7 +8211,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "size": "0..16",
             "optional": true,
             "field": "latitude",
@@ -8262,7 +8219,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "size": "0..32",
             "optional": true,
             "field": "professionId",
@@ -8270,7 +8227,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "tag1",
@@ -8278,7 +8235,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "tag2",
@@ -8286,7 +8243,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "tag3",
@@ -8294,7 +8251,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "tag4",
@@ -8302,7 +8259,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "tag5",
@@ -8310,7 +8267,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..255",
             "optional": true,
             "field": "autograph",
@@ -8318,7 +8275,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "file",
+            "type": "File",
             "optional": false,
             "field": "head",
             "description": "<p>头像图片文件</p>"
@@ -8343,80 +8300,77 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "user",
             "description": "<p>用户数据</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "gender",
             "description": "<p>性别</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "head",
             "description": "<p>头像图片地址</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "bg",
             "description": "<p>背景图片地址</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "autograph",
             "description": "<p>签名</p>"
@@ -8436,16 +8390,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -8461,16 +8413,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -8486,16 +8436,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -8547,7 +8495,7 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "11",
             "optional": false,
             "field": "phone",
@@ -8555,7 +8503,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "16",
             "optional": true,
             "field": "ip",
@@ -8563,7 +8511,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..16",
             "optional": true,
             "field": "country",
@@ -8571,7 +8519,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "province",
@@ -8579,7 +8527,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "city",
@@ -8587,7 +8535,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "district",
@@ -8595,7 +8543,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "size": "0..32",
             "optional": true,
             "field": "other",
@@ -8603,7 +8551,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "size": "0..16",
             "optional": true,
             "field": "longitude",
@@ -8611,7 +8559,7 @@ define({ "api": [
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "size": "0..16",
             "optional": true,
             "field": "latitude",
@@ -8637,73 +8585,70 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "user",
             "description": "<p>用户数据</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "gender",
             "description": "<p>性别</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "head",
             "description": "<p>头像图片地址</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "autograph",
             "description": "<p>签名</p>"
@@ -8723,16 +8668,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -8748,16 +8691,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -8773,16 +8714,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -8843,52 +8782,49 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>标签列表</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>标签id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "name",
             "description": "<p>标签名称</p>"
@@ -8908,16 +8844,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -8933,16 +8867,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -8989,7 +8921,7 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
@@ -8999,7 +8931,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例 查看用户举报类型",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/report-categories",
+          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/report-categories",
           "type": "json"
         }
       ]
@@ -9009,52 +8941,49 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>举报类型数据列表</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>类型id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "name",
             "description": "<p>类型名称</p>"
@@ -9074,16 +9003,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -9099,16 +9026,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -9164,52 +9089,49 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>标签列表</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>标签id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "name",
             "description": "<p>标签名称</p>"
@@ -9229,16 +9151,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -9254,16 +9174,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -9310,21 +9228,21 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageNum",
             "description": "<p>当前页数，默认值：1</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "pageSize",
             "description": "<p>每页条数，默认值：10</p>"
@@ -9334,7 +9252,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例 查看用户举报类型",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/blacklist?pageNum=1&pageSize=10",
+          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/1/blacklist?pageNum=1&pageSize=10",
           "type": "json"
         }
       ]
@@ -9344,73 +9262,70 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "totalPage",
             "description": "<p>总页数</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>黑名单数据列表</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "head",
             "description": "<p>头像图片地址</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "time",
             "description": "<p>加入时间</p>"
@@ -9430,16 +9345,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -9455,16 +9368,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -9520,52 +9431,49 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>行业列表</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>行业id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "name",
             "description": "<p>行业名称</p>"
@@ -9585,16 +9493,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -9610,16 +9516,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -9666,35 +9570,35 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "string",
+            "type": "String",
             "optional": false,
             "field": "ip",
             "description": "<p>客户端ip</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": false,
             "field": "longitude",
             "description": "<p>定位（经度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "double",
+            "type": "Double",
             "optional": false,
             "field": "latitude",
             "description": "<p>定位（纬度）</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "count",
             "description": "<p>推荐用户数量，默认：10</p>"
@@ -9704,7 +9608,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&count=10 -H \"Content-Type: application/json;charset=UTF-8\"",
+          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&count=10 -H \"Content-Type: application/json;charset=UTF-8\"",
           "type": "json"
         }
       ]
@@ -9714,101 +9618,98 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>鹿可用户列表</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>用户昵称</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "age",
             "description": "<p>年龄</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "country",
             "description": "<p>国家</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "province",
             "description": "<p>省份</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "city",
             "description": "<p>城市</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "district",
             "description": "<p>区/县</p>"
           },
           {
             "group": "200",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "distance",
             "description": "<p>距离（单位：米）</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "img",
             "description": "<p>动态图片地址</p>"
@@ -9828,16 +9729,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -9853,16 +9752,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -9909,14 +9806,14 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "detailsUserId",
             "description": "<p>用户详情id</p>"
@@ -9926,7 +9823,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look-details?detailsUserId=65 -H \"Content-Type: application/json;charset=UTF-8\"",
+          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look-details?detailsUserId=70 -H \"Content-Type: application/json;charset=UTF-8\"",
           "type": "json"
         }
       ]
@@ -9936,116 +9833,148 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "200",
-            "type": "string[]",
-            "size": "1..6",
+            "type": "String[]",
+            "size": "1..4",
             "optional": true,
             "field": "attacheList",
-            "description": "<p>动态图片列表，最多6张</p>"
+            "description": "<p>动态图片列表，最多4张</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
+            "optional": true,
+            "field": "tag1",
+            "description": "<p>标签1</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag2",
+            "description": "<p>标签2</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag3",
+            "description": "<p>标签3</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag4",
+            "description": "<p>标签4</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag5",
+            "description": "<p>标签5</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
             "optional": true,
             "field": "nickname",
             "description": "<p>昵称</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "constellation",
             "description": "<p>星座</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "gender",
             "description": "<p>性别，0-&gt;女，1-&gt;男</p>"
           },
           {
             "group": "200",
-            "type": "int",
+            "type": "Number",
             "optional": true,
             "field": "age",
             "description": "<p>年龄</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "industry",
             "description": "<p>行业</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "profession",
             "description": "<p>职业</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "country",
             "description": "<p>国家</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "province",
             "description": "<p>省份</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "city",
             "description": "<p>城市</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "district",
             "description": "<p>区/县</p>"
@@ -10055,7 +9984,7 @@ define({ "api": [
       "examples": [
         {
           "title": "HTTP/1.1 200 OK",
-          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"id\": 65,\n\"attacheList\": [\n\"http://192.168.31.31:9000/find/res/images/65/20201113/04.png\",\n\"http://192.168.31.31:9000/find/res/images/65/20201113/05.png\",\n\"http://192.168.31.31:9000/find/res/images/65/20201107/09.png\",\n\"http://192.168.31.31:9000/find/res/images/65/20201107/010.png\",\n\"http://192.168.31.31:9000/find/res/images/65/20201024/012.png\",\n\"http://192.168.31.31:9000/find/res/images/65/20201024/06.png\"\n],\n\"nickname\": \"兰烬\",\n\"constellation\": \"金牛座\",\n\"gender\": \"0\",\n\"age\": 23,\n\"industry\": \"计算机/互联网/通信/电子\",\n\"profession\": \"后端开发工程师\",\n\"country\": \"中国\",\n\"province\": \"上海市\",\n\"city\": \"上海市\",\n\"district\": \"徐汇区\"\n}\n}",
+          "content": "{\n    \"status\": 200,\n    \"code\": 0,\n    \"msg\": \"获取鹿可模块用户详情数据成功。\",\n    \"data\": {\n        \"id\": 70,\n        \"attacheList\": [\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/308f48ad-ce12-49ab-92f2-eb4ef7dcd649.jpg\",\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/72517b7c-a808-445e-9a3d-3f15ee66e341.jpg\",\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/2d5f85de-e2b1-4b96-a8c5-f3a6814c3c50.jpg\",\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/fb92d519-e29c-4c80-b7cc-acfa2f6eaf47.jpg\",\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/4872593b-e7d2-496a-a52c-897cafda2bb5.jpg\",\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/d7319235-dfee-42e3-a089-50cec9ae5a1f.jpg\"\n        ],\n        \"tag1\": \"颜值\",\n        \"tag2\": \"吃货\",\n        \"tag3\": \"篮球\",\n        \"tag4\": \"足球\",\n        \"tag5\": \"打碟DJ\",\n        \"nickname\": \"阿萌\",\n        \"constellation\": \"双子座\",\n        \"gender\": \"0\",\n        \"age\": 27,\n        \"industry\": \"计算机/互联网/通信/电子\",\n        \"profession\": \"测试工程师\",\n        \"country\": \"中国\",\n        \"province\": \"河南省\",\n        \"city\": \"郑州市\",\n        \"district\": \"中原区\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -10065,16 +9994,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -10090,16 +10017,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -10146,28 +10071,32 @@ define({ "api": [
         "请求参数": [
           {
             "group": "请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
           },
           {
             "group": "请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "pid",
             "description": "<p>商品id</p>"
           },
           {
             "group": "请求参数",
-            "type": "int",
+            "type": "Number",
+            "allowedValues": [
+              "0",
+              "1"
+            ],
             "optional": false,
             "field": "mode",
             "description": "<p>支付方式：0-&gt;微信，1-&gt;支付宝</p>"
           },
           {
             "group": "请求参数",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "ip",
             "description": "<p>客户端IP</p>"
@@ -10192,129 +10121,126 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "trade_info",
             "description": "<p>商品预支付订单信息</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "appid",
             "description": "<p>应用id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "err_code",
             "description": "<p>错误码</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "err_code_des",
             "description": "<p>错误说明</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "out_trade_no",
             "description": "<p>订单号</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "package",
             "description": "<p>支付标识</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "partnerid",
             "description": "<p>商户id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "prepayid",
             "description": "<p>预支付请求id</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "result_code",
             "description": "<p>结果状态</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "return_code",
             "description": "<p>返回状态</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "return_msg",
             "description": "<p>返回消息说明</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "sign",
             "description": "<p>签名</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "timestamp",
             "description": "<p>时间戳</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "orderString",
             "description": "<p>支付订单信息</p>"
@@ -10324,12 +10250,12 @@ define({ "api": [
       "examples": [
         {
           "title": "200（微信支付）响应示例01",
-          "content": "HTTPS/1.1 200 OK\n{\n\"code\": 0,\n\"data\": {\n\"trade_info\": {\n\"appid\": \"wx394471ab93938b34\",\n\"err_code\": \"Success\",\n\"err_code_des\": \"请求微信支付统一下单接口生成APP支付预付单信息成功。\",\n\"noncestr\": \"1610960641587\",\n\"out_trade_no\": \"2021011817040003581135ba8bfa742a\",\n\"package\": \"Sign=WXPay\",\n\"partnerid\": \"1539515591\",\n\"prepayid\": \"wx1817040283097360129d35d33dfc5a0000\",\n\"result_code\": \"Success\",\n\"return_code\": \"Success\",\n\"return_msg\": \"生成微信APP支付预支付订单信息成功。\",\n\"sign\": \"0F6E2CB474B2A6B675D35D3F9215086D\",\n\"timestamp\": \"1610960641\"\n}\n},\n\"msg\": \"返回数据成功\",\n\"status\": 200\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"code\": 0,\n\"data\": {\n\"trade_info\": {\n\"appid\": \"wx394471ab93938b34\",\n\"err_code\": \"Success\",\n\"err_code_des\": \"请求微信支付统一下单接口生成APP支付预付单信息成功。\",\n\"noncestr\": \"1610960641587\",\n\"out_trade_no\": \"2021011817040003581135ba8bfa742a\",\n\"package\": \"Sign=WXPay\",\n\"partnerid\": \"1539515591\",\n\"prepayid\": \"wx1817040283097360129d35d33dfc5a0000\",\n\"result_code\": \"Success\",\n\"return_code\": \"Success\",\n\"return_msg\": \"生成微信APP支付预支付订单信息成功。\",\n\"sign\": \"0F6E2CB474B2A6B675D35D3F9215086D\",\n\"timestamp\": \"1610960641\"\n}\n},\n\"msg\": \"返回数据成功\",\n\"status\": 200\n}",
           "type": "json"
         },
         {
           "title": "200（支付宝支付）响应示例01",
-          "content": "HTTPS/1.1 200 OK\n{\n\"code\": 0,\n\"data\": {\n\"trade_info\": {\n\"appid\": \"2021001183634710\",\n\"err_code\": \"Success\",\n\"err_code_des\": \"生成支付宝APP预支付订单信息返回数据成功。\",\n\"orderString\": \"alipay_sdk=alipay-sdk-java-3.7.110.ALL&app_id=2021001183634710&biz_content=%7B%22goods_type%22%3A%220%22%2C%22out_trade_no%22%3A%22202101181714518933f2c2fe0f3fa423%22%2C%22subject%22%3A%22%E5%85%85%E5%80%BC2%E4%B8%AA%E6%9C%88VIP%22%2C%22timeout_express%22%3A%2230%22%2C%22total_amount%22%3A%221%22%7D&charset=UTF-8&format=JSON&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Fw168428j19.51mypc.cn%2Ffind%2Fv1%2Forder%2Fpay%2Falipay-notify.do&sign=Hi4DY84hHqM%2F3SrBCCtUYfDd9i8ZKrf8QF0O3nRRO0bgvS7GTyuLOhaJQ9Td%2FLMfsvU7G0OPh7PABaslzRLqRKdVrMe0LvrVtBQQJ2%2BKh0w0YGOSoIV7tGq%2Bkz2hs4%2FmH%2FLfLH2XX2tSDOi3HM6CdhhF7SkX7DFEbgowLGR3VtRVpbKVBtpHKHVk%2BQbxlPnkiDNb9u6bnefb2kBYJB6AGLL7E7PrwQOx61yezFg8HBAd7Ic%2FNstMEZ%2BX5ZcCSQaiRbaAQ5iZTTiFiyF66bHtTTYrlT2M37JxO6VQ2o5Rn4EOKS4d1NwqaqUnGg7upZH4ygqbZFkaAvDGo3bbS%2FnZ0Q%3D%3D&sign_type=RSA2&timestamp=2021-01-18+17%3A14%3A51&version=2.0\",\n\"out_trade_no\": \"202101181714518933f2c2fe0f3fa423\",\n\"result_code\": \"Success\",\n\"return_code\": \"Success\",\n\"return_msg\": \"生成支付宝APP预支付订单信息返回数据成功。\"\n}\n},\n\"msg\": \"返回数据成功\",\n\"status\": 200\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"code\": 0,\n\"data\": {\n\"trade_info\": {\n\"appid\": \"2021001183634710\",\n\"err_code\": \"Success\",\n\"err_code_des\": \"生成支付宝APP预支付订单信息返回数据成功。\",\n\"orderString\": \"alipay_sdk=alipay-sdk-java-3.7.110.ALL&app_id=2021001183634710&biz_content=%7B%22goods_type%22%3A%220%22%2C%22out_trade_no%22%3A%22202101181714518933f2c2fe0f3fa423%22%2C%22subject%22%3A%22%E5%85%85%E5%80%BC2%E4%B8%AA%E6%9C%88VIP%22%2C%22timeout_express%22%3A%2230%22%2C%22total_amount%22%3A%221%22%7D&charset=UTF-8&format=JSON&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Fw168428j19.51mypc.cn%2Ffind%2Fv1%2Forder%2Fpay%2Falipay-notify.do&sign=Hi4DY84hHqM%2F3SrBCCtUYfDd9i8ZKrf8QF0O3nRRO0bgvS7GTyuLOhaJQ9Td%2FLMfsvU7G0OPh7PABaslzRLqRKdVrMe0LvrVtBQQJ2%2BKh0w0YGOSoIV7tGq%2Bkz2hs4%2FmH%2FLfLH2XX2tSDOi3HM6CdhhF7SkX7DFEbgowLGR3VtRVpbKVBtpHKHVk%2BQbxlPnkiDNb9u6bnefb2kBYJB6AGLL7E7PrwQOx61yezFg8HBAd7Ic%2FNstMEZ%2BX5ZcCSQaiRbaAQ5iZTTiFiyF66bHtTTYrlT2M37JxO6VQ2o5Rn4EOKS4d1NwqaqUnGg7upZH4ygqbZFkaAvDGo3bbS%2FnZ0Q%3D%3D&sign_type=RSA2&timestamp=2021-01-18+17%3A14%3A51&version=2.0\",\n\"out_trade_no\": \"202101181714518933f2c2fe0f3fa423\",\n\"result_code\": \"Success\",\n\"return_code\": \"Success\",\n\"return_msg\": \"生成支付宝APP预支付订单信息返回数据成功。\"\n}\n},\n\"msg\": \"返回数据成功\",\n\"status\": 200\n}",
           "type": "json"
         }
       ]
@@ -10339,16 +10265,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -10364,16 +10288,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -10389,16 +10311,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -10450,7 +10370,7 @@ define({ "api": [
         "接口请求参数": [
           {
             "group": "接口请求参数",
-            "type": "long",
+            "type": "Number",
             "optional": false,
             "field": "id",
             "description": "<p>用户id</p>"
@@ -10460,7 +10380,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例03（手机号码和客户端IP登录）",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET http://w168428j19.51mypc.cn/find/order/1/product/list",
+          "content": "curl -v -X GET http://w168428j19.51mypc.cn/find/order/1/product/list",
           "type": "json"
         }
       ]
@@ -10470,73 +10390,70 @@ define({ "api": [
         "200": [
           {
             "group": "200",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>信息码</p>"
           },
           {
             "group": "200",
-            "type": "string",
-            "size": "..255",
+            "type": "String",
             "optional": false,
             "field": "msg",
             "description": "<p>说明</p>"
           },
           {
             "group": "200",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "200",
-            "type": "object",
+            "type": "Object",
             "optional": true,
             "field": "data",
             "description": "<p>数据</p>"
           },
           {
             "group": "200",
-            "type": "object[]",
+            "type": "Object[]",
             "optional": true,
             "field": "list",
             "description": "<p>商品信息列表数据</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "desc",
             "description": "<p>描述</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "icon",
             "description": "<p>商品小图地址</p>"
           },
           {
             "group": "200",
-            "type": "string",
+            "type": "String",
             "optional": true,
             "field": "name",
             "description": "<p>商品名称</p>"
           },
           {
             "group": "200",
-            "type": "long",
+            "type": "Number",
             "optional": true,
             "field": "pid",
             "description": "<p>商品id</p>"
           },
           {
             "group": "200",
-            "type": "double",
+            "type": "Double",
             "optional": true,
             "field": "price",
             "description": "<p>商品价格</p>"
@@ -10556,16 +10473,14 @@ define({ "api": [
         "403": [
           {
             "group": "403",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "403",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -10581,16 +10496,14 @@ define({ "api": [
         "404": [
           {
             "group": "404",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "404",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"
@@ -10606,16 +10519,14 @@ define({ "api": [
         "500": [
           {
             "group": "500",
-            "type": "int",
-            "size": "0-65535",
+            "type": "Number",
             "optional": false,
             "field": "status",
             "description": "<p>响应状态码</p>"
           },
           {
             "group": "500",
-            "type": "long",
-            "size": "0-500",
+            "type": "Number",
             "optional": false,
             "field": "code",
             "description": "<p>消息码</p>"

@@ -143,4 +143,8 @@ public interface DynamicService {
                                                              @RequestParam(name = "latitude") Double latitude,
                                                              @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
                                                              @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize);
+
+    //查询热门推荐话题列表
+    @GetMapping(value = "/find/v1/dynamic/{id}/hot-topic.do")
+    CommonResult<Map<String, Object>> findHotByDynamicInfoCount(@PathVariable(name = "id") Long userId);
 }

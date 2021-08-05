@@ -30,20 +30,19 @@ public class OrderController {
      * @apiVersion 1.0.0
      * @apiGroup 订单模块API
      * @apiName 获取充值商品列表
-     * @apiParam (接口请求参数) {long} id 用户id
-     * @apiParamExample {json} 请求示例03（手机号码和客户端IP登录）
-     * HTTP/1.1 OK
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParamExample 请求示例03（手机号码和客户端IP登录）
      * curl -v -X GET http://w168428j19.51mypc.cn/find/order/1/product/list
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object[]} [list] 商品信息列表数据
-     * @apiSuccess (200) {string} [desc] 描述
-     * @apiSuccess (200) {string} [icon] 商品小图地址
-     * @apiSuccess (200) {string} [name] 商品名称
-     * @apiSuccess (200) {long} [pid] 商品id
-     * @apiSuccess (200) {double} [price] 商品价格
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object[]} [list] 商品信息列表数据
+     * @apiSuccess (200) {String} [desc] 描述
+     * @apiSuccess (200) {String} [icon] 商品小图地址
+     * @apiSuccess (200) {String} [name] 商品名称
+     * @apiSuccess (200) {Number}[pid] 商品id
+     * @apiSuccess (200) {Double} [price] 商品价格
      * @apiSuccessExample {json} 200响应示例
      * HTTPS/1.1 200 OK
      * {
@@ -83,9 +82,9 @@ public class OrderController {
      * ]
      * }
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
-     * @apiError (403) {String} msg 说明
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
+     * @apiError (403){String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
      * {
@@ -93,9 +92,9 @@ public class OrderController {
      * "code": 199,
      * "msg": "未找到用户信息！",
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
-     * @apiError (404) {String} msg 说明
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
+     * @apiError (404){String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
      * {
@@ -103,9 +102,9 @@ public class OrderController {
      * "code": 200,
      * "msg": "接口未注册！",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
-     * @apiError (500) {String} msg 说明
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500){String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
      * {
@@ -126,32 +125,32 @@ public class OrderController {
      * @apiVersion 1.0.0
      * @apiGroup 订单模块API
      * @apiName 创建预支付订单
-     * @apiParam (请求参数) {long} id 用户id
-     * @apiParam (请求参数) {long} pid 商品id
-     * @apiParam (请求参数) {int} mode 支付方式：0->微信，1->支付宝
-     * @apiParam (请求参数) {string} [ip] 客户端IP
+     * @apiParam (请求参数) {Number} id 用户id
+     * @apiParam (请求参数) {Number} pid 商品id
+     * @apiParam (请求参数) {Number=0, 1} mode 支付方式：0->微信，1->支付宝
+     * @apiParam (请求参数){String} [ip] 客户端IP
      * @apiParamExample {json} 请求示例01（微信支付）
      * HTTP/1.1 OK
      * curl -v -X POST http://w168428j19.51mypc.cn/find/order/1/mobile/create -H "Content-Type:application/json;charset=utf-8" -d '{"pid":1, "mode":0, "ip":"192.168.31.31"}'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object} [trade_info] 商品预支付订单信息
-     * @apiSuccess (200) {string} [appid] 应用id
-     * @apiSuccess (200) {string} [err_code] 错误码
-     * @apiSuccess (200) {string} [err_code_des] 错误说明
-     * @apiSuccess (200) {string} [out_trade_no] 订单号
-     * @apiSuccess (200) {string} [package] 支付标识
-     * @apiSuccess (200) {string} [partnerid] 商户id
-     * @apiSuccess (200) {string} [prepayid] 预支付请求id
-     * @apiSuccess (200) {string} [result_code] 结果状态
-     * @apiSuccess (200) {string} [return_code] 返回状态
-     * @apiSuccess (200) {string} [return_msg] 返回消息说明
-     * @apiSuccess (200) {string} [sign] 签名
-     * @apiSuccess (200) {string} [timestamp] 时间戳
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object} [trade_info] 商品预支付订单信息
+     * @apiSuccess (200) {String} [appid] 应用id
+     * @apiSuccess (200) {String} [err_code] 错误码
+     * @apiSuccess (200) {String} [err_code_des] 错误说明
+     * @apiSuccess (200) {String} [out_trade_no] 订单号
+     * @apiSuccess (200) {String} [package] 支付标识
+     * @apiSuccess (200) {String} [partnerid] 商户id
+     * @apiSuccess (200) {String} [prepayid] 预支付请求id
+     * @apiSuccess (200) {String} [result_code] 结果状态
+     * @apiSuccess (200) {String} [return_code] 返回状态
+     * @apiSuccess (200) {String} [return_msg] 返回消息说明
+     * @apiSuccess (200) {String} [sign] 签名
+     * @apiSuccess (200) {String} [timestamp] 时间戳
      * @apiSuccessExample {json} 200（微信支付）响应示例01
-     * HTTPS/1.1 200 OK
+     * HTTP/1.1 200 OK
      * {
      * "code": 0,
      * "data": {
@@ -177,21 +176,21 @@ public class OrderController {
      * @apiParamExample {json} 请求示例02（支付宝支付）
      * HTTP/1.1 OK
      * curl -v -X POST http://w168428j19.51mypc.cn/find/order/1/mobile/create -H "Content-Type:application/json;charset=utf-8" -d '{"pid":1, "mode":1, "ip":"192.168.31.31"}'
-     * @apiSuccess (200) {long{0-500}} code 信息码
-     * @apiSuccess (200) {string{..255}} msg 说明
-     * @apiSuccess (200) {int{0-65535}} status 响应状态码
-     * @apiSuccess (200) {object} [data] 数据
-     * @apiSuccess (200) {object} [trade_info] 商品预支付订单信息
-     * @apiSuccess (200) {string} [appid] 应用id
-     * @apiSuccess (200) {string} [err_code] 错误码
-     * @apiSuccess (200) {string} [err_code_des] 错误说明
-     * @apiSuccess (200) {string} [orderString] 支付订单信息
-     * @apiSuccess (200) {string} [out_trade_no] 订单号
-     * @apiSuccess (200) {string} [result_code] 结果状态
-     * @apiSuccess (200) {string} [return_code] 返回状态
-     * @apiSuccess (200) {string} [return_msg] 返回消息说明
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200){String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object} [trade_info] 商品预支付订单信息
+     * @apiSuccess (200) {String} [appid] 应用id
+     * @apiSuccess (200) {String} [err_code] 错误码
+     * @apiSuccess (200) {String} [err_code_des] 错误说明
+     * @apiSuccess (200) {String} [orderString] 支付订单信息
+     * @apiSuccess (200) {String} [out_trade_no] 订单号
+     * @apiSuccess (200) {String} [result_code] 结果状态
+     * @apiSuccess (200) {String} [return_code] 返回状态
+     * @apiSuccess (200) {String} [return_msg] 返回消息说明
      * @apiSuccessExample {json} 200（支付宝支付）响应示例01
-     * HTTPS/1.1 200 OK
+     * HTTP/1.1 200 OK
      * {
      * "code": 0,
      * "data": {
@@ -209,9 +208,9 @@ public class OrderController {
      * "msg": "返回数据成功",
      * "status": 200
      * }
-     * @apiError (403) {int{0-65535}} status 响应状态码
-     * @apiError (403) {long{0-500}} code 消息码
-     * @apiError (403) {String} msg 说明
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
+     * @apiError (403){String} msg 说明
      * @apiErrorExample {json} 403错误
      * HTTP/1.1 403 403响应
      * {
@@ -219,9 +218,9 @@ public class OrderController {
      * "code": 199,
      * "msg": "未找到用户信息！",
      * }
-     * @apiError (404) {int{0-65535}} status 响应状态码
-     * @apiError (404) {long{0-500}} code 消息码
-     * @apiError (404) {String} msg 说明
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
+     * @apiError (404){String} msg 说明
      * @apiErrorExample {json} 404错误
      * HTTP/1.1 404 404响应
      * {
@@ -229,9 +228,9 @@ public class OrderController {
      * "code": 200,
      * "msg": "接口未注册！",
      * }
-     * @apiError (500) {int{0-65535}} status 响应状态码
-     * @apiError (500) {long{0-500}} code 消息码
-     * @apiError (500) {String} msg 说明
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500){String} msg 说明
      * @apiErrorExample {json} 500错误
      * HTTP/1.1 500 500响应
      * {
