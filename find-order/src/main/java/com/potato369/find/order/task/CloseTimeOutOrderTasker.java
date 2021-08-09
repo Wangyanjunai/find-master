@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
+ *
+ *
  * <pre>
  * @PackageName com.potato369.find.order.task
  * @ClassName CancelOrderTimeOutTask
@@ -24,23 +27,30 @@ import java.util.List;
 @Component
 public class CloseTimeOutOrderTasker {
 
-    private OrderService orderService;
+  private OrderService orderService;
 
-    @Autowired
-    public void setOrderService(OrderService orderService) {
-        this.orderService = orderService;
-    }
+  @Autowired
+  public void setOrderService(OrderService orderService) {
+    this.orderService = orderService;
+  }
 
-    public void closeOrder() throws Exception {
-        OrderSetting orderSetting = this.orderService.orderSetting();
-        List<OrderMaster> orderMasterList = this.orderService.getTimeOutOrderMaster(orderSetting.getNormalOrderOvertime());
-        for (OrderMaster orderMaster : orderMasterList) {
-            OrderInfoDTO orderDTO = new OrderInfoDTO();
-            orderDTO.setOrderId(orderMaster.getOrderId());
+  public void closeOrder() throws Exception {
+    OrderSetting orderSetting = this.orderService.orderSetting();
+    List<OrderMaster> orderMasterList =
+        this.orderService.getTimeOutOrderMaster(orderSetting.getNormalOrderOvertime());
+    if (!Objects.isNull(orderMasterList) && !orderMasterList.isEmpty()) {
+      for (OrderMaster orderMaster : orderMasterList) {
+        if (!Objects.isNull(orderMaster)) {
+          OrderInfoDTO orderDTO = new OrderInfoDTO();
+          orderDTO.setOrderId(orderMaster.getOrderId());
+          if (!Objects.isNull(orderMaster.getOrderAmount())) {
             orderDTO.setOrderAmount(orderMaster.getOrderAmount().intValue());
-            orderDTO.setOrderName(orderMaster.getOrderName());
-            orderDTO.setProductId(orderMaster.getProductId());
-            this.orderService.close(orderDTO);
+          }
+          orderDTO.setOrderName(orderMaster.getOrderName());
+          orderDTO.setProductId(orderMaster.getProductId());
+          this.orderService.close(orderDTO);
         }
+      }
     }
+  }
 }

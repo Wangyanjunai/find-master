@@ -117,7 +117,7 @@ public class CommentController {
      * @apiSuccess (200) {String} [head] 评论的用户头像URL
      * @apiSuccess (200) {String} [content] 评论内容
      * @apiSuccess (200) {String} [dateTime] 评论时间
-     * @apiSuccess (200) {String} [isOrNotLikes] 当前用户是否点赞，0->点赞，1->未点赞
+     * @apiSuccess (200) {String} [isOrNotLikes] 当前用户是否点赞，0->未点赞，1->点赞
      * @apiSuccess (200) {Number} [likes] 当前评论点赞数
      * @apiSuccessExample {json} 200响应示例
      * {
