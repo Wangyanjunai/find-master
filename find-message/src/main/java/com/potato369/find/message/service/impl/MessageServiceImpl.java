@@ -17,7 +17,6 @@ import com.potato369.find.message.config.props.ProjectUrlProps;
 import com.potato369.find.message.service.JiGuangPushService;
 import com.potato369.find.message.service.MessageService;
 import com.potato369.find.message.service.SensitiveWordsService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +41,7 @@ public class MessageServiceImpl implements MessageService {
     private ProjectUrlProps projectUrlProps;
 
     private JiGuangPushService jiGuangPushService;
-    
+
     private SensitiveWordsService sensitiveWordsService;
 
     @Autowired
@@ -82,10 +81,10 @@ public class MessageServiceImpl implements MessageService {
 
     @Autowired
     public void setSensitiveWordsService(SensitiveWordsService sensitiveWordsService) {
-		this.sensitiveWordsService = sensitiveWordsService;
-	}
+        this.sensitiveWordsService = sensitiveWordsService;
+    }
 
-	@Override
+    @Override
     @Transactional(readOnly = true)
     public LikesMessageVO selectLikesMessage(Long userId) {
         // 查询未读点赞消息
@@ -184,8 +183,7 @@ public class MessageServiceImpl implements MessageService {
     public MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
-        final PageInfo<ApplicationRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
-                .doSelectPageInfo(() -> this.applicationRecordMapperReader.selectByUserId(userId));
+        final PageInfo<ApplicationRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.applicationRecordMapperReader.selectByUserId(userId));
         List<ApplicationRecord> applicationRecordList = listPageInfo.getList();
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         if (applicationRecordList != null && !applicationRecordList.isEmpty()) {
@@ -287,7 +285,7 @@ public class MessageServiceImpl implements MessageService {
                             + sendUser.getHeadIcon());
                     String content = message.getContent();
                     if (StrUtil.isNotEmpty(content) && StrUtil.contains(content, "|") && StrUtil.contains(content, sendUser.getWeixinId())) {
-                        content = StrUtil.removeAll(content, "|" + sendUser.getWeixinId())+"，我的微信号是：" + sendUser.getWeixinId();
+                        content = StrUtil.removeAll(content, "|" + sendUser.getWeixinId()) + "，我的微信号是：" + sendUser.getWeixinId();
                     }
                     messageInfoVO2.setContent(content);
                     messageInfoVO2s.add(messageInfoVO2);
@@ -308,7 +306,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional
     public CommonResult<Map<String, Object>> sendMessageAndPush(Long sendUserId, Long messageId, String content) {
-    	Map<String, Object> data = new ConcurrentHashMap<>();
+        Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("SEND", "ERROR");
         String msg;
         // 判断回复的消息记录是否存在
@@ -483,12 +481,12 @@ public class MessageServiceImpl implements MessageService {
             // 如果是同意申请加微信
             String welkinId = applicantsUser.getWeixinId();// 数据库获取到的被申请人的微信号
             if (StrUtil.isNotEmpty(content)) {
-            	//校验发布的内容是否包含敏感词汇
+                //校验发布的内容是否包含敏感词汇
                 SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(content);
                 if (!Objects.isNull(sensitiveWords)) {
                     return CommonResult.validateFailed("发消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
                 }
-    		}
+            }
             if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
                 if (StrUtil.isNotEmpty(weChatId)) {
                     if (StrUtil.isEmpty(content)) {

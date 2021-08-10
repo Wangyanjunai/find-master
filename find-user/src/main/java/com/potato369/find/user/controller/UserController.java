@@ -1229,11 +1229,9 @@ public class UserController {
             Integer age = 0;
             if (UserGenderEnum.Male.getGender().equals(screenGender)) {//男生
                 example.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.LOOK_AGE_MALE.getType());
-                age = 3;//默认+3
             }
             if (UserGenderEnum.Female.getGender().equals(screenGender)) {//女生
                 example.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.LOOK_AGE_FEMALE.getType());
-                age = 10;//默认+10
             }
             List<ScreenSetting> screenSettings = this.screenSettingMapperReader.selectByExample(example);
             if (!Objects.isNull(screenSettings) && !screenSettings.isEmpty()) {
@@ -1263,6 +1261,7 @@ public class UserController {
             lookInfoParam.setMinAge(min);
             lookInfoParam.setMaxAge(max);
             lookInfoParam.setUserId(id);
+            log.info("lookInfoParam={}", lookInfoParam);
             List<User> userList = this.userMapperReader.selectLookUserList(lookInfoParam);
             List<User> userList1 = new LinkedList<>();
             List<UserVO3> userVO3List = new LinkedList<>();
@@ -1279,12 +1278,19 @@ public class UserController {
                     String birthDateTmp = userTmp.getYear() + "-" + userTmp.getMonth() + "-" + userTmp.getDate();
                     Date birthDayTmp = DateUtil.fomatDate(birthDateTmp);
                     userVO3.setAge(AgeUtil.getAge(birthDayTmp));
-                    String[] filenameTemps = StrUtil.split(this.dynamicInfoMapperReader.getFileNameByUserId(userTmp.getId()), "||");
-                    String filenameTemp;
+                    List<AttacheInfo> attacheInfoList = this.dynamicInfoMapperReader.getFileNameByUserId(userTmp.getId());
+                    AttacheInfo attacheInfo = null;
+                    if (!Objects.isNull(attacheInfoList) && !attacheInfoList.isEmpty()) {
+                        attacheInfo = attacheInfoList.get(0);
+                    }
+                    String[] filenameTemps = new String[0];
+                    if (!Objects.isNull(attacheInfo)) {
+                        filenameTemps = StrUtil.split(attacheInfo.getFileName(), "||");
+                        userVO3.setDynamicInfoId(attacheInfo.getDynamicInfoBy());
+                    }
+                    String filenameTemp = null;
                     if (filenameTemps != null && filenameTemps.length > 0) {
                         filenameTemp = filenameTemps[0];
-                    } else {
-                        filenameTemp = this.dynamicInfoMapperReader.getFileNameByUserId(userTmp.getId());
                     }
                     String filename = StrUtil.trimToNull(this.projectUrlProps.getResDomain()) + StrUtil.trimToNull(this.projectUrlProps.getProjectName()) + StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()) + filenameTemp;
                     userVO3.setImg(filename);

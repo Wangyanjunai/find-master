@@ -625,8 +625,9 @@
         ORDER BY di.`likes` DESC, di.`create_time` DESC, di.`update_time` DESC
     </select>
 
-    <select id="getFileNameByUserId" parameterType="java.lang.Long" resultType="string">
-        select ai.`file_name`
+    <select id="getFileNameByUserId" parameterType="java.lang.Long" resultType="com.potato369.find.mbg.model.AttacheInfo">
+        select ai.`file_name`,
+               ai.`dynamic_info_by`
         from `attache_info` ai
         where ai.`dynamic_info_by` <![CDATA[=]]>
               (select dy.`id`

@@ -24,8 +24,8 @@
         <result column="city" jdbcType="VARCHAR" property="city"/>
         <result column="district" jdbcType="VARCHAR" property="district"/>
         <result column="other" jdbcType="VARCHAR" property="other"/>
-        <result column="longitude" jdbcType="DOUBLE" property="longitude" />
-    	<result column="latitude" jdbcType="DOUBLE" property="latitude" />
+        <result column="longitude" jdbcType="DOUBLE" property="longitude"/>
+        <result column="latitude" jdbcType="DOUBLE" property="latitude"/>
         <result column="platform" jdbcType="CHAR" property="platform"/>
         <result column="ip" jdbcType="VARCHAR" property="ip"/>
         <result column="grade" jdbcType="CHAR" property="grade"/>
@@ -37,16 +37,16 @@
         <result column="background_icon" jdbcType="VARCHAR" property="backgroundIcon"/>
         <result column="reserve_column03" jdbcType="VARCHAR" property="reserveColumn03"/>
         <result column="reserve_column04" jdbcType="VARCHAR" property="reserveColumn04"/>
-        <result column="profession_id" jdbcType="BIGINT" property="professionId" />
-	    <result column="tag1" jdbcType="BIGINT" property="tag1" />
-	    <result column="tag2" jdbcType="BIGINT" property="tag2" />
-	    <result column="tag3" jdbcType="BIGINT" property="tag3" />
-	    <result column="tag4" jdbcType="BIGINT" property="tag4" />
-	    <result column="tag5" jdbcType="BIGINT" property="tag5" />
-	    <result column="reserve_column05" jdbcType="VARCHAR" property="reserveColumn05" />
-	    <result column="reserve_column06" jdbcType="VARCHAR" property="reserveColumn06" />
-	    <result column="reserve_column07" jdbcType="VARCHAR" property="reserveColumn07" />
-	    <result column="reserve_column08" jdbcType="VARCHAR" property="reserveColumn08" />
+        <result column="profession_id" jdbcType="BIGINT" property="professionId"/>
+        <result column="tag1" jdbcType="BIGINT" property="tag1"/>
+        <result column="tag2" jdbcType="BIGINT" property="tag2"/>
+        <result column="tag3" jdbcType="BIGINT" property="tag3"/>
+        <result column="tag4" jdbcType="BIGINT" property="tag4"/>
+        <result column="tag5" jdbcType="BIGINT" property="tag5"/>
+        <result column="reserve_column05" jdbcType="VARCHAR" property="reserveColumn05"/>
+        <result column="reserve_column06" jdbcType="VARCHAR" property="reserveColumn06"/>
+        <result column="reserve_column07" jdbcType="VARCHAR" property="reserveColumn07"/>
+        <result column="reserve_column08" jdbcType="VARCHAR" property="reserveColumn08"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -109,7 +109,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, phone, status, is_test, nick_name, weixin_id, imei, model, sys_name, sys_code,
+    id, phone, status, is_test, nick_name, weixin_id, imei, model, sys_name, sys_code,
     network_mode, gender, year, month, date, constellation, head_icon, country, province, 
     city, district, other, longitude, latitude, platform, ip, grade, autograph, vip_start_time, vip_end_time, 
     create_time, update_time, background_icon, reserve_column03, reserve_column04, 
@@ -117,8 +117,9 @@
     reserve_column07, reserve_column08
     </sql>
     <sql id="Base_Column_List_01">
-        id, status, is_test, nick_name
-    </sql>      
+        id
+        , status, is_test, nick_name
+    </sql>
     <select id="selectByExample" parameterType="com.potato369.find.mbg.model.UserExample" resultMap="BaseResultMap">
         select
         <if test="distinct">
@@ -133,29 +134,31 @@
             order by ${orderByClause}
         </if>
     </select>
-	<select id="selectByUserIdList"
-		parameterType="com.potato369.find.common.dto.DynamicLocationDTO"
-		resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List_01" />
-		from user u
-		<where>
-			1 = 1
-			<if test="param != null">
-				<if test="param.gender != null">
-					AND u.`gender` <![CDATA[=]]> #{param.gender, jdbcType=CHAR}
-				</if>
-				<if test="param.minAge != null">
-					AND STR_TO_DATE(CONCAT_WS('-', u.`year`, u.`month`, u.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[<=]]> #{param.minAge, jdbcType=TIMESTAMP}
-				</if>
-				<if test="param.maxAge != null">
-					AND STR_TO_DATE(CONCAT_WS('-', u.`year`, u.`month`, u.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[>=]]> #{param.maxAge, jdbcType=TIMESTAMP}
-				</if>
-				<if test="param.constellation != null">
-					AND u.`constellation` <![CDATA[=]]> #{param.constellation, jdbcType=VARCHAR}
-				</if>
-				<if test="param.list!=null and param.list.size() !=0">
-					AND u.`id` NOT IN (
+    <select id="selectByUserIdList"
+            parameterType="com.potato369.find.common.dto.DynamicLocationDTO"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List_01"/>
+        from user u
+        <where>
+            1 = 1
+            <if test="param != null">
+                <if test="param.gender != null">
+                    AND u.`gender` <![CDATA[=]]> #{param.gender, jdbcType=CHAR}
+                </if>
+                <if test="param.minAge != null">
+                    AND STR_TO_DATE(CONCAT_WS('-', u.`year`, u.`month`, u.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[<=]]>
+                    #{param.minAge, jdbcType=TIMESTAMP}
+                </if>
+                <if test="param.maxAge != null">
+                    AND STR_TO_DATE(CONCAT_WS('-', u.`year`, u.`month`, u.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[>=]]>
+                    #{param.maxAge, jdbcType=TIMESTAMP}
+                </if>
+                <if test="param.constellation != null">
+                    AND u.`constellation` <![CDATA[=]]> #{param.constellation, jdbcType=VARCHAR}
+                </if>
+                <if test="param.list!=null and param.list.size() !=0">
+                    AND u.`id` NOT IN (
                     <foreach collection="param.list" item="uid" index="index"
                              separator=",">
                         #{uid}
@@ -168,27 +171,26 @@
     </select>
     <select id="selectLookUserList" parameterType="com.potato369.find.mbg.model.LookInfoParam"
             resultMap="BaseResultMap">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from `user` ur
-        where ur.`gender` <![CDATA[=]]> #{param.gender, jdbcType=CHAR}
-        and ur.`id` <![CDATA[!=]]> #{param.userId, jdbcType=BIGINT}
-        and str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[<=]]>
-        #{param.minAge, jdbcType=TIMESTAMP}
-        and str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[>=]]>
-        #{param.maxAge, jdbcType=TIMESTAMP}
-        order by ur.`create_time` desc, ur.`update_time` desc
+        FROM `user` ur
+        WHERE
+            ur.`gender` <![CDATA[=]]> #{param.gender, jdbcType=CHAR}
+        AND ur.`id` <![CDATA[!=]]> #{param.userId, jdbcType=BIGINT}
+        AND str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[<=]]> #{param.minAge, jdbcType=TIMESTAMP}
+        AND str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[>=]]> #{param.maxAge, jdbcType=TIMESTAMP}
+        ORDER BY ur.`create_time` DESC, ur.`update_time` DESC, ur.`id` DESC
     </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from user
-        where id = #{id,jdbcType=BIGINT}
+        FROM user
+        WHERE id = #{id,jdbcType=BIGINT}
     </select>
     <select id="selectVIPExpireUser" resultMap="BaseResultMap">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from `user`
+        FROM `user`
         WHERE `grade`!='0' AND `vip_end_time`<![CDATA[<=]]>now() ORDER BY `update_time` DESC
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -212,27 +214,28 @@
         network_mode, gender, year, month,
         date, constellation, head_icon,
         country, province, city,
-        district, other, longitude, 
-      	latitude, platform, ip, grade, autograph,
+        district, other, longitude,
+        latitude, platform, ip, grade, autograph,
         vip_start_time, vip_end_time, create_time,
-        update_time, background_icon, reserve_column03, reserve_column04, 
-        profession_id, tag1, tag2, tag3, tag4, tag5, reserve_column05, 
-      	reserve_column06, reserve_column07, reserve_column08)
+        update_time, background_icon, reserve_column03, reserve_column04,
+        profession_id, tag1, tag2, tag3, tag4, tag5, reserve_column05,
+        reserve_column06, reserve_column07, reserve_column08)
         values (#{phone,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{isTest,jdbcType=CHAR},
         #{nickName,jdbcType=VARCHAR}, #{weixinId,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR},
         #{model,jdbcType=VARCHAR}, #{sysName,jdbcType=VARCHAR}, #{sysCode,jdbcType=VARCHAR},
         #{networkMode,jdbcType=CHAR}, #{gender,jdbcType=CHAR}, #{year,jdbcType=CHAR}, #{month,jdbcType=CHAR},
         #{date,jdbcType=CHAR}, #{constellation,jdbcType=CHAR}, #{headIcon,jdbcType=VARCHAR},
         #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
-        #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, 
+        #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR},
         #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, #{platform,jdbcType=CHAR},
         #{ip,jdbcType=VARCHAR}, #{grade,jdbcType=CHAR}, #{autograph,jdbcType=VARCHAR},
         #{vipStartTime,jdbcType=TIMESTAMP}, #{vipEndTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
         #{updateTime,jdbcType=TIMESTAMP}, #{backgroundIcon,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR},
-        #{reserveColumn04,jdbcType=VARCHAR}, #{professionId,jdbcType=BIGINT}, #{tag1,jdbcType=BIGINT}, #{tag2,jdbcType=BIGINT}, 
-      	#{tag3,jdbcType=BIGINT}, #{tag4,jdbcType=BIGINT}, #{tag5,jdbcType=BIGINT}, #{reserveColumn05,jdbcType=VARCHAR}, 
-      	#{reserveColumn06,jdbcType=VARCHAR}, #{reserveColumn07,jdbcType=VARCHAR}, #{reserveColumn08,jdbcType=VARCHAR}
-      )
+        #{reserveColumn04,jdbcType=VARCHAR}, #{professionId,jdbcType=BIGINT}, #{tag1,jdbcType=BIGINT},
+        #{tag2,jdbcType=BIGINT},
+        #{tag3,jdbcType=BIGINT}, #{tag4,jdbcType=BIGINT}, #{tag5,jdbcType=BIGINT}, #{reserveColumn05,jdbcType=VARCHAR},
+        #{reserveColumn06,jdbcType=VARCHAR}, #{reserveColumn07,jdbcType=VARCHAR}, #{reserveColumn08,jdbcType=VARCHAR}
+        )
     </insert>
     <insert id="insertImport" parameterType="com.potato369.find.mbg.model.User">
         insert into user (id, phone, status, is_test,
@@ -241,8 +244,8 @@
                           network_mode, gender, year, month,
                           date, constellation, head_icon,
                           country, province, city,
-                          district, other, longitude, 
-      					  latitude,platform, ip, grade, autograph,
+                          district, other, longitude,
+                          latitude, platform, ip, grade, autograph,
                           vip_start_time, vip_end_time, create_time,
                           update_time, background_icon, reserve_column03,
                           reserve_column04)
@@ -256,9 +259,12 @@
                 #{ip,jdbcType=VARCHAR}, #{grade,jdbcType=CHAR}, #{autograph,jdbcType=VARCHAR},
                 #{vipStartTime,jdbcType=TIMESTAMP}, #{vipEndTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
                 #{updateTime,jdbcType=TIMESTAMP}, #{backgroundIcon,jdbcType=VARCHAR},
-                #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR}, #{professionId,jdbcType=BIGINT}, 
-                #{tag1,jdbcType=BIGINT}, #{tag2,jdbcType=BIGINT}, #{tag3,jdbcType=BIGINT}, #{tag4,jdbcType=BIGINT}, #{tag5,jdbcType=BIGINT}, #{reserveColumn05,jdbcType=VARCHAR}, 
-      			#{reserveColumn06,jdbcType=VARCHAR}, #{reserveColumn07,jdbcType=VARCHAR}, #{reserveColumn08,jdbcType=VARCHAR})
+                #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR},
+                #{professionId,jdbcType=BIGINT},
+                #{tag1,jdbcType=BIGINT}, #{tag2,jdbcType=BIGINT}, #{tag3,jdbcType=BIGINT}, #{tag4,jdbcType=BIGINT},
+                #{tag5,jdbcType=BIGINT}, #{reserveColumn05,jdbcType=VARCHAR},
+                #{reserveColumn06,jdbcType=VARCHAR}, #{reserveColumn07,jdbcType=VARCHAR},
+                #{reserveColumn08,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.potato369.find.mbg.model.User">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -330,11 +336,11 @@
                 other,
             </if>
             <if test="longitude != null">
-	        	longitude,
-	      	</if>
-	      	<if test="latitude != null">
-	        	latitude,
-	      	</if>
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
             <if test="platform != null">
                 platform,
             </if>
@@ -368,36 +374,36 @@
             <if test="reserveColumn04 != null">
                 reserve_column04,
             </if>
-	      	<if test="professionId != null">
-	        	profession_id,
-	      	</if>
-	      	<if test="tag1 != null">
-	        	tag1,
-	      	</if>
-	      	<if test="tag2 != null">
-	      	  	tag2,
-	      	</if>
-	      	<if test="tag3 != null">
-	       	 	tag3,
-	      	</if>
-	      	<if test="tag4 != null">
-	        	tag4,
-	      	</if>
-	      	<if test="tag5 != null">
-	        	tag5,
-	      	</if>
-	      	<if test="reserveColumn05 != null">
-	        	reserve_column05,
-	      	</if>
-	      	<if test="reserveColumn06 != null">
-	        	reserve_column06,
-	      	</if>
-	      	<if test="reserveColumn07 != null">
-	        	reserve_column07,
-	      	</if>
-	      	<if test="reserveColumn08 != null">
-	        	reserve_column08,
-	      	</if>            
+            <if test="professionId != null">
+                profession_id,
+            </if>
+            <if test="tag1 != null">
+                tag1,
+            </if>
+            <if test="tag2 != null">
+                tag2,
+            </if>
+            <if test="tag3 != null">
+                tag3,
+            </if>
+            <if test="tag4 != null">
+                tag4,
+            </if>
+            <if test="tag5 != null">
+                tag5,
+            </if>
+            <if test="reserveColumn05 != null">
+                reserve_column05,
+            </if>
+            <if test="reserveColumn06 != null">
+                reserve_column06,
+            </if>
+            <if test="reserveColumn07 != null">
+                reserve_column07,
+            </if>
+            <if test="reserveColumn08 != null">
+                reserve_column08,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="phone != null">
@@ -463,12 +469,12 @@
             <if test="other != null">
                 #{other,jdbcType=VARCHAR},
             </if>
-	      	<if test="longitude != null">
-	        	#{longitude,jdbcType=DOUBLE},
-	      	</if>
-	      	<if test="latitude != null">
-	        	#{latitude,jdbcType=DOUBLE},
-	      	</if>            
+            <if test="longitude != null">
+                #{longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=DOUBLE},
+            </if>
             <if test="platform != null">
                 #{platform,jdbcType=CHAR},
             </if>
@@ -503,35 +509,35 @@
                 #{reserveColumn04,jdbcType=VARCHAR},
             </if>
             <if test="professionId != null">
-		       #{professionId,jdbcType=BIGINT},
-		     </if>
-		     <if test="tag1 != null">
-		       #{tag1,jdbcType=BIGINT},
-		     </if>
-		     <if test="tag2 != null">
-		       #{tag2,jdbcType=BIGINT},
-		     </if>
-		     <if test="tag3 != null">
-		       #{tag3,jdbcType=BIGINT},
-		     </if>
-		     <if test="tag4 != null">
-		       #{tag4,jdbcType=BIGINT},
-		     </if>
-		     <if test="tag5 != null">
-		       #{tag5,jdbcType=BIGINT},
-		     </if>
-		     <if test="reserveColumn05 != null">
-		       #{reserveColumn05,jdbcType=VARCHAR},
-		     </if>
-		     <if test="reserveColumn06 != null">
-		       #{reserveColumn06,jdbcType=VARCHAR},
-		     </if>
-		     <if test="reserveColumn07 != null">
-		       #{reserveColumn07,jdbcType=VARCHAR},
-		     </if>
-		     <if test="reserveColumn08 != null">
-		       #{reserveColumn08,jdbcType=VARCHAR},
-		     </if>
+                #{professionId,jdbcType=BIGINT},
+            </if>
+            <if test="tag1 != null">
+                #{tag1,jdbcType=BIGINT},
+            </if>
+            <if test="tag2 != null">
+                #{tag2,jdbcType=BIGINT},
+            </if>
+            <if test="tag3 != null">
+                #{tag3,jdbcType=BIGINT},
+            </if>
+            <if test="tag4 != null">
+                #{tag4,jdbcType=BIGINT},
+            </if>
+            <if test="tag5 != null">
+                #{tag5,jdbcType=BIGINT},
+            </if>
+            <if test="reserveColumn05 != null">
+                #{reserveColumn05,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn06 != null">
+                #{reserveColumn06,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn07 != null">
+                #{reserveColumn07,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn08 != null">
+                #{reserveColumn08,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
     <select id="countByExample" parameterType="com.potato369.find.mbg.model.UserExample" resultType="java.lang.Long">
@@ -540,384 +546,384 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
-	<update id="updateByExampleSelective" parameterType="map">
-    	update user
-	    <set>
-	      <if test="record.id != null">
-	        id = #{record.id,jdbcType=BIGINT},
-	      </if>
-	      <if test="record.phone != null">
-	        phone = #{record.phone,jdbcType=CHAR},
-	      </if>
-	      <if test="record.status != null">
-	        status = #{record.status,jdbcType=CHAR},
-	      </if>
-	      <if test="record.isTest != null">
-	        is_test = #{record.isTest,jdbcType=CHAR},
-	      </if>
-	      <if test="record.nickName != null">
-	        nick_name = #{record.nickName,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.weixinId != null">
-	        weixin_id = #{record.weixinId,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.imei != null">
-	        imei = #{record.imei,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.model != null">
-	        model = #{record.model,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.sysName != null">
-	        sys_name = #{record.sysName,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.sysCode != null">
-	        sys_code = #{record.sysCode,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.networkMode != null">
-	        network_mode = #{record.networkMode,jdbcType=CHAR},
-	      </if>
-	      <if test="record.gender != null">
-	        gender = #{record.gender,jdbcType=CHAR},
-	      </if>
-	      <if test="record.year != null">
-	        year = #{record.year,jdbcType=CHAR},
-	      </if>
-	      <if test="record.month != null">
-	        month = #{record.month,jdbcType=CHAR},
-	      </if>
-	      <if test="record.date != null">
-	        date = #{record.date,jdbcType=CHAR},
-	      </if>
-	      <if test="record.constellation != null">
-	        constellation = #{record.constellation,jdbcType=CHAR},
-	      </if>
-	      <if test="record.headIcon != null">
-	        head_icon = #{record.headIcon,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.country != null">
-	        country = #{record.country,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.province != null">
-	        province = #{record.province,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.city != null">
-	        city = #{record.city,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.district != null">
-	        district = #{record.district,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.other != null">
-	        other = #{record.other,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.longitude != null">
-	        longitude = #{record.longitude,jdbcType=DOUBLE},
-	      </if>
-	      <if test="record.latitude != null">
-	        latitude = #{record.latitude,jdbcType=DOUBLE},
-	      </if>
-	      <if test="record.platform != null">
-	        platform = #{record.platform,jdbcType=CHAR},
-	      </if>
-	      <if test="record.ip != null">
-	        ip = #{record.ip,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.grade != null">
-	        grade = #{record.grade,jdbcType=CHAR},
-	      </if>
-	      <if test="record.autograph != null">
-	        autograph = #{record.autograph,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.vipStartTime != null">
-	        vip_start_time = #{record.vipStartTime,jdbcType=TIMESTAMP},
-	      </if>
-	      <if test="record.vipEndTime != null">
-	        vip_end_time = #{record.vipEndTime,jdbcType=TIMESTAMP},
-	      </if>
-	      <if test="record.createTime != null">
-	        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-	      </if>
-	      <if test="record.updateTime != null">
-	        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-	      </if>
-	      <if test="record.backgroundIcon != null">
-	        background_icon = #{record.backgroundIcon,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.reserveColumn03 != null">
-	        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.reserveColumn04 != null">
-	        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.professionId != null">
-	        profession_id = #{record.professionId,jdbcType=BIGINT},
-	      </if>
-	      <if test="record.tag1 != null">
-	        tag1 = #{record.tag1,jdbcType=BIGINT},
-	      </if>
-	      <if test="record.tag2 != null">
-	        tag2 = #{record.tag2,jdbcType=BIGINT},
-	      </if>
-	      <if test="record.tag3 != null">
-	        tag3 = #{record.tag3,jdbcType=BIGINT},
-	      </if>
-	      <if test="record.tag4 != null">
-	        tag4 = #{record.tag4,jdbcType=BIGINT},
-	      </if>
-	      <if test="record.tag5 != null">
-	        tag5 = #{record.tag5,jdbcType=BIGINT},
-	      </if>
-	      <if test="record.reserveColumn05 != null">
-	        reserve_column05 = #{record.reserveColumn05,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.reserveColumn06 != null">
-	        reserve_column06 = #{record.reserveColumn06,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.reserveColumn07 != null">
-	        reserve_column07 = #{record.reserveColumn07,jdbcType=VARCHAR},
-	      </if>
-	      <if test="record.reserveColumn08 != null">
-	        reserve_column08 = #{record.reserveColumn08,jdbcType=VARCHAR},
-	      </if>
-	    </set>
-	    <if test="_parameter != null">
-	      <include refid="Update_By_Example_Where_Clause" />
-	    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update user
-    set id = #{record.id,jdbcType=BIGINT},
-      phone = #{record.phone,jdbcType=CHAR},
-      status = #{record.status,jdbcType=CHAR},
-      is_test = #{record.isTest,jdbcType=CHAR},
-      nick_name = #{record.nickName,jdbcType=VARCHAR},
-      weixin_id = #{record.weixinId,jdbcType=VARCHAR},
-      imei = #{record.imei,jdbcType=VARCHAR},
-      model = #{record.model,jdbcType=VARCHAR},
-      sys_name = #{record.sysName,jdbcType=VARCHAR},
-      sys_code = #{record.sysCode,jdbcType=VARCHAR},
-      network_mode = #{record.networkMode,jdbcType=CHAR},
-      gender = #{record.gender,jdbcType=CHAR},
-      year = #{record.year,jdbcType=CHAR},
-      month = #{record.month,jdbcType=CHAR},
-      date = #{record.date,jdbcType=CHAR},
-      constellation = #{record.constellation,jdbcType=CHAR},
-      head_icon = #{record.headIcon,jdbcType=VARCHAR},
-      country = #{record.country,jdbcType=VARCHAR},
-      province = #{record.province,jdbcType=VARCHAR},
-      city = #{record.city,jdbcType=VARCHAR},
-      district = #{record.district,jdbcType=VARCHAR},
-      other = #{record.other,jdbcType=VARCHAR},
-      longitude = #{record.longitude,jdbcType=DOUBLE},
-      latitude = #{record.latitude,jdbcType=DOUBLE},
-      platform = #{record.platform,jdbcType=CHAR},
-      ip = #{record.ip,jdbcType=VARCHAR},
-      grade = #{record.grade,jdbcType=CHAR},
-      autograph = #{record.autograph,jdbcType=VARCHAR},
-      vip_start_time = #{record.vipStartTime,jdbcType=TIMESTAMP},
-      vip_end_time = #{record.vipEndTime,jdbcType=TIMESTAMP},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      background_icon = #{record.backgroundIcon,jdbcType=VARCHAR},
-      reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
-      reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
-      profession_id = #{record.professionId,jdbcType=BIGINT},
-      tag1 = #{record.tag1,jdbcType=BIGINT},
-      tag2 = #{record.tag2,jdbcType=BIGINT},
-      tag3 = #{record.tag3,jdbcType=BIGINT},
-      tag4 = #{record.tag4,jdbcType=BIGINT},
-      tag5 = #{record.tag5,jdbcType=BIGINT},
-      reserve_column05 = #{record.reserveColumn05,jdbcType=VARCHAR},
-      reserve_column06 = #{record.reserveColumn06,jdbcType=VARCHAR},
-      reserve_column07 = #{record.reserveColumn07,jdbcType=VARCHAR},
-      reserve_column08 = #{record.reserveColumn08,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.potato369.find.mbg.model.User">
-    update user
-    <set>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=CHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=CHAR},
-      </if>
-      <if test="isTest != null">
-        is_test = #{isTest,jdbcType=CHAR},
-      </if>
-      <if test="nickName != null">
-        nick_name = #{nickName,jdbcType=VARCHAR},
-      </if>
-      <if test="weixinId != null">
-        weixin_id = #{weixinId,jdbcType=VARCHAR},
-      </if>
-      <if test="imei != null">
-        imei = #{imei,jdbcType=VARCHAR},
-      </if>
-      <if test="model != null">
-        model = #{model,jdbcType=VARCHAR},
-      </if>
-      <if test="sysName != null">
-        sys_name = #{sysName,jdbcType=VARCHAR},
-      </if>
-      <if test="sysCode != null">
-        sys_code = #{sysCode,jdbcType=VARCHAR},
-      </if>
-      <if test="networkMode != null">
-        network_mode = #{networkMode,jdbcType=CHAR},
-      </if>
-      <if test="gender != null">
-        gender = #{gender,jdbcType=CHAR},
-      </if>
-      <if test="year != null">
-        year = #{year,jdbcType=CHAR},
-      </if>
-      <if test="month != null">
-        month = #{month,jdbcType=CHAR},
-      </if>
-      <if test="date != null">
-        date = #{date,jdbcType=CHAR},
-      </if>
-      <if test="constellation != null">
-        constellation = #{constellation,jdbcType=CHAR},
-      </if>
-      <if test="headIcon != null">
-        head_icon = #{headIcon,jdbcType=VARCHAR},
-      </if>
-      <if test="country != null">
-        country = #{country,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null">
-        province = #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null">
-        city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="district != null">
-        district = #{district,jdbcType=VARCHAR},
-      </if>
-      <if test="other != null">
-        other = #{other,jdbcType=VARCHAR},
-      </if>
-      <if test="longitude != null">
-        longitude = #{longitude,jdbcType=DOUBLE},
-      </if>
-      <if test="latitude != null">
-        latitude = #{latitude,jdbcType=DOUBLE},
-      </if>
-      <if test="platform != null">
-        platform = #{platform,jdbcType=CHAR},
-      </if>
-      <if test="ip != null">
-        ip = #{ip,jdbcType=VARCHAR},
-      </if>
-      <if test="grade != null">
-        grade = #{grade,jdbcType=CHAR},
-      </if>
-      <if test="autograph != null">
-        autograph = #{autograph,jdbcType=VARCHAR},
-      </if>
-      <if test="vipStartTime != null">
-        vip_start_time = #{vipStartTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="vipEndTime != null">
-        vip_end_time = #{vipEndTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="backgroundIcon != null">
-        background_icon = #{backgroundIcon,jdbcType=VARCHAR},
-      </if>
-      <if test="reserveColumn03 != null">
-        reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
-      </if>
-      <if test="reserveColumn04 != null">
-        reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
-      </if>
-      <if test="professionId != null">
-        profession_id = #{professionId,jdbcType=BIGINT},
-      </if>
-      <if test="tag1 != null">
-        tag1 = #{tag1,jdbcType=BIGINT},
-      </if>
-      <if test="tag2 != null">
-        tag2 = #{tag2,jdbcType=BIGINT},
-      </if>
-      <if test="tag3 != null">
-        tag3 = #{tag3,jdbcType=BIGINT},
-      </if>
-      <if test="tag4 != null">
-        tag4 = #{tag4,jdbcType=BIGINT},
-      </if>
-      <if test="tag5 != null">
-        tag5 = #{tag5,jdbcType=BIGINT},
-      </if>
-      <if test="reserveColumn05 != null">
-        reserve_column05 = #{reserveColumn05,jdbcType=VARCHAR},
-      </if>
-      <if test="reserveColumn06 != null">
-        reserve_column06 = #{reserveColumn06,jdbcType=VARCHAR},
-      </if>
-      <if test="reserveColumn07 != null">
-        reserve_column07 = #{reserveColumn07,jdbcType=VARCHAR},
-      </if>
-      <if test="reserveColumn08 != null">
-        reserve_column08 = #{reserveColumn08,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.potato369.find.mbg.model.User">
-    update user
-    set phone = #{phone,jdbcType=CHAR},
-      status = #{status,jdbcType=CHAR},
-      is_test = #{isTest,jdbcType=CHAR},
-      nick_name = #{nickName,jdbcType=VARCHAR},
-      weixin_id = #{weixinId,jdbcType=VARCHAR},
-      imei = #{imei,jdbcType=VARCHAR},
-      model = #{model,jdbcType=VARCHAR},
-      sys_name = #{sysName,jdbcType=VARCHAR},
-      sys_code = #{sysCode,jdbcType=VARCHAR},
-      network_mode = #{networkMode,jdbcType=CHAR},
-      gender = #{gender,jdbcType=CHAR},
-      year = #{year,jdbcType=CHAR},
-      month = #{month,jdbcType=CHAR},
-      date = #{date,jdbcType=CHAR},
-      constellation = #{constellation,jdbcType=CHAR},
-      head_icon = #{headIcon,jdbcType=VARCHAR},
-      country = #{country,jdbcType=VARCHAR},
-      province = #{province,jdbcType=VARCHAR},
-      city = #{city,jdbcType=VARCHAR},
-      district = #{district,jdbcType=VARCHAR},
-      other = #{other,jdbcType=VARCHAR},
-      longitude = #{longitude,jdbcType=DOUBLE},
-      latitude = #{latitude,jdbcType=DOUBLE},
-      platform = #{platform,jdbcType=CHAR},
-      ip = #{ip,jdbcType=VARCHAR},
-      grade = #{grade,jdbcType=CHAR},
-      autograph = #{autograph,jdbcType=VARCHAR},
-      vip_start_time = #{vipStartTime,jdbcType=TIMESTAMP},
-      vip_end_time = #{vipEndTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      background_icon = #{backgroundIcon,jdbcType=VARCHAR},
-      reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
-      reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
-      profession_id = #{professionId,jdbcType=BIGINT},
-      tag1 = #{tag1,jdbcType=BIGINT},
-      tag2 = #{tag2,jdbcType=BIGINT},
-      tag3 = #{tag3,jdbcType=BIGINT},
-      tag4 = #{tag4,jdbcType=BIGINT},
-      tag5 = #{tag5,jdbcType=BIGINT},
-      reserve_column05 = #{reserveColumn05,jdbcType=VARCHAR},
-      reserve_column06 = #{reserveColumn06,jdbcType=VARCHAR},
-      reserve_column07 = #{reserveColumn07,jdbcType=VARCHAR},
-      reserve_column08 = #{reserveColumn08,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.phone != null">
+                phone = #{record.phone,jdbcType=CHAR},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=CHAR},
+            </if>
+            <if test="record.isTest != null">
+                is_test = #{record.isTest,jdbcType=CHAR},
+            </if>
+            <if test="record.nickName != null">
+                nick_name = #{record.nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.weixinId != null">
+                weixin_id = #{record.weixinId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.imei != null">
+                imei = #{record.imei,jdbcType=VARCHAR},
+            </if>
+            <if test="record.model != null">
+                model = #{record.model,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sysName != null">
+                sys_name = #{record.sysName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sysCode != null">
+                sys_code = #{record.sysCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.networkMode != null">
+                network_mode = #{record.networkMode,jdbcType=CHAR},
+            </if>
+            <if test="record.gender != null">
+                gender = #{record.gender,jdbcType=CHAR},
+            </if>
+            <if test="record.year != null">
+                year = #{record.year,jdbcType=CHAR},
+            </if>
+            <if test="record.month != null">
+                month = #{record.month,jdbcType=CHAR},
+            </if>
+            <if test="record.date != null">
+                date = #{record.date,jdbcType=CHAR},
+            </if>
+            <if test="record.constellation != null">
+                constellation = #{record.constellation,jdbcType=CHAR},
+            </if>
+            <if test="record.headIcon != null">
+                head_icon = #{record.headIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="record.country != null">
+                country = #{record.country,jdbcType=VARCHAR},
+            </if>
+            <if test="record.province != null">
+                province = #{record.province,jdbcType=VARCHAR},
+            </if>
+            <if test="record.city != null">
+                city = #{record.city,jdbcType=VARCHAR},
+            </if>
+            <if test="record.district != null">
+                district = #{record.district,jdbcType=VARCHAR},
+            </if>
+            <if test="record.other != null">
+                other = #{record.other,jdbcType=VARCHAR},
+            </if>
+            <if test="record.longitude != null">
+                longitude = #{record.longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="record.latitude != null">
+                latitude = #{record.latitude,jdbcType=DOUBLE},
+            </if>
+            <if test="record.platform != null">
+                platform = #{record.platform,jdbcType=CHAR},
+            </if>
+            <if test="record.ip != null">
+                ip = #{record.ip,jdbcType=VARCHAR},
+            </if>
+            <if test="record.grade != null">
+                grade = #{record.grade,jdbcType=CHAR},
+            </if>
+            <if test="record.autograph != null">
+                autograph = #{record.autograph,jdbcType=VARCHAR},
+            </if>
+            <if test="record.vipStartTime != null">
+                vip_start_time = #{record.vipStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.vipEndTime != null">
+                vip_end_time = #{record.vipEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.backgroundIcon != null">
+                background_icon = #{record.backgroundIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn03 != null">
+                reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn04 != null">
+                reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
+            </if>
+            <if test="record.professionId != null">
+                profession_id = #{record.professionId,jdbcType=BIGINT},
+            </if>
+            <if test="record.tag1 != null">
+                tag1 = #{record.tag1,jdbcType=BIGINT},
+            </if>
+            <if test="record.tag2 != null">
+                tag2 = #{record.tag2,jdbcType=BIGINT},
+            </if>
+            <if test="record.tag3 != null">
+                tag3 = #{record.tag3,jdbcType=BIGINT},
+            </if>
+            <if test="record.tag4 != null">
+                tag4 = #{record.tag4,jdbcType=BIGINT},
+            </if>
+            <if test="record.tag5 != null">
+                tag5 = #{record.tag5,jdbcType=BIGINT},
+            </if>
+            <if test="record.reserveColumn05 != null">
+                reserve_column05 = #{record.reserveColumn05,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn06 != null">
+                reserve_column06 = #{record.reserveColumn06,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn07 != null">
+                reserve_column07 = #{record.reserveColumn07,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reserveColumn08 != null">
+                reserve_column08 = #{record.reserveColumn08,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user
+        set id = #{record.id,jdbcType=BIGINT},
+        phone = #{record.phone,jdbcType=CHAR},
+        status = #{record.status,jdbcType=CHAR},
+        is_test = #{record.isTest,jdbcType=CHAR},
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+        weixin_id = #{record.weixinId,jdbcType=VARCHAR},
+        imei = #{record.imei,jdbcType=VARCHAR},
+        model = #{record.model,jdbcType=VARCHAR},
+        sys_name = #{record.sysName,jdbcType=VARCHAR},
+        sys_code = #{record.sysCode,jdbcType=VARCHAR},
+        network_mode = #{record.networkMode,jdbcType=CHAR},
+        gender = #{record.gender,jdbcType=CHAR},
+        year = #{record.year,jdbcType=CHAR},
+        month = #{record.month,jdbcType=CHAR},
+        date = #{record.date,jdbcType=CHAR},
+        constellation = #{record.constellation,jdbcType=CHAR},
+        head_icon = #{record.headIcon,jdbcType=VARCHAR},
+        country = #{record.country,jdbcType=VARCHAR},
+        province = #{record.province,jdbcType=VARCHAR},
+        city = #{record.city,jdbcType=VARCHAR},
+        district = #{record.district,jdbcType=VARCHAR},
+        other = #{record.other,jdbcType=VARCHAR},
+        longitude = #{record.longitude,jdbcType=DOUBLE},
+        latitude = #{record.latitude,jdbcType=DOUBLE},
+        platform = #{record.platform,jdbcType=CHAR},
+        ip = #{record.ip,jdbcType=VARCHAR},
+        grade = #{record.grade,jdbcType=CHAR},
+        autograph = #{record.autograph,jdbcType=VARCHAR},
+        vip_start_time = #{record.vipStartTime,jdbcType=TIMESTAMP},
+        vip_end_time = #{record.vipEndTime,jdbcType=TIMESTAMP},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        background_icon = #{record.backgroundIcon,jdbcType=VARCHAR},
+        reserve_column03 = #{record.reserveColumn03,jdbcType=VARCHAR},
+        reserve_column04 = #{record.reserveColumn04,jdbcType=VARCHAR},
+        profession_id = #{record.professionId,jdbcType=BIGINT},
+        tag1 = #{record.tag1,jdbcType=BIGINT},
+        tag2 = #{record.tag2,jdbcType=BIGINT},
+        tag3 = #{record.tag3,jdbcType=BIGINT},
+        tag4 = #{record.tag4,jdbcType=BIGINT},
+        tag5 = #{record.tag5,jdbcType=BIGINT},
+        reserve_column05 = #{record.reserveColumn05,jdbcType=VARCHAR},
+        reserve_column06 = #{record.reserveColumn06,jdbcType=VARCHAR},
+        reserve_column07 = #{record.reserveColumn07,jdbcType=VARCHAR},
+        reserve_column08 = #{record.reserveColumn08,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.potato369.find.mbg.model.User">
+        update user
+        <set>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=CHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="isTest != null">
+                is_test = #{isTest,jdbcType=CHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="weixinId != null">
+                weixin_id = #{weixinId,jdbcType=VARCHAR},
+            </if>
+            <if test="imei != null">
+                imei = #{imei,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                model = #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="sysName != null">
+                sys_name = #{sysName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysCode != null">
+                sys_code = #{sysCode,jdbcType=VARCHAR},
+            </if>
+            <if test="networkMode != null">
+                network_mode = #{networkMode,jdbcType=CHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=CHAR},
+            </if>
+            <if test="year != null">
+                year = #{year,jdbcType=CHAR},
+            </if>
+            <if test="month != null">
+                month = #{month,jdbcType=CHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=CHAR},
+            </if>
+            <if test="constellation != null">
+                constellation = #{constellation,jdbcType=CHAR},
+            </if>
+            <if test="headIcon != null">
+                head_icon = #{headIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                district = #{district,jdbcType=VARCHAR},
+            </if>
+            <if test="other != null">
+                other = #{other,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=DOUBLE},
+            </if>
+            <if test="platform != null">
+                platform = #{platform,jdbcType=CHAR},
+            </if>
+            <if test="ip != null">
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null">
+                grade = #{grade,jdbcType=CHAR},
+            </if>
+            <if test="autograph != null">
+                autograph = #{autograph,jdbcType=VARCHAR},
+            </if>
+            <if test="vipStartTime != null">
+                vip_start_time = #{vipStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="vipEndTime != null">
+                vip_end_time = #{vipEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="backgroundIcon != null">
+                background_icon = #{backgroundIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn03 != null">
+                reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn04 != null">
+                reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
+            </if>
+            <if test="professionId != null">
+                profession_id = #{professionId,jdbcType=BIGINT},
+            </if>
+            <if test="tag1 != null">
+                tag1 = #{tag1,jdbcType=BIGINT},
+            </if>
+            <if test="tag2 != null">
+                tag2 = #{tag2,jdbcType=BIGINT},
+            </if>
+            <if test="tag3 != null">
+                tag3 = #{tag3,jdbcType=BIGINT},
+            </if>
+            <if test="tag4 != null">
+                tag4 = #{tag4,jdbcType=BIGINT},
+            </if>
+            <if test="tag5 != null">
+                tag5 = #{tag5,jdbcType=BIGINT},
+            </if>
+            <if test="reserveColumn05 != null">
+                reserve_column05 = #{reserveColumn05,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn06 != null">
+                reserve_column06 = #{reserveColumn06,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn07 != null">
+                reserve_column07 = #{reserveColumn07,jdbcType=VARCHAR},
+            </if>
+            <if test="reserveColumn08 != null">
+                reserve_column08 = #{reserveColumn08,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.potato369.find.mbg.model.User">
+        update user
+        set phone            = #{phone,jdbcType=CHAR},
+            status           = #{status,jdbcType=CHAR},
+            is_test          = #{isTest,jdbcType=CHAR},
+            nick_name        = #{nickName,jdbcType=VARCHAR},
+            weixin_id        = #{weixinId,jdbcType=VARCHAR},
+            imei             = #{imei,jdbcType=VARCHAR},
+            model            = #{model,jdbcType=VARCHAR},
+            sys_name         = #{sysName,jdbcType=VARCHAR},
+            sys_code         = #{sysCode,jdbcType=VARCHAR},
+            network_mode     = #{networkMode,jdbcType=CHAR},
+            gender           = #{gender,jdbcType=CHAR},
+            year             = #{year,jdbcType=CHAR},
+            month            = #{month,jdbcType=CHAR},
+            date             = #{date,jdbcType=CHAR},
+            constellation    = #{constellation,jdbcType=CHAR},
+            head_icon        = #{headIcon,jdbcType=VARCHAR},
+            country          = #{country,jdbcType=VARCHAR},
+            province         = #{province,jdbcType=VARCHAR},
+            city             = #{city,jdbcType=VARCHAR},
+            district         = #{district,jdbcType=VARCHAR},
+            other            = #{other,jdbcType=VARCHAR},
+            longitude        = #{longitude,jdbcType=DOUBLE},
+            latitude         = #{latitude,jdbcType=DOUBLE},
+            platform         = #{platform,jdbcType=CHAR},
+            ip               = #{ip,jdbcType=VARCHAR},
+            grade            = #{grade,jdbcType=CHAR},
+            autograph        = #{autograph,jdbcType=VARCHAR},
+            vip_start_time   = #{vipStartTime,jdbcType=TIMESTAMP},
+            vip_end_time     = #{vipEndTime,jdbcType=TIMESTAMP},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            update_time      = #{updateTime,jdbcType=TIMESTAMP},
+            background_icon  = #{backgroundIcon,jdbcType=VARCHAR},
+            reserve_column03 = #{reserveColumn03,jdbcType=VARCHAR},
+            reserve_column04 = #{reserveColumn04,jdbcType=VARCHAR},
+            profession_id    = #{professionId,jdbcType=BIGINT},
+            tag1             = #{tag1,jdbcType=BIGINT},
+            tag2             = #{tag2,jdbcType=BIGINT},
+            tag3             = #{tag3,jdbcType=BIGINT},
+            tag4             = #{tag4,jdbcType=BIGINT},
+            tag5             = #{tag5,jdbcType=BIGINT},
+            reserve_column05 = #{reserveColumn05,jdbcType=VARCHAR},
+            reserve_column06 = #{reserveColumn06,jdbcType=VARCHAR},
+            reserve_column07 = #{reserveColumn07,jdbcType=VARCHAR},
+            reserve_column08 = #{reserveColumn08,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

@@ -39,7 +39,7 @@ public interface DynamicInfoMapper {
 
     List<DynamicInfoData> selectByTopicTitle(@Param("topicTitle") String topicTitle);
 
-    String getFileNameByUserId(@Param("userId") Long userId);
+    List<AttacheInfo> getFileNameByUserId(@Param("userId") Long userId);
 
     List<HotTopic> findHotByDynamicInfoCount();
 

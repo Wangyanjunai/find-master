@@ -104,12 +104,6 @@
           AND `create_time` <![CDATA[ <=]]> DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY), INTERVAL -1 SECOND)
     </select>
     <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-	SELECT
-		a.`user_id`,
-		a.`reserve_column01`,
-		a.`create_time` 
-	FROM
-		(        
         SELECT `user_id`,
                `reserve_column01`,
                `create_time`
@@ -121,8 +115,7 @@
                `create_time`
         FROM `application_record`
         WHERE `reserve_column01` = #{userId,jdbcType=BIGINT}
-        ) AS a
-        GROUP BY a.`user_id`
+        ORDER BY `create_time` DESC
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete

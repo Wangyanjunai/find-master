@@ -695,34 +695,34 @@ public class UserController {
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
-     *     "status": 200,
-     *     "code": 0,
-     *     "msg": "查看用户个人资料成功",
-     *     "data": {
-     *         "user": {
-     *             "id": 70,
-     *             "nickname": "阿萌",
-     *             "head": "http://192.168.31.38:9000/find/img/head/70/b150c5e3-bf2d-4c2f-b6cd-f586cd65183b.jpg",
-     *             "grade": "0",
-     *             "age": 27,
-     *             "year": "1994",
-     *             "month": "05",
-     *             "date": "23",
-     *             "gender": "0",
-     *             "autograph": "初次见面，大家请多多关照！！",
-     *             "industry": "计算机/互联网/通信/电子",
-     *             "profession": "测试工程师",
-     *             "country": "中国",
-     *             "province": "河南省",
-     *             "city": "郑州市",
-     *             "district": "中原区",
-     *             "tag1": "颜值",
-     *             "tag2": "吃货",
-     *             "tag3": "篮球",
-     *             "tag4": "足球",
-     *             "tag5": "打碟DJ"
-     *         }
-     *     }
+     * "status": 200,
+     * "code": 0,
+     * "msg": "查看用户个人资料成功",
+     * "data": {
+     * "user": {
+     * "id": 70,
+     * "nickname": "阿萌",
+     * "head": "http://192.168.31.38:9000/find/img/head/70/b150c5e3-bf2d-4c2f-b6cd-f586cd65183b.jpg",
+     * "grade": "0",
+     * "age": 27,
+     * "year": "1994",
+     * "month": "05",
+     * "date": "23",
+     * "gender": "0",
+     * "autograph": "初次见面，大家请多多关照！！",
+     * "industry": "计算机/互联网/通信/电子",
+     * "profession": "测试工程师",
+     * "country": "中国",
+     * "province": "河南省",
+     * "city": "郑州市",
+     * "district": "中原区",
+     * "tag1": "颜值",
+     * "tag2": "吃货",
+     * "tag3": "篮球",
+     * "tag4": "足球",
+     * "tag5": "打碟DJ"
+     * }
+     * }
      * }
      * @apiError (404) {Number} status 响应状态码
      * @apiError (404) {Number} code 消息码
@@ -1537,6 +1537,7 @@ public class UserController {
      * @apiSuccess (200) {String} [district] 区/县
      * @apiSuccess (200) {Double} [distance] 距离（单位：米）
      * @apiSuccess (200) {String} [img] 动态图片地址
+     * @apiSuccess (200) {Number} [dynamicInfoId] 动态内容id
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
@@ -1544,61 +1545,6 @@ public class UserController {
      * "msg": "返回数据成功。",
      * "data": {
      * "list": [
-     * {
-     * "id": 57,
-     * "nickname": "孤烟丶",
-     * "age": 25,
-     * "country": "中国",
-     * "province": "陕西省",
-     * "city": "西安市",
-     * "district": "新城区",
-     * "distance": 1401785.0930982907,
-     * "img": "http://192.168.31.31:9000/find/res/images/57/20200701/05.png"
-     * },
-     * {
-     * "id": 51,
-     * "nickname": "暮夏",
-     * "age": 24,
-     * "country": "中国",
-     * "province": "江苏省",
-     * "city": "南京市",
-     * "district": "秦淮区",
-     * "distance": 1165271.2196834162,
-     * "img": "http://192.168.31.31:9000/find/res/images/51/20200503/03.png"
-     * },
-     * {
-     * "id": 22,
-     * "nickname": "曲终人散",
-     * "age": 22,
-     * "country": "中国",
-     * "province": "广东省",
-     * "city": "深圳市",
-     * "district": "福田区",
-     * "distance": 11630.023919958885,
-     * "img": "http://192.168.31.31:9000/find/res/images/22/20200711/02.png"
-     * },
-     * {
-     * "id": 10,
-     * "nickname": "澡澡猫",
-     * "age": 20,
-     * "country": "中国",
-     * "province": "广东省",
-     * "city": "广州市",
-     * "district": "南沙区",
-     * "distance": 50080.18515040895,
-     * "img": "http://192.168.31.31:9000/find/res/images/10/20200722/01.png"
-     * },
-     * {
-     * "id": 34,
-     * "nickname": "白素杉",
-     * "age": 24,
-     * "country": "中国",
-     * "province": "北京市",
-     * "city": "北京市",
-     * "district": "朝阳区",
-     * "distance": 1961017.910353171,
-     * "img": "http://192.168.31.31:9000/find/res/images/34/20200612/01.png"
-     * },
      * {
      * "id": 68,
      * "nickname": "丶倾城",
@@ -1608,51 +1554,116 @@ public class UserController {
      * "city": "上海市",
      * "district": "普陀区",
      * "distance": 1224663.7761815006,
-     * "img": "http://192.168.31.31:9000/find/res/images/68/20200819/04.png"
+     * "img": "http://192.168.31.38:9000/find/res/images/68/20200819/04.png",
+     * "dynamicInfoId": 248
      * },
      * {
-     * "id": 90,
-     * "nickname": "黑喵",
+     * "id": 133,
+     * "nickname": "碳水酵母",
      * "age": 23,
      * "country": "中国",
-     * "province": "湖北省",
-     * "city": "武汉市",
-     * "district": "汉南区",
-     * "distance": 873505.2168993158,
-     * "img": "http://192.168.31.31:9000/find/res/images/90/20201007/01.png"
+     * "province": "浙江省",
+     * "city": "温州市",
+     * "district": "苍南县",
+     * "distance": 861007.2418304504,
+     * "img": "http://192.168.31.38:9000/find/res/images/133/20200623/01.png",
+     * "dynamicInfoId": 544
      * },
      * {
-     * "id": 37,
-     * "nickname": "无所谓",
-     * "age": 24,
+     * "id": 6,
+     * "nickname": "花开",
+     * "age": 25,
      * "country": "中国",
-     * "province": "北京市",
-     * "city": "北京市",
-     * "district": "海淀区",
-     * "distance": 1960152.7662839654,
-     * "img": "http://192.168.31.31:9000/find/res/images/37/20200626/01.png"
+     * "province": "广东省",
+     * "city": "广州市",
+     * "district": "白云区",
+     * "distance": 104878.43917658104,
+     * "img": "http://192.168.31.38:9000/find/res/images/6/20200515/01.png",
+     * "dynamicInfoId": 19
      * },
      * {
-     * "id": 149,
-     * "nickname": "洋洋12",
+     * "id": 24,
+     * "nickname": "艺往昔",
      * "age": 25,
      * "country": "中国",
      * "province": "广东省",
      * "city": "深圳市",
-     * "district": "坪山新区",
-     * "distance": 46866.36032411066,
-     * "img": "http://192.168.31.31:9000/find/res/images/149/20210610/1623324450475/28747ba1-d92b-42ef-9bf1-d18a50eecb88.jpg"
+     * "district": "福田区",
+     * "distance": 11630.023919958885,
+     * "img": "http://192.168.31.38:9000/find/res/images/24/20200616/02.png",
+     * "dynamicInfoId": 70
      * },
      * {
-     * "id": 91,
-     * "nickname": "桃子",
+     * "id": 55,
+     * "nickname": "颜如玉",
+     * "age": 25,
+     * "country": "中国",
+     * "province": "江苏省",
+     * "city": "南京市",
+     * "district": "栖霞区",
+     * "distance": 1178908.7373939932,
+     * "img": "http://192.168.31.38:9000/find/res/images/55/20200508/02.png",
+     * "dynamicInfoId": 183
+     * },
+     * {
+     * "id": 8,
+     * "nickname": "莫莫",
+     * "age": 23,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "广州市",
+     * "district": "番禺区",
+     * "distance": 79441.66390343805,
+     * "img": "http://192.168.31.38:9000/find/res/images/8/20200624/05.png",
+     * "dynamicInfoId": 25
+     * },
+     * {
+     * "id": 94,
+     * "nickname": "花间",
      * "age": 24,
      * "country": "中国",
      * "province": "四川省",
      * "city": "成都市",
-     * "district": "锦江区",
-     * "distance": 1340238.1195277926,
-     * "img": "http://192.168.31.31:9000/find/res/images/91/20201117/02.png"
+     * "district": "武侯区",
+     * "distance": 1342190.332494322,
+     * "img": "http://192.168.31.38:9000/find/res/images/94/20201116/011.png",
+     * "dynamicInfoId": 353
+     * },
+     * {
+     * "id": 9,
+     * "nickname": "空水",
+     * "age": 21,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "广州市",
+     * "district": "花都区",
+     * "distance": 129482.87029765501,
+     * "img": "http://192.168.31.38:9000/find/res/images/9/20200518/03.png",
+     * "dynamicInfoId": 28
+     * },
+     * {
+     * "id": 5,
+     * "nickname": "白雨矮碧荷",
+     * "age": 26,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "广州市",
+     * "district": "天河区",
+     * "distance": 96148.58332378064,
+     * "img": "http://192.168.31.38:9000/find/res/images/5/20200526/01.png",
+     * "dynamicInfoId": 18
+     * },
+     * {
+     * "id": 36,
+     * "nickname": "水墨泪",
+     * "age": 24,
+     * "country": "中国",
+     * "province": "北京市",
+     * "city": "北京市",
+     * "district": "石景山区",
+     * "distance": 1953435.7345821974,
+     * "img": "http://192.168.31.38:9000/find/res/images/36/20200617/02.png",
+     * "dynamicInfoId": 118
      * }
      * ]
      * }
@@ -1719,35 +1730,35 @@ public class UserController {
      * @apiSuccess (200) {String} [district] 区/县
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
-     *     "status": 200,
-     *     "code": 0,
-     *     "msg": "获取鹿可模块用户详情数据成功。",
-     *     "data": {
-     *         "id": 70,
-     *         "attacheList": [
-     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/308f48ad-ce12-49ab-92f2-eb4ef7dcd649.jpg",
-     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/72517b7c-a808-445e-9a3d-3f15ee66e341.jpg",
-     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/2d5f85de-e2b1-4b96-a8c5-f3a6814c3c50.jpg",
-     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/fb92d519-e29c-4c80-b7cc-acfa2f6eaf47.jpg",
-     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/4872593b-e7d2-496a-a52c-897cafda2bb5.jpg",
-     *             "http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/d7319235-dfee-42e3-a089-50cec9ae5a1f.jpg"
-     *         ],
-     *         "tag1": "颜值",
-     *         "tag2": "吃货",
-     *         "tag3": "篮球",
-     *         "tag4": "足球",
-     *         "tag5": "打碟DJ",
-     *         "nickname": "阿萌",
-     *         "constellation": "双子座",
-     *         "gender": "0",
-     *         "age": 27,
-     *         "industry": "计算机/互联网/通信/电子",
-     *         "profession": "测试工程师",
-     *         "country": "中国",
-     *         "province": "河南省",
-     *         "city": "郑州市",
-     *         "district": "中原区"
-     *     }
+     * "status": 200,
+     * "code": 0,
+     * "msg": "获取鹿可模块用户详情数据成功。",
+     * "data": {
+     * "id": 70,
+     * "attacheList": [
+     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/308f48ad-ce12-49ab-92f2-eb4ef7dcd649.jpg",
+     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/72517b7c-a808-445e-9a3d-3f15ee66e341.jpg",
+     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/2d5f85de-e2b1-4b96-a8c5-f3a6814c3c50.jpg",
+     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/fb92d519-e29c-4c80-b7cc-acfa2f6eaf47.jpg",
+     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/4872593b-e7d2-496a-a52c-897cafda2bb5.jpg",
+     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/d7319235-dfee-42e3-a089-50cec9ae5a1f.jpg"
+     * ],
+     * "tag1": "颜值",
+     * "tag2": "吃货",
+     * "tag3": "篮球",
+     * "tag4": "足球",
+     * "tag5": "打碟DJ",
+     * "nickname": "阿萌",
+     * "constellation": "双子座",
+     * "gender": "0",
+     * "age": 27,
+     * "industry": "计算机/互联网/通信/电子",
+     * "profession": "测试工程师",
+     * "country": "中国",
+     * "province": "河南省",
+     * "city": "郑州市",
+     * "district": "中原区"
+     * }
      * }
      * @apiError (404) {Number} status 响应状态码
      * @apiError (404) {Number} code 消息码

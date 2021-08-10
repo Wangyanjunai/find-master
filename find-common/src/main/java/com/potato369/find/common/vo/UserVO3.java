@@ -106,4 +106,13 @@ public class UserVO3 {
     @JSONField(name = "img")
     @JsonProperty(value = "img")
     private String img;
+
+    /**
+     * <pre>
+     * dynamicInfoId：动态内容id
+     * </pre>
+     */
+    @JSONField(name = "dynamicInfoId")
+    @JsonProperty(value = "dynamicInfoId")
+    private Long dynamicInfoId;
 }

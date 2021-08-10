@@ -1,4 +1,6 @@
 #!/bin/bash
+# shellcheck disable=SC2046
+# shellcheck disable=SC2009
 kill -9 $(ps -ef | grep java | awk '{print $2}')
 cd /d/Users/wangyanjun/workspace/prod/find-master || exit
 git pull
