@@ -101,21 +101,23 @@
         FROM `application_record`
         WHERE `user_id` = #{userId,jdbcType=BIGINT}
           AND `create_time` <![CDATA[ >=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
-          AND `create_time` <![CDATA[ <=]]> DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY), INTERVAL -1 SECOND)
+          AND `create_time` <![CDATA[ <=]]>
+              DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY),
+                       INTERVAL -1 SECOND)
     </select>
     <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT `user_id`,
-               `reserve_column01`,
-               `create_time`
-        FROM `application_record`
-        WHERE `user_id` = #{userId,jdbcType=BIGINT}
-        UNION ALL
-        SELECT `user_id`,
-               `reserve_column01`,
-               `create_time`
-        FROM `application_record`
-        WHERE `reserve_column01` = #{userId,jdbcType=BIGINT}
-        ORDER BY `create_time` DESC
+        SELECT DISTINCTROW a.*
+        FROM (
+                 SELECT `user_id`,
+                        `reserve_column01`
+                 FROM `application_record`
+                 WHERE `user_id` = #{userId,jdbcType=BIGINT}
+                 UNION ALL
+                 SELECT `user_id`,
+                        `reserve_column01`
+                 FROM `application_record`
+                 WHERE `reserve_column01` = #{userId,jdbcType=BIGINT}
+             ) AS a
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
@@ -204,7 +206,9 @@
         WHERE `user_id` = #{applicantUserId, jdbcType=BIGINT}
           AND `reserve_column01` = #{applicantsUserId, jdbcType=BIGINT}
           AND `create_time` <![CDATA[>=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
-          AND `create_time` <![CDATA[<=]]> DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY), INTERVAL - 1 SECOND)
+          AND `create_time` <![CDATA[<=]]>
+              DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY),
+                       INTERVAL - 1 SECOND)
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update application_record

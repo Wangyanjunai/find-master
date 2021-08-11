@@ -582,7 +582,7 @@
             <if test="sendMode != null">
                 send_mode = #{sendMode,jdbcType=CHAR},
             </if>
-            <if test="sendMode != null">
+            <if test="status != null">
                 status = #{status,jdbcType=CHAR},
             </if>
             <if test="createTime != null">

@@ -17,6 +17,7 @@ import com.potato369.find.message.config.props.ProjectUrlProps;
 import com.potato369.find.message.service.JiGuangPushService;
 import com.potato369.find.message.service.MessageService;
 import com.potato369.find.message.service.SensitiveWordsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class MessageServiceImpl implements MessageService {
 
     private MessageMapper messageMapperReader;
@@ -183,67 +185,70 @@ public class MessageServiceImpl implements MessageService {
     public MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
-        final PageInfo<ApplicationRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.applicationRecordMapperReader.selectByUserId(userId));
-        List<ApplicationRecord> applicationRecordList = listPageInfo.getList();
+        List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByUserId(userId);
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         List<MessageInfoVO> messageInfoVOs2 = new ArrayList<>();
         if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
+            log.info("applicationRecordList={}", applicationRecordList);
             for (ApplicationRecord applicationRecord : applicationRecordList) {
                 long sendUserId = applicationRecord.getUserId();//申请加微信者
                 long recipientUserId = Long.parseLong(applicationRecord.getReserveColumn01());//被申请加微信者
-                MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
-                // 消息发送者（申请加微信者）
-                User user1 = this.userMapperReader.selectByPrimaryKey(sendUserId);
-                // 消息接收者（被申请加微信者）
-                User user2 = this.userMapperReader.selectByPrimaryKey(recipientUserId);
-                if (Objects.equals(sendUserId, userId)) {
-                    getUserInfo(user2, messageInfoVO);
-                } else {
-                    getUserInfo(user1, messageInfoVO);
-                }
-                messageInfoVO.setIsOrNotApplication(Objects.equals(applicationRecord.getUserId(), userId));
-                List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(sendUserId, recipientUserId);
-                if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
-                    Message message1 = messageList.get(0);
-                    if (!Objects.isNull(message1)) {
-                        messageInfoVO.setMessageId(message1.getId());
-                        if (MessageType2Enum.REPLY.getCodeStr().equals(message1.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
-                            messageInfoVO.setFlag(1);
-                            String contentString = message1.getContent();
-                            if (StrUtil.contains(contentString, "|")) {
-                                String[] strings = StrUtil.split(contentString, "|");
-                                messageInfoVO.setContent(strings[0]);
-                                if (StrUtil.isEmpty(strings[1])) {
-                                    messageInfoVO.setWeixinId(user1.getWeixinId());
+                final PageInfo<Message> messagePageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectApplicationMessageRecordByUserId2(sendUserId, recipientUserId));
+                if (!Objects.isNull(messagePageInfo) && messagePageInfo.getTotal() > 0) {
+                    List<Message> messageList = messagePageInfo.getList();
+                    if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
+                        for (Message message : messageList) {
+                            if (!Objects.isNull(message)) {
+                                MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
+                                // 消息发送者（申请加微信者）
+                                User user1 = this.userMapperReader.selectByPrimaryKey(sendUserId);
+                                // 消息接收者（被申请加微信者）
+                                User user2 = this.userMapperReader.selectByPrimaryKey(recipientUserId);
+                                if (Objects.equals(sendUserId, userId)) {
+                                    getUserInfo(user2, messageInfoVO);
                                 } else {
-                                    messageInfoVO.setWeixinId(strings[1]);
+                                    getUserInfo(user1, messageInfoVO);
                                 }
-                            } else {
-                                messageInfoVO.setContent(contentString);
-                                messageInfoVO.setWeixinId(user1.getWeixinId());
+                                messageInfoVO.setIsOrNotApplication(Objects.equals(applicationRecord.getUserId(), userId));
+                                messageInfoVO.setMessageId(message.getId());
+                                if (MessageType2Enum.REPLY.getCodeStr().equals(message.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message.getReserveColumn01())) {
+                                    messageInfoVO.setFlag(1);
+                                    String contentString = message.getContent();
+                                    if (StrUtil.contains(contentString, "|")) {
+                                        String[] strings = StrUtil.split(contentString, "|");
+                                        messageInfoVO.setContent(strings[0]);
+                                        if (StrUtil.isEmpty(strings[1])) {
+                                            messageInfoVO.setWeixinId(user1.getWeixinId());
+                                        } else {
+                                            messageInfoVO.setWeixinId(strings[1]);
+                                        }
+                                    } else {
+                                        messageInfoVO.setContent(contentString);
+                                        messageInfoVO.setWeixinId(user1.getWeixinId());
+                                    }
+                                } else {
+                                    messageInfoVO.setFlag(0);
+                                    messageInfoVO.setContent(message.getContent());
+                                }
+                                if (MessageTypeEnum.Applications.getMessage().equals(message.getReserveColumn01())) {
+                                    messageInfoVO.setType("1");
+                                }
+                                if (MessageTypeEnum.Commons.getMessage().equals(message.getReserveColumn01())) {
+                                    messageInfoVO.setType("0");
+                                }
+                                messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
+                                messageInfoVO.setCount(this.messageMapperReader.countByUserId2(sendUserId, recipientUserId, userId));
+                                messageInfoVOs.add(messageInfoVO);
+                                messageInfoVOs2 = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
                             }
-                        } else {
-                            messageInfoVO.setFlag(0);
-                            messageInfoVO.setContent(message1.getContent());
                         }
-                        if (MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
-                            messageInfoVO.setType("1");
-                        }
-                        if (MessageTypeEnum.Commons.getMessage().equals(message1.getReserveColumn01())) {
-                            messageInfoVO.setType("0");
-                        }
-                        messageInfoVO.setCreateTime(DateUtil.fomateDate(message1.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                        messageInfoVO.setCount(this.messageMapperReader.countByUserId2(sendUserId, recipientUserId, userId));
-
-                        messageInfoVOs.add(messageInfoVO);
-                        messageInfoVOs2 = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
                     }
+                    messageVO.setMessageInfoVOs(messageInfoVOs2);
+                    messageVO.setTotalCount(messagePageInfo.getTotal());
+                    messageVO.setTotalPage(messagePageInfo.getPages());
                 }
             }
         }
-        messageVO.setMessageInfoVOs(messageInfoVOs2);
-        messageVO.setTotalCount(listPageInfo.getTotal());
-        messageVO.setTotalPage(listPageInfo.getPages());
         return messageVO;
     }
 
@@ -410,13 +415,13 @@ public class MessageServiceImpl implements MessageService {
         if (!Objects.isNull(message)) {
             message.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
             message.setUpdateTime(new Date());
+            int count = this.messageMapperWriter.updateByPrimaryKeySelective(message);
+            if (count > 0) {
+                value = "OK";
+                msg = "删除消息记录成功。";
+            }
+            data.put(key, value);
         }
-        int count = this.messageMapperWriter.updateByPrimaryKeySelective(message);
-        if (count > 0) {
-            value = "OK";
-            msg = "删除消息记录成功。";
-        }
-        data.put(key, value);
         return CommonResult.success(data, msg);
     }
 
