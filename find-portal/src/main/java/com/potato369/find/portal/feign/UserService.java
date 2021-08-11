@@ -136,4 +136,11 @@ public interface UserService {
     //远程调用鹿可模块推荐用户详情数据接口
     @GetMapping("/find/v1/user/{id}/look-details.do")
     CommonResult<UserVO4> lookDetails(@PathVariable(name = "id") Long id, @RequestParam(name = "detailsUserId") Long detailsUserId);
+
+    //远程调用用户模块意见反馈接口
+    @PostMapping(value = "/find/v1/user/{id}/feedback.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    CommonResult<Map<String, Object>> feedback(@PathVariable(name = "id") Long userId,
+                                               @RequestParam(name = "dataType") String attacheInfoDataType,
+                                               @RequestParam(name = "content", required = false) String opinion,
+                                               @RequestPart(value = "files", required = false) MultipartFile[] files);
 }

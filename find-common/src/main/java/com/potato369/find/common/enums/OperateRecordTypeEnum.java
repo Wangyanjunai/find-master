@@ -59,6 +59,8 @@ public enum OperateRecordTypeEnum implements CodeEnum<Integer> {
 
     QueryOwnerDynamic(23, "23", "获取自己的动态"),
 
+    Feedback(24, "24", "意见反馈"),
+
     ;
     private Integer code;
 

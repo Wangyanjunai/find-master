@@ -1369,6 +1369,54 @@ public class UserController {
         }
     }
 
+    //意见反馈接口
+    @PostMapping(value = "{id}/feedback.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public CommonResult<Map<String, Object>> feedback(@PathVariable(name = "id") Long userId,
+                                                      @RequestParam(name = "dataType") String attacheInfoDataType,
+                                                      @RequestParam(name = "content", required = false) String opinion,
+                                                      @RequestPart(value = "files", required = false) MultipartFile[] files) {
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        data.put("FEEDBACK", "ERROR");
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setUserId(userId);
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.Feedback.getCode());
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始意见反馈");
+            }
+            User user = this.userMapperReader.selectByPrimaryKey(userId);
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
+            }
+            //校验附件文件类型是否正确
+            if (!Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Image.getCodeStr())
+                    && !Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Audio.getCodeStr())
+                    && !Objects.equals(attacheInfoDataType, AttacheInfoDataTypeEnum.Text.getCodeStr())) {
+                return CommonResult.validateFailed("参数校验不通过，不允许附件文件类型。");
+            }
+            FeedbackRecord feedbackRecord = new FeedbackRecord();
+            feedbackRecord.setUserId(userId);
+            feedbackRecord.setContent(opinion);
+            feedbackRecord.setDataType(attacheInfoDataType);
+            int result = this.userService.feedback(feedbackRecord, files);
+            if (result > 0) {
+                operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+                data.put("FEEDBACK", "OK");
+            }
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.success(data);
+        } catch (Exception e) {
+            log.error("意见反馈出现错误", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.failed("意见反馈失败。");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束意见反馈");
+            }
+        }
+    }
+
 
     //复制需要更新的用户信息
     private void copy(UpdateUserDTO userDTO, User user) {

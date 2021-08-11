@@ -186,7 +186,8 @@ public class MessageServiceImpl implements MessageService {
         final PageInfo<ApplicationRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.applicationRecordMapperReader.selectByUserId(userId));
         List<ApplicationRecord> applicationRecordList = listPageInfo.getList();
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
-        if (applicationRecordList != null && !applicationRecordList.isEmpty()) {
+        List<MessageInfoVO> messageInfoVOs2 = new ArrayList<>();
+        if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
             for (ApplicationRecord applicationRecord : applicationRecordList) {
                 long sendUserId = applicationRecord.getUserId();//申请加微信者
                 long recipientUserId = Long.parseLong(applicationRecord.getReserveColumn01());//被申请加微信者
@@ -200,46 +201,46 @@ public class MessageServiceImpl implements MessageService {
                 } else {
                     getUserInfo(user1, messageInfoVO);
                 }
+                messageInfoVO.setIsOrNotApplication(Objects.equals(applicationRecord.getUserId(), userId));
                 List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(sendUserId, recipientUserId);
                 if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
                     Message message1 = messageList.get(0);
-                    messageInfoVO.setMessageId(message1.getId());
-                    if (MessageType2Enum.REPLY.getCodeStr().equals(message1.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
-                        messageInfoVO.setFlag(1);
-                        String contentString = message1.getContent();
-                        if (StrUtil.contains(contentString, "|")) {
-                            String[] strings = StrUtil.split(contentString, "|");
-                            messageInfoVO.setContent(strings[0]);
-                            if (StrUtil.isEmpty(strings[1])) {
-                                if (!Objects.isNull(user1)) {
+                    if (!Objects.isNull(message1)) {
+                        messageInfoVO.setMessageId(message1.getId());
+                        if (MessageType2Enum.REPLY.getCodeStr().equals(message1.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
+                            messageInfoVO.setFlag(1);
+                            String contentString = message1.getContent();
+                            if (StrUtil.contains(contentString, "|")) {
+                                String[] strings = StrUtil.split(contentString, "|");
+                                messageInfoVO.setContent(strings[0]);
+                                if (StrUtil.isEmpty(strings[1])) {
                                     messageInfoVO.setWeixinId(user1.getWeixinId());
+                                } else {
+                                    messageInfoVO.setWeixinId(strings[1]);
                                 }
                             } else {
-                                messageInfoVO.setWeixinId(strings[1]);
-                            }
-                        } else {
-                            messageInfoVO.setContent(contentString);
-                            if (user1 != null) {
+                                messageInfoVO.setContent(contentString);
                                 messageInfoVO.setWeixinId(user1.getWeixinId());
                             }
+                        } else {
+                            messageInfoVO.setFlag(0);
+                            messageInfoVO.setContent(message1.getContent());
                         }
-                    } else {
-                        messageInfoVO.setFlag(0);
-                        messageInfoVO.setContent(message1.getContent());
+                        if (MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
+                            messageInfoVO.setType("1");
+                        }
+                        if (MessageTypeEnum.Commons.getMessage().equals(message1.getReserveColumn01())) {
+                            messageInfoVO.setType("0");
+                        }
+                        messageInfoVO.setCreateTime(DateUtil.fomateDate(message1.getCreateTime(), DateUtil.sdfTimeCNFmt));
+                        messageInfoVO.setCount(this.messageMapperReader.countByUserId2(sendUserId, recipientUserId, userId));
+
+                        messageInfoVOs.add(messageInfoVO);
+                        messageInfoVOs2 = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
                     }
-                    if (MessageTypeEnum.Applications.getMessage().equals(message1.getReserveColumn01())) {
-                        messageInfoVO.setType("1");
-                    }
-                    if (MessageTypeEnum.Commons.getMessage().equals(message1.getReserveColumn01())) {
-                        messageInfoVO.setType("0");
-                    }
-                    messageInfoVO.setCreateTime(DateUtil.fomateDate(message1.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                    messageInfoVO.setCount(this.messageMapperReader.countByUserId2(sendUserId, recipientUserId, userId));
                 }
-                messageInfoVOs.add(messageInfoVO);
             }
         }
-        List<MessageInfoVO> messageInfoVOs2 = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
         messageVO.setMessageInfoVOs(messageInfoVOs2);
         messageVO.setTotalCount(listPageInfo.getTotal());
         messageVO.setTotalPage(listPageInfo.getPages());
@@ -405,7 +406,12 @@ public class MessageServiceImpl implements MessageService {
         String key = "DELETE";
         String value = "ERROR";
         String msg = "删除消息记录失败。";
-        int count = this.messageMapperWriter.deleteApplicationMessageRecordByUserId(recipientUserId, messageId);
+        Message message = this.messageMapperReader.selectByPrimaryKey(messageId);
+        if (!Objects.isNull(message)) {
+            message.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
+            message.setUpdateTime(new Date());
+        }
+        int count = this.messageMapperWriter.updateByPrimaryKeySelective(message);
         if (count > 0) {
             value = "OK";
             msg = "删除消息记录成功。";

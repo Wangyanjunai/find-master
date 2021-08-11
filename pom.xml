@@ -11,6 +11,31 @@
     <packaging>pom</packaging>
     <description>Find master project for Spring Boot.</description>
 
+    <inceptionYear>2021</inceptionYear>
+    <mailingLists>
+        <mailingList>
+            <name>觅鹿项目</name>
+            <post>wyj@potato369.com</post>
+            <subscribe>wyj@potato369.com</subscribe>
+        </mailingList>
+    </mailingLists>
+
+    <developers>
+        <developer>
+            <id>find</id>
+            <name>Jack</name>
+            <email>wyj@potato369.com</email>
+            <url>https://i.csdn.net/#/user-center/profile?spm=1000.2115.3001.5111</url>
+            <roles>
+                <role>Project Manager</role>
+                <role>Architect</role>
+            </roles>
+            <organization>potato369</organization>
+            <organizationUrl>https://www.potato369.com</organizationUrl>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
+
     <modules>
         <module>find-common</module>    <!-- 觅鹿工具及通用模块-->
         <module>find-mbg</module>       <!-- 觅鹿数据库操作模块-->

@@ -2,6 +2,7 @@ package com.potato369.find.user.service;
 
 import com.potato369.find.common.dto.UserDTO;
 import com.potato369.find.mbg.model.Dynamic;
+import com.potato369.find.mbg.model.FeedbackRecord;
 import com.potato369.find.mbg.model.OperateRecord;
 import com.potato369.find.mbg.model.User;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,4 +78,13 @@ public interface UserService {
      * 更新用户VIP等级
      */
     void updateUserGrade();
+
+    /**
+     * 保存意见反馈信息
+     *
+     * @param feedbackRecord
+     * @param multipartFiles
+     * @return 0
+     */
+    int feedback(FeedbackRecord feedbackRecord, MultipartFile[] multipartFiles);
 }

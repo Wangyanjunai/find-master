@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 @ToString
 @NoArgsConstructor
 public class ProjectUrlProps {
-	
+
     /**
      * <pre>
      * projectName：项目名字
@@ -32,7 +32,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.project-name}")
     private String projectName;
-    
+
     /**
      * <pre>
      * resAppImg：项目前端图片资源存放路径
@@ -40,7 +40,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.res-app-img}")
     private String resAppImg;
-    
+
     /**
      * <pre>
      * resHeadImg：项目前端头像小图资源存放路径
@@ -48,7 +48,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.res-head-icon}")
     private String resHeadIcon;
-    
+
     /**
      * <pre>
      * resBackgroundIcon：项目前端背景小图资源存放路径
@@ -56,7 +56,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.res-background-icon}")
     private String resBackgroundIcon;
-    
+
     /**
      * <pre>
      * resVoices：项目前端语音资源存放路径
@@ -64,7 +64,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.res-voices-file}")
     private String resVoices;
-    
+
     /**
      * <pre>
      * resImages：项目前端动态图片资源存放路径
@@ -72,7 +72,15 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.res-images-file}")
     private String resImages;
-    
+
+    /**
+     * <pre>
+     * resFeedback：项目前端意见反馈图片资源存放路径
+     * </pre>
+     */
+    @Value(value = "${project-url.res-feedback-file}")
+    private String resFeedback;
+
     /**
      * <pre>
      * defaultHeadIcon：项目前端默认头像资源存放路径
@@ -80,7 +88,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.default-head-icon}")
     private String defaultHeadIcon;
-    
+
     /**
      * <pre>
      * defaultBgIcon：项目前端默认背景资源存放路径
@@ -88,7 +96,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.default-bg-icon}")
     private String defaultBgIcon;
-    
+
     /**
      * <pre>
      * defaultMaleContent：注册时男生默认发布动态内容，包括头像
@@ -96,7 +104,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.default-male-content}")
     private String defaultMaleContent;
-    
+
     /**
      * <pre>
      * defaultFemaleContent：注册时男生默认发布动态内容，包括头像
@@ -104,7 +112,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.default-female-content}")
     private String defaultFemaleContent;
-    
+
     /**
      * <pre>
      * domain：项目网关域名前缀
@@ -112,7 +120,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.domain}")
     private String domian;
-    
+
     /**
      * <pre>
      * uploadRes：资源文件存放nginx服务器路径
@@ -120,7 +128,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.upload-res}")
     private String uploadRes;
-    
+
     /**
      * <pre>
      * resDomain：资源文件存放nginx服务器路径
@@ -128,7 +136,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.res-domain}")
     private String resDomain;
-   
+
 
     /**
      * <pre>
@@ -145,7 +153,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.domain}")
     private String domain;
-    
+
     /**
      * <pre>
      * resVoiceIcon：项目前端语音资源存放路径
@@ -153,7 +161,7 @@ public class ProjectUrlProps {
      */
     @Value(value = "${project-url.res-voices-file}")
     private String resDynamicVoiceFile;
-    
+
     /**
      * <pre>
      * resVoiceIcon：项目前端动态图片资源存放路径

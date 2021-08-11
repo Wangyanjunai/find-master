@@ -1,15 +1,20 @@
 package com.potato369.find.user.service.impl;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import com.potato369.find.common.dto.DynamicDTO;
 import com.potato369.find.common.dto.UserDTO;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.CopyUtil;
+import com.potato369.find.common.utils.ErrorMessageUtil;
 import com.potato369.find.mbg.mapper.DynamicMapper;
+import com.potato369.find.mbg.mapper.FeedbackRecordMapper;
 import com.potato369.find.mbg.mapper.OperateRecordMapper;
 import com.potato369.find.mbg.mapper.UserMapper;
 import com.potato369.find.mbg.model.Dynamic;
+import com.potato369.find.mbg.model.FeedbackRecord;
 import com.potato369.find.mbg.model.OperateRecord;
 import com.potato369.find.mbg.model.User;
 import com.potato369.find.user.config.props.ProjectUrlProps;
@@ -24,8 +29,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -45,6 +55,8 @@ public class UserServiceImpl implements UserService {
     private DynamicService dynamicService;
 
     private DynamicMapper dynamicMapperWriter;
+
+    private FeedbackRecordMapper feedbackRecordMapperWriter;
 
     @Autowired
     public void setUserMapperWriter(UserMapper userMapperWriter) {
@@ -79,6 +91,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setDynamicMapperWriter(DynamicMapper dynamicMapperWriter) {
         this.dynamicMapperWriter = dynamicMapperWriter;
+    }
+
+    @Autowired
+    public void setFeedbackRecordMapperWriter(FeedbackRecordMapper feedbackRecordMapperWriter) {
+        this.feedbackRecordMapperWriter = feedbackRecordMapperWriter;
     }
 
     @Override
@@ -255,5 +272,49 @@ public class UserServiceImpl implements UserService {
             user.setUpdateTime(new Date());
             this.userMapperWriter.updateByPrimaryKeySelective(user);
         }
+    }
+
+    /**
+     * 保存意见反馈信息
+     *
+     * @param feedbackRecord
+     * @param files
+     * @return 0
+     */
+    @Override
+    @Transactional
+    public int feedback(FeedbackRecord feedbackRecord, MultipartFile[] files) {
+        List<File> files02 = new ArrayList<>();
+        String fileString = feedbackRecord.getUserId() + "/" +
+                DatePattern.PURE_DATE_FORMAT.format(new Date()) + "/" +
+                System.currentTimeMillis() + "/";
+        if (!Objects.isNull(files) && files.length > 0) {
+            StringBuilder filePath = new StringBuilder()
+                    .append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes()))
+                    .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
+                    .append(StrUtil.trimToNull(this.projectUrlProps.getResFeedback()));
+            try {
+                for (MultipartFile multipartFile : files) {
+                    StringBuilder stringBuilder = new StringBuilder().append(filePath).append("/").append(fileString);
+                    File path01 = new File(stringBuilder.toString());
+                    if (!path01.exists()) {
+                        path01.mkdirs();
+                    }
+                    String fileName = UUID.randomUUID() + "." + FileUtil.getSuffix(multipartFile.getOriginalFilename());
+                    Path path02 = Paths.get(stringBuilder.append(fileName).toString());
+                    if (!multipartFile.isEmpty()) {
+                        path02.toFile();
+                        File file = new File(path02.toString());
+                        files02.add(file);
+                        Files.write(path02, multipartFile.getBytes());
+                    }
+                }
+            } catch (Exception e) {
+                log.error("反馈意见上传文件出现出现错误", e);
+            }
+        }
+        String fileNames = ErrorMessageUtil.fileNameBuild(files02, fileString);
+        feedbackRecord.setFilePathList(fileNames);
+        return this.feedbackRecordMapperWriter.insertSelective(feedbackRecord);
     }
 }

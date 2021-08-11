@@ -54,6 +54,7 @@ public class MessageController {
      * @apiSuccess (200) {String} [type] 消息类型，0->普通消息，1->申请加微信消息
      * @apiSuccess (200) {Number} [flag] 是否展示复制微信，0->否，1->是
      * @apiSuccess (200) {String} [weixinId] 微信号
+     * @apiSuccess (200) {Boolean} [isOrNotApplication] 是否是申请者，true->是，false->否
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
@@ -77,7 +78,8 @@ public class MessageController {
      * "count2":5,
      * "createTime": "2021年04月22日 16:40:40",
      * "type":1,
-     * "flag":0
+     * "flag":0,
+     * "isOrNotApplication": false
      * },
      * {
      * "messageId": 2,
@@ -88,7 +90,8 @@ public class MessageController {
      * "count2":5,
      * "createTime": "2021年04月22日 16:40:40",
      * "type":1,
-     * "flag":0
+     * "flag":0,
+     * "isOrNotApplication": false
      * },
      * {
      * "messageId": 3,
@@ -99,7 +102,8 @@ public class MessageController {
      * "count2":6
      * "createTime": "2021年04月22日 16:40:40",
      * "type":1,
-     * "flag":0
+     * "flag":0,
+     * "isOrNotApplication": false
      * },
      * {
      * "messageId": 4,
@@ -110,7 +114,8 @@ public class MessageController {
      * "count2":6
      * "createTime": "2021年04月22日 16:40:40",
      * "type":1,
-     * "flag":0
+     * "flag":0,
+     * "isOrNotApplication": false
      * },
      * {
      * "messageId": 5,
@@ -121,7 +126,8 @@ public class MessageController {
      * "createTime": "2021年04月22日 16:40:40",
      * "count2":1
      * "type":1,
-     * "flag":0
+     * "flag":0,
+     * "isOrNotApplication": false
      * },
      * {
      * "messageId": 86,
@@ -133,7 +139,8 @@ public class MessageController {
      * "count2": 2,
      * "type": "1",
      * "flag": 1,
-     * "weixinId": "wxnaza12345681"
+     * "weixinId": "wxnaza12345681",
+     * "isOrNotApplication": false
      * }
      * ]
      * }
@@ -731,7 +738,7 @@ public class MessageController {
      * @apiGroup 消息模块API
      * @apiName 删除申请加微信消息记录
      * @apiParam (接口请求参数){Number} id1 消息接收者用户id
-     * @apiParam (接口请求参数){Number} id2 消息发送者用户id
+     * @apiParam (接口请求参数){Number} id2 消息id
      * @apiParamExample 请求示例
      * curl -v -X PUT "http://w168428j19.51mypc.cn/find/message/60/delete?id2=28" -H "accept: application/json"
      * @apiSuccess (200) {Number} code 信息码

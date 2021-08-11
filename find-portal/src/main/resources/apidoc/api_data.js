@@ -328,7 +328,7 @@ define({ "api": [
             "type": "String",
             "optional": true,
             "field": "isOrNotLikes",
-            "description": "<p>当前用户是否点赞，0-&gt;点赞，1-&gt;未点赞</p>"
+            "description": "<p>当前用户是否点赞，0-&gt;未点赞，1-&gt;点赞</p>"
           },
           {
             "group": "200",
@@ -5009,13 +5009,20 @@ define({ "api": [
             "optional": true,
             "field": "weixinId",
             "description": "<p>微信号</p>"
+          },
+          {
+            "group": "200",
+            "type": "Boolean",
+            "optional": true,
+            "field": "isOrNotApplication",
+            "description": "<p>是否是申请者，true-&gt;是，false-&gt;否</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"likes\":{\n\"content1\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"count1\":5\n},\n\"totalCount\":5,\n\"totalPage\":1,\n\"list\":[\n{\n\"messageId\": 7,\n\"userId\":60,\n\"head\":\"http://192.168.31.31:9000/find/img/head/60/01.png\",\n\"nickname\":\"尘埃\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 2,\n\"userId\":62,\n\"head\":\"http://192.168.31.31:9000/find/img/head/62/02.png\",\n\"nickname\":\"蓝梧桐\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 3,\n\"userId\":61,\n\"head\":\"http://192.168.31.31:9000/find/img/head/61/01.png\",\n\"nickname\":\"长安\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 4,\n\"userId\":71,\n\"head\":\"http://192.168.31.31:9000/find/img/head/71/07.png\",\n\"nickname\":\"弦雨晴\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 5,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"nickname\":\"阿萌\",\n\"content2\":\"需要加您的微信?\",\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"count2\":1\n\"type\":1,\n\"flag\":0\n},\n{\n\"messageId\": 86,\n\"userId\": 137,\n\"head\": \"http://192.168.31.31:9000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg\",\n\"nickname\": \"jack\",\n\"content2\": \"已同意添加微信，我的微信号是：\",\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"count2\": 2,\n\"type\": \"1\",\n\"flag\": 1,\n\"weixinId\": \"wxnaza12345681\"\n}\n]\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"likes\":{\n\"content1\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"count1\":5\n},\n\"totalCount\":5,\n\"totalPage\":1,\n\"list\":[\n{\n\"messageId\": 7,\n\"userId\":60,\n\"head\":\"http://192.168.31.31:9000/find/img/head/60/01.png\",\n\"nickname\":\"尘埃\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0,\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 2,\n\"userId\":62,\n\"head\":\"http://192.168.31.31:9000/find/img/head/62/02.png\",\n\"nickname\":\"蓝梧桐\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0,\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 3,\n\"userId\":61,\n\"head\":\"http://192.168.31.31:9000/find/img/head/61/01.png\",\n\"nickname\":\"长安\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0,\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 4,\n\"userId\":71,\n\"head\":\"http://192.168.31.31:9000/find/img/head/71/07.png\",\n\"nickname\":\"弦雨晴\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0,\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 5,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"nickname\":\"阿萌\",\n\"content2\":\"需要加您的微信?\",\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"count2\":1\n\"type\":1,\n\"flag\":0,\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 86,\n\"userId\": 137,\n\"head\": \"http://192.168.31.31:9000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg\",\n\"nickname\": \"jack\",\n\"content2\": \"已同意添加微信，我的微信号是：\",\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"count2\": 2,\n\"type\": \"1\",\n\"flag\": 1,\n\"weixinId\": \"wxnaza12345681\",\n\"isOrNotApplication\": false\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -5565,7 +5572,7 @@ define({ "api": [
             "type": "Number",
             "optional": false,
             "field": "id2",
-            "description": "<p>消息发送者用户id</p>"
+            "description": "<p>消息id</p>"
           }
         ]
       },
@@ -6850,6 +6857,181 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/find/user/{id}/feedback",
+    "title": "意见反馈接口",
+    "version": "1.0.0",
+    "group": "用户模块API",
+    "name": "意见反馈",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "String",
+            "allowedValues": [
+              "{\"0\"",
+              "\"1\"",
+              "\"2\"}"
+            ],
+            "optional": false,
+            "field": "dataType",
+            "description": "<p>附件文件类型，0-&gt;文字，1-&gt;图片，2-&gt;音频</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "String",
+            "optional": true,
+            "field": "content",
+            "description": "<p>内容</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "File[]",
+            "optional": true,
+            "field": "files",
+            "description": "<p>附件文件列表</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”\ncurl --insecure -X POST -v http://w168428j19.51mypc.cn/find/user/35/feedback -H \"Content-Type: application/json;charset=UTF-8\"\n-d '{\n\"dataType\": \"1\",\n\"content\": \"我要反馈\",\n\"files\": \"C:\\Users\\Administrator\\Pictures\\images\\01.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\02.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\03.jpg,\nC:\\Users\\Administrator\\Pictures\\images\\04.jpg\"\n}'",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "allowedValues": [
+              "{\"OK\"",
+              "\"ERROR\"}"
+            ],
+            "optional": true,
+            "field": "FEEDBACK",
+            "description": "<p>状态，OK-&gt;成功，ERROR-&gt;失败</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "HTTP/1.1 200 OK",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"FEEDBACK\": \"OK\"\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/UserController.java",
+    "groupTitle": "用户模块API",
+    "sampleRequest": [
+      {
+        "url": "http://w168428j19.51mypc.cn/find/user/{id}/feedback"
+      }
+    ]
+  },
+  {
+    "type": "post",
     "url": "/find/user/{id}/pushOrPull",
     "title": "拉入推出黑名单接口",
     "version": "1.0.0",
@@ -7603,7 +7785,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n    \"status\": 200,\n    \"code\": 0,\n    \"msg\": \"查看用户个人资料成功\",\n    \"data\": {\n        \"user\": {\n            \"id\": 70,\n            \"nickname\": \"阿萌\",\n            \"head\": \"http://192.168.31.38:9000/find/img/head/70/b150c5e3-bf2d-4c2f-b6cd-f586cd65183b.jpg\",\n            \"grade\": \"0\",\n            \"age\": 27,\n            \"year\": \"1994\",\n            \"month\": \"05\",\n            \"date\": \"23\",\n            \"gender\": \"0\",\n            \"autograph\": \"初次见面，大家请多多关照！！\",\n            \"industry\": \"计算机/互联网/通信/电子\",\n            \"profession\": \"测试工程师\",\n            \"country\": \"中国\",\n            \"province\": \"河南省\",\n            \"city\": \"郑州市\",\n            \"district\": \"中原区\",\n            \"tag1\": \"颜值\",\n            \"tag2\": \"吃货\",\n            \"tag3\": \"篮球\",\n            \"tag4\": \"足球\",\n            \"tag5\": \"打碟DJ\"\n        }\n    }\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"查看用户个人资料成功\",\n\"data\": {\n\"user\": {\n\"id\": 70,\n\"nickname\": \"阿萌\",\n\"head\": \"http://192.168.31.38:9000/find/img/head/70/b150c5e3-bf2d-4c2f-b6cd-f586cd65183b.jpg\",\n\"grade\": \"0\",\n\"age\": 27,\n\"year\": \"1994\",\n\"month\": \"05\",\n\"date\": \"23\",\n\"gender\": \"0\",\n\"autograph\": \"初次见面，大家请多多关照！！\",\n\"industry\": \"计算机/互联网/通信/电子\",\n\"profession\": \"测试工程师\",\n\"country\": \"中国\",\n\"province\": \"河南省\",\n\"city\": \"郑州市\",\n\"district\": \"中原区\",\n\"tag1\": \"颜值\",\n\"tag2\": \"吃货\",\n\"tag3\": \"篮球\",\n\"tag4\": \"足球\",\n\"tag5\": \"打碟DJ\"\n}\n}\n}",
           "type": "json"
         }
       ]
@@ -9713,13 +9895,20 @@ define({ "api": [
             "optional": true,
             "field": "img",
             "description": "<p>动态图片地址</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "dynamicInfoId",
+            "description": "<p>动态内容id</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "HTTP/1.1 200 OK",
-          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"list\": [\n{\n\"id\": 57,\n\"nickname\": \"孤烟丶\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"陕西省\",\n\"city\": \"西安市\",\n\"district\": \"新城区\",\n\"distance\": 1401785.0930982907,\n\"img\": \"http://192.168.31.31:9000/find/res/images/57/20200701/05.png\"\n},\n{\n\"id\": 51,\n\"nickname\": \"暮夏\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"江苏省\",\n\"city\": \"南京市\",\n\"district\": \"秦淮区\",\n\"distance\": 1165271.2196834162,\n\"img\": \"http://192.168.31.31:9000/find/res/images/51/20200503/03.png\"\n},\n{\n\"id\": 22,\n\"nickname\": \"曲终人散\",\n\"age\": 22,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"福田区\",\n\"distance\": 11630.023919958885,\n\"img\": \"http://192.168.31.31:9000/find/res/images/22/20200711/02.png\"\n},\n{\n\"id\": 10,\n\"nickname\": \"澡澡猫\",\n\"age\": 20,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"广州市\",\n\"district\": \"南沙区\",\n\"distance\": 50080.18515040895,\n\"img\": \"http://192.168.31.31:9000/find/res/images/10/20200722/01.png\"\n},\n{\n\"id\": 34,\n\"nickname\": \"白素杉\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"北京市\",\n\"city\": \"北京市\",\n\"district\": \"朝阳区\",\n\"distance\": 1961017.910353171,\n\"img\": \"http://192.168.31.31:9000/find/res/images/34/20200612/01.png\"\n},\n{\n\"id\": 68,\n\"nickname\": \"丶倾城\",\n\"age\": 23,\n\"country\": \"中国\",\n\"province\": \"上海市\",\n\"city\": \"上海市\",\n\"district\": \"普陀区\",\n\"distance\": 1224663.7761815006,\n\"img\": \"http://192.168.31.31:9000/find/res/images/68/20200819/04.png\"\n},\n{\n\"id\": 90,\n\"nickname\": \"黑喵\",\n\"age\": 23,\n\"country\": \"中国\",\n\"province\": \"湖北省\",\n\"city\": \"武汉市\",\n\"district\": \"汉南区\",\n\"distance\": 873505.2168993158,\n\"img\": \"http://192.168.31.31:9000/find/res/images/90/20201007/01.png\"\n},\n{\n\"id\": 37,\n\"nickname\": \"无所谓\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"北京市\",\n\"city\": \"北京市\",\n\"district\": \"海淀区\",\n\"distance\": 1960152.7662839654,\n\"img\": \"http://192.168.31.31:9000/find/res/images/37/20200626/01.png\"\n},\n{\n\"id\": 149,\n\"nickname\": \"洋洋12\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"坪山新区\",\n\"distance\": 46866.36032411066,\n\"img\": \"http://192.168.31.31:9000/find/res/images/149/20210610/1623324450475/28747ba1-d92b-42ef-9bf1-d18a50eecb88.jpg\"\n},\n{\n\"id\": 91,\n\"nickname\": \"桃子\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"四川省\",\n\"city\": \"成都市\",\n\"district\": \"锦江区\",\n\"distance\": 1340238.1195277926,\n\"img\": \"http://192.168.31.31:9000/find/res/images/91/20201117/02.png\"\n}\n]\n}\n}",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"list\": [\n{\n\"id\": 68,\n\"nickname\": \"丶倾城\",\n\"age\": 23,\n\"country\": \"中国\",\n\"province\": \"上海市\",\n\"city\": \"上海市\",\n\"district\": \"普陀区\",\n\"distance\": 1224663.7761815006,\n\"img\": \"http://192.168.31.38:9000/find/res/images/68/20200819/04.png\",\n\"dynamicInfoId\": 248\n},\n{\n\"id\": 133,\n\"nickname\": \"碳水酵母\",\n\"age\": 23,\n\"country\": \"中国\",\n\"province\": \"浙江省\",\n\"city\": \"温州市\",\n\"district\": \"苍南县\",\n\"distance\": 861007.2418304504,\n\"img\": \"http://192.168.31.38:9000/find/res/images/133/20200623/01.png\",\n\"dynamicInfoId\": 544\n},\n{\n\"id\": 6,\n\"nickname\": \"花开\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"广州市\",\n\"district\": \"白云区\",\n\"distance\": 104878.43917658104,\n\"img\": \"http://192.168.31.38:9000/find/res/images/6/20200515/01.png\",\n\"dynamicInfoId\": 19\n},\n{\n\"id\": 24,\n\"nickname\": \"艺往昔\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"福田区\",\n\"distance\": 11630.023919958885,\n\"img\": \"http://192.168.31.38:9000/find/res/images/24/20200616/02.png\",\n\"dynamicInfoId\": 70\n},\n{\n\"id\": 55,\n\"nickname\": \"颜如玉\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"江苏省\",\n\"city\": \"南京市\",\n\"district\": \"栖霞区\",\n\"distance\": 1178908.7373939932,\n\"img\": \"http://192.168.31.38:9000/find/res/images/55/20200508/02.png\",\n\"dynamicInfoId\": 183\n},\n{\n\"id\": 8,\n\"nickname\": \"莫莫\",\n\"age\": 23,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"广州市\",\n\"district\": \"番禺区\",\n\"distance\": 79441.66390343805,\n\"img\": \"http://192.168.31.38:9000/find/res/images/8/20200624/05.png\",\n\"dynamicInfoId\": 25\n},\n{\n\"id\": 94,\n\"nickname\": \"花间\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"四川省\",\n\"city\": \"成都市\",\n\"district\": \"武侯区\",\n\"distance\": 1342190.332494322,\n\"img\": \"http://192.168.31.38:9000/find/res/images/94/20201116/011.png\",\n\"dynamicInfoId\": 353\n},\n{\n\"id\": 9,\n\"nickname\": \"空水\",\n\"age\": 21,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"广州市\",\n\"district\": \"花都区\",\n\"distance\": 129482.87029765501,\n\"img\": \"http://192.168.31.38:9000/find/res/images/9/20200518/03.png\",\n\"dynamicInfoId\": 28\n},\n{\n\"id\": 5,\n\"nickname\": \"白雨矮碧荷\",\n\"age\": 26,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"广州市\",\n\"district\": \"天河区\",\n\"distance\": 96148.58332378064,\n\"img\": \"http://192.168.31.38:9000/find/res/images/5/20200526/01.png\",\n\"dynamicInfoId\": 18\n},\n{\n\"id\": 36,\n\"nickname\": \"水墨泪\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"北京市\",\n\"city\": \"北京市\",\n\"district\": \"石景山区\",\n\"distance\": 1953435.7345821974,\n\"img\": \"http://192.168.31.38:9000/find/res/images/36/20200617/02.png\",\n\"dynamicInfoId\": 118\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -9984,7 +10173,7 @@ define({ "api": [
       "examples": [
         {
           "title": "HTTP/1.1 200 OK",
-          "content": "{\n    \"status\": 200,\n    \"code\": 0,\n    \"msg\": \"获取鹿可模块用户详情数据成功。\",\n    \"data\": {\n        \"id\": 70,\n        \"attacheList\": [\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/308f48ad-ce12-49ab-92f2-eb4ef7dcd649.jpg\",\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/72517b7c-a808-445e-9a3d-3f15ee66e341.jpg\",\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/2d5f85de-e2b1-4b96-a8c5-f3a6814c3c50.jpg\",\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/fb92d519-e29c-4c80-b7cc-acfa2f6eaf47.jpg\",\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/4872593b-e7d2-496a-a52c-897cafda2bb5.jpg\",\n            \"http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/d7319235-dfee-42e3-a089-50cec9ae5a1f.jpg\"\n        ],\n        \"tag1\": \"颜值\",\n        \"tag2\": \"吃货\",\n        \"tag3\": \"篮球\",\n        \"tag4\": \"足球\",\n        \"tag5\": \"打碟DJ\",\n        \"nickname\": \"阿萌\",\n        \"constellation\": \"双子座\",\n        \"gender\": \"0\",\n        \"age\": 27,\n        \"industry\": \"计算机/互联网/通信/电子\",\n        \"profession\": \"测试工程师\",\n        \"country\": \"中国\",\n        \"province\": \"河南省\",\n        \"city\": \"郑州市\",\n        \"district\": \"中原区\"\n    }\n}",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"获取鹿可模块用户详情数据成功。\",\n\"data\": {\n\"id\": 70,\n\"attacheList\": [\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/308f48ad-ce12-49ab-92f2-eb4ef7dcd649.jpg\",\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/72517b7c-a808-445e-9a3d-3f15ee66e341.jpg\",\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/2d5f85de-e2b1-4b96-a8c5-f3a6814c3c50.jpg\",\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/fb92d519-e29c-4c80-b7cc-acfa2f6eaf47.jpg\",\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/4872593b-e7d2-496a-a52c-897cafda2bb5.jpg\",\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/d7319235-dfee-42e3-a089-50cec9ae5a1f.jpg\"\n],\n\"tag1\": \"颜值\",\n\"tag2\": \"吃货\",\n\"tag3\": \"篮球\",\n\"tag4\": \"足球\",\n\"tag5\": \"打碟DJ\",\n\"nickname\": \"阿萌\",\n\"constellation\": \"双子座\",\n\"gender\": \"0\",\n\"age\": 27,\n\"industry\": \"计算机/互联网/通信/电子\",\n\"profession\": \"测试工程师\",\n\"country\": \"中国\",\n\"province\": \"河南省\",\n\"city\": \"郑州市\",\n\"district\": \"中原区\"\n}\n}",
           "type": "json"
         }
       ]

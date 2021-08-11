@@ -71,12 +71,20 @@ aliyun:
   url: http://iploc.market.alicloudapi.com/v3/ip
 #########项目路径参数配置#########
 project-url:
+  #项目路径
   project-name: /find
+  #充值产品图片资源文件存放路径
   res-app-img: /img/app/
+  #用户头像图片资源文件存放路径
   res-head-icon: /img/head/
+  #用户背景图片资源文件存放路径
   res-background-icon: /img/background/
+  #动态内容语音资源文件存放路径
   res-voices-file: /res/voices/
+  #动态内容图片资源文件存放路径
   res-images-file: /res/images/
+  #意见反馈图片资源文件存放路径
+  res-feedback-file: /res/feedback/
   default-head-icon: head.png
   default-bg-icon: bg.png
   default-male-content: 新人小生，初来乍到，请多关照。

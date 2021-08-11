@@ -491,13 +491,6 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
-    <update id="deleteApplicationMessageRecordByUserId" parameterType="java.lang.Long">
-        UPDATE `message`
-        SET `reserve_column03` = '1'
-        WHERE `reserve_column01`<![CDATA[ =]]> 'applications'
-          AND `recipient_user_id`<![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
-          AND `id`<![CDATA[ =]]> #{messageId, jdbcType=BIGINT}
-    </update>
     <update id="updateByExampleSelective" parameterType="map">
         update message
         <set>

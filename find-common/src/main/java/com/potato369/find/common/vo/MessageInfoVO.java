@@ -23,7 +23,7 @@ public class MessageInfoVO {
     @JSONField(name = "userId")
     @JsonProperty(value = "userId")
     private Long userId;
-    
+
     //申请加微信消息接收者用户id
     @JSONField(name = "userId2")
     @JsonProperty(value = "userId2")
@@ -53,19 +53,24 @@ public class MessageInfoVO {
     @JSONField(name = "count2")
     @JsonProperty(value = "count2")
     private Long count;
-    
+
     //消息类型，0->普通消息，1->申请加微信消息
     @JSONField(name = "type")
     @JsonProperty(value = "type")
     private String type;
-    
+
     //是否展示复制微信，0->否，1->是
     @JSONField(name = "flag")
     @JsonProperty(value = "flag")
     private Integer flag;
-    
+
     //微信id
     @JSONField(name = "weixinId")
     @JsonProperty(value = "weixinId")
     private String weixinId;
+
+    //是否是申请者，true->是，false->否
+    @JSONField(name = "isOrNotApplication")
+    @JsonProperty(value = "isOrNotApplication")
+    private Boolean isOrNotApplication;
 }

@@ -1785,4 +1785,67 @@ public class UserController {
     CommonResult<UserVO4> lookDetails(@PathVariable(name = "id") Long id, @RequestParam(name = "detailsUserId") Long detailsUserId) {
         return this.userFeignClient.lookDetails(id, detailsUserId);
     }
+
+    /**
+     * @api {post} /find/user/{id}/feedback 意见反馈接口
+     * @apiVersion 1.0.0
+     * @apiGroup 用户模块API
+     * @apiName 意见反馈
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String={"0", "1", "2"}} dataType 附件文件类型，0->文字，1->图片，2->音频
+     * @apiParam (接口请求参数) {String} [content] 内容
+     * @apiParam (接口请求参数) {File[]} [files] 附件文件列表
+     * @apiParamExample 请求示例
+     * 注：form表单提交，需要在请求头加：“Content-Type=multipart/form-data;charset=utf-8”
+     * curl --insecure -X POST -v http://w168428j19.51mypc.cn/find/user/35/feedback -H "Content-Type: application/json;charset=UTF-8"
+     * -d '{
+     * "dataType": "1",
+     * "content": "我要反馈",
+     * "files": "C:\Users\Administrator\Pictures\images\01.jpg,
+     * C:\Users\Administrator\Pictures\images\02.jpg,
+     * C:\Users\Administrator\Pictures\images\03.jpg,
+     * C:\Users\Administrator\Pictures\images\04.jpg"
+     * }'
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String={"OK", "ERROR"}} [FEEDBACK] 状态，OK->成功，ERROR->失败
+     * @apiSuccessExample HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "FEEDBACK": "OK"
+     * }
+     * }
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册",
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应"
+     * }
+     */
+    @PostMapping(value = "{id}/feedback", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public CommonResult<Map<String, Object>> feedback(@PathVariable(name = "id") Long userId,
+                                                      @RequestParam(name = "dataType") String attacheInfoDataType,
+                                                      @RequestParam(name = "content", required = false) String opinion,
+                                                      @RequestPart(value = "files", required = false) MultipartFile[] files) {
+        return this.userFeignClient.feedback(userId, attacheInfoDataType, opinion, files);
+    }
 }

@@ -48,7 +48,7 @@ CREATE TABLE `alipay_config`  (
   INDEX `n_idx_sign_type`(`sign_type`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '支付宝配置表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '支付宝配置表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for application_record
@@ -67,7 +67,7 @@ CREATE TABLE `application_record`  (
   INDEX `n_idx_user_id`(`user_id`) USING BTREE,
   INDEX `n_idx_dynamic_info_id`(`dynamic_info_id`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 145 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申请加微信记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申请加微信记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for application_setting
@@ -88,7 +88,7 @@ CREATE TABLE `application_setting`  (
   INDEX `n_idx_status`(`status`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申请加微信次数设置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申请加微信次数设置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for attache_info
@@ -113,7 +113,7 @@ CREATE TABLE `attache_info`  (
   INDEX `n_idx_data_type`(`data_type`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3641 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for blacklist_record
@@ -136,7 +136,7 @@ CREATE TABLE `blacklist_record`  (
   INDEX `n_idx_status`(`status`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '黑名单记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '黑名单记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for comment
@@ -157,7 +157,7 @@ CREATE TABLE `comment`  (
   `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
   `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '评论信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '评论信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for dynamic
@@ -200,7 +200,7 @@ CREATE TABLE `dynamic`  (
   INDEX `n_idx_other`(`other`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 609 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动态信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动态信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for dynamic_info
@@ -246,7 +246,7 @@ CREATE TABLE `dynamic_info`  (
   INDEX `n_idx_attache_number`(`attache_number`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 775 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '动态内容表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '动态内容表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for hibernate_sequence
@@ -273,7 +273,7 @@ CREATE TABLE `industrys`  (
   `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
   `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '行业信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '行业信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for is_debug
@@ -296,7 +296,7 @@ CREATE TABLE `is_debug`  (
   INDEX `n_idx_price`(`price`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '支付调测表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '支付调测表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for like_record
@@ -320,7 +320,7 @@ CREATE TABLE `like_record`  (
   INDEX `n_idx_status`(`status`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 188 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '点赞记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '点赞记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for message
@@ -345,7 +345,7 @@ CREATE TABLE `message`  (
   INDEX `n_idx_send_mode`(`send_mode`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 406 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '消息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '消息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for operate_record
@@ -363,7 +363,7 @@ CREATE TABLE `operate_record`  (
   `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
   `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17095 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户操作记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户操作记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for order_detail
@@ -392,7 +392,7 @@ CREATE TABLE `order_detail`  (
   INDEX `n_idx_product_quantity`(`product_quantity`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单详情表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单详情表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for order_master
@@ -434,7 +434,7 @@ CREATE TABLE `order_master`  (
   INDEX `n_idx_pay_time`(`pay_time`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for order_setting
@@ -455,7 +455,7 @@ CREATE TABLE `order_setting`  (
   INDEX `n_idx_status`(`status`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单设置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单设置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for product_info
@@ -483,7 +483,7 @@ CREATE TABLE `product_info`  (
   INDEX `n_idx_vip_charge_time`(`vip_charge_time`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for professions
@@ -502,7 +502,7 @@ CREATE TABLE `professions`  (
   `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
   `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 164 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '职业信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '职业信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for report_category
@@ -523,7 +523,7 @@ CREATE TABLE `report_category`  (
   INDEX `n_idx_status`(`status`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '举报类目表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '举报类目表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for report_info
@@ -551,7 +551,7 @@ CREATE TABLE `report_info`  (
   INDEX `n_idx_being_report_user_id`(`being_report_user_id`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '举报信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '举报信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for screen_setting
@@ -570,7 +570,7 @@ CREATE TABLE `screen_setting`  (
   `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
   `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '筛选条件配置信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '筛选条件配置信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sensitive_words
@@ -589,7 +589,7 @@ CREATE TABLE `sensitive_words`  (
   `reserve_column03` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
   `reserve_column04` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4038 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '敏感词汇表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '敏感词汇表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for share_record
@@ -631,7 +631,7 @@ CREATE TABLE `tag`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `u_idx_name`(`name`) USING BTREE,
   UNIQUE INDEX `uq_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '标签信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '标签信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user
@@ -706,7 +706,7 @@ CREATE TABLE `user`  (
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE,
   INDEX `u_idx_weixin_id`(`weixin_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 172 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for weixin_config
@@ -736,6 +736,29 @@ CREATE TABLE `weixin_config`  (
   UNIQUE INDEX `u_idx_api_v3_key`(`api_v3_key`) USING BTREE,
   INDEX `n_idx_create_time`(`create_time`) USING BTREE,
   INDEX `n_idx_update_time`(`update_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '微信配置表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '微信配置表' ROW_FORMAT = Compact;
+
+
+-- ----------------------------
+-- Table structure for feedback_record
+-- ----------------------------
+DROP TABLE IF EXISTS `feedback_record`;
+CREATE TABLE `feedback_record`  (
+   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
+   `user_id` bigint(20) NOT NULL COMMENT '反馈者id',
+   `content` tinytext CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '内容',
+   `file_path_list` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附件路径列表',
+   `data_type` enum('0','1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '附件类型，0->文字；1->图片；2->音频，默认：0->文字',
+   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+   `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+   `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+   `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+   `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+   PRIMARY KEY (`id`) USING BTREE,
+   INDEX `n_idx_user_id`(`user_id`) USING BTREE,
+   INDEX `n_idx_data_type`(`data_type`) USING BTREE,
+   INDEX `n_idx_create_time`(`create_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '意见反馈记录表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
