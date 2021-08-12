@@ -8,6 +8,7 @@ import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Message implements Serializable {
+
     @ApiModelProperty(value = "消息id，主键")
     private Long id;
 
@@ -35,10 +36,10 @@ public class Message implements Serializable {
     @ApiModelProperty(value = "预留字段02")
     private String reserveColumn02;
 
-    @ApiModelProperty(value = "预留字段03")
+    @ApiModelProperty(value = "预留字段03，是否删除，0->否,1-删除，默认：0")
     private String reserveColumn03;
 
-    @ApiModelProperty(value = "预留字段04")
+    @ApiModelProperty(value = "预留字段04，回复的消息id")
     private String reserveColumn04;
 
     @ApiModelProperty(value = "内容")

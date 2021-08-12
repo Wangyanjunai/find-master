@@ -29,6 +29,8 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Long id);
 
+    User selectByPhone(@Param("phone") String phone);
+
     List<User> selectLookUserList(@Param("param") LookInfoParam lookInfoParam);
 
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);

@@ -109,7 +109,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, phone, status, is_test, nick_name, weixin_id, imei, model, sys_name, sys_code,
+        id
+        , phone, status, is_test, nick_name, weixin_id, imei, model, sys_name, sys_code,
     network_mode, gender, year, month, date, constellation, head_icon, country, province, 
     city, district, other, longitude, latitude, platform, ip, grade, autograph, vip_start_time, vip_end_time, 
     create_time, update_time, background_icon, reserve_column03, reserve_column04, 
@@ -175,10 +176,12 @@
         <include refid="Base_Column_List"/>
         FROM `user` ur
         WHERE
-            ur.`gender` <![CDATA[=]]> #{param.gender, jdbcType=CHAR}
+        ur.`gender` <![CDATA[=]]> #{param.gender, jdbcType=CHAR}
         AND ur.`id` <![CDATA[!=]]> #{param.userId, jdbcType=BIGINT}
-        AND str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[<=]]> #{param.minAge, jdbcType=TIMESTAMP}
-        AND str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[>=]]> #{param.maxAge, jdbcType=TIMESTAMP}
+        AND str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[<=]]>
+        #{param.minAge, jdbcType=TIMESTAMP}
+        AND str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[>=]]>
+        #{param.maxAge, jdbcType=TIMESTAMP}
         ORDER BY ur.`create_time` DESC, ur.`update_time` DESC, ur.`id` DESC
     </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -186,6 +189,12 @@
         <include refid="Base_Column_List"/>
         FROM user
         WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE phone = #{phone,jdbcType=CHAR}
     </select>
     <select id="selectVIPExpireUser" resultMap="BaseResultMap">
         SELECT
@@ -239,31 +248,28 @@
     </insert>
     <insert id="insertImport" parameterType="com.potato369.find.mbg.model.User">
         insert into user (id, phone, status, is_test,
-                          nick_name, weixin_id, imei,
-                          model, sys_name, sys_code,
-                          network_mode, gender, year, month,
-                          date, constellation, head_icon,
-                          country, province, city,
-                          district, other, longitude,
-                          latitude, platform, ip, grade, autograph,
-                          vip_start_time, vip_end_time, create_time,
-                          update_time, background_icon, reserve_column03,
-                          reserve_column04)
+                          nick_name, weixin_id, imei, model,
+                          sys_name, sys_code, network_mode, gender,
+                          year, month, date, constellation,
+                          head_icon, country, province, city,
+                          district, other, longitude, latitude,
+                          platform, ip, grade, autograph,
+                          vip_start_time, vip_end_time, create_time, update_time,
+                          background_icon, reserve_column03, reserve_column04, profession_id,
+                          tag1, tag2, tag3, tag4,
+                          tag5, reserve_column05, reserve_column06, reserve_column07,
+                          reserve_column08)
         values (#{id,jdbcType=BIGINT}, #{phone,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{isTest,jdbcType=CHAR},
-                #{nickName,jdbcType=VARCHAR}, #{weixinId,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR},
-                #{model,jdbcType=VARCHAR}, #{sysName,jdbcType=VARCHAR}, #{sysCode,jdbcType=VARCHAR},
-                #{networkMode,jdbcType=CHAR}, #{gender,jdbcType=CHAR}, #{year,jdbcType=CHAR}, #{month,jdbcType=CHAR},
-                #{date,jdbcType=CHAR}, #{constellation,jdbcType=CHAR}, #{headIcon,jdbcType=VARCHAR},
-                #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
-                #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{platform,jdbcType=CHAR},
-                #{ip,jdbcType=VARCHAR}, #{grade,jdbcType=CHAR}, #{autograph,jdbcType=VARCHAR},
-                #{vipStartTime,jdbcType=TIMESTAMP}, #{vipEndTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
-                #{updateTime,jdbcType=TIMESTAMP}, #{backgroundIcon,jdbcType=VARCHAR},
-                #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR},
-                #{professionId,jdbcType=BIGINT},
+                #{nickName,jdbcType=VARCHAR}, #{weixinId,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR},
+                #{sysName,jdbcType=VARCHAR}, #{sysCode,jdbcType=VARCHAR}, #{networkMode,jdbcType=CHAR}, #{gender,jdbcType=CHAR},
+                #{year,jdbcType=CHAR}, #{month,jdbcType=CHAR}, #{date,jdbcType=CHAR}, #{constellation,jdbcType=CHAR},
+                #{headIcon,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+                #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE},
+                #{platform,jdbcType=CHAR}, #{ip,jdbcType=VARCHAR}, #{grade,jdbcType=CHAR}, #{autograph,jdbcType=VARCHAR},
+                #{vipStartTime,jdbcType=TIMESTAMP}, #{vipEndTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+                #{backgroundIcon,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR}, #{professionId,jdbcType=BIGINT},
                 #{tag1,jdbcType=BIGINT}, #{tag2,jdbcType=BIGINT}, #{tag3,jdbcType=BIGINT}, #{tag4,jdbcType=BIGINT},
-                #{tag5,jdbcType=BIGINT}, #{reserveColumn05,jdbcType=VARCHAR},
-                #{reserveColumn06,jdbcType=VARCHAR}, #{reserveColumn07,jdbcType=VARCHAR},
+                #{tag5,jdbcType=BIGINT}, #{reserveColumn05,jdbcType=VARCHAR}, #{reserveColumn06,jdbcType=VARCHAR}, #{reserveColumn07,jdbcType=VARCHAR},
                 #{reserveColumn08,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.potato369.find.mbg.model.User">

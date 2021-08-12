@@ -22,6 +22,7 @@ import com.potato369.find.mbg.model.Dynamic;
 import com.potato369.find.mbg.model.DynamicInfo;
 import com.potato369.find.mbg.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +31,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -90,7 +89,7 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public int insert(User user, Dynamic dynamic, DynamicInfo dynamicInfo, AttacheInfo attacheInfo) throws Exception {
         int userResult = 0;
         int dynamicResult = 0;
@@ -105,7 +104,9 @@ public class DynamicServiceImpl implements DynamicService {
                 if (user2 == null) {
                     userResult = this.userMapperWrite.insertImport(user);
                 } else {
-                    userResult = this.userMapperWrite.updateByPrimaryKey(user);
+                    BeanUtils.copyProperties(user, user2);
+                    user2.setUpdateTime(new Date());
+                    userResult = this.userMapperWrite.updateByPrimaryKeySelective(user2);
                 }
             }
             if (dynamicIdLong != null) {
@@ -113,7 +114,9 @@ public class DynamicServiceImpl implements DynamicService {
                 if (dynamic2 == null) {
                     dynamicResult = this.dynamicMapperWrite.insertImport(dynamic);
                 } else {
-                    dynamicResult = this.dynamicMapperWrite.updateByPrimaryKey(dynamic);
+                    BeanUtils.copyProperties(dynamic, dynamic2);
+                    dynamic2.setUpdateTime(new Date());
+                    dynamicResult = this.dynamicMapperWrite.updateByPrimaryKeySelective(dynamic2);
                 }
             }
             if (dynamicInfoIdLong != null) {
@@ -121,7 +124,9 @@ public class DynamicServiceImpl implements DynamicService {
                 if (dynamicInfo2 == null) {
                     dynamicInfoResult = this.dynamicInfoMapperWrite.insertImport(dynamicInfo);
                 } else {
-                    dynamicInfoResult = this.dynamicInfoMapperWrite.updateByPrimaryKey(dynamicInfo);
+                    BeanUtils.copyProperties(dynamicInfo, dynamicInfo2);
+                    dynamicInfo2.setUpdateTime(new Date());
+                    dynamicInfoResult = this.dynamicInfoMapperWrite.updateByPrimaryKeySelective(dynamicInfo2);
                 }
             }
             attacheInfoResult = this.attacheInfoMapperWrite.insertSelective(attacheInfo);
@@ -133,7 +138,7 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public String ajaxUploadExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("upfile");
@@ -142,27 +147,18 @@ public class DynamicServiceImpl implements DynamicService {
             log.error("文件不存在！");
             return "文件不存在！";
         }
-        InputStream in = null;
+        List<List<Object>> listObject;
         try {
-            in = file.getInputStream();
-        } catch (IOException e) {
-            log.error("文件不存在！", e);
-            return "文件不存在！";
-        }
-        List<List<Object>> listob = null;
-        try {
-            listob = new ExcelUtil().getBankListByExcel(in, file.getOriginalFilename());
+            listObject = new ExcelUtil().getBankListByExcel(file.getInputStream(), file.getOriginalFilename());
         } catch (Exception e) {
             log.error("文件不存在！", e);
             return "文件不存在！";
         }
         // 该处可调用service相应方法进行数据保存到数据库中，现只对数据输出
-        for (int i = 0; i < listob.size(); i++) {
-            List<Object> lo = listob.get(i);
-            log.info("lo.size={}", lo.size());
+        for (List<Object> lo : listObject) {
             if (!lo.isEmpty() && StrUtil.isNotEmpty(lo.get(0).toString()) && lo.size() == 24) {
                 String dir = String.valueOf(lo.get(22));
-                Long userIdLong;// id
+                Long userIdLong;
                 String datetimeString;
                 String phoneString = String.valueOf(lo.get(0)); // 手机号码
                 String nicknameString = String.valueOf(lo.get(1)); // 昵称
@@ -175,15 +171,13 @@ public class DynamicServiceImpl implements DynamicService {
                 String headIconString = String.valueOf(lo.get(8)); // 头像小图
                 String provinceString = String.valueOf(lo.get(9)); // 注册定位（省份）
                 String cityString = String.valueOf(lo.get(10)); // 注册定位（城市）
-                User user = null;
-                Dynamic dynamic = null;
-                DynamicInfo dynamicInfo = null;
+                User user;
+                Dynamic dynamic;
+                DynamicInfo dynamicInfo;
                 if (StrUtil.isNotEmpty(dir)) {
                     String[] dirArray = StrUtil.split(dir, "/");
                     userIdLong = Long.parseLong(dirArray[0]);
                     datetimeString = dirArray[1];
-                    log.info("userIdLong={}", userIdLong);
-                    log.info("datetimeString={}", datetimeString);
                     user = this.userDaoUseJdbcTemplate.getById(userIdLong);
                     if (user == null && StrUtil.isNotEmpty(phoneString)) {
                         user = this.userDaoUseJdbcTemplate.getByPhone(phoneString);
@@ -201,8 +195,6 @@ public class DynamicServiceImpl implements DynamicService {
                     user.setNickName(nicknameString);// 昵称
                     if (StrUtil.isNotEmpty(welkinIdString)) {
                         user.setWeixinId(welkinIdString);// 微信号
-                    } else {
-                        user.setWeixinId(UUIDUtil.genWeChat());
                     }
                     if (StrUtil.isNotEmpty(genderString)) {
                         user.setGender(genderString);// 性别
@@ -233,7 +225,7 @@ public class DynamicServiceImpl implements DynamicService {
                     user.setImei(UUIDUtil.genIMEI());
                     user.setModel("华为 P40");
                     user.setSysName("Android");
-                    user.setSysCode("10.0");
+                    user.setSysCode("11");
                     user.setNetworkMode("WIFI");
                     user.setPlatform("HuaWei");
                     user.setIp("183.14.29.243");
@@ -241,15 +233,16 @@ public class DynamicServiceImpl implements DynamicService {
                     Date userUpdateTimeDate = DateUtil.getTimeByHourAndDate(2, userCreateTimeDate);
                     user.setCreateTime(userCreateTimeDate);
                     user.setUpdateTime(userUpdateTimeDate);
-
-                    Long dynamicIdLong = Long.parseLong(String.valueOf(lo.get(11)));// 动态信息id
+                    //Long dynamicIdLong = Long.parseLong(String.valueOf(lo.get(11)));// 动态信息id
                     String dynamicProvinceString = String.valueOf(lo.get(12)); // 动态定位地址（省份）
+                    log.info("dynamicProvinceString={}", dynamicProvinceString);
                     String dynamicCityString = String.valueOf(lo.get(13)); // 动态定位地址（城市）
-                    dynamic = this.dynamicDaoUseJdbcTemplate.getById(dynamicIdLong);
+                    log.info("dynamicCityString={}", dynamicCityString);
+                    dynamic = this.dynamicDaoUseJdbcTemplate.getById(userIdLong);
                     if (dynamic == null) {
                         dynamic = new Dynamic();
                     }
-                    dynamic.setId(dynamicIdLong);
+                    dynamic.setId(userIdLong);
                     dynamic.setUserId(user.getId());
                     dynamic.setNickName(user.getNickName());
                     dynamic.setImei(user.getImei());
@@ -271,22 +264,18 @@ public class DynamicServiceImpl implements DynamicService {
                     dynamic.setCreateTime(DateUtil.getTimeByHourAndDate(3, userCreateTimeDate));
                     dynamic.setUpdateTime(DateUtil.getTimeByHourAndDate(5, userCreateTimeDate));
                     Long dynamicInfoIdLong = Long.parseLong(String.valueOf(lo.get(14)));// 动态内容id
-                    dynamicInfo = this.dynamicInfoDaoUseJdbcTemplate.getById(dynamicInfoIdLong);
+
                     String contentString = String.valueOf(lo.get(15));// 动态内容
                     String contentStatusString = String.valueOf(lo.get(16));// 动态内容状态
                     String publishStatusString = String.valueOf(lo.get(17));// 是否公开定位状态
                     Integer likesInteger = Integer.parseInt(String.valueOf(lo.get(18)));// 点赞数
                     Integer applicationsInteger = Integer.parseInt(String.valueOf(lo.get(19)));// 申请加微信数
                     String attacheTypeString = String.valueOf(lo.get(20));// 附件类型
+                    log.info("attacheTypeString={}", attacheTypeString);
                     Integer attacheNumberInteger = Integer.parseInt(String.valueOf(lo.get(21)));// 附件数量
+                    dynamicInfo = this.dynamicInfoDaoUseJdbcTemplate.getById(dynamicInfoIdLong);
                     if (dynamicInfo == null) {
                         dynamicInfo = new DynamicInfo();
-                    }
-                    if ("1".equals(attacheTypeString)) {
-                        attacheTypeString = "0";
-                    }
-                    if ("2".equals(attacheTypeString)) {
-                        attacheTypeString = "1";
                     }
                     dynamicInfo.setId(dynamicInfoIdLong);
                     dynamicInfo.setUserId(user.getId());
@@ -299,10 +288,19 @@ public class DynamicServiceImpl implements DynamicService {
                     dynamicInfo.setShares(0);
                     dynamicInfo.setAttacheType(attacheTypeString);
                     dynamicInfo.setAttacheNumber(attacheNumberInteger);
-
                     dynamicInfo.setCreateTime(DateUtil.getTimeByHourAndDate(6, userCreateTimeDate));
                     dynamicInfo.setUpdateTime(DateUtil.getTimeByHourAndDate(7, userCreateTimeDate));
-
+                    dynamicInfo.setCountry("中国");
+                    if (StrUtil.isNotEmpty(dynamicProvinceString)) {
+                        dynamicInfo.setProvince(dynamicProvinceString);
+                    } else {
+                        dynamicInfo.setProvince(dynamic.getProvince());
+                    }
+                    if (StrUtil.isNotEmpty(dynamicCityString)) {
+                        dynamicInfo.setCity(dynamicCityString);
+                    } else {
+                        dynamicInfo.setCity(dynamic.getCity());
+                    }
                     String attacheNameStrings = String.valueOf(lo.get(23));// 附件名称集合
                     String[] attacheNameArray = StrUtil.split(attacheNameStrings, "||");
                     AttacheInfo attacheInfo = new AttacheInfo();
