@@ -1229,9 +1229,11 @@ public class UserController {
             Integer age = 0;
             if (UserGenderEnum.Male.getGender().equals(screenGender)) {//男生
                 example.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.LOOK_AGE_MALE.getType());
+                screenGender = UserGenderEnum.Female.getGender();
             }
             if (UserGenderEnum.Female.getGender().equals(screenGender)) {//女生
                 example.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.LOOK_AGE_FEMALE.getType());
+                screenGender = UserGenderEnum.Male.getGender();
             }
             List<ScreenSetting> screenSettings = this.screenSettingMapperReader.selectByExample(example);
             if (!Objects.isNull(screenSettings) && !screenSettings.isEmpty()) {
@@ -1261,7 +1263,7 @@ public class UserController {
             lookInfoParam.setMinAge(min);
             lookInfoParam.setMaxAge(max);
             lookInfoParam.setUserId(id);
-            log.info("lookInfoParam={}", lookInfoParam);
+//            log.info("lookInfoParam={}", lookInfoParam);
             List<User> userList = this.userMapperReader.selectLookUserList(lookInfoParam);
             List<User> userList1 = new LinkedList<>();
             List<UserVO3> userVO3List = new LinkedList<>();

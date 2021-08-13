@@ -475,7 +475,7 @@ public class DynamicServiceImpl implements DynamicService {
     @Transactional(readOnly = true)
     public Map<String, Object> getDynamicInfoData(Long userId, DynamicInfoParam dynamicInfoParam, Integer pageNum, Integer pageSize) {
         Map<String, Object> data = new ConcurrentHashMap<>();
-        log.info("dynamicInfoParam={}", dynamicInfoParam);
+//        log.info("dynamicInfoParam={}", dynamicInfoParam);
         final PageInfo<DynamicInfoData> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectDynamicInfoData(dynamicInfoParam));
         data.put("totalPage", listPageInfo.getPages());
         List<DynamicInfoData> list = listPageInfo.getList();
