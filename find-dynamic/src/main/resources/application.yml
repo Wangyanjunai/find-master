@@ -69,7 +69,7 @@ spring:
 server:
   servlet:
     context-path: /find
-  port: 8093
+  port: 8083
 #########Mybatis自身配置##########
 mybatis:
   configuration:

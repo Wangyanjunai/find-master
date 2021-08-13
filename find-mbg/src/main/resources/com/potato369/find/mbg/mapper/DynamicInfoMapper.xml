@@ -465,28 +465,28 @@
                 )
             </if>
             <if test="param.tagsList != null and param.tagsList.size() > 0">
-                OR ur.`tag2` IN (
+                AND ur.`tag2` IN (
                 <foreach collection="param.tagsList" item="tagId" index="index" separator=",">
                     #{tagId}
                 </foreach>
                 )
             </if>
             <if test="param.tagsList != null and param.tagsList.size() > 0">
-                OR ur.`tag3` IN (
+                AND ur.`tag3` IN (
                 <foreach collection="param.tagsList" item="tagId" index="index" separator=",">
                     #{tagId}
                 </foreach>
                 )
             </if>
             <if test="param.tagsList != null and param.tagsList.size() > 0">
-                OR ur.`tag4` IN (
+                AND ur.`tag4` IN (
                 <foreach collection="param.tagsList" item="tagId" index="index" separator=",">
                     #{tagId}
                 </foreach>
                 )
             </if>
             <if test="param.tagsList != null and param.tagsList.size() > 0">
-                OR ur.`tag5` IN (
+                AND ur.`tag5` IN (
                 <foreach collection="param.tagsList" item="tagId" index="index" separator=",">
                     #{tagId}
                 </foreach>

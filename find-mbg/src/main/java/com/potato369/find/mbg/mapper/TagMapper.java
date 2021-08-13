@@ -21,6 +21,8 @@ public interface TagMapper {
 
     List<Tag> selectByKeywords(@Param("keywords") String keywords);
 
+    List<Tag> selectByTagName(@Param("name") String keywords);
+
     Tag selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") Tag record, @Param("example") TagExample example);

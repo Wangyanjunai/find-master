@@ -86,6 +86,8 @@ public class DynamicController {
 
     private AttacheInfoMapper attacheInfoMapperReader;
 
+    private IndustrysMapper industrysMapperReader;
+
     @Autowired
     public void setDynamicService(DynamicService dynamicService) {
         this.dynamicService = dynamicService;
@@ -194,6 +196,11 @@ public class DynamicController {
     @Autowired
     public void setAttacheInfoMapperReader(AttacheInfoMapper attacheInfoMapperReader) {
         this.attacheInfoMapperReader = attacheInfoMapperReader;
+    }
+
+    @Autowired
+    public void setIndustrysMapperReader(IndustrysMapper industrysMapperReader) {
+        this.industrysMapperReader = industrysMapperReader;
     }
 
     // 用户发布动态附件（包括图片和语音）
@@ -543,8 +550,6 @@ public class DynamicController {
             @RequestParam(name = "ip", required = false) String ip,//客户端ip
             @RequestParam(name = "longitude", required = false) Double longitude,//经度
             @RequestParam(name = "latitude", required = false) Double latitude,//纬度
-            @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum, // 当前页数，默认：当前第1页
-            @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize, // 每页条数，默认：每页20条
             @RequestParam(name = "gender", required = false) String gender, // 性别，0->女生，1->男生，2->全部
             @RequestParam(name = "minAge", required = false, defaultValue = "16") Integer minAge, // 年龄范围（最小值），默认：16岁
             @RequestParam(name = "maxAge", required = false, defaultValue = "35") Integer maxAge, // 年龄范围（最大值），默认：35岁
@@ -553,8 +558,10 @@ public class DynamicController {
             @RequestParam(name = "provinceList", required = false) List<String> provinceList, // 发布动态定位（省份列表）
             @RequestParam(name = "cityList", required = false) List<String> cityList,// 发布动态定位（城市列表）
             @RequestParam(name = "industryId", required = false) Long industryId, //行业Id
+            @RequestParam(name = "tags", required = false) List<String> tagsList,//标签列表
             @RequestParam(name = "professionId", required = false) Long professionId, //职业Id
-            @RequestParam(name = "tags", required = false) List<String> tagsList) {   //标签列表
+            @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum, // 当前页数，默认：当前第1页
+            @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize) { // 每页条数，默认：每页20条
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
         operateRecord.setType(OperateRecordTypeEnum.ScreenDynamic.getCode());
@@ -574,6 +581,7 @@ public class DynamicController {
             if (StrUtil.isAllEmpty(ip, longitudeString, latitudeString)) {
                 return CommonResult.validateFailed("参数校验不通过，客户端IP，定位地址经纬度不能同时为空。");
             }
+            //根据客户端ip获取经纬度，计算距离
             if (Objects.isNull(longitude) && Objects.isNull(latitude)) {
                 if (!Objects.isNull(ip)) {
                     LocationDTO locationDTO = dynamicService.getLocationByAliyunIP(ip);
@@ -605,9 +613,9 @@ public class DynamicController {
                 return CommonResult.validateFailed("参数校验不通过，年龄范围最大值为150岁。");
             }
 
-            // 5、 校验星座数组参数，星座值是否在十二星座中选择
+            // 5、 校验星座数组参数，星座值是否在十二个星座中选择
             ConstellationConstant constellationConstant = new ConstellationConstant();
-            if (constellations != null && constellations.size() > 0) {
+            if (!Objects.isNull(constellations) && constellations.size() > 0) {
                 for (String constellation : constellations) {
                     if (!constellationConstant.getConstellationList().contains(constellation)) {
                         return CommonResult.validateFailed("参数校验不通过，星座值“" + constellation + "”不符合要求。");
@@ -620,10 +628,21 @@ public class DynamicController {
                     dataType = null; //null 全部
                 }
             }
+
             DynamicInfoParam dynamicInfoParam = new DynamicInfoParam();
-            // 如果前端传过来的筛选条件值为2
-            if (Objects.equals(UserGenderEnum.ALL.getGender(), gender)) {
-                gender = null;
+            if (Objects.isNull(gender)) {
+                String userGender = user.getGender();
+                if (Objects.equals(UserGenderEnum.Female.getGender(), userGender)) {
+                    gender = UserGenderEnum.Male.getGender();
+                }
+                if (Objects.equals(UserGenderEnum.Male.getGender(), userGender)) {
+                    gender = UserGenderEnum.Female.getGender();
+                }
+            } else {
+                // 如果前端传过来的筛选条件值为2
+                if (Objects.equals(UserGenderEnum.ALL.getGender(), gender)) {
+                    gender = null;
+                }
             }
             // 设置性别筛选条件
             dynamicInfoParam.setGender(gender);
@@ -689,28 +708,44 @@ public class DynamicController {
                 dynamicInfoParam.setConstellations(constellations);
             }
             List<Long> professionIdList = new ArrayList<>();
-            if (Objects.isNull(industryId)) {
-                professionId = user.getProfessionId();
-                professionIdList.add(professionId);
+            if (Objects.isNull(professionId) && Objects.isNull(industryId)) {
+                Long p = user.getProfessionId();
+                Industrys in = this.industrysMapperReader.selectByPrimaryKey(p);
+                if (!Objects.isNull(in)) {
+                    industryId = in.getId();
+                }
+                //行业id，查询所有的职业id
+                ProfessionsExample example = new ProfessionsExample();
+                example.createCriteria().andIndustryIdEqualTo(industryId).andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());
+                List<Professions> professionsList = this.professionsMapperReader.selectByExample(example);
+                if (!Objects.isNull(professionsList) && !professionsList.isEmpty()) {
+                    professionIdList = professionsList.stream().map(Professions::getId).collect(Collectors.toList());
+                }
             } else {
-                if (Objects.isNull(professionId)) {
+                //行业id，查询所有的职业id
+                if (!Objects.isNull(industryId) && !Objects.isNull(professionId)) {
+                    professionIdList.add(professionId);
+                }
+                //行业id，查询所有的职业id
+                if (!Objects.isNull(industryId) && Objects.isNull(professionId)) {
                     ProfessionsExample example = new ProfessionsExample();
                     example.createCriteria().andIndustryIdEqualTo(industryId).andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());
                     List<Professions> professionsList = this.professionsMapperReader.selectByExample(example);
                     if (!Objects.isNull(professionsList) && !professionsList.isEmpty()) {
                         professionIdList = professionsList.stream().map(Professions::getId).collect(Collectors.toList());
                     }
-                } else {
+                }
+                //行业id，查询所有的职业id
+                if (Objects.isNull(industryId) && !Objects.isNull(professionId)) {
                     professionIdList.add(professionId);
                 }
             }
-            //行业id，查询所有的职业id
             dynamicInfoParam.setProfessionIds(professionIdList);
 
             List<Long> tagsIdList = new ArrayList<>();
             if (!Objects.isNull(tagsList) && !tagsList.isEmpty()) {
                 for (String tag : tagsList) {
-                    List<Tag> tagRecord = this.tagMapperReader.selectByKeywords(tag);
+                    List<Tag> tagRecord = this.tagMapperReader.selectByTagName(tag);
                     if (!Objects.isNull(tagRecord) && !tagRecord.isEmpty()) {
                         List<Long> longList = tagRecord.stream().map(Tag::getId).collect(Collectors.toList());
                         tagsIdList.addAll(longList);

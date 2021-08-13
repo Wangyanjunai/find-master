@@ -24,7 +24,7 @@ spring:
 server:
   servlet:
     context-path: /find
-  port: 8094
+  port: 8084
   tomcat:
     accept-count: 500 # Maximum queue length for incoming connection requests when all possible request processing threads are in use.
     accesslog.buffered: true # Whether to buffer output such that it is flushed only periodically.
