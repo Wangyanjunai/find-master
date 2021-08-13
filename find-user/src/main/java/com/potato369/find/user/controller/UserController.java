@@ -1229,11 +1229,9 @@ public class UserController {
             Integer age = 0;
             if (UserGenderEnum.Male.getGender().equals(screenGender)) {//男生
                 example.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.LOOK_AGE_MALE.getType());
-                screenGender = UserGenderEnum.Female.getGender();
             }
             if (UserGenderEnum.Female.getGender().equals(screenGender)) {//女生
                 example.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.LOOK_AGE_FEMALE.getType());
-                screenGender = UserGenderEnum.Male.getGender();
             }
             List<ScreenSetting> screenSettings = this.screenSettingMapperReader.selectByExample(example);
             if (!Objects.isNull(screenSettings) && !screenSettings.isEmpty()) {
@@ -1259,6 +1257,12 @@ public class UserController {
             Date min = DateUtil.fomatDate(DateUtil.getBeforeYearByAge(screenAgeMin));
             Date max = DateUtil.fomatDate(DateUtil.getBeforeYearByAge(screenAgeMax));
             LookInfoParam lookInfoParam = new LookInfoParam();
+            if (UserGenderEnum.Female.getGender().equals(screenGender)) {
+                screenGender = UserGenderEnum.Male.getGender();
+            }
+            if (UserGenderEnum.Male.getGender().equals(screenGender)) {
+                screenGender = UserGenderEnum.Female.getGender();
+            }
             lookInfoParam.setGender(screenGender);
             lookInfoParam.setMinAge(min);
             lookInfoParam.setMaxAge(max);
