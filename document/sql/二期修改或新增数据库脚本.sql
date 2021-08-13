@@ -66,7 +66,7 @@ CREATE TABLE `comment`
   `user_id` bigint(20) NOT NULL COMMENT '评论的用户id',
   `dynamic_info_id` bigint(20) NOT NULL COMMENT '被评论的动态内容id',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '评论内容',
-  `likes`   int(11) unsigned NOT NULL DEFAULT 0 COMMENT '评论的点赞数',
+  `likes`   int(11)  NOT NULL DEFAULT 0 COMMENT '评论的点赞数',
   `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是，默认：0->否',
   `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
@@ -78,7 +78,7 @@ CREATE TABLE `comment`
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '评论信息表' ROW_FORMAT = Dynamic;
 
--- alter table `comment` add column `likes` int(11) unsigned NOT NULL DEFAULT 0 COMMENT '评论的点赞数' after `dynamic_info_id`;
+-- alter table `comment` add column `likes` int(11)  NOT NULL DEFAULT 0 COMMENT '评论的点赞数' after `dynamic_info_id`;
 -- ----------------------------
 -- Table structure for industrys
 -- ----------------------------

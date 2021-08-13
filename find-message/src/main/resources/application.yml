@@ -53,7 +53,7 @@ spring:
 server:
   servlet:
     context-path: /find
-  port: 8082
+  port: 8092
 #########Mybatis自身配置##########
 mybatis:
   configuration:

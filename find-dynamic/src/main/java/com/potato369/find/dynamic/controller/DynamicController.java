@@ -563,7 +563,6 @@ public class DynamicController {
             if (log.isDebugEnabled()) {
                 log.debug("开始筛选发布动态内容信息列表");
             }
-
             String longitudeString = null;
             if (!Objects.isNull(longitude)) {
                 longitudeString = Double.toString(longitude);

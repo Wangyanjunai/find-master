@@ -4,14 +4,15 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 8.135.36.45:8848
+        server-addr: 127.0.0.1:8848
         namespace: ff16f08d-13a1-481f-a01c-fefc6d33cb74
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/find_dev_test01?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://potato369.com:31306/find_dev_test02?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useOldAliasMetadataBehavior=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: find
     password: XueGod!@#123
 #项目相关配置
 project-url:
-  domain: http://188.131.154.96:8081                 #项目网关域名前缀
-  upload-res: /ebookData/upgrade_file/http/Resources #资源文件存放nginx服务器路径
-  res-domain: http://188.131.154.96:8000             #Nginx服务器路径网关域名
+  project-name: /find02
+  domain: http://8.135.36.45:8091 #项目网关域名前缀
+  upload-res: /data/Resources     #资源文件存放nginx服务器路径
+  res-domain: http://8.135.36.45:8000 #Nginx服务器路径网关域名

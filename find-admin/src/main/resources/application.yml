@@ -74,7 +74,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 server:
-  port: 8085
+  port: 8095
   servlet:
     context-path: /find
 #########Mybatis自身配置##########

@@ -405,10 +405,10 @@
         di.`content`,
         di.`public_status`,
         CONCAT( di.`country`, '·' ) AS `country`,
-        CONCAT( di.`province`, '·' ) AS `province`,
-        CONCAT( di.`city`, '·' ) AS `city`,
-        CONCAT( di.`district`, '·' ) AS `district`,
-        di.`other`,
+        CONCAT(di.`province`) AS `province`,
+        CONCAT('·' , di.`city`) AS `city`,
+        CONCAT( '·' , di.`district`) AS `district`,
+        CONCAT( '·' , di.`other`) AS `other`,
         di.`longitude`,
         di.latitude,
         di.`likes`,
@@ -571,11 +571,11 @@
                di.`create_time`,
                di.`content`,
                di.`public_status`,
-               CONCAT(di.`country`, '·')  AS country,
-               CONCAT(di.`province`, '·') AS province,
-               CONCAT(di.`city`, '·')     AS city,
-               CONCAT(di.`district`, '·') AS district,
-               di.`other`,
+               CONCAT(di.`country`, '·')  AS `country`,
+               CONCAT(di.`province`)      AS `province`,
+               CONCAT('·', di.`city`)     AS `city`,
+               CONCAT('·', di.`district`) AS `district`,
+               CONCAT('·', di.`other`)    AS `other`,
                di.`likes`,
                di.`applications`,
                di.`shares`,
@@ -602,11 +602,11 @@
                di.`create_time`,
                di.`content`,
                di.`public_status`,
-               CONCAT(di.`country`, '·')  AS country,
-               CONCAT(di.`province`, '·') AS province,
-               CONCAT(di.`city`, '·')     AS city,
-               CONCAT(di.`district`, '·') AS district,
-               di.`other`,
+               CONCAT(di.`country`, '·')  AS `country`,
+               CONCAT(di.`province`)      AS `province`,
+               CONCAT('·', di.`city`)     AS `city`,
+               CONCAT('·', di.`district`) AS `district`,
+               CONCAT('·', di.`other`)    AS `other`,
                di.`likes`,
                di.`applications`,
                di.`shares`,
@@ -625,7 +625,8 @@
         ORDER BY di.`likes` DESC, di.`create_time` DESC, di.`update_time` DESC
     </select>
 
-    <select id="getFileNameByUserId" parameterType="java.lang.Long" resultType="com.potato369.find.mbg.model.AttacheInfo">
+    <select id="getFileNameByUserId" parameterType="java.lang.Long"
+            resultType="com.potato369.find.mbg.model.AttacheInfo">
         select ai.`file_name`,
                ai.`dynamic_info_by`
         from `attache_info` ai

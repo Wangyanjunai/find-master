@@ -17,7 +17,6 @@ import com.potato369.find.message.config.props.ProjectUrlProps;
 import com.potato369.find.message.service.JiGuangPushService;
 import com.potato369.find.message.service.MessageService;
 import com.potato369.find.message.service.SensitiveWordsService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +26,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 public class MessageServiceImpl implements MessageService {
 
     private MessageMapper messageMapperReader;

@@ -146,7 +146,7 @@ CREATE TABLE `comment`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号，主键',
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
   `dynamic_info_id` bigint(20) NOT NULL COMMENT '动态内容id',
-  `likes` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '评论的点赞数',
+  `likes` int(11) NOT NULL DEFAULT 0 COMMENT '评论的点赞数',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
   `delete_status` enum('0','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否删除状态，0->否，1->是，默认：0->否',
   `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

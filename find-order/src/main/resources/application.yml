@@ -66,7 +66,7 @@ spring:
 server:
   servlet:
     context-path: /find
-  port: 8086
+  port: 8096
 #项目路径参数配置
 project-url:
   project-name: /find
