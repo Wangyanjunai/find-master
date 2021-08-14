@@ -2861,7 +2861,7 @@ public class DynamicController {
      * @apiSuccess (200) {Number} [totalCount] 参与此话题的动态总数量
      * @apiSuccess (200) {String} [topicTitle] 话题标题
      * @apiSuccess (200) {String[]} [attacheFileList] 参与此话题的动态附件文件路径列表
-     * @apiParamExample  请求示例
+     * @apiParamExample 请求示例
      * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/70/hot-topics?pageNum=1&pageSize=10
      * @apiSuccessExample {json} 200响应示例
      * {
@@ -3654,5 +3654,83 @@ public class DynamicController {
     @GetMapping(value = "/{id}/hot-topic")
     public CommonResult<Map<String, Object>> findHotByDynamicInfoCount(@PathVariable(name = "id") Long userId) {
         return this.dynamicFeignClient.findHotByDynamicInfoCount(userId);
+    }
+
+    /**
+     * @api {put} /find/dynamic/{id}/apply 根据用户id申请加微信接口
+     * @apiVersion 1.0.0
+     * @apiGroup 动态模块API
+     * @apiName 根据用户id申请加微信
+     * @apiParam (接口请求参数) {Number} id 申请者用户id，说明：普通用户每天只允许申请最多5次添加微信，VIP用户申请加微信次数没有限制
+     * @apiParam (接口请求参数) {Number} userId 被申请者用户id
+     * @apiParam (接口请求参数) {String} [message] 发送的消息
+     * @apiParamExample 请求示例01（第1次申请加微信）
+     * HTTP/1.1 OK
+     * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/apply?userId=86&message=需要加您的微信，请发送微信号码过来
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [APPLICATION] 申请加微信状态，OK->成功，ERROR->失败
+     * @apiSuccessExample {json} 200响应示例01（第1次申请加微信）
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "申请加微信成功。",
+     * "data": {
+     * "APPLICATION": "OK"
+     * }
+     * }
+     * @apiParamExample {json} 请求示例02（第6次申请加微信）
+     * HTTP/1.1 OK
+     * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/70/apply?userId=86&message=需要加您的微信16
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String} [APPLICATION] 申请加微信状态，OK->成功，ERROR->失败
+     * @apiSuccessExample {json} 200 响应示例02（第6次申请加微信）
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "申请加微信出错，当天申请加微信次数超限。",
+     * "data": {
+     * "APPLICATION": "ERROR"
+     * }
+     * }
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
+     * @apiError (404) {String} error 错误说明
+     * @apiError (404) {String} message 返回说明
+     * @apiError (404) {String} path 路径
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应 接口未注册
+     * {
+     * "timestamp": 1611558682334,
+     * "status": 404,
+     * "error": "Not Found",
+     * "message": "No message available",
+     * "path": "find/dynamic/70/userId1"
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！",
+     * "data": null
+     * }
+     */
+    //根据用户id申请加微信
+    @PutMapping(value = "/{id}/apply")
+    CommonResult<Map<String, Object>> applyToAddWechatByUserId(@PathVariable(name = "id") Long applicantUserId,
+                                                               @RequestParam(name = "userId") Long applicantsUserId,
+                                                               @RequestParam(name = "message", required = false) String message) {
+        return this.dynamicFeignClient.applyToAddWechatByUserId(applicantUserId, applicantsUserId, message);
     }
 }

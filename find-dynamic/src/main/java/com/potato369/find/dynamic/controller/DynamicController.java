@@ -908,16 +908,16 @@ public class DynamicController {
     }
 
     /**
-     * 用户申请加微信
+     * 根据用户发布的动态内容Id申请加微信
      *
      * @param applicantUserId 申请加微信者的用户id
      * @param dynamicInfoId   被申请加微信者的动态内容信息id
      * @param message         申请加微信发送的消息
      */
     @PutMapping(value = "/{id}/application.do")
-    public CommonResult<Map<String, Object>> application(@PathVariable(name = "id") Long applicantUserId,
-                                                         @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
-                                                         @RequestParam(name = "message", required = false) String message) {
+    public CommonResult<Map<String, Object>> applyToAddWechatByDynamicId(@PathVariable(name = "id") Long applicantUserId,
+                                                                         @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
+                                                                         @RequestParam(name = "message", required = false) String message) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setUserId(applicantUserId);
@@ -1366,6 +1366,130 @@ public class DynamicController {
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束查询热门推荐话题列表");
+            }
+        }
+    }
+
+    /**
+     * 根据用户id申请加微信
+     *
+     * @param applicantUserId  申请加微信者用户id
+     * @param applicantsUserId 被申请加微信着用户id
+     * @param message          申请加微信发送的消息
+     */
+    @PutMapping(value = "/{id}/apply-to-add-wechat.do")
+    public CommonResult<Map<String, Object>> applyToAddWechatByUserId(@PathVariable(name = "id") Long applicantUserId,
+                                                                      @RequestParam(name = "userId") Long applicantsUserId,
+                                                                      @RequestParam(name = "message", required = false) String message) {
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setUserId(applicantUserId);
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.ApplyForWechat.getCode());
+        data.put("APPLICATION", "ERROR");
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始申请加微信");
+            }
+            //申请加微信者
+            User applicantUser = this.userMapperReader.selectByPrimaryKey(applicantUserId);
+            if (Objects.isNull(applicantUser)) {
+                return CommonResult.failed(data, ResultCode.APPLICANT_USER_IS_NOT_EXIST);
+            }
+            //需要判断是否是在申请加自己微信
+            if (Objects.equals(applicantsUserId, applicantUserId)) {
+                return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_VALID);
+            }
+            //被申请者用户信息
+            User applicantsUser = this.userMapperReader.selectByPrimaryKey(applicantsUserId);
+            if (Objects.isNull(applicantsUser)) {
+                return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
+            }
+            //校验发布的内容是否包含敏感词汇
+            SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(message);
+            if (!Objects.isNull(sensitiveWords)) {
+                return CommonResult.validateFailed("发送消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
+            }
+            // 获取申请加微信者申请加被申请加微信者微信记录条数，查询当天用户申请加微信次数
+            int count = this.applicationRecordMapperReader.countByUserId(applicantUserId, applicantsUserId);
+            if (count > 0) {
+                // 如果次数大于0，则判断被申请加微信者未回复申请加微信者发送的消息，则不允许继续申请加被申请人微信
+                MessageExample messageExample = new MessageExample();
+                messageExample.setOrderByClause("create_time DESC");
+                messageExample.createCriteria()
+                        .andRecipientUserIdEqualTo(applicantsUserId)
+                        .andSendUserIdEqualTo(applicantUserId)
+                        .andReserveColumn01EqualTo(MessageTypeEnum.Applications.getMessage())
+                        .andReserveColumn02EqualTo(MessageType2Enum.SEND.getCodeStr());
+                List<Message> messageList = this.messageMapperReader.selectByExample(messageExample);
+                if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
+                    Message messageTemp = messageList.get(0);
+                    if (!Objects.isNull(messageTemp)) {
+                        int count2 = this.messageMapperReader.countByUserId(applicantsUserId, applicantUserId, messageTemp.getId());
+                        if (count2 <= 0) {
+                            return CommonResult.failed(data, ResultCode.NO_REPLY_OVERRUN);
+                        }
+                    }
+                }
+            }
+            // 非VIP用户加不同人微信次数看配置，目前配置是每人每天只能申请添加微信5次，VIP用户没有限制
+            ApplicationSetting applicationSetting = this.applicationSettingService.findApplication();
+            int times = 0;
+            if (!Objects.isNull(applicationSetting)) {
+                times = applicationSetting.getTimes();
+            }
+            if (UserGradeEnum.VIP0.getGrade().equals(applicantUser.getGrade())) {
+                int timesResult = this.applicationRecordService.findApplicationRecordCountByUserId(applicantUserId);
+                if (timesResult >= times) {
+                    return CommonResult.failed(data, ResultCode.TIMES_OVERRUN);
+                }
+            }
+            DynamicInfo dynamicInfo = null;
+            DynamicInfoExample dynamicInfoExample = new DynamicInfoExample();
+            dynamicInfoExample.setDistinct(true);
+            dynamicInfoExample.setOrderByClause("create_time DESC, update_time DESC");
+            dynamicInfoExample.createCriteria().andDynamicStatusNotEqualTo(DynamicInfoStatusEnum.HIDE.getStatus());
+            List<DynamicInfo> dynamicInfoList = this.dynamicInfoMapperReader.selectByExample(dynamicInfoExample);
+            if (!Objects.isNull(dynamicInfoList) && dynamicInfoList.size() > 0) {
+                dynamicInfo = dynamicInfoList.get(0);
+            }
+            ApplicationRecord applicationRecord = new ApplicationRecord();
+            if (!Objects.isNull(dynamicInfo)) {
+                applicationRecord.setDynamicInfoId(dynamicInfo.getId());//被申请加微信者动态内容信息id
+            } else {
+                applicationRecord.setDynamicInfoId(applicantsUserId);//被申请加微信者动态内容信息id
+            }
+            applicationRecord.setUserId(applicantUserId);//申请加微信者用户id
+            applicationRecord.setReserveColumn01(String.valueOf(applicantsUserId));//被申请加微信者用户id
+            if (StrUtil.isEmpty(message)) {
+                message = "申请加您的微信，麻烦通过一下，谢谢！";
+            }
+            int rowResult = this.applicationRecordService.saveApplicationRecord(dynamicInfo, applicationRecord, message);
+            String msg;
+            if (rowResult > 0) {
+                data.put("APPLICATION", "OK");
+                msg = "申请加微信成功。";
+                String title = applicantUser.getNickName();//消息标题
+                Map<String, String> extras = new ConcurrentHashMap<>();
+                PushBean pushBean = new PushBean();
+                pushBean.setAlert(message);
+                pushBean.setTitle(title);
+                pushBean.setExtras(extras);
+                this.jiGuangPushService.pushAndroid(pushBean, applicantsUser.getReserveColumn03());
+            } else {
+                data.put("APPLICATION", "ERROR");
+                msg = "申请加微信失败。";
+            }
+            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.success(data, msg);
+        } catch (Exception e) {
+            log.error("申请加微信出现错误", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.failed("申请加微信出现错误。");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束申请加微信");
             }
         }
     }

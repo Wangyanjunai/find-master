@@ -147,4 +147,10 @@ public interface DynamicService {
     //查询热门推荐话题列表
     @GetMapping(value = "/find/v1/dynamic/{id}/hot-topic.do")
     CommonResult<Map<String, Object>> findHotByDynamicInfoCount(@PathVariable(name = "id") Long userId);
+
+    //根据用户id申请加微信
+    @PutMapping(value = "/find/v1/dynamic/{id}/apply-to-add-wechat.do")
+    CommonResult<Map<String, Object>> applyToAddWechatByUserId(@PathVariable(name = "id") Long applicantUserId,
+                                                               @RequestParam(name = "userId") Long applicantsUserId,
+                                                               @RequestParam(name = "message", required = false) String message);
 }
