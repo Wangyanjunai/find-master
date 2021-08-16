@@ -708,37 +708,23 @@ public class DynamicController {
                 dynamicInfoParam.setConstellations(constellations);
             }
             List<Long> professionIdList = new ArrayList<>();
-            if (Objects.isNull(professionId) && Objects.isNull(industryId)) {
-                Long p = user.getProfessionId();
-                Industrys in = this.industrysMapperReader.selectByPrimaryKey(p);
-                if (!Objects.isNull(in)) {
-                    industryId = in.getId();
+            if (Objects.isNull(professionId)) {
+                if (Objects.isNull(industryId)) {
+                    Long p = user.getProfessionId();
+                    Industrys in = this.industrysMapperReader.selectByPrimaryKey(p);
+                    if (!Objects.isNull(in)) {
+                        industryId = in.getId();
+                    }
                 }
-                //行业id，查询所有的职业id
                 ProfessionsExample example = new ProfessionsExample();
                 example.createCriteria().andIndustryIdEqualTo(industryId).andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());
                 List<Professions> professionsList = this.professionsMapperReader.selectByExample(example);
                 if (!Objects.isNull(professionsList) && !professionsList.isEmpty()) {
                     professionIdList = professionsList.stream().map(Professions::getId).collect(Collectors.toList());
                 }
-            } else {
-                //行业id，查询所有的职业id
-                if (!Objects.isNull(industryId) && !Objects.isNull(professionId)) {
-                    professionIdList.add(professionId);
-                }
-                //行业id，查询所有的职业id
-                if (!Objects.isNull(industryId) && Objects.isNull(professionId)) {
-                    ProfessionsExample example = new ProfessionsExample();
-                    example.createCriteria().andIndustryIdEqualTo(industryId).andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());
-                    List<Professions> professionsList = this.professionsMapperReader.selectByExample(example);
-                    if (!Objects.isNull(professionsList) && !professionsList.isEmpty()) {
-                        professionIdList = professionsList.stream().map(Professions::getId).collect(Collectors.toList());
-                    }
-                }
-                //行业id，查询所有的职业id
-                if (Objects.isNull(industryId) && !Objects.isNull(professionId)) {
-                    professionIdList.add(professionId);
-                }
+            }
+            if (!Objects.isNull(professionId)) {
+                professionIdList.add(professionId);
             }
             dynamicInfoParam.setProfessionIds(professionIdList);
 
@@ -889,7 +875,10 @@ public class DynamicController {
                     PushBean pushBean = new PushBean();
                     pushBean.setAlert(content);
                     pushBean.setTitle(title);
-                    this.jiGuangPushService.pushAndroid(pushBean, publishUser.getReserveColumn03());
+                    String regId = publishUser.getReserveColumn03();
+                    if (!Objects.isNull(regId)) {
+                        this.jiGuangPushService.pushAndroid(pushBean, regId);
+                    }
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                     this.operateRecordMapperWriter.insertSelective(operateRecord);
                     return CommonResult.success(data, "点赞成功。");
@@ -1006,7 +995,10 @@ public class DynamicController {
                 pushBean.setAlert(message);
                 pushBean.setTitle(title);
                 pushBean.setExtras(extras);
-                this.jiGuangPushService.pushAndroid(pushBean, applicantsUser.getReserveColumn03());
+                String regId = applicantsUser.getReserveColumn03();
+                if (!Objects.isNull(regId)) {
+                    this.jiGuangPushService.pushAndroid(pushBean, regId);
+                }
             } else {
                 data.put("APPLICATION", "ERROR");
                 msg = "申请加微信失败。";
@@ -1475,7 +1467,10 @@ public class DynamicController {
                 pushBean.setAlert(message);
                 pushBean.setTitle(title);
                 pushBean.setExtras(extras);
-                this.jiGuangPushService.pushAndroid(pushBean, applicantsUser.getReserveColumn03());
+                String regId = applicantsUser.getReserveColumn03();
+                if (!Objects.isNull(regId)) {
+                    this.jiGuangPushService.pushAndroid(pushBean, regId);
+                }
             } else {
                 data.put("APPLICATION", "ERROR");
                 msg = "申请加微信失败。";

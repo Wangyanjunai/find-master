@@ -117,7 +117,7 @@ public class JiGuangPushServiceImpl implements JiGuangPushService {
 				regList.add(registid);
 			}
 			if (log.isDebugEnabled()) {
-				log.debug("registid={}", registid.toString());
+				log.debug("registid={}", registid);
 			}
 		}
 		return regList.toArray(new String[0]);
