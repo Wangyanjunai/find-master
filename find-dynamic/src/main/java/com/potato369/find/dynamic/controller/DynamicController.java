@@ -711,9 +711,9 @@ public class DynamicController {
             if (Objects.isNull(professionId)) {
                 if (Objects.isNull(industryId)) {
                     Long p = user.getProfessionId();
-                    Industrys in = this.industrysMapperReader.selectByPrimaryKey(p);
-                    if (!Objects.isNull(in)) {
-                        industryId = in.getId();
+                    Professions professions = this.professionsMapperReader.selectByPrimaryKey(p);
+                    if (!Objects.isNull(professions)) {
+                        industryId = professions.getIndustryId();
                     }
                 }
                 ProfessionsExample example = new ProfessionsExample();
