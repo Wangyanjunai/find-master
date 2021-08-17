@@ -52,8 +52,7 @@ public enum ResultCode implements IErrorCode {
 
     COUNT_OVERRUN(605, "今天已经申请加过微信，请明天再试。"),
 
-    NO_REPLY_OVERRUN(606, "对方未回复，请等待对方回复再试。"),
-
+    NO_REPLY_OVERRUN(606, "已经提交申请，等待对方通过。"),
 
     LIKES_USER_IS_NOT_EXIST(630, "点赞当前动态内容出错，用户信息不存在。"),
 

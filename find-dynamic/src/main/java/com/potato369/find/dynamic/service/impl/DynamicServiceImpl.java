@@ -475,7 +475,6 @@ public class DynamicServiceImpl implements DynamicService {
     @Transactional(readOnly = true)
     public Map<String, Object> getDynamicInfoData(Long userId, DynamicInfoParam dynamicInfoParam, Integer pageNum, Integer pageSize) {
         Map<String, Object> data = new ConcurrentHashMap<>();
-//        log.info("dynamicInfoParam={}", dynamicInfoParam);
         final PageInfo<DynamicInfoData> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectDynamicInfoData(dynamicInfoParam));
         data.put("totalPage", listPageInfo.getPages());
         List<DynamicInfoData> list = listPageInfo.getList();
@@ -564,7 +563,7 @@ public class DynamicServiceImpl implements DynamicService {
                     dynamicInfoVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()
                             + StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
                             + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon() + "default.png"));
-                    dynamicInfoVO.setNickName("匿名");
+                    dynamicInfoVO.setNickName("匿名用户");
                 }
                 if (Objects.equals(IsTopicEnum.No.getType(), dynamicInfoData.getIsTopic())) {
                     dynamicInfoVO.setTopic(false);

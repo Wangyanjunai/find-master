@@ -458,61 +458,54 @@
                 )
             </if>
             <if test="param.tagsList != null and param.tagsList.size() > 0">
-                AND ur.`tag1` IN (
+                AND ur.`id` IN (
+                SELECT u.`id` from `user` u WHERE u.`tag1` IN(
                 <foreach collection="param.tagsList" item="tagId" index="index" separator=",">
                     #{tagId}
-                </foreach>
-                )
-            </if>
-            <if test="param.tagsList != null and param.tagsList.size() > 0">
-                AND ur.`tag2` IN (
+                </foreach>)
+                OR
+                u.`tag2` IN(
                 <foreach collection="param.tagsList" item="tagId" index="index" separator=",">
                     #{tagId}
-                </foreach>
-                )
-            </if>
-            <if test="param.tagsList != null and param.tagsList.size() > 0">
-                AND ur.`tag3` IN (
+                </foreach>)
+                OR
+                u.`tag3` IN(
                 <foreach collection="param.tagsList" item="tagId" index="index" separator=",">
                     #{tagId}
-                </foreach>
-                )
-            </if>
-            <if test="param.tagsList != null and param.tagsList.size() > 0">
-                AND ur.`tag4` IN (
+                </foreach>)
+                OR
+                u.`tag4` IN(
                 <foreach collection="param.tagsList" item="tagId" index="index" separator=",">
                     #{tagId}
-                </foreach>
-                )
-            </if>
-            <if test="param.tagsList != null and param.tagsList.size() > 0">
-                AND ur.`tag5` IN (
+                </foreach>)
+                OR
+                u.`tag5` IN(
                 <foreach collection="param.tagsList" item="tagId" index="index" separator=",">
                     #{tagId}
-                </foreach>
+                </foreach>)
                 )
             </if>
             <if test="param.dataType != null">
                 AND di.`attache_type`<![CDATA[=]]>#{param.dataType, jdbcType=CHAR}
             </if>
-            <if test="param.countryLocations != null and param.countryLocations.size() > 0">
-                AND di.`country` IN (
-                <foreach collection="param.countryLocations" item="country" index="index" separator=",">
-                    #{country}
-                </foreach>)
-            </if>
+            <!--            <if test="param.countryLocations != null and param.countryLocations.size() > 0">-->
+            <!--                AND di.`country` IN (-->
+            <!--                <foreach collection="param.countryLocations" item="country" index="index" separator=",">-->
+            <!--                    #{country}-->
+            <!--                </foreach>)-->
+            <!--            </if>-->
             <if test="param.provinceLocations != null and param.provinceLocations.size() > 0">
                 AND di.`province` IN (
                 <foreach collection="param.provinceLocations" item="province" index="index" separator=",">
                     #{province}
                 </foreach>)
             </if>
-            <if test="param.cityLocations != null and param.cityLocations.size() > 0">
-                AND di.`city` IN (
-                <foreach collection="param.cityLocations" item="city" index="index" separator=",">
-                    #{city}
-                </foreach>)
-            </if>
+            <!--            <if test="param.cityLocations != null and param.cityLocations.size() > 0">-->
+            <!--                AND di.`city` IN (-->
+            <!--                <foreach collection="param.cityLocations" item="city" index="index" separator=",">-->
+            <!--                    #{city}-->
+            <!--                </foreach>)-->
+            <!--            </if>-->
         </if>
         ORDER BY di.`dynamic_status` DESC, di.`create_time` DESC, di.`update_time` DESC
     </select>
