@@ -29,7 +29,8 @@ public class UserAuthorizeAspect {
 
     @Pointcut("execution(public * com.potato369.find.dynamic.controller.*.*(..))"
             + "&& !execution(public * com.potato369.find.dynamic.controller.HelloController*.*(..))"
-            + "&& !execution(public * com.potato369.find.dynamic.controller.DruidStatController.*druidStat(..))")
+            + "&& !execution(public * com.potato369.find.dynamic.controller.DruidStatController.*druidStat(..))"
+            + "&& !execution(public * com.potato369.find.dynamic.controller.DynamicController.*checkResult(..))")
     public void verify() {
     }
 

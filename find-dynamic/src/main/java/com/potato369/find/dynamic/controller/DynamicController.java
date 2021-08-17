@@ -1490,19 +1490,13 @@ public class DynamicController {
     }
 
     //校验内容是否包含敏感词汇接口
-    @GetMapping("/{id}/check.do")
-    public CommonResult<Map<String, Object>> checkResult(
-            @PathVariable(name = "id") Long id,
-            @RequestParam(name = "content") String content) {
+    @GetMapping("/check.do")
+    public CommonResult<Map<String, Object>> checkResult(@RequestParam(name = "content") String content) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("HAS", false);
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始校验内容是否含有敏感词汇");
-            }
-            User user = this.userMapperReader.selectByPrimaryKey(id);
-            if (Objects.isNull(user)) {
-                return CommonResult.validateFailed("用户信息不存在。");
             }
             SensitiveWords sensitiveWords = this.check(content);
             if (!Objects.isNull(sensitiveWords)) {

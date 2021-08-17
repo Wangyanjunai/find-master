@@ -3735,15 +3735,14 @@ public class DynamicController {
     }
 
     /**
-     * @api {get} /find/dynamic/{id}/check 校验内容是否包含敏感词汇接口
+     * @api {get} /find/dynamic/check 校验内容是否包含敏感词汇接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 校验内容是否包含敏感词汇
-     * @apiParam (接口请求参数) {Number} id 用户id
      * @apiParam (接口请求参数) {String} content 内容
      * @apiParamExample 请求示例
      * HTTP/1.1 OK
-     * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/138/check?content=双规
+     * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/check?content=双规
      * @apiSuccess (200) {Number} status 响应状态码
      * @apiSuccess (200) {Number} code 信息码
      * @apiSuccess (200) {String} msg 说明
@@ -3784,10 +3783,8 @@ public class DynamicController {
      * "msg": "服务器未响应！"
      * }
      */
-    @GetMapping("/{id}/check")
-    CommonResult<Map<String, Object>> checkResult(
-            @PathVariable(name = "id") Long id,
-            @RequestParam(name = "content") String content) {
-        return this.dynamicFeignClient.checkResult(id, content);
+    @GetMapping("/check")
+    CommonResult<Map<String, Object>> checkResult(@RequestParam(name = "content") String content) {
+        return this.dynamicFeignClient.checkResult(content);
     }
 }

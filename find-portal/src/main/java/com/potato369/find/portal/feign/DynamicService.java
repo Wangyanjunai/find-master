@@ -155,8 +155,6 @@ public interface DynamicService {
                                                                @RequestParam(name = "message", required = false) String message);
 
     //检查内容是否包含敏感词汇
-    @GetMapping("/find/v1/dynamic/{id}/check.do")
-    CommonResult<Map<String, Object>> checkResult(
-            @PathVariable(name = "id") Long id,
-            @RequestParam(name = "content") String content);
+    @GetMapping("/find/v1/dynamic/check.do")
+    CommonResult<Map<String, Object>> checkResult(@RequestParam(name = "content") String content);
 }
