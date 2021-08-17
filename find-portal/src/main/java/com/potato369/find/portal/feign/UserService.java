@@ -127,11 +127,12 @@ public interface UserService {
 
     //远程调用鹿可模块推荐用户数据接口
     @GetMapping("/find/v1/user/{id}/look.do")
-    CommonResult<Map<String, List<UserVO3>>> look(@PathVariable(name = "id") Long id,
-                                                  @RequestParam(name = "ip") String ip,
-                                                  @RequestParam(name = "longitude") Double longitude,
-                                                  @RequestParam(name = "latitude") Double latitude,
-                                                  @RequestParam(name = "count", required = false, defaultValue = "10") Integer count);
+    CommonResult<PageInfoVO<UserVO3>> look(@PathVariable(name = "id") Long id,
+                                  @RequestParam(name = "ip") String ip,
+                                  @RequestParam(name = "longitude") Double longitude,
+                                  @RequestParam(name = "latitude") Double latitude,
+                                  @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                  @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize);
 
     //远程调用鹿可模块推荐用户详情数据接口
     @GetMapping("/find/v1/user/{id}/look-details.do")

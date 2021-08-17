@@ -1142,7 +1142,7 @@ public class UserController {
                 data.put(status, statusStr);
                 return CommonResult.failed(data, ResultCode.USER_NOT_EXIST_BLACKLIST_ERROR);
             }
-            if (!Objects.isNull(blacklistRecords) && !blacklistRecords.isEmpty()) {
+            if (!Objects.isNull(blacklistRecords)) {
                 BlacklistRecord blacklistRecord = blacklistRecords.get(0);
                 if (!Objects.isNull(blacklistRecord)) {
                     Integer typeTemp = blacklistRecord.getStatus();
@@ -1206,11 +1206,11 @@ public class UserController {
 
     //鹿可模块推荐用户数据接口
     @GetMapping("/{id}/look.do")
-    public CommonResult<Map<String, List<UserVO3>>> look(
+    public CommonResult<PageInfoVO<UserVO3>> look(
             @PathVariable(name = "id") Long id,
             @Valid UserDTO3 userDTO, BindingResult bindingResult,
-            @RequestParam(name = "count", required = false, defaultValue = "10") Integer count) {
-        Map<String, List<UserVO3>> data = new ConcurrentHashMap<>();
+            @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取鹿可模块用户数据");
@@ -1227,10 +1227,10 @@ public class UserController {
             example.setDistinct(true);
             ScreenSetting screenSetting = null;
             Integer age = 0;
-            if (UserGenderEnum.Male.getGender().equals(screenGender)) {//男生
+            if (UserGenderEnum.Male.getGender().equals(screenGender)) {//男生，年龄筛选条件
                 example.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.LOOK_AGE_MALE.getType());
             }
-            if (UserGenderEnum.Female.getGender().equals(screenGender)) {//女生
+            if (UserGenderEnum.Female.getGender().equals(screenGender)) {//女生，年龄筛选条件
                 example.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andTypeEqualTo(ScreenSettingTypeEnum.LOOK_AGE_FEMALE.getType());
             }
             List<ScreenSetting> screenSettings = this.screenSettingMapperReader.selectByExample(example);
@@ -1257,28 +1257,20 @@ public class UserController {
             Date min = DateUtil.fomatDate(DateUtil.getBeforeYearByAge(screenAgeMin));
             Date max = DateUtil.fomatDate(DateUtil.getBeforeYearByAge(screenAgeMax));
             LookInfoParam lookInfoParam = new LookInfoParam();
-            if (UserGenderEnum.Female.getGender().equals(screenGender)) {
+            if (Objects.equals(UserGenderEnum.Female.getGender(), screenGender)) {
                 screenGender = UserGenderEnum.Male.getGender();
-            }
-            if (UserGenderEnum.Male.getGender().equals(screenGender)) {
+            } else {
                 screenGender = UserGenderEnum.Female.getGender();
             }
             lookInfoParam.setGender(screenGender);
             lookInfoParam.setMinAge(min);
             lookInfoParam.setMaxAge(max);
             lookInfoParam.setUserId(id);
-//            log.info("lookInfoParam={}", lookInfoParam);
-            List<User> userList = this.userMapperReader.selectLookUserList(lookInfoParam);
-            List<User> userList1 = new LinkedList<>();
+            final PageInfo<User> userPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.userMapperReader.selectLookUserList(lookInfoParam));
+            List<User> userList = userPageInfo.getList();
             List<UserVO3> userVO3List = new LinkedList<>();
-            if (userList != null && !userList.isEmpty() && userList.size() - 1 > count) {
-                int[] list = MathUtil.getRandoms(0, userList.size() - 1, count);
-                assert list != null;
-                for (int i : list) {
-                    User user1 = userList.get(i);
-                    userList1.add(user1);
-                }
-                for (User userTmp : userList1) {
+            if (userList != null && !userList.isEmpty()) {
+                for (User userTmp : userList) {
                     UserVO3 userVO3 = UserVO3.builder().build();
                     BeanUtils.copyProperties(userTmp, userVO3);
                     String birthDateTmp = userTmp.getYear() + "-" + userTmp.getMonth() + "-" + userTmp.getDate();
@@ -1304,8 +1296,11 @@ public class UserController {
                     userVO3List.add(userVO3);
                 }
             }
-            data.put("list", userVO3List);
-            return CommonResult.success(data);
+            PageInfoVO<UserVO3> lookVO = new PageInfoVO<>();
+            lookVO.setTotalPage(userPageInfo.getPages());
+            lookVO.setTotalSize(userPageInfo.getTotal());
+            lookVO.setList(userVO3List);
+            return CommonResult.success(lookVO);
         } catch (Exception e) {
             log.error("获取鹿可模块用户数据出现错误", e);
             return CommonResult.failed("获取鹿可模块用户数据失败");

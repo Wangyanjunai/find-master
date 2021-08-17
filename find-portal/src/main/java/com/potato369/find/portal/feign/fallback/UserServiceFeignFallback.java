@@ -162,7 +162,7 @@ public class UserServiceFeignFallback implements UserService {
     }
 
     @Override
-    public CommonResult<Map<String, List<UserVO3>>> look(Long id, String ip, Double longitude, Double latitude, Integer count) {
+    public CommonResult<PageInfoVO<UserVO3>> look(Long id, String ip, Double longitude, Double latitude, int pageNum, int pageSize) {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }

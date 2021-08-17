@@ -170,18 +170,14 @@
         </where>
         ORDER BY u.`id` ASC
     </select>
-    <select id="selectLookUserList" parameterType="com.potato369.find.mbg.model.LookInfoParam"
-            resultMap="BaseResultMap">
+    <select id="selectLookUserList" parameterType="com.potato369.find.mbg.model.LookInfoParam" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM `user` ur
-        WHERE
-        ur.`gender` <![CDATA[=]]> #{param.gender, jdbcType=CHAR}
+        WHERE ur.`gender` <![CDATA[=]]> #{param.gender, jdbcType=CHAR}
         AND ur.`id` <![CDATA[!=]]> #{param.userId, jdbcType=BIGINT}
-        AND str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[<=]]>
-        #{param.minAge, jdbcType=TIMESTAMP}
-        AND str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[>=]]>
-        #{param.maxAge, jdbcType=TIMESTAMP}
+        AND str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[<=]]> #{param.minAge, jdbcType=TIMESTAMP}
+        AND str_to_date(concat_ws('-', ur.`year`, ur.`month`, ur.`date`), '%Y-%m-%d %H:%M:%s') <![CDATA[>=]]> #{param.maxAge, jdbcType=TIMESTAMP}
         ORDER BY ur.`create_time` DESC, ur.`update_time` DESC, ur.`id` DESC
     </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -260,16 +256,24 @@
                           tag5, reserve_column05, reserve_column06, reserve_column07,
                           reserve_column08)
         values (#{id,jdbcType=BIGINT}, #{phone,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{isTest,jdbcType=CHAR},
-                #{nickName,jdbcType=VARCHAR}, #{weixinId,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR},
-                #{sysName,jdbcType=VARCHAR}, #{sysCode,jdbcType=VARCHAR}, #{networkMode,jdbcType=CHAR}, #{gender,jdbcType=CHAR},
+                #{nickName,jdbcType=VARCHAR}, #{weixinId,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR},
+                #{model,jdbcType=VARCHAR},
+                #{sysName,jdbcType=VARCHAR}, #{sysCode,jdbcType=VARCHAR}, #{networkMode,jdbcType=CHAR},
+                #{gender,jdbcType=CHAR},
                 #{year,jdbcType=CHAR}, #{month,jdbcType=CHAR}, #{date,jdbcType=CHAR}, #{constellation,jdbcType=CHAR},
-                #{headIcon,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
-                #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE},
-                #{platform,jdbcType=CHAR}, #{ip,jdbcType=VARCHAR}, #{grade,jdbcType=CHAR}, #{autograph,jdbcType=VARCHAR},
-                #{vipStartTime,jdbcType=TIMESTAMP}, #{vipEndTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-                #{backgroundIcon,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR}, #{reserveColumn04,jdbcType=VARCHAR}, #{professionId,jdbcType=BIGINT},
+                #{headIcon,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
+                #{city,jdbcType=VARCHAR},
+                #{district,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE},
+                #{latitude,jdbcType=DOUBLE},
+                #{platform,jdbcType=CHAR}, #{ip,jdbcType=VARCHAR}, #{grade,jdbcType=CHAR},
+                #{autograph,jdbcType=VARCHAR},
+                #{vipStartTime,jdbcType=TIMESTAMP}, #{vipEndTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP},
+                #{backgroundIcon,jdbcType=VARCHAR}, #{reserveColumn03,jdbcType=VARCHAR},
+                #{reserveColumn04,jdbcType=VARCHAR}, #{professionId,jdbcType=BIGINT},
                 #{tag1,jdbcType=BIGINT}, #{tag2,jdbcType=BIGINT}, #{tag3,jdbcType=BIGINT}, #{tag4,jdbcType=BIGINT},
-                #{tag5,jdbcType=BIGINT}, #{reserveColumn05,jdbcType=VARCHAR}, #{reserveColumn06,jdbcType=VARCHAR}, #{reserveColumn07,jdbcType=VARCHAR},
+                #{tag5,jdbcType=BIGINT}, #{reserveColumn05,jdbcType=VARCHAR}, #{reserveColumn06,jdbcType=VARCHAR},
+                #{reserveColumn07,jdbcType=VARCHAR},
                 #{reserveColumn08,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.potato369.find.mbg.model.User">
