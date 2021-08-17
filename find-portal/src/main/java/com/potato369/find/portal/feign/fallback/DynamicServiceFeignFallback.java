@@ -173,4 +173,10 @@ public class DynamicServiceFeignFallback implements DynamicService {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }
+
+    @Override
+    public CommonResult<Map<String, Object>> checkResult(Long id, String content) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 }

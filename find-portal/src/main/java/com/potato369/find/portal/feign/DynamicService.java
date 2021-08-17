@@ -153,4 +153,10 @@ public interface DynamicService {
     CommonResult<Map<String, Object>> applyToAddWechatByUserId(@PathVariable(name = "id") Long applicantUserId,
                                                                @RequestParam(name = "userId") Long applicantsUserId,
                                                                @RequestParam(name = "message", required = false) String message);
+
+    //检查内容是否包含敏感词汇
+    @GetMapping("/find/v1/dynamic/{id}/check.do")
+    CommonResult<Map<String, Object>> checkResult(
+            @PathVariable(name = "id") Long id,
+            @RequestParam(name = "content") String content);
 }

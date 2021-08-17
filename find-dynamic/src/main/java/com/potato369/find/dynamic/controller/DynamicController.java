@@ -1488,4 +1488,42 @@ public class DynamicController {
             }
         }
     }
+
+    //校验内容是否包含敏感词汇接口
+    @GetMapping("/{id}/check.do")
+    public CommonResult<Map<String, Object>> checkResult(
+            @PathVariable(name = "id") Long id,
+            @RequestParam(name = "content") String content) {
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        data.put("HAS", false);
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始校验内容是否含有敏感词汇");
+            }
+            User user = this.userMapperReader.selectByPrimaryKey(id);
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("用户信息不存在。");
+            }
+            SensitiveWords sensitiveWords = this.check(content);
+            if (!Objects.isNull(sensitiveWords)) {
+                data.put("HAS", true);
+                return CommonResult.success(data, "内容校验不通过，内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇。");
+            }
+            return CommonResult.success(data, "内容校验通过，内容不包含敏感词汇。");
+        } catch (Exception e) {
+            log.error("校验内容是否含有敏感词汇出错", e);
+            return CommonResult.failed("校验内容是否含有敏感词汇失败");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束校验内容是否含有敏感词汇");
+            }
+        }
+    }
+
+    private SensitiveWords check(String content) {
+        if (StrUtil.isNotEmpty(content)) {
+            return this.sensitiveWordsService.checkHasSensitiveWords(content);
+        }
+        return null;
+    }
 }

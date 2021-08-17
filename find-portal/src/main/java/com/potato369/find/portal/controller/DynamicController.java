@@ -3733,4 +3733,61 @@ public class DynamicController {
                                                                @RequestParam(name = "message", required = false) String message) {
         return this.dynamicFeignClient.applyToAddWechatByUserId(applicantUserId, applicantsUserId, message);
     }
+
+    /**
+     * @api {get} /find/dynamic/{id}/check 校验内容是否包含敏感词汇接口
+     * @apiVersion 1.0.0
+     * @apiGroup 动态模块API
+     * @apiName 校验内容是否包含敏感词汇
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String} content 内容
+     * @apiParamExample 请求示例
+     * HTTP/1.1 OK
+     * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/138/check?content=双规
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Boolean} [HAS] 是否包含敏感词汇，true->是，false->否
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "内容校验不通过，内容包含反动类型敏感词汇。",
+     * "data": {
+     * "HAS": true
+     * }
+     * }
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
+     * @apiError (404) {String} error 错误说明
+     * @apiError (404) {String} message 返回说明
+     * @apiError (404) {String} path 路径
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应 接口未注册
+     * {
+     * "timestamp": 1611558682334,
+     * "status": 404,
+     * "error": "Not Found",
+     * "message": "No message available",
+     * "path": "find/dynamic/70/check1"
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！"
+     * }
+     */
+    @GetMapping("/{id}/check")
+    CommonResult<Map<String, Object>> checkResult(
+            @PathVariable(name = "id") Long id,
+            @RequestParam(name = "content") String content) {
+        return this.dynamicFeignClient.checkResult(id, content);
+    }
 }
