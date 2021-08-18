@@ -18,7 +18,7 @@ public interface MessageService {
      *
      * @param userId 消息接收者用户id
      */
-    LikesMessageVO selectLikesMessage(Long userId);
+    LikesMessageVO selectAllLikesMessage(Long userId, int pageNum, int pageSize);
 
     /**
      * 根据用户id分页查询某个用户不是被点赞的消息记录
@@ -27,7 +27,7 @@ public interface MessageService {
      * @param pageNum  当前页码
      * @param pageSize 每页数量
      */
-    MessageVO selectNotLikesMessage(Long userId, Integer pageNum, Integer pageSize);
+    MessageVO selectNotLikesMessage(Long userId, int pageNum, int pageSize);
 
     /**
      * 根据用户id分页查询某个用户被点赞的消息记录
@@ -36,7 +36,7 @@ public interface MessageService {
      * @param pageNum  当前页码
      * @param pageSize 每页数量
      */
-    MessageVO2 selectLikesMessage(Long userId, Integer pageNum, Integer pageSize);
+    MessageVO2 selectLikesMessage(Long userId, int pageNum, int pageSize);
 
     /**
      * 根据用户id分页查询某个用户收到的申请加微信消息记录
@@ -45,7 +45,7 @@ public interface MessageService {
      * @param pageNum  当前页码
      * @param pageSize 每页数量
      */
-    MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize);
+    MessageVO selectApplicationsMessage(Long userId, int pageNum, int pageSize);
 
     /**
      * 分页查询某个用户发送接收消息记录列表
@@ -55,7 +55,7 @@ public interface MessageService {
      * @param pageNum         当前页码
      * @param pageSize        每页数量
      */
-    MessageVO3 selectMessageRecord(Long sendUserId, Long recipientUserId, Integer pageNum, Integer pageSize);
+    MessageVO3 selectMessageRecord(Long sendUserId, Long recipientUserId, int pageNum, int pageSize);
 
     /**
      * 发送消息

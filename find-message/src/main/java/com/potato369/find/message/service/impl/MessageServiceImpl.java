@@ -86,17 +86,16 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(readOnly = true)
-    public LikesMessageVO selectLikesMessage(Long userId) {
-        // 查询未读点赞消息
+    public LikesMessageVO selectAllLikesMessage(Long userId, int pageNum, int pageSize) {
+        // 查询点赞消息
         LikesMessageVO likesMessageVO = LikesMessageVO.builder().build();
-        final PageInfo<Message> messagePageInfo = PageHelper.startPage(1, 20)
-                .doSelectPageInfo(() -> this.messageMapperReader.selectUnReadLikesMessageRecord(userId));
+        final PageInfo<Message> messagePageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectAllLikesMessageRecord(userId));
         // 查询最后一条点赞消息记录
-        List<Message> messageList;
-        if (messagePageInfo.getTotal() > 0) {
-            likesMessageVO.setCount(messagePageInfo.getTotal());
-            messageList = messagePageInfo.getList();
-            if (!messageList.isEmpty()) {
+        if (!Objects.isNull(messagePageInfo) && messagePageInfo.getTotal() > 0) {
+            List<Message> messageList = messagePageInfo.getList();
+            if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
+                messageList = messageList.stream().filter(message -> Objects.equals(MessageStatusEnum.UNREAD.getStatus(), message.getStatus())).collect(Collectors.toList());
+                likesMessageVO.setCount((long) messageList.size());
                 likesMessageVO.setContent(messageList.get(0).getContent());
             }
         } else {
@@ -108,9 +107,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(readOnly = true)
-    public MessageVO selectNotLikesMessage(Long userId, Integer pageNum, Integer pageSize) {
+    public MessageVO selectNotLikesMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
-        messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
+        messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId, pageNum, pageSize));
         final PageInfo<NotLikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.messageMapperReader.selectUnLikesRecordByUserId(userId));
         messageVO.setTotalCount(listPageInfo.getTotal());// 未读申请加微信总数量
@@ -134,7 +133,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional
-    public MessageVO2 selectLikesMessage(Long userId, Integer pageNum, Integer pageSize) {
+    public MessageVO2 selectLikesMessage(Long userId, int pageNum, int pageSize) {
         MessageVO2 messageVO2 = MessageVO2.builder().build();
         final PageInfo<LikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.messageMapperReader.selectLikesMessageRecordByUserId(userId));
@@ -180,9 +179,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(readOnly = true)
-    public MessageVO selectApplicationsMessage(Long userId, Integer pageNum, Integer pageSize) {
+    public MessageVO selectApplicationsMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
-        messageVO.setLikesMessageVO(this.selectLikesMessage(userId));
+        messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId, pageNum, pageSize));
         List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByUserId(userId);
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         List<MessageInfoVO> messageInfoVOs2 = new ArrayList<>();
@@ -263,7 +262,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional
-    public MessageVO3 selectMessageRecord(Long sendUserId, Long recipientUserId, Integer pageNum, Integer pageSize) {
+    public MessageVO3 selectMessageRecord(Long sendUserId, Long recipientUserId, int pageNum, int pageSize) {
         MessageVO3 messageVO3 = MessageVO3.builder().build();
         final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize)
                 .doSelectPageInfo(() -> this.messageMapperReader.selectMessageRecord(sendUserId, recipientUserId));

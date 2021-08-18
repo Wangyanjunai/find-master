@@ -34,7 +34,7 @@ public interface MessageMapper {
 
     List<Message> selectApplicationMessageRecordByUserId2(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 
-    List<Message> selectUnReadLikesMessageRecord(@Param("userId") Long userId);
+    List<Message> selectAllLikesMessageRecord(@Param("userId") Long userId);
 
     List<Message> selectMessageRecordCount(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 

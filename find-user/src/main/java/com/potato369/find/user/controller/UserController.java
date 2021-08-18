@@ -967,13 +967,13 @@ public class UserController {
             String reportType = reportInfoDTO.getReportType();          //举报类型，1->动态，2->用户，默认：1-动态
             Long reportUserId = reportInfoDTO.getBeingReportId();       //被举报用户id或者动态id
             String reportContent = reportInfoDTO.getReportContent();    //举报填写的内容
-            if (StrUtil.isNotEmpty(reportContent)) {
-                //校验举报填写的内容是否包含敏感词汇
-                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(reportContent);
-                if (!Objects.isNull(sensitiveWords)) {
-                    return CommonResult.validateFailed("举报填写的内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
-                }
-            }
+//            if (StrUtil.isNotEmpty(reportContent)) {
+//                //校验举报填写的内容是否包含敏感词汇
+//                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(reportContent);
+//                if (!Objects.isNull(sensitiveWords)) {
+//                    return CommonResult.validateFailed("举报填写的内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
+//                }
+//            }
             User reportUser = this.userDaoUseJdbcTemplate.getById(userId);
             if (Objects.isNull(reportUser)) {
                 return CommonResult.validateFailed("参数校验不通过，举报用户不存在。");

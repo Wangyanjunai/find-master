@@ -367,7 +367,7 @@
           and `send_mode` = '1'
           and `reserve_column04` = #{messageId, jdbcType=BIGINT}
     </select>
-    <select id="selectUnReadLikesMessageRecord" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    <select id="selectAllLikesMessageRecord" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         SELECT message.`send_user_id`,
                message.`send_mode`,
                message.`status`,
@@ -376,7 +376,7 @@
              `message` message
         WHERE like_record.`id` = message.`reserve_column04`
           AND like_record.`status` = '1'
-          AND message.`status` = '0'
+          -- AND message.`status` = '0'
           AND message.`recipient_user_id` = #{userId, jdbcType=BIGINT}
           AND message.`reserve_column01` = 'likes'
           AND message.reserve_column02 = '0'

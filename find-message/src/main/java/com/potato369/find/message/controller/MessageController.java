@@ -36,8 +36,8 @@ public class MessageController {
     @GetMapping(value = "/{id}/all.do")
     public CommonResult<MessageVO> all(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
-            @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码", example = "1") Integer pageNum,
-            @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
+            @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码", example = "1") int pageNum,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") int pageSize) {
         return CommonResult.success(this.messageService.selectApplicationsMessage(userId, pageNum, pageSize));
     }
 
