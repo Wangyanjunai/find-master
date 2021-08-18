@@ -94,8 +94,8 @@ public class MessageServiceImpl implements MessageService {
         if (!Objects.isNull(messagePageInfo) && messagePageInfo.getTotal() > 0) {
             List<Message> messageList = messagePageInfo.getList();
             if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
-                messageList = messageList.stream().filter(message -> Objects.equals(MessageStatusEnum.UNREAD.getStatus(), message.getStatus())).collect(Collectors.toList());
-                likesMessageVO.setCount((long) messageList.size());
+                List<Message> messageList2 = messageList.stream().filter(message -> Objects.equals(MessageStatusEnum.UNREAD.getStatus(), message.getStatus())).collect(Collectors.toList());
+                likesMessageVO.setCount((long) messageList2.size());
                 likesMessageVO.setContent(messageList.get(0).getContent());
             }
         } else {
