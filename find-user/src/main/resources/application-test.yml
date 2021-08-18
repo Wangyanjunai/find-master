@@ -13,6 +13,6 @@ spring:
 #项目相关配置
 project-url:
   project-name: /find02
-  domain: http://8.135.36.45:8091 #项目网关域名前缀
+  domain: http://8.135.36.45:8081 #项目网关域名前缀
   upload-res: /data/Resources     #资源文件存放nginx服务器路径
   res-domain: http://8.135.36.45:8000 #Nginx服务器路径网关域名
