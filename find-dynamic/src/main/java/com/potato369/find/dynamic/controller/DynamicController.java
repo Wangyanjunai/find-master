@@ -867,7 +867,7 @@ public class DynamicController {
             }
             //点赞
             if (LikeStatusEnum.YES.getStatus().equals(type)) {
-                String content = user.getNickName() + "点赞你的动态" + dynamicInfo.getContent();//消息内容
+                String content = user.getNickName() + " 点赞您的动态 " + dynamicInfo.getContent();//消息内容
                 int result = this.likeRecordService.createByUserIdAndDynamicInfoId(content, userId, dynamicInfo, likeRecord);
                 if (result > 0) {
                     data.put("LIKED", "OK");
