@@ -8489,3 +8489,24 @@ INSERT INTO `sensitive_words`
 VALUES (4036, '其他', '作硝化甘', '0', '2021-07-06 13:52:02', '2021-07-06 13:52:02', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sensitive_words`
 VALUES (4037, '其他', '唑仑', '0', '2021-07-06 13:52:02', '2021-07-06 13:52:02', NULL, NULL, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for comment_record
+-- ----------------------------
+DROP TABLE IF EXISTS `comment_record`;
+CREATE TABLE `comment_record` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录id，主键',
+  `user_id` bigint(20) NOT NULL COMMENT '评论者用户id',
+  `be_user_id` bigint(20) NOT NULL COMMENT '被评论者用户id',
+  `dynamic_info_id` bigint(20) NOT NULL COMMENT '被评论者动态内容id',
+  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
+  `reserve_column01` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段01',
+  `reserve_column02` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段02',
+  `reserve_column03` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段03',
+  `reserve_column04` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段04',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `n_idx_user_id`(`user_id`) USING BTREE,
+  INDEX `n_idx_be_user_id`(`be_user_id`) USING BTREE,
+  INDEX `n_idx_dynamic_info_id`(`dynamic_info_id`) USING BTREE,
+  INDEX `n_idx_create_time`(`create_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '评论记录表' ROW_FORMAT = Dynamic;

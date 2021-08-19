@@ -931,6 +931,12 @@ public class DynamicController {
             if (Objects.isNull(applicantsUser)) {
                 return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
             }
+            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
+            applicationRecordExample.createCriteria().andUserIdEqualTo(applicantUserId).andReserveColumn01EqualTo(String.valueOf(applicantsUserId));
+            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
+            if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
+                return CommonResult.failed(data, ResultCode.APPLICATIONS_USER_IS_VALID);
+            }
             // 获取申请加微信者申请加被申请加微信者微信记录条数，查询当天用户申请加微信次数
             int count = this.applicationRecordMapperReader.countByUserId(applicantUserId, applicantsUserId);
             if (count > 0) {
@@ -1395,6 +1401,12 @@ public class DynamicController {
             if (!Objects.isNull(sensitiveWords)) {
                 return CommonResult.validateFailed("发送消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
             }
+            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
+            applicationRecordExample.createCriteria().andUserIdEqualTo(applicantUserId).andReserveColumn01EqualTo(String.valueOf(applicantsUserId));
+            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
+            if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
+                return CommonResult.failed(data, ResultCode.APPLICATIONS_USER_IS_VALID);
+            }
             // 获取申请加微信者申请加被申请加微信者微信记录条数，查询当天用户申请加微信次数
             int count = this.applicationRecordMapperReader.countByUserId(applicantUserId, applicantsUserId);
             if (count > 0) {
@@ -1431,9 +1443,8 @@ public class DynamicController {
             }
             DynamicInfo dynamicInfo = null;
             DynamicInfoExample dynamicInfoExample = new DynamicInfoExample();
-            dynamicInfoExample.setDistinct(true);
             dynamicInfoExample.setOrderByClause("create_time DESC, update_time DESC");
-            dynamicInfoExample.createCriteria().andDynamicStatusNotEqualTo(DynamicInfoStatusEnum.HIDE.getStatus());
+            dynamicInfoExample.createCriteria().andDynamicStatusNotEqualTo(DynamicInfoStatusEnum.HIDE.getStatus()).andUserIdEqualTo(applicantsUserId);
             List<DynamicInfo> dynamicInfoList = this.dynamicInfoMapperReader.selectByExample(dynamicInfoExample);
             if (!Objects.isNull(dynamicInfoList) && dynamicInfoList.size() > 0) {
                 dynamicInfo = dynamicInfoList.get(0);

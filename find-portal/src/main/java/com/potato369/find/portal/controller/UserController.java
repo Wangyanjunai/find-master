@@ -1541,7 +1541,7 @@ public class UserController {
      * @apiSuccess (200) {Double} [distance] 距离（单位：米）
      * @apiSuccess (200) {String} [img] 动态图片地址
      * @apiSuccess (200) {Number} [dynamicInfoId] 动态内容id
-     * @apiSuccess (200) {Boolean={"true", "false"}} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
+     * @apiSuccess (200) {Boolean=true, false} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
@@ -1742,7 +1742,7 @@ public class UserController {
      * @apiSuccess (200) {String} [province] 省份
      * @apiSuccess (200) {String} [city] 城市
      * @apiSuccess (200) {String} [district] 区/县
-     * @apiSuccess (200) {Boolean={"true", "false"}} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
+     * @apiSuccess (200) {Boolean=true, false} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
@@ -1859,13 +1859,14 @@ public class UserController {
     }
 
     /**
-     * @api {get} /find/user/{id}/queryOther 查看别人个人资料接口
+     * @api {get} /find/user/{id}/{id2}/queryOther 查看别人个人资料接口
      * @apiVersion 1.0.0
      * @apiGroup 用户模块API
      * @apiName 查看别人个人资料
-     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} id 当前用户id
+     * @apiParam (接口请求参数) {Number} id2 其他用户id
      * @apiParamExample {json} 请求示例 获取用户资料
-     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/70/queryOther
+     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/147/172/queryOther
      * @apiSuccess (200) {Number} status 响应状态码
      * @apiSuccess (200) {Number} code 消息码
      * @apiSuccess (200) {String} msg 说明
@@ -1883,7 +1884,7 @@ public class UserController {
      * @apiSuccess (200) {String} [tag3] 标签3
      * @apiSuccess (200) {String} [tag4] 标签4
      * @apiSuccess (200) {String} [tag5] 标签5
-     * @apiSuccess (200) {Boolean={"true", "false"}} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
+     * @apiSuccess (200) {Boolean=true, false} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {

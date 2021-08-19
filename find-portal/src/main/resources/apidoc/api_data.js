@@ -8122,7 +8122,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/find/user/{id}/queryOther",
+    "url": "/find/user/{id}/{id2}/queryOther",
     "title": "查看别人个人资料接口",
     "version": "1.0.0",
     "group": "用户模块API",
@@ -8135,14 +8135,21 @@ define({ "api": [
             "type": "Number",
             "optional": false,
             "field": "id",
-            "description": "<p>用户id</p>"
+            "description": "<p>当前用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "id2",
+            "description": "<p>其他用户id</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "请求示例 获取用户资料",
-          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/70/queryOther",
+          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/147/172/queryOther",
           "type": "json"
         }
       ]
@@ -8282,8 +8289,8 @@ define({ "api": [
             "group": "200",
             "type": "Boolean",
             "allowedValues": [
-              "{\"true\"",
-              "\"false\"}"
+              "true",
+              "false"
             ],
             "optional": true,
             "field": "applicationStatus",
@@ -8365,7 +8372,7 @@ define({ "api": [
     "groupTitle": "用户模块API",
     "sampleRequest": [
       {
-        "url": "http://w168428j19.51mypc.cn/find/user/{id}/queryOther"
+        "url": "http://w168428j19.51mypc.cn/find/user/{id}/{id2}/queryOther"
       }
     ]
   },
@@ -10829,8 +10836,8 @@ define({ "api": [
             "group": "200",
             "type": "Boolean",
             "allowedValues": [
-              "{\"true\"",
-              "\"false\"}"
+              "true",
+              "false"
             ],
             "optional": true,
             "field": "applicationStatus",
@@ -11105,8 +11112,8 @@ define({ "api": [
             "group": "200",
             "type": "Boolean",
             "allowedValues": [
-              "{\"true\"",
-              "\"false\"}"
+              "true",
+              "false"
             ],
             "optional": true,
             "field": "applicationStatus",

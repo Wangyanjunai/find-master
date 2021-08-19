@@ -36,6 +36,8 @@ public class CommentServiceImpl implements CommentService {
 
     private MessageMapper messageMapperWriter;
 
+    private CommentRecordMapper commentRecordMapperWriter;
+
     @Autowired
     public void setCommentMapperReader(CommentMapper commentMapperReader) {
         this.commentMapperReader = commentMapperReader;
@@ -71,18 +73,25 @@ public class CommentServiceImpl implements CommentService {
         this.messageMapperWriter = messageMapperWriter;
     }
 
+    @Autowired
+    public void setCommentRecordMapperWriter(CommentRecordMapper commentRecordMapperWriter) {
+        this.commentRecordMapperWriter = commentRecordMapperWriter;
+    }
+
     /**
      * 新增评论
      *
      * @param content
      * @param comment
+     * @param commentRecord
      * @param dynamicInfo
      */
     @Override
     @Transactional
-    public int save(String content, Comment comment, DynamicInfo dynamicInfo) {
+    public int save(String content, Comment comment, CommentRecord commentRecord, DynamicInfo dynamicInfo) {
         int a = this.dynamicInfoMapperReader.updateByPrimaryKeySelective(dynamicInfo);
         int b = this.commentMapperWriter.insertSelective(comment);
+        int c = this.commentRecordMapperWriter.insertSelective(commentRecord);
         //消息记录
         Message messageRecord = new Message();
         messageRecord.setContent(content);//消息内容
@@ -93,8 +102,8 @@ public class CommentServiceImpl implements CommentService {
         messageRecord.setReserveColumn01(MessageTypeEnum.Comments.getMessage());//消息类型，评论->comments
         messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
         messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
-        int c = this.messageMapperWriter.insertSelective(messageRecord);
-        return a + b + c;
+        int d = this.messageMapperWriter.insertSelective(messageRecord);
+        return a + b + c + d;
     }
 
     /**

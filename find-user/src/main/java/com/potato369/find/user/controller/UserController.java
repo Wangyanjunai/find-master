@@ -933,6 +933,7 @@ public class UserController {
             ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
             applicationRecordExample.createCriteria().andUserIdEqualTo(id).andReserveColumn01EqualTo(String.valueOf(detailsUserId));
             List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
+            log.info("applicationRecordList={}", applicationRecordList);
             boolean result = !Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty();
             userVO.setApplicationStatus(result);
             data.put("user", userVO);

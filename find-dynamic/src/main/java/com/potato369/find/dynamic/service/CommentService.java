@@ -2,6 +2,7 @@ package com.potato369.find.dynamic.service;
 
 import com.potato369.find.common.vo.PageCommentVOs;
 import com.potato369.find.mbg.model.Comment;
+import com.potato369.find.mbg.model.CommentRecord;
 import com.potato369.find.mbg.model.DynamicInfo;
 
 import java.util.List;
@@ -13,9 +14,10 @@ public interface CommentService {
      *
      * @param content
      * @param comment
+     * @param commentRecord
      * @param dynamicInfo
      */
-    int save(String content, Comment comment, DynamicInfo dynamicInfo);
+    int save(String content, Comment comment, CommentRecord commentRecord, DynamicInfo dynamicInfo);
 
     /**
      * 查询评论

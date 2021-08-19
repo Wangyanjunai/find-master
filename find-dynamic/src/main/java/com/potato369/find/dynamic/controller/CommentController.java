@@ -131,13 +131,19 @@ public class CommentController {
             if (!Objects.isNull(commentList) && !commentList.isEmpty()) {
                 return CommonResult.validateFailed("参数校验不通过，只能对这条动态评论一次。");
             }
+            //评论信息
             Comment comment = new Comment();
             BeanUtils.copyProperties(commentDTO, comment);
             comment.setUserId(userId);
             dynamicInfo.setUpdateTime(new Date());
             dynamicInfo.setComments(dynamicInfo.getComments() + 1);
             String content = user.getNickName() + " 评论您的动态 " + dynamicInfo.getContent();//消息内容
-            int result = this.commentService.save(content, comment, dynamicInfo);
+            //评论记录信息
+            CommentRecord commentRecord = new CommentRecord();
+            commentRecord.setUserId(userId);
+            commentRecord.setBeUserId(publishUserId);
+            commentRecord.setDynamicInfoId(commentDTO.getDynamicInfoId());
+            int result = this.commentService.save(content, comment, commentRecord, dynamicInfo);
             if (result > 0) {
                 data.put("RELEASE", "OK");
                 String title = "互动消息";//消息标题
