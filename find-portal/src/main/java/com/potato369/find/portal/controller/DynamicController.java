@@ -2313,10 +2313,10 @@ public class DynamicController {
     }
 
     /**
-     * @api {get} /find/dynamic/{id}/mylist 获取自己的动态内容列表接口
+     * @api {get} /find/dynamic/{id}/mylist 分页获取自己的动态内容列表接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
-     * @apiName 获取自己的动态内容列表
+     * @apiName 分页获取自己的动态内容列表
      * @apiParam (接口请求参数) {Number} id 用户id
      * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页数
      * @apiParam (接口请求参数) {Number} [pageSize=20] 每页条数
@@ -3786,5 +3786,466 @@ public class DynamicController {
     @GetMapping("/check")
     CommonResult<Map<String, Object>> checkResult(@RequestParam(name = "content") String content) {
         return this.dynamicFeignClient.checkResult(content);
+    }
+
+    /**
+     * @api {get} /find/dynamic/{id}/{id2}/otherList 分页获取别人的动态内容列表接口
+     * @apiVersion 1.0.0
+     * @apiGroup 动态模块API
+     * @apiName 分页获取别人的动态内容列表
+     * @apiParam (接口请求参数) {Number} id 自己的用户id
+     * @apiParam (接口请求参数) {Number} id2 别人的用户id
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页数
+     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页条数
+     * @apiParamExample {json} 请求示例
+     * HTTP/1.1 OK
+     * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/138/144/otherList?pageNum=1&pageSize=20
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Number} [totalPage] 总页数
+     * @apiSuccess (200) {Object} [list] 动态内容数据列表
+     * @apiSuccess (200) {Number} [userId] 用户id
+     * @apiSuccess (200) {String} [headUrl] 头像图片地址
+     * @apiSuccess (200) {String} [nickname] 昵称
+     * @apiSuccess (200) {String} [publishTime] 发布时间
+     * @apiSuccess (200) {Number} [dynamicInfoId] 动态内容id
+     * @apiSuccess (200) {String} [content] 动态内容
+     * @apiSuccess (200) {String} [address] 定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回
+     * @apiSuccess (200) {Number} [likes] 点赞数
+     * @apiSuccess (200) {Boolean} [likeStatus] 点赞状态，true->已点赞，false->未点赞
+     * @apiSuccess (200) {Number} [applications] 申请加微信数
+     * @apiSuccess (200) {Boolean} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
+     * @apiSuccess (200) {Boolean} [isTopic] 是否话题，true->是，false->否
+     * @apiSuccess (200) {String} [topicTitle] 话题标题
+     * @apiSuccess (200) {Number} [comments] 评论数
+     * @apiSuccess (200) {Boolean} [isAnonymous] 是否匿名发布，true->是，false->否
+     * @apiSuccess (200) {String} [dataTye] 附件文件类型，1->图片，2->语音
+     * @apiSuccess (200) {String[]} [attacheFileUrlList] 附件文件地址列表
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "分页获取别人发布的所有动态内容列表成功。",
+     * "data": {
+     * "totalPage": 1,
+     * "list": [
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/default.png",
+     * "nickname": "匿名用户",
+     * "publishTime": "2021-07-21 17:46:37",
+     * "dynamicInfoId": 747,
+     * "content": "大家好，今天发布几张违法抓拍图片。",
+     * "address": "广东省·深圳市",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": false,
+     * "comments": 0,
+     * "isAnonymous": true,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626860797870/021c6104-a1e8-4811-a3d9-dcf0bcc2ab3a.jpg",
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626860797870/1279cab3-5bc1-4719-a199-fe66a6b8ae39.jpg",
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626860797870/c8077e24-ffb2-42ec-bdbb-7dee206152bc.jpg",
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626860797870/3ba9a02c-71bc-49ce-8ffb-46667fa14af8.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/default.png",
+     * "nickname": "匿名用户",
+     * "publishTime": "2021-07-21 17:43:58",
+     * "dynamicInfoId": 746,
+     * "content": "大家好，今天发布几张违法抓拍图片。",
+     * "address": "广东省·深圳市",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": false,
+     * "comments": 0,
+     * "isAnonymous": true,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626860638180/6877cde6-c4db-4ca9-8134-5c26334c3446.jpg",
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626860638180/4923990b-3c0b-4a57-9784-52ba6edc4527.jpg",
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626860638180/068d982b-5e37-447f-8134-4a154ded53de.jpg",
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626860638180/b659c879-26cf-49a9-b419-9e17437e9c75.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/default.png",
+     * "nickname": "匿名用户",
+     * "publishTime": "2021-07-21 17:33:09",
+     * "dynamicInfoId": 744,
+     * "content": "大家好，今天发布几张违法抓拍图片。",
+     * "address": "广东省·深圳市",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": false,
+     * "comments": 0,
+     * "isAnonymous": true,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626859989359/f6445ce4-829c-45f9-912b-299c2065576c.jpg",
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626859989359/4dba0a11-27fd-493e-8b59-a83c3251a0ac.jpg",
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626859989359/c04b4347-400d-4be9-9dd7-5f30953d0f8f.jpg",
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626859989359/37b9835b-b527-40fa-851b-f07254e80a22.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-07-21 17:09:42",
+     * "dynamicInfoId": 742,
+     * "content": "发几张美女照片看看。",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": false,
+     * "comments": 0,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626858582879/7e632d43-1f3a-4e0c-b531-22847a46304f.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-07-21 17:01:57",
+     * "dynamicInfoId": 741,
+     * "content": "发几张美女照片看看。",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": false,
+     * "comments": 0,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210721/1626858117646/9d06c224-47fa-4915-9351-4ed8c872db82.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-04-30 17:14:10",
+     * "dynamicInfoId": 708,
+     * "content": "测试",
+     * "address": "广东省·深圳市",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找女朋友",
+     * "comments": 120,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210430/1619774050374/a1259f31-3131-4f8c-a99b-3f8120ec2bfa.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:36:44",
+     * "dynamicInfoId": 658,
+     * "content": "测试",
+     * "address": "广东省·深圳市",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617176204339/a76d12a2-d430-4155-9a79-a5f6485b0544.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:36:44",
+     * "dynamicInfoId": 659,
+     * "content": "测试",
+     * "address": "广东省·深圳市",
+     * "likes": 2,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#新农人计划2021",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617176204466/bbdfdece-081d-4eaf-81d1-79855d6d39bc.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:35:07",
+     * "dynamicInfoId": 656,
+     * "content": "二哥",
+     * "address": "广东省·深圳市",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 1,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617176107913/b7eb7189-346c-44e1-8fb4-41d84b44b2c4.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:35:07",
+     * "dynamicInfoId": 657,
+     * "content": "二哥",
+     * "address": "广东省·深圳市",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#我要上热门",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617176108009/9212a7c2-535e-44cc-9f4b-bd53e44b01e3.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:34:01",
+     * "dynamicInfoId": 653,
+     * "content": "呃呃呃",
+     * "address": "广东省·深圳市",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617176041285/0956f1b1-201b-4288-9c4d-c898814b0533.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:34:01",
+     * "dynamicInfoId": 652,
+     * "content": "呃呃呃",
+     * "address": "广东省·深圳市",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#我要上热门",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617176041174/f53b5070-ba5e-4d8d-8b15-b6d6f73a50c8.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:33:35",
+     * "dynamicInfoId": 650,
+     * "content": "打算",
+     * "address": "广东省·深圳市",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#我要上热门",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617176015267/1b0909a3-697a-4c53-91cf-9b7146360181.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:33:35",
+     * "dynamicInfoId": 651,
+     * "content": "打算",
+     * "address": "广东省·深圳市",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#我要上热门",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617176015395/71b9fdaf-dd61-413c-b6d3-e7cea0b7d905.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:32:38",
+     * "dynamicInfoId": 649,
+     * "content": "测试",
+     * "address": "广东省·深圳市",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#我要上热门",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617175958506/88afb745-172f-487b-9712-f9f33747119d.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-31 15:30:59",
+     * "dynamicInfoId": 648,
+     * "content": "测试",
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#我要上热门",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210331/1617175859511/b99c7a95-59d6-4780-8310-3462181b4c4f.jpeg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-30 20:22:25",
+     * "dynamicInfoId": 644,
+     * "content": "测试",
+     * "address": "广东省·深圳市",
+     * "likes": 4,
+     * "likeStatus": false,
+     * "applications": 0,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#新农人计划2021",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210330/1617106945829/aee822d2-ee9c-4fff-8597-464e15906c2c.jpg"
+     * ]
+     * },
+     * {
+     * "userId": 144,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "publishTime": "2021-03-10 20:09:10",
+     * "dynamicInfoId": 620,
+     * "content": "测试",
+     * "address": "广东省·深圳市",
+     * "likes": 1,
+     * "likeStatus": false,
+     * "applications": 2,
+     * "applicationStatus": false,
+     * "isTopic": true,
+     * "topicTitle": "#找男朋友",
+     * "comments": 109,
+     * "isAnonymous": false,
+     * "dataType": "1",
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/144/20210310/1615378150059/40ab5a01-de81-4e88-8f80-ff4d110142ec.jpg",
+     * "http://192.168.31.38:9000/find/res/images/144/20210310/1615378150059/77acf396-1fcf-48a6-aed3-5f7b335568d3.jpg"
+     * ]
+     * }
+     * ]
+     * }
+     * }
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
+     * @apiError (404) {String} error 错误说明
+     * @apiError (404) {String} message 返回说明
+     * @apiError (404) {String} path 路径
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应 接口未注册
+     * {
+     * "timestamp": 1611558682334,
+     * "status": 404,
+     * "error": "Not Found",
+     * "message": "No message available",
+     * "path": "find/dynamic/71/otherList1"
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！",
+     * "data": null
+     * }
+     */
+    @GetMapping("/{id}/{id2}/otherList")
+    public CommonResult<Map<String, Object>> getDynamicByUserId(@PathVariable(name = "id") Long id,
+                                                                @PathVariable(name = "id2") Long id2,
+                                                                @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                                                @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize) {
+        return this.dynamicFeignClient.getDynamicByUserId(id, id2, pageNum, pageSize);
     }
 }

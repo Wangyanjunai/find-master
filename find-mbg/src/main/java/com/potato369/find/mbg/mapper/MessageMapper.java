@@ -36,6 +36,8 @@ public interface MessageMapper {
 
     List<Message> selectAllLikesMessageRecord(@Param("userId") Long userId);
 
+    List<Message> selectAllCommentsMessageRecord(@Param("userId") Long userId);
+
     List<Message> selectMessageRecordCount(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 
     List<Message> selectMessageRecord(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);

@@ -86,8 +86,6 @@ public class DynamicController {
 
     private AttacheInfoMapper attacheInfoMapperReader;
 
-    private IndustrysMapper industrysMapperReader;
-
     @Autowired
     public void setDynamicService(DynamicService dynamicService) {
         this.dynamicService = dynamicService;
@@ -196,11 +194,6 @@ public class DynamicController {
     @Autowired
     public void setAttacheInfoMapperReader(AttacheInfoMapper attacheInfoMapperReader) {
         this.attacheInfoMapperReader = attacheInfoMapperReader;
-    }
-
-    @Autowired
-    public void setIndustrysMapperReader(IndustrysMapper industrysMapperReader) {
-        this.industrysMapperReader = industrysMapperReader;
     }
 
     // 用户发布动态附件（包括图片和语音）
@@ -1510,6 +1503,47 @@ public class DynamicController {
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束校验内容是否含有敏感词汇");
+            }
+        }
+    }
+
+    /**
+     * 根据别人的用户id查询他的动态信息
+     *
+     * @param id  当前用户id
+     * @param id2 别人用户id
+     */
+    @GetMapping("/{id}/{id2}/otherList.do")
+    public CommonResult<Map<String, Object>> getDynamicByUserId(@PathVariable(name = "id") Long id,
+                                                                @PathVariable(name = "id2") Long id2,
+                                                                @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                                                @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize) {
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setUserId(id2);
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.QueryOwnerDynamic.getCode());
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始分页获取别人发布的所有动态内容列表");
+            }
+            User user1 = this.userMapperReader.selectByPrimaryKey(id);
+            if (Objects.isNull(user1)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
+            }
+            User user2 = this.userMapperReader.selectByPrimaryKey(id2);
+            if (Objects.isNull(user2)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
+            }
+            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.success(this.dynamicInfoService.getOtherDynamicInfoDataList(id, id2, pageNum, pageSize), "分页获取别人发布的所有动态内容列表成功。");
+        } catch (Exception e) {
+            log.error("分页获取别人发布的所有动态内容列表出现错误", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.failed("分页获取别人发布的所有动态内容列表出现错误。");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束分页获取别人发布的所有动态内容列表");
             }
         }
     }

@@ -383,6 +383,19 @@
         ORDER BY like_record.`create_time` DESC,
                  like_record.`update_time` DESC
     </select>
+    <select id="selectAllCommentsMessageRecord" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        SELECT message.`send_user_id`,
+               message.`send_mode`,
+               message.`status`,
+               message.`content`
+        FROM `message` message
+        WHERE message.`recipient_user_id` = #{userId, jdbcType=BIGINT}
+          AND message.`reserve_column01` = 'comments'
+          AND message.reserve_column02 = '0'
+          AND message.`reserve_column03` = '0'
+        ORDER BY message.`create_time` DESC,
+                 message.`update_time` DESC
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete

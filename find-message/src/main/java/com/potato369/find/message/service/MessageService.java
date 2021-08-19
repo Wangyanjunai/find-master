@@ -1,10 +1,7 @@
 package com.potato369.find.message.service;
 
 import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.common.vo.LikesMessageVO;
-import com.potato369.find.common.vo.MessageVO;
-import com.potato369.find.common.vo.MessageVO2;
-import com.potato369.find.common.vo.MessageVO3;
+import com.potato369.find.common.vo.*;
 
 import java.util.Map;
 
@@ -19,6 +16,16 @@ public interface MessageService {
      * @param userId 消息接收者用户id
      */
     LikesMessageVO selectAllLikesMessage(Long userId, int pageNum, int pageSize);
+
+    /**
+     * 根据用户id查询某个用户最新一条被评论的消息记录
+     *
+     * @param userId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    CommentsMessageVO selectAllCommentsMessage(Long userId, int pageNum, int pageSize);
 
     /**
      * 根据用户id分页查询某个用户不是被点赞的消息记录
@@ -37,6 +44,15 @@ public interface MessageService {
      * @param pageSize 每页数量
      */
     MessageVO2 selectLikesMessage(Long userId, int pageNum, int pageSize);
+
+    /**
+     * 根据用户id分页查询某个用户被评论的消息记录
+     *
+     * @param userId   消息接收者用户id
+     * @param pageNum  当前页码
+     * @param pageSize 每页数量
+     */
+    CommentsVO2 selectCommentsMessage(Long userId, int pageNum, int pageSize);
 
     /**
      * 根据用户id分页查询某个用户收到的申请加微信消息记录

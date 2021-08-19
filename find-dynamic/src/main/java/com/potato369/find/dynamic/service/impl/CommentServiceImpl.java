@@ -3,17 +3,12 @@ package com.potato369.find.dynamic.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.potato369.find.common.enums.DeleteStatusEnum;
-import com.potato369.find.common.enums.LikeRecordTypeEnum;
-import com.potato369.find.common.enums.LikeStatusEnum;
+import com.potato369.find.common.enums.*;
 import com.potato369.find.common.vo.CommentVO;
 import com.potato369.find.common.vo.PageCommentVOs;
 import com.potato369.find.dynamic.config.props.ProjectUrlProps;
 import com.potato369.find.dynamic.service.CommentService;
-import com.potato369.find.mbg.mapper.CommentMapper;
-import com.potato369.find.mbg.mapper.DynamicInfoMapper;
-import com.potato369.find.mbg.mapper.LikeRecordMapper;
-import com.potato369.find.mbg.mapper.UserMapper;
+import com.potato369.find.mbg.mapper.*;
 import com.potato369.find.mbg.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +33,8 @@ public class CommentServiceImpl implements CommentService {
     private ProjectUrlProps projectUrlProps;
 
     private DynamicInfoMapper dynamicInfoMapperReader;
+
+    private MessageMapper messageMapperWriter;
 
     @Autowired
     public void setCommentMapperReader(CommentMapper commentMapperReader) {
@@ -69,17 +66,35 @@ public class CommentServiceImpl implements CommentService {
         this.dynamicInfoMapperReader = dynamicInfoMapperReader;
     }
 
+    @Autowired
+    public void setMessageMapperWriter(MessageMapper messageMapperWriter) {
+        this.messageMapperWriter = messageMapperWriter;
+    }
+
     /**
      * 新增评论
      *
+     * @param content
      * @param comment
-     * @return
+     * @param dynamicInfo
      */
     @Override
     @Transactional
-    public int save(Comment comment, DynamicInfo dynamicInfo) {
-        this.dynamicInfoMapperReader.updateByPrimaryKeySelective(dynamicInfo);
-        return this.commentMapperWriter.insertSelective(comment);
+    public int save(String content, Comment comment, DynamicInfo dynamicInfo) {
+        int a = this.dynamicInfoMapperReader.updateByPrimaryKeySelective(dynamicInfo);
+        int b = this.commentMapperWriter.insertSelective(comment);
+        //消息记录
+        Message messageRecord = new Message();
+        messageRecord.setContent(content);//消息内容
+        messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
+        messageRecord.setRecipientUserId(dynamicInfo.getUserId());//接收者用户id
+        messageRecord.setSendUserId(comment.getUserId());//发送者用户id
+        messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//未读
+        messageRecord.setReserveColumn01(MessageTypeEnum.Comments.getMessage());//消息类型，评论->comments
+        messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
+        messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
+        int c = this.messageMapperWriter.insertSelective(messageRecord);
+        return a + b + c;
     }
 
     /**

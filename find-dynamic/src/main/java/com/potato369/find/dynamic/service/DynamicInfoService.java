@@ -48,6 +48,15 @@ public interface DynamicInfoService {
     Map<String, Object> getMyDynamicInfoDataList(Long userId, Integer pageNum, Integer pageSize);
 
     /**
+     * @param myUserId
+     * @param otherUserId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    Map<String, Object> getOtherDynamicInfoDataList(Long myUserId, Long otherUserId, Integer pageNum, Integer pageSize);
+
+    /**
      * 根据用户id分页获取热门话题数据
      *
      * @param userId   用户id

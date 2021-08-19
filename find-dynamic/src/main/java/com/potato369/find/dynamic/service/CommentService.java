@@ -11,17 +11,16 @@ public interface CommentService {
     /**
      * 新增评论
      *
+     * @param content
      * @param comment
      * @param dynamicInfo
-     * @return
      */
-    int save(Comment comment, DynamicInfo dynamicInfo);
+    int save(String content, Comment comment, DynamicInfo dynamicInfo);
 
     /**
      * 查询评论
      *
      * @param id
-     * @return
      */
     Comment findById(Long id);
 

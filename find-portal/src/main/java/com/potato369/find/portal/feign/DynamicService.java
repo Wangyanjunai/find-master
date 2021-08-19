@@ -157,4 +157,10 @@ public interface DynamicService {
     //检查内容是否包含敏感词汇
     @GetMapping("/find/v1/dynamic/check.do")
     CommonResult<Map<String, Object>> checkResult(@RequestParam(name = "content") String content);
+
+    @GetMapping("/find/v1/dynamic/{id}/{id2}/otherList.do")
+    CommonResult<Map<String, Object>> getDynamicByUserId(@PathVariable(name = "id") Long id,
+                                                         @PathVariable(name = "id2") Long id2,
+                                                         @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                                         @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize);
 }

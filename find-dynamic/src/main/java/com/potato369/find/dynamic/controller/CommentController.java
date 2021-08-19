@@ -5,11 +5,10 @@ import com.potato369.find.common.api.ResultCode;
 import com.potato369.find.common.dto.CommentDTO;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.vo.PageCommentVOs;
-import com.potato369.find.dynamic.service.CommentService;
-import com.potato369.find.dynamic.service.DynamicInfoService;
-import com.potato369.find.dynamic.service.LikeRecordService;
-import com.potato369.find.dynamic.service.SensitiveWordsService;
+import com.potato369.find.dynamic.config.bean.PushBean;
+import com.potato369.find.dynamic.service.*;
 import com.potato369.find.mbg.mapper.OperateRecordMapper;
+import com.potato369.find.mbg.mapper.UserMapper;
 import com.potato369.find.mbg.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -51,6 +50,10 @@ public class CommentController {
 
     private OperateRecordMapper operateRecordMapperWriter;
 
+    private UserMapper userMapperReader;
+
+    private JiGuangPushService jiGuangPushService;
+
     @Autowired
     public void setDynamicInfoService(DynamicInfoService dynamicInfoService) {
         this.dynamicInfoService = dynamicInfoService;
@@ -76,6 +79,16 @@ public class CommentController {
         this.operateRecordMapperWriter = operateRecordMapperWriter;
     }
 
+    @Autowired
+    public void setUserMapperReader(UserMapper userMapperReader) {
+        this.userMapperReader = userMapperReader;
+    }
+
+    @Autowired
+    public void setJiGuangPushService(JiGuangPushService jiGuangPushService) {
+        this.jiGuangPushService = jiGuangPushService;
+    }
+
     // 发布评论
     @PostMapping("/{id}/release.do")
     public CommonResult<Map<String, Object>> release(
@@ -95,9 +108,18 @@ public class CommentController {
             if (bindingResult.hasErrors()) {
                 return CommonResult.validateFailed("参数校验不通过，" + Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
             }
+            User user = this.userMapperReader.selectByPrimaryKey(userId);
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
+            }
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(commentDTO.getDynamicInfoId());
             if (Objects.isNull(dynamicInfo)) {
                 return CommonResult.validateFailed("参数校验不通过，动态内容信息不存在。");
+            }
+            Long publishUserId = dynamicInfo.getUserId();
+            User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);
+            if (Objects.isNull(publishUser)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
             // 校验发布的内容是否包含敏感词汇
             SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(commentDTO.getContent());
@@ -114,9 +136,18 @@ public class CommentController {
             comment.setUserId(userId);
             dynamicInfo.setUpdateTime(new Date());
             dynamicInfo.setComments(dynamicInfo.getComments() + 1);
-            int result = this.commentService.save(comment, dynamicInfo);
+            String content = user.getNickName() + " 评论您的动态 " + dynamicInfo.getContent();//消息内容
+            int result = this.commentService.save(content, comment, dynamicInfo);
             if (result > 0) {
                 data.put("RELEASE", "OK");
+                String title = "互动消息";//消息标题
+                PushBean pushBean = new PushBean();
+                pushBean.setAlert(content);
+                pushBean.setTitle(title);
+                String regId = publishUser.getReserveColumn03();
+                if (!Objects.isNull(regId)) {
+                    this.jiGuangPushService.pushAndroid(pushBean, regId);
+                }
                 operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                 this.operateRecordMapperWriter.insertSelective(operateRecord);
                 return CommonResult.success(data, "发布评论成功。");
@@ -237,9 +268,7 @@ public class CommentController {
                 return CommonResult.validateFailed("点赞/取消点赞评论，评论不存在。");
             }
             data.put("LIKES", "ERROR");
-            LikeRecord likeRecord =
-                    this.likeRecordService.findByUserIdAndDynamicInfoId(
-                            userId, commentId, LikeRecordTypeEnum.Comment.getType());
+            LikeRecord likeRecord = this.likeRecordService.findByUserIdAndDynamicInfoId(userId, commentId, LikeRecordTypeEnum.Comment.getType());
             // 取消点赞
             if (Objects.equals(LikeStatusEnum.NO.getStatus(), type)) {
                 if (Objects.isNull(likeRecord)) {

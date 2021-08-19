@@ -107,6 +107,27 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional(readOnly = true)
+    public CommentsMessageVO selectAllCommentsMessage(Long userId, int pageNum, int pageSize) {
+        // 查询点赞消息
+        CommentsMessageVO commentsMessageVO = CommentsMessageVO.builder().build();
+        final PageInfo<Message> messagePageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectAllCommentsMessageRecord(userId));
+        // 查询最后一条点赞消息记录
+        if (!Objects.isNull(messagePageInfo) && messagePageInfo.getTotal() > 0) {
+            List<Message> messageList = messagePageInfo.getList();
+            if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
+                List<Message> messageList2 = messageList.stream().filter(message -> Objects.equals(MessageStatusEnum.UNREAD.getStatus(), message.getStatus())).collect(Collectors.toList());
+                commentsMessageVO.setCount((long) messageList2.size());
+                commentsMessageVO.setContent(messageList.get(0).getContent());
+            }
+        } else {
+            commentsMessageVO.setCount(0L);
+            commentsMessageVO.setContent(null);
+        }
+        return commentsMessageVO;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public MessageVO selectNotLikesMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId, pageNum, pageSize));
@@ -178,10 +199,57 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
+    public CommentsVO2 selectCommentsMessage(Long userId, int pageNum, int pageSize) {
+        CommentsVO2 commentsVO2 = CommentsVO2.builder().build();
+        final PageInfo<LikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
+                .doSelectPageInfo(() -> this.messageMapperReader.selectLikesMessageRecordByUserId(userId));
+        commentsVO2.setTotalCount(listPageInfo.getTotal());
+        commentsVO2.setTotalPage(listPageInfo.getPages());
+        List<LikesInfoVO> likesInfoVOs = new ArrayList<>();
+        List<LikesMessageRecord> likesMessageRecordList = listPageInfo.getList();
+        for (LikesMessageRecord likesMessageRecord : likesMessageRecordList) {
+            LikesInfoVO likesInfoVO = LikesInfoVO.builder().build();
+            likesInfoVO.setMessageId(likesMessageRecord.getMessageId());
+            likesInfoVO.setUserId(likesMessageRecord.getUserId());
+            likesInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                    + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                    + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) + likesMessageRecord.getUserId() + "/"
+                    + likesMessageRecord.getHeadIcon());
+            likesInfoVO.setAttacheType(likesMessageRecord.getAttacheType());
+            likesInfoVO.setContent(likesMessageRecord.getLikesContent());
+            String[] fileNameList01 = StrUtil.split(likesMessageRecord.getAttacheFilename(), "||");
+            List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
+            List<String> fileNameList03 = new ArrayList<>();
+            for (String fileName : fileNameList02) {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain()))
+                        .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                if (StrUtil.isNotEmpty(likesMessageRecord.getAttacheType()) && AttacheInfoDataTypeEnum.Image.getCode()
+                        .toString().equals(likesMessageRecord.getAttacheType())) {
+                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+                }
+                if (StrUtil.isNotEmpty(likesMessageRecord.getAttacheType()) && AttacheInfoDataTypeEnum.Audio.getCode()
+                        .toString().equals(likesMessageRecord.getAttacheType())) {
+                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
+                }
+                stringBuilder.append(fileName);
+                fileNameList03.add(stringBuilder.toString());
+            }
+            likesInfoVO.setAttacheFilenameList(fileNameList03);
+            likesInfoVOs.add(likesInfoVO);
+            this.messageMapperWriter.updateLikesMessage(likesInfoVO.getUserId(), userId);
+        }
+//        commentsVO2.getCommentVOList(new ArrayList<>());
+        return commentsVO2;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public MessageVO selectApplicationsMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId, pageNum, pageSize));
+        messageVO.setCommentsMessageVO(this.selectAllCommentsMessage(userId, pageNum, pageSize));
         List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByUserId(userId);
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         List<MessageInfoVO> messageInfoVOs2 = new ArrayList<>();
