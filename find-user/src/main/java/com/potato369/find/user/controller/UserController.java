@@ -914,7 +914,7 @@ public class UserController {
                         "/" +
                         user2.getHeadIcon());
             }
-            if (StrUtil.isNotEmpty(user.getBackgroundIcon())) {
+            if (StrUtil.isNotEmpty(user2.getBackgroundIcon())) {
                 userVO.setBgIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
                         StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
                         StrUtil.trimToNull(this.projectUrlProps.getResBackgroundIcon()) +
