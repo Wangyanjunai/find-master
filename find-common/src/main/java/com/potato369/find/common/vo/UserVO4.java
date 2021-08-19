@@ -180,4 +180,11 @@ public class UserVO4 {
     @JSONField(name = "other")
     @JsonProperty(value = "other")
     private String other;
+
+    /**
+     * 申请加微信状态，true->已申请，false->未申请
+     */
+    @JSONField(name = "applicationStatus")
+    @JsonProperty(value = "applicationStatus")
+    private Boolean applicationStatus;
 }

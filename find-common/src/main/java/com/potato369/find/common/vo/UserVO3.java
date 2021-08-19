@@ -115,4 +115,11 @@ public class UserVO3 {
     @JSONField(name = "dynamicInfoId")
     @JsonProperty(value = "dynamicInfoId")
     private Long dynamicInfoId;
+
+    /**
+     * 申请加微信状态，true->已申请，false->未申请
+     */
+    @JSONField(name = "applicationStatus")
+    @JsonProperty(value = "applicationStatus")
+    private Boolean applicationStatus;
 }

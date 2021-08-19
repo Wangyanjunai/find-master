@@ -219,4 +219,11 @@ public class UserVO {
     @JSONField(name = "tag5")
     @JsonProperty(value = "tag5")
     private String tag5;
+
+    /**
+     * 申请加微信状态，true->已申请，false->未申请
+     */
+    @JSONField(name = "applicationStatus")
+    @JsonProperty(value = "applicationStatus")
+    private Boolean applicationStatus;
 }

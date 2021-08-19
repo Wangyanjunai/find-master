@@ -8122,6 +8122,255 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/find/user/{id}/queryOther",
+    "title": "查看别人个人资料接口",
+    "version": "1.0.0",
+    "group": "用户模块API",
+    "name": "查看别人个人资料",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例 获取用户资料",
+          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/70/queryOther",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": true,
+            "field": "user",
+            "description": "<p>用户数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "nickname",
+            "description": "<p>昵称</p>"
+          },
+          {
+            "group": "200",
+            "type": "int",
+            "allowedValues": [
+              "{\"0\"",
+              "\"1\"",
+              "\"2\"}"
+            ],
+            "optional": true,
+            "field": "grade",
+            "description": "<p>VIP等级，0-&gt;普通用户，1-&gt;VIP1等级用户，2-&gt;VIP2等级用户</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "age",
+            "description": "<p>年龄</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "allowedValues": [
+              "{\"0\"",
+              "\"1\"}"
+            ],
+            "optional": true,
+            "field": "gender",
+            "description": "<p>性别，&quot;0&quot;-&gt;女生，&quot;1&quot;-&gt;男生</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "head",
+            "description": "<p>头像</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "bg",
+            "description": "<p>背景图片</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag1",
+            "description": "<p>标签1</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag2",
+            "description": "<p>标签2</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag3",
+            "description": "<p>标签3</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag4",
+            "description": "<p>标签4</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "tag5",
+            "description": "<p>标签5</p>"
+          },
+          {
+            "group": "200",
+            "type": "Boolean",
+            "allowedValues": [
+              "{\"true\"",
+              "\"false\"}"
+            ],
+            "optional": true,
+            "field": "applicationStatus",
+            "description": "<p>申请加微信状态，true-&gt;已申请，false-&gt;未申请</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"查看用户个人资料成功\",\n\"data\": {\n\"user\": {\n\"id\": 172,\n\"nickname\": \"樊旻骞\",\n\"head\": \"http://192.168.31.38:9000/find/img/head/172/f00346d6-b332-4b3b-a728-935b1e15719b.jpg\",\n\"grade\": \"0\",\n\"age\": 28,\n\"year\": \"1993\",\n\"month\": \"05\",\n\"date\": \"06\",\n\"gender\": \"0\",\n\"autograph\": \"刚刚注册，请多关照小妹子！\",\n\"industry\": \"IT/通信/电子\",\n\"profession\": \"电子商务\",\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"南山区\",\n\"other\": \"科兴科学园C座\",\n\"tag1\": \"颜值\",\n\"tag2\": \"吃货\",\n\"applicationStatus\": true\n}\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/UserController.java",
+    "groupTitle": "用户模块API",
+    "sampleRequest": [
+      {
+        "url": "http://w168428j19.51mypc.cn/find/user/{id}/queryOther"
+      }
+    ]
+  },
+  {
+    "type": "get",
     "url": "/find/user/{id}/queryWeixin",
     "title": "查看用户微信号接口",
     "version": "1.0.0",
@@ -10410,21 +10659,21 @@ define({ "api": [
           {
             "group": "接口请求参数",
             "type": "String",
-            "optional": false,
+            "optional": true,
             "field": "ip",
-            "description": "<p>客户端ip</p>"
+            "description": "<p>客户端ip，不能与定位经纬度同时为空</p>"
           },
           {
             "group": "接口请求参数",
             "type": "Double",
-            "optional": false,
+            "optional": true,
             "field": "longitude",
             "description": "<p>定位（经度）</p>"
           },
           {
             "group": "接口请求参数",
             "type": "Double",
-            "optional": false,
+            "optional": true,
             "field": "latitude",
             "description": "<p>定位（纬度）</p>"
           },
@@ -10449,7 +10698,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&pageNum=1&pageSize=10 -H \"Content-Type: application/json;charset=UTF-8\"",
+          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/147/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&pageNum=1&pageSize=10 -H \"Content-Type: application/json;charset=UTF-8\"",
           "type": "json"
         }
       ]
@@ -10575,13 +10824,24 @@ define({ "api": [
             "optional": true,
             "field": "dynamicInfoId",
             "description": "<p>动态内容id</p>"
+          },
+          {
+            "group": "200",
+            "type": "Boolean",
+            "allowedValues": [
+              "{\"true\"",
+              "\"false\"}"
+            ],
+            "optional": true,
+            "field": "applicationStatus",
+            "description": "<p>申请加微信状态，true-&gt;已申请，false-&gt;未申请</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "HTTP/1.1 200 OK",
-          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"totalSize\": 146,\n\"totalPage\": 15,\n\"list\": [\n{\n\"id\": 144,\n\"nickname\": \"季婉\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"宝安区\",\n\"distance\": 13038.787386521431,\n\"img\": \"http://192.168.31.38:9000/find/res/images/144/20210721/1626860797870/021c6104-a1e8-4811-a3d9-dcf0bcc2ab3a.jpg\",\n\"dynamicInfoId\": 747\n},\n{\n\"id\": 143,\n\"nickname\": \"www\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"宝安区\",\n\"distance\": 13038.787386521431,\n\"img\": \"http://192.168.31.38:9000/find/res/images/143/20210219/1613714536715/f683b170-6aa1-4cec-99c9-25baeecb74a1.jpeg\",\n\"dynamicInfoId\": 608\n},\n{\n\"id\": 140,\n\"nickname\": \"凝噎新紫\",\n\"age\": 30,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"宝安区\",\n\"distance\": 13038.787386521431,\n\"img\": \"http://192.168.31.38:9000/find/res/images/140/20210218/1613661729591/0c99dc02-188b-426e-a46d-5e951743dedf.jpg\",\n\"dynamicInfoId\": 601\n},\n{\n\"id\": 138,\n\"nickname\": \"阿妩\",\n\"age\": 33,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"龙华新区\",\n\"distance\": 26084.37755145445,\n\"img\": \"http://192.168.31.38:9000/find/res/images/138/20210429/1619663244476/4d789742-acb9-4298-b74e-8618f9c9d2e4.jpg\",\n\"dynamicInfoId\": 707\n},\n{\n\"id\": 136,\n\"nickname\": \"杨八\",\n\"age\": 30,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"龙华新区\",\n\"distance\": 26084.37755145445,\n\"img\": \"http://192.168.31.38:9000/find/res/images/136/20210310/1615347606043/de454037-90eb-4739-b7ed-dbe9ec67e3e3.jpg\",\n\"dynamicInfoId\": 617\n},\n{\n\"id\": 92,\n\"nickname\": \"雨悠扬\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"四川省\",\n\"city\": \"成都市\",\n\"district\": \"青羊区\",\n\"distance\": 1343118.910357623,\n\"img\": \"http://192.168.31.38:9000/find/res/images/92/20201228/01.png\",\n\"dynamicInfoId\": 344\n},\n{\n\"id\": 117,\n\"nickname\": \"安然\",\n\"age\": 28,\n\"country\": \"中国\",\n\"province\": \"江苏省\",\n\"city\": \"南通市\",\n\"district\": \"如皋市\",\n\"distance\": 1280893.236686052,\n\"img\": \"http://192.168.31.38:9000/find/res/images/117/20201226/01.png\",\n\"dynamicInfoId\": 460\n},\n{\n\"id\": 113,\n\"nickname\": \"妤元\",\n\"age\": 28,\n\"country\": \"中国\",\n\"province\": \"江苏省\",\n\"city\": \"南通市\",\n\"district\": \"通州区\",\n\"distance\": 1279048.9936150846,\n\"img\": \"http://192.168.31.38:9000/find/res/images/113/20201225/02.png\",\n\"dynamicInfoId\": 442\n},\n{\n\"id\": 95,\n\"nickname\": \"樱樱\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"四川省\",\n\"city\": \"成都市\",\n\"district\": \"成华区\",\n\"distance\": 1339169.4151919885,\n\"img\": \"http://192.168.31.38:9000/find/res/images/95/20201225/05.png\",\n\"dynamicInfoId\": 360\n},\n{\n\"id\": 128,\n\"nickname\": \"宇儿\",\n\"age\": 23,\n\"country\": \"中国\",\n\"province\": \"浙江省\",\n\"city\": \"杭州市\",\n\"district\": \"滨江区\",\n\"distance\": 1063497.5983731847,\n\"img\": \"http://192.168.31.38:9000/find/res/images/128/20201223/010.png\",\n\"dynamicInfoId\": 513\n}\n]\n}\n}",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"totalSize\": 146,\n\"totalPage\": 15,\n\"list\": [\n{\n\"id\": 173,\n\"nickname\": \"一手的触碰\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"distance\": 0.030315003677945207,\n\"img\": \"http://192.168.31.38:9000/find/res/images/173/20210729/1627527665688/946945bd-b212-4f39-80c5-74a42bd5da2d.jpg\",\n\"dynamicInfoId\": 776,\n\"applicationStatus\": true\n},\n{\n\"id\": 172,\n\"nickname\": \"樊旻骞\",\n\"age\": 28,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"南山区\",\n\"other\": \"科兴科学园C座\",\n\"distance\": 11552.161604077619,\n\"img\": \"http://192.168.31.38:9000/find/res/images/172/20210729/1627526970322/f00346d6-b332-4b3b-a728-935b1e15719b.jpg\",\n\"dynamicInfoId\": 775,\n\"applicationStatus\": false\n},\n{\n\"id\": 166,\n\"nickname\": \"啊阳3\",\n\"age\": 29,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"distance\": 0.030315003677945207,\n\"img\": \"http://192.168.31.38:9000/find/res/images/166/20210727/1627381333700/ef06cbdd-9f9e-4bc5-a6e3-24ba28fdc43a.jpg\",\n\"dynamicInfoId\": 770,\n\"applicationStatus\": false\n},\n{\n\"id\": 165,\n\"nickname\": \"啊阳\",\n\"age\": 29,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"distance\": 0.030315003677945207,\n\"img\": \"http://192.168.31.38:9000/find/res/images/165/20210727/1627380633909/0279e3cf-7e1b-43a6-bc5b-89bfae3e08c1.jpg\",\n\"dynamicInfoId\": 769,\n\"applicationStatus\": false\n},\n{\n\"id\": 154,\n\"nickname\": \"小阳\",\n\"age\": 29,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"distance\": 0.030315003677945207,\n\"img\": \"http://192.168.31.38:9000/find/res/images/154/20210719/1626675851218/c19e30f5-fefe-4060-a5f5-b6231eba6861.jpg\",\n\"dynamicInfoId\": 723,\n\"applicationStatus\": false\n},\n{\n\"id\": 152,\n\"nickname\": \"王环\",\n\"age\": 29,\n\"country\": \"中国\",\n\"province\": \"上海市\",\n\"city\": \"上海市\",\n\"district\": \"徐汇区\",\n\"distance\": 1243539.199156731,\n\"img\": \"http://192.168.31.38:9000/find/res/images/152/20210701/1625109265050/76d33e4d-cd92-4358-bb33-13be748fb30d.jpg\",\n\"dynamicInfoId\": 711,\n\"applicationStatus\": false\n},\n{\n\"id\": 150,\n\"nickname\": \"王儇\",\n\"age\": 27,\n\"country\": \"中国\",\n\"province\": \"上海市\",\n\"city\": \"上海市\",\n\"district\": \"虹口区\",\n\"distance\": 1232177.4599431185,\n\"img\": \"http://192.168.31.38:9000/find/res/images/150/20210610/1623324932338/458a81a3-ae7d-4442-b812-debe68f05b2e.jpg\",\n\"dynamicInfoId\": 710,\n\"applicationStatus\": false\n},\n{\n\"id\": 149,\n\"nickname\": \"洋洋12\",\n\"age\": 25,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"坪山新区\",\n\"distance\": 46866.36032411066,\n\"img\": \"http://192.168.31.38:9000/find/res/images/149/20210610/1623324450475/28747ba1-d92b-42ef-9bf1-d18a50eecb88.jpg\",\n\"dynamicInfoId\": 709,\n\"applicationStatus\": false\n},\n{\n\"id\": 148,\n\"nickname\": \"元凝然\",\n\"age\": 24,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"盐田区\",\n\"distance\": 30138.030306155608,\n\"img\": \"http://192.168.31.38:9000/find/res/images/148/20210817/1629167545657/af3db729-1ba1-40c5-9295-0158a3e59536.jpg\",\n\"dynamicInfoId\": 799,\n\"applicationStatus\": false\n},\n{\n\"id\": 145,\n\"nickname\": \"咿呀呀\",\n\"age\": 21,\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"龙岗区\",\n\"distance\": 40939.20057469871,\n\"img\": \"http://192.168.31.38:9000/find/res/images/145/20210308/1615191441985/8c4e4bab-b850-4b8f-90dc-18866c2a9df2.jpg\",\n\"dynamicInfoId\": 612,\n\"applicationStatus\": false\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -10685,7 +10945,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look-details?detailsUserId=70 -H \"Content-Type: application/json;charset=UTF-8\"",
+          "content": "curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/147/look-details?detailsUserId=172 -H \"Content-Type: application/json;charset=UTF-8\"",
           "type": "json"
         }
       ]
@@ -10840,13 +11100,24 @@ define({ "api": [
             "optional": true,
             "field": "district",
             "description": "<p>区/县</p>"
+          },
+          {
+            "group": "200",
+            "type": "Boolean",
+            "allowedValues": [
+              "{\"true\"",
+              "\"false\"}"
+            ],
+            "optional": true,
+            "field": "applicationStatus",
+            "description": "<p>申请加微信状态，true-&gt;已申请，false-&gt;未申请</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "HTTP/1.1 200 OK",
-          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"获取鹿可模块用户详情数据成功。\",\n\"data\": {\n\"id\": 70,\n\"attacheList\": [\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/308f48ad-ce12-49ab-92f2-eb4ef7dcd649.jpg\",\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/72517b7c-a808-445e-9a3d-3f15ee66e341.jpg\",\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/2d5f85de-e2b1-4b96-a8c5-f3a6814c3c50.jpg\",\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/fb92d519-e29c-4c80-b7cc-acfa2f6eaf47.jpg\",\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/4872593b-e7d2-496a-a52c-897cafda2bb5.jpg\",\n\"http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/d7319235-dfee-42e3-a089-50cec9ae5a1f.jpg\"\n],\n\"tag1\": \"颜值\",\n\"tag2\": \"吃货\",\n\"tag3\": \"篮球\",\n\"tag4\": \"足球\",\n\"tag5\": \"打碟DJ\",\n\"nickname\": \"阿萌\",\n\"constellation\": \"双子座\",\n\"gender\": \"0\",\n\"age\": 27,\n\"industry\": \"计算机/互联网/通信/电子\",\n\"profession\": \"测试工程师\",\n\"country\": \"中国\",\n\"province\": \"河南省\",\n\"city\": \"郑州市\",\n\"district\": \"中原区\"\n}\n}",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"获取鹿可模块用户详情数据成功。\",\n\"data\": {\n\"id\": 172,\n\"attacheList\": [\n\"http://192.168.31.38:9000/find/res/images/172/20210729/1627526970322/f00346d6-b332-4b3b-a728-935b1e15719b.jpg\"\n],\n\"tag1\": \"颜值\",\n\"tag2\": \"吃货\",\n\"nickname\": \"樊旻骞\",\n\"constellation\": \"金牛座\",\n\"gender\": \"0\",\n\"age\": 28,\n\"industry\": \"IT/通信/电子\",\n\"profession\": \"电子商务\",\n\"country\": \"中国\",\n\"province\": \"广东省\",\n\"city\": \"深圳市\",\n\"district\": \"南山区\",\n\"other\": \"科兴科学园C座\",\n\"applicationStatus\": true\n}\n}",
           "type": "json"
         }
       ]

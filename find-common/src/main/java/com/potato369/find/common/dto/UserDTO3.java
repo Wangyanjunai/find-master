@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 /**
  * 鹿可模块传递参数实体
  */
@@ -27,7 +24,6 @@ public class UserDTO3 extends AbstractDTO {
     @ApiModelProperty(value = "客户端IP")
     @JSONField(name = "ip")
     @JsonProperty(value = "ip")
-    @NotEmpty(message = "客户端IP不能为空")
     private String ip;
 
     /**
@@ -38,7 +34,6 @@ public class UserDTO3 extends AbstractDTO {
     @ApiModelProperty(value = "经度")
     @JSONField(name = "longitude")
     @JsonProperty(value = "longitude")
-    @NotNull(message = "经度不能为空")
     private Double longitude;
 
     /**
@@ -49,6 +44,5 @@ public class UserDTO3 extends AbstractDTO {
     @ApiModelProperty(value = "纬度")
     @JSONField(name = "latitude")
     @JsonProperty(value = "latitude")
-    @NotNull(message = "纬度不能为空")
     private Double latitude;
 }

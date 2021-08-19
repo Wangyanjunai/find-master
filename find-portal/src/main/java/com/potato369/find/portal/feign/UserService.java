@@ -128,11 +128,11 @@ public interface UserService {
     //远程调用鹿可模块推荐用户数据接口
     @GetMapping("/find/v1/user/{id}/look.do")
     CommonResult<PageInfoVO<UserVO3>> look(@PathVariable(name = "id") Long id,
-                                  @RequestParam(name = "ip") String ip,
-                                  @RequestParam(name = "longitude") Double longitude,
-                                  @RequestParam(name = "latitude") Double latitude,
-                                  @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
-                                  @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize);
+                                           @RequestParam(name = "ip", required = false) String ip,
+                                           @RequestParam(name = "longitude", required = false) Double longitude,
+                                           @RequestParam(name = "latitude", required = false) Double latitude,
+                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                           @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize);
 
     //远程调用鹿可模块推荐用户详情数据接口
     @GetMapping("/find/v1/user/{id}/look-details.do")
@@ -144,4 +144,9 @@ public interface UserService {
                                                @RequestParam(name = "dataType") String attacheInfoDataType,
                                                @RequestParam(name = "content", required = false) String opinion,
                                                @RequestPart(value = "files", required = false) MultipartFile[] files);
+
+    //查看别人个人资料接口
+    @GetMapping(value = "/find/v1/user/{id}/{id2}/queryOther.do")
+    public CommonResult<Map<String, Object>> query(@PathVariable(name = "id") Long id,
+                                                   @PathVariable(name = "id2") Long detailsUserId);
 }

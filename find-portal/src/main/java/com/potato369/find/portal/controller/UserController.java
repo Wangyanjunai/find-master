@@ -1517,13 +1517,13 @@ public class UserController {
      * @apiGroup 用户模块API
      * @apiName 鹿可模块推荐用户数据
      * @apiParam (接口请求参数) {Number} id 用户id
-     * @apiParam (接口请求参数) {String} ip 客户端ip
-     * @apiParam (接口请求参数) {Double} longitude 定位（经度）
-     * @apiParam (接口请求参数) {Double} latitude 定位（纬度）
+     * @apiParam (接口请求参数) {String} [ip] 客户端ip，不能与定位经纬度同时为空
+     * @apiParam (接口请求参数) {Double} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {Double} [latitude] 定位（纬度）
      * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页码
      * @apiParam (接口请求参数) {Number} [pageSize=10] 每页条数
      * @apiParamExample 请求示例
-     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&pageNum=1&pageSize=10 -H "Content-Type: application/json;charset=UTF-8"
+     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/147/look?ip=183.14.135.75&longitude=113.9629412&latitude=22.4627142&pageNum=1&pageSize=10 -H "Content-Type: application/json;charset=UTF-8"
      * @apiSuccess (200) {Number} status 响应状态码
      * @apiSuccess (200) {Number} code 消息码
      * @apiSuccess (200) {String} msg 说明
@@ -1541,6 +1541,7 @@ public class UserController {
      * @apiSuccess (200) {Double} [distance] 距离（单位：米）
      * @apiSuccess (200) {String} [img] 动态图片地址
      * @apiSuccess (200) {Number} [dynamicInfoId] 动态内容id
+     * @apiSuccess (200) {Boolean={"true", "false"}} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
@@ -1551,124 +1552,131 @@ public class UserController {
      * "totalPage": 15,
      * "list": [
      * {
-     * "id": 144,
-     * "nickname": "季婉",
-     * "age": 25,
-     * "country": "中国",
-     * "province": "广东省",
-     * "city": "深圳市",
-     * "district": "宝安区",
-     * "distance": 13038.787386521431,
-     * "img": "http://192.168.31.38:9000/find/res/images/144/20210721/1626860797870/021c6104-a1e8-4811-a3d9-dcf0bcc2ab3a.jpg",
-     * "dynamicInfoId": 747
-     * },
-     * {
-     * "id": 143,
-     * "nickname": "www",
-     * "age": 25,
-     * "country": "中国",
-     * "province": "广东省",
-     * "city": "深圳市",
-     * "district": "宝安区",
-     * "distance": 13038.787386521431,
-     * "img": "http://192.168.31.38:9000/find/res/images/143/20210219/1613714536715/f683b170-6aa1-4cec-99c9-25baeecb74a1.jpeg",
-     * "dynamicInfoId": 608
-     * },
-     * {
-     * "id": 140,
-     * "nickname": "凝噎新紫",
-     * "age": 30,
-     * "country": "中国",
-     * "province": "广东省",
-     * "city": "深圳市",
-     * "district": "宝安区",
-     * "distance": 13038.787386521431,
-     * "img": "http://192.168.31.38:9000/find/res/images/140/20210218/1613661729591/0c99dc02-188b-426e-a46d-5e951743dedf.jpg",
-     * "dynamicInfoId": 601
-     * },
-     * {
-     * "id": 138,
-     * "nickname": "阿妩",
-     * "age": 33,
-     * "country": "中国",
-     * "province": "广东省",
-     * "city": "深圳市",
-     * "district": "龙华新区",
-     * "distance": 26084.37755145445,
-     * "img": "http://192.168.31.38:9000/find/res/images/138/20210429/1619663244476/4d789742-acb9-4298-b74e-8618f9c9d2e4.jpg",
-     * "dynamicInfoId": 707
-     * },
-     * {
-     * "id": 136,
-     * "nickname": "杨八",
-     * "age": 30,
-     * "country": "中国",
-     * "province": "广东省",
-     * "city": "深圳市",
-     * "district": "龙华新区",
-     * "distance": 26084.37755145445,
-     * "img": "http://192.168.31.38:9000/find/res/images/136/20210310/1615347606043/de454037-90eb-4739-b7ed-dbe9ec67e3e3.jpg",
-     * "dynamicInfoId": 617
-     * },
-     * {
-     * "id": 92,
-     * "nickname": "雨悠扬",
-     * "age": 25,
-     * "country": "中国",
-     * "province": "四川省",
-     * "city": "成都市",
-     * "district": "青羊区",
-     * "distance": 1343118.910357623,
-     * "img": "http://192.168.31.38:9000/find/res/images/92/20201228/01.png",
-     * "dynamicInfoId": 344
-     * },
-     * {
-     * "id": 117,
-     * "nickname": "安然",
-     * "age": 28,
-     * "country": "中国",
-     * "province": "江苏省",
-     * "city": "南通市",
-     * "district": "如皋市",
-     * "distance": 1280893.236686052,
-     * "img": "http://192.168.31.38:9000/find/res/images/117/20201226/01.png",
-     * "dynamicInfoId": 460
-     * },
-     * {
-     * "id": 113,
-     * "nickname": "妤元",
-     * "age": 28,
-     * "country": "中国",
-     * "province": "江苏省",
-     * "city": "南通市",
-     * "district": "通州区",
-     * "distance": 1279048.9936150846,
-     * "img": "http://192.168.31.38:9000/find/res/images/113/20201225/02.png",
-     * "dynamicInfoId": 442
-     * },
-     * {
-     * "id": 95,
-     * "nickname": "樱樱",
+     * "id": 173,
+     * "nickname": "一手的触碰",
      * "age": 24,
      * "country": "中国",
-     * "province": "四川省",
-     * "city": "成都市",
-     * "district": "成华区",
-     * "distance": 1339169.4151919885,
-     * "img": "http://192.168.31.38:9000/find/res/images/95/20201225/05.png",
-     * "dynamicInfoId": 360
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "distance": 0.030315003677945207,
+     * "img": "http://192.168.31.38:9000/find/res/images/173/20210729/1627527665688/946945bd-b212-4f39-80c5-74a42bd5da2d.jpg",
+     * "dynamicInfoId": 776,
+     * "applicationStatus": true
      * },
      * {
-     * "id": 128,
-     * "nickname": "宇儿",
-     * "age": 23,
+     * "id": 172,
+     * "nickname": "樊旻骞",
+     * "age": 28,
      * "country": "中国",
-     * "province": "浙江省",
-     * "city": "杭州市",
-     * "district": "滨江区",
-     * "distance": 1063497.5983731847,
-     * "img": "http://192.168.31.38:9000/find/res/images/128/20201223/010.png",
-     * "dynamicInfoId": 513
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "district": "南山区",
+     * "other": "科兴科学园C座",
+     * "distance": 11552.161604077619,
+     * "img": "http://192.168.31.38:9000/find/res/images/172/20210729/1627526970322/f00346d6-b332-4b3b-a728-935b1e15719b.jpg",
+     * "dynamicInfoId": 775,
+     * "applicationStatus": false
+     * },
+     * {
+     * "id": 166,
+     * "nickname": "啊阳3",
+     * "age": 29,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "distance": 0.030315003677945207,
+     * "img": "http://192.168.31.38:9000/find/res/images/166/20210727/1627381333700/ef06cbdd-9f9e-4bc5-a6e3-24ba28fdc43a.jpg",
+     * "dynamicInfoId": 770,
+     * "applicationStatus": false
+     * },
+     * {
+     * "id": 165,
+     * "nickname": "啊阳",
+     * "age": 29,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "distance": 0.030315003677945207,
+     * "img": "http://192.168.31.38:9000/find/res/images/165/20210727/1627380633909/0279e3cf-7e1b-43a6-bc5b-89bfae3e08c1.jpg",
+     * "dynamicInfoId": 769,
+     * "applicationStatus": false
+     * },
+     * {
+     * "id": 154,
+     * "nickname": "小阳",
+     * "age": 29,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "distance": 0.030315003677945207,
+     * "img": "http://192.168.31.38:9000/find/res/images/154/20210719/1626675851218/c19e30f5-fefe-4060-a5f5-b6231eba6861.jpg",
+     * "dynamicInfoId": 723,
+     * "applicationStatus": false
+     * },
+     * {
+     * "id": 152,
+     * "nickname": "王环",
+     * "age": 29,
+     * "country": "中国",
+     * "province": "上海市",
+     * "city": "上海市",
+     * "district": "徐汇区",
+     * "distance": 1243539.199156731,
+     * "img": "http://192.168.31.38:9000/find/res/images/152/20210701/1625109265050/76d33e4d-cd92-4358-bb33-13be748fb30d.jpg",
+     * "dynamicInfoId": 711,
+     * "applicationStatus": false
+     * },
+     * {
+     * "id": 150,
+     * "nickname": "王儇",
+     * "age": 27,
+     * "country": "中国",
+     * "province": "上海市",
+     * "city": "上海市",
+     * "district": "虹口区",
+     * "distance": 1232177.4599431185,
+     * "img": "http://192.168.31.38:9000/find/res/images/150/20210610/1623324932338/458a81a3-ae7d-4442-b812-debe68f05b2e.jpg",
+     * "dynamicInfoId": 710,
+     * "applicationStatus": false
+     * },
+     * {
+     * "id": 149,
+     * "nickname": "洋洋12",
+     * "age": 25,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "district": "坪山新区",
+     * "distance": 46866.36032411066,
+     * "img": "http://192.168.31.38:9000/find/res/images/149/20210610/1623324450475/28747ba1-d92b-42ef-9bf1-d18a50eecb88.jpg",
+     * "dynamicInfoId": 709,
+     * "applicationStatus": false
+     * },
+     * {
+     * "id": 148,
+     * "nickname": "元凝然",
+     * "age": 24,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "district": "盐田区",
+     * "distance": 30138.030306155608,
+     * "img": "http://192.168.31.38:9000/find/res/images/148/20210817/1629167545657/af3db729-1ba1-40c5-9295-0158a3e59536.jpg",
+     * "dynamicInfoId": 799,
+     * "applicationStatus": false
+     * },
+     * {
+     * "id": 145,
+     * "nickname": "咿呀呀",
+     * "age": 21,
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "district": "龙岗区",
+     * "distance": 40939.20057469871,
+     * "img": "http://192.168.31.38:9000/find/res/images/145/20210308/1615191441985/8c4e4bab-b850-4b8f-90dc-18866c2a9df2.jpg",
+     * "dynamicInfoId": 612,
+     * "applicationStatus": false
      * }
      * ]
      * }
@@ -1696,9 +1704,9 @@ public class UserController {
      */
     @GetMapping("/{id}/look")
     CommonResult<PageInfoVO<UserVO3>> look(@PathVariable(name = "id") Long id,
-                                           @RequestParam(name = "ip") String ip,
-                                           @RequestParam(name = "longitude") Double longitude,
-                                           @RequestParam(name = "latitude") Double latitude,
+                                           @RequestParam(name = "ip", required = false) String ip,
+                                           @RequestParam(name = "longitude", required = false) Double longitude,
+                                           @RequestParam(name = "latitude", required = false) Double latitude,
                                            @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
                                            @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
         return this.userFeignClient.look(id, ip, longitude, latitude, pageNum, pageSize);
@@ -1712,7 +1720,7 @@ public class UserController {
      * @apiParam (接口请求参数) {Number} id 用户id
      * @apiParam (接口请求参数) {Number} detailsUserId 用户详情id
      * @apiParamExample {json} 请求示例
-     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/35/look-details?detailsUserId=70 -H "Content-Type: application/json;charset=UTF-8"
+     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/147/look-details?detailsUserId=172 -H "Content-Type: application/json;charset=UTF-8"
      * @apiSuccess (200) {Number} status 响应状态码
      * @apiSuccess (200) {Number} code 消息码
      * @apiSuccess (200) {String} msg 说明
@@ -1734,36 +1742,31 @@ public class UserController {
      * @apiSuccess (200) {String} [province] 省份
      * @apiSuccess (200) {String} [city] 城市
      * @apiSuccess (200) {String} [district] 区/县
+     * @apiSuccess (200) {Boolean={"true", "false"}} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
      * @apiSuccessExample HTTP/1.1 200 OK
      * {
      * "status": 200,
      * "code": 0,
      * "msg": "获取鹿可模块用户详情数据成功。",
      * "data": {
-     * "id": 70,
+     * "id": 172,
      * "attacheList": [
-     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/308f48ad-ce12-49ab-92f2-eb4ef7dcd649.jpg",
-     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626934237048/72517b7c-a808-445e-9a3d-3f15ee66e341.jpg",
-     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/2d5f85de-e2b1-4b96-a8c5-f3a6814c3c50.jpg",
-     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626933512005/fb92d519-e29c-4c80-b7cc-acfa2f6eaf47.jpg",
-     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/4872593b-e7d2-496a-a52c-897cafda2bb5.jpg",
-     * "http://192.168.31.38:9000/find/res/images/70/20210722/1626933326165/d7319235-dfee-42e3-a089-50cec9ae5a1f.jpg"
+     * "http://192.168.31.38:9000/find/res/images/172/20210729/1627526970322/f00346d6-b332-4b3b-a728-935b1e15719b.jpg"
      * ],
      * "tag1": "颜值",
      * "tag2": "吃货",
-     * "tag3": "篮球",
-     * "tag4": "足球",
-     * "tag5": "打碟DJ",
-     * "nickname": "阿萌",
-     * "constellation": "双子座",
+     * "nickname": "樊旻骞",
+     * "constellation": "金牛座",
      * "gender": "0",
-     * "age": 27,
-     * "industry": "计算机/互联网/通信/电子",
-     * "profession": "测试工程师",
+     * "age": 28,
+     * "industry": "IT/通信/电子",
+     * "profession": "电子商务",
      * "country": "中国",
-     * "province": "河南省",
-     * "city": "郑州市",
-     * "district": "中原区"
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "district": "南山区",
+     * "other": "科兴科学园C座",
+     * "applicationStatus": true
      * }
      * }
      * @apiError (404) {Number} status 响应状态码
@@ -1853,5 +1856,89 @@ public class UserController {
                                                       @RequestParam(name = "content", required = false) String opinion,
                                                       @RequestPart(value = "files", required = false) MultipartFile[] files) {
         return this.userFeignClient.feedback(userId, attacheInfoDataType, opinion, files);
+    }
+
+    /**
+     * @api {get} /find/user/{id}/queryOther 查看别人个人资料接口
+     * @apiVersion 1.0.0
+     * @apiGroup 用户模块API
+     * @apiName 查看别人个人资料
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParamExample {json} 请求示例 获取用户资料
+     * curl --insecure -X GET -v http://w168428j19.51mypc.cn/find/user/70/queryOther
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 消息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Object} [user] 用户数据
+     * @apiSuccess (200) {Number} [id] 用户id
+     * @apiSuccess (200) {String} [nickname] 昵称
+     * @apiSuccess (200) {int={"0", "1", "2"}} [grade] VIP等级，0->普通用户，1->VIP1等级用户，2->VIP2等级用户
+     * @apiSuccess (200) {Number} [age] 年龄
+     * @apiSuccess (200) {String={"0", "1"}} [gender] 性别，"0"->女生，"1"->男生
+     * @apiSuccess (200) {String} [head] 头像
+     * @apiSuccess (200) {String} [bg] 背景图片
+     * @apiSuccess (200) {String} [tag1] 标签1
+     * @apiSuccess (200) {String} [tag2] 标签2
+     * @apiSuccess (200) {String} [tag3] 标签3
+     * @apiSuccess (200) {String} [tag4] 标签4
+     * @apiSuccess (200) {String} [tag5] 标签5
+     * @apiSuccess (200) {Boolean={"true", "false"}} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "查看用户个人资料成功",
+     * "data": {
+     * "user": {
+     * "id": 172,
+     * "nickname": "樊旻骞",
+     * "head": "http://192.168.31.38:9000/find/img/head/172/f00346d6-b332-4b3b-a728-935b1e15719b.jpg",
+     * "grade": "0",
+     * "age": 28,
+     * "year": "1993",
+     * "month": "05",
+     * "date": "06",
+     * "gender": "0",
+     * "autograph": "刚刚注册，请多关照小妹子！",
+     * "industry": "IT/通信/电子",
+     * "profession": "电子商务",
+     * "country": "中国",
+     * "province": "广东省",
+     * "city": "深圳市",
+     * "district": "南山区",
+     * "other": "科兴科学园C座",
+     * "tag1": "颜值",
+     * "tag2": "吃货",
+     * "applicationStatus": true
+     * }
+     * }
+     * }
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册",
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应"
+     * }
+     */
+    @GetMapping(value = "/{id}/{id2}/queryOther")
+    public CommonResult<Map<String, Object>> query(@PathVariable(name = "id") Long id,
+                                                   @PathVariable(name = "id2") Long detailsUserId) {
+        return this.userFeignClient.query(id, detailsUserId);
     }
 }

@@ -358,7 +358,7 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
                 BeanUtils.copyProperties(hotTopic, hotTopicInfoVO);
                 hotTopicInfoVO.setTopicTitle("#" + hotTopicInfoVO.getTopicTitle());
                 List<DynamicInfo> dynamicInfoList = this.dynamicInfoMapperReader.selectHotDynamicInfoByTopicTitle(hotTopic.getTopicTitle());
-                if (!Objects.isNull(dynamicInfoList) && !dynamicInfoList.isEmpty() && dynamicInfoList.size() > 0) {
+                if (!Objects.isNull(dynamicInfoList) && !dynamicInfoList.isEmpty()) {
                     List<String> fileList = new ArrayList<>();
                     for (DynamicInfo dynamicInfo : dynamicInfoList) {
                         AttacheInfo attacheInfo = this.attacheInfoMapperReader.selectByDynamicInfoId(dynamicInfo.getId());

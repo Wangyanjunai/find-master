@@ -92,6 +92,8 @@ public class UserController {
 
     private OperateRecordMapper operateRecordMapperWriter;
 
+    private ApplicationRecordMapper applicationRecordMapperReader;
+
     @Autowired
     public void setUserMapperWriter(UserMapper userMapperWriter) {
         this.userMapperWriter = userMapperWriter;
@@ -205,6 +207,11 @@ public class UserController {
     @Autowired
     public void setOperateRecordMapperWriter(OperateRecordMapper operateRecordMapperWriter) {
         this.operateRecordMapperWriter = operateRecordMapperWriter;
+    }
+
+    @Autowired
+    public void setApplicationRecordMapperReader(ApplicationRecordMapper applicationRecordMapperReader) {
+        this.applicationRecordMapperReader = applicationRecordMapperReader;
     }
 
     //上报或者更新极光推送唯一设备的标识接口
@@ -811,7 +818,7 @@ public class UserController {
         }
     }
 
-    //查看用户个人资料接口
+    //查看自己个人资料接口
     @GetMapping(value = "/{id}/query.do")
     public CommonResult<Map<String, Object>> query(@PathVariable(name = "id") Long id) {
         if (log.isDebugEnabled()) {
@@ -857,6 +864,77 @@ public class UserController {
             Date birthDay = DateUtil.fomatDate(birthDate);
             userVO.setAge(AgeUtil.getAge(birthDay));
             this.setUserVO(userVO, user);
+            data.put("user", userVO);
+            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.success(data, "查看用户个人资料成功");
+        } catch (Exception e) {
+            log.error("查看用户个人资料出现错误", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.failed("查看用户个人资料失败");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束查看用户个人资料");
+            }
+        }
+    }
+
+    //查看别人个人资料接口
+    @GetMapping(value = "/{id}/{id2}/queryOther.do")
+    public CommonResult<Map<String, Object>> query(@PathVariable(name = "id") Long id,
+                                                   @PathVariable(name = "id2") Long detailsUserId) {
+        if (log.isDebugEnabled()) {
+            log.debug("开始查看别人个人资料");
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("前端传输过来的用户信息id={}", id);
+        }
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.QueryUser.getCode());
+        operateRecord.setUserId(id);
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        try {
+            User user = this.userMapperReader.selectByPrimaryKey(id);
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
+            }
+            User user2 = this.userMapperReader.selectByPrimaryKey(detailsUserId);
+            if (Objects.isNull(user2)) {
+                return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
+            }
+            UserVO userVO = UserVO.builder().build();
+            BeanUtils.copyProperties(user2, userVO);
+            userVO.setGrade(user2.getGrade());
+            if (StrUtil.isNotEmpty(user2.getHeadIcon())) {
+                userVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) +
+                        user2.getId() +
+                        "/" +
+                        user2.getHeadIcon());
+            }
+            if (StrUtil.isNotEmpty(user.getBackgroundIcon())) {
+                userVO.setBgIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getProjectName()) +
+                        StrUtil.trimToNull(this.projectUrlProps.getResBackgroundIcon()) +
+                        user2.getId() +
+                        "/" +
+                        user2.getBackgroundIcon());
+            }
+            userVO.setGender(user2.getGender());
+            userVO.setYear(user2.getYear());
+            userVO.setMonth(user2.getMonth());
+            userVO.setDate(user2.getDate());
+            String birthDate = user2.getYear() + "-" + user2.getMonth() + "-" + user2.getDate();
+            Date birthDay = DateUtil.fomatDate(birthDate);
+            userVO.setAge(AgeUtil.getAge(birthDay));
+            this.setUserVO(userVO, user2);
+            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
+            applicationRecordExample.createCriteria().andUserIdEqualTo(id).andReserveColumn01EqualTo(String.valueOf(detailsUserId));
+            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
+            boolean result = !Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty();
+            userVO.setApplicationStatus(result);
             data.put("user", userVO);
             operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
             this.operateRecordMapperWriter.insertSelective(operateRecord);
@@ -1208,19 +1286,39 @@ public class UserController {
     @GetMapping("/{id}/look.do")
     public CommonResult<PageInfoVO<UserVO3>> look(
             @PathVariable(name = "id") Long id,
-            @Valid UserDTO3 userDTO, BindingResult bindingResult,
+            UserDTO3 userDTO,
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
         try {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取鹿可模块用户数据");
             }
-            if (bindingResult.hasErrors()) {
-                return CommonResult.validateFailed("参数校验不通过，" + Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
-            }
             User user = this.userMapperReader.selectByPrimaryKey(id);
             if (Objects.isNull(user)) {
                 return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
+            }
+            String ip = userDTO.getIp();
+            Double longitude = userDTO.getLongitude();
+            Double latitude = userDTO.getLatitude();
+            String longitudeStr = null;
+            if (!Objects.isNull(longitude)) {
+                longitudeStr = String.valueOf(latitude);
+            }
+            String latitudeStr = null;
+            if (Objects.isNull(longitude)) {
+                latitudeStr = String.valueOf(latitude);
+            }
+            if (StrUtil.isAllEmpty(ip, longitudeStr, latitudeStr)) {
+                return CommonResult.validateFailed("参数校验不通过，客户端IP，定位经纬度同时为空，不能计算距离。");
+            }
+            if (StrUtil.isAllEmpty(longitudeStr, latitudeStr)) {
+                if (StrUtil.isNotEmpty(ip)) {
+                    LocationDTO locationDTO = IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), ip);
+                    if (!Objects.isNull(locationDTO)) {
+                        longitude = locationDTO.getLongitude();
+                        latitude = locationDTO.getLatitude();
+                    }
+                }
             }
             String screenGender = user.getGender();//鹿可性别筛选条件一
             ScreenSettingExample example = new ScreenSettingExample();
@@ -1292,7 +1390,14 @@ public class UserController {
                     }
                     String filename = StrUtil.trimToNull(this.projectUrlProps.getResDomain()) + StrUtil.trimToNull(this.projectUrlProps.getProjectName()) + StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()) + filenameTemp;
                     userVO3.setImg(filename);
-                    userVO3.setDistance(DistanceUtil.getDistance(userDTO.getLongitude(), userDTO.getLatitude(), userTmp.getLongitude(), userTmp.getLatitude()));
+                    if (!Objects.isNull(userTmp.getLongitude()) && !Objects.isNull(userTmp.getLatitude())) {
+                        userVO3.setDistance(DistanceUtil.getDistance(longitude, latitude, userTmp.getLongitude(), userTmp.getLatitude()));
+                    }
+                    ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
+                    applicationRecordExample.createCriteria().andUserIdEqualTo(id).andReserveColumn01EqualTo(String.valueOf(userVO3.getId()));
+                    List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
+                    boolean result = !Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty();
+                    userVO3.setApplicationStatus(result);
                     userVO3List.add(userVO3);
                 }
             }
@@ -1320,7 +1425,6 @@ public class UserController {
             if (log.isDebugEnabled()) {
                 log.debug("开始获取鹿可模块用户详情数据");
             }
-            //log.info("前端提交过来的请求参数：id={}, detailsUserId={}", id, detailsUserId);
             User user = this.userMapperReader.selectByPrimaryKey(id);
             if (Objects.isNull(user)) {
                 return CommonResult.validateFailed("参数校验不通过，当前用户信息不存在。");
@@ -1359,6 +1463,11 @@ public class UserController {
             Date birthDay = DateUtil.fomatDate(birthDate);
             userVO4.setAge(AgeUtil.getAge(birthDay));
             setUserVO4(userVO4, userDetails);
+            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
+            applicationRecordExample.createCriteria().andUserIdEqualTo(id).andReserveColumn01EqualTo(String.valueOf(detailsUserId));
+            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
+            boolean result = !Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty();
+            userVO4.setApplicationStatus(result);
             return CommonResult.success(userVO4, "获取鹿可模块用户详情数据成功。");
         } catch (Exception e) {
             log.error("获取鹿可模块用户详情数据出现错误", e);
