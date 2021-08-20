@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 参考博客网址：https://www.cnblogs.com/bigben0123/p/7895696.html -->
+<!-- 参考博客网址：https://www.cnblogs.com/candlia/p/11919981.html -->
+<!DOCTYPE configuration>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+           <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+           <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50} - %msg%n</pattern>
+        </layout>
+    </appender>
+    
+	<!-- debug日志配置 -->
+    <appender name="fileDebugLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--滚动日志基于时间和文件大小-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 滚动日志文件保存格式 -->
+            <FileNamePattern>log/user-web/%d{yyyy-MM-dd}/debug-.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxFileSize>50MB</MaxFileSize>
+            <totalSizeCap>5GB</totalSizeCap>
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+        <!-- 按临界值过滤日志：低于INFO以下级别被抛弃 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <!-- 不过滤日志 -->
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>	
+
+	<!--info日志配置 -->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--只保留最近90天的日志-->
+            <MaxHistory>90</MaxHistory>
+            <!--文件路径，定义了日志的切分方式——把每一天的日志归档到一个文件中，以防止日志填满整个磁盘空间-->
+            <fileNamePattern>log/user-web/%d{yyyy-MM-dd}/info-.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志-->
+ 			<MaxFileSize>50MB</MaxFileSize>
+            <totalSizeCap>5GB</totalSizeCap>
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+    </appender>	
+    
+    <!-- warn日志配置 -->
+    <appender name="fileWarnLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--滚动日志 基于时间和文件大小-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 滚动日志文件保存格式 -->
+            <FileNamePattern>log/user-web/%d{yyyy-MM-dd}/warn-.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxFileSize>50MB</MaxFileSize>
+            <totalSizeCap>5GB</totalSizeCap>
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+        <!-- 按临界值过滤日志：低于WARN以下级别被抛弃 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <!-- 按指定规则过滤日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch><!-- ERROR级别被抛弃 -->
+            <onMismatch>NEUTRAL</onMismatch><!-- 其它级别继续处理 -->
+        </filter>
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50} - %msg%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    	
+	<!--error日志配置 -->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+		<encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--只保留最近90天的日志-->
+            <MaxHistory>90</MaxHistory>
+            <!--文件路径，定义了日志的切分方式——把每一天的日志归档到一个文件中，以防止日志填满整个磁盘空间-->
+            <fileNamePattern>log/user-web/%d{yyyy-MM-dd}/error-.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志-->
+ 			<MaxFileSize>50MB</MaxFileSize>
+            <totalSizeCap>5GB</totalSizeCap>
+            <MaxHistory>100</MaxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileDebugLog"/>
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="fileWarnLog"/>
+        <appender-ref ref="fileErrorLog"/>
+    </root>
+
+</configuration>

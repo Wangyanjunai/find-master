@@ -124,7 +124,7 @@ public class CommentController {
             // 校验发布的内容是否包含敏感词汇
             SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(commentDTO.getContent());
             if (!Objects.isNull(sensitiveWords)) {
-                return CommonResult.validateFailed("参数校验不通过，评论内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，不允许发布。");
+                return CommonResult.validateFailed("参数校验不通过，评论内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
             }
             //每个用户对一条动态只能评论一次
             List<Comment> commentList = this.commentService.findByDynamicIdAndUserId(commentDTO.getDynamicInfoId(), userId);
@@ -135,6 +135,7 @@ public class CommentController {
             Comment comment = new Comment();
             BeanUtils.copyProperties(commentDTO, comment);
             comment.setUserId(userId);
+            //动态信息
             dynamicInfo.setUpdateTime(new Date());
             dynamicInfo.setComments(dynamicInfo.getComments() + 1);
             String content = user.getNickName() + " 评论您的动态 " + dynamicInfo.getContent();//消息内容
@@ -145,17 +146,17 @@ public class CommentController {
             commentRecord.setDynamicInfoId(commentDTO.getDynamicInfoId());
             int result = this.commentService.save(content, comment, commentRecord, dynamicInfo);
             if (result > 0) {
-                data.put("RELEASE", "OK");
-                String title = "互动消息";//消息标题
+                operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+                this.operateRecordMapperWriter.insertSelective(operateRecord);
+                String title = "互动消息";  //消息标题
                 PushBean pushBean = new PushBean();
                 pushBean.setAlert(content);
                 pushBean.setTitle(title);
                 String regId = publishUser.getReserveColumn03();
-                if (!Objects.isNull(regId)) {
+                if (!Objects.isNull(regId) && !Objects.equals(userId, publishUserId)) {
                     this.jiGuangPushService.pushAndroid(pushBean, regId);
                 }
-                operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
-                this.operateRecordMapperWriter.insertSelective(operateRecord);
+                data.put("RELEASE", "OK");
                 return CommonResult.success(data, "发布评论成功。");
             } else {
                 this.operateRecordMapperWriter.insertSelective(operateRecord);
@@ -269,9 +270,18 @@ public class CommentController {
             if (log.isDebugEnabled()) {
                 log.debug("开始点赞/取消点赞评论（修改评论）");
             }
+            User user = this.userMapperReader.selectByPrimaryKey(userId);
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("点赞/取消点赞评论，用户信息不存在。");
+            }
             Comment comment = this.commentService.findById(commentId);
-            if (Objects.isNull(comment)) {
+            if (Objects.isNull(comment) || Objects.equals(DeleteStatusEnum.YES.getStatus(), comment.getDeleteStatus())) {
                 return CommonResult.validateFailed("点赞/取消点赞评论，评论不存在。");
+            }
+            Long publishUserId = comment.getUserId();
+            User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);
+            if (Objects.isNull(publishUser)) {
+                return CommonResult.validateFailed("点赞/取消点赞评论，用户信息不存在。");
             }
             data.put("LIKES", "ERROR");
             LikeRecord likeRecord = this.likeRecordService.findByUserIdAndDynamicInfoId(userId, commentId, LikeRecordTypeEnum.Comment.getType());
@@ -293,9 +303,20 @@ public class CommentController {
             }
             // 点赞
             if (Objects.equals(LikeStatusEnum.YES.getStatus(), type)) {
-                int result = this.likeRecordService.createByUserIdAndCommentId(userId, comment, likeRecord);
+                String content = user.getNickName() + " 点赞您的评论 " + comment.getContent();//消息内容
+                comment.setLikes(comment.getLikes() + 1);
+                comment.setUpdatedTime(new Date());
+                int result = this.likeRecordService.createByUserIdAndCommentId(content, userId, comment, likeRecord);
                 if (result > 0) {
                     data.put("LIKES", "OK");
+                    String title = "互动消息";//消息标题
+                    PushBean pushBean = new PushBean();
+                    pushBean.setAlert(content);
+                    pushBean.setTitle(title);
+                    String regId = publishUser.getReserveColumn03();
+                    if (!Objects.isNull(regId) && !Objects.equals(userId, publishUserId)) {
+                        this.jiGuangPushService.pushAndroid(pushBean, regId);
+                    }
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                     return CommonResult.success(data, "点赞成功。");
                 } else {

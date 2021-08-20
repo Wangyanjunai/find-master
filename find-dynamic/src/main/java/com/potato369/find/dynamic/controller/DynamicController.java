@@ -869,7 +869,7 @@ public class DynamicController {
                     pushBean.setAlert(content);
                     pushBean.setTitle(title);
                     String regId = publishUser.getReserveColumn03();
-                    if (!Objects.isNull(regId)) {
+                    if (!Objects.isNull(regId) && !Objects.equals(userId, publishUserId)) {
                         this.jiGuangPushService.pushAndroid(pushBean, regId);
                     }
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
@@ -1202,7 +1202,7 @@ public class DynamicController {
             }
             if (Objects.isNull(longitude) && Objects.isNull(latitude)) {
                 if (!Objects.isNull(ip)) {
-                    LocationDTO locationDTO = dynamicService.getLocationByAliyunIP(ip);
+                    LocationDTO locationDTO = this.dynamicService.getLocationByAliyunIP(ip);
                     longitude = locationDTO.getLongitude();//经度
                     latitude = locationDTO.getLatitude();//纬度
                 }
@@ -1300,7 +1300,7 @@ public class DynamicController {
                         dynamicInfoVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()
                                 + StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
                                 + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon() + "default.png"));
-                        dynamicInfoVO.setNickName("匿名");
+                        dynamicInfoVO.setNickName("匿名用户");
                     }
                     if (Objects.equals(IsTopicEnum.No.getType(), dynamicInfoData.getIsTopic())) {
                         dynamicInfoVO.setTopic(false);

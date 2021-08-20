@@ -6,17 +6,14 @@ import com.potato369.find.mbg.mapper.CommentMapper;
 import com.potato369.find.mbg.mapper.DynamicInfoMapper;
 import com.potato369.find.mbg.mapper.LikeRecordMapper;
 import com.potato369.find.mbg.mapper.MessageMapper;
-import com.potato369.find.mbg.model.Comment;
-import com.potato369.find.mbg.model.DynamicInfo;
-import com.potato369.find.mbg.model.LikeRecord;
-import com.potato369.find.mbg.model.LikeRecordExample;
-import com.potato369.find.mbg.model.Message;
+import com.potato369.find.mbg.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <pre>
@@ -167,39 +164,34 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      */
     @Override
     @Transactional
-    public int createByUserIdAndCommentId(Long userId, Comment comment, LikeRecord likeRecord) {
-        int a = 0, b = 0;
-        if (comment != null) {
-            int likes = comment.getLikes();
-            comment.setLikes(likes + 1);
-            comment.setUpdatedTime(new Date());
-            a = this.commentMapperWriter.updateByPrimaryKeySelective(comment);
-            if (likeRecord == null) {
-                likeRecord = new LikeRecord();
-                likeRecord.setDynamicInfoId(comment.getId());
-                likeRecord.setUserId(userId);
-                likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
-                likeRecord.setType(LikeRecordTypeEnum.Comment.getType());
-                b = this.likeRecordMapperWriter.insertSelective(likeRecord);
-            } else {
-                likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
-                likeRecord.setUpdateTime(new Date());
-                b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
-            }
-            //消息记录
-//            Message messageRecord = new Message();
-//            messageRecord.setContent(content);//消息内容
-//            messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
-//            messageRecord.setRecipientUserId(comment.getUserId());//接收者用户id
-//            messageRecord.setSendUserId(userId);//发送者用户id
-//            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//未读
-//            messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型，点赞->likes
-//            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
-//            messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
-//            messageRecord.setReserveColumn04(String.valueOf(likeRecord.getId()));//点赞记录id
-//            c = this.messageMapperWriter.insertSelective(messageRecord);
+    public int createByUserIdAndCommentId(String content, Long userId, Comment comment, LikeRecord likeRecord) {
+        int a = this.commentMapperWriter.updateByPrimaryKeySelective(comment);
+        int b;
+        if (Objects.isNull(likeRecord)) {
+            likeRecord = new LikeRecord();
+            likeRecord.setDynamicInfoId(comment.getId());
+            likeRecord.setUserId(userId);
+            likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
+            likeRecord.setType(LikeRecordTypeEnum.Comment.getType());
+            b = this.likeRecordMapperWriter.insertSelective(likeRecord);
+        } else {
+            likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
+            likeRecord.setUpdateTime(new Date());
+            b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
         }
-        return a + b;
+        //消息记录
+        Message messageRecord = new Message();
+        messageRecord.setContent(content);//消息内容
+        messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
+        messageRecord.setRecipientUserId(comment.getUserId());//接收者用户id
+        messageRecord.setSendUserId(userId);//发送者用户id
+        messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//未读
+        messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型，点赞->likes
+        messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
+        messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
+        messageRecord.setReserveColumn04(String.valueOf(likeRecord.getId()));//点赞记录id
+        int c = this.messageMapperWriter.insertSelective(messageRecord);
+        return a + b + c;
     }
 
     /**

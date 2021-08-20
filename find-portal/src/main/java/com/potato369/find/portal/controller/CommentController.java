@@ -396,4 +396,62 @@ public class CommentController {
                                             @RequestParam(name = "type") String type) {
         return dynamicFeignClient.likesComment(userId, commentId, type);
     }
+
+    /**
+     * @api {delete} /find/comment/{id}/delete 删除评论接口
+     * @apiVersion 2.0.0
+     * @apiGroup 动态模块API
+     * @apiName 删除评论
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} commentId 评论id
+     * @apiParamExample 请求示例
+     * curl -v -X DELETE http://w168428j19.51mypc.cn/find/comment/35/delete?commentId=16
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {String="OK", "ERROR"} [DELETE] 点赞状态，OK->“成功”，ERROR->“失败”
+     * @apiSuccessExample {json} 200响应示例
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "点赞成功。",
+     * "data": {
+     * "LIKES": "OK"
+     * }
+     * }
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
+     * @apiError (403) {String} msg 说明
+     * @apiErrorExample {json} 403错误
+     * HTTP/1.1 403 403响应
+     * {
+     * "status": 403,
+     * "code": 199,
+     * "msg": "未找到用户信息",
+     * }
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册",
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500 错误
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应"
+     * }
+     */
+    @DeleteMapping("/{id}/delete")
+    public CommonResult<Map<String, Object>> delete(@PathVariable(name = "id") Long userId, @RequestParam(name = "commentId") Long commentId) {
+        return this.dynamicFeignClient.deleteComment(userId, commentId);
+    }
 }
