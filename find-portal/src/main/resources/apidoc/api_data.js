@@ -1001,7 +1001,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "HTTP/1.1 OK\ncurl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/144/mylist?pageNum=1&pageSize=20",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/138/mylist?pageNum=1&pageSize=20",
           "type": "json"
         }
       ]
@@ -1132,6 +1132,13 @@ define({ "api": [
             "group": "200",
             "type": "Boolean",
             "optional": true,
+            "field": "isTop",
+            "description": "<p>是否置顶，true-&gt;是，false-&gt;否</p>"
+          },
+          {
+            "group": "200",
+            "type": "Boolean",
+            "optional": true,
             "field": "isTopic",
             "description": "<p>是否话题，true-&gt;是，false-&gt;否</p>"
           },
@@ -1175,7 +1182,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"分页获取用户自己发布的所有动态内容列表成功。\",\n\"data\": {\n\"totalPage\": 1,\n\"list\": [\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-07-21 17:46:37\",\n\"dynamicInfoId\": 747,\n\"content\": \"大家好，今天发布几张违法抓拍图片。\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": false,\n\"comments\": 0,\n\"isAnonymous\": true,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626860797870/021c6104-a1e8-4811-a3d9-dcf0bcc2ab3a.jpg\",\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626860797870/1279cab3-5bc1-4719-a199-fe66a6b8ae39.jpg\",\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626860797870/c8077e24-ffb2-42ec-bdbb-7dee206152bc.jpg\",\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626860797870/3ba9a02c-71bc-49ce-8ffb-46667fa14af8.jpg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-07-21 17:43:58\",\n\"dynamicInfoId\": 746,\n\"content\": \"大家好，今天发布几张违法抓拍图片。\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": false,\n\"comments\": 0,\n\"isAnonymous\": true,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626860638180/6877cde6-c4db-4ca9-8134-5c26334c3446.jpg\",\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626860638180/4923990b-3c0b-4a57-9784-52ba6edc4527.jpg\",\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626860638180/068d982b-5e37-447f-8134-4a154ded53de.jpg\",\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626860638180/b659c879-26cf-49a9-b419-9e17437e9c75.jpg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-07-21 17:33:09\",\n\"dynamicInfoId\": 744,\n\"content\": \"大家好，今天发布几张违法抓拍图片。\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": false,\n\"comments\": 0,\n\"isAnonymous\": true,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626859989359/f6445ce4-829c-45f9-912b-299c2065576c.jpg\",\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626859989359/4dba0a11-27fd-493e-8b59-a83c3251a0ac.jpg\",\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626859989359/c04b4347-400d-4be9-9dd7-5f30953d0f8f.jpg\",\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626859989359/37b9835b-b527-40fa-851b-f07254e80a22.jpg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-07-21 17:09:42\",\n\"dynamicInfoId\": 742,\n\"content\": \"发几张美女照片看看。\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": false,\n\"comments\": 0,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626858582879/7e632d43-1f3a-4e0c-b531-22847a46304f.jpg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-07-21 17:01:57\",\n\"dynamicInfoId\": 741,\n\"content\": \"发几张美女照片看看。\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": false,\n\"comments\": 0,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210721/1626858117646/9d06c224-47fa-4915-9351-4ed8c872db82.jpg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-04-30 17:14:10\",\n\"dynamicInfoId\": 708,\n\"content\": \"测试\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找女朋友\",\n\"comments\": 120,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210430/1619774050374/a1259f31-3131-4f8c-a99b-3f8120ec2bfa.jpg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:36:44\",\n\"dynamicInfoId\": 658,\n\"content\": \"测试\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210331/1617176204339/a76d12a2-d430-4155-9a79-a5f6485b0544.jpeg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:36:44\",\n\"dynamicInfoId\": 659,\n\"content\": \"测试\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 2,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210331/1617176204466/bbdfdece-081d-4eaf-81d1-79855d6d39bc.jpeg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:35:07\",\n\"dynamicInfoId\": 656,\n\"content\": \"二哥\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 1,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210331/1617176107913/b7eb7189-346c-44e1-8fb4-41d84b44b2c4.jpeg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:35:07\",\n\"dynamicInfoId\": 657,\n\"content\": \"二哥\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210331/1617176108009/9212a7c2-535e-44cc-9f4b-bd53e44b01e3.jpeg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:34:01\",\n\"dynamicInfoId\": 652,\n\"content\": \"呃呃呃\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210331/1617176041174/f53b5070-ba5e-4d8d-8b15-b6d6f73a50c8.jpeg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:34:01\",\n\"dynamicInfoId\": 653,\n\"content\": \"呃呃呃\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210331/1617176041285/0956f1b1-201b-4288-9c4d-c898814b0533.jpeg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:33:35\",\n\"dynamicInfoId\": 650,\n\"content\": \"打算\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210331/1617176015267/1b0909a3-697a-4c53-91cf-9b7146360181.jpeg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:33:35\",\n\"dynamicInfoId\": 651,\n\"content\": \"打算\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210331/1617176015395/71b9fdaf-dd61-413c-b6d3-e7cea0b7d905.jpeg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:32:38\",\n\"dynamicInfoId\": 649,\n\"content\": \"测试\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210331/1617175958506/88afb745-172f-487b-9712-f9f33747119d.jpeg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-31 15:30:59\",\n\"dynamicInfoId\": 648,\n\"content\": \"测试\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210331/1617175859511/b99c7a95-59d6-4780-8310-3462181b4c4f.jpeg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-30 20:22:25\",\n\"dynamicInfoId\": 644,\n\"content\": \"测试\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 4,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210330/1617106945829/aee822d2-ee9c-4fff-8597-464e15906c2c.jpg\"\n]\n},\n{\n\"userId\": 144,\n\"headUrl\": \"http://192.168.31.31:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"publishTime\": \"2021-03-10 20:09:10\",\n\"dynamicInfoId\": 620,\n\"content\": \"测试\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 2,\n\"applicationStatus\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.31:9000/find/res/images/144/20210310/1615378150059/40ab5a01-de81-4e88-8f80-ff4d110142ec.jpg\",\n\"http://192.168.31.31:9000/find/res/images/144/20210310/1615378150059/77acf396-1fcf-48a6-aed3-5f7b335568d3.jpg\"\n]\n}\n]\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"分页获取用户自己发布的所有动态内容列表成功。\",\n\"data\": {\n\"totalPage\": 4,\n\"list\": [\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-08 11:31:24\",\n\"dynamicInfoId\": 685,\n\"content\": \"19\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": true,\n\"isTopic\": true,\n\"topicTitle\": \"#衡阳网红\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210408/1617852684622/fc75eefe-41d9-4657-8cbe-d18fcec6535f.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-03-11 14:35:28\",\n\"dynamicInfoId\": 621,\n\"content\": \"测试\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": true,\n\"isTopic\": true,\n\"topicTitle\": \"#我要上热门\",\n\"comments\": 110,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210311/1615444528883/bd111b94-3b6d-412b-b533-cacec0c04a49.jpeg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-03-21 19:53:15\",\n\"dynamicInfoId\": 630,\n\"content\": \"测试\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#我要上热门\",\n\"comments\": 110,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210321/1616327595977/0a85d9a9-ba0a-4944-95f3-0689a1fb82a8.jpeg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-08 13:52:42\",\n\"dynamicInfoId\": 686,\n\"content\": \"20\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#衡阳网红\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210408/1617861162035/70de84e7-4d86-4b8a-9289-e10073fea5b2.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-07 22:37:03\",\n\"dynamicInfoId\": 684,\n\"content\": \"18\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#衡阳网红\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210407/1617806223442/39c4e01e-a572-4f67-b347-45634762ba33.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-05 17:05:17\",\n\"dynamicInfoId\": 680,\n\"content\": \" 14\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#衡阳网红\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210405/1617613517593/640bc20b-712a-41a1-b50e-184688b4b743.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-05 14:30:32\",\n\"dynamicInfoId\": 679,\n\"content\": \"13\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 1,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#衡阳网红\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210405/1617604232669/fa68923f-3b64-4492-9c4e-409ed86b013e.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-05 14:21:05\",\n\"dynamicInfoId\": 678,\n\"content\": \"12\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#衡阳网红\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210405/1617603665684/1ef5bb06-fef6-49eb-80c4-61ff38323937.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-05 12:52:49\",\n\"dynamicInfoId\": 677,\n\"content\": \"11\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#衡阳网红\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210405/1617598369883/bc340a19-26f6-4f68-860f-0f0c48f698bd.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-05 09:53:36\",\n\"dynamicInfoId\": 676,\n\"content\": \"10\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#衡阳网红\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210405/1617587616129/5e9a13d9-606f-4452-995a-996b0e135db3.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-05 09:18:11\",\n\"dynamicInfoId\": 675,\n\"content\": \"9\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#衡阳网红\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210405/1617585491752/09d522b3-9d7c-4046-9e8a-9b02eba508df.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-04 21:42:32\",\n\"dynamicInfoId\": 674,\n\"content\": \"8\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#衡阳网红\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210404/1617543752495/7c93f0ad-4cf5-4f83-88a2-edf4d856656e.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-16 16:16:15\",\n\"dynamicInfoId\": 699,\n\"content\": \"31\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 2,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210416/1618560975204/bd9463ce-2e85-4e1e-9244-8301ac2b5c8f.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-14 15:42:34\",\n\"dynamicInfoId\": 696,\n\"content\": \"29\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 1,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210414/1618386154220/edb9f9c5-54e3-4b0c-a756-e98ce495d31d.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-14 11:50:31\",\n\"dynamicInfoId\": 695,\n\"content\": \"26\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210414/1618372231157/67247c89-e2bb-4648-b3d2-ea29be0b6bdc.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-14 11:19:02\",\n\"dynamicInfoId\": 694,\n\"content\": \"28\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210414/1618370342448/b39c07e9-f810-4559-8f00-9d55a92d3197.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-13 15:32:25\",\n\"dynamicInfoId\": 693,\n\"content\": \"27\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210413/1618299145687/eac8e343-3a7e-4557-b958-5dfae3e79968.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-11 07:16:59\",\n\"dynamicInfoId\": 692,\n\"content\": \"25\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210411/1618096619022/28c09f39-4e1c-4d01-85b1-6dd867a0e3fc.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-10 11:03:59\",\n\"dynamicInfoId\": 690,\n\"content\": \"24\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210410/1618023839769/20fe4527-aa75-4b5b-9859-9aa018236e9f.jpg\"\n]\n},\n{\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-09 20:40:35\",\n\"dynamicInfoId\": 689,\n\"content\": \"23\",\n\"address\": \"广东省·深圳市\",\n\"likes\": 1,\n\"likeStatus\": false,\n\"applications\": 0,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#找男朋友\",\n\"comments\": 109,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210409/1617972036000/bb723c3c-88ce-44a2-a4a8-69c3626a67eb.jpg\"\n]\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -1437,6 +1444,190 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://w168428j19.51mypc.cn/find/dynamic/{id}/delete"
+      }
+    ]
+  },
+  {
+    "type": "delete",
+    "url": "/find/comment/{id}/delete",
+    "title": "删除评论接口",
+    "version": "2.0.0",
+    "group": "动态模块API",
+    "name": "删除评论",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "commentId",
+            "description": "<p>评论id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "curl -v -X DELETE http://w168428j19.51mypc.cn/find/comment/35/delete?commentId=16",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "allowedValues": [
+              "\"OK\"",
+              "\"ERROR\""
+            ],
+            "optional": true,
+            "field": "DELETE",
+            "description": "<p>点赞状态，OK-&gt;“成功”，ERROR-&gt;“失败”</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"点赞成功。\",\n\"data\": {\n\"LIKES\": \"OK\"\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册\",\n}",
+          "type": "json"
+        },
+        {
+          "title": "500 错误",
+          "content": "{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/CommentController.java",
+    "groupTitle": "动态模块API",
+    "sampleRequest": [
+      {
+        "url": "http://w168428j19.51mypc.cn/find/comment/{id}/delete"
       }
     ]
   },
@@ -4534,6 +4725,186 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://w168428j19.51mypc.cn/find/dynamic/{id}/screen"
+      }
+    ]
+  },
+  {
+    "type": "put",
+    "url": "/find/dynamic/{id}/topping",
+    "title": "置顶动态内容接口",
+    "version": "1.0.0",
+    "group": "动态模块API",
+    "name": "置顶动态内容",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "dynamicInfoId",
+            "description": "<p>动态内容id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例01（是自己发布的动态内容， 置顶成功）",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/138/topping?dynamicInfoId=685",
+          "type": "json"
+        },
+        {
+          "title": "请求示例02（非自己发布的动态内容， 置顶失败）",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/138/topping?dynamicInfoId=86",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "allowedValues": [
+              "\"OK\"",
+              "\"ERROR\""
+            ],
+            "optional": true,
+            "field": "TOPPING",
+            "description": "<p>置顶状态，OK-&gt;成功，ERROR-&gt;失败</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例01（是自己发布的动态内容， 置顶成功）",
+          "content": "{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"置顶动态内容成功。\",\n\"data\": {\n\"TOPPING\": \"OK\"\n}\n}",
+          "type": "json"
+        },
+        {
+          "title": "200 响应示例02（非自己发布的动态内容， 置顶失败）",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"置顶动态内容失败。\",\n\"data\": {\n\"TOPPING\": \"ERROR\"\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "timestamp",
+            "description": "<p>响应时间戳</p>"
+          },
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>错误说明</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>返回说明</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "path",
+            "description": "<p>路径</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/dynamic/1/topping1\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\",\n\"data\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/DynamicController.java",
+    "groupTitle": "动态模块API",
+    "sampleRequest": [
+      {
+        "url": "http://w168428j19.51mypc.cn/find/dynamic/{id}/topping"
       }
     ]
   },

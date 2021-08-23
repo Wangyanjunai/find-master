@@ -163,4 +163,9 @@ public interface DynamicService {
                                                          @PathVariable(name = "id2") Long id2,
                                                          @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
                                                          @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize);
+
+    // 用户置顶动态内容
+    @PutMapping(value = "/find/v1/dynamic/{id}/topping.do")
+    CommonResult<Map<String, Object>> topping(@PathVariable(name = "id") Long userId,
+                                              @RequestParam(name = "dynamicInfoId") Long dynamicInfoId);
 }

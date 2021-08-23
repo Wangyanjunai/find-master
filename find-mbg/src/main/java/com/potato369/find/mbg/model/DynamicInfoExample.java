@@ -224,6 +224,7 @@ public class DynamicInfoExample {
             addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
+
         public Criteria andDynamicIdIsNull() {
             addCriterion("dynamic_id is null");
             return (Criteria) this;
@@ -292,7 +293,7 @@ public class DynamicInfoExample {
         public Criteria andDynamicIdNotBetween(String value1, String value2) {
             addCriterion("dynamic_id not between", value1, value2, "dynamicId");
             return (Criteria) this;
-        }        
+        }
 
         public Criteria andDynamicStatusIsNull() {
             addCriterion("dynamic_status is null");
@@ -431,6 +432,76 @@ public class DynamicInfoExample {
 
         public Criteria andPublicStatusNotBetween(String value1, String value2) {
             addCriterion("public_status not between", value1, value2, "publicStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopIsNull() {
+            addCriterion("is_top is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopIsNotNull() {
+            addCriterion("is_top is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopEqualTo(String value) {
+            addCriterion("is_top =", value, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopNotEqualTo(String value) {
+            addCriterion("is_top <>", value, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopGreaterThan(String value) {
+            addCriterion("is_top >", value, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopGreaterThanOrEqualTo(String value) {
+            addCriterion("is_top >=", value, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopLessThan(String value) {
+            addCriterion("is_top <", value, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopLessThanOrEqualTo(String value) {
+            addCriterion("is_top <=", value, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopLike(String value) {
+            addCriterion("is_top like", value, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopNotLike(String value) {
+            addCriterion("is_top not like", value, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopIn(List<String> values) {
+            addCriterion("is_top in", values, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopNotIn(List<String> values) {
+            addCriterion("is_top not in", values, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopBetween(String value1, String value2) {
+            addCriterion("is_top between", value1, value2, "isTop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsTopNotBetween(String value1, String value2) {
+            addCriterion("is_top not between", value1, value2, "isTop");
             return (Criteria) this;
         }
 
@@ -643,7 +714,7 @@ public class DynamicInfoExample {
             addCriterion("topic_title not between", value1, value2, "topicTitle");
             return (Criteria) this;
         }
-        
+
         public Criteria andLikesIsNull() {
             addCriterion("likes is null");
             return (Criteria) this;
@@ -703,7 +774,7 @@ public class DynamicInfoExample {
             addCriterion("likes not between", value1, value2, "likes");
             return (Criteria) this;
         }
-        
+
         public Criteria andCommentsIsNull() {
             addCriterion("comments is null");
             return (Criteria) this;
@@ -762,7 +833,7 @@ public class DynamicInfoExample {
         public Criteria andCommentsNotBetween(Integer value1, Integer value2) {
             addCriterion("comments not between", value1, value2, "comments");
             return (Criteria) this;
-        }        
+        }
 
         public Criteria andApplicationsIsNull() {
             addCriterion("applications is null");
@@ -1013,7 +1084,7 @@ public class DynamicInfoExample {
             addCriterion("attache_number not between", value1, value2, "attacheNumber");
             return (Criteria) this;
         }
-        
+
         public Criteria andLongitudeIsNull() {
             addCriterion("longitude is null");
             return (Criteria) this;
@@ -1133,7 +1204,7 @@ public class DynamicInfoExample {
             addCriterion("latitude not between", value1, value2, "latitude");
             return (Criteria) this;
         }
-        
+
         public Criteria andCountryIsNull() {
             addCriterion("country is null");
             return (Criteria) this;
@@ -1483,7 +1554,7 @@ public class DynamicInfoExample {
             addCriterion("other not between", value1, value2, "other");
             return (Criteria) this;
         }
-        
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

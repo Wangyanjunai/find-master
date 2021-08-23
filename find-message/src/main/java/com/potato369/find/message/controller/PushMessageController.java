@@ -45,7 +45,6 @@ public class PushMessageController {
 		boolean flag = this.jiGuangPushService.pushAndroid(pushBean);
 		Map<String, Object> result = new HashMap<>();
 		String message = "";
-		log.info("flag={}", flag);
 		if (flag) {
 			message = "OK";
 		} else {
@@ -60,7 +59,6 @@ public class PushMessageController {
 	 * 
 	 * @param title   推送标题
 	 * @param regId   设备对应的唯一极光ID
-	 * @param content 推送内容
 	 * @return
 	 */
 	@PutMapping(value = "/push/one.do")
@@ -76,7 +74,6 @@ public class PushMessageController {
 		boolean flag = this.jiGuangPushService.pushAndroid(pushBean, regId);
 		Map<String, Object> result = new HashMap<>();
 		String message = "";
-		log.info("flag={}", flag);
 		if (flag) {
 			message = "OK";
 		} else {

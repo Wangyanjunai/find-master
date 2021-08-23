@@ -53,6 +53,9 @@ public class DynamicInfoData implements Serializable {
     @ApiModelProperty(value = "是否公开定位，0->否，1->是")
     private String publishStatus;
 
+    @ApiModelProperty(value = "是否置顶，0->否,1->是")
+    private String isTop;
+
     @ApiModelProperty(value = "是否话题，0->否,1->是")
     private String isTopic;
 

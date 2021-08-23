@@ -73,6 +73,10 @@ public class DynamicInfoVO {
     @JsonProperty(value = "applicationStatus")
     private boolean applicationStatus; // 申请加微信状态，true->已申请添加微信，false->未申请添加微信
 
+    @JSONField(name = "isTop")
+    @JsonProperty(value = "isTop")
+    private boolean isTop;//是否置顶
+
     @JSONField(name = "isTopic")
     @JsonProperty(value = "isTopic")
     private boolean isTopic;//是否话题

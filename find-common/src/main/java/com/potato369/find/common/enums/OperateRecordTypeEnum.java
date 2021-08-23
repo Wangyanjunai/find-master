@@ -61,6 +61,8 @@ public enum OperateRecordTypeEnum implements CodeEnum<Integer> {
 
     Feedback(24, "24", "意见反馈"),
 
+    ToppingDynamic(25, "25", "置顶动态"),
+
     ;
     private Integer code;
 

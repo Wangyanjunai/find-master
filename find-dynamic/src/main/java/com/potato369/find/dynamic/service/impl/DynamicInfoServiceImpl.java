@@ -210,12 +210,20 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
                             + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon() + "default.png"));
                     dynamicInfoVO.setNickName("匿名用户");
                 }
+
+
                 if (Objects.equals(IsTopicEnum.No.getType(), dynamicInfoData.getIsTopic())) {
                     dynamicInfoVO.setTopic(false);
                 }
                 if (Objects.equals(IsTopicEnum.Yes.getType(), dynamicInfoData.getIsTopic())) {
                     dynamicInfoVO.setTopic(true);
                     dynamicInfoVO.setTopicTitle("#" + dynamicInfoData.getTopicTitle());
+                }
+                if (Objects.equals(DynamicInfoToppingEnum.YES.getStatus(), dynamicInfoData.getIsTop())) {
+                    dynamicInfoVO.setTop(true);
+                }
+                if (Objects.equals(DynamicInfoToppingEnum.NO.getStatus(), dynamicInfoData.getIsTop())) {
+                    dynamicInfoVO.setTop(false);
                 }
                 dynamicInfoVO.setApplicationStatus(false);
                 dynamicInfoVO.setComments(dynamicInfoData.getComments());

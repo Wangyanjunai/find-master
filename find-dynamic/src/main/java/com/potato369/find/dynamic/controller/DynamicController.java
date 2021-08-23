@@ -1559,6 +1559,53 @@ public class DynamicController {
         }
     }
 
+    // 用户置顶动态内容
+    @PutMapping(value = "/{id}/topping.do")
+    public CommonResult<Map<String, Object>> topping(@PathVariable(name = "id") Long userId,
+                                                     @RequestParam(name = "dynamicInfoId") Long dynamicInfoId) {
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        OperateRecord operateRecord = new OperateRecord();
+        operateRecord.setUserId(userId);
+        operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
+        operateRecord.setType(OperateRecordTypeEnum.ToppingDynamic.getCode());
+        data.put("TOPPING", "ERROR");
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始置顶动态内容");
+            }
+            DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
+            if (Objects.isNull(dynamicInfo)) {
+                return CommonResult.success(data, "置顶动态内容出错，动态内容不存在。");
+            }
+            long dynamicInfoUserId = dynamicInfo.getUserId();
+            String message;
+            if (Objects.equals(userId, dynamicInfoUserId)) {
+                dynamicInfo.setIsTop(DynamicInfoToppingEnum.YES.getStatus());
+                dynamicInfo.setUpdateTime(new Date());
+                int rowResult = this.dynamicInfoService.updateDynamicInfoByPrimaryKey(dynamicInfo);
+                if (rowResult > 0) {
+                    message = "置顶动态内容成功。";
+                    data.put("TOPPING", "OK");
+                } else {
+                    message = "置顶动态内容失败。";
+                }
+            } else {
+                message = "置顶动态内容失败。";
+            }
+            operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.success(data, message);
+        } catch (Exception e) {
+            log.error("置顶动态内容出现错误", e);
+            this.operateRecordMapperWriter.insertSelective(operateRecord);
+            return CommonResult.failed("置顶动态内容出现错误。");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束置顶动态内容");
+            }
+        }
+    }
+
     private SensitiveWords check(String content) {
         if (StrUtil.isNotEmpty(content)) {
             return this.sensitiveWordsService.checkHasSensitiveWords(content);

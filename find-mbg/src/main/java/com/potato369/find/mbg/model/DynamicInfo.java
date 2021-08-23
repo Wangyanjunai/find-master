@@ -24,6 +24,9 @@ public class DynamicInfo implements Serializable {
     @ApiModelProperty(value = "是否公开定位状态，0->未公开；1->公开，默认：0->未公开")
     private String publicStatus;
 
+    @ApiModelProperty(value = "是否置顶，0->否；1->是，默认：0->否")
+    private String isTop;
+
     @ApiModelProperty(value = "是否话题，0->否；1->是，默认：0->否")
     private String isTopic;
 
@@ -51,25 +54,25 @@ public class DynamicInfo implements Serializable {
     @ApiModelProperty(value = "附件数量")
     private Integer attacheNumber;
 
-    @ApiModelProperty(value = "经度")
+    @ApiModelProperty(value = "定位（经度）")
     private Double longitude;
 
-    @ApiModelProperty(value = "纬度")
+    @ApiModelProperty(value = "定位（纬度）")
     private Double latitude;
 
-    @ApiModelProperty(value = "国")
+    @ApiModelProperty(value = "定位（国家）")
     private String country;
 
-    @ApiModelProperty(value = "省")
+    @ApiModelProperty(value = "定位（省份）")
     private String province;
 
-    @ApiModelProperty(value = "市")
+    @ApiModelProperty(value = "定位（城市）")
     private String city;
 
-    @ApiModelProperty(value = "区/县")
+    @ApiModelProperty(value = "定位（区/县）")
     private String district;
 
-    @ApiModelProperty(value = "其它地址")
+    @ApiModelProperty(value = "定位（其它地址）")
     private String other;
 
     @ApiModelProperty(value = "发布时间")
@@ -130,6 +133,14 @@ public class DynamicInfo implements Serializable {
 
     public void setPublicStatus(String publicStatus) {
         this.publicStatus = publicStatus;
+    }
+
+    public String getIsTop() {
+        return isTop;
+    }
+
+    public void setIsTop(String isTop) {
+        this.isTop = isTop;
     }
 
     public String getIsTopic() {
@@ -318,6 +329,7 @@ public class DynamicInfo implements Serializable {
                 ", dynamicId=" + dynamicId +
                 ", dynamicStatus=" + dynamicStatus +
                 ", publicStatus=" + publicStatus +
+                ", isTop=" + isTop +
                 ", isTopic=" + isTopic +
                 ", isAnonymous=" + isAnonymous +
                 ", topicTitle=" + topicTitle +

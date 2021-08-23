@@ -7,6 +7,7 @@
         <result column="dynamic_id" jdbcType="BIGINT" property="dynamicId"/>
         <result column="dynamic_status" jdbcType="CHAR" property="dynamicStatus"/><!--动态状态-->
         <result column="public_status" jdbcType="CHAR" property="publicStatus"/><!--公开定位状态-->
+        <result column="is_top" jdbcType="CHAR" property="isTop"/><!-- 是否置顶，0->否；1->是，默认：0->否 -->
         <result column="is_topic" jdbcType="CHAR" property="isTopic"/><!-- 是否话题，0->否；1->是，默认：0->否 -->
         <result column="is_anonymous" jdbcType="CHAR" property="isAnonymous"/><!-- 是否匿名，0->否；1->是，默认：0->否 -->
         <result column="topic_title" jdbcType="VARCHAR" property="topicTitle"/><!-- 话题标题 -->
@@ -37,6 +38,7 @@
         <result column="dynamic_info_id" jdbcType="BIGINT" property="dynamicInfoId"/><!-- 动态内容id -->
         <result column="content" jdbcType="LONGVARCHAR" property="content"/><!-- 动态内容 -->
         <result column="public_status" jdbcType="VARCHAR" property="publishStatus"/><!-- 是否公开定位 -->
+        <result column="is_top" jdbcType="VARCHAR" property="isTop"/><!-- 是否置顶 -->
         <result column="is_topic" jdbcType="VARCHAR" property="isTopic"/><!-- 是否话题 -->
         <result column="topic_title" jdbcType="VARCHAR" property="topicTitle"/><!-- 话题标题 -->
         <result column="is_anonymous" jdbcType="VARCHAR" property="isAnonymous"/><!-- 是否匿名 -->
@@ -118,7 +120,7 @@
     <sql id="Base_Column_List">
         id
         , user_id, dynamic_id, dynamic_status,
-        public_status, is_topic, is_anonymous, topic_title, likes,
+        public_status, is_top, is_topic, is_anonymous, topic_title, likes,
         comments, applications, shares, attache_type,
     	attache_number, longitude, latitude, country, 
     	province, city, district, other, 
@@ -184,7 +186,7 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into dynamic_info (
-        user_id, dynamic_status, public_status, is_topic,
+        user_id, dynamic_status, public_status, is_top, is_topic,
         is_anonymous, topic_title, likes, comments,
         applications, shares, attache_type, attache_number,
         longitude, latitude, country, province,
@@ -194,7 +196,7 @@
         )
         values (
         #{userId,jdbcType=BIGINT}, #{dynamicStatus,jdbcType=CHAR}, #{publicStatus,jdbcType=CHAR},
-        #{isTopic,jdbcType=CHAR},
+        #{isTop,jdbcType=CHAR}, #{isTopic,jdbcType=CHAR},
         #{isAnonymous,jdbcType=CHAR}, #{topicTitle,jdbcType=VARCHAR}, #{likes,jdbcType=INTEGER},
         #{comments,jdbcType=INTEGER},
         #{applications,jdbcType=INTEGER}, #{shares,jdbcType=INTEGER}, #{attacheType,jdbcType=CHAR},
@@ -238,6 +240,9 @@
             </if>
             <if test="publicStatus != null">
                 public_status,
+            </if>
+            <if test="isTop != null">
+                is_top,
             </if>
             <if test="isTopic != null">
                 is_topic,
@@ -318,6 +323,9 @@
             </if>
             <if test="publicStatus != null">
                 #{publicStatus,jdbcType=CHAR},
+            </if>
+            <if test="isTop != null">
+                #{isTop,jdbcType=CHAR},
             </if>
             <if test="isTopic != null">
                 #{isTopic,jdbcType=CHAR},
@@ -564,6 +572,7 @@
                di.`create_time`,
                di.`content`,
                di.`public_status`,
+               di.`is_top`,
                CONCAT(di.`country`, '·')  AS `country`,
                CONCAT(di.`province`)      AS `province`,
                CONCAT('·', di.`city`)     AS `city`,
@@ -584,7 +593,7 @@
         WHERE di.`user_id` = ur.`id`
           AND di.`dynamic_status`<![CDATA[ !=]]> '1'
           AND ur.`id` = #{userId, jdbcType=BIGINT}
-        ORDER BY di.`dynamic_status` DESC, di.`create_time` DESC, di.`update_time` DESC
+        ORDER BY di.`is_top` DESC, di.`update_time` DESC, di.`dynamic_status` DESC, di.`create_time` DESC
     </select>
 
     <select id="selectByTopicTitle" parameterType="java.lang.String" resultMap="BaseResultMap2">
@@ -816,6 +825,9 @@
             </if>
             <if test="publicStatus != null">
                 public_status = #{publicStatus,jdbcType=CHAR},
+            </if>
+            <if test="isTop != null">
+                is_top = #{isTop,jdbcType=CHAR},
             </if>
             <if test="isTopic != null">
                 is_topic = #{isTopic,jdbcType=CHAR},
