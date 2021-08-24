@@ -4386,10 +4386,10 @@ public class DynamicController {
     }
 
     /**
-     * @api {put} /find/dynamic/{id}/info 查询当前用户与动态内容与的关系接口
+     * @api {put} /find/dynamic/{id}/info 查询当前用户与动态内容的关系接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
-     * @apiName 查询当前用户与动态内容与的关系
+     * @apiName 查询当前用户与动态内容的关系
      * @apiParam (接口请求参数) {Number} id 用户id
      * @apiParam (接口请求参数) {Number} dynamicInfoId 动态内容id
      * @apiParam (接口请求参数) {String} [ip] 客户端ip，不能与定位（经纬度）同时为空

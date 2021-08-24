@@ -2452,10 +2452,10 @@
   {
     "type": "put",
     "url": "/find/dynamic/{id}/info",
-    "title": "查询当前用户与动态内容与的关系接口",
+    "title": "查询当前用户与动态内容的关系接口",
     "version": "1.0.0",
     "group": "动态模块API",
-    "name": "查询当前用户与动态内容与的关系",
+    "name": "查询当前用户与动态内容的关系",
     "parameter": {
       "fields": {
         "接口请求参数": [
