@@ -167,6 +167,5 @@ public interface DynamicService {
     // 用户置顶动态内容
     @PutMapping(value = "/find/v1/dynamic/{id}/topping.do")
     CommonResult<Map<String, Object>> topping(@PathVariable(name = "id") Long userId,
-                                              @RequestParam(name = "type") String type,
                                               @RequestParam(name = "dynamicInfoId") Long dynamicInfoId);
 }

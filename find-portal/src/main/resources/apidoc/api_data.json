@@ -4731,10 +4731,10 @@
   {
     "type": "put",
     "url": "/find/dynamic/{id}/topping",
-    "title": "置顶动态内容接口",
+    "title": "置顶/取消置顶动态内容接口",
     "version": "1.0.0",
     "group": "动态模块API",
-    "name": "置顶动态内容",
+    "name": "置顶/取消置顶动态内容",
     "parameter": {
       "fields": {
         "接口请求参数": [
@@ -4756,13 +4756,13 @@
       },
       "examples": [
         {
-          "title": "请求示例01（是自己发布的动态内容， 置顶成功）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/138/topping?dynamicInfoId=685",
+          "title": "请求示例01（置顶动态内容）",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/138/topping?dynamicInfoId=621",
           "type": "json"
         },
         {
-          "title": "请求示例02（非自己发布的动态内容， 置顶失败）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/138/topping?dynamicInfoId=86",
+          "title": "请求示例02（取消置顶动态内容）",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/138/topping?dynamicInfoId=621",
           "type": "json"
         }
       ]
@@ -4818,8 +4818,8 @@
           "type": "json"
         },
         {
-          "title": "200 响应示例02（非自己发布的动态内容， 置顶失败）",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"置顶动态内容失败。\",\n\"data\": {\n\"TOPPING\": \"ERROR\"\n}\n}",
+          "title": "200 响应示例02（取消置顶动态内容）",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"取消置顶动态内容成功。\",\n\"data\": {\n\"TOPPING\": \"OK\"\n}\n}",
           "type": "json"
         }
       ]

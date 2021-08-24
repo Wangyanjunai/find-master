@@ -1562,7 +1562,6 @@ public class DynamicController {
     // 用户置顶/取消置顶动态内容
     @PutMapping(value = "/{id}/topping.do")
     public CommonResult<Map<String, Object>> topping(@PathVariable(name = "id") Long userId,
-                                                     @RequestParam(name = "type") String type,
                                                      @RequestParam(name = "dynamicInfoId") Long dynamicInfoId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         OperateRecord operateRecord = new OperateRecord();
@@ -1583,19 +1582,17 @@ public class DynamicController {
             String message1 = null;
             if (Objects.equals(userId, dynamicInfoUserId)) {
                 //置顶
-                int count = this.dynamicInfoMapperReader.selectMyIsTopCount(userId);
-                if (Objects.equals(type, DynamicInfoToppingEnum.YES.getStatus())) {
-                    if (count >= 1) {
+                String type = dynamicInfo.getIsTop();
+                if (Objects.equals(type, DynamicInfoToppingEnum.NO.getStatus())) {
+                    int count = this.dynamicInfoMapperReader.selectMyIsTopCount(userId);
+                    if (count > 0) {
                         return CommonResult.success(data, "置顶动态内容出错，只能置顶一条动态。");
                     }
                     dynamicInfo.setIsTop(DynamicInfoToppingEnum.YES.getStatus());
                     message1 = "置顶";
                 }
                 //取消置顶
-                if (Objects.equals(type, DynamicInfoToppingEnum.NO.getStatus())) {
-                    if (count < 1) {
-                        return CommonResult.success(data, "置顶动态内容出错，没有置顶一条动态。");
-                    }
+                if (Objects.equals(type, DynamicInfoToppingEnum.YES.getStatus())) {
                     dynamicInfo.setIsTop(DynamicInfoToppingEnum.NO.getStatus());
                     message1 = "取消置顶";
                 }
