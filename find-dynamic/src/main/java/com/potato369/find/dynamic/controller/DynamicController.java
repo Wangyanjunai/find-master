@@ -701,14 +701,10 @@ public class DynamicController {
                 dynamicInfoParam.setConstellations(constellations);
             }
             List<Long> professionIdList = new ArrayList<>();
-            if (Objects.isNull(professionId)) {
-                if (Objects.isNull(industryId)) {
-                    Long p = user.getProfessionId();
-                    Professions professions = this.professionsMapperReader.selectByPrimaryKey(p);
-                    if (!Objects.isNull(professions)) {
-                        industryId = professions.getIndustryId();
-                    }
-                }
+            if (!Objects.isNull(industryId) && !Objects.isNull(professionId)) {
+                professionIdList.add(professionId);
+            }
+            if (!Objects.isNull(industryId) && Objects.isNull(professionId)) {
                 ProfessionsExample example = new ProfessionsExample();
                 example.createCriteria().andIndustryIdEqualTo(industryId).andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());
                 List<Professions> professionsList = this.professionsMapperReader.selectByExample(example);
@@ -716,7 +712,7 @@ public class DynamicController {
                     professionIdList = professionsList.stream().map(Professions::getId).collect(Collectors.toList());
                 }
             }
-            if (!Objects.isNull(professionId)) {
+            if (Objects.isNull(industryId) && !Objects.isNull(professionId)) {
                 professionIdList.add(professionId);
             }
             dynamicInfoParam.setProfessionIds(professionIdList);
@@ -724,7 +720,7 @@ public class DynamicController {
             List<Long> tagsIdList = new ArrayList<>();
             if (!Objects.isNull(tagsList) && !tagsList.isEmpty()) {
                 for (String tag : tagsList) {
-                    List<Tag> tagRecord = this.tagMapperReader.selectByTagName(tag);
+                    List<Tag> tagRecord = this.tagMapperReader.selectByTagNameLike(tag);
                     if (!Objects.isNull(tagRecord) && !tagRecord.isEmpty()) {
                         List<Long> longList = tagRecord.stream().map(Tag::getId).collect(Collectors.toList());
                         tagsIdList.addAll(longList);
@@ -738,8 +734,9 @@ public class DynamicController {
             example.setDistinct(true);
             example.setOrderByClause("id DESC, update_time DESC, create_time DESC");
             example.createCriteria().andOwnerUserIdEqualTo(userId).andStatusEqualTo(BlacklistRecordStatusEnum.PUSH.getCode());
-            List<BlacklistRecord> blacklistRecordList = this.blacklistRecordMapperReader.selectByExample(example).stream().collect(Collectors.toList());
+            List<BlacklistRecord> blacklistRecordList = new ArrayList<>(this.blacklistRecordMapperReader.selectByExample(example));
             List<Long> blackUserIdList = blacklistRecordList.stream().map(BlacklistRecord::getBlackUserId).collect(Collectors.toList());
+            blackUserIdList.add(userId);
             CopyUtil.removeLongDuplicate(blackUserIdList);
             dynamicInfoParam.setBlackRecordUserIdLongList(blackUserIdList);
             dynamicInfoParam.setLongitude(longitude);

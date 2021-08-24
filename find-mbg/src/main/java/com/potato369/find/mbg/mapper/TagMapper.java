@@ -23,6 +23,8 @@ public interface TagMapper {
 
     List<Tag> selectByTagName(@Param("name") String keywords);
 
+    List<Tag> selectByTagNameLike(@Param("name") String keywords);
+
     Tag selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") Tag record, @Param("example") TagExample example);
