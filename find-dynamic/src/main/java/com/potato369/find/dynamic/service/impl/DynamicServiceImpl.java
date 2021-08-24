@@ -67,6 +67,8 @@ public class DynamicServiceImpl implements DynamicService {
 
     private AttacheInfoMapper attacheInfoMapperReader;
 
+    private CommentRecordMapper commentRecordMapperReader;
+
     @Autowired
     public void setDynamicMapperReader(DynamicMapper dynamicMapperReader) {
         this.dynamicMapperReader = dynamicMapperReader;
@@ -125,6 +127,11 @@ public class DynamicServiceImpl implements DynamicService {
     @Autowired
     public void setAttacheInfoMapperReader(AttacheInfoMapper attacheInfoMapperReader) {
         this.attacheInfoMapperReader = attacheInfoMapperReader;
+    }
+
+    @Autowired
+    public void setCommentRecordMapperReader(CommentRecordMapper commentRecordMapperReader) {
+        this.commentRecordMapperReader = commentRecordMapperReader;
     }
 
     //保存动态内容信息
@@ -554,6 +561,8 @@ public class DynamicServiceImpl implements DynamicService {
                         fileNameList03.add(stringBuilder.toString());
                         dynamicInfoVO.setFileName(fileNameList03);
                     }
+                } else {
+                    dynamicInfoVO.setAttacheFileDataType(AttacheInfoDataTypeEnum.Text.getCodeStr());
                 }
                 if (Objects.equals(IsAnonymousEnum.No.getType(), dynamicInfoData.getIsAnonymous())) {
                     dynamicInfoVO.setAnonymous(false);
@@ -573,6 +582,10 @@ public class DynamicServiceImpl implements DynamicService {
                     dynamicInfoVO.setTopicTitle("#" + dynamicInfoData.getTopicTitle());
                 }
                 dynamicInfoVO.setComments(dynamicInfoData.getComments());
+                CommentRecordExample commentRecordExample = new CommentRecordExample();
+                commentRecordExample.createCriteria().andDynamicInfoIdEqualTo(dynamicInfoId).andBeUserIdEqualTo(dynamicInfoData.getUserId()).andUserIdEqualTo(userId);
+                List<CommentRecord> commentRecordList = this.commentRecordMapperReader.selectByExample(commentRecordExample);
+                dynamicInfoVO.setIsComment(!Objects.isNull(commentRecordList) && !commentRecordList.isEmpty());
                 if (!Objects.isNull(dynamicInfoData.getLongitude()) && !Objects.isNull(dynamicInfoData.getLatitude())) {
                     dynamicInfoVO.setDistance(DistanceUtil.getDistance(dynamicInfoData.getLongitude(), dynamicInfoData.getLatitude(), dynamicInfoParam.getLongitude(), dynamicInfoParam.getLatitude()));
                 }

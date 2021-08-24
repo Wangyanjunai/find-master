@@ -2,6 +2,7 @@ package com.potato369.find.portal.controller;
 
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.LocationDTO;
+import com.potato369.find.common.vo.DynamicInfoVO;
 import com.potato369.find.portal.feign.DynamicService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -4382,5 +4383,103 @@ public class DynamicController {
     public CommonResult<Map<String, Object>> topping(@PathVariable(name = "id") Long userId,
                                                      @RequestParam(name = "dynamicInfoId") Long dynamicInfoId) {
         return this.dynamicFeignClient.topping(userId, dynamicInfoId);
+    }
+
+    /**
+     * @api {put} /find/dynamic/{id}/info 查询当前用户与动态内容与的关系接口
+     * @apiVersion 1.0.0
+     * @apiGroup 动态模块API
+     * @apiName 查询当前用户与动态内容与的关系
+     * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {Number} dynamicInfoId 动态内容id
+     * @apiParam (接口请求参数) {String} [ip] 客户端ip，不能与定位（经纬度）同时为空
+     * @apiParam (接口请求参数) {Double} [longitude] 定位（经度）
+     * @apiParam (接口请求参数) {Double} [latitude] 定位（纬度）
+     * @apiParamExample {json} 请求示例（客户端ip不为空，定位（经纬度）为空）
+     * HTTP/1.1 OK
+     * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/144/info?dynamicInfoId=707&ip=183.14.135.139
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Object} [data] 数据
+     * @apiSuccess (200) {Number} [userId] 动态内容拥有者用户id
+     * @apiSuccess (200) {String} [headUrl] 动态内容拥有者头像地址
+     * @apiSuccess (200) {String} [publishTime] 动态内容发布时间
+     * @apiSuccess (200) {Number} [dynamicInfoId] 动态内容id
+     * @apiSuccess (200) {String} [content] 内容信息
+     * @apiSuccess (200) {String} [address] 定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回
+     * @apiSuccess (200) {Number} [likes] 点赞数
+     * @apiSuccess (200) {Boolean} [likeStatus] 点赞状态，true->已点赞，false->未点赞
+     * @apiSuccess (200) {Number} [applications] 申请加微信数
+     * @apiSuccess (200) {Boolean} [applicationStatus] 申请加微信状态，true->已申请，false->未申请
+     * @apiSuccess (200) {Boolean} [isTopic] 是否话题，true->是，false->否
+     * @apiSuccess (200) {String} [topicTitle] 话题标题
+     * @apiSuccess (200) {Number} [comments] 评论数
+     * @apiSuccess (200) {Boolean} [isAnonymous] 是否匿名发布，true->是，false->否
+     * @apiSuccess (200) {Double} [distance] 当前位置距发布动态定位的距离（单位（米））
+     * @apiSuccess (200) {String} [dataTye] 附件文件类型，0->无附件，纯文字，1->图片，2->语音
+     * @apiSuccess (200) {String[]} [attacheFileUrlList] 附件文件地址列表
+     * @apiSuccessExample {json} 200 响应示例（客户端ip不为空，定位（经纬度）为空）
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "userId": 138,
+     * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "publishTime": "2021-04-29 10:27:24",
+     * "dynamicInfoId": 707,
+     * "content": "41",
+     * "address": "广东省深圳市",
+     * "likes": 1,
+     * "likeStatus": true,
+     * "applications": 3,
+     * "applicationStatus": false,
+     * "isTop": false,
+     * "isTopic": true,
+     * "topicTitle": "#健身",
+     * "comments": 110,
+     * "isComment": false,
+     * "isAnonymous": false,
+     * "attacheFileUrlList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210429/1619663244476/4d789742-acb9-4298-b74e-8618f9c9d2e4.jpg"
+     * ]
+     * }
+     * }
+     * @apiError (404) {Number} timestamp 响应时间戳
+     * @apiError (404) {Number} status 消息码
+     * @apiError (404) {String} error 错误说明
+     * @apiError (404) {String} message 返回说明
+     * @apiError (404) {String} path 路径
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应 接口未注册
+     * {
+     * "timestamp": 1611558682334,
+     * "status": 404,
+     * "error": "Not Found",
+     * "message": "No message available",
+     * "path": "/find/dynamic/1/info1"
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！",
+     * "data": null
+     * }
+     */
+    //查询当前用户与动态内容与的关系接口
+    @GetMapping("/{id}/info")
+    public CommonResult<DynamicInfoVO> getDynamicInfoById(@PathVariable(name = "id") Long userId,
+                                                          @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
+                                                          @RequestParam(name = "ip", required = false) String clientIP,
+                                                          @RequestParam(name = "longitude", required = false) Double longitude,
+                                                          @RequestParam(name = "latitude", required = false) Double latitude) {
+        return this.dynamicFeignClient.getDynamicInfoById(userId, dynamicInfoId, clientIP, longitude, latitude);
     }
 }

@@ -2,6 +2,7 @@ package com.potato369.find.portal.feign;
 
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.dto.LocationDTO;
+import com.potato369.find.common.vo.DynamicInfoVO;
 import com.potato369.find.portal.config.FeignMultipartSupportConfig;
 import com.potato369.find.portal.feign.fallback.DynamicServiceFeignFallback;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -168,4 +169,12 @@ public interface DynamicService {
     @PutMapping(value = "/find/v1/dynamic/{id}/topping.do")
     CommonResult<Map<String, Object>> topping(@PathVariable(name = "id") Long userId,
                                               @RequestParam(name = "dynamicInfoId") Long dynamicInfoId);
+
+    //查询动态内容与当前用户的关系接口
+    @GetMapping("/find/v1/dynamic/{id}/info.do")
+    CommonResult<DynamicInfoVO> getDynamicInfoById(@PathVariable(name = "id") Long userId,
+                                                   @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
+                                                   @RequestParam(name = "ip", required = false) String clientIP,
+                                                   @RequestParam(name = "longitude", required = false) Double longitude,
+                                                   @RequestParam(name = "latitude", required = false) Double latitude);
 }

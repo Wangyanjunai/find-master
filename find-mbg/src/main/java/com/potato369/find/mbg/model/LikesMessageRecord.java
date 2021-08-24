@@ -8,152 +8,166 @@ import java.util.Date;
 //用户点赞记录
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LikesMessageRecord {
-	
-	//点赞记录id
-	@ApiModelProperty(value = "点赞记录id")
-	private Long messageId;
-		
+
+    //点赞消息id
+    @ApiModelProperty(value = "点赞消息id")
+    private Long messageId;
+
+    //动态内容id
+    @ApiModelProperty(value = "动态内容id")
+    private Long dynamicInfoId;
+
     //点赞消息记录状态
-	@ApiModelProperty(value = "点赞消息记录状态，0->取消，1->点赞")
-	private String status;
-	
-	//点赞记录创建时间
-	@ApiModelProperty(value = "点赞消息记录创建时间")
-	private Date createTime;
-	
-	//点赞记录更新时间
-	@ApiModelProperty(value = "点赞消息记录更新时间")
-	private Date updateTime;
-	
-	//点赞用户id
-	@ApiModelProperty(value = "点赞用户id")
-	private Long userId;
-	
-	//点赞用户昵称
-	@ApiModelProperty(value = "点赞记录用户昵称")
-	private String nickname;
-	
-	//点赞用户头像图片
-	@ApiModelProperty(value = "点赞记录用户头像图片")
-	private String headIcon;
-	
-	//点赞的动态信息内容
-	@ApiModelProperty(value = "点赞发送的消息内容")
-	private String likesContent;
-	
-	//点赞的动态附件类型
-	@ApiModelProperty(value = "点赞的动态附件类型")
-	private String attacheType;
-	
-	//点赞的动态内容附件文件名称
-	@ApiModelProperty(value = "点赞的动态内容附件文件名称")
-	private String attacheFilename;
+    @ApiModelProperty(value = "点赞消息记录状态，0->取消，1->点赞")
+    private String status;
 
-	public Long getMessageId() {
-		return messageId;
-	}
+    //点赞记录创建时间
+    @ApiModelProperty(value = "点赞消息记录创建时间")
+    private Date createTime;
 
-	public void setMessageId(Long messageId) {
-		this.messageId = messageId;
-	}
+    //点赞记录更新时间
+    @ApiModelProperty(value = "点赞消息记录更新时间")
+    private Date updateTime;
 
-	public String getStatus() {
-		return status;
-	}
+    //点赞用户id
+    @ApiModelProperty(value = "点赞用户id")
+    private Long userId;
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    //点赞用户昵称
+    @ApiModelProperty(value = "点赞记录用户昵称")
+    private String nickname;
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    //点赞用户头像图片
+    @ApiModelProperty(value = "点赞记录用户头像图片")
+    private String headIcon;
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    //点赞的动态信息内容
+    @ApiModelProperty(value = "点赞发送的消息内容")
+    private String likesContent;
 
-	public Date getUpdateTime() {
-		return updateTime;
-	}
+    //点赞的动态附件类型
+    @ApiModelProperty(value = "点赞的动态附件类型")
+    private String attacheType;
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
+    //点赞的动态内容附件文件名称
+    @ApiModelProperty(value = "点赞的动态内容附件文件名称")
+    private String attacheFilename;
 
-	public Long getUserId() {
-		return userId;
-	}
+    public Long getMessageId() {
+        return messageId;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
+    }
 
-	public String getNickname() {
-		return nickname;
-	}
+    public Long getDynamicInfoId() {
+        return dynamicInfoId;
+    }
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    public void setDynamicInfoId(Long dynamicInfoId) {
+        this.dynamicInfoId = dynamicInfoId;
+    }
 
-	public String getHeadIcon() {
-		return headIcon;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setHeadIcon(String headIcon) {
-		this.headIcon = headIcon;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getLikesContent() {
-		return likesContent;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	public void setLikesContent(String likesContent) {
-		this.likesContent = likesContent;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public String getAttacheType() {
-		return attacheType;
-	}
+    public Date getUpdateTime() {
+        return updateTime;
+    }
 
-	public void setAttacheType(String attacheType) {
-		this.attacheType = attacheType;
-	}
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
-	public String getAttacheFilename() {
-		return attacheFilename;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setAttacheFilename(String attacheFilename) {
-		this.attacheFilename = attacheFilename;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("LikesMessageRecord [messageId=");
-		builder.append(messageId);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", createTime=");
-		builder.append(createTime);
-		builder.append(", updateTime=");
-		builder.append(updateTime);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", nickname=");
-		builder.append(nickname);
-		builder.append(", headIcon=");
-		builder.append(headIcon);
-		builder.append(", likesContent=");
-		builder.append(likesContent);
-		builder.append(", attacheType=");
-		builder.append(attacheType);
-		builder.append(", attacheFilename=");
-		builder.append(attacheFilename);
-		builder.append("]");
-		return builder.toString();
-	}
-	
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getHeadIcon() {
+        return headIcon;
+    }
+
+    public void setHeadIcon(String headIcon) {
+        this.headIcon = headIcon;
+    }
+
+    public String getLikesContent() {
+        return likesContent;
+    }
+
+    public void setLikesContent(String likesContent) {
+        this.likesContent = likesContent;
+    }
+
+    public String getAttacheType() {
+        return attacheType;
+    }
+
+    public void setAttacheType(String attacheType) {
+        this.attacheType = attacheType;
+    }
+
+    public String getAttacheFilename() {
+        return attacheFilename;
+    }
+
+    public void setAttacheFilename(String attacheFilename) {
+        this.attacheFilename = attacheFilename;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("LikesMessageRecord [messageId=");
+        builder.append(messageId);
+        builder.append(", dynamicInfoId=");
+        builder.append(dynamicInfoId);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", createTime=");
+        builder.append(createTime);
+        builder.append(", updateTime=");
+        builder.append(updateTime);
+        builder.append(", userId=");
+        builder.append(userId);
+        builder.append(", nickname=");
+        builder.append(nickname);
+        builder.append(", headIcon=");
+        builder.append(headIcon);
+        builder.append(", likesContent=");
+        builder.append(likesContent);
+        builder.append(", attacheType=");
+        builder.append(attacheType);
+        builder.append(", attacheFilename=");
+        builder.append(attacheFilename);
+        builder.append("]");
+        return builder.toString();
+    }
+
 }

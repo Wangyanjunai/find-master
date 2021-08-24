@@ -89,6 +89,10 @@ public class DynamicInfoVO {
     @JsonProperty(value = "comments")
     private Integer comments;//评论数
 
+    @JSONField(name = "isComment")
+    @JsonProperty(value = "isComment")
+    private Boolean isComment;//是否评论
+
     @JSONField(name = "isAnonymous")
     @JsonProperty(value = "isAnonymous")
     private boolean isAnonymous;//是否匿名发布

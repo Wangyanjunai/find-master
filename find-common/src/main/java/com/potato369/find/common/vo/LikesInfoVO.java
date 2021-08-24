@@ -16,16 +16,21 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LikesInfoVO {
 
-	//点赞消息记录id
+    //点赞消息记录id
     @JSONField(name = "messageId")
     @JsonProperty(value = "messageId")
     private Long messageId;
-    
+
     //点赞的用户id
     @JSONField(name = "userId")
     @JsonProperty(value = "userId")
     private Long userId;
-    
+
+    //点赞的动态内容id
+    @JSONField(name = "dynamicInfoId")
+    @JsonProperty(value = "dynamicInfoId")
+    private Long dynamicInfoId;
+
     //点赞的用户头像
     @JSONField(name = "head")
     @JsonProperty(value = "head")
@@ -35,12 +40,12 @@ public class LikesInfoVO {
     @JSONField(name = "content")
     @JsonProperty(value = "content")
     private String content;
-    
+
     //点赞的动态内容类型
     @JSONField(name = "attacheType")
     @JsonProperty(value = "attacheType")
     private String attacheType;
-    
+
     //点赞的动态内容附件文件名称列表
     @JSONField(name = "filenameList")
     @JsonProperty(value = "filenameList")

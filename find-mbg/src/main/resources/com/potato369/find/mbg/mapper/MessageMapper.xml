@@ -30,6 +30,7 @@
     </resultMap>
     <resultMap type="com.potato369.find.mbg.model.LikesMessageRecord" id="LikesMessageRecordMap">
         <result column="message_id" jdbcType="BIGINT" property="messageId"/>
+        <result column="dynamic_info_id" jdbcType="BIGINT" property="dynamicInfoId"/>
         <result column="status" jdbcType="CHAR" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
@@ -193,7 +194,8 @@
                user.`id`,
                user.`nick_name`,
                user.`head_icon`,
-               attache_info.`data_type` AS `attache_type`,
+               dynamic_info.`id`          AS `dynamic_info_id`,
+               attache_info.`data_type`   AS `attache_type`,
                attache_info.`file_name`
         FROM `like_record` AS like_record,
              `message` AS message,

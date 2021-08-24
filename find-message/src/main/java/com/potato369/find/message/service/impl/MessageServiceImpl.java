@@ -156,8 +156,7 @@ public class MessageServiceImpl implements MessageService {
     @Transactional
     public MessageVO2 selectLikesMessage(Long userId, int pageNum, int pageSize) {
         MessageVO2 messageVO2 = MessageVO2.builder().build();
-        final PageInfo<LikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
-                .doSelectPageInfo(() -> this.messageMapperReader.selectLikesMessageRecordByUserId(userId));
+        final PageInfo<LikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectLikesMessageRecordByUserId(userId));
         messageVO2.setTotalCount(listPageInfo.getTotal());
         messageVO2.setTotalPage(listPageInfo.getPages());
         List<LikesInfoVO> likesInfoVOs = new ArrayList<>();
@@ -165,6 +164,7 @@ public class MessageServiceImpl implements MessageService {
         for (LikesMessageRecord likesMessageRecord : likesMessageRecordList) {
             LikesInfoVO likesInfoVO = LikesInfoVO.builder().build();
             likesInfoVO.setMessageId(likesMessageRecord.getMessageId());
+            likesInfoVO.setDynamicInfoId(likesMessageRecord.getDynamicInfoId());
             likesInfoVO.setUserId(likesMessageRecord.getUserId());
             likesInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
                     + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
@@ -177,14 +177,11 @@ public class MessageServiceImpl implements MessageService {
             List<String> fileNameList03 = new ArrayList<>();
             for (String fileName : fileNameList02) {
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain()))
-                        .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
-                if (StrUtil.isNotEmpty(likesMessageRecord.getAttacheType()) && AttacheInfoDataTypeEnum.Image.getCode()
-                        .toString().equals(likesMessageRecord.getAttacheType())) {
+                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                if (StrUtil.isNotEmpty(likesMessageRecord.getAttacheType()) && AttacheInfoDataTypeEnum.Image.getCode().toString().equals(likesMessageRecord.getAttacheType())) {
                     stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
                 }
-                if (StrUtil.isNotEmpty(likesMessageRecord.getAttacheType()) && AttacheInfoDataTypeEnum.Audio.getCode()
-                        .toString().equals(likesMessageRecord.getAttacheType())) {
+                if (StrUtil.isNotEmpty(likesMessageRecord.getAttacheType()) && AttacheInfoDataTypeEnum.Audio.getCode().toString().equals(likesMessageRecord.getAttacheType())) {
                     stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
                 }
                 stringBuilder.append(fileName);

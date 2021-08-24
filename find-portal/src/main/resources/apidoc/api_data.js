@@ -2450,6 +2450,305 @@ define({ "api": [
     ]
   },
   {
+    "type": "put",
+    "url": "/find/dynamic/{id}/info",
+    "title": "查询当前用户与动态内容与的关系接口",
+    "version": "1.0.0",
+    "group": "动态模块API",
+    "name": "查询当前用户与动态内容与的关系",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "dynamicInfoId",
+            "description": "<p>动态内容id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "String",
+            "optional": true,
+            "field": "ip",
+            "description": "<p>客户端ip，不能与定位（经纬度）同时为空</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "Double",
+            "optional": true,
+            "field": "longitude",
+            "description": "<p>定位（经度）</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "Double",
+            "optional": true,
+            "field": "latitude",
+            "description": "<p>定位（纬度）</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例（客户端ip不为空，定位（经纬度）为空）",
+          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/144/info?dynamicInfoId=707&ip=183.14.135.139",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "userId",
+            "description": "<p>动态内容拥有者用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "headUrl",
+            "description": "<p>动态内容拥有者头像地址</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "publishTime",
+            "description": "<p>动态内容发布时间</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "dynamicInfoId",
+            "description": "<p>动态内容id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "content",
+            "description": "<p>内容信息</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "address",
+            "description": "<p>定位地址，如果发布动态时，公开定位，则会返回这条动态发布时的定位，否则不返回</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "likes",
+            "description": "<p>点赞数</p>"
+          },
+          {
+            "group": "200",
+            "type": "Boolean",
+            "optional": true,
+            "field": "likeStatus",
+            "description": "<p>点赞状态，true-&gt;已点赞，false-&gt;未点赞</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "applications",
+            "description": "<p>申请加微信数</p>"
+          },
+          {
+            "group": "200",
+            "type": "Boolean",
+            "optional": true,
+            "field": "applicationStatus",
+            "description": "<p>申请加微信状态，true-&gt;已申请，false-&gt;未申请</p>"
+          },
+          {
+            "group": "200",
+            "type": "Boolean",
+            "optional": true,
+            "field": "isTopic",
+            "description": "<p>是否话题，true-&gt;是，false-&gt;否</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "topicTitle",
+            "description": "<p>话题标题</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "comments",
+            "description": "<p>评论数</p>"
+          },
+          {
+            "group": "200",
+            "type": "Boolean",
+            "optional": true,
+            "field": "isAnonymous",
+            "description": "<p>是否匿名发布，true-&gt;是，false-&gt;否</p>"
+          },
+          {
+            "group": "200",
+            "type": "Double",
+            "optional": true,
+            "field": "distance",
+            "description": "<p>当前位置距发布动态定位的距离（单位（米））</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "dataTye",
+            "description": "<p>附件文件类型，0-&gt;无附件，纯文字，1-&gt;图片，2-&gt;语音</p>"
+          },
+          {
+            "group": "200",
+            "type": "String[]",
+            "optional": true,
+            "field": "attacheFileUrlList",
+            "description": "<p>附件文件地址列表</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200 响应示例（客户端ip不为空，定位（经纬度）为空）",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"publishTime\": \"2021-04-29 10:27:24\",\n\"dynamicInfoId\": 707,\n\"content\": \"41\",\n\"address\": \"广东省深圳市\",\n\"likes\": 1,\n\"likeStatus\": true,\n\"applications\": 3,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#健身\",\n\"comments\": 110,\n\"isComment\": false,\n\"isAnonymous\": false,\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210429/1619663244476/4d789742-acb9-4298-b74e-8618f9c9d2e4.jpg\"\n]\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "timestamp",
+            "description": "<p>响应时间戳</p>"
+          },
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>错误说明</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>返回说明</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "path",
+            "description": "<p>路径</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应 接口未注册\n{\n\"timestamp\": 1611558682334,\n\"status\": 404,\n\"error\": \"Not Found\",\n\"message\": \"No message available\",\n\"path\": \"/find/dynamic/1/info1\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\",\n\"data\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/DynamicController.java",
+    "groupTitle": "动态模块API",
+    "sampleRequest": [
+      {
+        "url": "http://w168428j19.51mypc.cn/find/dynamic/{id}/info"
+      }
+    ]
+  },
+  {
     "type": "get",
     "url": "/find/dynamic/check",
     "title": "校验内容是否包含敏感词汇接口",
@@ -6257,6 +6556,13 @@ define({ "api": [
           },
           {
             "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "dynamicInfoId",
+            "description": "<p>点赞的动态内容id</p>"
+          },
+          {
+            "group": "200",
             "type": "String",
             "optional": true,
             "field": "head",
@@ -6288,7 +6594,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"totalCount\":30,\n\"totalPage\":2,\n\"list\":[\n{\n\"messageId\":90,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":89,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":88,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200502/07.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200503/03.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/05.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":86,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200505/12.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/13.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":85,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":84,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":83,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":82,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200502/07.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":81,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200503/03.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/05.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":80,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200505/12.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/13.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":79,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":78,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":77,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":76,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200502/07.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":75,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200503/03.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/05.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":74,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200505/12.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/13.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":73,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":72,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":71,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n}\n]\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"totalCount\":30,\n\"totalPage\":2,\n\"list\":[\n{\n\"messageId\":90,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":89,\n\"dynamicInfoId\":187,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":88,\n\"dynamicInfoId\":37,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200502/07.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":87,\n\"dynamicInfoId\":57,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200503/03.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/05.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":86,\n\"dynamicInfoId\":287,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200505/12.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/13.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":85,\n\"dynamicInfoId\":88,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":84,\n\"dynamicInfoId\":37,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":83,\n\"dynamicInfoId\":47,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":82,\n\"dynamicInfoId\":67,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200502/07.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":81,\n\"dynamicInfoId\":77,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200503/03.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/05.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":80,\n\"dynamicInfoId\":67,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200505/12.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/13.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":79,\n\"dynamicInfoId\":57,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":78,\n\"dynamicInfoId\":17,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":77,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":76,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200502/07.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":75,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200503/03.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/05.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":74,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200505/12.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/13.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":73,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":72,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":71,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n}\n]\n}\n}",
           "type": "json"
         }
       ]

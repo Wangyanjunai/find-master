@@ -86,6 +86,8 @@ public class DynamicController {
 
     private AttacheInfoMapper attacheInfoMapperReader;
 
+    private CommentRecordMapper commentRecordMapperReader;
+
     @Autowired
     public void setDynamicService(DynamicService dynamicService) {
         this.dynamicService = dynamicService;
@@ -194,6 +196,11 @@ public class DynamicController {
     @Autowired
     public void setAttacheInfoMapperReader(AttacheInfoMapper attacheInfoMapperReader) {
         this.attacheInfoMapperReader = attacheInfoMapperReader;
+    }
+
+    @Autowired
+    public void setCommentRecordMapperReader(CommentRecordMapper commentRecordMapperReader) {
+        this.commentRecordMapperReader = commentRecordMapperReader;
     }
 
     // 用户发布动态附件（包括图片和语音）
@@ -1614,6 +1621,171 @@ public class DynamicController {
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束置顶/取消置顶动态内容");
+            }
+        }
+    }
+
+    //查询动态内容与当前用户的关系接口
+    @GetMapping("/{id}/info.do")
+    public CommonResult<DynamicInfoVO> getDynamicInfoById(@PathVariable(name = "id") Long userId,
+                                                          @RequestParam(name = "dynamicInfoId") Long dynamicInfoId,
+                                                          @RequestParam(name = "ip", required = false) String clientIP,
+                                                          @RequestParam(name = "longitude", required = false) Double longitude,
+                                                          @RequestParam(name = "latitude", required = false) Double latitude) {
+        try {
+            if (log.isDebugEnabled()) {
+                log.debug("开始查询动态内容与当前用户的关系");
+            }
+            String longitudeString = null;
+            if (!Objects.isNull(longitude)) {
+                longitudeString = Double.toString(longitude);
+            }
+            String latitudeString = null;
+            if (!Objects.isNull(latitude)) {
+                latitudeString = Double.toString(latitude);
+            }
+            if (StrUtil.isAllEmpty(clientIP, longitudeString, latitudeString)) {
+                return CommonResult.validateFailed("参数校验不通过，客户端IP，定位地址经纬度不能同时为空。");
+            }
+            if (Objects.isNull(longitude) && Objects.isNull(latitude)) {
+                if (!Objects.isNull(clientIP)) {
+                    LocationDTO locationDTO = this.dynamicService.getLocationByAliyunIP(clientIP);
+                    longitude = locationDTO.getLongitude(); //经度
+                    latitude = locationDTO.getLatitude();   //纬度
+                }
+            }
+            User user = this.userMapperReader.selectByPrimaryKey(userId);
+            if (Objects.isNull(user)) {
+                return CommonResult.validateFailed("参数校验不通过，当前用户信息不存在");
+            }
+            DynamicInfo dynamicInfo = this.dynamicInfoMapperReader.selectByPrimaryKey(dynamicInfoId);
+            if (Objects.isNull(dynamicInfo) || Objects.equals(DynamicInfoStatusEnum.HIDE.getStatus(), dynamicInfo.getDynamicStatus())) {
+                return CommonResult.validateFailed("参数校验不通过，当前动态内容信息不存在");
+            }
+            //动态内容发布者id
+            Long dynamicInfoUserId = dynamicInfo.getUserId();
+            User dynamicInfoUser = this.userMapperReader.selectByPrimaryKey(dynamicInfoUserId);
+            if (Objects.isNull(dynamicInfoUser) || Objects.equals(UserStatusEnum.Abnormal.getStatus(), dynamicInfoUser.getStatus())) {
+                return CommonResult.validateFailed("参数校验不通过，当前动态内容用户信息不存在");
+            }
+            //动态id
+            Long dynamicId = dynamicInfo.getDynamicId();
+            Dynamic dynamic = this.dynamicMapperReader.selectByPrimaryKey(dynamicId);
+            if (Objects.isNull(dynamic)) {
+                return CommonResult.validateFailed("参数校验不通过，当前动态信息不存在");
+            }
+            DynamicInfoVO dynamicInfoVO = DynamicInfoVO.builder().build();
+            BeanUtils.copyProperties(dynamicInfo, dynamicInfoVO);
+            dynamicInfoVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()
+                    + StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
+                    + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                    + dynamicInfoUserId
+                    + "/"
+                    + dynamicInfoUser.getHeadIcon());
+            dynamicInfoVO.setPublishTime(DateUtil.fomateDate(dynamicInfo.getCreateTime(), DateUtil.sdfTimeFmt));
+            // 查询用户对该条动态是否申请加微信
+            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
+            applicationRecordExample.setDistinct(true);
+            applicationRecordExample.setOrderByClause("create_time DESC, id DESC");
+            applicationRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId);
+            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
+            dynamicInfoVO.setApplicationStatus(applicationRecordList != null && !applicationRecordList.isEmpty());
+
+            // 查询用户对该条动态是否点赞
+            LikeRecordExample likeRecordExample = new LikeRecordExample();
+            likeRecordExample.setDistinct(true);
+            likeRecordExample.setOrderByClause("create_time DESC, id DESC");
+            likeRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId);
+            List<LikeRecord> likeRecordList = this.likeRecordMapperReader.selectByExample(likeRecordExample);
+            if (!Objects.isNull(likeRecordList) && !likeRecordList.isEmpty()) {
+                LikeRecord likeRecord = likeRecordList.get(0);
+                if (!Objects.isNull(likeRecord)) {
+                    if (likeRecord.getStatus().equals(LikeStatusEnum.YES.getStatus())) {
+                        dynamicInfoVO.setLikeStatus(true);
+                    }
+                    if (likeRecord.getStatus().equals(LikeStatusEnum.NO.getStatus())) {
+                        dynamicInfoVO.setLikeStatus(false);
+                    }
+                }
+            } else {
+                dynamicInfoVO.setLikeStatus(false);
+            }
+            if (PublicStatusEnum.NOPublic.getType().equals(dynamicInfo.getPublicStatus())) {
+                dynamicInfoVO.setAddress(null);
+            }
+            if (PublicStatusEnum.Public.getType().equals(dynamicInfo.getPublicStatus())) {
+                StringBuilder stringBuilder = new StringBuilder();
+                if (!"省".equals(dynamicInfo.getProvince())) {
+                    stringBuilder.append(dynamicInfo.getProvince());
+                }
+                if (!Objects.isNull(dynamicInfo.getCity())) {
+                    stringBuilder.append(dynamicInfo.getCity());
+                }
+                if (!Objects.isNull(dynamicInfo.getDistrict())) {
+                    stringBuilder.append(dynamicInfo.getDistrict());
+                }
+                dynamicInfoVO.setAddress(stringBuilder.toString());
+            }
+            AttacheInfo attacheInfo = this.attacheInfoMapperReader.selectByDynamicInfoId(dynamicInfoId);
+            if (!Objects.isNull(attacheInfo)) {
+                String[] fileNameList01 = StrUtil.split(attacheInfo.getFileName(), "||");
+                List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
+                List<String> fileNameList03 = new ArrayList<>();
+                for (String fileName : fileNameList02) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                    if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), attacheInfo.getDataType())) {
+                        stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+                    }
+                    if (Objects.equals(AttacheInfoDataTypeEnum.Audio.getCodeStr(), attacheInfo.getDataType())) {
+                        stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
+                    }
+                    stringBuilder.append(fileName);
+                    fileNameList03.add(stringBuilder.toString());
+                    dynamicInfoVO.setFileName(fileNameList03);
+                }
+                if (Objects.equals(AttacheInfoDataTypeEnum.Image.getCodeStr(), attacheInfo.getDataType())) {
+                    dynamicInfoVO.setAttacheFileDataType(AttacheInfoDataTypeEnum.Image.getCodeStr());
+                }
+                if (Objects.equals(AttacheInfoDataTypeEnum.Audio.getCodeStr(), attacheInfo.getDataType())) {
+                    dynamicInfoVO.setAttacheFileDataType(AttacheInfoDataTypeEnum.Audio.getCodeStr());
+                }
+            } else {
+                dynamicInfoVO.setAttacheFileDataType(AttacheInfoDataTypeEnum.Text.getCodeStr());
+            }
+            if (Objects.equals(IsAnonymousEnum.No.getType(), dynamicInfo.getIsAnonymous())) {
+                dynamicInfoVO.setAnonymous(false);
+            }
+            if (Objects.equals(IsAnonymousEnum.Yes.getType(), dynamicInfo.getIsAnonymous())) {
+                dynamicInfoVO.setAnonymous(true);
+                dynamicInfoVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()
+                        + StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
+                        + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon() + "default.png"));
+                dynamicInfoVO.setNickName("匿名用户");
+            }
+            if (Objects.equals(IsTopicEnum.No.getType(), dynamicInfo.getIsTopic())) {
+                dynamicInfoVO.setTopic(false);
+            }
+            if (Objects.equals(IsTopicEnum.Yes.getType(), dynamicInfo.getIsTopic())) {
+                dynamicInfoVO.setTopic(true);
+                dynamicInfoVO.setTopicTitle("#" + dynamicInfo.getTopicTitle());
+            }
+            dynamicInfoVO.setComments(dynamicInfo.getComments());
+            CommentRecordExample commentRecordExample = new CommentRecordExample();
+            commentRecordExample.createCriteria().andDynamicInfoIdEqualTo(dynamicInfoId).andBeUserIdEqualTo(dynamicInfoUserId).andUserIdEqualTo(userId);
+            List<CommentRecord> commentRecordList = this.commentRecordMapperReader.selectByExample(commentRecordExample);
+            dynamicInfoVO.setIsComment(!Objects.isNull(commentRecordList) && !commentRecordList.isEmpty());
+            if (!Objects.isNull(dynamicInfo.getLongitude()) && !Objects.isNull(dynamicInfo.getLatitude())) {
+                dynamicInfoVO.setDistance(DistanceUtil.getDistance(dynamicInfo.getLongitude(), dynamicInfo.getLatitude(), longitude, latitude));
+            }
+            dynamicInfoVO.setDynamicInfoId(dynamicInfoId);
+            return CommonResult.success(dynamicInfoVO);
+        } catch (Exception e) {
+            log.error("查询动态内容与当前用户的关系出现错误", e);
+            return CommonResult.failed("查询动态内容与当前用户的关系失败");
+        } finally {
+            if (log.isDebugEnabled()) {
+                log.debug("结束查询动态内容与当前用户的关系");
             }
         }
     }

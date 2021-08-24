@@ -204,6 +204,7 @@ public class MessageController {
      * @apiSuccess (200) {Object[]} [list] 点赞消息数据
      * @apiSuccess (200){Number} [userId] 点赞者用户id
      * @apiSuccess (200){Number} [messageId] 点赞消息记录id
+     * @apiSuccess (200){Number} [dynamicInfoId] 点赞的动态内容id
      * @apiSuccess (200) {String} [head] 点赞者用户头像
      * @apiSuccess (200) {String} [content] 点赞者发送消息内容
      * @apiSuccess (200) {String} [attacheType] 点赞的动态内容类型，0->图片，1->语音
@@ -220,6 +221,7 @@ public class MessageController {
      * "list":[
      * {
      * "messageId":90,
+     * "dynamicInfoId":87,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -230,6 +232,7 @@ public class MessageController {
      * },
      * {
      * "messageId":89,
+     * "dynamicInfoId":187,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -240,6 +243,7 @@ public class MessageController {
      * },
      * {
      * "messageId":88,
+     * "dynamicInfoId":37,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -251,6 +255,7 @@ public class MessageController {
      * },
      * {
      * "messageId":87,
+     * "dynamicInfoId":57,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -263,6 +268,7 @@ public class MessageController {
      * },
      * {
      * "messageId":86,
+     * "dynamicInfoId":287,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -275,6 +281,7 @@ public class MessageController {
      * },
      * {
      * "messageId":85,
+     * "dynamicInfoId":88,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态差点就掉下去了！",
@@ -285,6 +292,7 @@ public class MessageController {
      * },
      * {
      * "messageId":84,
+     * "dynamicInfoId":37,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -295,6 +303,7 @@ public class MessageController {
      * },
      * {
      * "messageId":83,
+     * "dynamicInfoId":47,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -305,6 +314,7 @@ public class MessageController {
      * },
      * {
      * "messageId":82,
+     * "dynamicInfoId":67,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -316,6 +326,7 @@ public class MessageController {
      * },
      * {
      * "messageId":81,
+     * "dynamicInfoId":77,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -328,6 +339,7 @@ public class MessageController {
      * },
      * {
      * "messageId":80,
+     * "dynamicInfoId":67,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -340,6 +352,7 @@ public class MessageController {
      * },
      * {
      * "messageId":79,
+     * "dynamicInfoId":57,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态这组我比较喜欢",
@@ -350,6 +363,7 @@ public class MessageController {
      * },
      * {
      * "messageId":78,
+     * "dynamicInfoId":17,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
@@ -360,6 +374,7 @@ public class MessageController {
      * },
      * {
      * "messageId":77,
+     * "dynamicInfoId":87,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
@@ -370,6 +385,7 @@ public class MessageController {
      * },
      * {
      * "messageId":76,
+     * "dynamicInfoId":87,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
@@ -381,6 +397,7 @@ public class MessageController {
      * },
      * {
      * "messageId":75,
+     * "dynamicInfoId":87,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
@@ -393,6 +410,7 @@ public class MessageController {
      * },
      * {
      * "messageId":74,
+     * "dynamicInfoId":87,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
@@ -405,6 +423,7 @@ public class MessageController {
      * },
      * {
      * "messageId":73,
+     * "dynamicInfoId":87,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态51出门熏人",
@@ -415,6 +434,7 @@ public class MessageController {
      * },
      * {
      * "messageId":72,
+     * "dynamicInfoId":87,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态摩天轮旋转",
@@ -425,6 +445,7 @@ public class MessageController {
      * },
      * {
      * "messageId":71,
+     * "dynamicInfoId":87,
      * "userId":70,
      * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
      * "content":"阿萌赞了你的动态摩天轮旋转",
