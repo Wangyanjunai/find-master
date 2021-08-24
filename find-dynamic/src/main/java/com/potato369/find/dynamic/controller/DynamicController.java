@@ -1559,9 +1559,10 @@ public class DynamicController {
         }
     }
 
-    // 用户置顶动态内容
+    // 用户置顶/取消置顶动态内容
     @PutMapping(value = "/{id}/topping.do")
     public CommonResult<Map<String, Object>> topping(@PathVariable(name = "id") Long userId,
+                                                     @RequestParam(name = "type") String type,
                                                      @RequestParam(name = "dynamicInfoId") Long dynamicInfoId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         OperateRecord operateRecord = new OperateRecord();
@@ -1571,7 +1572,7 @@ public class DynamicController {
         data.put("TOPPING", "ERROR");
         try {
             if (log.isDebugEnabled()) {
-                log.debug("开始置顶动态内容");
+                log.debug("开始置顶/取消置顶动态内容");
             }
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
             if (Objects.isNull(dynamicInfo)) {
@@ -1579,29 +1580,46 @@ public class DynamicController {
             }
             long dynamicInfoUserId = dynamicInfo.getUserId();
             String message;
+            String message1 = null;
             if (Objects.equals(userId, dynamicInfoUserId)) {
-                dynamicInfo.setIsTop(DynamicInfoToppingEnum.YES.getStatus());
+                //置顶
+                int count = this.dynamicInfoMapperReader.selectMyIsTopCount(userId);
+                if (Objects.equals(type, DynamicInfoToppingEnum.YES.getStatus())) {
+                    if (count >= 1) {
+                        return CommonResult.success(data, "置顶动态内容出错，只能置顶一条动态。");
+                    }
+                    dynamicInfo.setIsTop(DynamicInfoToppingEnum.YES.getStatus());
+                    message1 = "置顶";
+                }
+                //取消置顶
+                if (Objects.equals(type, DynamicInfoToppingEnum.NO.getStatus())) {
+                    if (count < 1) {
+                        return CommonResult.success(data, "置顶动态内容出错，没有置顶一条动态。");
+                    }
+                    dynamicInfo.setIsTop(DynamicInfoToppingEnum.NO.getStatus());
+                    message1 = "取消置顶";
+                }
                 dynamicInfo.setUpdateTime(new Date());
                 int rowResult = this.dynamicInfoService.updateDynamicInfoByPrimaryKey(dynamicInfo);
                 if (rowResult > 0) {
-                    message = "置顶动态内容成功。";
+                    message = message1 + "动态内容成功。";
                     data.put("TOPPING", "OK");
                 } else {
-                    message = "置顶动态内容失败。";
+                    message = message1 + "动态内容失败。";
                 }
             } else {
-                message = "置顶动态内容失败。";
+                message = "置顶/取消置顶动态内容失败。";
             }
             operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
             this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, message);
         } catch (Exception e) {
-            log.error("置顶动态内容出现错误", e);
+            log.error("置顶/取消置顶动态内容出现错误", e);
             this.operateRecordMapperWriter.insertSelective(operateRecord);
-            return CommonResult.failed("置顶动态内容出现错误。");
+            return CommonResult.failed("置顶/取消置顶动态内容出现错误。");
         } finally {
             if (log.isDebugEnabled()) {
-                log.debug("结束置顶动态内容");
+                log.debug("结束置顶/取消置顶动态内容");
             }
         }
     }

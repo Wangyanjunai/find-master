@@ -43,6 +43,8 @@ public interface DynamicInfoMapper {
 
     List<HotTopic> findHotByDynamicInfoCount();
 
+    int selectMyIsTopCount(@Param("userId") Long userId);
+
     int updateByExampleSelective(@Param("record") DynamicInfo record, @Param("example") DynamicInfoExample example);
 
     int updateByExampleWithBLOBs(@Param("record") DynamicInfo record, @Param("example") DynamicInfoExample example);

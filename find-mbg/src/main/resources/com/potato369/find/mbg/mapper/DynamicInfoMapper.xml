@@ -564,6 +564,14 @@
         LIMIT 4
     </select>
 
+    <select id="selectMyIsTopCount" resultType="java.lang.Integer" parameterType="java.lang.Long">
+        SELECT count(1)
+        FROM `dynamic_info`
+        WHERE `user_id` = #{userId, jdbcType=BIGINT}
+          AND `dynamic_status` <![CDATA[ !=]]> '1'
+          AND `is_top` <![CDATA[ =]]> '1'
+    </select>
+
     <select id="selectMyDynamicInfoData" parameterType="java.lang.Long" resultMap="BaseResultMap2">
         SELECT ur.`id`                    AS user_id,
                ur.`head_icon`,
@@ -593,7 +601,7 @@
         WHERE di.`user_id` = ur.`id`
           AND di.`dynamic_status`<![CDATA[ !=]]> '1'
           AND ur.`id` = #{userId, jdbcType=BIGINT}
-        ORDER BY di.`is_top` DESC, di.`update_time` DESC, di.`dynamic_status` DESC, di.`create_time` DESC
+        ORDER BY di.`is_top` DESC, di.`dynamic_status` DESC, di.`create_time` DESC
     </select>
 
     <select id="selectByTopicTitle" parameterType="java.lang.String" resultMap="BaseResultMap2">

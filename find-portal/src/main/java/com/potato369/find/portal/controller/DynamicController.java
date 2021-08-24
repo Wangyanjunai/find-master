@@ -4315,10 +4315,11 @@ public class DynamicController {
      * @apiGroup 动态模块API
      * @apiName 置顶动态内容
      * @apiParam (接口请求参数) {Number} id 用户id
+     * @apiParam (接口请求参数) {String="0", "1"} type 类型，0->取消置顶，1->置顶
      * @apiParam (接口请求参数) {Number} dynamicInfoId 动态内容id
      * @apiParamExample 请求示例01（是自己发布的动态内容， 置顶成功）
      * HTTP/1.1 OK
-     * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/138/topping?dynamicInfoId=685
+     * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/138/topping?type="1"&dynamicInfoId=685
      * @apiSuccess (200) {Number} code 信息码
      * @apiSuccess (200) {Number} status 响应状态码
      * @apiSuccess (200) {String} msg 说明
@@ -4335,7 +4336,7 @@ public class DynamicController {
      * }
      * @apiParamExample {json} 请求示例02（非自己发布的动态内容， 置顶失败）
      * HTTP/1.1 OK
-     * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/138/topping?dynamicInfoId=86
+     * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/138/topping?type="1"&dynamicInfoId=86
      * @apiSuccess (200) {Number} status 响应状态码
      * @apiSuccess (200) {Number} code 信息码
      * @apiSuccess (200) {String} msg 说明
@@ -4380,7 +4381,8 @@ public class DynamicController {
     // 用户置顶动态内容
     @PutMapping(value = "/{id}/topping")
     public CommonResult<Map<String, Object>> topping(@PathVariable(name = "id") Long userId,
+                                                     @RequestParam(name = "type") String type,
                                                      @RequestParam(name = "dynamicInfoId") Long dynamicInfoId) {
-        return this.dynamicFeignClient.topping(userId, dynamicInfoId);
+        return this.dynamicFeignClient.topping(userId, type, dynamicInfoId);
     }
 }
