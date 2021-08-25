@@ -1,6 +1,6 @@
 package com.potato369.find.common.utils;
 
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
@@ -9,7 +9,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-@Slf4j
+//@Slf4j
 public class Decode {
     /**
      * 生成秘钥

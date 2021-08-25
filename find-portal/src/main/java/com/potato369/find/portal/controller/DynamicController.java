@@ -4386,7 +4386,7 @@ public class DynamicController {
     }
 
     /**
-     * @api {put} /find/dynamic/{id}/info 查询当前用户与动态内容的关系接口
+     * @api {get} /find/dynamic/{id}/info 查询当前用户与动态内容的关系接口
      * @apiVersion 1.0.0
      * @apiGroup 动态模块API
      * @apiName 查询当前用户与动态内容的关系
@@ -4397,7 +4397,7 @@ public class DynamicController {
      * @apiParam (接口请求参数) {Double} [latitude] 定位（纬度）
      * @apiParamExample {json} 请求示例（客户端ip不为空，定位（经纬度）为空）
      * HTTP/1.1 OK
-     * curl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/144/info?dynamicInfoId=707&ip=183.14.135.139
+     * curl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/144/info?dynamicInfoId=707&ip=183.14.135.139
      * @apiSuccess (200) {Number} status 响应状态码
      * @apiSuccess (200) {Number} code 信息码
      * @apiSuccess (200) {String} msg 说明

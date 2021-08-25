@@ -127,12 +127,9 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(readOnly = true)
     public Comment findById(Long id) {
         CommentExample commentExample = new CommentExample();
-        commentExample
-                .createCriteria()
-                .andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus())
-                .andIdEqualTo(id);
-        List<Comment> comments = this.commentMapperReader.selectByExample(commentExample);
-        if (comments != null && !comments.isEmpty()) {
+        commentExample.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andIdEqualTo(id);
+        List<Comment> comments = this.commentMapperReader.selectByExampleWithBLOBs(commentExample);
+        if (!Objects.isNull(comments) && !comments.isEmpty()) {
             return comments.get(0);
         }
         return null;

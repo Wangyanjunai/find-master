@@ -2450,7 +2450,7 @@ define({ "api": [
     ]
   },
   {
-    "type": "put",
+    "type": "get",
     "url": "/find/dynamic/{id}/info",
     "title": "查询当前用户与动态内容的关系接口",
     "version": "1.0.0",
@@ -2499,7 +2499,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例（客户端ip不为空，定位（经纬度）为空）",
-          "content": "HTTP/1.1 OK\ncurl -v -X PUT http://w168428j19.51mypc.cn/find/dynamic/144/info?dynamicInfoId=707&ip=183.14.135.139",
+          "content": "HTTP/1.1 OK\ncurl -v -X GET http://w168428j19.51mypc.cn/find/dynamic/144/info?dynamicInfoId=707&ip=183.14.135.139",
           "type": "json"
         }
       ]

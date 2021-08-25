@@ -829,18 +829,18 @@ public class DynamicController {
             }
             //点赞者用户信息
             User user = this.userMapperReader.selectByPrimaryKey(userId);
-            if (user == null) {
+            if (Objects.isNull(user)) {
                 return CommonResult.failed(data, ResultCode.LIKES_USER_IS_NOT_EXIST);
             }
             //被点赞的动态内容信息
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
-            if (dynamicInfo == null) {
+            if (Objects.isNull(dynamicInfo) || Objects.equals(DynamicInfoStatusEnum.HIDE.getStatus(), dynamicInfo.getDynamicStatus())) {
                 return CommonResult.failed(data, ResultCode.LIKES_DYNAMIC_INFO_IS_NOT_EXIST);
             }
             //被点赞者用户信息
             Long publishUserId = dynamicInfo.getUserId();
             User publishUser = this.userMapperReader.selectByPrimaryKey(publishUserId);
-            if (publishUser == null) {
+            if (Objects.isNull(publishUser)) {
                 return CommonResult.failed(data, ResultCode.LIKES_USER_IS_NOT_EXIST);
             }
             //点赞记录信息

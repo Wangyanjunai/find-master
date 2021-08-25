@@ -80,7 +80,7 @@ public class LikeRecordServiceImpl implements LikeRecordService {
         likeRecordExample.setOrderByClause("create_time DESC, id DESC");
         likeRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId).andTypeEqualTo(type);
         List<LikeRecord> likeRecordList = this.likeRecordMapperReader.selectByExample(likeRecordExample);
-        if (likeRecordList != null && !likeRecordList.isEmpty()) {
+        if (!Objects.isNull(likeRecordList) && !likeRecordList.isEmpty()) {
             return likeRecordList.get(0);
         }
         return null;
@@ -121,37 +121,35 @@ public class LikeRecordServiceImpl implements LikeRecordService {
     @Override
     @Transactional
     public int createByUserIdAndDynamicInfoId(String content, Long userId, DynamicInfo dynamicInfo, LikeRecord likeRecord) {
-        int a = 0, b = 0, c = 0;
-        if (dynamicInfo != null) {
-            int likes = dynamicInfo.getLikes();
-            dynamicInfo.setLikes(likes + 1);
-            dynamicInfo.setUpdateTime(new Date());
-            a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
-            if (likeRecord == null) {
-                likeRecord = new LikeRecord();
-                likeRecord.setDynamicInfoId(dynamicInfo.getId());
-                likeRecord.setUserId(userId);
-                likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
-                likeRecord.setType(LikeRecordTypeEnum.Dynamic.getType());
-                b = this.likeRecordMapperWriter.insertSelective(likeRecord);
-            } else {
-                likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
-                likeRecord.setUpdateTime(new Date());
-                b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
-            }
-            //消息记录
-            Message messageRecord = new Message();
-            messageRecord.setContent(content);//消息内容
-            messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
-            messageRecord.setRecipientUserId(dynamicInfo.getUserId());//接收者用户id
-            messageRecord.setSendUserId(userId);//发送者用户id
-            messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//未读
-            messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型，点赞->likes
-            messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
-            messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
-            messageRecord.setReserveColumn04(String.valueOf(likeRecord.getId()));//点赞记录id
-            c = this.messageMapperWriter.insertSelective(messageRecord);
+        int likes = dynamicInfo.getLikes();
+        dynamicInfo.setLikes(likes + 1);
+        dynamicInfo.setUpdateTime(new Date());
+        int a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
+        int b;
+        if (Objects.isNull(likeRecord)) {
+            likeRecord = new LikeRecord();
+            likeRecord.setDynamicInfoId(dynamicInfo.getId());
+            likeRecord.setUserId(userId);
+            likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
+            likeRecord.setType(LikeRecordTypeEnum.Dynamic.getType());
+            b = this.likeRecordMapperWriter.insertSelective(likeRecord);
+        } else {
+            likeRecord.setStatus(LikeStatusEnum.YES.getStatus());
+            likeRecord.setUpdateTime(new Date());
+            b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
         }
+        //消息记录
+        Message messageRecord = new Message();
+        messageRecord.setContent(content);//消息内容
+        messageRecord.setSendMode(MessageSendModeEnum.PASSIVE.getStatus());//发送方式
+        messageRecord.setRecipientUserId(dynamicInfo.getUserId());//接收者用户id
+        messageRecord.setSendUserId(userId);//发送者用户id
+        messageRecord.setStatus(MessageStatusEnum.UNREAD.getStatus());//未读
+        messageRecord.setReserveColumn01(MessageTypeEnum.Likes.getMessage());//消息类型，点赞->likes
+        messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
+        messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
+        messageRecord.setReserveColumn04(String.valueOf(likeRecord.getId()));//点赞记录id
+        int c = this.messageMapperWriter.insertSelective(messageRecord);
         return a + b + c;
     }
 

@@ -32,7 +32,7 @@ public class MessageController {
      * @param pageNum  当前页码，默认：1
      * @param pageSize 每页数量，默认：20
      */
-    @ApiOperation(value = "获取最新点赞，评论和申请加微信消息记录", notes = "获取最新点赞，评论和申请加微信消息记录")
+    @ApiOperation(value = "获取最新（动态内容或者评论）点赞，评论和申请加微信消息记录", notes = "获取最新（动态内容或者评论）点赞，评论和申请加微信消息记录")
     @GetMapping(value = "/{id}/all.do")
     public CommonResult<MessageVO> all(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
@@ -48,7 +48,7 @@ public class MessageController {
      * @param pageNum  当前页码，默认：1
      * @param pageSize 每页数量，默认：20
      */
-    @ApiOperation(value = "被点赞的动态内容消息记录", notes = "被点赞的动态内容消息记录")
+    @ApiOperation(value = "被点赞的动态、评论内容消息记录", notes = "被点赞的动态、评论内容消息记录")
     @GetMapping(value = "/{id}/likes.do")
     public CommonResult<MessageVO2> likes(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
