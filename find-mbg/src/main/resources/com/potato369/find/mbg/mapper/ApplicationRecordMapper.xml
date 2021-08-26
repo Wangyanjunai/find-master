@@ -101,9 +101,7 @@
         FROM `application_record`
         WHERE `user_id` = #{userId,jdbcType=BIGINT}
           AND `create_time` <![CDATA[ >=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
-          AND `create_time` <![CDATA[ <=]]>
-              DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY),
-                       INTERVAL -1 SECOND)
+          AND `create_time` <![CDATA[ <=]]> DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY), INTERVAL -1 SECOND)
     </select>
     <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT DISTINCTROW a.*
@@ -206,9 +204,7 @@
         WHERE `user_id` = #{applicantUserId, jdbcType=BIGINT}
           AND `reserve_column01` = #{applicantsUserId, jdbcType=BIGINT}
           AND `create_time` <![CDATA[>=]]> STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s')
-          AND `create_time` <![CDATA[<=]]>
-              DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY),
-                       INTERVAL - 1 SECOND)
+          AND `create_time` <![CDATA[<=]]> DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY), INTERVAL - 1 SECOND)
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update application_record

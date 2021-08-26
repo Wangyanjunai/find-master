@@ -834,7 +834,7 @@ public class DynamicController {
             }
             //被点赞的动态内容信息
             DynamicInfo dynamicInfo = this.dynamicInfoService.findDynamicInfoByPrimaryKey(dynamicInfoId);
-            if (Objects.isNull(dynamicInfo) || Objects.equals(DynamicInfoStatusEnum.HIDE.getStatus(), dynamicInfo.getDynamicStatus())) {
+            if (Objects.isNull(dynamicInfo)) {
                 return CommonResult.failed(data, ResultCode.LIKES_DYNAMIC_INFO_IS_NOT_EXIST);
             }
             //被点赞者用户信息
@@ -935,13 +935,13 @@ public class DynamicController {
             if (Objects.isNull(applicantsUser)) {
                 return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
             }
-            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
-            applicationRecordExample.createCriteria().andUserIdEqualTo(applicantUserId).andReserveColumn01EqualTo(String.valueOf(applicantsUserId));
-            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
-            if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
-                return CommonResult.failed(data, ResultCode.APPLICATIONS_USER_IS_VALID);
-            }
-            // 获取申请加微信者申请加被申请加微信者微信记录条数，查询当天用户申请加微信次数
+//            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
+//            applicationRecordExample.createCriteria().andUserIdEqualTo(applicantUserId).andReserveColumn01EqualTo(String.valueOf(applicantsUserId));
+//            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
+//            if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
+//                return CommonResult.failed(data, ResultCode.APPLICATIONS_USER_IS_VALID);
+//            }
+            // 获取申请加微信者申请加被申请加微信者微信记录条数，查询当天该用户申请加被申请者微信次数
             int count = this.applicationRecordMapperReader.countByUserId(applicantUserId, applicantsUserId);
             if (count > 0) {
                 // 如果次数大于0，则判断被申请加微信者未回复申请加微信者发送的消息，则不允许继续申请加被申请人微信
@@ -979,13 +979,15 @@ public class DynamicController {
             applicationRecord.setDynamicInfoId(dynamicInfoId);//被申请加微信者动态内容信息id
             applicationRecord.setUserId(applicantUserId);//申请加微信者用户id
             applicationRecord.setReserveColumn01(String.valueOf(applicantsUserId));//被申请加微信者用户id
+            if (StrUtil.isNotEmpty(message)) {
+                //校验发布的内容是否包含敏感词汇
+                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(message);
+                if (!Objects.isNull(sensitiveWords)) {
+                    return CommonResult.validateFailed("发送消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
+                }
+            }
             if (StrUtil.isEmpty(message)) {
                 message = "申请加您的微信，麻烦通过一下，谢谢！";
-            }
-            //校验发布的内容是否包含敏感词汇
-            SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(message);
-            if (!Objects.isNull(sensitiveWords)) {
-                return CommonResult.validateFailed("发送消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
             }
             int rowResult = this.applicationRecordService.saveApplicationRecord(dynamicInfo, applicationRecord, message);
             String msg;
@@ -999,7 +1001,7 @@ public class DynamicController {
                 pushBean.setTitle(title);
                 pushBean.setExtras(extras);
                 String regId = applicantsUser.getReserveColumn03();
-                if (!Objects.isNull(regId)) {
+                if (!Objects.isNull(regId) && !Objects.equals(applicantsUserId, applicantUserId)) {
                     this.jiGuangPushService.pushAndroid(pushBean, regId);
                 }
             } else {
@@ -1012,7 +1014,7 @@ public class DynamicController {
         } catch (Exception e) {
             log.error("申请加微信出现错误", e);
             this.operateRecordMapperWriter.insertSelective(operateRecord);
-            return CommonResult.failed("申请加微信出现错误。");
+            return CommonResult.failed("申请加微信失败。");
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("结束申请加微信");
@@ -1400,17 +1402,22 @@ public class DynamicController {
             if (Objects.isNull(applicantsUser)) {
                 return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
             }
-            //校验发布的内容是否包含敏感词汇
-            SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(message);
-            if (!Objects.isNull(sensitiveWords)) {
-                return CommonResult.validateFailed("发送消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
+            if (StrUtil.isNotEmpty(message)) {
+                //校验发布的内容是否包含敏感词汇
+                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(message);
+                if (!Objects.isNull(sensitiveWords)) {
+                    return CommonResult.validateFailed("发送消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
+                }
             }
-            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
-            applicationRecordExample.createCriteria().andUserIdEqualTo(applicantUserId).andReserveColumn01EqualTo(String.valueOf(applicantsUserId));
-            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
-            if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
-                return CommonResult.failed(data, ResultCode.APPLICATIONS_USER_IS_VALID);
+            if (StrUtil.isEmpty(message)) {
+                message = "申请加您的微信，麻烦通过一下，谢谢！";
             }
+//            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
+//            applicationRecordExample.createCriteria().andUserIdEqualTo(applicantUserId).andReserveColumn01EqualTo(String.valueOf(applicantsUserId));
+//            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
+//            if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
+//                return CommonResult.failed(data, ResultCode.APPLICATIONS_USER_IS_VALID);
+//            }
             // 获取申请加微信者申请加被申请加微信者微信记录条数，查询当天用户申请加微信次数
             int count = this.applicationRecordMapperReader.countByUserId(applicantUserId, applicantsUserId);
             if (count > 0) {
@@ -1461,9 +1468,6 @@ public class DynamicController {
             }
             applicationRecord.setUserId(applicantUserId);//申请加微信者用户id
             applicationRecord.setReserveColumn01(String.valueOf(applicantsUserId));//被申请加微信者用户id
-            if (StrUtil.isEmpty(message)) {
-                message = "申请加您的微信，麻烦通过一下，谢谢！";
-            }
             int rowResult = this.applicationRecordService.saveApplicationRecord(dynamicInfo, applicationRecord, message);
             String msg;
             if (rowResult > 0) {
@@ -1476,7 +1480,7 @@ public class DynamicController {
                 pushBean.setTitle(title);
                 pushBean.setExtras(extras);
                 String regId = applicantsUser.getReserveColumn03();
-                if (!Objects.isNull(regId)) {
+                if (!Objects.isNull(regId) && !Objects.equals(applicantsUserId, applicantUserId)) {
                     this.jiGuangPushService.pushAndroid(pushBean, regId);
                 }
             } else {

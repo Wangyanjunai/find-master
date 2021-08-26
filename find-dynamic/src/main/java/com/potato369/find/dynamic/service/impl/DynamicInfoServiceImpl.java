@@ -88,7 +88,6 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
      * @return 动态内容
      */
     @Override
-    @Transactional(readOnly = true)
     public DynamicInfo findDynamicInfoByPrimaryKey(Long id) {
         DynamicInfo dynamicInfo = this.dynamicInfoMapperReader.selectByPrimaryKey(id);
         if (!Objects.isNull(dynamicInfo) && !Objects.equals(DynamicInfoStatusEnum.HIDE.getStatus(), dynamicInfo.getDynamicStatus())) {
