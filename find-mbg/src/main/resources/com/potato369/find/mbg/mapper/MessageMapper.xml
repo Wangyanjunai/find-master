@@ -377,7 +377,7 @@
                message.`content`
         FROM `message` message
         WHERE message.`recipient_user_id` = #{userId, jdbcType=BIGINT}
-          AND message.`reserve_column01` = 'likes'
+          AND message.`reserve_column01` IN( 'likes', 'comments')
           AND message.`reserve_column03` = '0'
         ORDER BY message.`create_time` DESC
     </select>

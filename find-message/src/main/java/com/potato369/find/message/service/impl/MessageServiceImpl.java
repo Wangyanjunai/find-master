@@ -159,7 +159,7 @@ public class MessageServiceImpl implements MessageService {
         MessageVO2 messageVO2 = MessageVO2.builder().build();
         MessageExample messageExample = new MessageExample();
         messageExample.setOrderByClause("create_time DESC");
-        messageExample.createCriteria().andRecipientUserIdEqualTo(userId).andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage());
+        messageExample.createCriteria().andRecipientUserIdEqualTo(userId).andReserveColumn01In(Arrays.asList(MessageTypeEnum.Likes.getMessage(), MessageTypeEnum.Comments.getMessage()));
         final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectByExampleWithBLOBs(messageExample));
         List<LikesInfoVO> likesInfoVOs = new ArrayList<>();
         List<Message> likesMessageRecordList = new ArrayList<>();
@@ -271,7 +271,7 @@ public class MessageServiceImpl implements MessageService {
     public MessageVO selectApplicationsMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId));
-        messageVO.setCommentsMessageVO(this.selectAllCommentsMessage(userId));
+//        messageVO.setCommentsMessageVO(this.selectAllCommentsMessage(userId));
         List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByUserId(userId);
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         List<MessageInfoVO> messageInfoVOs2 = new ArrayList<>();

@@ -26,9 +26,9 @@ public class MessageVO {
     /**
      * comments:评论消息数据
      */
-    @JSONField(name = "comments")
-    @JsonProperty(value = "comments")
-    private CommentsMessageVO commentsMessageVO;
+//    @JSONField(name = "comments")
+//    @JsonProperty(value = "comments")
+//    private CommentsMessageVO commentsMessageVO;
 
     /**
      * totalCount:未读申请加微信消息总条数
