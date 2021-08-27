@@ -21,5 +21,5 @@ public class CommentsMessageVO {
     //未读评论消息总条数
     @JSONField(name = "count2")
     @JsonProperty(value = "count2")
-    private Long count;
+    private Integer count;
 }

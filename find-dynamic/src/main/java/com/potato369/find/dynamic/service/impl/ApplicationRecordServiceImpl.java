@@ -84,7 +84,10 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
         if (StrUtil.isNotEmpty(message) && !Objects.isNull(dynamicInfo) && !Objects.isNull(applicationRecord)) {
             Long sendUserId = applicationRecord.getUserId();//申请加微信者用户id
             Long recipientUserId = dynamicInfo.getUserId();//被申请加微信者用户id
-
+            dynamicInfo.setApplications(dynamicInfo.getApplications() + 1);//动态内容信息申请加微信数量+1
+            dynamicInfo.setUpdateTime(new Date());//动态内容信息更新时间
+            a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
+            b = this.applicationRecordMapperWriter.insertSelective(applicationRecord);
             Message messageRecord = new Message();//消息记录
             messageRecord.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());//消息发送方式，用户主动
             messageRecord.setSendUserId(sendUserId);//消息发送者用户id
@@ -94,12 +97,8 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
             messageRecord.setReserveColumn01(MessageTypeEnum.Applications.getMessage());//消息类型，申请加微信
             messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//消息发送还是回复类型
             messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//消息是否删除
-
-            dynamicInfo.setApplications(dynamicInfo.getApplications() + 1);//动态内容信息申请加微信数量+1
-            dynamicInfo.setUpdateTime(new Date());//动态内容信息更新时间
-            a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
-            b = this.messageMapperWriter.insertSelective(messageRecord);
-            c = this.applicationRecordMapperWriter.insertSelective(applicationRecord);
+            messageRecord.setReserveColumn04(String.valueOf(applicationRecord.getUserId()));//申请加微信记录id
+            c = this.messageMapperWriter.insertSelective(messageRecord);
         }
         return a + b + c;
     }

@@ -194,8 +194,8 @@
                user.`id`,
                user.`nick_name`,
                user.`head_icon`,
-               dynamic_info.`id`          AS `dynamic_info_id`,
-               attache_info.`data_type`   AS `attache_type`,
+               dynamic_info.`id`        AS `dynamic_info_id`,
+               attache_info.`data_type` AS `attache_type`,
                attache_info.`file_name`
         FROM `like_record` AS like_record,
              `message` AS message,
@@ -246,7 +246,7 @@
                  FROM `message`
                  WHERE `send_user_id` = #{sendUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
-                   AND `reserve_column01` <![CDATA[ !=]]> 'likes'
+                   AND `reserve_column01` NOT IN ('likes', 'comments')
                    AND `reserve_column03` = '0'
                  UNION ALL
                  SELECT `id`,
@@ -259,7 +259,7 @@
                  FROM `message`
                  WHERE `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
-                   AND `reserve_column01` <![CDATA[ !=]]> 'likes'
+                   AND `reserve_column01` NOT IN ('likes', 'comments')
                    AND `reserve_column03` = '0'
              ) AS a
         GROUP BY a.`send_user_id`, a.`create_time`, a.`id`
@@ -271,7 +271,7 @@
                 from `message`
                 where `send_user_id` = #{sendUserId, jdbcType=BIGINT}
                   and recipient_user_id = #{recipientUserId, jdbcType=BIGINT}
-                  and `reserve_column01` <![CDATA[ !=]]> 'likes'
+                  and `reserve_column01` NOT IN ('likes', 'comments')
                   and `reserve_column03` = '0'
                   and `status` = '0'
                   and `send_user_id` <![CDATA[ !=]]> #{userId, jdbcType=BIGINT}) +
@@ -279,7 +279,7 @@
                 from message
                 where `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
                   and `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
-                  and `reserve_column01` <![CDATA[ !=]]> 'likes'
+                  and `reserve_column01` NOT IN ('likes', 'comments')
                   and `reserve_column03` = '0'
                   and `status` = '0'
                   and `send_user_id` <![CDATA[ !=]]> #{userId, jdbcType=BIGINT}) as count
@@ -375,16 +375,11 @@
                message.`send_mode`,
                message.`status`,
                message.`content`
-        FROM `like_record` like_record,
-             `message` message
-        WHERE like_record.`id` = message.`reserve_column04`
-          AND like_record.`status` = '1'
-          AND message.`recipient_user_id` = #{userId, jdbcType=BIGINT}
+        FROM `message` message
+        WHERE message.`recipient_user_id` = #{userId, jdbcType=BIGINT}
           AND message.`reserve_column01` = 'likes'
-          AND message.reserve_column02 = '0'
           AND message.`reserve_column03` = '0'
-        ORDER BY like_record.`create_time` DESC,
-                 like_record.`update_time` DESC
+        ORDER BY message.`create_time` DESC
     </select>
     <select id="selectAllCommentsMessageRecord" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         SELECT message.`send_user_id`,
@@ -394,10 +389,8 @@
         FROM `message` message
         WHERE message.`recipient_user_id` = #{userId, jdbcType=BIGINT}
           AND message.`reserve_column01` = 'comments'
-          AND message.reserve_column02 = '0'
           AND message.`reserve_column03` = '0'
-        ORDER BY message.`create_time` DESC,
-                 message.`update_time` DESC
+        ORDER BY message.`create_time` DESC
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -666,6 +659,14 @@
         SET `status`      = '1',
             `update_time` = NOW()
         WHERE `reserve_column01` = 'likes'
+          AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
+          AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
+    </update>
+    <update id="updateCommentsMessage" parameterType="java.lang.Long">
+        UPDATE `message`
+        SET `status`      = '1',
+            `update_time` = NOW()
+        WHERE `reserve_column01` = 'comments'
           AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
           AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
     </update>

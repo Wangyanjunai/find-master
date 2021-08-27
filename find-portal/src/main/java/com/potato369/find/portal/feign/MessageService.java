@@ -1,6 +1,7 @@
 package com.potato369.find.portal.feign;
 
 import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.common.vo.CommentsVO2;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.common.vo.MessageVO3;
@@ -24,6 +25,11 @@ public interface MessageService {
                                    @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                    @RequestParam(name = "pageSize", required = false, defaultValue = "20") Integer pageSize);
 
+    @GetMapping(value = "/find/v1/message/{id}/comments.do")
+    CommonResult<CommentsVO2> comments(@PathVariable(name = "id") Long userId,
+                                       @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
+                                       @RequestParam(name = "pageSize", required = false, defaultValue = "20") Integer pageSize);
+
     @GetMapping(value = "/find/v1/message/{id1}/{id2}/messages.do")
     CommonResult<MessageVO3> messages(@PathVariable(name = "id1") Long sendUserId,
                                       @PathVariable(name = "id2") Long recipientUserId,
@@ -46,10 +52,14 @@ public interface MessageService {
     CommonResult<Map<String, Object>> deleteLikes(@PathVariable(name = "id") Long recipientUserId,
                                                   @RequestParam(name = "messageId") Long messageId);
 
+    @DeleteMapping(value = "/find/v1/message/{id}/deleteComments.do")
+    CommonResult<Map<String, Object>> deleteComments(@PathVariable(name = "id") Long recipientUserId,
+                                                     @RequestParam(name = "messageId") Long messageId);
+
     @PutMapping(value = "/find/v1/message/{id}/reply.do")
-    public CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") Long userId,
-                                                   @RequestParam(name = "messageId") Long messageId,
-                                                   @RequestParam(name = "type") String type,
-                                                   @RequestParam(name = "content", required = false) String content,
-                                                   @RequestParam(name = "weChatId", required = false) String weChatId);
+    CommonResult<Map<String, Object>> reply(@PathVariable(name = "id") Long userId,
+                                            @RequestParam(name = "messageId") Long messageId,
+                                            @RequestParam(name = "type") String type,
+                                            @RequestParam(name = "content", required = false) String content,
+                                            @RequestParam(name = "weChatId", required = false) String weChatId);
 }

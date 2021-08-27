@@ -62,6 +62,8 @@ public interface MessageMapper {
 
     int updateLikesMessage(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 
+    int updateCommentsMessage(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
+
     int updateAllByUserId(@Param("recipientUserId") Long recipientUserId);
 
     /**

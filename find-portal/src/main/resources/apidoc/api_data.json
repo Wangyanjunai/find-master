@@ -6230,7 +6230,7 @@
             "type": "String",
             "optional": true,
             "field": "content1",
-            "description": "<p>最新一条未读点赞消息内容</p>"
+            "description": "<p>最新一条点赞消息内容</p>"
           },
           {
             "group": "200",
@@ -6238,6 +6238,27 @@
             "optional": true,
             "field": "count1",
             "description": "<p>未读点赞消息数量</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": true,
+            "field": "comments",
+            "description": "<p>最新评论消息</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "content2",
+            "description": "<p>最新一条评论消息内容</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "count2",
+            "description": "<p>未读评论消息数量</p>"
           },
           {
             "group": "200",
@@ -6292,20 +6313,6 @@
             "group": "200",
             "type": "String",
             "optional": true,
-            "field": "content2",
-            "description": "<p>申请加微信发送消息内容</p>"
-          },
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": true,
-            "field": "count2",
-            "description": "<p>申请加微信未读消息数量</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": true,
             "field": "createTime",
             "description": "<p>消息发送时间</p>"
           },
@@ -6342,7 +6349,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"likes\":{\n\"content1\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"count1\":5\n},\n\"totalCount\":5,\n\"totalPage\":1,\n\"list\":[\n{\n\"messageId\": 7,\n\"userId\":60,\n\"head\":\"http://192.168.31.31:9000/find/img/head/60/01.png\",\n\"nickname\":\"尘埃\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0,\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 2,\n\"userId\":62,\n\"head\":\"http://192.168.31.31:9000/find/img/head/62/02.png\",\n\"nickname\":\"蓝梧桐\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":5,\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0,\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 3,\n\"userId\":61,\n\"head\":\"http://192.168.31.31:9000/find/img/head/61/01.png\",\n\"nickname\":\"长安\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0,\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 4,\n\"userId\":71,\n\"head\":\"http://192.168.31.31:9000/find/img/head/71/07.png\",\n\"nickname\":\"弦雨晴\",\n\"content2\":\"需要加您的微信?\",\n\"count2\":6\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"type\":1,\n\"flag\":0,\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 5,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"nickname\":\"阿萌\",\n\"content2\":\"需要加您的微信?\",\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"count2\":1\n\"type\":1,\n\"flag\":0,\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 86,\n\"userId\": 137,\n\"head\": \"http://192.168.31.31:9000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg\",\n\"nickname\": \"jack\",\n\"content2\": \"已同意添加微信，我的微信号是：\",\n\"createTime\": \"2021年04月22日 16:40:40\",\n\"count2\": 2,\n\"type\": \"1\",\n\"flag\": 1,\n\"weixinId\": \"wxnaza12345681\",\n\"isOrNotApplication\": false\n}\n]\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"likes\": {\n\"content1\": \"尹明艳 点赞您的评论 是的，今天天气很糟糕的。\",\n\"count1\": 0\n},\n\"comments\": {\n\"content2\": \"季婉 评论您的动态 测试一下\",\n\"count2\": 0\n},\n\"totalCount\": 2,\n\"totalPage\": 1,\n\"list\": [\n{\n\"messageId\": 505,\n\"userId\": 140,\n\"head\": \"http://192.168.31.38:9000/find/img/head/140/0c99dc02-188b-426e-a46d-5e951743dedf.jpg\",\n\"nickname\": \"凝噎新紫\",\n\"content2\": \"同意\",\n\"createTime\": \"2021年08月27日 16:28:21\",\n\"count2\": 1,\n\"type\": \"1\",\n\"flag\": 1,\n\"weixinId\": \"11111111111\",\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 498,\n\"userId\": 144,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"content2\": \"申请加您的微信，麻烦通过一下。\",\n\"createTime\": \"2021年08月26日 15:42:32\",\n\"count2\": 1,\n\"type\": \"1\",\n\"flag\": 0,\n\"isOrNotApplication\": false\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -6694,6 +6701,244 @@
     "sampleRequest": [
       {
         "url": "http://w168428j19.51mypc.cn/find/message/{id}/likes"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "/find/message/{id}/comments",
+    "title": "分页获取评论消息列表接口",
+    "version": "1.0.0",
+    "group": "消息模块API",
+    "name": "分页获取评论消息列表",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>消息接收者用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": true,
+            "field": "pageNum",
+            "defaultValue": "1",
+            "description": "<p>当前页码</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": true,
+            "field": "pageSize",
+            "defaultValue": "20",
+            "description": "<p>每页数量</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "curl -v -X GET \"http://w168428j19.51mypc.cn/find/message/138/comments?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>消息数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "totalCount",
+            "description": "<p>评论消息总条数</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "totalPage",
+            "description": "<p>评论消息总页数</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object[]",
+            "optional": true,
+            "field": "list",
+            "description": "<p>评论消息数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "userId",
+            "description": "<p>点赞者用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "messageId",
+            "description": "<p>评论消息id</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "commentId",
+            "description": "<p>评论id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "head",
+            "description": "<p>评论的用户头像</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "content",
+            "description": "<p>发送消息内容</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"totalCount\": 2,\n\"totalPage\": 1,\n\"list\": [\n{\n\"messageId\": 500,\n\"commentId\": 44,\n\"userId\": 144,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"content\": \"季婉 评论您的动态 测试一下\"\n},\n{\n\"messageId\": 494,\n\"commentId\": 43,\n\"userId\": 144,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"content\": \"季婉 评论您的动态 测试正常\"\n}\n]\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/MessageController.java",
+    "groupTitle": "消息模块API",
+    "sampleRequest": [
+      {
+        "url": "http://w168428j19.51mypc.cn/find/message/{id}/comments"
       }
     ]
   },
@@ -7054,6 +7299,186 @@
     "sampleRequest": [
       {
         "url": "http://w168428j19.51mypc.cn/find/message/{id1}/delete"
+      }
+    ]
+  },
+  {
+    "type": "delete",
+    "url": "/find/message/{id}/deleteComments",
+    "title": "删除评论消息记录接口",
+    "version": "1.0.0",
+    "group": "消息模块API",
+    "name": "删除评论消息记录",
+    "parameter": {
+      "fields": {
+        "接口请求参数": [
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>消息接收者用户id</p>"
+          },
+          {
+            "group": "接口请求参数",
+            "type": "Number",
+            "optional": false,
+            "field": "messageId",
+            "description": "<p>消息记录id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "请求示例",
+          "content": "curl -v -X PUT \"http://w168428j19.51mypc.cn/find/message/60/deleteComments?messageId=28\" -H \"accept: application/json\"",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>信息码</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": true,
+            "field": "data",
+            "description": "<p>删除消息状态数据</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
+            "field": "DELETE",
+            "description": "<p>OK-&gt;删除消息记录成功，ERROR-&gt;删除消息记录失败</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "200响应示例",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"删除消息记录成功。\",\n\"data\": {\n\"DELETE\": \"OK\"\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "403": [
+          {
+            "group": "403",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "403",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "403",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "404",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "404",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "500",
+            "type": "Number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>消息码</p>"
+          },
+          {
+            "group": "500",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>说明</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "403错误",
+          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "404错误",
+          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "500错误",
+          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/potato369/find/portal/controller/MessageController.java",
+    "groupTitle": "消息模块API",
+    "sampleRequest": [
+      {
+        "url": "http://w168428j19.51mypc.cn/find/message/{id}/deleteComments"
       }
     ]
   },

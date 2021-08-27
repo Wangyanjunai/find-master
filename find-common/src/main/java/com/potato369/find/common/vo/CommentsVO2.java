@@ -31,9 +31,9 @@ public class CommentsVO2 {
     private Integer totalPage;
 
     /**
-     * 点赞数据列表
+     * 评论数据列表
      */
     @JSONField(name = "list")
     @JsonProperty(value = "list")
-    private List<CommentVO> commentVOList;
+    private List<CommentInfoVO> commentInfoVOList;
 }

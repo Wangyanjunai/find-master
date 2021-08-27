@@ -26,10 +26,20 @@ public class LikesInfoVO {
     @JsonProperty(value = "userId")
     private Long userId;
 
+    //点赞的类型，0->动态，1->评论
+    @JSONField(name = "type")
+    @JsonProperty(value = "type")
+    private String type;
+
     //点赞的动态内容id
     @JSONField(name = "dynamicInfoId")
     @JsonProperty(value = "dynamicInfoId")
     private Long dynamicInfoId;
+
+    //点赞的评论内容id
+    @JSONField(name = "commentInfoId")
+    @JsonProperty(value = "commentInfoId")
+    private Long commentInfoId;
 
     //点赞的用户头像
     @JSONField(name = "head")

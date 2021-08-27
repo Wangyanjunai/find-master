@@ -8,9 +8,7 @@ import com.potato369.find.common.api.ResultCode;
 import com.potato369.find.common.enums.*;
 import com.potato369.find.common.utils.DateUtil;
 import com.potato369.find.common.vo.*;
-import com.potato369.find.mbg.mapper.ApplicationRecordMapper;
-import com.potato369.find.mbg.mapper.MessageMapper;
-import com.potato369.find.mbg.mapper.UserMapper;
+import com.potato369.find.mbg.mapper.*;
 import com.potato369.find.mbg.model.*;
 import com.potato369.find.message.config.bean.PushBean;
 import com.potato369.find.message.config.props.ProjectUrlProps;
@@ -43,6 +41,12 @@ public class MessageServiceImpl implements MessageService {
     private JiGuangPushService jiGuangPushService;
 
     private SensitiveWordsService sensitiveWordsService;
+
+    private LikeRecordMapper likeRecordMapperReader;
+
+    private DynamicInfoMapper dynamicInfoMapperReader;
+
+    private AttacheInfoMapper attacheInfoMapperReader;
 
     @Autowired
     public void setMessageMapperReader(MessageMapper messageMapperReader) {
@@ -84,55 +88,52 @@ public class MessageServiceImpl implements MessageService {
         this.sensitiveWordsService = sensitiveWordsService;
     }
 
+    @Autowired
+    public void setLikeRecordMapperReader(LikeRecordMapper likeRecordMapperReader) {
+        this.likeRecordMapperReader = likeRecordMapperReader;
+    }
+
+    @Autowired
+    public void setDynamicInfoMapperReader(DynamicInfoMapper dynamicInfoMapperReader) {
+        this.dynamicInfoMapperReader = dynamicInfoMapperReader;
+    }
+
+    @Autowired
+    public void setAttacheInfoMapperReader(AttacheInfoMapper attacheInfoMapperReader) {
+        this.attacheInfoMapperReader = attacheInfoMapperReader;
+    }
+
     @Override
-    @Transactional(readOnly = true)
-    public LikesMessageVO selectAllLikesMessage(Long userId, int pageNum, int pageSize) {
+    public LikesMessageVO selectAllLikesMessage(Long userId) {
         // 查询点赞消息
         LikesMessageVO likesMessageVO = LikesMessageVO.builder().build();
-        final PageInfo<Message> messagePageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectAllLikesMessageRecord(userId));
-        // 查询最后一条点赞消息记录
-        if (!Objects.isNull(messagePageInfo) && messagePageInfo.getTotal() > 0) {
-            List<Message> messageList = messagePageInfo.getList();
-            if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
-                List<Message> messageList2 = messageList.stream().filter(message -> Objects.equals(MessageStatusEnum.UNREAD.getStatus(), message.getStatus())).collect(Collectors.toList());
-                likesMessageVO.setCount((long) messageList2.size());
-                likesMessageVO.setContent(messageList.get(0).getContent());
-            }
-        } else {
-            likesMessageVO.setCount(0L);
-            likesMessageVO.setContent(null);
+        List<Message> messageList = this.messageMapperReader.selectAllLikesMessageRecord(userId);
+        if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
+            List<Message> messageList2 = messageList.stream().filter(message -> Objects.equals(MessageStatusEnum.UNREAD.getStatus(), message.getStatus())).collect(Collectors.toList());
+            likesMessageVO.setCount(messageList2.size());
+            likesMessageVO.setContent(messageList.get(0).getContent());
         }
         return likesMessageVO;
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public CommentsMessageVO selectAllCommentsMessage(Long userId, int pageNum, int pageSize) {
+    public CommentsMessageVO selectAllCommentsMessage(Long userId) {
         // 查询点赞消息
+        List<Message> messageList = this.messageMapperReader.selectAllCommentsMessageRecord(userId);
         CommentsMessageVO commentsMessageVO = CommentsMessageVO.builder().build();
-        final PageInfo<Message> messagePageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectAllCommentsMessageRecord(userId));
-        // 查询最后一条点赞消息记录
-        if (!Objects.isNull(messagePageInfo) && messagePageInfo.getTotal() > 0) {
-            List<Message> messageList = messagePageInfo.getList();
-            if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
-                List<Message> messageList2 = messageList.stream().filter(message -> Objects.equals(MessageStatusEnum.UNREAD.getStatus(), message.getStatus())).collect(Collectors.toList());
-                commentsMessageVO.setCount((long) messageList2.size());
-                commentsMessageVO.setContent(messageList.get(0).getContent());
-            }
-        } else {
-            commentsMessageVO.setCount(0L);
-            commentsMessageVO.setContent(null);
+        if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
+            List<Message> messageList2 = messageList.stream().filter(message -> Objects.equals(MessageStatusEnum.UNREAD.getStatus(), message.getStatus())).collect(Collectors.toList());
+            commentsMessageVO.setCount(messageList2.size());
+            commentsMessageVO.setContent(messageList.get(0).getContent());
         }
         return commentsMessageVO;
     }
 
     @Override
-    @Transactional(readOnly = true)
     public MessageVO selectNotLikesMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
-        messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId, pageNum, pageSize));
-        final PageInfo<NotLikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
-                .doSelectPageInfo(() -> this.messageMapperReader.selectUnLikesRecordByUserId(userId));
+        messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId));
+        final PageInfo<NotLikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectUnLikesRecordByUserId(userId));
         messageVO.setTotalCount(listPageInfo.getTotal());// 未读申请加微信总数量
         messageVO.setTotalPage(listPageInfo.getPages());
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
@@ -156,39 +157,73 @@ public class MessageServiceImpl implements MessageService {
     @Transactional
     public MessageVO2 selectLikesMessage(Long userId, int pageNum, int pageSize) {
         MessageVO2 messageVO2 = MessageVO2.builder().build();
-        final PageInfo<LikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectLikesMessageRecordByUserId(userId));
-        messageVO2.setTotalCount(listPageInfo.getTotal());
-        messageVO2.setTotalPage(listPageInfo.getPages());
+        MessageExample messageExample = new MessageExample();
+        messageExample.setOrderByClause("create_time DESC");
+        messageExample.createCriteria().andRecipientUserIdEqualTo(userId).andReserveColumn01EqualTo(MessageTypeEnum.Likes.getMessage());
+        final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectByExampleWithBLOBs(messageExample));
         List<LikesInfoVO> likesInfoVOs = new ArrayList<>();
-        List<LikesMessageRecord> likesMessageRecordList = listPageInfo.getList();
-        for (LikesMessageRecord likesMessageRecord : likesMessageRecordList) {
+        List<Message> likesMessageRecordList = new ArrayList<>();
+        if (!Objects.isNull(listPageInfo)) {
+            messageVO2.setTotalCount(listPageInfo.getTotal());
+            messageVO2.setTotalPage(listPageInfo.getPages());
+            likesMessageRecordList = listPageInfo.getList();
+        }
+        for (Message message : likesMessageRecordList) {
             LikesInfoVO likesInfoVO = LikesInfoVO.builder().build();
-            likesInfoVO.setMessageId(likesMessageRecord.getMessageId());
-            likesInfoVO.setDynamicInfoId(likesMessageRecord.getDynamicInfoId());
-            likesInfoVO.setUserId(likesMessageRecord.getUserId());
-            likesInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                    + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                    + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) + likesMessageRecord.getUserId() + "/"
-                    + likesMessageRecord.getHeadIcon());
-            likesInfoVO.setAttacheType(likesMessageRecord.getAttacheType());
-            likesInfoVO.setContent(likesMessageRecord.getLikesContent());
-            String[] fileNameList01 = StrUtil.split(likesMessageRecord.getAttacheFilename(), "||");
-            List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
-            List<String> fileNameList03 = new ArrayList<>();
-            for (String fileName : fileNameList02) {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
-                if (StrUtil.isNotEmpty(likesMessageRecord.getAttacheType()) && AttacheInfoDataTypeEnum.Image.getCode().toString().equals(likesMessageRecord.getAttacheType())) {
-                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+            likesInfoVO.setMessageId(message.getId());
+            Long likeRecordId = Long.valueOf(message.getReserveColumn04());
+            Long dynamicInfoId;
+            Long commentInfoId;
+            LikeRecord likeRecord = this.likeRecordMapperReader.selectByPrimaryKey(likeRecordId);
+            if (!Objects.isNull(likeRecord) && Objects.equals(LikeRecordTypeEnum.Dynamic.getType(), likeRecord.getType())) {
+                dynamicInfoId = likeRecord.getDynamicInfoId();
+                likesInfoVO.setType(LikeRecordTypeEnum.Dynamic.getType());
+                likesInfoVO.setDynamicInfoId(dynamicInfoId);
+                DynamicInfo dynamicInfo = this.dynamicInfoMapperReader.selectByPrimaryKey(dynamicInfoId);
+                if (!Objects.isNull(dynamicInfo)) {
+                    likesInfoVO.setAttacheType(dynamicInfo.getAttacheType());
+                    AttacheInfo attacheInfo = new AttacheInfo();
+                    AttacheInfoExample attacheInfoExample = new AttacheInfoExample();
+                    attacheInfoExample.createCriteria().andDynamicInfoByEqualTo(dynamicInfoId);
+                    List<AttacheInfo> attacheInfoList = this.attacheInfoMapperReader.selectByExample(attacheInfoExample);
+                    if (!Objects.isNull(attacheInfoList) && !attacheInfoList.isEmpty()) {
+                        attacheInfo = attacheInfoList.get(0);
+                    }
+                    String[] fileNameList01 = StrUtil.split(attacheInfo.getFileName(), "||");
+                    List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
+                    List<String> fileNameList03 = new ArrayList<>();
+                    for (String fileName : fileNameList02) {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                        if (StrUtil.isNotEmpty(attacheInfo.getDataType()) && AttacheInfoDataTypeEnum.Image.getCodeStr().equals(attacheInfo.getDataType())) {
+                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+                        }
+                        if (StrUtil.isNotEmpty(attacheInfo.getDataType()) && AttacheInfoDataTypeEnum.Audio.getCodeStr().equals(attacheInfo.getDataType())) {
+                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
+                        }
+                        stringBuilder.append(fileName);
+                        fileNameList03.add(stringBuilder.toString());
+                    }
+                    likesInfoVO.setAttacheFilenameList(fileNameList03);
                 }
-                if (StrUtil.isNotEmpty(likesMessageRecord.getAttacheType()) && AttacheInfoDataTypeEnum.Audio.getCode().toString().equals(likesMessageRecord.getAttacheType())) {
-                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
-                }
-                stringBuilder.append(fileName);
-                fileNameList03.add(stringBuilder.toString());
             }
-            likesInfoVO.setAttacheFilenameList(fileNameList03);
+            if (!Objects.isNull(likeRecord) && Objects.equals(LikeRecordTypeEnum.Comment.getType(), likeRecord.getType())) {
+                commentInfoId = likeRecord.getDynamicInfoId();
+                likesInfoVO.setType(LikeRecordTypeEnum.Comment.getType());
+                likesInfoVO.setCommentInfoId(commentInfoId);
+            }
             likesInfoVOs.add(likesInfoVO);
+            Long sendUserId = message.getSendUserId();
+            likesInfoVO.setUserId(sendUserId);
+            User sendUser = this.userMapperReader.selectByPrimaryKey(sendUserId);
+            if (!Objects.isNull(sendUser) && !Objects.isNull(sendUser.getHeadIcon())) {
+                likesInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                        + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                        + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                        + sendUserId + "/"
+                        + sendUser.getHeadIcon());
+            }
+            likesInfoVO.setContent(message.getContent());
             this.messageMapperWriter.updateLikesMessage(likesInfoVO.getUserId(), userId);
         }
         messageVO2.setLikesInfoVOs(likesInfoVOs);
@@ -198,55 +233,45 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional
     public CommentsVO2 selectCommentsMessage(Long userId, int pageNum, int pageSize) {
+        MessageExample messageExample = new MessageExample();
+        messageExample.setOrderByClause("create_time DESC");
+        messageExample.createCriteria().andRecipientUserIdEqualTo(userId).andReserveColumn01EqualTo(MessageTypeEnum.Comments.getMessage());
+        final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectByExampleWithBLOBs(messageExample));
         CommentsVO2 commentsVO2 = CommentsVO2.builder().build();
-        final PageInfo<LikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize)
-                .doSelectPageInfo(() -> this.messageMapperReader.selectLikesMessageRecordByUserId(userId));
-        commentsVO2.setTotalCount(listPageInfo.getTotal());
-        commentsVO2.setTotalPage(listPageInfo.getPages());
-        List<LikesInfoVO> likesInfoVOs = new ArrayList<>();
-        List<LikesMessageRecord> likesMessageRecordList = listPageInfo.getList();
-        for (LikesMessageRecord likesMessageRecord : likesMessageRecordList) {
-            LikesInfoVO likesInfoVO = LikesInfoVO.builder().build();
-            likesInfoVO.setMessageId(likesMessageRecord.getMessageId());
-            likesInfoVO.setUserId(likesMessageRecord.getUserId());
-            likesInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                    + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                    + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) + likesMessageRecord.getUserId() + "/"
-                    + likesMessageRecord.getHeadIcon());
-            likesInfoVO.setAttacheType(likesMessageRecord.getAttacheType());
-            likesInfoVO.setContent(likesMessageRecord.getLikesContent());
-            String[] fileNameList01 = StrUtil.split(likesMessageRecord.getAttacheFilename(), "||");
-            List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
-            List<String> fileNameList03 = new ArrayList<>();
-            for (String fileName : fileNameList02) {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain()))
-                        .append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
-                if (StrUtil.isNotEmpty(likesMessageRecord.getAttacheType()) && AttacheInfoDataTypeEnum.Image.getCode()
-                        .toString().equals(likesMessageRecord.getAttacheType())) {
-                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
-                }
-                if (StrUtil.isNotEmpty(likesMessageRecord.getAttacheType()) && AttacheInfoDataTypeEnum.Audio.getCode()
-                        .toString().equals(likesMessageRecord.getAttacheType())) {
-                    stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
-                }
-                stringBuilder.append(fileName);
-                fileNameList03.add(stringBuilder.toString());
-            }
-            likesInfoVO.setAttacheFilenameList(fileNameList03);
-            likesInfoVOs.add(likesInfoVO);
-            this.messageMapperWriter.updateLikesMessage(likesInfoVO.getUserId(), userId);
+        List<Message> messageList = new ArrayList<>();
+        if (!Objects.isNull(listPageInfo)) {
+            commentsVO2.setTotalCount(listPageInfo.getTotal());
+            commentsVO2.setTotalPage(listPageInfo.getPages());
+            messageList = listPageInfo.getList();
         }
-//        commentsVO2.getCommentVOList(new ArrayList<>());
+        List<CommentInfoVO> commentInfoVOList = new ArrayList<>();
+        for (Message message : messageList) {
+            CommentInfoVO commentInfoVO = CommentInfoVO.builder().build();
+            commentInfoVO.setMessageId(message.getId());
+            Long sendUserId = message.getSendUserId();
+            User user = this.userMapperReader.selectByPrimaryKey(sendUserId);
+            if (!Objects.isNull(user)) {
+                commentInfoVO.setUserId(sendUserId);
+                commentInfoVO.setHead(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                        + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                        + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
+                        + sendUserId + "/"
+                        + user.getHeadIcon());
+            }
+            commentInfoVO.setCommentId(Long.valueOf(message.getReserveColumn04()));
+            commentInfoVO.setContent(message.getContent());
+            commentInfoVOList.add(commentInfoVO);
+            this.messageMapperWriter.updateCommentsMessage(message.getSendUserId(), userId);
+        }
+        commentsVO2.setCommentInfoVOList(commentInfoVOList);
         return commentsVO2;
     }
 
     @Override
-    @Transactional(readOnly = true)
     public MessageVO selectApplicationsMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
-        messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId, pageNum, pageSize));
-        messageVO.setCommentsMessageVO(this.selectAllCommentsMessage(userId, pageNum, pageSize));
+        messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId));
+        messageVO.setCommentsMessageVO(this.selectAllCommentsMessage(userId));
         List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByUserId(userId);
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         List<MessageInfoVO> messageInfoVOs2 = new ArrayList<>();
@@ -498,7 +523,33 @@ public class MessageServiceImpl implements MessageService {
         String value = "ERROR";
         String msg = "删除消息记录失败。";
         Message messageRecord = this.messageMapperReader.selectByPrimaryKey(messageId);
-        if (messageRecord != null) {
+        if (!Objects.isNull(messageRecord) && Objects.equals(messageRecord.getRecipientUserId(), recipientUserId)) {
+            messageRecord.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
+            messageRecord.setUpdateTime(new Date());
+            int count = this.messageMapperWriter.updateByPrimaryKeySelective(messageRecord);
+            if (count > 0) {
+                value = "OK";
+                msg = "删除消息记录成功。";
+            }
+        }
+        data.put(key, value);
+        return CommonResult.success(data, msg);
+    }
+
+    /**
+     * <pre>
+     * 描述该方法的实现功能：
+     * </pre>
+     */
+    @Override
+    @Transactional
+    public CommonResult<Map<String, Object>> deleteComments(Long recipientUserId, Long messageId) {
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        String key = "DELETE";
+        String value = "ERROR";
+        String msg = "删除消息记录失败。";
+        Message messageRecord = this.messageMapperReader.selectByPrimaryKey(messageId);
+        if (!Objects.isNull(messageRecord) && Objects.equals(messageRecord.getRecipientUserId(), recipientUserId)) {
             messageRecord.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
             messageRecord.setUpdateTime(new Date());
             int count = this.messageMapperWriter.updateByPrimaryKeySelective(messageRecord);
@@ -512,7 +563,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type, String content, String weChatId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("REPLY", "ERROR");
@@ -548,72 +599,73 @@ public class MessageServiceImpl implements MessageService {
             return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
         }
         ApplicationRecord applicationRecord = applicationRecordList.get(0);
-        if (!Objects.isNull(applicationRecord)) {
-            // 如果是同意申请加微信
-            String welkinId = applicantsUser.getWeixinId();// 数据库获取到的被申请人的微信号
-            if (StrUtil.isNotEmpty(content)) {
-                //校验发布的内容是否包含敏感词汇
-                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(content);
-                if (!Objects.isNull(sensitiveWords)) {
-                    return CommonResult.validateFailed("发消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
-                }
+        if (!Objects.equals(Long.valueOf(applicationRecord.getReserveColumn01()), applicantsUserId)) {
+            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
+        }
+        // 如果是同意申请加微信
+        String welkinId = applicantsUser.getWeixinId();// 数据库获取到的被申请人的微信号
+        if (StrUtil.isNotEmpty(content)) {
+            //校验发布的内容是否包含敏感词汇
+            SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(content);
+            if (!Objects.isNull(sensitiveWords)) {
+                return CommonResult.validateFailed("发消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
             }
-            if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
-                if (StrUtil.isNotEmpty(weChatId)) {
-                    if (StrUtil.isEmpty(content)) {
-                        content = "已同意添加微信，我的微信号是：|" + weChatId;
+        }
+        if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
+            if (StrUtil.isNotEmpty(weChatId)) {
+                if (StrUtil.isEmpty(content)) {
+                    content = "已同意添加微信，我的微信号是：|" + weChatId;
+                } else {
+                    if (content.contains(weChatId)) {
+                        content = content + "|";
                     } else {
-                        if (content.contains(weChatId)) {
+                        content = content + "|" + weChatId;
+                    }
+                }
+            } else {
+                if (StrUtil.isNotEmpty(welkinId)) {
+                    if (StrUtil.isEmpty(content)) {
+                        content = "已同意添加微信，我的微信号是：|" + welkinId;
+                    } else {
+                        if (content.contains(welkinId)) {
                             content = content + "|";
                         } else {
                             content = content + "|" + weChatId;
                         }
                     }
-                } else {
-                    if (StrUtil.isNotEmpty(welkinId)) {
-                        if (StrUtil.isEmpty(content)) {
-                            content = "已同意添加微信，我的微信号是：|" + welkinId;
-                        } else {
-                            if (content.contains(welkinId)) {
-                                content = content + "|";
-                            } else {
-                                content = content + "|" + weChatId;
-                            }
-                        }
-                    }
-                }
-                if (StrUtil.isNotEmpty(weChatId) && !weChatId.equals(welkinId)) {
-                    applicantsUser.setWeixinId(weChatId);
-                    applicantsUser.setUpdateTime(new Date());
-                    this.userMapperWriter.updateByPrimaryKeySelective(applicantsUser);
                 }
             }
-            // 如果是拒绝申请加微信
-            if (MessageType3Enum.REFUSE.getCodeStr().equals(type)) {
-                if (StrUtil.isEmpty(content)) {
-                    content = "非常抱歉，我不想加你！";
-                }
+            if (StrUtil.isNotEmpty(weChatId) && !Objects.equals(weChatId, welkinId)) {
+                applicantsUser.setWeixinId(weChatId);
+                applicantsUser.setUpdateTime(new Date());
+                this.userMapperWriter.updateByPrimaryKeySelective(applicantsUser);
             }
-            Message message = new Message();
-            message.setSendUserId(applicantsUserId);
-            message.setRecipientUserId(sendUserId);
-            message.setContent(content);
-            message.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
-            message.setStatus(MessageStatusEnum.UNREAD.getStatus());
-            message.setReserveColumn01(MessageTypeEnum.Applications.getMessage());
-            message.setReserveColumn02(MessageType2Enum.REPLY.getCodeStr());
-            message.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
-            message.setReserveColumn04(String.valueOf(messageOld.getId()));
-            this.messageMapperWriter.insertSelective(message);
-            String title = applicantsUser.getNickName();// 消息标题
-            PushBean pushBean = new PushBean();
-            pushBean.setAlert(content);
-            pushBean.setTitle(title);
-            this.jiGuangPushService.pushAndroid(pushBean, applicantUser.getReserveColumn03());
-            data.put("REPLY", "OK");
-            return CommonResult.success(data, ResultCode.SUCCESS.getMessage());
-        } else {
-            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
         }
+        // 如果是拒绝申请加微信
+        if (MessageType3Enum.REFUSE.getCodeStr().equals(type)) {
+            if (StrUtil.isEmpty(content)) {
+                content = "非常抱歉，我不想加你！";
+            }
+        }
+        Message message = new Message();
+        message.setSendUserId(applicantsUserId);
+        message.setRecipientUserId(sendUserId);
+        message.setContent(content);
+        message.setSendMode(MessageSendModeEnum.ACTIVE.getStatus());
+        message.setStatus(MessageStatusEnum.UNREAD.getStatus());
+        message.setReserveColumn01(MessageTypeEnum.Applications.getMessage());
+        message.setReserveColumn02(MessageType2Enum.REPLY.getCodeStr());
+        message.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
+        message.setReserveColumn04(String.valueOf(messageOld.getId()));
+        this.messageMapperWriter.insertSelective(message);
+        String title = applicantsUser.getNickName();// 消息标题
+        PushBean pushBean = new PushBean();
+        pushBean.setAlert(content);
+        pushBean.setTitle(title);
+        if (!Objects.isNull(applicantUser.getReserveColumn03())) {
+            this.jiGuangPushService.pushAndroid(pushBean, applicantUser.getReserveColumn03());
+        }
+        data.put("REPLY", "OK");
+        return CommonResult.success(data, ResultCode.SUCCESS.getMessage());
     }
 }

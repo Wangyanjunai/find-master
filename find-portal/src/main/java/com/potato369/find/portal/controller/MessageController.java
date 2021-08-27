@@ -1,6 +1,7 @@
 package com.potato369.find.portal.controller;
 
 import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.common.vo.CommentsVO2;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.common.vo.MessageVO3;
@@ -39,8 +40,11 @@ public class MessageController {
      * @apiSuccess (200) {Number} status 响应状态码
      * @apiSuccess (200) {Object} [data] 消息数据
      * @apiSuccess (200) {Object} [likes] 最新点赞消息
-     * @apiSuccess (200) {String} [content1] 最新一条未读点赞消息内容
+     * @apiSuccess (200) {String} [content1] 最新一条点赞消息内容
      * @apiSuccess (200) {Number} [count1] 未读点赞消息数量
+     * @apiSuccess (200) {Object} [comments] 最新评论消息
+     * @apiSuccess (200) {String} [content2] 最新一条评论消息内容
+     * @apiSuccess (200) {Number} [count2] 未读评论消息数量
      * @apiSuccess (200){Number} [totalCount] 申请加微信消息总条数
      * @apiSuccess (200) {Number} [totalPage] 申请加微信消息总页数
      * @apiSuccess (200) {Object[]} [list] 申请加微信消息数据
@@ -58,88 +62,44 @@ public class MessageController {
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
-     * "status":200,
-     * "code":0,
-     * "msg":"返回数据成功",
-     * "data":{
-     * "likes":{
-     * "content1":"阿萌赞了你的动态差点就掉下去了！",
-     * "count1":5
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "likes": {
+     * "content1": "尹明艳 点赞您的评论 是的，今天天气很糟糕的。",
+     * "count1": 0
      * },
-     * "totalCount":5,
-     * "totalPage":1,
-     * "list":[
-     * {
-     * "messageId": 7,
-     * "userId":60,
-     * "head":"http://192.168.31.31:9000/find/img/head/60/01.png",
-     * "nickname":"尘埃",
-     * "content2":"需要加您的微信?",
-     * "count2":5,
-     * "createTime": "2021年04月22日 16:40:40",
-     * "type":1,
-     * "flag":0,
-     * "isOrNotApplication": false
+     * "comments": {
+     * "content2": "季婉 评论您的动态 测试一下",
+     * "count2": 0
      * },
+     * "totalCount": 2,
+     * "totalPage": 1,
+     * "list": [
      * {
-     * "messageId": 2,
-     * "userId":62,
-     * "head":"http://192.168.31.31:9000/find/img/head/62/02.png",
-     * "nickname":"蓝梧桐",
-     * "content2":"需要加您的微信?",
-     * "count2":5,
-     * "createTime": "2021年04月22日 16:40:40",
-     * "type":1,
-     * "flag":0,
-     * "isOrNotApplication": false
-     * },
-     * {
-     * "messageId": 3,
-     * "userId":61,
-     * "head":"http://192.168.31.31:9000/find/img/head/61/01.png",
-     * "nickname":"长安",
-     * "content2":"需要加您的微信?",
-     * "count2":6
-     * "createTime": "2021年04月22日 16:40:40",
-     * "type":1,
-     * "flag":0,
-     * "isOrNotApplication": false
-     * },
-     * {
-     * "messageId": 4,
-     * "userId":71,
-     * "head":"http://192.168.31.31:9000/find/img/head/71/07.png",
-     * "nickname":"弦雨晴",
-     * "content2":"需要加您的微信?",
-     * "count2":6
-     * "createTime": "2021年04月22日 16:40:40",
-     * "type":1,
-     * "flag":0,
-     * "isOrNotApplication": false
-     * },
-     * {
-     * "messageId": 5,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "nickname":"阿萌",
-     * "content2":"需要加您的微信?",
-     * "createTime": "2021年04月22日 16:40:40",
-     * "count2":1
-     * "type":1,
-     * "flag":0,
-     * "isOrNotApplication": false
-     * },
-     * {
-     * "messageId": 86,
-     * "userId": 137,
-     * "head": "http://192.168.31.31:9000/find/img/head/137/34ca77aa-b3e2-4358-b7cf-0acb172121db.jpeg",
-     * "nickname": "jack",
-     * "content2": "已同意添加微信，我的微信号是：",
-     * "createTime": "2021年04月22日 16:40:40",
-     * "count2": 2,
+     * "messageId": 505,
+     * "userId": 140,
+     * "head": "http://192.168.31.38:9000/find/img/head/140/0c99dc02-188b-426e-a46d-5e951743dedf.jpg",
+     * "nickname": "凝噎新紫",
+     * "content2": "同意",
+     * "createTime": "2021年08月27日 16:28:21",
+     * "count2": 1,
      * "type": "1",
      * "flag": 1,
-     * "weixinId": "wxnaza12345681",
+     * "weixinId": "11111111111",
+     * "isOrNotApplication": false
+     * },
+     * {
+     * "messageId": 498,
+     * "userId": 144,
+     * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "nickname": "季婉",
+     * "content2": "申请加您的微信，麻烦通过一下。",
+     * "createTime": "2021年08月26日 15:42:32",
+     * "count2": 1,
+     * "type": "1",
+     * "flag": 0,
      * "isOrNotApplication": false
      * }
      * ]
@@ -495,6 +455,96 @@ public class MessageController {
                                        @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码，默认：当前第1页", example = "1") Integer pageNum, // 当前页码，默认：当前第1页
                                        @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量，默认：每页20条", example = "20") Integer pageSize) {// 每页数量，默认：每页20条
         return this.messageFeignClient.likes(userId, pageNum, pageSize);
+    }
+
+    /**
+     * @api {get} /find/message/{id}/comments 分页获取评论消息列表接口
+     * @apiVersion 1.0.0
+     * @apiGroup 消息模块API
+     * @apiName 分页获取评论消息列表
+     * @apiParam (接口请求参数){Number} id 消息接收者用户id
+     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页码
+     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页数量
+     * @apiParamExample 请求示例
+     * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/138/comments?pageNum=1&pageSize=20" -H "accept: application/json"
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 消息数据
+     * @apiSuccess (200){Number} [totalCount] 评论消息总条数
+     * @apiSuccess (200) {Number} [totalPage] 评论消息总页数
+     * @apiSuccess (200) {Object[]} [list] 评论消息数据
+     * @apiSuccess (200){Number} [userId] 点赞者用户id
+     * @apiSuccess (200){Number} [messageId] 评论消息id
+     * @apiSuccess (200){Number} [commentId] 评论id
+     * @apiSuccess (200){Number} [userId] 评论的用户id
+     * @apiSuccess (200) {String} [head] 评论的用户头像
+     * @apiSuccess (200) {String} [content] 发送消息内容
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "totalCount": 2,
+     * "totalPage": 1,
+     * "list": [
+     * {
+     * "messageId": 500,
+     * "commentId": 44,
+     * "userId": 144,
+     * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "content": "季婉 评论您的动态 测试一下"
+     * },
+     * {
+     * "messageId": 494,
+     * "commentId": 43,
+     * "userId": 144,
+     * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "content": "季婉 评论您的动态 测试正常"
+     * }
+     * ]
+     * }
+     * }
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
+     * @apiError (403) {String} msg 说明
+     * @apiErrorExample {json} 403错误
+     * HTTP/1.1 403 403响应
+     * {
+     * "status": 403,
+     * "code": 199,
+     * "msg": "未找到用户信息！"
+     * }
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册！"
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！"
+     * }
+     */
+    @GetMapping(value = "{id}/comments")
+    @ApiOperation(value = "分页获取评论消息列表接口", notes = "分页获取评论消息列表。")
+    @ApiResponses(@ApiResponse(code = 200, message = "分页获取点赞消息列表成功", response = CommonResult.class))
+    CommonResult<CommentsVO2> findComments(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
+                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码，默认：当前第1页", example = "1") Integer pageNum, // 当前页码，默认：当前第1页
+                                           @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量，默认：每页20条", example = "20") Integer pageSize) {// 每页数量，默认：每页20条
+        return this.messageFeignClient.comments(userId, pageNum, pageSize);
     }
 
     /**
@@ -877,6 +927,69 @@ public class MessageController {
             @PathVariable(name = "id") @ApiParam(name = "id", value = "消息接收者用户id", required = true, example = "1") Long recipientUserId,
             @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId) {
         return this.messageFeignClient.deleteLikes(recipientUserId, messageId);
+    }
+
+    /**
+     * @api {delete} /find/message/{id}/deleteComments 删除评论消息记录接口
+     * @apiVersion 1.0.0
+     * @apiGroup 消息模块API
+     * @apiName 删除评论消息记录
+     * @apiParam (接口请求参数){Number} id 消息接收者用户id
+     * @apiParam (接口请求参数){Number} messageId 消息记录id
+     * @apiParamExample 请求示例
+     * curl -v -X PUT "http://w168428j19.51mypc.cn/find/message/60/deleteComments?messageId=28" -H "accept: application/json"
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 删除消息状态数据
+     * @apiSuccess (200) {String} [DELETE] OK->删除消息记录成功，ERROR->删除消息记录失败
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "删除消息记录成功。",
+     * "data": {
+     * "DELETE": "OK"
+     * }
+     * }
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
+     * @apiError (403) {String} msg 说明
+     * @apiErrorExample {json} 403错误
+     * HTTP/1.1 403 403响应
+     * {
+     * "status": 403,
+     * "code": 199,
+     * "msg": "未找到用户信息！"
+     * }
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册！"
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！"
+     * }
+     */
+    @DeleteMapping(value = "/{id}/deleteComments")
+    @ApiOperation(value = "删除评论消息记录接口", notes = "删除评论消息记录接口")
+    public CommonResult<Map<String, Object>> deleteComments(
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "消息接收者用户id", required = true, example = "1") Long recipientUserId,
+            @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId) {
+        return this.messageFeignClient.deleteComments(recipientUserId, messageId);
     }
 
     /**

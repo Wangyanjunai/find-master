@@ -1,5 +1,6 @@
 package com.potato369.find.dynamic.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.common.api.ResultCode;
 import com.potato369.find.common.dto.CommentDTO;
@@ -122,9 +123,11 @@ public class CommentController {
                 return CommonResult.validateFailed("参数校验不通过，用户信息不存在。");
             }
             // 校验发布的内容是否包含敏感词汇
-            SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(commentDTO.getContent());
-            if (!Objects.isNull(sensitiveWords)) {
-                return CommonResult.validateFailed("参数校验不通过，评论内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
+            if (StrUtil.isNotEmpty(commentDTO.getContent())) {
+                SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(commentDTO.getContent());
+                if (!Objects.isNull(sensitiveWords)) {
+                    return CommonResult.validateFailed("参数校验不通过，评论内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发布。");
+                }
             }
             //每个用户对一条动态只能评论一次
             List<Comment> commentList = this.commentService.findByDynamicIdAndUserId(commentDTO.getDynamicInfoId(), userId);

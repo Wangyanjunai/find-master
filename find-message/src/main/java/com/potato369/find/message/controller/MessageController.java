@@ -1,6 +1,7 @@
 package com.potato369.find.message.controller;
 
 import com.potato369.find.common.api.CommonResult;
+import com.potato369.find.common.vo.CommentsVO2;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.common.vo.MessageVO3;
@@ -58,19 +59,19 @@ public class MessageController {
     }
 
     /**
-     * 被评论的动态内容消息记录
+     * 被评论的消息记录
      *
-     * @param userId   被评论的动态所属的用户id
+     * @param userId   被评论的用户id
      * @param pageNum  当前页码，默认：1
      * @param pageSize 每页数量，默认：20
      */
-    @ApiOperation(value = "被评论动态内容消息记录", notes = "被评论动态内容消息记录")
+    @ApiOperation(value = "被评论消息记录", notes = "被评论消息记录")
     @GetMapping(value = "/{id}/comments.do")
-    public CommonResult<MessageVO2> comments(
+    public CommonResult<CommentsVO2> comments(
             @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码", example = "1") Integer pageNum,
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
-        return CommonResult.success(this.messageService.selectLikesMessage(userId, pageNum, pageSize));
+        return CommonResult.success(this.messageService.selectCommentsMessage(userId, pageNum, pageSize));
     }
 
     /**
@@ -145,6 +146,20 @@ public class MessageController {
             @PathVariable(name = "id") @ApiParam(name = "id", value = "消息收者用户id", required = true, example = "1") Long recipientUserId,
             @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId) {
         return this.messageService.deleteLikes(recipientUserId, messageId);
+    }
+
+    /**
+     * 删除评论消息记录接口
+     *
+     * @param recipientUserId 消息收者用户id
+     * @param messageId       消息记录id
+     */
+    @ApiOperation(value = "删除评论消息记录接口", notes = "删除评论消息记录接口")
+    @DeleteMapping(value = "/{id}/deleteComments.do")
+    public CommonResult<Map<String, Object>> deleteComments(
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "消息收者用户id", required = true, example = "1") Long recipientUserId,
+            @RequestParam(name = "messageId") @ApiParam(name = "messageId", value = "消息记录id", required = true, example = "2") Long messageId) {
+        return this.messageService.deleteComments(recipientUserId, messageId);
     }
 
     /**

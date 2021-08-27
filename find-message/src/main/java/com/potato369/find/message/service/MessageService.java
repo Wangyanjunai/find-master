@@ -15,17 +15,14 @@ public interface MessageService {
      *
      * @param userId 消息接收者用户id
      */
-    LikesMessageVO selectAllLikesMessage(Long userId, int pageNum, int pageSize);
+    LikesMessageVO selectAllLikesMessage(Long userId);
 
     /**
      * 根据用户id查询某个用户最新一条被评论的消息记录
      *
-     * @param userId
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param userId 消息接收者用户id
      */
-    CommentsMessageVO selectAllCommentsMessage(Long userId, int pageNum, int pageSize);
+    CommentsMessageVO selectAllCommentsMessage(Long userId);
 
     /**
      * 根据用户id分页查询某个用户不是被点赞的消息记录
@@ -98,11 +95,18 @@ public interface MessageService {
     CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId);
 
     /**
+     * 删除点赞消息
      * @param recipientUserId 消息接收者用户id
      * @param messageId       消息id
      */
-
     CommonResult<Map<String, Object>> deleteLikes(Long recipientUserId, Long messageId);
+
+    /**
+     * 删除评论消息
+     * @param recipientUserId 消息接收者用户id
+     * @param messageId       消息id
+     */
+    CommonResult<Map<String, Object>> deleteComments(Long recipientUserId, Long messageId);
 
     /**
      * 被申请者回复申请者申请加微信消息记录

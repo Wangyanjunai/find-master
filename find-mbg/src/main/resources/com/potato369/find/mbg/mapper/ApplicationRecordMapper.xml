@@ -104,18 +104,10 @@
           AND `create_time` <![CDATA[ <=]]> DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY), INTERVAL -1 SECOND)
     </select>
     <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT DISTINCTROW a.*
-        FROM (
-                 SELECT `user_id`,
-                        `reserve_column01`
-                 FROM `application_record`
-                 WHERE `user_id` = #{userId,jdbcType=BIGINT}
-                 UNION ALL
-                 SELECT `user_id`,
-                        `reserve_column01`
-                 FROM `application_record`
-                 WHERE `reserve_column01` = #{userId,jdbcType=BIGINT}
-             ) AS a
+        SELECT `user_id`,
+               `reserve_column01`
+        FROM `application_record`
+        WHERE `reserve_column01` = #{userId,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete

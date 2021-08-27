@@ -102,6 +102,7 @@ public class CommentServiceImpl implements CommentService {
         messageRecord.setReserveColumn01(MessageTypeEnum.Comments.getMessage());//消息类型，评论->comments
         messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//发送
         messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//是否删除
+        messageRecord.setReserveColumn04(String.valueOf(comment.getId()));//评论id
         int d = this.messageMapperWriter.insertSelective(messageRecord);
         return a + b + c + d;
     }
