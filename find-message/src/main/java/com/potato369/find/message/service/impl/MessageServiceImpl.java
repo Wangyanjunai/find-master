@@ -48,6 +48,8 @@ public class MessageServiceImpl implements MessageService {
 
     private AttacheInfoMapper attacheInfoMapperReader;
 
+    private CommentRecordMapper commentRecordMapperReader;
+
     @Autowired
     public void setMessageMapperReader(MessageMapper messageMapperReader) {
         this.messageMapperReader = messageMapperReader;
@@ -79,7 +81,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Autowired
-    public void setJiGuangPushService(JiGuangPushServiceImpl jiGuangPushService) {
+    public void setJiGuangPushService(JiGuangPushService jiGuangPushService) {
         this.jiGuangPushService = jiGuangPushService;
     }
 
@@ -103,11 +105,21 @@ public class MessageServiceImpl implements MessageService {
         this.attacheInfoMapperReader = attacheInfoMapperReader;
     }
 
+    @Autowired
+    public void setCommentRecordMapperReader(CommentRecordMapper commentRecordMapperReader) {
+        this.commentRecordMapperReader = commentRecordMapperReader;
+    }
+
     @Override
     public LikesMessageVO selectAllLikesMessage(Long userId) {
-        // 查询点赞消息
+        // 查询（动态，评论）点赞，评论最新消息和未读消息条数
         LikesMessageVO likesMessageVO = LikesMessageVO.builder().build();
-        List<Message> messageList = this.messageMapperReader.selectAllLikesMessageRecord(userId);
+        MessageExample messageExample = new MessageExample();
+        messageExample.setOrderByClause("create_time DESC");
+        messageExample.createCriteria().andRecipientUserIdEqualTo(userId)
+                .andReserveColumn01In(Arrays.asList(MessageTypeEnum.Likes.getMessage(), MessageTypeEnum.Comments.getMessage()))
+                .andReserveColumn03EqualTo(MessageStatus2Enum.NO.getStatus());
+        List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
         if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
             List<Message> messageList2 = messageList.stream().filter(message -> Objects.equals(MessageStatusEnum.UNREAD.getStatus(), message.getStatus())).collect(Collectors.toList());
             likesMessageVO.setCount(messageList2.size());
@@ -159,7 +171,10 @@ public class MessageServiceImpl implements MessageService {
         MessageVO2 messageVO2 = MessageVO2.builder().build();
         MessageExample messageExample = new MessageExample();
         messageExample.setOrderByClause("create_time DESC");
-        messageExample.createCriteria().andRecipientUserIdEqualTo(userId).andReserveColumn01In(Arrays.asList(MessageTypeEnum.Likes.getMessage(), MessageTypeEnum.Comments.getMessage()));
+        messageExample.createCriteria()
+                .andRecipientUserIdEqualTo(userId)
+                .andReserveColumn01In(Arrays.asList(MessageTypeEnum.Likes.getMessage(), MessageTypeEnum.Comments.getMessage()))
+                .andReserveColumn03EqualTo(MessageStatus2Enum.NO.getStatus());
         final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectByExampleWithBLOBs(messageExample));
         List<LikesInfoVO> likesInfoVOs = new ArrayList<>();
         List<Message> likesMessageRecordList = new ArrayList<>();
@@ -171,46 +186,85 @@ public class MessageServiceImpl implements MessageService {
         for (Message message : likesMessageRecordList) {
             LikesInfoVO likesInfoVO = LikesInfoVO.builder().build();
             likesInfoVO.setMessageId(message.getId());
-            Long likeRecordId = Long.valueOf(message.getReserveColumn04());
-            Long dynamicInfoId;
-            Long commentInfoId;
-            LikeRecord likeRecord = this.likeRecordMapperReader.selectByPrimaryKey(likeRecordId);
-            if (!Objects.isNull(likeRecord) && Objects.equals(LikeRecordTypeEnum.Dynamic.getType(), likeRecord.getType())) {
-                dynamicInfoId = likeRecord.getDynamicInfoId();
-                likesInfoVO.setType(LikeRecordTypeEnum.Dynamic.getType());
-                likesInfoVO.setDynamicInfoId(dynamicInfoId);
-                DynamicInfo dynamicInfo = this.dynamicInfoMapperReader.selectByPrimaryKey(dynamicInfoId);
-                if (!Objects.isNull(dynamicInfo)) {
-                    likesInfoVO.setAttacheType(dynamicInfo.getAttacheType());
-                    AttacheInfo attacheInfo = new AttacheInfo();
-                    AttacheInfoExample attacheInfoExample = new AttacheInfoExample();
-                    attacheInfoExample.createCriteria().andDynamicInfoByEqualTo(dynamicInfoId);
-                    List<AttacheInfo> attacheInfoList = this.attacheInfoMapperReader.selectByExample(attacheInfoExample);
-                    if (!Objects.isNull(attacheInfoList) && !attacheInfoList.isEmpty()) {
-                        attacheInfo = attacheInfoList.get(0);
-                    }
-                    String[] fileNameList01 = StrUtil.split(attacheInfo.getFileName(), "||");
-                    List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
-                    List<String> fileNameList03 = new ArrayList<>();
-                    for (String fileName : fileNameList02) {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
-                        if (StrUtil.isNotEmpty(attacheInfo.getDataType()) && AttacheInfoDataTypeEnum.Image.getCodeStr().equals(attacheInfo.getDataType())) {
-                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+            String type = message.getReserveColumn01();
+            //点赞
+            if (Objects.equals(MessageTypeEnum.Likes.getMessage(), type)) {
+                Long likeRecordId = Long.valueOf(message.getReserveColumn04());
+                LikeRecord likeRecord = this.likeRecordMapperReader.selectByPrimaryKey(likeRecordId);
+                if (!Objects.isNull(likeRecord) && Objects.equals(LikeRecordTypeEnum.Dynamic.getType(), likeRecord.getType())) {
+                    Long dynamicInfoId = likeRecord.getDynamicInfoId();
+                    likesInfoVO.setInfoId(dynamicInfoId);
+                    likesInfoVO.setType(LikeRecordTypeEnum.Dynamic.getType());
+                    DynamicInfo dynamicInfo = this.dynamicInfoMapperReader.selectByPrimaryKey(dynamicInfoId);
+                    if (!Objects.isNull(dynamicInfo)) {
+                        likesInfoVO.setAttacheType(dynamicInfo.getAttacheType());
+                        AttacheInfo attacheInfo = new AttacheInfo();
+                        AttacheInfoExample attacheInfoExample = new AttacheInfoExample();
+                        attacheInfoExample.createCriteria().andDynamicInfoByEqualTo(dynamicInfoId);
+                        List<AttacheInfo> attacheInfoList = this.attacheInfoMapperReader.selectByExample(attacheInfoExample);
+                        if (!Objects.isNull(attacheInfoList) && !attacheInfoList.isEmpty()) {
+                            attacheInfo = attacheInfoList.get(0);
                         }
-                        if (StrUtil.isNotEmpty(attacheInfo.getDataType()) && AttacheInfoDataTypeEnum.Audio.getCodeStr().equals(attacheInfo.getDataType())) {
-                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
+                        String[] fileNameList01 = StrUtil.split(attacheInfo.getFileName(), "||");
+                        List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
+                        List<String> fileNameList03 = new ArrayList<>();
+                        for (String fileName : fileNameList02) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                            if (StrUtil.isNotEmpty(attacheInfo.getDataType()) && AttacheInfoDataTypeEnum.Image.getCodeStr().equals(attacheInfo.getDataType())) {
+                                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+                            }
+                            if (StrUtil.isNotEmpty(attacheInfo.getDataType()) && AttacheInfoDataTypeEnum.Audio.getCodeStr().equals(attacheInfo.getDataType())) {
+                                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
+                            }
+                            stringBuilder.append(fileName);
+                            fileNameList03.add(stringBuilder.toString());
                         }
-                        stringBuilder.append(fileName);
-                        fileNameList03.add(stringBuilder.toString());
+                        likesInfoVO.setAttacheFilenameList(fileNameList03);
                     }
-                    likesInfoVO.setAttacheFilenameList(fileNameList03);
+                }
+                if (!Objects.isNull(likeRecord) && Objects.equals(LikeRecordTypeEnum.Comment.getType(), likeRecord.getType())) {
+                    Long commentInfoId = likeRecord.getDynamicInfoId();
+                    likesInfoVO.setInfoId(commentInfoId);
+                    likesInfoVO.setType(LikeRecordTypeEnum.Comment.getType());
                 }
             }
-            if (!Objects.isNull(likeRecord) && Objects.equals(LikeRecordTypeEnum.Comment.getType(), likeRecord.getType())) {
-                commentInfoId = likeRecord.getDynamicInfoId();
-                likesInfoVO.setType(LikeRecordTypeEnum.Comment.getType());
-                likesInfoVO.setCommentInfoId(commentInfoId);
+            //评论
+            if (Objects.equals(MessageTypeEnum.Comments.getMessage(), type)) {
+                likesInfoVO.setType(MessageTypeEnum.Comments.getCodeStr());
+                Long commentRecordId = Long.valueOf(message.getReserveColumn04());
+                CommentRecord commentRecord = this.commentRecordMapperReader.selectByPrimaryKey(commentRecordId);
+                if (!Objects.isNull(commentRecord)) {
+                    Long dynamicInfoId = commentRecord.getDynamicInfoId();
+                    likesInfoVO.setInfoId(dynamicInfoId);
+                    DynamicInfo dynamicInfo = this.dynamicInfoMapperReader.selectByPrimaryKey(dynamicInfoId);
+                    if (!Objects.isNull(dynamicInfo)) {
+                        likesInfoVO.setAttacheType(dynamicInfo.getAttacheType());
+                        AttacheInfo attacheInfo = new AttacheInfo();
+                        AttacheInfoExample attacheInfoExample = new AttacheInfoExample();
+                        attacheInfoExample.createCriteria().andDynamicInfoByEqualTo(dynamicInfoId);
+                        List<AttacheInfo> attacheInfoList = this.attacheInfoMapperReader.selectByExample(attacheInfoExample);
+                        if (!Objects.isNull(attacheInfoList) && !attacheInfoList.isEmpty()) {
+                            attacheInfo = attacheInfoList.get(0);
+                        }
+                        String[] fileNameList01 = StrUtil.split(attacheInfo.getFileName(), "||");
+                        List<String> fileNameList02 = new ArrayList<>(Arrays.asList(fileNameList01));
+                        List<String> fileNameList03 = new ArrayList<>();
+                        for (String fileName : fileNameList02) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDomain())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
+                            if (StrUtil.isNotEmpty(attacheInfo.getDataType()) && AttacheInfoDataTypeEnum.Image.getCodeStr().equals(attacheInfo.getDataType())) {
+                                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicImageFile()));
+                            }
+                            if (StrUtil.isNotEmpty(attacheInfo.getDataType()) && AttacheInfoDataTypeEnum.Audio.getCodeStr().equals(attacheInfo.getDataType())) {
+                                stringBuilder.append(StrUtil.trimToNull(this.projectUrlProps.getResDynamicVoiceFile()));
+                            }
+                            stringBuilder.append(fileName);
+                            fileNameList03.add(stringBuilder.toString());
+                        }
+                        likesInfoVO.setAttacheFilenameList(fileNameList03);
+                    }
+                }
             }
             likesInfoVOs.add(likesInfoVO);
             Long sendUserId = message.getSendUserId();
@@ -271,7 +325,6 @@ public class MessageServiceImpl implements MessageService {
     public MessageVO selectApplicationsMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId));
-//        messageVO.setCommentsMessageVO(this.selectAllCommentsMessage(userId));
         List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByUserId(userId);
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
         List<MessageInfoVO> messageInfoVOs2 = new ArrayList<>();

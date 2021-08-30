@@ -96,6 +96,7 @@ public interface MessageService {
 
     /**
      * 删除点赞消息
+     *
      * @param recipientUserId 消息接收者用户id
      * @param messageId       消息id
      */
@@ -103,6 +104,7 @@ public interface MessageService {
 
     /**
      * 删除评论消息
+     *
      * @param recipientUserId 消息接收者用户id
      * @param messageId       消息id
      */

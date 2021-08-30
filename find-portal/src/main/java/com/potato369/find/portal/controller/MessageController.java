@@ -1,7 +1,6 @@
 package com.potato369.find.portal.controller;
 
 import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.common.vo.CommentsVO2;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.common.vo.MessageVO3;
@@ -39,12 +38,9 @@ public class MessageController {
      * @apiSuccess (200) {String} msg 说明
      * @apiSuccess (200) {Number} status 响应状态码
      * @apiSuccess (200) {Object} [data] 消息数据
-     * @apiSuccess (200) {Object} [likes] 最新点赞消息
-     * @apiSuccess (200) {String} [content1] 最新一条点赞消息内容
-     * @apiSuccess (200) {Number} [count1] 未读点赞消息数量
-     * @apiSuccess (200) {Object} [comments] 最新评论消息
-     * @apiSuccess (200) {String} [content2] 最新一条评论消息内容
-     * @apiSuccess (200) {Number} [count2] 未读评论消息数量
+     * @apiSuccess (200) {Object} [likes] 最新点赞或者评论消息
+     * @apiSuccess (200) {String} [content1] 最新一条点赞或者评论消息内容
+     * @apiSuccess (200) {Number} [count1] 未读点赞或者评论消息数量
      * @apiSuccess (200){Number} [totalCount] 申请加微信消息总条数
      * @apiSuccess (200) {Number} [totalPage] 申请加微信消息总页数
      * @apiSuccess (200) {Object[]} [list] 申请加微信消息数据
@@ -69,10 +65,6 @@ public class MessageController {
      * "likes": {
      * "content1": "尹明艳 点赞您的评论 是的，今天天气很糟糕的。",
      * "count1": 0
-     * },
-     * "comments": {
-     * "content2": "季婉 评论您的动态 测试一下",
-     * "count2": 0
      * },
      * "totalCount": 2,
      * "totalPage": 1,
@@ -146,272 +138,106 @@ public class MessageController {
     }
 
     /**
-     * @api {get} /find/message/{id}/likes 分页获取点赞消息列表接口
+     * @api {get} /find/message/{id}/likes 分页获取点赞，评论消息列表接口
      * @apiVersion 1.0.0
      * @apiGroup 消息模块API
-     * @apiName 分页获取点赞消息列表
+     * @apiName 分页获取点赞，评论消息列表
      * @apiParam (接口请求参数){Number} id 消息接收者用户id
      * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页码
      * @apiParam (接口请求参数) {Number} [pageSize=20] 每页数量
      * @apiParamExample 请求示例
-     * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/29/likes?pageNum=1&pageSize=20" -H "accept: application/json"
+     * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/138/likes?pageNum=1&pageSize=20" -H "accept: application/json"
      * @apiSuccess (200) {Number} code 信息码
      * @apiSuccess (200) {String} msg 说明
      * @apiSuccess (200) {Number} status 响应状态码
      * @apiSuccess (200) {Object} [data] 消息数据
-     * @apiSuccess (200){Number} [totalCount] 点赞消息总条数
-     * @apiSuccess (200) {Number} [totalPage] 点赞消息总页数
-     * @apiSuccess (200) {Object[]} [list] 点赞消息数据
-     * @apiSuccess (200){Number} [userId] 点赞者用户id
-     * @apiSuccess (200){Number} [messageId] 点赞消息记录id
-     * @apiSuccess (200){Number} [dynamicInfoId] 点赞的动态内容id
-     * @apiSuccess (200) {String} [head] 点赞者用户头像
-     * @apiSuccess (200) {String} [content] 点赞者发送消息内容
-     * @apiSuccess (200) {String} [attacheType] 点赞的动态内容类型，0->图片，1->语音
-     * @apiSuccess (200) {String[]} [filenameList] 点赞的动态文件名称列表
+     * @apiSuccess (200) {Number} [totalCount] 消息总条数
+     * @apiSuccess (200) {Number} [totalPage] 消息总页数
+     * @apiSuccess (200) {Object[]} [list] 消息数据
+     * @apiSuccess (200) {Number} [messageId] 消息记录id
+     * @apiSuccess (200) {Number} [userId] 消息发送者用户id
+     * @apiSuccess (200) {String="0", "1", "3"} [type] 消息类型，"0"->点赞动态内容消息，"1"->点赞评论内容消息，"3"->评论动态内容消息
+     * @apiSuccess (200) {Number} [infoId] 如果消息类型type="0"或者type="3"，则，infoId是动态内容id，如果消息类型type="1"，则，infoId是评论内容id。
+     * @apiSuccess (200) {String} [head] 消息发送者用户头像
+     * @apiSuccess (200) {String} [content] 消息发送者发送消息内容
+     * @apiSuccess (200) {String} [attacheType] 消息类型type="0"或者type="3"，为动态内容，则表示点赞，或者评论的动态内容类型，0->图片，1->语音
+     * @apiSuccess (200) {String[]} [filenameList] 消息类型type="0"或者type="3"，则为动态内容的动态文件名称列表
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK
      * {
-     * "status":200,
-     * "code":0,
-     * "msg":"返回数据成功",
-     * "data":{
-     * "totalCount":30,
-     * "totalPage":2,
-     * "list":[
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "totalCount": 6,
+     * "totalPage": 1,
+     * "list": [
      * {
-     * "messageId":90,
-     * "dynamicInfoId":87,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态差点就掉下去了！",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/28/20200611/03.png"
+     * "messageId": 503,
+     * "userId": 146,
+     * "type": "1",
+     * "infoId": 45,
+     * "head": "http://192.168.31.38:9000/find/img/head/146/68d93b51-fee5-413a-b600-3597f1a1197c.jpg",
+     * "content": "尹明艳 点赞您的评论 是的，今天天气很糟糕的。"
+     * },
+     * {
+     * "messageId": 501,
+     * "userId": 146,
+     * "type": "0",
+     * "infoId": 642,
+     * "head": "http://192.168.31.38:9000/find/img/head/146/68d93b51-fee5-413a-b600-3597f1a1197c.jpg",
+     * "content": "尹明艳 点赞您的动态 测试一下",
+     * "attacheType": "1",
+     * "filenameList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210328/1616931465570/bfbe75bc-4ab5-4984-ab08-a8f492b718f1.jpeg"
      * ]
      * },
      * {
-     * "messageId":89,
-     * "dynamicInfoId":187,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态差点就掉下去了！",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200427/014.png"
+     * "messageId": 500,
+     * "userId": 144,
+     * "type": "3",
+     * "infoId": 642,
+     * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "content": "季婉 评论您的动态 测试一下",
+     * "attacheType": "1",
+     * "filenameList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210328/1616931465570/bfbe75bc-4ab5-4984-ab08-a8f492b718f1.jpeg"
      * ]
      * },
      * {
-     * "messageId":88,
-     * "dynamicInfoId":37,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态差点就掉下去了！",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200502/07.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200502/09.png"
+     * "messageId": 497,
+     * "userId": 144,
+     * "type": "0",
+     * "infoId": 642,
+     * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "content": "季婉 点赞您的动态 测试一下",
+     * "attacheType": "1",
+     * "filenameList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210328/1616931465570/bfbe75bc-4ab5-4984-ab08-a8f492b718f1.jpeg"
      * ]
      * },
      * {
-     * "messageId":87,
-     * "dynamicInfoId":57,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态差点就掉下去了！",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200503/03.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200503/05.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200503/08.png"
+     * "messageId": 494,
+     * "userId": 144,
+     * "type": "3",
+     * "infoId": 628,
+     * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "content": "季婉 评论您的动态 测试正常",
+     * "attacheType": "1",
+     * "filenameList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210317/1615981448911/d338074b-d7a9-4963-9ccf-3cc4de3a9485.jpeg"
      * ]
      * },
      * {
-     * "messageId":86,
-     * "dynamicInfoId":287,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态差点就掉下去了！",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200505/12.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200505/13.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200505/15.png"
-     * ]
-     * },
-     * {
-     * "messageId":85,
-     * "dynamicInfoId":88,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态差点就掉下去了！",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200507/04.png"
-     * ]
-     * },
-     * {
-     * "messageId":84,
-     * "dynamicInfoId":37,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态这组我比较喜欢",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/28/20200611/03.png"
-     * ]
-     * },
-     * {
-     * "messageId":83,
-     * "dynamicInfoId":47,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态这组我比较喜欢",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200427/014.png"
-     * ]
-     * },
-     * {
-     * "messageId":82,
-     * "dynamicInfoId":67,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态这组我比较喜欢",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200502/07.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200502/09.png"
-     * ]
-     * },
-     * {
-     * "messageId":81,
-     * "dynamicInfoId":77,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态这组我比较喜欢",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200503/03.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200503/05.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200503/08.png"
-     * ]
-     * },
-     * {
-     * "messageId":80,
-     * "dynamicInfoId":67,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态这组我比较喜欢",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200505/12.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200505/13.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200505/15.png"
-     * ]
-     * },
-     * {
-     * "messageId":79,
-     * "dynamicInfoId":57,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态这组我比较喜欢",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200507/04.png"
-     * ]
-     * },
-     * {
-     * "messageId":78,
-     * "dynamicInfoId":17,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态51出门熏人",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/28/20200611/03.png"
-     * ]
-     * },
-     * {
-     * "messageId":77,
-     * "dynamicInfoId":87,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态51出门熏人",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200427/014.png"
-     * ]
-     * },
-     * {
-     * "messageId":76,
-     * "dynamicInfoId":87,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态51出门熏人",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200502/07.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200502/09.png"
-     * ]
-     * },
-     * {
-     * "messageId":75,
-     * "dynamicInfoId":87,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态51出门熏人",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200503/03.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200503/05.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200503/08.png"
-     * ]
-     * },
-     * {
-     * "messageId":74,
-     * "dynamicInfoId":87,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态51出门熏人",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200505/12.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200505/13.png",
-     * "http://192.168.31.31:9000/find/res/images/29/20200505/15.png"
-     * ]
-     * },
-     * {
-     * "messageId":73,
-     * "dynamicInfoId":87,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态51出门熏人",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200507/04.png"
-     * ]
-     * },
-     * {
-     * "messageId":72,
-     * "dynamicInfoId":87,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态摩天轮旋转",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/28/20200611/03.png"
-     * ]
-     * },
-     * {
-     * "messageId":71,
-     * "dynamicInfoId":87,
-     * "userId":70,
-     * "head":"http://192.168.31.31:9000/find/img/head/70/03.png",
-     * "content":"阿萌赞了你的动态摩天轮旋转",
-     * "attacheType":"0",
-     * "filenameList":[
-     * "http://192.168.31.31:9000/find/res/images/29/20200427/014.png"
+     * "messageId": 493,
+     * "userId": 144,
+     * "type": "0",
+     * "infoId": 628,
+     * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
+     * "content": "季婉 点赞您的动态 测试正常",
+     * "attacheType": "1",
+     * "filenameList": [
+     * "http://192.168.31.38:9000/find/res/images/138/20210317/1615981448911/d338074b-d7a9-4963-9ccf-3cc4de3a9485.jpeg"
      * ]
      * }
      * ]
@@ -457,95 +283,14 @@ public class MessageController {
         return this.messageFeignClient.likes(userId, pageNum, pageSize);
     }
 
-    /**
-     * @api {get} /find/message/{id}/comments 分页获取评论消息列表接口
-     * @apiVersion 1.0.0
-     * @apiGroup 消息模块API
-     * @apiName 分页获取评论消息列表
-     * @apiParam (接口请求参数){Number} id 消息接收者用户id
-     * @apiParam (接口请求参数) {Number} [pageNum=1] 当前页码
-     * @apiParam (接口请求参数) {Number} [pageSize=20] 每页数量
-     * @apiParamExample 请求示例
-     * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/138/comments?pageNum=1&pageSize=20" -H "accept: application/json"
-     * @apiSuccess (200) {Number} code 信息码
-     * @apiSuccess (200) {String} msg 说明
-     * @apiSuccess (200) {Number} status 响应状态码
-     * @apiSuccess (200) {Object} [data] 消息数据
-     * @apiSuccess (200){Number} [totalCount] 评论消息总条数
-     * @apiSuccess (200) {Number} [totalPage] 评论消息总页数
-     * @apiSuccess (200) {Object[]} [list] 评论消息数据
-     * @apiSuccess (200){Number} [userId] 点赞者用户id
-     * @apiSuccess (200){Number} [messageId] 评论消息id
-     * @apiSuccess (200){Number} [commentId] 评论id
-     * @apiSuccess (200){Number} [userId] 评论的用户id
-     * @apiSuccess (200) {String} [head] 评论的用户头像
-     * @apiSuccess (200) {String} [content] 发送消息内容
-     * @apiSuccessExample {json} 200响应示例
-     * HTTP/1.1 200 OK
-     * {
-     * "status": 200,
-     * "code": 0,
-     * "msg": "返回数据成功。",
-     * "data": {
-     * "totalCount": 2,
-     * "totalPage": 1,
-     * "list": [
-     * {
-     * "messageId": 500,
-     * "commentId": 44,
-     * "userId": 144,
-     * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
-     * "content": "季婉 评论您的动态 测试一下"
-     * },
-     * {
-     * "messageId": 494,
-     * "commentId": 43,
-     * "userId": 144,
-     * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
-     * "content": "季婉 评论您的动态 测试正常"
-     * }
-     * ]
-     * }
-     * }
-     * @apiError (403) {Number} status 响应状态码
-     * @apiError (403) {Number} code 消息码
-     * @apiError (403) {String} msg 说明
-     * @apiErrorExample {json} 403错误
-     * HTTP/1.1 403 403响应
-     * {
-     * "status": 403,
-     * "code": 199,
-     * "msg": "未找到用户信息！"
-     * }
-     * @apiError (404) {Number} status 响应状态码
-     * @apiError (404) {Number} code 消息码
-     * @apiError (404) {String} msg 说明
-     * @apiErrorExample {json} 404错误
-     * HTTP/1.1 404 404响应
-     * {
-     * "status": 404,
-     * "code": 200,
-     * "msg": "接口未注册！"
-     * }
-     * @apiError (500) {Number} status 响应状态码
-     * @apiError (500) {Number} code 消息码
-     * @apiError (500) {String} msg 说明
-     * @apiErrorExample {json} 500错误
-     * HTTP/1.1 500 500响应
-     * {
-     * "status": 500,
-     * "code": 205,
-     * "msg": "服务器未响应！"
-     * }
-     */
-    @GetMapping(value = "{id}/comments")
-    @ApiOperation(value = "分页获取评论消息列表接口", notes = "分页获取评论消息列表。")
-    @ApiResponses(@ApiResponse(code = 200, message = "分页获取点赞消息列表成功", response = CommonResult.class))
-    CommonResult<CommentsVO2> findComments(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
-                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码，默认：当前第1页", example = "1") Integer pageNum, // 当前页码，默认：当前第1页
-                                           @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量，默认：每页20条", example = "20") Integer pageSize) {// 每页数量，默认：每页20条
-        return this.messageFeignClient.comments(userId, pageNum, pageSize);
-    }
+//    @GetMapping(value = "{id}/comments")
+//    @ApiOperation(value = "分页获取评论消息列表接口", notes = "分页获取评论消息列表。")
+//    @ApiResponses(@ApiResponse(code = 200, message = "分页获取点赞消息列表成功", response = CommonResult.class))
+//    CommonResult<CommentsVO2> findComments(@PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
+//                                           @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码，默认：当前第1页", example = "1") Integer pageNum, // 当前页码，默认：当前第1页
+//                                           @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量，默认：每页20条", example = "20") Integer pageSize) {// 每页数量，默认：每页20条
+//        return this.messageFeignClient.comments(userId, pageNum, pageSize);
+//    }
 
     /**
      * @api {get} /find/message/{id1}/{id2}/messages 分页获取消息历史记录列表接口

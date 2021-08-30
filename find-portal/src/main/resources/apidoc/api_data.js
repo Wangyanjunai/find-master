@@ -6223,42 +6223,21 @@ define({ "api": [
             "type": "Object",
             "optional": true,
             "field": "likes",
-            "description": "<p>最新点赞消息</p>"
+            "description": "<p>最新点赞或者评论消息</p>"
           },
           {
             "group": "200",
             "type": "String",
             "optional": true,
             "field": "content1",
-            "description": "<p>最新一条点赞消息内容</p>"
+            "description": "<p>最新一条点赞或者评论消息内容</p>"
           },
           {
             "group": "200",
             "type": "Number",
             "optional": true,
             "field": "count1",
-            "description": "<p>未读点赞消息数量</p>"
-          },
-          {
-            "group": "200",
-            "type": "Object",
-            "optional": true,
-            "field": "comments",
-            "description": "<p>最新评论消息</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": true,
-            "field": "content2",
-            "description": "<p>最新一条评论消息内容</p>"
-          },
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": true,
-            "field": "count2",
-            "description": "<p>未读评论消息数量</p>"
+            "description": "<p>未读点赞或者评论消息数量</p>"
           },
           {
             "group": "200",
@@ -6313,6 +6292,20 @@ define({ "api": [
             "group": "200",
             "type": "String",
             "optional": true,
+            "field": "content2",
+            "description": "<p>申请加微信发送消息内容</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "count2",
+            "description": "<p>申请加微信未读消息数量</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": true,
             "field": "createTime",
             "description": "<p>消息发送时间</p>"
           },
@@ -6349,7 +6342,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"likes\": {\n\"content1\": \"尹明艳 点赞您的评论 是的，今天天气很糟糕的。\",\n\"count1\": 0\n},\n\"comments\": {\n\"content2\": \"季婉 评论您的动态 测试一下\",\n\"count2\": 0\n},\n\"totalCount\": 2,\n\"totalPage\": 1,\n\"list\": [\n{\n\"messageId\": 505,\n\"userId\": 140,\n\"head\": \"http://192.168.31.38:9000/find/img/head/140/0c99dc02-188b-426e-a46d-5e951743dedf.jpg\",\n\"nickname\": \"凝噎新紫\",\n\"content2\": \"同意\",\n\"createTime\": \"2021年08月27日 16:28:21\",\n\"count2\": 1,\n\"type\": \"1\",\n\"flag\": 1,\n\"weixinId\": \"11111111111\",\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 498,\n\"userId\": 144,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"content2\": \"申请加您的微信，麻烦通过一下。\",\n\"createTime\": \"2021年08月26日 15:42:32\",\n\"count2\": 1,\n\"type\": \"1\",\n\"flag\": 0,\n\"isOrNotApplication\": false\n}\n]\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"likes\": {\n\"content1\": \"尹明艳 点赞您的评论 是的，今天天气很糟糕的。\",\n\"count1\": 0\n},\n\"totalCount\": 2,\n\"totalPage\": 1,\n\"list\": [\n{\n\"messageId\": 505,\n\"userId\": 140,\n\"head\": \"http://192.168.31.38:9000/find/img/head/140/0c99dc02-188b-426e-a46d-5e951743dedf.jpg\",\n\"nickname\": \"凝噎新紫\",\n\"content2\": \"同意\",\n\"createTime\": \"2021年08月27日 16:28:21\",\n\"count2\": 1,\n\"type\": \"1\",\n\"flag\": 1,\n\"weixinId\": \"11111111111\",\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 498,\n\"userId\": 144,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"content2\": \"申请加您的微信，麻烦通过一下。\",\n\"createTime\": \"2021年08月26日 15:42:32\",\n\"count2\": 1,\n\"type\": \"1\",\n\"flag\": 0,\n\"isOrNotApplication\": false\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -6455,10 +6448,10 @@ define({ "api": [
   {
     "type": "get",
     "url": "/find/message/{id}/likes",
-    "title": "分页获取点赞消息列表接口",
+    "title": "分页获取点赞，评论消息列表接口",
     "version": "1.0.0",
     "group": "消息模块API",
-    "name": "分页获取点赞消息列表",
+    "name": "分页获取点赞，评论消息列表",
     "parameter": {
       "fields": {
         "接口请求参数": [
@@ -6490,7 +6483,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求示例",
-          "content": "curl -v -X GET \"http://w168428j19.51mypc.cn/find/message/29/likes?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
+          "content": "curl -v -X GET \"http://w168428j19.51mypc.cn/find/message/138/likes?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
           "type": "json"
         }
       ]
@@ -6531,77 +6524,89 @@ define({ "api": [
             "type": "Number",
             "optional": true,
             "field": "totalCount",
-            "description": "<p>点赞消息总条数</p>"
+            "description": "<p>消息总条数</p>"
           },
           {
             "group": "200",
             "type": "Number",
             "optional": true,
             "field": "totalPage",
-            "description": "<p>点赞消息总页数</p>"
+            "description": "<p>消息总页数</p>"
           },
           {
             "group": "200",
             "type": "Object[]",
             "optional": true,
             "field": "list",
-            "description": "<p>点赞消息数据</p>"
-          },
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": true,
-            "field": "userId",
-            "description": "<p>点赞者用户id</p>"
+            "description": "<p>消息数据</p>"
           },
           {
             "group": "200",
             "type": "Number",
             "optional": true,
             "field": "messageId",
-            "description": "<p>点赞消息记录id</p>"
+            "description": "<p>消息记录id</p>"
           },
           {
             "group": "200",
             "type": "Number",
             "optional": true,
-            "field": "dynamicInfoId",
-            "description": "<p>点赞的动态内容id</p>"
+            "field": "userId",
+            "description": "<p>消息发送者用户id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "allowedValues": [
+              "\"0\"",
+              "\"1\"",
+              "\"3\""
+            ],
+            "optional": true,
+            "field": "type",
+            "description": "<p>消息类型，&quot;0&quot;-&gt;点赞动态内容消息，&quot;1&quot;-&gt;点赞评论内容消息，&quot;3&quot;-&gt;评论动态内容消息</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "infoId",
+            "description": "<p>如果消息类型type=&quot;0&quot;或者type=&quot;3&quot;，则，infoId是动态内容id，如果消息类型type=&quot;1&quot;，则，infoId是评论内容id。</p>"
           },
           {
             "group": "200",
             "type": "String",
             "optional": true,
             "field": "head",
-            "description": "<p>点赞者用户头像</p>"
+            "description": "<p>消息发送者用户头像</p>"
           },
           {
             "group": "200",
             "type": "String",
             "optional": true,
             "field": "content",
-            "description": "<p>点赞者发送消息内容</p>"
+            "description": "<p>消息发送者发送消息内容</p>"
           },
           {
             "group": "200",
             "type": "String",
             "optional": true,
             "field": "attacheType",
-            "description": "<p>点赞的动态内容类型，0-&gt;图片，1-&gt;语音</p>"
+            "description": "<p>消息类型type=&quot;0&quot;或者type=&quot;3&quot;，为动态内容，则表示点赞，或者评论的动态内容类型，0-&gt;图片，1-&gt;语音</p>"
           },
           {
             "group": "200",
             "type": "String[]",
             "optional": true,
             "field": "filenameList",
-            "description": "<p>点赞的动态文件名称列表</p>"
+            "description": "<p>消息类型type=&quot;0&quot;或者type=&quot;3&quot;，则为动态内容的动态文件名称列表</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\":200,\n\"code\":0,\n\"msg\":\"返回数据成功\",\n\"data\":{\n\"totalCount\":30,\n\"totalPage\":2,\n\"list\":[\n{\n\"messageId\":90,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":89,\n\"dynamicInfoId\":187,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":88,\n\"dynamicInfoId\":37,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200502/07.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":87,\n\"dynamicInfoId\":57,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200503/03.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/05.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":86,\n\"dynamicInfoId\":287,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200505/12.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/13.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":85,\n\"dynamicInfoId\":88,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态差点就掉下去了！\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":84,\n\"dynamicInfoId\":37,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":83,\n\"dynamicInfoId\":47,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":82,\n\"dynamicInfoId\":67,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200502/07.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":81,\n\"dynamicInfoId\":77,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200503/03.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/05.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":80,\n\"dynamicInfoId\":67,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200505/12.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/13.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":79,\n\"dynamicInfoId\":57,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态这组我比较喜欢\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":78,\n\"dynamicInfoId\":17,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":77,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n},\n{\n\"messageId\":76,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200502/07.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200502/09.png\"\n]\n},\n{\n\"messageId\":75,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200503/03.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/05.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200503/08.png\"\n]\n},\n{\n\"messageId\":74,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200505/12.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/13.png\",\n\"http://192.168.31.31:9000/find/res/images/29/20200505/15.png\"\n]\n},\n{\n\"messageId\":73,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态51出门熏人\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200507/04.png\"\n]\n},\n{\n\"messageId\":72,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/28/20200611/03.png\"\n]\n},\n{\n\"messageId\":71,\n\"dynamicInfoId\":87,\n\"userId\":70,\n\"head\":\"http://192.168.31.31:9000/find/img/head/70/03.png\",\n\"content\":\"阿萌赞了你的动态摩天轮旋转\",\n\"attacheType\":\"0\",\n\"filenameList\":[\n\"http://192.168.31.31:9000/find/res/images/29/20200427/014.png\"\n]\n}\n]\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"totalCount\": 6,\n\"totalPage\": 1,\n\"list\": [\n{\n\"messageId\": 503,\n\"userId\": 146,\n\"type\": \"1\",\n\"infoId\": 45,\n\"head\": \"http://192.168.31.38:9000/find/img/head/146/68d93b51-fee5-413a-b600-3597f1a1197c.jpg\",\n\"content\": \"尹明艳 点赞您的评论 是的，今天天气很糟糕的。\"\n},\n{\n\"messageId\": 501,\n\"userId\": 146,\n\"type\": \"0\",\n\"infoId\": 642,\n\"head\": \"http://192.168.31.38:9000/find/img/head/146/68d93b51-fee5-413a-b600-3597f1a1197c.jpg\",\n\"content\": \"尹明艳 点赞您的动态 测试一下\",\n\"attacheType\": \"1\",\n\"filenameList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210328/1616931465570/bfbe75bc-4ab5-4984-ab08-a8f492b718f1.jpeg\"\n]\n},\n{\n\"messageId\": 500,\n\"userId\": 144,\n\"type\": \"3\",\n\"infoId\": 642,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"content\": \"季婉 评论您的动态 测试一下\",\n\"attacheType\": \"1\",\n\"filenameList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210328/1616931465570/bfbe75bc-4ab5-4984-ab08-a8f492b718f1.jpeg\"\n]\n},\n{\n\"messageId\": 497,\n\"userId\": 144,\n\"type\": \"0\",\n\"infoId\": 642,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"content\": \"季婉 点赞您的动态 测试一下\",\n\"attacheType\": \"1\",\n\"filenameList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210328/1616931465570/bfbe75bc-4ab5-4984-ab08-a8f492b718f1.jpeg\"\n]\n},\n{\n\"messageId\": 494,\n\"userId\": 144,\n\"type\": \"3\",\n\"infoId\": 628,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"content\": \"季婉 评论您的动态 测试正常\",\n\"attacheType\": \"1\",\n\"filenameList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210317/1615981448911/d338074b-d7a9-4963-9ccf-3cc4de3a9485.jpeg\"\n]\n},\n{\n\"messageId\": 493,\n\"userId\": 144,\n\"type\": \"0\",\n\"infoId\": 628,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"content\": \"季婉 点赞您的动态 测试正常\",\n\"attacheType\": \"1\",\n\"filenameList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210317/1615981448911/d338074b-d7a9-4963-9ccf-3cc4de3a9485.jpeg\"\n]\n}\n]\n}\n}",
           "type": "json"
         }
       ]
@@ -6701,244 +6706,6 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://w168428j19.51mypc.cn/find/message/{id}/likes"
-      }
-    ]
-  },
-  {
-    "type": "get",
-    "url": "/find/message/{id}/comments",
-    "title": "分页获取评论消息列表接口",
-    "version": "1.0.0",
-    "group": "消息模块API",
-    "name": "分页获取评论消息列表",
-    "parameter": {
-      "fields": {
-        "接口请求参数": [
-          {
-            "group": "接口请求参数",
-            "type": "Number",
-            "optional": false,
-            "field": "id",
-            "description": "<p>消息接收者用户id</p>"
-          },
-          {
-            "group": "接口请求参数",
-            "type": "Number",
-            "optional": true,
-            "field": "pageNum",
-            "defaultValue": "1",
-            "description": "<p>当前页码</p>"
-          },
-          {
-            "group": "接口请求参数",
-            "type": "Number",
-            "optional": true,
-            "field": "pageSize",
-            "defaultValue": "20",
-            "description": "<p>每页数量</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "请求示例",
-          "content": "curl -v -X GET \"http://w168428j19.51mypc.cn/find/message/138/comments?pageNum=1&pageSize=20\" -H \"accept: application/json\"",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "200": [
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": false,
-            "field": "code",
-            "description": "<p>信息码</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": false,
-            "field": "msg",
-            "description": "<p>说明</p>"
-          },
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": false,
-            "field": "status",
-            "description": "<p>响应状态码</p>"
-          },
-          {
-            "group": "200",
-            "type": "Object",
-            "optional": true,
-            "field": "data",
-            "description": "<p>消息数据</p>"
-          },
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": true,
-            "field": "totalCount",
-            "description": "<p>评论消息总条数</p>"
-          },
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": true,
-            "field": "totalPage",
-            "description": "<p>评论消息总页数</p>"
-          },
-          {
-            "group": "200",
-            "type": "Object[]",
-            "optional": true,
-            "field": "list",
-            "description": "<p>评论消息数据</p>"
-          },
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": true,
-            "field": "userId",
-            "description": "<p>点赞者用户id</p>"
-          },
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": true,
-            "field": "messageId",
-            "description": "<p>评论消息id</p>"
-          },
-          {
-            "group": "200",
-            "type": "Number",
-            "optional": true,
-            "field": "commentId",
-            "description": "<p>评论id</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": true,
-            "field": "head",
-            "description": "<p>评论的用户头像</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "optional": true,
-            "field": "content",
-            "description": "<p>发送消息内容</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"totalCount\": 2,\n\"totalPage\": 1,\n\"list\": [\n{\n\"messageId\": 500,\n\"commentId\": 44,\n\"userId\": 144,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"content\": \"季婉 评论您的动态 测试一下\"\n},\n{\n\"messageId\": 494,\n\"commentId\": 43,\n\"userId\": 144,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"content\": \"季婉 评论您的动态 测试正常\"\n}\n]\n}\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "403": [
-          {
-            "group": "403",
-            "type": "Number",
-            "optional": false,
-            "field": "status",
-            "description": "<p>响应状态码</p>"
-          },
-          {
-            "group": "403",
-            "type": "Number",
-            "optional": false,
-            "field": "code",
-            "description": "<p>消息码</p>"
-          },
-          {
-            "group": "403",
-            "type": "String",
-            "optional": false,
-            "field": "msg",
-            "description": "<p>说明</p>"
-          }
-        ],
-        "404": [
-          {
-            "group": "404",
-            "type": "Number",
-            "optional": false,
-            "field": "status",
-            "description": "<p>响应状态码</p>"
-          },
-          {
-            "group": "404",
-            "type": "Number",
-            "optional": false,
-            "field": "code",
-            "description": "<p>消息码</p>"
-          },
-          {
-            "group": "404",
-            "type": "String",
-            "optional": false,
-            "field": "msg",
-            "description": "<p>说明</p>"
-          }
-        ],
-        "500": [
-          {
-            "group": "500",
-            "type": "Number",
-            "optional": false,
-            "field": "status",
-            "description": "<p>响应状态码</p>"
-          },
-          {
-            "group": "500",
-            "type": "Number",
-            "optional": false,
-            "field": "code",
-            "description": "<p>消息码</p>"
-          },
-          {
-            "group": "500",
-            "type": "String",
-            "optional": false,
-            "field": "msg",
-            "description": "<p>说明</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "403错误",
-          "content": "HTTP/1.1 403 403响应\n{\n\"status\": 403,\n\"code\": 199,\n\"msg\": \"未找到用户信息！\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "404错误",
-          "content": "HTTP/1.1 404 404响应\n{\n\"status\": 404,\n\"code\": 200,\n\"msg\": \"接口未注册！\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "500错误",
-          "content": "HTTP/1.1 500 500响应\n{\n\"status\": 500,\n\"code\": 205,\n\"msg\": \"服务器未响应！\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/main/java/com/potato369/find/portal/controller/MessageController.java",
-    "groupTitle": "消息模块API",
-    "sampleRequest": [
-      {
-        "url": "http://w168428j19.51mypc.cn/find/message/{id}/comments"
       }
     ]
   },

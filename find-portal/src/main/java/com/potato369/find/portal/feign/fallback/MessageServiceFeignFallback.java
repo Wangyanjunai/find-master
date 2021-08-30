@@ -1,7 +1,6 @@
 package com.potato369.find.portal.feign.fallback;
 
 import com.potato369.find.common.api.CommonResult;
-import com.potato369.find.common.vo.CommentsVO2;
 import com.potato369.find.common.vo.MessageVO;
 import com.potato369.find.common.vo.MessageVO2;
 import com.potato369.find.common.vo.MessageVO3;
@@ -27,11 +26,11 @@ public class MessageServiceFeignFallback implements MessageService {
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }
 
-    @Override
-    public CommonResult<CommentsVO2> comments(Long userId, Integer pageNum, Integer pageSize) {
-        log.error("进入了熔断器方法！！！");
-        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
-    }
+//    @Override
+//    public CommonResult<CommentsVO2> comments(Long userId, Integer pageNum, Integer pageSize) {
+//        log.error("进入了熔断器方法！！！");
+//        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+//    }
 
     @Override
     public CommonResult<MessageVO3> messages(Long sendUserId, Long recipientUserId, Integer pageNum, Integer pageSize) {
