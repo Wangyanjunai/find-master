@@ -111,7 +111,7 @@
 
     <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="TRACE"/>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="consoleLog"/>
         <appender-ref ref="fileDebugLog"/>
         <appender-ref ref="fileInfoLog"/>

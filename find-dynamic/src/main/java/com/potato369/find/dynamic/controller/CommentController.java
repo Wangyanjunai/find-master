@@ -293,15 +293,15 @@ public class CommentController {
                 if (Objects.isNull(likeRecord)) {
                     return CommonResult.failed(data, ResultCode.LIKES_RECORD_IS_NOT_EXIST);
                 }
-                likeRecord.setStatus(LikeStatusEnum.NO.getStatus());
+//                likeRecord.setStatus(LikeStatusEnum.NO.getStatus());
                 likeRecord.setUpdateTime(new Date());
-                comment.setLikes(comment.getLikes() - 1);
+//                comment.setLikes(comment.getLikes() - 1);
                 comment.setUpdatedTime(new Date());
                 int result = this.likeRecordService.updateComment(likeRecord, comment);
                 if (result > 0) {
                     data.put("LIKES", "OK");
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
-                    return CommonResult.success(data, "取消点赞成功。");
+                    return CommonResult.success(data, "无法取消点赞。");
                 }
             }
             // 点赞

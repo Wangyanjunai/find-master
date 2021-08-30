@@ -850,16 +850,16 @@ public class DynamicController {
                 if (Objects.isNull(likeRecord)) {
                     return CommonResult.failed(data, ResultCode.LIKES_RECORD_IS_NOT_EXIST);
                 }
-                likeRecord.setStatus(LikeStatusEnum.NO.getStatus());
+//                likeRecord.setStatus(LikeStatusEnum.NO.getStatus());
                 likeRecord.setUpdateTime(new Date());
-                dynamicInfo.setLikes(dynamicInfo.getLikes() - 1);
+//                dynamicInfo.setLikes(dynamicInfo.getLikes() - 1);
                 dynamicInfo.setUpdateTime(new Date());
                 int result = this.likeRecordService.update(likeRecord, dynamicInfo);
                 if (result > 0) {
                     data.put("LIKED", "OK");
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                     this.operateRecordMapperWriter.insertSelective(operateRecord);
-                    return CommonResult.success(data, "取消点赞成功。");
+                    return CommonResult.success(data, "无法取消点赞。");
                 }
             }
             //点赞

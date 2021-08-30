@@ -31,7 +31,7 @@ public class MessageVO2 {
     private Integer totalPage;
 
     /**
-     * 点赞数据列表
+     * 点赞或者评论消息数据列表
      */
     @JSONField(name = "list")
     @JsonProperty(value = "list")
