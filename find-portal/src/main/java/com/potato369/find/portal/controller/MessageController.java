@@ -160,7 +160,7 @@ public class MessageController {
      * @apiSuccess (200) {Number} [dynamicInfoId] 点赞的或者评论的动态内容id
      * @apiSuccess (200) {String} [head] 消息发送者用户头像
      * @apiSuccess (200) {String} [content] 消息发送者发送消息内容
-     * @apiSuccess (200) {String} [attacheType] 消息类型type="0"或者type="3"，为动态内容，则表示点赞，或者评论的动态内容类型，0->图片，1->语音
+     * @apiSuccess (200) {String} [attacheType] 消息类型type="0"或者type="3"，为动态内容，则表示点赞，或者评论的动态内容类型，1->图片，2->语音
      * @apiSuccess (200) {String[]} [filenameList] 消息类型type="0"或者type="3"，则为动态内容的动态文件名称列表
      * @apiSuccessExample {json} 200响应示例
      * HTTP/1.1 200 OK

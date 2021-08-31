@@ -6592,7 +6592,7 @@ define({ "api": [
             "type": "String",
             "optional": true,
             "field": "attacheType",
-            "description": "<p>消息类型type=&quot;0&quot;或者type=&quot;3&quot;，为动态内容，则表示点赞，或者评论的动态内容类型，0-&gt;图片，1-&gt;语音</p>"
+            "description": "<p>消息类型type=&quot;0&quot;或者type=&quot;3&quot;，为动态内容，则表示点赞，或者评论的动态内容类型，1-&gt;图片，2-&gt;语音</p>"
           },
           {
             "group": "200",
