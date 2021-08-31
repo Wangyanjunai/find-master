@@ -377,7 +377,7 @@
                message.`content`
         FROM `message` message
         WHERE message.`recipient_user_id` = #{userId, jdbcType=BIGINT}
-          AND message.`reserve_column01` IN( 'likes', 'comments')
+          AND message.`reserve_column01` IN ('likes', 'comments')
           AND message.`reserve_column03` = '0'
         ORDER BY message.`create_time` DESC
     </select>
@@ -658,7 +658,7 @@
         UPDATE `message`
         SET `status`      = '1',
             `update_time` = NOW()
-        WHERE `reserve_column01` = 'likes'
+        WHERE `reserve_column01` IN ('likes', 'comments')
           AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
           AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
     </update>
