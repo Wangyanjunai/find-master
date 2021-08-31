@@ -50,6 +50,8 @@ public class MessageServiceImpl implements MessageService {
 
     private CommentRecordMapper commentRecordMapperReader;
 
+    private CommentMapper commentMapperReader;
+
     @Autowired
     public void setMessageMapperReader(MessageMapper messageMapperReader) {
         this.messageMapperReader = messageMapperReader;
@@ -108,6 +110,11 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     public void setCommentRecordMapperReader(CommentRecordMapper commentRecordMapperReader) {
         this.commentRecordMapperReader = commentRecordMapperReader;
+    }
+
+    @Autowired
+    public void setCommentMapperReader(CommentMapper commentMapperReader) {
+        this.commentMapperReader = commentMapperReader;
     }
 
     @Override
@@ -193,7 +200,7 @@ public class MessageServiceImpl implements MessageService {
                 LikeRecord likeRecord = this.likeRecordMapperReader.selectByPrimaryKey(likeRecordId);
                 if (!Objects.isNull(likeRecord) && Objects.equals(LikeRecordTypeEnum.Dynamic.getType(), likeRecord.getType())) {
                     Long dynamicInfoId = likeRecord.getDynamicInfoId();
-                    likesInfoVO.setInfoId(dynamicInfoId);
+                    likesInfoVO.setDynamicInfoId(dynamicInfoId);
                     likesInfoVO.setType(LikeRecordTypeEnum.Dynamic.getType());
                     DynamicInfo dynamicInfo = this.dynamicInfoMapperReader.selectByPrimaryKey(dynamicInfoId);
                     if (!Objects.isNull(dynamicInfo)) {
@@ -225,7 +232,10 @@ public class MessageServiceImpl implements MessageService {
                 }
                 if (!Objects.isNull(likeRecord) && Objects.equals(LikeRecordTypeEnum.Comment.getType(), likeRecord.getType())) {
                     Long commentInfoId = likeRecord.getDynamicInfoId();
-                    likesInfoVO.setInfoId(commentInfoId);
+                    Comment comment = this.commentMapperReader.selectByPrimaryKey(commentInfoId);
+                    if (!Objects.isNull(comment)) {
+                        likesInfoVO.setDynamicInfoId(comment.getDynamicInfoId());
+                    }
                     likesInfoVO.setType(LikeRecordTypeEnum.Comment.getType());
                 }
             }
@@ -236,7 +246,7 @@ public class MessageServiceImpl implements MessageService {
                 CommentRecord commentRecord = this.commentRecordMapperReader.selectByPrimaryKey(commentRecordId);
                 if (!Objects.isNull(commentRecord)) {
                     Long dynamicInfoId = commentRecord.getDynamicInfoId();
-                    likesInfoVO.setInfoId(dynamicInfoId);
+                    likesInfoVO.setDynamicInfoId(dynamicInfoId);
                     DynamicInfo dynamicInfo = this.dynamicInfoMapperReader.selectByPrimaryKey(dynamicInfoId);
                     if (!Objects.isNull(dynamicInfo)) {
                         likesInfoVO.setAttacheType(dynamicInfo.getAttacheType());

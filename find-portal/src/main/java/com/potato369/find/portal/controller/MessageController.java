@@ -157,7 +157,7 @@ public class MessageController {
      * @apiSuccess (200) {Number} [messageId] 消息记录id
      * @apiSuccess (200) {Number} [userId] 消息发送者用户id
      * @apiSuccess (200) {String="0", "1", "3"} [type] 消息类型，"0"->点赞动态内容消息，"1"->点赞评论内容消息，"3"->评论动态内容消息
-     * @apiSuccess (200) {Number} [infoId] 如果消息类型type="0"或者type="3"，则，infoId是动态内容id，如果消息类型type="1"，则，infoId是评论内容id。
+     * @apiSuccess (200) {Number} [dynamicInfoId] 点赞的或者评论的动态内容id
      * @apiSuccess (200) {String} [head] 消息发送者用户头像
      * @apiSuccess (200) {String} [content] 消息发送者发送消息内容
      * @apiSuccess (200) {String} [attacheType] 消息类型type="0"或者type="3"，为动态内容，则表示点赞，或者评论的动态内容类型，0->图片，1->语音
@@ -176,7 +176,7 @@ public class MessageController {
      * "messageId": 503,
      * "userId": 146,
      * "type": "1",
-     * "infoId": 45,
+     * "dynamicInfoId": 24,
      * "head": "http://192.168.31.38:9000/find/img/head/146/68d93b51-fee5-413a-b600-3597f1a1197c.jpg",
      * "content": "尹明艳 点赞您的评论 是的，今天天气很糟糕的。"
      * },
@@ -184,7 +184,7 @@ public class MessageController {
      * "messageId": 501,
      * "userId": 146,
      * "type": "0",
-     * "infoId": 642,
+     * "dynamicInfoId": 642,
      * "head": "http://192.168.31.38:9000/find/img/head/146/68d93b51-fee5-413a-b600-3597f1a1197c.jpg",
      * "content": "尹明艳 点赞您的动态 测试一下",
      * "attacheType": "1",
@@ -196,7 +196,7 @@ public class MessageController {
      * "messageId": 500,
      * "userId": 144,
      * "type": "3",
-     * "infoId": 642,
+     * "dynamicInfoId": 642,
      * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
      * "content": "季婉 评论您的动态 测试一下",
      * "attacheType": "1",
@@ -208,7 +208,7 @@ public class MessageController {
      * "messageId": 497,
      * "userId": 144,
      * "type": "0",
-     * "infoId": 642,
+     * "dynamicInfoId": 642,
      * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
      * "content": "季婉 点赞您的动态 测试一下",
      * "attacheType": "1",
@@ -220,7 +220,7 @@ public class MessageController {
      * "messageId": 494,
      * "userId": 144,
      * "type": "3",
-     * "infoId": 628,
+     * "dynamicInfoId": 628,
      * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
      * "content": "季婉 评论您的动态 测试正常",
      * "attacheType": "1",
@@ -232,7 +232,7 @@ public class MessageController {
      * "messageId": 493,
      * "userId": 144,
      * "type": "0",
-     * "infoId": 628,
+     * "dynamicInfoId": 628,
      * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
      * "content": "季婉 点赞您的动态 测试正常",
      * "attacheType": "1",
