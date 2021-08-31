@@ -4403,6 +4403,7 @@ public class DynamicController {
      * @apiSuccess (200) {String} msg 说明
      * @apiSuccess (200) {Object} [data] 数据
      * @apiSuccess (200) {Number} [userId] 动态内容拥有者用户id
+     * @apiSuccess (200) {String} [nickname] 动态内容拥有者用户昵称
      * @apiSuccess (200) {String} [headUrl] 动态内容拥有者头像地址
      * @apiSuccess (200) {String} [publishTime] 动态内容发布时间
      * @apiSuccess (200) {Number} [dynamicInfoId] 动态内容id
@@ -4427,21 +4428,23 @@ public class DynamicController {
      * "msg": "返回数据成功。",
      * "data": {
      * "userId": 138,
+     * "nickname": "阿妩",
      * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
      * "publishTime": "2021-04-29 10:27:24",
      * "dynamicInfoId": 707,
      * "content": "41",
      * "address": "广东省深圳市",
-     * "likes": 1,
-     * "likeStatus": true,
-     * "applications": 3,
+     * "likes": 0,
+     * "likeStatus": false,
+     * "applications": 1,
      * "applicationStatus": false,
      * "isTop": false,
      * "isTopic": true,
      * "topicTitle": "#健身",
-     * "comments": 110,
+     * "comments": 0,
      * "isComment": false,
      * "isAnonymous": false,
+     * "dataType": "1",
      * "attacheFileUrlList": [
      * "http://192.168.31.38:9000/find/res/images/138/20210429/1619663244476/4d789742-acb9-4298-b74e-8618f9c9d2e4.jpg"
      * ]

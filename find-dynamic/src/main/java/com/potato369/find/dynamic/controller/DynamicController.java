@@ -1680,6 +1680,7 @@ public class DynamicController {
             }
             DynamicInfoVO dynamicInfoVO = DynamicInfoVO.builder().build();
             BeanUtils.copyProperties(dynamicInfo, dynamicInfoVO);
+            dynamicInfoVO.setNickName(dynamicInfoUser.getNickName());
             dynamicInfoVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()
                     + StrUtil.trimToNull(this.projectUrlProps.getProjectName()))
                     + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon())
@@ -1760,6 +1761,7 @@ public class DynamicController {
             if (Objects.equals(IsAnonymousEnum.No.getType(), dynamicInfo.getIsAnonymous())) {
                 dynamicInfoVO.setAnonymous(false);
             }
+
             if (Objects.equals(IsAnonymousEnum.Yes.getType(), dynamicInfo.getIsAnonymous())) {
                 dynamicInfoVO.setAnonymous(true);
                 dynamicInfoVO.setHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain()
