@@ -78,7 +78,7 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
      * @return 保存记录条数
      */
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public Integer saveApplicationRecord(DynamicInfo dynamicInfo, ApplicationRecord applicationRecord, String message) {
         int a = 0, b = 0, c = 0;
         if (StrUtil.isNotEmpty(message) && !Objects.isNull(dynamicInfo) && !Objects.isNull(applicationRecord)) {
@@ -97,7 +97,7 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
             messageRecord.setReserveColumn01(MessageTypeEnum.Applications.getMessage());//消息类型，申请加微信
             messageRecord.setReserveColumn02(MessageType2Enum.SEND.getCodeStr());//消息发送还是回复类型
             messageRecord.setReserveColumn03(MessageStatus2Enum.NO.getStatus());//消息是否删除
-            messageRecord.setReserveColumn04(String.valueOf(applicationRecord.getUserId()));//申请加微信记录id
+            messageRecord.setReserveColumn04(String.valueOf(applicationRecord.getId()));//申请加微信记录id
             c = this.messageMapperWriter.insertSelective(messageRecord);
         }
         return a + b + c;
