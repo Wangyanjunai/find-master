@@ -335,67 +335,65 @@ public class MessageServiceImpl implements MessageService {
     public MessageVO selectApplicationsMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId));
-        List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByUserId(userId);
+        MessageExample messageExample = new MessageExample();
+        messageExample.setOrderByClause("create_time DESC");
+        messageExample.createCriteria().andReserveColumn01In(Arrays.asList(MessageTypeEnum.Applications.getMessage(), MessageTypeEnum.Commons.getMessage()))
+                .andRecipientUserIdEqualTo(userId)
+                .andReserveColumn03EqualTo(MessageStatus2Enum.NO.getStatus());
+        final PageInfo<Message> messagePageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectByExampleWithBLOBs(messageExample));
         List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
-        List<MessageInfoVO> messageInfoVOs2 = new ArrayList<>();
-        if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
-            for (ApplicationRecord applicationRecord : applicationRecordList) {
-                long sendUserId = applicationRecord.getUserId();//申请加微信者
-                long recipientUserId = Long.parseLong(applicationRecord.getReserveColumn01());//被申请加微信者
-                final PageInfo<Message> messagePageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectApplicationMessageRecordByUserId2(sendUserId, recipientUserId));
-                if (!Objects.isNull(messagePageInfo) && messagePageInfo.getTotal() > 0) {
-                    List<Message> messageList = messagePageInfo.getList();
-                    if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
-                        Message message = messageList.get(0);//获取最新的一条消息
-                        if (!Objects.isNull(message)) {
-                            MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
-                            // 消息发送者（申请加微信者）
-                            User user1 = this.userMapperReader.selectByPrimaryKey(sendUserId);
-                            // 消息接收者（被申请加微信者）
-                            User user2 = this.userMapperReader.selectByPrimaryKey(recipientUserId);
-                            if (Objects.equals(sendUserId, userId)) {
-                                getUserInfo(user2, messageInfoVO);
-                            } else {
-                                getUserInfo(user1, messageInfoVO);
-                            }
-                            messageInfoVO.setIsOrNotApplication(Objects.equals(applicationRecord.getUserId(), userId));
-                            messageInfoVO.setMessageId(message.getId());
-                            if (MessageType2Enum.REPLY.getCodeStr().equals(message.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message.getReserveColumn01())) {
-                                messageInfoVO.setFlag(1);
-                                String contentString = message.getContent();
-                                if (StrUtil.contains(contentString, "|")) {
-                                    String[] strings = StrUtil.split(contentString, "|");
-                                    messageInfoVO.setContent(strings[0]);
-                                    if (StrUtil.isEmpty(strings[1])) {
-                                        messageInfoVO.setWeixinId(user1.getWeixinId());
-                                    } else {
-                                        messageInfoVO.setWeixinId(strings[1]);
-                                    }
-                                } else {
-                                    messageInfoVO.setContent(contentString);
-                                    messageInfoVO.setWeixinId(user1.getWeixinId());
-                                }
-                            } else {
-                                messageInfoVO.setFlag(0);
-                                messageInfoVO.setContent(message.getContent());
-                            }
-                            if (MessageTypeEnum.Applications.getMessage().equals(message.getReserveColumn01())) {
-                                messageInfoVO.setType("1");
-                            }
-                            if (MessageTypeEnum.Commons.getMessage().equals(message.getReserveColumn01())) {
-                                messageInfoVO.setType("0");
-                            }
-                            messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                            messageInfoVO.setCount(this.messageMapperReader.countByUserId2(sendUserId, recipientUserId, userId));
-                            messageInfoVOs.add(messageInfoVO);
-                            messageInfoVOs2 = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
-                        }
+        if (!Objects.isNull(messagePageInfo) && messagePageInfo.getTotal() > 0) {
+            List<Message> messageList = messagePageInfo.getList();
+            if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
+                for (Message message : messageList) {
+                    MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
+                    // 消息发送者（申请加微信者）
+                    User user1 = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+                    // 消息接收者（被申请加微信者）
+                    User user2 = this.userMapperReader.selectByPrimaryKey(userId);
+                    if (Objects.equals(message.getSendUserId(), userId)) {
+                        getUserInfo(user2, messageInfoVO);
+                    } else {
+                        getUserInfo(user1, messageInfoVO);
                     }
-                    messageVO.setMessageInfoVOs(messageInfoVOs2);
-                    messageVO.setTotalCount(messagePageInfo.getTotal());
-                    messageVO.setTotalPage(messagePageInfo.getPages());
+                    ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
+                    applicationRecordExample.createCriteria().andUserIdEqualTo(user1.getId()).andReserveColumn01EqualTo(String.valueOf(user2.getId()));
+                    long count = this.applicationRecordMapperReader.countByExample(applicationRecordExample);
+                    messageInfoVO.setIsOrNotApplication(count > 0);
+                    messageInfoVO.setMessageId(message.getId());
+                    if (MessageType2Enum.REPLY.getCodeStr().equals(message.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message.getReserveColumn01())) {
+                        messageInfoVO.setFlag(1);
+                        String contentString = message.getContent();
+                        if (StrUtil.contains(contentString, "|")) {
+                            String[] strings = StrUtil.split(contentString, "|");
+                            messageInfoVO.setContent(strings[0]);
+                            if (StrUtil.isEmpty(strings[1])) {
+                                messageInfoVO.setWeixinId(user1.getWeixinId());
+                            } else {
+                                messageInfoVO.setWeixinId(strings[1]);
+                            }
+                        } else {
+                            messageInfoVO.setContent(contentString);
+                            messageInfoVO.setWeixinId(user1.getWeixinId());
+                        }
+                    } else {
+                        messageInfoVO.setFlag(0);
+                        messageInfoVO.setContent(message.getContent());
+                    }
+                    if (MessageTypeEnum.Applications.getMessage().equals(message.getReserveColumn01())) {
+                        messageInfoVO.setType("1");
+                    }
+                    if (MessageTypeEnum.Commons.getMessage().equals(message.getReserveColumn01())) {
+                        messageInfoVO.setType("0");
+                    }
+                    messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
+                    messageInfoVO.setCount(this.messageMapperReader.countByUserId2(userId));
+                    messageInfoVOs.add(messageInfoVO);
                 }
             }
+            messageVO.setMessageInfoVOs(messageInfoVOs);
+            messageVO.setTotalCount(messagePageInfo.getTotal());
+            messageVO.setTotalPage(messagePageInfo.getPages());
         }
         return messageVO;
     }

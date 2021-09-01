@@ -44,7 +44,7 @@ public interface MessageMapper {
 
     int countByUserId(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId, @Param("messageId") Long messageId);
 
-    long countByUserId2(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId, @Param("userId") Long userId);
+    long countByUserId2(@Param("userId") Long userId);
 
     int updateByExampleSelective(@Param("record") Message record, @Param("example") MessageExample example);
 

@@ -935,12 +935,6 @@ public class DynamicController {
             if (Objects.isNull(applicantsUser)) {
                 return CommonResult.failed(data, ResultCode.APPLICANTS_USER_IS_NOT_EXIST);
             }
-//            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
-//            applicationRecordExample.createCriteria().andUserIdEqualTo(applicantUserId).andReserveColumn01EqualTo(String.valueOf(applicantsUserId));
-//            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
-//            if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
-//                return CommonResult.failed(data, ResultCode.APPLICATIONS_USER_IS_VALID);
-//            }
             // 获取申请加微信者申请加被申请加微信者微信记录条数，查询当天该用户申请加被申请者微信次数
             int count = this.applicationRecordMapperReader.countByUserId(applicantUserId, applicantsUserId);
             if (count > 0) {
@@ -1412,12 +1406,6 @@ public class DynamicController {
             if (StrUtil.isEmpty(message)) {
                 message = "申请加您的微信，麻烦通过一下，谢谢！";
             }
-//            ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
-//            applicationRecordExample.createCriteria().andUserIdEqualTo(applicantUserId).andReserveColumn01EqualTo(String.valueOf(applicantsUserId));
-//            List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
-//            if (!Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty()) {
-//                return CommonResult.failed(data, ResultCode.APPLICATIONS_USER_IS_VALID);
-//            }
             // 获取申请加微信者申请加被申请加微信者微信记录条数，查询当天用户申请加微信次数
             int count = this.applicationRecordMapperReader.countByUserId(applicantUserId, applicantsUserId);
             if (count > 0) {
@@ -1690,9 +1678,7 @@ public class DynamicController {
             dynamicInfoVO.setPublishTime(DateUtil.fomateDate(dynamicInfo.getCreateTime(), DateUtil.sdfTimeFmt));
             // 查询用户对该条动态是否申请加微信
             ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
-            applicationRecordExample.setDistinct(true);
-            applicationRecordExample.setOrderByClause("create_time DESC, id DESC");
-            applicationRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId);
+            applicationRecordExample.createCriteria().andUserIdEqualTo(userId).andDynamicInfoIdEqualTo(dynamicInfoId).andReserveColumn01EqualTo(String.valueOf(dynamicInfoUserId));
             List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
             dynamicInfoVO.setApplicationStatus(applicationRecordList != null && !applicationRecordList.isEmpty());
 

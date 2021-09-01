@@ -246,7 +246,7 @@
                  FROM `message`
                  WHERE `send_user_id` = #{sendUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
-                   AND `reserve_column01` NOT IN ('likes', 'comments')
+                   AND `reserve_column01` IN ('applications', 'commons')
                    AND `reserve_column03` = '0'
                  UNION ALL
                  SELECT `id`,
@@ -259,7 +259,7 @@
                  FROM `message`
                  WHERE `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
-                   AND `reserve_column01` NOT IN ('likes', 'comments')
+                   AND `reserve_column01` IN ('applications', 'commons')
                    AND `reserve_column03` = '0'
              ) AS a
         GROUP BY a.`send_user_id`, a.`create_time`, a.`id`
@@ -267,22 +267,12 @@
     </select>
 
     <select id="countByUserId2" parameterType="java.lang.Long" resultType="java.lang.Long">
-        select (select count(0)
-                from `message`
-                where `send_user_id` = #{sendUserId, jdbcType=BIGINT}
-                  and recipient_user_id = #{recipientUserId, jdbcType=BIGINT}
-                  and `reserve_column01` NOT IN ('likes', 'comments')
-                  and `reserve_column03` = '0'
-                  and `status` = '0'
-                  and `send_user_id` <![CDATA[ !=]]> #{userId, jdbcType=BIGINT}) +
-               (select count(0)
-                from message
-                where `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
-                  and `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
-                  and `reserve_column01` NOT IN ('likes', 'comments')
-                  and `reserve_column03` = '0'
-                  and `status` = '0'
-                  and `send_user_id` <![CDATA[ !=]]> #{userId, jdbcType=BIGINT}) as count
+        select count(0)
+        from `message`
+        where recipient_user_id = #{userId, jdbcType=BIGINT}
+          and `reserve_column01` IN ('applications', 'commons')
+          and `reserve_column03` = '0'
+          and `status` = '0'
     </select>
 
     <select id="selectMessageRecordCount" parameterType="java.lang.Long" resultMap="BaseResultMap">
