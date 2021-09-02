@@ -49,12 +49,12 @@ spring:
     open-in-view: false
   application:
     name: admin-service
-  devtools:
-    livereload:
-      port: 35732
-    restart:
-      enabled: true
-      additional-paths: src/main/java, src/main/resources
+#  devtools:
+#    livereload:
+#      port: 35732
+#    restart:
+#      enabled: true
+#      additional-paths: src/main/java, src/main/resources
   freemarker:
     settings:
       number_format: "0.##"

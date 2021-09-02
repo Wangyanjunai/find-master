@@ -49,12 +49,12 @@ spring:
     open-in-view: false
   application:
     name: dynamic-service
-  devtools:
-    livereload:
-      port: 35733
-    restart:
-      enabled: true
-      additional-paths: src/main/java, src/main/resources
+#  devtools:
+#    livereload:
+#      port: 35733
+#    restart:
+#      enabled: true
+#      additional-paths: src/main/java, src/main/resources
   servlet:
     multipart:
       enabled: true
