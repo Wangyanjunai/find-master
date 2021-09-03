@@ -4416,6 +4416,7 @@ public class DynamicController {
      * @apiSuccess (200) {Boolean} [isTopic] 是否话题，true->是，false->否
      * @apiSuccess (200) {String} [topicTitle] 话题标题
      * @apiSuccess (200) {Number} [comments] 评论数
+     * @apiSuccess (200) {Boolean} [isComment] 是否评论，true->是，false->否
      * @apiSuccess (200) {Boolean} [isAnonymous] 是否匿名发布，true->是，false->否
      * @apiSuccess (200) {Double} [distance] 当前位置距发布动态定位的距离（单位（米））
      * @apiSuccess (200) {String} [dataTye] 附件文件类型，0->无附件，纯文字，1->图片，2->语音
@@ -4428,15 +4429,15 @@ public class DynamicController {
      * "msg": "返回数据成功。",
      * "data": {
      * "userId": 138,
-     * "nickname": "阿妩",
      * "headUrl": "http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg",
+     * "nickname": "阿妩",
      * "publishTime": "2021-04-29 10:27:24",
      * "dynamicInfoId": 707,
      * "content": "41",
      * "address": "广东省深圳市",
      * "likes": 0,
      * "likeStatus": false,
-     * "applications": 1,
+     * "applications": 2,
      * "applicationStatus": false,
      * "isTop": false,
      * "isTopic": true,
