@@ -926,15 +926,16 @@ public class UserController {
             userVO.setYear(user2.getYear());
             userVO.setMonth(user2.getMonth());
             userVO.setDate(user2.getDate());
-            String birthDate = user2.getYear() + "-" + user2.getMonth() + "-" + user2.getDate();
-            Date birthDay = DateUtil.fomatDate(birthDate);
-            userVO.setAge(AgeUtil.getAge(birthDay));
+            if (!Objects.isNull(user2.getYear()) && !Objects.isNull(user2.getMonth()) && !Objects.isNull(user2.getDate())) {
+                String birthDate = user2.getYear() + "-" + user2.getMonth() + "-" + user2.getDate();
+                Date birthDay = DateUtil.fomatDate(birthDate);
+                userVO.setAge(AgeUtil.getAge(birthDay));
+            }
             this.setUserVO(userVO, user2);
             ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
             applicationRecordExample.createCriteria().andUserIdEqualTo(id).andReserveColumn01EqualTo(String.valueOf(detailsUserId));
             List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
-            log.info("applicationRecordList={}", applicationRecordList);
-            boolean result = !Objects.isNull(applicationRecordList) && !applicationRecordList.isEmpty();
+            boolean result = !Objects.isNull(applicationRecordList) && applicationRecordList.size() > 0;
             userVO.setApplicationStatus(result);
             data.put("user", userVO);
             operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
