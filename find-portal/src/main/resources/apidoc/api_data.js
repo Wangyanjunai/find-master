@@ -2637,6 +2637,13 @@ define({ "api": [
             "group": "200",
             "type": "Boolean",
             "optional": true,
+            "field": "isComment",
+            "description": "<p>是否评论，true-&gt;是，false-&gt;否</p>"
+          },
+          {
+            "group": "200",
+            "type": "Boolean",
+            "optional": true,
             "field": "isAnonymous",
             "description": "<p>是否匿名发布，true-&gt;是，false-&gt;否</p>"
           },
@@ -2666,7 +2673,7 @@ define({ "api": [
       "examples": [
         {
           "title": "200 响应示例（客户端ip不为空，定位（经纬度）为空）",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"userId\": 138,\n\"nickname\": \"阿妩\",\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"publishTime\": \"2021-04-29 10:27:24\",\n\"dynamicInfoId\": 707,\n\"content\": \"41\",\n\"address\": \"广东省深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 1,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#健身\",\n\"comments\": 0,\n\"isComment\": false,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210429/1619663244476/4d789742-acb9-4298-b74e-8618f9c9d2e4.jpg\"\n]\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"userId\": 138,\n\"headUrl\": \"http://192.168.31.38:9000/find/img/head/138/31b0b00e-f8c3-4e23-ba77-d7e50eafe17e.jpg\",\n\"nickname\": \"阿妩\",\n\"publishTime\": \"2021-04-29 10:27:24\",\n\"dynamicInfoId\": 707,\n\"content\": \"41\",\n\"address\": \"广东省深圳市\",\n\"likes\": 0,\n\"likeStatus\": false,\n\"applications\": 2,\n\"applicationStatus\": false,\n\"isTop\": false,\n\"isTopic\": true,\n\"topicTitle\": \"#健身\",\n\"comments\": 0,\n\"isComment\": false,\n\"isAnonymous\": false,\n\"dataType\": \"1\",\n\"attacheFileUrlList\": [\n\"http://192.168.31.38:9000/find/res/images/138/20210429/1619663244476/4d789742-acb9-4298-b74e-8618f9c9d2e4.jpg\"\n]\n}\n}",
           "type": "json"
         }
       ]
