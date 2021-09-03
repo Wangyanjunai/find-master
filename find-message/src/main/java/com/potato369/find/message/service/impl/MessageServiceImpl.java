@@ -351,10 +351,13 @@ public class MessageServiceImpl implements MessageService {
                     User user1 = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
                     // 消息接收者（被申请加微信者）
                     User user2 = this.userMapperReader.selectByPrimaryKey(userId);
+                    long sendUserId;
                     if (Objects.equals(message.getSendUserId(), userId)) {
                         getUserInfo(user2, messageInfoVO);
+                        sendUserId = user2.getId();
                     } else {
                         getUserInfo(user1, messageInfoVO);
+                        sendUserId = user1.getId();
                     }
                     ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
                     applicationRecordExample.createCriteria().andUserIdEqualTo(user1.getId()).andReserveColumn01EqualTo(String.valueOf(user2.getId()));
@@ -387,7 +390,7 @@ public class MessageServiceImpl implements MessageService {
                         messageInfoVO.setType("0");
                     }
                     messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                    messageInfoVO.setCount(this.messageMapperReader.countByUserId2(userId));
+                    messageInfoVO.setCount(this.messageMapperReader.countByUserId2(userId, sendUserId));
                     messageInfoVOs.add(messageInfoVO);
                 }
             }
@@ -415,43 +418,42 @@ public class MessageServiceImpl implements MessageService {
     @Transactional
     public MessageVO3 selectMessageRecord(Long sendUserId, Long recipientUserId, int pageNum, int pageSize) {
         MessageVO3 messageVO3 = MessageVO3.builder().build();
-        final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize)
-                .doSelectPageInfo(() -> this.messageMapperReader.selectMessageRecord(sendUserId, recipientUserId));
-        List<Message> messages = listPageInfo.getList();
-        long totalCount = listPageInfo.getTotal();
-        int totalPage = listPageInfo.getPages();
-        ArrayList<MessageInfoVO2> messageInfoVO2s = new ArrayList<>();
-        if (messages != null && !messages.isEmpty()) {
-            for (Message message : messages) {
-                long sendUserIdTmp = message.getSendUserId();
-                User sendUser = this.userMapperReader.selectByPrimaryKey(sendUserIdTmp);
-                if (sendUser != null) {
-                    MessageInfoVO2 messageInfoVO2 = MessageInfoVO2.builder().build();
-                    messageInfoVO2.setMessageId(message.getId());
-                    messageInfoVO2.setSendDateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                    messageInfoVO2.setSendUserId(sendUserIdTmp);
-                    messageInfoVO2.setSendUserNickname(sendUser.getNickName());
-                    messageInfoVO2.setSendUserHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
-                            + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
-                            + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) + sendUser.getId() + "/"
-                            + sendUser.getHeadIcon());
-                    String content = message.getContent();
-                    if (StrUtil.isNotEmpty(content) && StrUtil.contains(content, "|") && StrUtil.contains(content, sendUser.getWeixinId())) {
-                        content = StrUtil.removeAll(content, "|" + sendUser.getWeixinId()) + "，我的微信号是：" + sendUser.getWeixinId();
+        final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectMessageRecord(sendUserId, recipientUserId));
+        if (!Objects.isNull(listPageInfo) && listPageInfo.getTotal() > 0) {
+            List<Message> messages = listPageInfo.getList();
+            List<MessageInfoVO2> messageInfoVO2s = new ArrayList<>();
+            if (!Objects.isNull(messages) && !messages.isEmpty()) {
+                for (Message message : messages) {
+                    long sendUserIdTmp = message.getSendUserId();
+                    User sendUser = this.userMapperReader.selectByPrimaryKey(sendUserIdTmp);
+                    if (!Objects.isNull(sendUser)) {
+                        MessageInfoVO2 messageInfoVO2 = MessageInfoVO2.builder().build();
+                        messageInfoVO2.setMessageId(message.getId());
+                        messageInfoVO2.setSendDateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
+                        messageInfoVO2.setSendUserId(sendUserIdTmp);
+                        messageInfoVO2.setSendUserNickname(sendUser.getNickName());
+                        messageInfoVO2.setSendUserHeadIcon(StrUtil.trimToNull(this.projectUrlProps.getResDomain())
+                                + StrUtil.trimToNull(this.projectUrlProps.getProjectName())
+                                + StrUtil.trimToNull(this.projectUrlProps.getResHeadIcon()) + sendUser.getId() + "/"
+                                + sendUser.getHeadIcon());
+                        String content = message.getContent();
+                        if (StrUtil.isNotEmpty(content) && StrUtil.contains(content, "|") && StrUtil.contains(content, sendUser.getWeixinId())) {
+                            content = StrUtil.removeAll(content, "|" + sendUser.getWeixinId()) + "，我的微信号是：" + sendUser.getWeixinId();
+                        }
+                        messageInfoVO2.setContent(content);
+                        messageInfoVO2s.add(messageInfoVO2);
                     }
-                    messageInfoVO2.setContent(content);
-                    messageInfoVO2s.add(messageInfoVO2);
-                }
-                if (message.getSendUserId().equals(sendUserId) && message.getRecipientUserId().equals(recipientUserId)) {
-                    message.setUpdateTime(new Date());
-                    message.setStatus(MessageStatusEnum.READ.getStatus());
-                    this.messageMapperWriter.updateByPrimaryKeySelective(message);
+                    if (message.getSendUserId().equals(sendUserId) && message.getRecipientUserId().equals(recipientUserId)) {
+                        message.setUpdateTime(new Date());
+                        message.setStatus(MessageStatusEnum.READ.getStatus());
+                        this.messageMapperWriter.updateByPrimaryKeySelective(message);
+                    }
                 }
             }
+            messageVO3.setMessageInfoVO2s(messageInfoVO2s);
+            messageVO3.setTotalCount(listPageInfo.getTotal());
+            messageVO3.setTotalPage(listPageInfo.getPages());
         }
-        messageVO3.setMessageInfoVO2s(messageInfoVO2s);
-        messageVO3.setTotalCount(totalCount);
-        messageVO3.setTotalPage(totalPage);
         return messageVO3;
     }
 
@@ -486,7 +488,7 @@ public class MessageServiceImpl implements MessageService {
         if (recipientUser == null) {
             return CommonResult.failed(data, ResultCode.REPLY_MESSAGE_USER_IS_NOT_EXIST);
         }
-        long recipientUserId = 0L;
+        long recipientUserId;
         if (recipientUser.getId().equals(sendUser.getId())) {
             recipientUserId = messageRecord2.getSendUserId();
         } else {
