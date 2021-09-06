@@ -104,10 +104,30 @@
           AND `create_time` <![CDATA[ <=]]> DATE_ADD(DATE_ADD(STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'), '%Y-%m-%d %H:%i:%s'), INTERVAL 1 DAY), INTERVAL -1 SECOND)
     </select>
     <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT `user_id`,
-               `reserve_column01`
+        SELECT
+        `id`,
+        `user_id`,
+        `dynamic_info_id`,
+        `create_time`,
+        `reserve_column01`,
+        `reserve_column02`,
+        `reserve_column03`,
+        `reserve_column04`
+        FROM `application_record`
+        WHERE `user_id` = #{userId,jdbcType=BIGINT}
+        UNION ALL
+        SELECT
+        `id`,
+        `user_id`,
+        `dynamic_info_id`,
+        `create_time`,
+        `reserve_column01`,
+        `reserve_column02`,
+        `reserve_column03`,
+        `reserve_column04`
         FROM `application_record`
         WHERE `reserve_column01` = #{userId,jdbcType=BIGINT}
+        order by `create_time` DESC
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete

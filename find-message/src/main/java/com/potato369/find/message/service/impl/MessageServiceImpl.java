@@ -335,29 +335,32 @@ public class MessageServiceImpl implements MessageService {
     public MessageVO selectApplicationsMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId));
-        MessageExample messageExample = new MessageExample();
-        messageExample.setOrderByClause("create_time DESC");
-        messageExample.createCriteria().andReserveColumn01In(Arrays.asList(MessageTypeEnum.Applications.getMessage(), MessageTypeEnum.Commons.getMessage()))
-                .andRecipientUserIdEqualTo(userId)
-                .andReserveColumn03EqualTo(MessageStatus2Enum.NO.getStatus());
-        final PageInfo<Message> messagePageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectByExampleWithBLOBs(messageExample));
-        List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
-        if (!Objects.isNull(messagePageInfo) && messagePageInfo.getTotal() > 0) {
-            List<Message> messageList = messagePageInfo.getList();
-            if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
-                for (Message message : messageList) {
+        final PageInfo<ApplicationRecord> applicationRecordPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.applicationRecordMapperReader.selectByUserId(userId));
+        if (!Objects.isNull(applicationRecordPageInfo) && applicationRecordPageInfo.getTotal() > 0) {
+            List<ApplicationRecord> applicationRecordList = applicationRecordPageInfo.getList();
+            List<MessageInfoVO> messageInfoVOs = new ArrayList<>();
+            for (ApplicationRecord applicationRecord : applicationRecordList) {
+                long sendUserId = applicationRecord.getUserId();
+                long recipientUserId = Long.parseLong(applicationRecord.getReserveColumn01());
+                long applicationRecordId = applicationRecord.getId();
+                MessageExample messageExample = new MessageExample();
+                messageExample.setOrderByClause("create_time DESC");
+                messageExample.createCriteria().andSendUserIdEqualTo(sendUserId)
+                        .andRecipientUserIdEqualTo(recipientUserId)
+                        .andReserveColumn04EqualTo(String.valueOf(applicationRecordId))
+                        .andReserveColumn01In(Arrays.asList(MessageTypeEnum.Applications.getMessage(), MessageTypeEnum.Commons.getMessage()));
+                List<Message> messageList = this.messageMapperReader.selectByExample(messageExample);
+                if (!Objects.isNull(messageList) && messageList.size() > 0) {
+                    Message message = messageList.get(0);
                     MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
                     // 消息发送者（申请加微信者）
-                    User user1 = this.userMapperReader.selectByPrimaryKey(message.getSendUserId());
+                    User user1 = this.userMapperReader.selectByPrimaryKey(sendUserId);
                     // 消息接收者（被申请加微信者）
-                    User user2 = this.userMapperReader.selectByPrimaryKey(userId);
-                    long sendUserId;
-                    if (Objects.equals(message.getSendUserId(), userId)) {
+                    User user2 = this.userMapperReader.selectByPrimaryKey(recipientUserId);
+                    if (Objects.equals(sendUserId, userId)) {
                         getUserInfo(user2, messageInfoVO);
-                        sendUserId = user2.getId();
                     } else {
                         getUserInfo(user1, messageInfoVO);
-                        sendUserId = user1.getId();
                     }
                     ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
                     applicationRecordExample.createCriteria().andUserIdEqualTo(user1.getId()).andReserveColumn01EqualTo(String.valueOf(user2.getId()));
@@ -390,13 +393,13 @@ public class MessageServiceImpl implements MessageService {
                         messageInfoVO.setType("0");
                     }
                     messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                    messageInfoVO.setCount(this.messageMapperReader.countByUserId2(userId, sendUserId));
+                    messageInfoVO.setCount(this.messageMapperReader.countByUserId2(recipientUserId, sendUserId));
                     messageInfoVOs.add(messageInfoVO);
                 }
             }
             messageVO.setMessageInfoVOs(messageInfoVOs);
-            messageVO.setTotalCount(messagePageInfo.getTotal());
-            messageVO.setTotalPage(messagePageInfo.getPages());
+            messageVO.setTotalCount(applicationRecordPageInfo.getTotal());
+            messageVO.setTotalPage(applicationRecordPageInfo.getPages());
         }
         return messageVO;
     }
