@@ -349,7 +349,7 @@ public class MessageServiceImpl implements MessageService {
                         .andRecipientUserIdEqualTo(recipientUserId)
                         .andReserveColumn04EqualTo(String.valueOf(applicationRecordId))
                         .andReserveColumn01In(Arrays.asList(MessageTypeEnum.Applications.getMessage(), MessageTypeEnum.Commons.getMessage()));
-                List<Message> messageList = this.messageMapperReader.selectByExample(messageExample);
+                List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
                 if (!Objects.isNull(messageList) && messageList.size() > 0) {
                     Message message = messageList.get(0);
                     MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
