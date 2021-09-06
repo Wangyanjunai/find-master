@@ -320,7 +320,7 @@
                         `status`,
                         `create_time`
                  FROM `message`
-                 WHERE `reserve_column01` NOT IN ('likes', 'comments')
+                 WHERE `reserve_column01` IN ( 'applications', 'commons' )
                    AND `reserve_column03` = '0'
                    AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
@@ -333,7 +333,7 @@
                         `status`,
                         `create_time`
                  FROM `message`
-                 WHERE `reserve_column01` NOT IN ('likes', 'comments')
+                 WHERE `reserve_column01` IN ( 'applications', 'commons' )
                    AND `reserve_column03` = '0'
                    AND `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
