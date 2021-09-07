@@ -342,7 +342,6 @@ public class MessageServiceImpl implements MessageService {
             for (ApplicationRecord applicationRecord : applicationRecordList) {
                 long sendUserId = applicationRecord.getUserId();
                 long recipientUserId = Long.parseLong(applicationRecord.getReserveColumn01());
-                long applicationRecordId = applicationRecord.getId();
                 MessageExample messageExample = new MessageExample();
                 messageExample.setOrderByClause("create_time DESC");
                 messageExample.createCriteria().andSendUserIdEqualTo(sendUserId)
