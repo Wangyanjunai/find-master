@@ -105,29 +105,18 @@
     </select>
     <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT
-        `id`,
+        DISTINCT
         `user_id`,
-        `dynamic_info_id`,
-        `create_time`,
-        `reserve_column01`,
-        `reserve_column02`,
-        `reserve_column03`,
-        `reserve_column04`
+        `reserve_column01`
         FROM `application_record`
         WHERE `user_id` = #{userId,jdbcType=BIGINT}
         UNION ALL
         SELECT
-        `id`,
+        DISTINCT
         `user_id`,
-        `dynamic_info_id`,
-        `create_time`,
-        `reserve_column01`,
-        `reserve_column02`,
-        `reserve_column03`,
-        `reserve_column04`
+        `reserve_column01`
         FROM `application_record`
         WHERE `reserve_column01` = #{userId,jdbcType=BIGINT}
-        order by `create_time` DESC
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete

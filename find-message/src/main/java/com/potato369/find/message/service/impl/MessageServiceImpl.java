@@ -347,7 +347,6 @@ public class MessageServiceImpl implements MessageService {
                 messageExample.setOrderByClause("create_time DESC");
                 messageExample.createCriteria().andSendUserIdEqualTo(sendUserId)
                         .andRecipientUserIdEqualTo(recipientUserId)
-                        .andReserveColumn04EqualTo(String.valueOf(applicationRecordId))
                         .andReserveColumn01In(Arrays.asList(MessageTypeEnum.Applications.getMessage(), MessageTypeEnum.Commons.getMessage()));
                 List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
                 if (!Objects.isNull(messageList) && messageList.size() > 0) {
