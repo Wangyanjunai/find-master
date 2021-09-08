@@ -717,6 +717,9 @@ public class MessageServiceImpl implements MessageService {
                 content = "非常抱歉，我不想加你！";
             }
             message.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
+            messageOld.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
+            messageOld.setUpdateTime(new Date());
+            this.messageMapperWriter.updateByPrimaryKey(messageOld);
         }
         message.setSendUserId(applicantsUserId);
         message.setRecipientUserId(sendUserId);
