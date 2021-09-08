@@ -129,8 +129,8 @@ public class MessageServiceImpl implements MessageService {
         List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
         if (!Objects.isNull(messageList) && !messageList.isEmpty()) {
             List<Message> messageList2 = messageList.stream().filter(message -> Objects.equals(MessageStatusEnum.UNREAD.getStatus(), message.getStatus())).collect(Collectors.toList());
-            likesMessageVO.setCount(messageList2.size());
-            likesMessageVO.setContent(messageList.get(0).getContent());
+            likesMessageVO.setCount(messageList2.size());//未读点赞或者评论消息总条数
+            likesMessageVO.setContent(messageList.get(0).getContent());//最新一条点赞或者评论消息内容
         }
         return likesMessageVO;
     }
@@ -360,10 +360,7 @@ public class MessageServiceImpl implements MessageService {
                     } else {
                         getUserInfo(user1, messageInfoVO);
                     }
-                    ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
-                    applicationRecordExample.createCriteria().andUserIdEqualTo(user1.getId()).andReserveColumn01EqualTo(String.valueOf(user2.getId()));
-                    long count = this.applicationRecordMapperReader.countByExample(applicationRecordExample);
-                    messageInfoVO.setIsOrNotApplication(count > 0);
+                    messageInfoVO.setIsOrNotApplication(Objects.equals(sendUserId, userId));
                     messageInfoVO.setMessageId(message.getId());
                     if (MessageType2Enum.REPLY.getCodeStr().equals(message.getReserveColumn02()) && MessageTypeEnum.Applications.getMessage().equals(message.getReserveColumn01())) {
                         messageInfoVO.setFlag(1);

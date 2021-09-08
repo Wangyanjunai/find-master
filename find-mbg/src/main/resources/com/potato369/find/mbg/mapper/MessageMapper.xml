@@ -269,8 +269,8 @@
     <select id="countByUserId2" parameterType="java.lang.Long" resultType="java.lang.Long">
         select count(0)
         from `message`
-        where `recipient_user_id` = #{userId, jdbcType=BIGINT}
-          and `send_user_id` = #{sendUserId, jdbcType=BIGINT}
+        where `recipient_user_id` <![CDATA[ =]]> #{userId, jdbcType=BIGINT}
+          and `send_user_id` <![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
           and `reserve_column01` IN ('applications', 'commons')
           and `reserve_column03` = '0'
           and `status` = '0'
@@ -320,7 +320,7 @@
                         `status`,
                         `create_time`
                  FROM `message`
-                 WHERE `reserve_column01` IN ( 'applications', 'commons' )
+                 WHERE `reserve_column01` IN ('applications', 'commons')
                    AND `reserve_column03` = '0'
                    AND `send_user_id` = #{sendUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
@@ -333,7 +333,7 @@
                         `status`,
                         `create_time`
                  FROM `message`
-                 WHERE `reserve_column01` IN ( 'applications', 'commons' )
+                 WHERE `reserve_column01` IN ('applications', 'commons')
                    AND `reserve_column03` = '0'
                    AND `send_user_id` = #{recipientUserId, jdbcType=BIGINT}
                    AND `recipient_user_id` = #{sendUserId, jdbcType=BIGINT}
