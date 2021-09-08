@@ -52,7 +52,8 @@ public class MessageController {
      * @apiSuccess (200){Number} [count2] 申请加微信未读消息数量
      * @apiSuccess (200) {String} [createTime] 消息发送时间
      * @apiSuccess (200) {String} [type] 消息类型，0->普通消息，1->申请加微信消息
-     * @apiSuccess (200) {Number} [flag] 是否展示复制微信，0->否，1->是
+     * @apiSuccess (200) {Number} [flag] 是否展示复制微信按钮，0->否，1->是
+     * @apiSuccess (200) {Number} [flag2] 是否展示“同意”，“拒绝”按钮，0->否，1->是
      * @apiSuccess (200) {String} [weixinId] 微信号
      * @apiSuccess (200) {Boolean} [isOrNotApplication] 是否是申请者，true->是，false->否
      * @apiSuccessExample {json} 200响应示例
@@ -63,35 +64,92 @@ public class MessageController {
      * "msg": "返回数据成功。",
      * "data": {
      * "likes": {
-     * "content1": "尹明艳 点赞您的评论 是的，今天天气很糟糕的。",
-     * "count1": 0
+     * "content1": "qqq 评论您的动态 测试安排",
+     * "count1": 2
      * },
-     * "totalCount": 2,
+     * "totalCount": 6,
      * "totalPage": 1,
      * "list": [
      * {
-     * "messageId": 505,
+     * "messageId": 514,
+     * "userId": 143,
+     * "head": "http://192.168.31.38:9000/find/img/head/143/f683b170-6aa1-4cec-99c9-25baeecb74a1.jpeg",
+     * "nickname": "www",
+     * "content2": "同意",
+     * "createTime": "2021年09月08日 15:54:16",
+     * "count2": 1,
+     * "type": "0",
+     * "flag": 1,
+     * "flag2": 0,
+     * "weixinId": "11111111111",
+     * "isOrNotApplication": true
+     * },
+     * {
+     * "messageId": 519,
+     * "userId": 131,
+     * "head": "http://192.168.31.38:9000/find/img/head/131/02.png",
+     * "nickname": "YY",
+     * "content2": "申请加您的微信，麻烦通过一下。",
+     * "createTime": "2021年09月08日 16:27:18",
+     * "count2": 1,
+     * "type": "1",
+     * "flag": 0,
+     * "flag2": 1,
+     * "isOrNotApplication": true
+     * },
+     * {
+     * "messageId": 515,
      * "userId": 140,
      * "head": "http://192.168.31.38:9000/find/img/head/140/0c99dc02-188b-426e-a46d-5e951743dedf.jpg",
      * "nickname": "凝噎新紫",
      * "content2": "同意",
-     * "createTime": "2021年08月27日 16:28:21",
+     * "createTime": "2021年09月08日 16:22:43",
      * "count2": 1,
-     * "type": "1",
+     * "type": "0",
      * "flag": 1,
+     * "flag2": 0,
      * "weixinId": "11111111111",
      * "isOrNotApplication": false
      * },
      * {
-     * "messageId": 498,
+     * "messageId": 516,
      * "userId": 144,
      * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
      * "nickname": "季婉",
+     * "content2": "同意",
+     * "createTime": "2021年09月08日 16:23:12",
+     * "count2": 1,
+     * "type": "0",
+     * "flag": 1,
+     * "flag2": 0,
+     * "weixinId": "11111111111",
+     * "isOrNotApplication": false
+     * },
+     * {
+     * "messageId": 517,
+     * "userId": 142,
+     * "head": "http://192.168.31.38:9000/find/img/head/142/331e380a-73da-4592-9bd6-6c79f539c4e4.jpeg",
+     * "nickname": "qqq",
+     * "content2": "同意",
+     * "createTime": "2021年09月08日 16:24:58",
+     * "count2": 1,
+     * "type": "0",
+     * "flag": 1,
+     * "flag2": 0,
+     * "weixinId": "11111111111",
+     * "isOrNotApplication": false
+     * },
+     * {
+     * "messageId": 518,
+     * "userId": 124,
+     * "head": "http://192.168.31.38:9000/find/img/head/124/08.png",
+     * "nickname": "miss T",
      * "content2": "申请加您的微信，麻烦通过一下。",
-     * "createTime": "2021年08月26日 15:42:32",
+     * "createTime": "2021年09月08日 16:26:29",
      * "count2": 1,
      * "type": "1",
      * "flag": 0,
+     * "flag2": 0,
      * "isOrNotApplication": false
      * }
      * ]
