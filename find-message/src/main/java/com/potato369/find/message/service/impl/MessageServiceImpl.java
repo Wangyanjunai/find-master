@@ -677,6 +677,7 @@ public class MessageServiceImpl implements MessageService {
                 return CommonResult.validateFailed("发消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
             }
         }
+        Message message = new Message();
         // 如果是同意申请加微信
         String welkinId = applicantsUser.getWeixinId();// 数据库获取到的被申请人的微信号
         if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
@@ -708,14 +709,15 @@ public class MessageServiceImpl implements MessageService {
                 applicantsUser.setUpdateTime(new Date());
                 this.userMapperWriter.updateByPrimaryKeySelective(applicantsUser);
             }
+            message.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
         }
         // 如果是拒绝申请加微信
         if (MessageType3Enum.REFUSE.getCodeStr().equals(type)) {
             if (StrUtil.isEmpty(content)) {
                 content = "非常抱歉，我不想加你！";
             }
+            message.setReserveColumn03(MessageStatus2Enum.YES.getStatus());
         }
-        Message message = new Message();
         message.setSendUserId(applicantsUserId);
         message.setRecipientUserId(sendUserId);
         message.setContent(content);
@@ -723,7 +725,6 @@ public class MessageServiceImpl implements MessageService {
         message.setStatus(MessageStatusEnum.UNREAD.getStatus());
         message.setReserveColumn01(MessageTypeEnum.Applications.getMessage());
         message.setReserveColumn02(MessageType2Enum.REPLY.getCodeStr());
-        message.setReserveColumn03(MessageStatus2Enum.NO.getStatus());
         message.setReserveColumn04(String.valueOf(messageOld.getId()));
         this.messageMapperWriter.insertSelective(message);
         String title = applicantsUser.getNickName();// 消息标题
