@@ -35,7 +35,9 @@ public class DateUtil {
     public static final String sdfTimeMinuFmt = "yyyyMMddHHmmss";
     
     public static final String sdfTimeMinuFmt1 = "yyyyMMdd HH:mm:ss";
-    
+
+    public static final String sdfTimeMinuFmt2 = "MM-dd HH:mm";
+
     public static final String sdfTimeStampFmt = "yyyyMMddHHmmssSSS";
 
     public final static SimpleDateFormat sdfYear = new SimpleDateFormat(sdfYearFmt);

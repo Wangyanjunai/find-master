@@ -342,14 +342,12 @@ public class MessageServiceImpl implements MessageService {
             for (ApplicationRecord applicationRecord : applicationRecordList) {
                 long sendUserId = applicationRecord.getUserId();
                 long recipientUserId = Long.parseLong(applicationRecord.getReserveColumn01());
-                MessageExample messageExample = new MessageExample();
-                messageExample.setOrderByClause("create_time DESC");
-                messageExample.createCriteria().andSendUserIdEqualTo(sendUserId)
-                        .andRecipientUserIdEqualTo(recipientUserId)
-                        .andReserveColumn01In(Arrays.asList(MessageTypeEnum.Applications.getMessage(), MessageTypeEnum.Commons.getMessage()));
-                List<Message> messageList = this.messageMapperReader.selectByExampleWithBLOBs(messageExample);
+                List<Message> messageList = this.messageMapperReader.selectApplicationMessageRecordByUserId2(sendUserId, recipientUserId);
+                Message message = null;
                 if (!Objects.isNull(messageList) && messageList.size() > 0) {
-                    Message message = messageList.get(0);
+                    message = messageList.get(0);
+                }
+                if (!Objects.isNull(message)) {
                     MessageInfoVO messageInfoVO = MessageInfoVO.builder().build();
                     // 消息发送者（申请加微信者）
                     User user1 = this.userMapperReader.selectByPrimaryKey(sendUserId);
@@ -381,11 +379,18 @@ public class MessageServiceImpl implements MessageService {
                         messageInfoVO.setFlag(0);
                         messageInfoVO.setContent(message.getContent());
                     }
-                    if (MessageTypeEnum.Applications.getMessage().equals(message.getReserveColumn01())) {
+                    if (MessageTypeEnum.Applications.getMessage().equals(message.getReserveColumn01()) && Objects.equals(MessageType2Enum.SEND.getCodeStr(), message.getReserveColumn02())) {
                         messageInfoVO.setType("1");
+                    } else {
+                        messageInfoVO.setType("0");
                     }
                     if (MessageTypeEnum.Commons.getMessage().equals(message.getReserveColumn01())) {
                         messageInfoVO.setType("0");
+                    }
+                    if (Objects.equals(true, messageInfoVO.getIsOrNotApplication()) && Objects.equals("1", messageInfoVO.getType())) {
+                        messageInfoVO.setFlag2(1);
+                    } else {
+                        messageInfoVO.setFlag2(0);
                     }
                     messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
                     messageInfoVO.setCount(this.messageMapperReader.countByUserId2(recipientUserId, sendUserId));
@@ -654,7 +659,9 @@ public class MessageServiceImpl implements MessageService {
             return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
         }
         MessageExample messageExample = new MessageExample();
-        messageExample.createCriteria().andRecipientUserIdEqualTo(applicantsUserId).andSendUserIdEqualTo(sendUserId).andReserveColumn01EqualTo(MessageTypeEnum.Applications.getMessage());
+        messageExample.createCriteria().andRecipientUserIdEqualTo(applicantsUserId)
+                .andSendUserIdEqualTo(sendUserId)
+                .andReserveColumn01EqualTo(MessageTypeEnum.Applications.getMessage());
         List<Message> messageList = this.messageMapperReader.selectByExample(messageExample);
         if (Objects.isNull(messageList) || messageList.isEmpty()) {
             return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
@@ -663,8 +670,6 @@ public class MessageServiceImpl implements MessageService {
         if (!Objects.equals(Long.valueOf(applicationRecord.getReserveColumn01()), applicantsUserId)) {
             return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
         }
-        // 如果是同意申请加微信
-        String welkinId = applicantsUser.getWeixinId();// 数据库获取到的被申请人的微信号
         if (StrUtil.isNotEmpty(content)) {
             //校验发布的内容是否包含敏感词汇
             SensitiveWords sensitiveWords = this.sensitiveWordsService.checkHasSensitiveWords(content);
@@ -672,6 +677,8 @@ public class MessageServiceImpl implements MessageService {
                 return CommonResult.validateFailed("发消息，消息内容包含" + sensitiveWords.getTypeName() + "类型敏感词汇，禁止发送。");
             }
         }
+        // 如果是同意申请加微信
+        String welkinId = applicantsUser.getWeixinId();// 数据库获取到的被申请人的微信号
         if (MessageType3Enum.AGREE.getCodeStr().equals(type)) {
             if (StrUtil.isNotEmpty(weChatId)) {
                 if (StrUtil.isEmpty(content)) {
@@ -691,12 +698,12 @@ public class MessageServiceImpl implements MessageService {
                         if (content.contains(welkinId)) {
                             content = content + "|";
                         } else {
-                            content = content + "|" + weChatId;
+                            content = content + "|" + welkinId;
                         }
                     }
                 }
             }
-            if (StrUtil.isNotEmpty(weChatId) && !Objects.equals(weChatId, welkinId)) {
+            if (!Objects.equals(weChatId, welkinId)) {
                 applicantsUser.setWeixinId(weChatId);
                 applicantsUser.setUpdateTime(new Date());
                 this.userMapperWriter.updateByPrimaryKeySelective(applicantsUser);

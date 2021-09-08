@@ -64,6 +64,11 @@ public class MessageInfoVO {
     @JsonProperty(value = "flag")
     private Integer flag;
 
+    //是否展示同意或者拒绝按钮，"0"->否，"1"->是
+    @JSONField(name = "flag2")
+    @JsonProperty(value = "flag2")
+    private Integer flag2;
+
     //微信id
     @JSONField(name = "weixinId")
     @JsonProperty(value = "weixinId")
