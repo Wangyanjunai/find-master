@@ -272,6 +272,7 @@
         WHERE `send_user_id` <![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
           AND `recipient_user_id` <![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
           AND `reserve_column01` IN ('applications', 'commons')
+          AND `reserve_column03` <![CDATA[ =]]> '0'
           and `status` = '0'
     </select>
 
