@@ -78,6 +78,7 @@ public enum ResultCode implements IErrorCode {
     REPLY_APPLICATIONS_MESSAGE_IS_VALID1(6571, "不能同意自己加别人微信，只能同意别人加自己微信1。"),
 
     REPLY_APPLICATIONS_MESSAGE_IS_VALID2(6572, "不能同意自己加别人微信，只能同意别人加自己微信2。"),
+
     REPLY_APPLICATIONS_MESSAGE_IS_VALID3(6573, "不能同意自己加别人微信，只能同意别人加自己微信3。"),
 
     APPLICATIONS_USER_IS_VALID(658, "只能申请加一个人的微信一次。"),

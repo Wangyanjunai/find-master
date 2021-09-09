@@ -389,7 +389,7 @@ public class MessageServiceImpl implements MessageService {
                     if (MessageTypeEnum.Commons.getMessage().equals(message.getReserveColumn01())) {
                         messageInfoVO.setType("0");
                     }
-                    if (Objects.equals(false, messageInfoVO.getIsOrNotApplication()) && Objects.equals("1", messageInfoVO.getType())) {
+                    if (Objects.equals(false, Objects.equals(sendUserId, userId))) {
                         messageInfoVO.setFlag2(1);
                     } else {
                         messageInfoVO.setFlag2(0);
