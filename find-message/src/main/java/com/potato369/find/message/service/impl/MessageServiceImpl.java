@@ -15,6 +15,7 @@ import com.potato369.find.message.config.props.ProjectUrlProps;
 import com.potato369.find.message.service.JiGuangPushService;
 import com.potato369.find.message.service.MessageService;
 import com.potato369.find.message.service.SensitiveWordsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class MessageServiceImpl implements MessageService {
 
@@ -387,16 +389,19 @@ public class MessageServiceImpl implements MessageService {
                     if (MessageTypeEnum.Commons.getMessage().equals(message.getReserveColumn01())) {
                         messageInfoVO.setType("0");
                     }
-                    if (Objects.equals(true, messageInfoVO.getIsOrNotApplication()) && Objects.equals("1", messageInfoVO.getType())) {
+                    if (Objects.equals(false, messageInfoVO.getIsOrNotApplication()) && Objects.equals("1", messageInfoVO.getType())) {
                         messageInfoVO.setFlag2(1);
                     } else {
                         messageInfoVO.setFlag2(0);
                     }
                     messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                    messageInfoVO.setCount(this.messageMapperReader.countByUserId2(recipientUserId, sendUserId));
+                    long count = this.messageMapperReader.countByUserId2(userId, sendUserId);
+//                    log.info("count={}, recipientUserId={}, sendUserId={}", count, userId, sendUserId);
+                    messageInfoVO.setCount(count);
                     messageInfoVOs.add(messageInfoVO);
                 }
             }
+            messageInfoVOs = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
             messageVO.setMessageInfoVOs(messageInfoVOs);
             messageVO.setTotalCount(applicationRecordPageInfo.getTotal());
             messageVO.setTotalPage(applicationRecordPageInfo.getPages());
@@ -654,9 +659,10 @@ public class MessageServiceImpl implements MessageService {
         applicationRecordExample.createCriteria()
                 .andUserIdEqualTo(sendUserId)
                 .andReserveColumn01EqualTo(String.valueOf(applicantsUserId));
+        log.info("sendUserId={}, applicantsUserId={}", sendUserId, applicantsUserId);
         List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
         if (Objects.isNull(applicationRecordList) || applicationRecordList.isEmpty()) {
-            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
+            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID1);
         }
         MessageExample messageExample = new MessageExample();
         messageExample.createCriteria().andRecipientUserIdEqualTo(applicantsUserId)
@@ -664,11 +670,11 @@ public class MessageServiceImpl implements MessageService {
                 .andReserveColumn01EqualTo(MessageTypeEnum.Applications.getMessage());
         List<Message> messageList = this.messageMapperReader.selectByExample(messageExample);
         if (Objects.isNull(messageList) || messageList.isEmpty()) {
-            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
+            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID2);
         }
         ApplicationRecord applicationRecord = applicationRecordList.get(0);
         if (!Objects.equals(Long.valueOf(applicationRecord.getReserveColumn01()), applicantsUserId)) {
-            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID);
+            return CommonResult.failed(data, ResultCode.REPLY_APPLICATIONS_MESSAGE_IS_VALID3);
         }
         if (StrUtil.isNotEmpty(content)) {
             //校验发布的内容是否包含敏感词汇

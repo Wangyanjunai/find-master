@@ -6335,7 +6335,14 @@
             "type": "Number",
             "optional": true,
             "field": "flag",
-            "description": "<p>是否展示复制微信，0-&gt;否，1-&gt;是</p>"
+            "description": "<p>是否展示复制微信按钮，0-&gt;否，1-&gt;是</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": true,
+            "field": "flag2",
+            "description": "<p>是否展示“同意”，“拒绝”按钮，0-&gt;否，1-&gt;是</p>"
           },
           {
             "group": "200",
@@ -6356,7 +6363,7 @@
       "examples": [
         {
           "title": "200响应示例",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"likes\": {\n\"content1\": \"尹明艳 点赞您的评论 是的，今天天气很糟糕的。\",\n\"count1\": 0\n},\n\"totalCount\": 2,\n\"totalPage\": 1,\n\"list\": [\n{\n\"messageId\": 505,\n\"userId\": 140,\n\"head\": \"http://192.168.31.38:9000/find/img/head/140/0c99dc02-188b-426e-a46d-5e951743dedf.jpg\",\n\"nickname\": \"凝噎新紫\",\n\"content2\": \"同意\",\n\"createTime\": \"2021年08月27日 16:28:21\",\n\"count2\": 1,\n\"type\": \"1\",\n\"flag\": 1,\n\"weixinId\": \"11111111111\",\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 498,\n\"userId\": 144,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"content2\": \"申请加您的微信，麻烦通过一下。\",\n\"createTime\": \"2021年08月26日 15:42:32\",\n\"count2\": 1,\n\"type\": \"1\",\n\"flag\": 0,\n\"isOrNotApplication\": false\n}\n]\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 200,\n\"code\": 0,\n\"msg\": \"返回数据成功。\",\n\"data\": {\n\"likes\": {\n\"content1\": \"qqq 评论您的动态 测试安排\",\n\"count1\": 2\n},\n\"totalCount\": 6,\n\"totalPage\": 1,\n\"list\": [\n{\n\"messageId\": 514,\n\"userId\": 143,\n\"head\": \"http://192.168.31.38:9000/find/img/head/143/f683b170-6aa1-4cec-99c9-25baeecb74a1.jpeg\",\n\"nickname\": \"www\",\n\"content2\": \"同意\",\n\"createTime\": \"2021年09月08日 15:54:16\",\n\"count2\": 1,\n\"type\": \"0\",\n\"flag\": 1,\n\"flag2\": 0,\n\"weixinId\": \"11111111111\",\n\"isOrNotApplication\": true\n},\n{\n\"messageId\": 519,\n\"userId\": 131,\n\"head\": \"http://192.168.31.38:9000/find/img/head/131/02.png\",\n\"nickname\": \"YY\",\n\"content2\": \"申请加您的微信，麻烦通过一下。\",\n\"createTime\": \"2021年09月08日 16:27:18\",\n\"count2\": 1,\n\"type\": \"1\",\n\"flag\": 0,\n\"flag2\": 1,\n\"isOrNotApplication\": true\n},\n{\n\"messageId\": 515,\n\"userId\": 140,\n\"head\": \"http://192.168.31.38:9000/find/img/head/140/0c99dc02-188b-426e-a46d-5e951743dedf.jpg\",\n\"nickname\": \"凝噎新紫\",\n\"content2\": \"同意\",\n\"createTime\": \"2021年09月08日 16:22:43\",\n\"count2\": 1,\n\"type\": \"0\",\n\"flag\": 1,\n\"flag2\": 0,\n\"weixinId\": \"11111111111\",\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 516,\n\"userId\": 144,\n\"head\": \"http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg\",\n\"nickname\": \"季婉\",\n\"content2\": \"同意\",\n\"createTime\": \"2021年09月08日 16:23:12\",\n\"count2\": 1,\n\"type\": \"0\",\n\"flag\": 1,\n\"flag2\": 0,\n\"weixinId\": \"11111111111\",\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 517,\n\"userId\": 142,\n\"head\": \"http://192.168.31.38:9000/find/img/head/142/331e380a-73da-4592-9bd6-6c79f539c4e4.jpeg\",\n\"nickname\": \"qqq\",\n\"content2\": \"同意\",\n\"createTime\": \"2021年09月08日 16:24:58\",\n\"count2\": 1,\n\"type\": \"0\",\n\"flag\": 1,\n\"flag2\": 0,\n\"weixinId\": \"11111111111\",\n\"isOrNotApplication\": false\n},\n{\n\"messageId\": 518,\n\"userId\": 124,\n\"head\": \"http://192.168.31.38:9000/find/img/head/124/08.png\",\n\"nickname\": \"miss T\",\n\"content2\": \"申请加您的微信，麻烦通过一下。\",\n\"createTime\": \"2021年09月08日 16:26:29\",\n\"count2\": 1,\n\"type\": \"1\",\n\"flag\": 0,\n\"flag2\": 0,\n\"isOrNotApplication\": false\n}\n]\n}\n}",
           "type": "json"
         }
       ]

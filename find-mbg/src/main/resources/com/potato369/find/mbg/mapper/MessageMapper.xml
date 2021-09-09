@@ -268,12 +268,9 @@
 
     <select id="countByUserId2" parameterType="java.lang.Long" resultType="java.lang.Long">
         select count(0)
-        from `message`
-        where `recipient_user_id` <![CDATA[ =]]> #{userId, jdbcType=BIGINT}
-          and `send_user_id` <![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
-          and `reserve_column01` IN ('applications', 'commons')
-          and `reserve_column03` = '0'
-          and `status` = '0'
+        from `application_record`
+        where `user_id` <![CDATA[ =]]> #{sendUserId, jdbcType=BIGINT}
+          and `reserve_column01` <![CDATA[ =]]> #{recipientUserId, jdbcType=BIGINT}
     </select>
 
     <select id="selectMessageRecordCount" parameterType="java.lang.Long" resultMap="BaseResultMap">
