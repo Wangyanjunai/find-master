@@ -395,8 +395,9 @@ public class MessageServiceImpl implements MessageService {
                         messageInfoVO.setFlag2(0);
                     }
                     messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
-                    long count = this.messageMapperReader.countByUserId2(userId, sendUserId);
-//                    log.info("count={}, recipientUserId={}, sendUserId={}", count, userId, sendUserId);
+                    log.info("recipientUserId={}, sendUserId={}", userId, message.getSendUserId());
+                    long count = this.messageMapperReader.countByUserId2(userId, message.getSendUserId());
+                    log.info("count={}", count);
                     messageInfoVO.setCount(count);
                     messageInfoVOs.add(messageInfoVO);
                 }
