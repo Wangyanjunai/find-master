@@ -9,7 +9,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.*;
 import org.springframework.web.servlet.HandlerMapping;
@@ -19,7 +18,6 @@ import java.util.Map;
 
 @Aspect
 @Component
-@Scope("request")
 public class UserAuthorizeAspect {
 
     private UserMapper userMapperReader;

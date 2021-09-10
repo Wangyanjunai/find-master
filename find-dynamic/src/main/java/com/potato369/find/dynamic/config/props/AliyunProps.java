@@ -2,7 +2,6 @@ package com.potato369.find.dynamic.config.props;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,7 +24,6 @@ import org.springframework.stereotype.Component;
 @Setter
 @ToString
 @NoArgsConstructor
-@Scope("request")
 public class AliyunProps {
 
     @Value("${aliyun.appcode}")
