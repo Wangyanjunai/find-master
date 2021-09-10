@@ -4,6 +4,7 @@ import com.potato369.find.common.api.CommonResult;
 import com.potato369.find.portal.feign.DynamicService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -23,6 +24,7 @@ import java.util.Map;
 @Api(value = "comment-controller", tags = "动态评论信息模块Restful API")
 @RestController
 @RequestMapping("/comment")
+@Scope("request")
 public class CommentController {
 
     private DynamicService dynamicFeignClient;

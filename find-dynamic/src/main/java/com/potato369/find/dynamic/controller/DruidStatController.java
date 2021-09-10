@@ -1,6 +1,7 @@
 package com.potato369.find.dynamic.controller;
 
 import com.alibaba.druid.stat.DruidStatManagerFacade;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * </pre>
  */
 @RestController
+@Scope("request")
 public class DruidStatController {
 
     @GetMapping("/stat")

@@ -11,6 +11,7 @@ import com.potato369.find.order.utils.MD5SignatureUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/v1/order")
+@Scope("request")
 public class OrderController {
 
     private ProductInfoService productInfoService;

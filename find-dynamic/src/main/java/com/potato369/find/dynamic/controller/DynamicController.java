@@ -28,6 +28,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +41,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/v1/dynamic")
+@Scope("request")
 public class DynamicController {
 
     private DynamicService dynamicService;
@@ -821,7 +823,7 @@ public class DynamicController {
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setUserId(userId);
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getStatus());
-        operateRecord.setType(OperateRecordTypeEnum.LikeDynamic.getCode());
+        operateRecord.setType(OperateRecordTypeEnum.LikesDynamic.getCode());
         data.put("LIKED", "ERROR");
         try {
             if (log.isDebugEnabled()) {
@@ -894,11 +896,11 @@ public class DynamicController {
     }
 
     /**
-     * 根据用户发布的动态内容Id申请加微信
+     * 根据动态内容id申请加微信
      *
-     * @param applicantUserId 申请加微信者的用户id
-     * @param dynamicInfoId   被申请加微信者的动态内容信息id
-     * @param message         申请加微信发送的消息
+     * @param applicantUserId 申请者的用户id
+     * @param dynamicInfoId   动态内容信息id
+     * @param message         发送的消息
      */
     @PutMapping(value = "/{id}/application.do")
     public CommonResult<Map<String, Object>> applyToAddWechatByDynamicId(@PathVariable(name = "id") Long applicantUserId,

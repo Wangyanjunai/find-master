@@ -6,6 +6,7 @@ import com.potato369.find.common.vo.DynamicInfoVO;
 import com.potato369.find.portal.feign.DynamicService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/dynamic")
 //@Profile({"dev", "dev2", "test", "prod"})
+@Scope("request")
 public class DynamicController {
 
     private DynamicService dynamicFeignClient;

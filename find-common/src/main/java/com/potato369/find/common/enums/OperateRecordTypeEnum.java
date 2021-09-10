@@ -15,7 +15,7 @@ public enum OperateRecordTypeEnum implements CodeEnum<Integer> {
 
     DeleteDynamic(1, "1", "删除动态"),
 
-    LikeDynamic(2, "2", "点赞动态"),
+    LikesDynamic(2, "2", "点赞/取消点赞动态"),
 
     ApplyForWechat(3, "3", "申请加微信"),
 

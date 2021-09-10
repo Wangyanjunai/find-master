@@ -6,6 +6,7 @@ import com.potato369.find.message.service.JiGuangPushService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import java.util.Map;
 @Api(value = "消息模块消息推送控制器类", consumes = "消息模块消息推送控制器类")
 @RestController
 @RequestMapping("/v1/message")
+@Scope("request")
 public class PushMessageController {
 
 	private JiGuangPushService jiGuangPushService;

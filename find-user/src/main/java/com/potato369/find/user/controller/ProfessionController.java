@@ -7,6 +7,8 @@ import com.potato369.find.user.service.ProfessionService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @Api(value = "用户模块职业管理控制器类")
 @RestController
 @RequestMapping("/v1/professions")
+@Scope("request")
 public class ProfessionController {
 
     private ProfessionService professionService;
@@ -29,7 +32,7 @@ public class ProfessionController {
         this.professionService = professionService;
     }
 
-    @RequestMapping("/list.do")
+    @GetMapping("/list.do")
 	public CommonResult<Map<String, List<IndustriesVO>>> list() {
 		try {
 			if (log.isDebugEnabled()) {
