@@ -131,10 +131,3 @@ pagehelper:
   support-methods-arguments: true
   reasonable: false
   helper-dialect: mysql
-logging:
-  level:
-    org:
-      springframework:
-        web: TRACE
-        cloud:
-          netflix: TRACE

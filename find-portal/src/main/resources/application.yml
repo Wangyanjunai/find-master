@@ -59,6 +59,8 @@ ribbon:
     enabled: true
   restclient:
     enabled: true
+  eager-load:
+    enabled: true
 ##########feign客户端配置##########
 feign:
   compression:
@@ -76,14 +78,6 @@ feign:
       default:
         connectTimeout: 5000
         readTimeout: 10000
-        loggerLevel: FULL
+        loggerLevel: BASIC
   okhttp:
     enabled: true
-logging:
-  level:
-    org:
-      springframework:
-        web: TRACE
-        cloud:
-          netflix: TRACE          
-  
