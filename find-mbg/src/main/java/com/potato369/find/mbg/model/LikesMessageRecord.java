@@ -2,12 +2,19 @@ package com.potato369.find.mbg.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 //用户点赞记录
+@Data
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LikesMessageRecord {
+public class LikesMessageRecord implements Serializable {
 
     //点赞消息id
     @ApiModelProperty(value = "点赞消息id")
@@ -53,121 +60,5 @@ public class LikesMessageRecord {
     @ApiModelProperty(value = "点赞的动态内容附件文件名称")
     private String attacheFilename;
 
-    public Long getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(Long messageId) {
-        this.messageId = messageId;
-    }
-
-    public Long getDynamicInfoId() {
-        return dynamicInfoId;
-    }
-
-    public void setDynamicInfoId(Long dynamicInfoId) {
-        this.dynamicInfoId = dynamicInfoId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getHeadIcon() {
-        return headIcon;
-    }
-
-    public void setHeadIcon(String headIcon) {
-        this.headIcon = headIcon;
-    }
-
-    public String getLikesContent() {
-        return likesContent;
-    }
-
-    public void setLikesContent(String likesContent) {
-        this.likesContent = likesContent;
-    }
-
-    public String getAttacheType() {
-        return attacheType;
-    }
-
-    public void setAttacheType(String attacheType) {
-        this.attacheType = attacheType;
-    }
-
-    public String getAttacheFilename() {
-        return attacheFilename;
-    }
-
-    public void setAttacheFilename(String attacheFilename) {
-        this.attacheFilename = attacheFilename;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("LikesMessageRecord [messageId=");
-        builder.append(messageId);
-        builder.append(", dynamicInfoId=");
-        builder.append(dynamicInfoId);
-        builder.append(", status=");
-        builder.append(status);
-        builder.append(", createTime=");
-        builder.append(createTime);
-        builder.append(", updateTime=");
-        builder.append(updateTime);
-        builder.append(", userId=");
-        builder.append(userId);
-        builder.append(", nickname=");
-        builder.append(nickname);
-        builder.append(", headIcon=");
-        builder.append(headIcon);
-        builder.append(", likesContent=");
-        builder.append(likesContent);
-        builder.append(", attacheType=");
-        builder.append(attacheType);
-        builder.append(", attacheFilename=");
-        builder.append(attacheFilename);
-        builder.append("]");
-        return builder.toString();
-    }
-
+    private static final long serialVersionUID = 1L;
 }

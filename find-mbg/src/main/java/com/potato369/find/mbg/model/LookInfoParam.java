@@ -4,10 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -25,13 +22,14 @@ import java.util.Date;
  * </pre>
  */
 @Data
+@Builder
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LookInfoParam implements Serializable {
 
-    private static final long serialVersionUID = 6080249421284905175L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "鹿可性别筛选条件")
     private String gender;

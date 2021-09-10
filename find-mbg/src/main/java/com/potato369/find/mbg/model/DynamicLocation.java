@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper = false)
@@ -11,7 +13,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DynamicLocation {
+public class DynamicLocation implements Serializable {
 
     @ApiModelProperty(value = "定位（国家）")
     private String country;
@@ -33,4 +35,6 @@ public class DynamicLocation {
 
     @ApiModelProperty(value = "定位（纬度）")
     private Double latitude;
+
+    private static final long serialVersionUID = 1L;
 }

@@ -3,6 +3,8 @@ package com.potato369.find.mbg.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  * @PackageName com.potato369.find.mbg.model
@@ -22,9 +24,11 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class HotTopic {
+public class HotTopic implements Serializable {
     //话题总数量，动态总数量
     private long totalCount;
     //话题标题
     private String topicTitle;
+
+    private static final long serialVersionUID = 1L;
 }

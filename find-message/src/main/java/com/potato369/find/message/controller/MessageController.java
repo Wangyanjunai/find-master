@@ -28,19 +28,20 @@ public class MessageController {
     }
 
     /**
-     * 获取消息界面点赞和申请加微信消息记录
-     *
+     * <pre>
+     * 获取最新（动态或评论）的点赞，评论和申请加微信消息
      * @param userId   用户id
      * @param pageNum  当前页码，默认：1
      * @param pageSize 每页数量，默认：20
+     * </pre>
      */
-    @ApiOperation(value = "获取最新（动态或评论）点赞，评论和申请加微信消息记录", notes = "获取最新（动态或评论）点赞，评论和申请加微信消息记录")
+    @ApiOperation(value = "获取最新（动态或评论）的点赞，评论和申请加微信消息", notes = "获取最新（动态或评论）的点赞，评论和申请加微信消息")
     @GetMapping(value = "/{id}/all.do")
     public CommonResult<MessageVO> all(
-            @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
+            @PathVariable(name = "id", required = true) @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
             @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码", example = "1") int pageNum,
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") int pageSize) {
-        return CommonResult.success(this.messageService.selectApplicationsMessage(userId, pageNum, pageSize));
+        return CommonResult.success(this.messageService.selectNewestMessages(userId, pageNum, pageSize));
     }
 
     /**
@@ -58,22 +59,6 @@ public class MessageController {
             @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
         return CommonResult.success(this.messageService.selectLikesMessage(userId, pageNum, pageSize));
     }
-
-//    /**
-//     * 被评论的消息记录
-//     *
-//     * @param userId   被评论的用户id
-//     * @param pageNum  当前页码，默认：1
-//     * @param pageSize 每页数量，默认：20
-//     */
-//    @ApiOperation(value = "被评论消息记录", notes = "被评论消息记录")
-//    @GetMapping(value = "/{id}/comments.do")
-//    public CommonResult<CommentsVO2> comments(
-//            @PathVariable(name = "id") @ApiParam(name = "id", value = "用户id", required = true, example = "1") Long userId,
-//            @RequestParam(name = "pageNum", required = false, defaultValue = "1") @ApiParam(name = "pageNum", value = "当前页码", example = "1") Integer pageNum,
-//            @RequestParam(name = "pageSize", required = false, defaultValue = "20") @ApiParam(name = "pageSize", value = "每页数量", example = "20") Integer pageSize) {
-//        return CommonResult.success(this.messageService.selectCommentsMessage(userId, pageNum, pageSize));
-//    }
 
     /**
      * 消息记录

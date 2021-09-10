@@ -15,7 +15,7 @@ public interface MessageService {
      *
      * @param userId 消息接收者用户id
      */
-    LikesMessageVO selectAllLikesMessage(Long userId);
+    LikesMessageVO selectInteractionMessage(Long userId);
 
     /**
      * 根据用户id查询某个用户最新一条被评论的消息记录
@@ -58,7 +58,7 @@ public interface MessageService {
      * @param pageNum  当前页码
      * @param pageSize 每页数量
      */
-    MessageVO selectApplicationsMessage(Long userId, int pageNum, int pageSize);
+    MessageVO selectNewestMessages(Long userId, int pageNum, int pageSize);
 
     /**
      * 分页查询某个用户发送接收消息记录列表

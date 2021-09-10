@@ -119,8 +119,9 @@ public class MessageServiceImpl implements MessageService {
         this.commentMapperReader = commentMapperReader;
     }
 
+    //查询最新一条互动消息，包括点赞（动态，评论），评论动态消息
     @Override
-    public LikesMessageVO selectAllLikesMessage(Long userId) {
+    public LikesMessageVO selectInteractionMessage(Long userId) {
         // 查询（动态，评论）点赞，评论最新消息和未读消息条数
         LikesMessageVO likesMessageVO = LikesMessageVO.builder().build();
         MessageExample messageExample = new MessageExample();
@@ -153,7 +154,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageVO selectNotLikesMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
-        messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId));
+        messageVO.setLikesMessageVO(this.selectInteractionMessage(userId));
         final PageInfo<NotLikesMessageRecord> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectUnLikesRecordByUserId(userId));
         messageVO.setTotalCount(listPageInfo.getTotal());// 未读申请加微信总数量
         messageVO.setTotalPage(listPageInfo.getPages());
@@ -334,9 +335,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public MessageVO selectApplicationsMessage(Long userId, int pageNum, int pageSize) {
+    public MessageVO selectNewestMessages(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
-        messageVO.setLikesMessageVO(this.selectAllLikesMessage(userId));
+        messageVO.setLikesMessageVO(this.selectInteractionMessage(userId));
         final PageInfo<ApplicationRecord> applicationRecordPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.applicationRecordMapperReader.selectByUserId(userId));
         if (!Objects.isNull(applicationRecordPageInfo) && applicationRecordPageInfo.getTotal() > 0) {
             List<ApplicationRecord> applicationRecordList = applicationRecordPageInfo.getList();
@@ -395,9 +396,7 @@ public class MessageServiceImpl implements MessageService {
                         messageInfoVO.setFlag2(0);
                     }
                     messageInfoVO.setCreateTime(DateUtil.fomateDate(message.getCreateTime(), DateUtil.sdfTimeCNFmt));
-//                    log.info("recipientUserId={}, sendUserId={}", userId, message.getSendUserId());
                     long count = this.messageMapperReader.countByUserId2(userId, message.getSendUserId());
-//                    log.info("count={}", count);
                     messageInfoVO.setCount(count);
                     messageInfoVOs.add(messageInfoVO);
                 }
