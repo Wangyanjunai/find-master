@@ -3,6 +3,7 @@ package com.potato369.find.message.aspect;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Slf4j
 @Component
+@Scope("request")
 public class HttpAspect {
 
     @Pointcut("execution(public * com.potato369.find.message.controller.*.*(..))")

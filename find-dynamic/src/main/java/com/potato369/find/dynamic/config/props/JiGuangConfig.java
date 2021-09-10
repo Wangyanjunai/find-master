@@ -6,12 +6,14 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 
 @Data
 @Configuration
 @ConfigurationProperties
+@Scope("request")
 public class JiGuangConfig {
 	/**
      * appKey：极光平台应用的唯一标识，或者说是极光推送的用户名

@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Scope;
  */
 
 @Configuration
+@Scope("request")
 public class FeignMultipartSupportConfig {
 
     private ObjectFactory<HttpMessageConverters> messageConverters;
