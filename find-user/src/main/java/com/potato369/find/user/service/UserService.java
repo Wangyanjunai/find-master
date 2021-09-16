@@ -87,4 +87,11 @@ public interface UserService {
      * @return 0
      */
     int feedback(FeedbackRecord feedbackRecord, MultipartFile[] multipartFiles);
+    
+    /**
+     * 根据手机号码判断该手机号码是否注册用户
+     * @param phone 手机号码
+     * @return
+     */
+    boolean isReg(String phone);
 }

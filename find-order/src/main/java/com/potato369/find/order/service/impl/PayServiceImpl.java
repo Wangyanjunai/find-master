@@ -36,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -45,6 +46,7 @@ import java.util.Map;
 
 @Slf4j
 @Service
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class PayServiceImpl implements PayService {
 
     private WxPayService mobileWxPayService;
@@ -89,9 +91,7 @@ public class PayServiceImpl implements PayService {
         this.alipayConfigMapperReader = alipayConfigMapperReader;
     }
 
-
     @Override
-    @Transactional(readOnly = false)
     public WeChatAppPayResult payWithWeixinAppPay(OrderInfoDTO orderInfoDTO) {
         WeChatAppPayResult payResult = new WeChatAppPayResult();
         try {
@@ -173,7 +173,6 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public AliAppPayResult payWithAliAppPay(OrderInfoDTO orderInfoDTO) {
         AliAppPayResult aliAppPayResult = new AliAppPayResult();
         try {
@@ -292,7 +291,6 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public WxPayOrderNotifyResult weixinAppPayNotify(String notifyData) {
         String resultCode = "FAIL";
         String outTradeNo = "";
@@ -414,7 +412,6 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public String aliAppPayNotify(Map<String, String> conversionParams) {
         Boolean signVerified = Boolean.FALSE;
         String outTradeNo = "";

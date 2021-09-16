@@ -18,6 +18,7 @@ import com.potato369.find.message.service.SensitiveWordsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class MessageServiceImpl implements MessageService {
 
     private MessageMapper messageMapperReader;
@@ -121,6 +123,7 @@ public class MessageServiceImpl implements MessageService {
 
     //查询最新一条互动消息，包括点赞（动态，评论），评论动态消息
     @Override
+    @Transactional(readOnly = true)
     public LikesMessageVO selectInteractionMessage(Long userId) {
         // 查询（动态，评论）点赞，评论最新消息和未读消息条数
         LikesMessageVO likesMessageVO = LikesMessageVO.builder().build();
@@ -139,6 +142,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CommentsMessageVO selectAllCommentsMessage(Long userId) {
         // 查询点赞消息
         List<Message> messageList = this.messageMapperReader.selectAllCommentsMessageRecord(userId);
@@ -152,6 +156,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MessageVO selectNotLikesMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectInteractionMessage(userId));
@@ -176,7 +181,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional
     public MessageVO2 selectLikesMessage(Long userId, int pageNum, int pageSize) {
         MessageVO2 messageVO2 = MessageVO2.builder().build();
         MessageExample messageExample = new MessageExample();
@@ -298,7 +302,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional
     public CommentsVO2 selectCommentsMessage(Long userId, int pageNum, int pageSize) {
         MessageExample messageExample = new MessageExample();
         messageExample.setOrderByClause("create_time DESC");
@@ -335,6 +338,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MessageVO selectNewestMessages(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectInteractionMessage(userId));
@@ -423,7 +427,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional
     public MessageVO3 selectMessageRecord(Long sendUserId, Long recipientUserId, int pageNum, int pageSize) {
         MessageVO3 messageVO3 = MessageVO3.builder().build();
         final PageInfo<Message> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.messageMapperReader.selectMessageRecord(sendUserId, recipientUserId));
@@ -466,7 +469,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional
     public CommonResult<Map<String, Object>> sendMessageAndPush(Long sendUserId, Long messageId, String content) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("SEND", "ERROR");
@@ -539,7 +541,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional
     public CommonResult<Map<String, Object>> allRead(Long recipientUserId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String key = "UPDATE";
@@ -561,7 +562,6 @@ public class MessageServiceImpl implements MessageService {
      */
 
     @Override
-    @Transactional
     public CommonResult<Map<String, Object>> delete(Long recipientUserId, Long messageId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String key = "DELETE";
@@ -587,7 +587,6 @@ public class MessageServiceImpl implements MessageService {
      * </pre>
      */
     @Override
-    @Transactional
     public CommonResult<Map<String, Object>> deleteLikes(Long recipientUserId, Long messageId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String key = "DELETE";
@@ -613,7 +612,6 @@ public class MessageServiceImpl implements MessageService {
      * </pre>
      */
     @Override
-    @Transactional
     public CommonResult<Map<String, Object>> deleteComments(Long recipientUserId, Long messageId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         String key = "DELETE";
@@ -634,7 +632,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional
     public CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type, String content, String weChatId) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("REPLY", "ERROR");

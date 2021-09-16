@@ -18,6 +18,7 @@ import com.potato369.find.mbg.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -36,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * </pre>
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class DynamicInfoServiceImpl implements DynamicInfoService {
 
     private DynamicInfoMapper dynamicInfoMapperReader;
@@ -88,6 +89,7 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
      * @return 动态内容
      */
     @Override
+    @Transactional(readOnly = true)
     public DynamicInfo findDynamicInfoByPrimaryKey(Long id) {
         DynamicInfo dynamicInfo = this.dynamicInfoMapperReader.selectByPrimaryKey(id);
         if (!Objects.isNull(dynamicInfo) && !Objects.equals(DynamicInfoStatusEnum.HIDE.getStatus(), dynamicInfo.getDynamicStatus())) {
@@ -104,7 +106,6 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
      * @return 更新条数
      */
     @Override
-    @Transactional
     public Integer updateDynamicInfoByPrimaryKey(DynamicInfo dynamicInfo) {
         return this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
     }

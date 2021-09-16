@@ -15,6 +15,7 @@ import com.potato369.find.order.service.PayService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -25,6 +26,7 @@ import java.util.Map;
 
 @Slf4j
 @Service
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class OrderServiceImpl implements OrderService {
 
     private UserMapper userMapperReader;
@@ -92,7 +94,6 @@ public class OrderServiceImpl implements OrderService {
 
     //创建预支付订单信息
     @Override
-    @Transactional
     public CommonResult<Map<String, Object>> create(OrderDTO orderDTO, Long userId) throws Exception {
         if (check(orderDTO, userId)) {
             Long productId = orderDTO.getProductId();   //商品id
@@ -181,7 +182,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
     public OrderMaster cancel(OrderInfoDTO orderInfoDTO) throws Exception {
         OrderMaster orderMaster = this.orderMasterMapperReader.selectByOrderId(orderInfoDTO.getOrderId());
         if (orderMaster != null) {
@@ -194,7 +194,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
     public OrderMaster close(OrderInfoDTO orderInfoDTO) throws Exception {
         OrderMaster orderMaster = this.orderMasterMapperReader.selectByOrderId(orderInfoDTO.getOrderId());
         if (orderMaster != null) {
@@ -228,7 +227,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
     public OrderMaster finish(OrderInfoDTO orderInfoDTO) throws Exception {
         OrderMaster orderMaster = this.orderMasterMapperReader.selectByOrderId(orderInfoDTO.getOrderId());
         if (orderMaster != null) {
@@ -241,7 +239,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
     public OrderMaster paid(OrderMaster orderMaster) throws Exception {
         if (checkOrder(orderMaster)) {
             Long productId = orderMaster.getProductId();

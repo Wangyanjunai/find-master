@@ -11,6 +11,7 @@ import com.potato369.find.mbg.model.DynamicInfo;
 import com.potato369.find.mbg.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -29,6 +30,7 @@ import java.util.Objects;
  * </pre>
  */
 @Service
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class ApplicationRecordServiceImpl implements ApplicationRecordService {
 
     private ApplicationRecordMapper applicationRecordMapperReader;
@@ -78,7 +80,6 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
      * @return 保存记录条数
      */
     @Override
-    @Transactional
     public Integer saveApplicationRecord(DynamicInfo dynamicInfo, ApplicationRecord applicationRecord, String message) {
         int a = 0, b = 0, c = 0;
         if (StrUtil.isNotEmpty(message) && !Objects.isNull(dynamicInfo) && !Objects.isNull(applicationRecord)) {

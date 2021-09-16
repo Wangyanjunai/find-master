@@ -168,7 +168,7 @@ public class UserDTO extends AbstractDTO {
      * country：国家
      * </pre>
      */
-    @ApiModelProperty(value = "国家")
+    @ApiModelProperty(value = "定位（国家）")
     @JSONField(name = "country")
     @JsonProperty(value = "country")
     private String country;
@@ -178,7 +178,7 @@ public class UserDTO extends AbstractDTO {
      * province：省份
      * </pre>
      */
-    @ApiModelProperty(value = "省份")
+    @ApiModelProperty(value = "定位（省份）")
     @JSONField(name = "province")
     @JsonProperty(value = "province")
     private String province;
@@ -188,27 +188,27 @@ public class UserDTO extends AbstractDTO {
      * city：城市
      * </pre>
      */
-    @ApiModelProperty(value = "城市")
+    @ApiModelProperty(value = "定位（城市）")
     @JSONField(name = "city")
     @JsonProperty(value = "city")
     private String city;
-    
+
     /**
      * <pre>
      * district：区/县
      * </pre>
      */
-    @ApiModelProperty(value = "区/县")
+    @ApiModelProperty(value = "定位（区/县）")
     @JSONField(name = "district")
     @JsonProperty(value = "district")
     private String district;
-    
+
     /**
      * <pre>
      * other：其它
      * </pre>
      */
-    @ApiModelProperty(value = "其它")
+    @ApiModelProperty(value = "定位（其它）")
     @JSONField(name = "other")
     @JsonProperty(value = "other")
     private String other;
@@ -218,7 +218,7 @@ public class UserDTO extends AbstractDTO {
      * longitude：经度
      * </pre>
      */
-    @ApiModelProperty(value = "经度")
+    @ApiModelProperty(value = "定位（经度）")
     @JSONField(name = "longitude")
     @JsonProperty(value = "longitude")
     private Double longitude;
@@ -228,7 +228,7 @@ public class UserDTO extends AbstractDTO {
      * latitude：纬度
      * </pre>
      */
-    @ApiModelProperty(value = "纬度")
+    @ApiModelProperty(value = "定位（纬度）")
     @JSONField(name = "latitude")
     @JsonProperty(value = "latitude")
     private Double latitude;

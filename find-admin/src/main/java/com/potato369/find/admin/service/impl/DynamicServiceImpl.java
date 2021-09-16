@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -36,7 +37,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class DynamicServiceImpl implements DynamicService {
 
     private UserMapper userMapperWrite;
@@ -89,7 +90,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional
     public int insert(User user, Dynamic dynamic, DynamicInfo dynamicInfo, AttacheInfo attacheInfo) throws Exception {
         int userResult = 0;
         int dynamicResult = 0;
@@ -138,7 +138,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional
     public String ajaxUploadExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("upfile");

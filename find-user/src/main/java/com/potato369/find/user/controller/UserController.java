@@ -742,18 +742,16 @@ public class UserController {
             if (log.isDebugEnabled()) {
                 log.debug("开始判断用户是否已经注册");
             }
+            if(Objects.isNull(phone)) {
+            	return CommonResult.failed("手机号码不能为空");
+            }
             if (!RegexUtil.isMathPhone(phone)) {
                 return CommonResult.failed("手机号码格式不正确");
             }
-            User user = this.userDaoUseJdbcTemplate.getByPhone(phone);
             Map<String, Boolean> map = new ConcurrentHashMap<>();
-            if (user == null) {
-                map.put("isReg", false);
-                return CommonResult.success(map, "SUCCESS，还未注册。");
-            } else {
-                map.put("isReg", true);
-                return CommonResult.success(map, "SUCCESS，已经注册。");
-            }
+            boolean result = this.userService.isReg(phone);
+            map.put("isReg", result);
+            return CommonResult.success(map, "SUCCESS，还未注册。");
         } catch (Exception e) {
             log.error("判断用户是否注册出现错误", e);
             return CommonResult.failed("判断用户是否注册出现错误");

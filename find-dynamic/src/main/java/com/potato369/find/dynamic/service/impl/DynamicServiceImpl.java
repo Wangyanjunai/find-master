@@ -28,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,7 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Service
-@Transactional
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class DynamicServiceImpl implements DynamicService {
 
     private DynamicMapper dynamicMapperReader;
@@ -136,7 +137,6 @@ public class DynamicServiceImpl implements DynamicService {
 
     //保存动态内容信息
     @Override
-    @Transactional
     public int save(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception {
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setUserId(user.getId());
@@ -239,7 +239,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional
     public CommonResult<Map<String, Object>> updateDynamic(LocationDTO locationDTO, DynamicDTO dynamicDTO) throws Exception {
         int row = this.updateLocation(locationDTO, dynamicDTO);
         if (row > 0) {
@@ -250,7 +249,6 @@ public class DynamicServiceImpl implements DynamicService {
 
     //更新动态内容信息
     @Override
-    @Transactional
     public int update(User user, DynamicDTO dynamicDTO, MultipartFile[] files) throws Exception {
         String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
         StringBuilder filePath = new StringBuilder().append(StrUtil.trimToNull(this.projectUrlProps.getUploadRes())).append(StrUtil.trimToNull(this.projectUrlProps.getProjectName()));
@@ -328,6 +326,7 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public LocationDTO getLocationByAliyunIP(String ip) {
         return IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), ip);
     }
@@ -450,7 +449,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public Integer updateLocation(LocationDTO locationDTO, DynamicDTO dynamicDTO) {
         if (locationDTO != null && dynamicDTO != null) {
             Long dynamicInfoIdLong = dynamicDTO.getDynamicInfoId();

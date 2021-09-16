@@ -8,6 +8,7 @@ import com.potato369.find.mbg.model.SensitiveWordsExample;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Slf4j
 @Service
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class SensitiveWordsServiceImpl implements SensitiveWordsService {
 
 	private SensitiveWordsMapper sensitiveWordsMapperReader;
@@ -36,7 +38,6 @@ public class SensitiveWordsServiceImpl implements SensitiveWordsService {
 	}
 
 	@Override
-	@Transactional(readOnly = false)
 	public String ajaxUploadExcel(HttpServletRequest request, HttpServletResponse response) {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		MultipartFile file = multipartRequest.getFile("upfile");

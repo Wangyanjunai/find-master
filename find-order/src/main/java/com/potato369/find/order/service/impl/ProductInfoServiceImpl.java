@@ -11,11 +11,14 @@ import com.potato369.find.order.service.ProductInfoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class ProductInfoServiceImpl implements ProductInfoService {
 
     private ProductInfoMapper productInfoMapperReader;
@@ -33,6 +36,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProductInfoVO> findAll() {
         ProductInfoExample example = new ProductInfoExample();
         example.setDistinct(true);
@@ -54,8 +58,9 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         return productInfoVOList;
     }
 
-	@Override
-	public ProductInfo findOne(Long id) {
-		return this.productInfoMapperReader.selectByPrimaryKey(id);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public ProductInfo findOne(Long id) {
+        return this.productInfoMapperReader.selectByPrimaryKey(id);
+    }
 }

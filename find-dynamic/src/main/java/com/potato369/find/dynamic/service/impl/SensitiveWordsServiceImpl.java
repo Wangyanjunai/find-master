@@ -1,21 +1,20 @@
 package com.potato369.find.dynamic.service.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import cn.hutool.core.util.StrUtil;
 import com.potato369.find.common.enums.DeleteStatusEnum;
 import com.potato369.find.dynamic.service.SensitiveWordsService;
 import com.potato369.find.mbg.mapper.SensitiveWordsMapper;
 import com.potato369.find.mbg.model.SensitiveWords;
 import com.potato369.find.mbg.model.SensitiveWordsExample;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import cn.hutool.core.util.StrUtil;
+import java.util.List;
 
 @Service
-@Transactional
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class SensitiveWordsServiceImpl implements SensitiveWordsService {
 
 	private SensitiveWordsMapper sensitiveWordsMapperReader;

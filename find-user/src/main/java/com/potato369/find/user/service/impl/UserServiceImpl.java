@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +40,7 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-@Transactional
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class UserServiceImpl implements UserService {
 
     private UserMapper userMapperWriter;
@@ -99,7 +100,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public int save(User user, OperateRecord operateRecord) {
         int result01 = this.userMapperWriter.insertSelective(user);
         int result02 = this.operateRecordMapperWriter.insert(operateRecord);
@@ -110,7 +110,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public int update(Long id, User user, OperateRecord operateRecord) {
         User currentInstance = this.userDaoUseJdbcTemplate.getById(id);
         String[] nullPropertyNames = CopyUtil.getNullPropertyNames(user);
@@ -131,7 +130,6 @@ public class UserServiceImpl implements UserService {
      * @return 更新用户条数
      */
     @Override
-    @Transactional(readOnly = false)
     public int update(User user, Dynamic dynamic) {
         int a = this.userMapperWriter.updateByPrimaryKeySelective(user);
         int b = this.dynamicMapperWriter.updateByPrimaryKeySelective(dynamic);
@@ -147,7 +145,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public void uploadHeadIcon(User user1, String content, MultipartFile headIconFile01, OperateRecord operateRecord) {
         if (headIconFile01 != null && !headIconFile01.isEmpty()) {
             try {
@@ -179,7 +176,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public String uploadBackgroundIcon(User user1, MultipartFile backgroundIconFile01, OperateRecord operateRecord) {
         // 头像图片上传服务器
         String backgroundIconFileName = "bg01.png";
@@ -234,7 +230,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public int register(User user, String content, UserDTO userDTO, MultipartFile head) throws Exception {
         //用户信息入库
         this.userMapperWriter.insertSelective(user);
@@ -264,7 +259,6 @@ public class UserServiceImpl implements UserService {
      * 更新用户VIP等级
      */
     @Override
-    @Transactional
     public void updateUserGrade() {
         List<User> userList = this.userMapperReader.selectVIPExpireUser();
         for (User user : userList) {
@@ -282,7 +276,6 @@ public class UserServiceImpl implements UserService {
      * @return 0
      */
     @Override
-    @Transactional
     public int feedback(FeedbackRecord feedbackRecord, MultipartFile[] files) {
         List<File> files02 = new ArrayList<>();
         String fileString = feedbackRecord.getUserId() + "/" +
@@ -316,5 +309,12 @@ public class UserServiceImpl implements UserService {
         String fileNames = ErrorMessageUtil.fileNameBuild(files02, fileString);
         feedbackRecord.setFilePathList(fileNames);
         return this.feedbackRecordMapperWriter.insertSelective(feedbackRecord);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isReg(String phone) {
+        User user = this.userDaoUseJdbcTemplate.getByPhone(phone);
+        return !Objects.isNull(user);
     }
 }

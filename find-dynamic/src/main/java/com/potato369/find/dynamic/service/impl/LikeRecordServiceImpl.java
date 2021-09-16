@@ -9,6 +9,7 @@ import com.potato369.find.mbg.mapper.MessageMapper;
 import com.potato369.find.mbg.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -28,6 +29,7 @@ import java.util.Objects;
  * </pre>
  */
 @Service
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class LikeRecordServiceImpl implements LikeRecordService {
 
     private LikeRecordMapper likeRecordMapperReader;
@@ -94,7 +96,6 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      * @return 点赞记录条数
      */
     @Override
-    @Transactional
     public int deleteByUserIdAndDynamicInfoId(Long userId, DynamicInfo dynamicInfo) {
         if (dynamicInfo != null) {
             int likes = dynamicInfo.getLikes();
@@ -119,7 +120,6 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      * @return 点赞记录条数
      */
     @Override
-    @Transactional
     public int createByUserIdAndDynamicInfoId(String content, Long userId, DynamicInfo dynamicInfo, LikeRecord likeRecord) {
         int likes = dynamicInfo.getLikes();
         dynamicInfo.setLikes(likes + 1);
@@ -161,7 +161,6 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      * @return 点赞记录条数
      */
     @Override
-    @Transactional
     public int createByUserIdAndCommentId(String content, Long userId, Comment comment, LikeRecord likeRecord) {
         int a = this.commentMapperWriter.updateByPrimaryKeySelective(comment);
         int b;
@@ -200,7 +199,6 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      * @return int
      */
     @Override
-    @Transactional(readOnly = false)
     public int update(LikeRecord likeRecord, DynamicInfo dynamicInfo) {
         int a = this.dynamicInfoMapperWriter.updateByPrimaryKeySelective(dynamicInfo);
         int b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);
@@ -215,7 +213,6 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      * @return int
      */
     @Override
-    @Transactional(readOnly = false)
     public int updateComment(LikeRecord likeRecord, Comment comment) {
         int a = this.commentMapperWriter.updateByPrimaryKeySelective(comment);
         int b = this.likeRecordMapperWriter.updateByPrimaryKeySelective(likeRecord);

@@ -10,6 +10,7 @@ import com.potato369.find.mbg.model.ProfessionsExample;
 import com.potato369.find.user.service.ProfessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.List;
  * </pre>
  */
 @Service
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class ProfessionServiceImpl implements ProfessionService {
 
     private IndustrysMapper industrysMapperReader;

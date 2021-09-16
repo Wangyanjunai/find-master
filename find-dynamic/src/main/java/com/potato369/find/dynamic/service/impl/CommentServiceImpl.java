@@ -12,6 +12,7 @@ import com.potato369.find.mbg.mapper.*;
 import com.potato369.find.mbg.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@Transactional
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class CommentServiceImpl implements CommentService {
 
     private CommentMapper commentMapperReader;
@@ -87,7 +88,6 @@ public class CommentServiceImpl implements CommentService {
      * @param dynamicInfo
      */
     @Override
-    @Transactional
     public int save(String content, Comment comment, CommentRecord commentRecord, DynamicInfo dynamicInfo) {
         int a = this.dynamicInfoMapperReader.updateByPrimaryKeySelective(dynamicInfo);
         int b = this.commentMapperWriter.insertSelective(comment);
@@ -114,7 +114,6 @@ public class CommentServiceImpl implements CommentService {
      * @return
      */
     @Override
-    @Transactional
     public int update(Comment comment) {
         return this.commentMapperWriter.updateByPrimaryKeySelective(comment);
     }

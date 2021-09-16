@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
-@Transactional
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class DynamicServiceImpl implements DynamicService {
 
     private UserMapper userMapperReader;
@@ -107,7 +108,6 @@ public class DynamicServiceImpl implements DynamicService {
 
     //保存动态内容信息
     @Override
-    @Transactional
     public DynamicInfo save(DynamicDTO dynamicDTO) {
         OperateRecord operateRecord = new OperateRecord();
         operateRecord.setStatus(OperateRecordStatusEnum.Fail.getCode().toString());
@@ -189,7 +189,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional
     public CommonResult<Map<String, Object>> updateDynamic(LocationDTO locationDTO, DynamicDTO dynamicDTO) throws Exception {
         int row = this.updateLocation(locationDTO, dynamicDTO);
         if (row > 0) {
@@ -200,7 +199,6 @@ public class DynamicServiceImpl implements DynamicService {
 
     //更新动态内容信息
     @Override
-    @Transactional
     public CommonResult<Map<String, Object>> update(User user, DynamicDTO dynamicDTO, MultipartFile[] files, String message) throws Exception {
         // 附件文件数据类型
         String attacheInfoDataType = dynamicDTO.getAttacheInfoDataType();
@@ -388,7 +386,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional
     public Integer updateLocation(LocationDTO locationDTO, DynamicDTO dynamicDTO) {
         if (locationDTO != null && dynamicDTO != null) {
             Long dynamicInfoIdLong = dynamicDTO.getDynamicInfoId();
@@ -463,7 +460,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional
     public int release(User user, DynamicDTO dynamicDTO, MultipartFile head) throws Exception {
         // 头像图片存储本地路径
         String headIconFilePath = StrUtil.trimToNull(this.projectUrlProps.getUploadRes())

@@ -8,11 +8,13 @@ import com.potato369.find.mbg.model.TagExample;
 import com.potato369.find.user.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class, timeout = 30)
 public class TagServiceImpl implements TagService {
 
     private TagMapper tagMapperReader;
@@ -70,7 +72,6 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public Long saveTag(Tag tag) {
         int row = this.getTagMapperWriter.insertSelective(tag);
         if (row > 0) {
@@ -81,6 +82,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public String findTagById(Long id) {
         Tag tag = this.tagMapperReader.selectByPrimaryKey(id);
         if (tag != null) {
