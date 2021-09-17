@@ -667,4 +667,13 @@
             `update_time` = NOW()
         WHERE `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
     </update>
+    <select id="selectUnReadMessageCount" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT
+            count( 1 )
+        FROM
+            `message`
+        WHERE
+            `recipient_user_id` = #{recipientUserId, jdbcType=BIGINT}
+          AND `status` = '0'
+    </select>
 </mapper>

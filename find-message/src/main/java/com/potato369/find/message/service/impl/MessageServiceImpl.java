@@ -403,6 +403,9 @@ public class MessageServiceImpl implements MessageService {
             }
             messageInfoVOs = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
             messageVO.setMessageInfoVOs(messageInfoVOs);
+            long count = messageMapperReader.selectUnReadMessageCount(userId);
+            log.info("count={}", count);
+            messageVO.setUnReadCount(count);
             messageVO.setTotalCount(applicationRecordPageInfo.getTotal());
             messageVO.setTotalPage(applicationRecordPageInfo.getPages());
         }

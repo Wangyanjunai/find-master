@@ -40,6 +40,8 @@ public interface MessageMapper {
 
     List<Message> selectMessageRecordCount(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 
+    long selectUnReadMessageCount(@Param("recipientUserId") Long recipientUserId);
+
     List<Message> selectMessageRecord(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId);
 
     int countByUserId(@Param("sendUserId") Long sendUserId, @Param("recipientUserId") Long recipientUserId, @Param("messageId") Long messageId);
