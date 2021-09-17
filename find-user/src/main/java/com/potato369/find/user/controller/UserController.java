@@ -495,6 +495,7 @@ public class UserController {
             BeanUtils.copyProperties(userDTO, updateUserDTO);
             this.copy(updateUserDTO, user);
             user.setNickName(nickname);
+            this.tagService.setTags(user, updateUserDTO);
             if (StrUtil.isAllEmpty(userDTO.getCountry(), userDTO.getProvince(), userDTO.getCity(), userDTO.getDistrict(), userDTO.getOther(), longitudeStr, latitudeStr)) {
                 // 根据IP调用百度定位获取地址
                 if (StrUtil.isNotEmpty(userDTO.getIp())) {
