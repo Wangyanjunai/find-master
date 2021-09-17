@@ -89,7 +89,6 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
      * @return 动态内容
      */
     @Override
-    @Transactional(readOnly = true)
     public DynamicInfo findDynamicInfoByPrimaryKey(Long id) {
         DynamicInfo dynamicInfo = this.dynamicInfoMapperReader.selectByPrimaryKey(id);
         if (!Objects.isNull(dynamicInfo) && !Objects.equals(DynamicInfoStatusEnum.HIDE.getStatus(), dynamicInfo.getDynamicStatus())) {
@@ -117,7 +116,6 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
      * @return 动态内容数据
      */
     @Override
-    @Transactional(readOnly = true)
     public Map<String, Object> getMyDynamicInfoDataList(Long userId, Integer pageNum, Integer pageSize) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         final PageInfo<DynamicInfoData> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectMyDynamicInfoData(userId));
@@ -242,7 +240,6 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
      * @return 动态内容数据
      */
     @Override
-    @Transactional(readOnly = true)
     public Map<String, Object> getOtherDynamicInfoDataList(Long myUserId, Long otherUserId, Integer pageNum, Integer pageSize) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         final PageInfo<DynamicInfoData> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectMyDynamicInfoData(otherUserId));
@@ -360,7 +357,6 @@ public class DynamicInfoServiceImpl implements DynamicInfoService {
      * @return 热门话题数据
      */
     @Override
-    @Transactional(readOnly = true)
     public HotTopicVO findHotTopicList(Long userId, Integer pageNum, Integer pageSize) {
         final PageInfo<HotTopic> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectHotTopic());
         HotTopicVO hotTopicVO = HotTopicVO.builder().build();

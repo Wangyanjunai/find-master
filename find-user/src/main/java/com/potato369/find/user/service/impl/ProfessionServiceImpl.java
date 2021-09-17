@@ -46,7 +46,6 @@ public class ProfessionServiceImpl implements ProfessionService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Industrys> getAllUnDeleteIndustrys() {
         IndustrysExample industrysExample = new IndustrysExample();
         industrysExample.setDistinct(true);
@@ -55,7 +54,6 @@ public class ProfessionServiceImpl implements ProfessionService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Professions> getAllUndeleteProfessions() {
         ProfessionsExample professionsExample = new ProfessionsExample();
         professionsExample.setDistinct(true);
@@ -64,7 +62,6 @@ public class ProfessionServiceImpl implements ProfessionService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Professions> getProfessionsByIndustrysId(Long id) {
         ProfessionsExample professionsExample = new ProfessionsExample();
         professionsExample.setDistinct(true);

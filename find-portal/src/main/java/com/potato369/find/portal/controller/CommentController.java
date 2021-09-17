@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Map;
 
@@ -24,7 +25,7 @@ import java.util.Map;
 @Api(value = "comment-controller", tags = "动态评论信息模块Restful API")
 @RestController
 @RequestMapping("/comment")
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class CommentController {
 
     private DynamicService dynamicFeignClient;

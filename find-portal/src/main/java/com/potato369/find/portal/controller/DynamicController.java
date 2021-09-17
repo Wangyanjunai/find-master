@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/dynamic")
 //@Profile({"dev", "dev2", "test", "prod"})
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class DynamicController {
 
     private DynamicService dynamicFeignClient;

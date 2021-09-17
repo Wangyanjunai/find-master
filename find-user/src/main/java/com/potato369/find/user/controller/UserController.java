@@ -33,6 +33,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -45,7 +46,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/v1/user")
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class UserController {
 
     private UserMapper userMapperWriter;
@@ -78,17 +79,10 @@ public class UserController {
 
     private TagService tagService;
 
-    private ProfessionsMapper professionsMapperReader;
-
-    private IndustrysMapper industrysMapperReader;
-
     private ScreenSettingMapper screenSettingMapperReader;
 
     private AttacheInfoMapper attacheInfoMapperReader;
 
-    private TagMapper tagMapperWriter;
-
-    private TagMapper tagMapperReader;
 
     private SensitiveWordsService sensitiveWordsService;
 
@@ -152,11 +146,6 @@ public class UserController {
     }
 
     @Autowired
-    public void setProfessionsMapperReader(ProfessionsMapper professionsMapperReader) {
-        this.professionsMapperReader = professionsMapperReader;
-    }
-
-    @Autowired
     public void setAliyunProps(AliyunProps aliyunProps) {
         this.aliyunProps = aliyunProps;
     }
@@ -177,11 +166,6 @@ public class UserController {
     }
 
     @Autowired
-    public void setIndustrysMapperReader(IndustrysMapper industrysMapperReader) {
-        this.industrysMapperReader = industrysMapperReader;
-    }
-
-    @Autowired
     public void setScreenSettingMapperReader(ScreenSettingMapper screenSettingMapperReader) {
         this.screenSettingMapperReader = screenSettingMapperReader;
     }
@@ -189,16 +173,6 @@ public class UserController {
     @Autowired
     public void setAttacheInfoMapperReader(AttacheInfoMapper attacheInfoMapperReader) {
         this.attacheInfoMapperReader = attacheInfoMapperReader;
-    }
-
-    @Autowired
-    public void setTagMapperWriter(TagMapper tagMapperWriter) {
-        this.tagMapperWriter = tagMapperWriter;
-    }
-
-    @Autowired
-    public void setTagMapperReader(TagMapper tagMapperReader) {
-        this.tagMapperReader = tagMapperReader;
     }
 
     @Autowired
@@ -742,8 +716,8 @@ public class UserController {
             if (log.isDebugEnabled()) {
                 log.debug("开始判断用户是否已经注册");
             }
-            if(Objects.isNull(phone)) {
-            	return CommonResult.failed("手机号码不能为空");
+            if (Objects.isNull(phone)) {
+                return CommonResult.failed("手机号码不能为空");
             }
             if (!RegexUtil.isMathPhone(phone)) {
                 return CommonResult.failed("手机号码格式不正确");
@@ -779,15 +753,22 @@ public class UserController {
         operateRecord.setUserId(id);
         try {
             User user = this.userMapperReader.selectByPrimaryKey(id);
-            //校验昵称是否包含敏感词汇
-            SensitiveWords sensitiveWords01 = this.sensitiveWordsService.checkHasSensitiveWords(updateUserDTO.getNickname());
-            if (!Objects.isNull(sensitiveWords01)) {
-                return CommonResult.validateFailed("用户昵称包含" + sensitiveWords01.getTypeName() + "类型敏感词汇，禁止添加。");
+            String nickname = updateUserDTO.getNickname();
+            if (StrUtil.isNotEmpty(nickname)) {
+                //校验昵称是否包含敏感词汇
+                SensitiveWords sensitiveWords01 = this.sensitiveWordsService.checkHasSensitiveWords(nickname);
+                if (!Objects.isNull(sensitiveWords01)) {
+                    return CommonResult.validateFailed("用户昵称\" + \"“\" + nickname + \"”\" + \"包含" + sensitiveWords01.getTypeName() + "类型敏感词汇，禁止添加。");
+                }
+
             }
-            //校验签名内容是否包含敏感词汇
-            SensitiveWords sensitiveWords02 = this.sensitiveWordsService.checkHasSensitiveWords(updateUserDTO.getAutograph());
-            if (!Objects.isNull(sensitiveWords02)) {
-                return CommonResult.validateFailed("签名包含" + sensitiveWords02.getTypeName() + "类型敏感词汇，禁止发布。");
+            String autograph = updateUserDTO.getAutograph();
+            if (StrUtil.isNotEmpty(autograph)) {
+                //校验签名内容是否包含敏感词汇
+                SensitiveWords sensitiveWords02 = this.sensitiveWordsService.checkHasSensitiveWords(autograph);
+                if (!Objects.isNull(sensitiveWords02)) {
+                    return CommonResult.validateFailed("签名\" + \"“\" + autograph + \"”\" + \"包含" + sensitiveWords02.getTypeName() + "类型敏感词汇，禁止发布。");
+                }
             }
             //校验星座值是否符合要求
             if (StrUtil.isNotEmpty(updateUserDTO.getConstellation())) {
@@ -797,14 +778,18 @@ public class UserController {
                 }
             }
             if (!Objects.isNull(user)) {
+                log.info("user={},userDTO={}", user, updateUserDTO);
                 this.copy(updateUserDTO, user);
+                this.tagService.setTags(user, updateUserDTO);
                 user.setUpdateTime(new Date());
-                int a = this.userMapperWriter.updateByPrimaryKeySelective(user);
+                log.info("user={},userDTO={}", user, updateUserDTO);
+                int a = this.userService.update(user);
                 if (a > 0) {
                     data.put("UPDATE", "OK");
                     operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
                 }
             }
+            log.info("user={},userDTO={}", user, updateUserDTO);
             this.operateRecordMapperWriter.insertSelective(operateRecord);
             return CommonResult.success(data, "修改或者更新用户资料成功");
         } catch (Exception e) {
@@ -863,7 +848,7 @@ public class UserController {
             String birthDate = user.getYear() + "-" + user.getMonth() + "-" + user.getDate();
             Date birthDay = DateUtil.fomatDate(birthDate);
             userVO.setAge(AgeUtil.getAge(birthDay));
-            this.setUserVO(userVO, user);
+            this.tagService.setUserVO(userVO, user);
             data.put("user", userVO);
             operateRecord.setStatus(OperateRecordStatusEnum.Success.getStatus());
             this.operateRecordMapperWriter.insertSelective(operateRecord);
@@ -931,7 +916,7 @@ public class UserController {
                 Date birthDay = DateUtil.fomatDate(birthDate);
                 userVO.setAge(AgeUtil.getAge(birthDay));
             }
-            this.setUserVO(userVO, user2);
+            this.tagService.setUserVO(userVO, user2);
             ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
             applicationRecordExample.createCriteria().andUserIdEqualTo(id).andReserveColumn01EqualTo(String.valueOf(detailsUserId));
             List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
@@ -1464,7 +1449,7 @@ public class UserController {
             String birthDate = userDetails.getYear() + "-" + userDetails.getMonth() + "-" + userDetails.getDate();
             Date birthDay = DateUtil.fomatDate(birthDate);
             userVO4.setAge(AgeUtil.getAge(birthDay));
-            setUserVO4(userVO4, userDetails);
+            this.tagService.setUserVO4(userVO4, userDetails);
             ApplicationRecordExample applicationRecordExample = new ApplicationRecordExample();
             applicationRecordExample.createCriteria().andUserIdEqualTo(id).andReserveColumn01EqualTo(String.valueOf(detailsUserId));
             List<ApplicationRecord> applicationRecordList = this.applicationRecordMapperReader.selectByExample(applicationRecordExample);
@@ -1532,148 +1517,56 @@ public class UserController {
 
     //复制需要更新的用户信息
     private void copy(UpdateUserDTO userDTO, User user) {
-        if (!Objects.equals(userDTO.getYear(), user.getYear())) {
-            user.setYear(userDTO.getYear());//出生年代
-        }
-        if (!Objects.equals(userDTO.getMonth(), user.getMonth())) {
-            user.setMonth(userDTO.getMonth());//出生月份
-        }
-        if (!Objects.equals(userDTO.getDate(), user.getDate())) {
-            user.setDate(userDTO.getDate());//出生日期
-        }
-        if (!Objects.equals(userDTO.getConstellation(), user.getConstellation())) {
-            user.setConstellation(userDTO.getConstellation());//星座
-        }
-        if (!Objects.equals(userDTO.getNickname(), user.getNickName())) {
-            user.setNickName(userDTO.getNickname());//昵称
-        }
-        if (!Objects.equals(userDTO.getWeixinId(), user.getWeixinId())) {
-            user.setWeixinId(userDTO.getWeixinId());//昵称
-        }
-        if (!Objects.equals(userDTO.getAutograph(), user.getAutograph())) {
-            user.setAutograph(userDTO.getAutograph());//签名
-        }
-        if (!Objects.equals(userDTO.getProfessionId(), user.getProfessionId())) {
-            user.setProfessionId(userDTO.getProfessionId());//职业id
-        }
-        this.setTags(user, userDTO);//标签
-    }
-
-    /**
-     * <pre>
-     * 根据标签的名称获取标签Id
-     * @param name 标签名称
-     * @return 标签信息Id
-     * </pre>
-     */
-    private Long getTagIdByName(String name) {
-        Long tagIdLong = null;
-        if (!Objects.isNull(name)) {
-            Tag tag = this.tagService.findTagByName(name);
-            if (!Objects.isNull(tag)) {
-                tagIdLong = tag.getId();
-            } else {
-                tag = new Tag();
-                tag.setName(name);
-                tag.setReserveColumn01(TagTypeEnum.USER.getType());
-                tagIdLong = this.tagService.saveTag(tag);
+        if (StrUtil.isNotBlank(userDTO.getYear())) {
+            if (!Objects.equals(userDTO.getYear(), user.getYear())) {
+                user.setYear(userDTO.getYear());//出生年代
             }
         }
-        return tagIdLong;
-    }
-
-    /**
-     * <pre>
-     * 根据标签Id获取标签名称
-     * @param id 标签id
-     * @return 标签名称
-     * </pre>
-     */
-    private String getTagNameById(Long id) {
-        return this.tagService.findTagById(id);
-    }
-
-    private void setTags(User user, UpdateUserDTO userDTO) {
-        if (StrUtil.isNotEmpty(userDTO.getTag1())) {
-            Long tagIdLong = this.getTagIdByName(userDTO.getTag1());
-            if (!Objects.equals(tagIdLong, user.getTag1())) {
-                user.setTag1(tagIdLong);
-                this.updateByTagId(tagIdLong);
+        if (StrUtil.isNotBlank(userDTO.getMonth())) {
+            if (!Objects.equals(userDTO.getMonth(), user.getMonth())) {
+                user.setMonth(userDTO.getMonth());//出生月份
             }
         }
-        if (StrUtil.isNotEmpty(userDTO.getTag2())) {
-            Long tagIdLong = this.getTagIdByName(userDTO.getTag2());
-            if (!Objects.equals(tagIdLong, user.getTag2())) {
-                user.setTag2(tagIdLong);
-                this.updateByTagId(tagIdLong);
+        if (StrUtil.isNotBlank(userDTO.getDate())) {
+            if (!Objects.equals(userDTO.getDate(), user.getDate())) {
+                user.setDate(userDTO.getDate());//出生日期
             }
         }
-        if (StrUtil.isNotEmpty(userDTO.getTag3())) {
-            Long tagIdLong = this.getTagIdByName(userDTO.getTag3());
-            if (!Objects.equals(tagIdLong, user.getTag3())) {
-                user.setTag3(tagIdLong);
-                this.updateByTagId(tagIdLong);
+        if (StrUtil.isNotBlank(userDTO.getConstellation())) {
+            if (!Objects.equals(userDTO.getConstellation(), user.getConstellation())) {
+                user.setConstellation(userDTO.getConstellation());//星座
             }
         }
-        if (StrUtil.isNotEmpty(userDTO.getTag4())) {
-            Long tagIdLong = this.getTagIdByName(userDTO.getTag4());
-            if (!Objects.equals(tagIdLong, user.getTag4())) {
-                user.setTag4(tagIdLong);
-                this.updateByTagId(tagIdLong);
+        if (StrUtil.isNotBlank(userDTO.getNickname())) {
+            if (!Objects.equals(userDTO.getNickname(), user.getNickName())) {
+                user.setNickName(userDTO.getNickname());//昵称
+            }
+        } else {
+            if ("".equals(userDTO.getNickname())) {
+                user.setNickName(null);
             }
         }
-        if (StrUtil.isNotEmpty(userDTO.getTag5())) {
-            Long tagIdLong = this.getTagIdByName(userDTO.getTag5());
-            if (!Objects.equals(tagIdLong, user.getTag5())) {
-                user.setTag5(tagIdLong);
-                this.updateByTagId(tagIdLong);
+        if (StrUtil.isNotBlank(userDTO.getWeixinId())) {
+            if (!Objects.equals(userDTO.getWeixinId(), user.getWeixinId())) {
+                user.setWeixinId(userDTO.getWeixinId());//微信号
+            }
+        } else {
+            if ("".equals(userDTO.getWeixinId())) {
+                user.setWeixinId(null);
             }
         }
-    }
-
-    private void setUserVO(UserVO userVO3, User user) {
-        if (!Objects.isNull(userVO3) && !Objects.isNull(user)) {
-            Professions professions = this.professionsMapperReader.selectByPrimaryKey(user.getProfessionId());
-            if (!Objects.isNull(professions)) {
-                userVO3.setProfession(professions.getName());
-                Industrys industrys = this.industrysMapperReader.selectByPrimaryKey(professions.getIndustryId());
-                if (!Objects.isNull(industrys)) {
-                    userVO3.setIndustry(industrys.getName());
-                }
+        if (StrUtil.isNotBlank(userDTO.getAutograph())) {
+            if (!Objects.equals(userDTO.getAutograph(), user.getAutograph())) {
+                user.setAutograph(userDTO.getAutograph());//签名
             }
-            userVO3.setTag1(this.getTagNameById(user.getTag1()));
-            userVO3.setTag2(this.getTagNameById(user.getTag2()));
-            userVO3.setTag3(this.getTagNameById(user.getTag3()));
-            userVO3.setTag4(this.getTagNameById(user.getTag4()));
-            userVO3.setTag5(this.getTagNameById(user.getTag5()));
-        }
-    }
-
-    private void setUserVO4(UserVO4 userVO4, User user) {
-        if (!Objects.isNull(userVO4) && !Objects.isNull(user)) {
-            Professions professions = this.professionsMapperReader.selectByPrimaryKey(user.getProfessionId());
-            if (!Objects.isNull(professions)) {
-                userVO4.setProfession(professions.getName());
-                Industrys industrys = this.industrysMapperReader.selectByPrimaryKey(professions.getIndustryId());
-                if (!Objects.isNull(industrys)) {
-                    userVO4.setIndustry(industrys.getName());
-                }
+        } else {
+            if ("".equals(userDTO.getAutograph())) {
+                user.setAutograph(null);
             }
-            userVO4.setTag1(this.getTagNameById(user.getTag1()));
-            userVO4.setTag2(this.getTagNameById(user.getTag2()));
-            userVO4.setTag3(this.getTagNameById(user.getTag3()));
-            userVO4.setTag4(this.getTagNameById(user.getTag4()));
-            userVO4.setTag5(this.getTagNameById(user.getTag5()));
         }
-    }
-
-    private void updateByTagId(Long tagId) {
-        if (!Objects.isNull(tagId)) {
-            Tag tag = this.tagMapperReader.selectByPrimaryKey(tagId);
-            if (!Objects.isNull(tag)) {
-                tag.setHotValue(tag.getHotValue() + 1);
-                tag.setUpdatedTime(new Date());
-                this.tagMapperWriter.updateByPrimaryKeySelective(tag);
+        if (!Objects.isNull(userDTO.getProfessionId())) {
+            if (!Objects.equals(userDTO.getProfessionId(), user.getProfessionId())) {
+                user.setProfessionId(userDTO.getProfessionId());//职业id
             }
         }
     }

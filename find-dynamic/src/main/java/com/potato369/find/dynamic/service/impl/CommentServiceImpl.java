@@ -124,7 +124,6 @@ public class CommentServiceImpl implements CommentService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public Comment findById(Long id) {
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus()).andIdEqualTo(id);
@@ -144,7 +143,6 @@ public class CommentServiceImpl implements CommentService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public PageCommentVOs pageCommentsByDynamicId(
             Long userId, Long dynamicId, int pageNum, int pageSize) {
         CommentExample example = new CommentExample();
@@ -212,7 +210,6 @@ public class CommentServiceImpl implements CommentService {
      * @param userId    用户id
      */
     @Override
-    @Transactional(readOnly = true)
     public List<Comment> findByDynamicIdAndUserId(Long dynamicId, Long userId) {
         CommentExample commentExample = new CommentExample();
         commentExample.setOrderByClause("created_time DESC");

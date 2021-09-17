@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -141,4 +143,14 @@ public class UpdateUserDTO extends AbstractDTO {
     @JSONField(name = "tag5")
     @JsonProperty(value = "tag5")
     private String tag5;
+    
+    /**
+     * <pre>
+     * tag5：标签5
+     * </pre>
+     */
+    @ApiModelProperty(value = "更新时间")
+    @JSONField(name = "updateTime")
+    @JsonProperty(value = "updateTime")
+    private Date updateTime;
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +39,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/v1/order")
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class OrderController {
 
     private ProductInfoService productInfoService;

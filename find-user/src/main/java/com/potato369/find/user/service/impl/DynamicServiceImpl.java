@@ -184,7 +184,6 @@ public class DynamicServiceImpl implements DynamicService {
 
     //筛选动态内容信息
     @Override
-    @Transactional(readOnly = true)
     public void find(Long userId) {
     }
 
@@ -289,7 +288,6 @@ public class DynamicServiceImpl implements DynamicService {
 
     //获取定位地址
     @Override
-    @Transactional(readOnly = true)
     public DynamicDTO getLocation(LocationDTO locationDTO, User user) {
         DynamicDTO dynamicDTOTmp = this.getLocationByIp(locationDTO);
         String country2 = dynamicDTOTmp.getCountry();
@@ -309,7 +307,6 @@ public class DynamicServiceImpl implements DynamicService {
 
     //根据客户端ip获取定位地址
     @Override
-    @Transactional(readOnly = true)
     public DynamicDTO getLocationByIp(LocationDTO locationDTO) {
         DynamicDTO dynamicDTOTmp = new DynamicDTO();
         String country2 = locationDTO.getCountry();
@@ -370,7 +367,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public boolean checkLocationIsUpdate(LocationDTO locationDTO, User user) {
         DynamicDTO dynamicDTOTmp = this.getLocation(locationDTO, user);
         Long userIdLong = user.getId();
@@ -414,13 +410,11 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<DynamicInfoData> getDynamicInfoData(DynamicInfoParam dynamicInfoParam, Integer pageNum, Integer sizeNum) {
         return this.dynamicInfoMapperReader.selectDynamicInfoData(dynamicInfoParam);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Dynamic getDynamicByUserId(Long userId) {
         DynamicExample example = new DynamicExample();
         example.setDistinct(true);
@@ -441,7 +435,6 @@ public class DynamicServiceImpl implements DynamicService {
      * @return 动态信息
      */
     @Override
-    @Transactional(readOnly = true)
     public Dynamic findDynamicByUserId(Long userId, String country, String province, String city) {
         DynamicExample example = new DynamicExample();
         example.setDistinct(true);

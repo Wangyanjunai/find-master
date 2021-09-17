@@ -68,7 +68,6 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
      * @return 当天的申请加微信次数
      */
     @Override
-    @Transactional(readOnly = true)
     public Integer findApplicationRecordCountByUserId(Long userId) {
         return applicationRecordMapperReader.selectCountDataByUserId(userId);
     }

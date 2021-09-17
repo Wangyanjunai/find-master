@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Map;
 @Api(value = "消息模块消息推送控制器类", consumes = "消息模块消息推送控制器类")
 @RestController
 @RequestMapping("/v1/message")
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class PushMessageController {
 
 	private JiGuangPushService jiGuangPushService;

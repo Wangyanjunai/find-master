@@ -9,13 +9,14 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Map;
 
 @Api(value = "message-controller", tags = "消息模块Restful API")
 @RestController
 @RequestMapping("/message")
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 //@Profile({"dev", "dev2", "test", "prod"})
 public class MessageController {
 

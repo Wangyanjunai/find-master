@@ -11,13 +11,14 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Map;
 
 @Api(value = "消息模块消息管理控制器类", consumes = "消息模块消息管理控制器类")
 @RestController
 @RequestMapping("/v1/message")
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class MessageController {
 
     private MessageService messageService;

@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -17,7 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/order")
 //@Profile({"dev", "dev2", "test", "prod"})
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class OrderController {
 
     private OrderService orderFeignClient;

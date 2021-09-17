@@ -25,7 +25,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User findUserById(Long userId) {
         UserExample example = new UserExample();
         example.createCriteria().andIdEqualTo(userId).andStatusEqualTo(UserStatusEnum.Normal.getStatus());

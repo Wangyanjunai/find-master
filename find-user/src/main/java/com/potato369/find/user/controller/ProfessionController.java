@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 @Api(value = "用户模块职业管理控制器类")
 @RestController
 @RequestMapping("/v1/professions")
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class ProfessionController {
 
     private ProfessionService professionService;

@@ -75,7 +75,6 @@ public class LikeRecordServiceImpl implements LikeRecordService {
      * @return 点赞记录
      */
     @Override
-    @Transactional(readOnly = true)
     public LikeRecord findByUserIdAndDynamicInfoId(Long userId, Long dynamicInfoId, String type) {
         LikeRecordExample likeRecordExample = new LikeRecordExample();
         likeRecordExample.setDistinct(true);

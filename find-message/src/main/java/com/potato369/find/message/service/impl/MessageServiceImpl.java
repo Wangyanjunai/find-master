@@ -123,7 +123,6 @@ public class MessageServiceImpl implements MessageService {
 
     //查询最新一条互动消息，包括点赞（动态，评论），评论动态消息
     @Override
-    @Transactional(readOnly = true)
     public LikesMessageVO selectInteractionMessage(Long userId) {
         // 查询（动态，评论）点赞，评论最新消息和未读消息条数
         LikesMessageVO likesMessageVO = LikesMessageVO.builder().build();
@@ -142,7 +141,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public CommentsMessageVO selectAllCommentsMessage(Long userId) {
         // 查询点赞消息
         List<Message> messageList = this.messageMapperReader.selectAllCommentsMessageRecord(userId);
@@ -156,7 +154,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public MessageVO selectNotLikesMessage(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectInteractionMessage(userId));
@@ -338,7 +335,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public MessageVO selectNewestMessages(Long userId, int pageNum, int pageSize) {
         MessageVO messageVO = MessageVO.builder().build();
         messageVO.setLikesMessageVO(this.selectInteractionMessage(userId));

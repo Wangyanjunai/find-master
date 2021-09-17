@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -40,7 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @RestController
 @RequestMapping("/v1/comment")
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class CommentController {
 
     private DynamicInfoService dynamicInfoService;

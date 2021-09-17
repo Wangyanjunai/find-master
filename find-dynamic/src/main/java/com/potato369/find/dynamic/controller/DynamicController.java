@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
@@ -41,7 +42,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/v1/dynamic")
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class DynamicController {
 
     private DynamicService dynamicService;
@@ -731,8 +732,7 @@ public class DynamicController {
                 for (String tag : tagsList) {
                     List<Tag> tagRecord = this.tagMapperReader.selectByTagNameLike(tag);
                     if (!Objects.isNull(tagRecord) && !tagRecord.isEmpty()) {
-                        List<Long> longList = tagRecord.stream().map(Tag::getId).collect(Collectors.toList());
-                        tagsIdList.addAll(longList);
+                        tagsIdList.addAll(tagRecord.stream().map(Tag::getId).collect(Collectors.toList()));
                     }
                 }
             }

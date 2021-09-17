@@ -25,7 +25,6 @@ public class SensitiveWordsServiceImpl implements SensitiveWordsService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public SensitiveWords checkHasSensitiveWords(String content) {
 		SensitiveWordsExample sensitiveWordsExample = new SensitiveWordsExample();
         sensitiveWordsExample.createCriteria().andDeleteStatusEqualTo(DeleteStatusEnum.NO.getStatus());

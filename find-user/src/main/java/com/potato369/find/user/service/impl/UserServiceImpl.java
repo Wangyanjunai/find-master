@@ -116,10 +116,17 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(user, currentInstance, nullPropertyNames);
         int result01 = this.userMapperWriter.updateByPrimaryKey(currentInstance);
         int result02 = this.operateRecordMapperWriter.insert(operateRecord);
-        if (result01 > 0 && result02 > 0) {
-            return 2;
-        }
-        return 0;
+        return result01 + result02;
+    }
+    /**
+     * 修改用户个人资料
+     * @param updateUserDTO 更新的用户信息
+     * @param user 用户信息
+     * @return 更新用户条数
+     */
+    @Override
+    public int update(User user) {
+        return this.userMapperWriter.updateByPrimaryKey(user);
     }
 
     /**
@@ -137,7 +144,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User find(Long id, OperateRecord operateRecord) {
         User currentInstance = this.userDaoUseJdbcTemplate.getById(id);
         this.operateRecordMapperWriter.insert(operateRecord);
@@ -312,7 +318,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public boolean isReg(String phone) {
         User user = this.userDaoUseJdbcTemplate.getByPhone(phone);
         return !Objects.isNull(user);

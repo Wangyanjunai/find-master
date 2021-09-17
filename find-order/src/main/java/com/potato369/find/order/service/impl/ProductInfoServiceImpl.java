@@ -36,7 +36,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<ProductInfoVO> findAll() {
         ProductInfoExample example = new ProductInfoExample();
         example.setDistinct(true);
@@ -59,7 +58,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public ProductInfo findOne(Long id) {
         return this.productInfoMapperReader.selectByPrimaryKey(id);
     }

@@ -29,6 +29,13 @@ public interface UserService {
     int update(Long id, User user, OperateRecord operateRecord);
 
     /**
+     * 修改用户个人资料
+     * @param user 用户信息
+     * @return 更新用户条数
+     */
+    int update(User user);
+
+    /**
      * 登录修改用户信息和动态信息
      *
      * @param user    用户信息
@@ -87,9 +94,10 @@ public interface UserService {
      * @return 0
      */
     int feedback(FeedbackRecord feedbackRecord, MultipartFile[] multipartFiles);
-    
+
     /**
      * 根据手机号码判断该手机号码是否注册用户
+     *
      * @param phone 手机号码
      * @return
      */

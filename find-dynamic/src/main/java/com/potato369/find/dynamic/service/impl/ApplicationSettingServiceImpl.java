@@ -42,7 +42,6 @@ public class ApplicationSettingServiceImpl implements ApplicationSettingService 
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public ApplicationSetting findApplication() {
         ApplicationSettingExample applicationSettingExample = new ApplicationSettingExample();
         applicationSettingExample.setDistinct(true);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Api(value = "用户模块标签管理控制器类")
 @RestController
 @RequestMapping("/v1/tag")
-@Scope("request")
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class TagController {
 
     private TagService tagService;

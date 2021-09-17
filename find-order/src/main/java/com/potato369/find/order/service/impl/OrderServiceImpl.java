@@ -169,7 +169,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public OrderMaster findOne(String orderId) throws Exception {
         OrderMasterExample example = new OrderMasterExample();
         example.setDistinct(true);
@@ -206,7 +205,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public OrderSetting orderSetting() {
         OrderSettingExample example = new OrderSettingExample();
         example.setDistinct(true);
@@ -221,7 +219,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<OrderMaster> getTimeOutOrderMaster(Integer minute) throws Exception {
         return this.orderMasterMapperReader.selectTimeOut(minute);
     }
@@ -270,7 +267,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public boolean check(OrderDTO orderDTO, Long userId) throws Exception {
         if (orderDTO != null) {
             Long productId = orderDTO.getProductId();    //商品id
@@ -299,7 +295,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public boolean checkOrder(OrderMaster orderInfo) {
         if (orderInfo == null) {
             log.error("APP支付回调，订单信息不存在");

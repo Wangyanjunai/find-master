@@ -234,7 +234,6 @@ public class DynamicServiceImpl implements DynamicService {
 
     //筛选动态内容信息
     @Override
-    @Transactional(readOnly = true)
     public void find(Long userId) {
     }
 
@@ -317,7 +316,6 @@ public class DynamicServiceImpl implements DynamicService {
 
     //获取定位地址
     @Override
-    @Transactional(readOnly = true)
     public DynamicDTO getLocation(LocationDTO locationDTO) {
         DynamicDTO dynamicDTOTmp = new DynamicDTO();
         LocationDTO locationDTO02 = this.getLocationByAliyunIP(locationDTO.getIp());
@@ -326,14 +324,12 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public LocationDTO getLocationByAliyunIP(String ip) {
         return IPLocationUtil.getLocationByAliyunIP(StrUtil.trimToEmpty(this.aliyunProps.getAppcode()), StrUtil.trimToEmpty(this.aliyunProps.getUrl()), ip);
     }
 
     //根据客户端ip获取定位地址
     @Override
-    @Transactional(readOnly = true)
     public DynamicDTO getLocationByIp(LocationDTO locationDTO) {
         DynamicDTO dynamicDTOTmp = new DynamicDTO();
         String country2 = locationDTO.getCountry();
@@ -400,7 +396,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public boolean checkLocationIsUpdate(LocationDTO locationDTO, User user) {
         String ip = locationDTO.getIp();
         String country = locationDTO.getCountry();
@@ -477,7 +472,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Map<String, Object> getDynamicInfoData(Long userId, DynamicInfoParam dynamicInfoParam, Integer pageNum, Integer pageSize) {
         Map<String, Object> data = new ConcurrentHashMap<>();
         final PageInfo<DynamicInfoData> listPageInfo = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> this.dynamicInfoMapperReader.selectDynamicInfoData(dynamicInfoParam));
@@ -601,7 +595,6 @@ public class DynamicServiceImpl implements DynamicService {
      * @return 动态信息
      */
     @Override
-    @Transactional(readOnly = true)
     public Dynamic findDynamicByUserId(Long userId) {
         DynamicExample example = new DynamicExample();
         example.createCriteria().andUserIdEqualTo(userId);
@@ -610,7 +603,6 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<HotTopic> findHotTopicList() {
         return this.dynamicInfoMapperReader.selectHotTopicTitle();
     }
