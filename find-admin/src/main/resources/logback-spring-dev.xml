@@ -115,7 +115,7 @@
 
     <logger name="log4j.logger.freemarker.beans" level="ERROR"/>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="consoleLog"/>
         <appender-ref ref="fileDebugLog"/>
         <appender-ref ref="fileInfoLog"/>
