@@ -1,8 +1,0 @@
-logging:
-  config: classpath:logback-spring-dev.xml
-spring:
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 8.135.36.45:8848
-        namespace: bb0e196a-546f-48b8-af0f-ae445d63c0bd
