@@ -166,4 +166,14 @@ public class MessageController {
                                                    @RequestParam(name = "weChatId", required = false) @ApiParam(name = "weChatId", value = "微信号", example = "wx123456789") String weChatId) {
         return this.messageService.replyApplications(userId, messageId, type, content, weChatId);
     }
+
+    /**
+     * 获取未读（点赞，评论，申请加微信）消息总条数
+     *
+     * @param userId 消息接收者用户id
+     */
+    @GetMapping(value = "/{id}/count.do")
+    public CommonResult<Map<String, Object>> getUnReadCount(@PathVariable(name = "id") @ApiParam(name = "id", value = "消息接收者用户id", required = true, example = "1") Long userId) {
+        return this.messageService.count(userId);
+    }
 }

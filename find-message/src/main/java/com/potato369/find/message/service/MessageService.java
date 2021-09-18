@@ -120,4 +120,11 @@ public interface MessageService {
      * @param weChatId         回复的微信id
      */
     CommonResult<Map<String, Object>> replyApplications(Long applicantsUserId, Long messageId, String type, String content, String weChatId);
+
+    /**
+     * 获取未读（点赞，评论，申请加微信）消息总数量
+     *
+     * @param recipientUserId 消息接收者用户id
+     */
+    CommonResult<Map<String, Object>> count(Long recipientUserId);
 }

@@ -403,9 +403,6 @@ public class MessageServiceImpl implements MessageService {
             }
             messageInfoVOs = messageInfoVOs.stream().sorted(Comparator.comparing(MessageInfoVO::getCreateTime).reversed()).collect(Collectors.toList());
             messageVO.setMessageInfoVOs(messageInfoVOs);
-            long count = messageMapperReader.selectUnReadMessageCount(userId);
-            log.info("count={}", count);
-            messageVO.setUnReadCount(count);
             messageVO.setTotalCount(applicationRecordPageInfo.getTotal());
             messageVO.setTotalPage(applicationRecordPageInfo.getPages());
         }
@@ -741,5 +738,18 @@ public class MessageServiceImpl implements MessageService {
         }
         data.put("REPLY", "OK");
         return CommonResult.success(data, ResultCode.SUCCESS.getMessage());
+    }
+
+    /**
+     * 获取未读（点赞，评论，申请加微信）消息总数量
+     *
+     * @param recipientUserId 消息接收者用户id
+     */
+    @Override
+    public CommonResult<Map<String, Object>> count(Long recipientUserId) {
+        Map<String, Object> data = new ConcurrentHashMap<>();
+        long count = messageMapperReader.selectUnReadMessageCount(recipientUserId);
+        data.put("unReadCount", count);
+        return CommonResult.success(data);
     }
 }

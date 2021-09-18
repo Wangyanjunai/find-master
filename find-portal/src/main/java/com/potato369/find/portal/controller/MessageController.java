@@ -46,6 +46,7 @@ public class MessageController {
      * @apiSuccess (200) {Number} [count1] 未读点赞或者评论消息数量
      * @apiSuccess (200){Number} [totalCount] 申请加微信消息总条数
      * @apiSuccess (200) {Number} [totalPage] 申请加微信消息总页数
+     * @apiSuccess (200) {Number} [unReadCount] 未读（点赞，评论，申请加微信）消息总条数
      * @apiSuccess (200) {Object[]} [list] 申请加微信消息数据
      * @apiSuccess (200){Number} [messageId] 申请加微信消息记录id
      * @apiSuccess (200){Number} [userId] 申请加微信发送者用户id
@@ -67,95 +68,93 @@ public class MessageController {
      * "msg": "返回数据成功。",
      * "data": {
      * "likes": {
-     * "content1": "qqq 评论您的动态 测试安排",
-     * "count1": 2
+     * "content1": "测试11 点赞您的动态 测试是否推送",
+     * "count1": 0
      * },
      * "totalCount": 6,
      * "totalPage": 1,
      * "list": [
      * {
-     * "messageId": 514,
-     * "userId": 143,
-     * "head": "http://192.168.31.38:9000/find/img/head/143/f683b170-6aa1-4cec-99c9-25baeecb74a1.jpeg",
-     * "nickname": "www",
-     * "content2": "同意",
-     * "createTime": "2021年09月08日 15:54:16",
-     * "count2": 1,
-     * "type": "0",
-     * "flag": 1,
-     * "flag2": 0,
-     * "weixinId": "11111111111",
-     * "isOrNotApplication": true
-     * },
-     * {
-     * "messageId": 519,
-     * "userId": 131,
-     * "head": "http://192.168.31.38:9000/find/img/head/131/02.png",
-     * "nickname": "YY",
-     * "content2": "申请加您的微信，麻烦通过一下。",
-     * "createTime": "2021年09月08日 16:27:18",
+     * "messageId": 865,
+     * "userId": 229,
+     * "head": "http://8.135.36.45:8000/find02/img/head/229/341bbd52-135b-46ab-9996-9698ba98a919.jpg",
+     * "nickname": "测试11",
+     * "content2": "你好，可以加微信吗",
+     * "createTime": "2021年09月17日 16:41:16",
      * "count2": 1,
      * "type": "1",
      * "flag": 0,
      * "flag2": 1,
-     * "isOrNotApplication": true
-     * },
-     * {
-     * "messageId": 515,
-     * "userId": 140,
-     * "head": "http://192.168.31.38:9000/find/img/head/140/0c99dc02-188b-426e-a46d-5e951743dedf.jpg",
-     * "nickname": "凝噎新紫",
-     * "content2": "同意",
-     * "createTime": "2021年09月08日 16:22:43",
-     * "count2": 1,
-     * "type": "0",
-     * "flag": 1,
-     * "flag2": 0,
-     * "weixinId": "11111111111",
      * "isOrNotApplication": false
      * },
      * {
-     * "messageId": 516,
-     * "userId": 144,
-     * "head": "http://192.168.31.38:9000/find/img/head/144/fc3fe05b-6ca8-49fe-863c-31593879e124.jpg",
-     * "nickname": "季婉",
-     * "content2": "同意",
-     * "createTime": "2021年09月08日 16:23:12",
-     * "count2": 1,
-     * "type": "0",
-     * "flag": 1,
-     * "flag2": 0,
-     * "weixinId": "11111111111",
-     * "isOrNotApplication": false
-     * },
-     * {
-     * "messageId": 517,
-     * "userId": 142,
-     * "head": "http://192.168.31.38:9000/find/img/head/142/331e380a-73da-4592-9bd6-6c79f539c4e4.jpeg",
-     * "nickname": "qqq",
-     * "content2": "同意",
-     * "createTime": "2021年09月08日 16:24:58",
-     * "count2": 1,
-     * "type": "0",
-     * "flag": 1,
-     * "flag2": 0,
-     * "weixinId": "11111111111",
-     * "isOrNotApplication": false
-     * },
-     * {
-     * "messageId": 518,
-     * "userId": 124,
-     * "head": "http://192.168.31.38:9000/find/img/head/124/08.png",
-     * "nickname": "miss T",
-     * "content2": "申请加您的微信，麻烦通过一下。",
-     * "createTime": "2021年09月08日 16:26:29",
+     * "messageId": 852,
+     * "userId": 224,
+     * "head": "http://8.135.36.45:8000/find02/img/head/224/d9a25d51-c90e-4df6-9910-5e20dbe565f1.jpg",
+     * "nickname": "tt",
+     * "content2": "你好美女",
+     * "createTime": "2021年09月16日 14:52:12",
      * "count2": 1,
      * "type": "1",
      * "flag": 0,
+     * "flag2": 1,
+     * "isOrNotApplication": false
+     * },
+     * {
+     * "messageId": 724,
+     * "userId": 210,
+     * "head": "http://8.135.36.45:8000/find02/img/head/210/b6d8f544-a1b1-45a3-92da-72618a90df95.png",
+     * "nickname": "关键",
+     * "content2": "qqq",
+     * "createTime": "2021年09月13日 14:07:11",
+     * "count2": 0,
+     * "type": "1",
+     * "flag": 0,
+     * "flag2": 1,
+     * "isOrNotApplication": false
+     * },
+     * {
+     * "messageId": 714,
+     * "userId": 142,
+     * "head": "http://8.135.36.45:8000/find02/img/head/142/331e380a-73da-4592-9bd6-6c79f539c4e4.jpeg",
+     * "nickname": "qqq",
+     * "content2": "我的微信号是wx406181651",
+     * "createTime": "2021年09月13日 13:52:35",
+     * "count2": 0,
+     * "type": "0",
+     * "flag": 1,
      * "flag2": 0,
      * "isOrNotApplication": false
+     * },
+     * {
+     * "messageId": 710,
+     * "userId": 139,
+     * "head": "http://8.135.36.45:8000/find02/img/head/139/76489d30-d996-46dd-81c9-fdb3ed6197ca.jpg",
+     * "nickname": "哦哦哦哦",
+     * "content2": "我的微信号是wx406181651",
+     * "createTime": "2021年09月13日 13:46:21",
+     * "count2": 0,
+     * "type": "0",
+     * "flag": 1,
+     * "flag2": 0,
+     * "weixinId": "qqq",
+     * "isOrNotApplication": false
+     * },
+     * {
+     * "messageId": 658,
+     * "userId": 44,
+     * "head": "http://8.135.36.45:8000/find02/img/head/44/10.png",
+     * "nickname": "如雪",
+     * "content2": "你好",
+     * "createTime": "2021年09月09日 14:08:43",
+     * "count2": 0,
+     * "type": "0",
+     * "flag": 0,
+     * "flag2": 0,
+     * "isOrNotApplication": true
      * }
-     * ]
+     * ],
+     * "unReadCount": 2
      * }
      * }
      * @apiError (403) {Number} status 响应状态码
@@ -883,5 +882,65 @@ public class MessageController {
                                                    @RequestParam(name = "content", required = false) @ApiParam(name = "content", value = "消息内容", example = "非常抱歉，我不想加你！") String content,
                                                    @RequestParam(name = "weChatId", required = false) @ApiParam(name = "weChatId", value = "微信号", example = "wx123456789") String weChatId) {
         return this.messageFeignClient.reply(userId, messageId, type, content, weChatId);
+    }
+
+    /**
+     * @api {get} /find/message/{id}/getUnReadCount 获取未读（点赞，评论，申请加微信）消息总条数接口
+     * @apiVersion 1.0.0
+     * @apiGroup 消息模块API
+     * @apiName 获取未读（点赞，评论，申请加微信）消息总条数
+     * @apiParam (接口请求参数){Number} id 当前（消息接收者）用户id
+     * @apiParamExample {json} 请求示例 回复申请加微信消息（拒绝）
+     * HTTP/1.1 OK
+     * curl -v -X GET "http://w168428j19.51mypc.cn/find/message/138/getUnReadCount
+     * @apiSuccess (200) {Number} code 信息码
+     * @apiSuccess (200) {String} msg 说明
+     * @apiSuccess (200) {Number} status 响应状态码
+     * @apiSuccess (200) {Object} [data] 回复消息状态数据
+     * @apiSuccess (200) {Number} [unReadCount] 未读（点赞，评论，申请加微信）消息总条数
+     * @apiSuccessExample {json} 200响应示例
+     * HTTP/1.1 200 OK
+     * {
+     * "status": 200,
+     * "code": 0,
+     * "msg": "返回数据成功。",
+     * "data": {
+     * "unReadCount": 6
+     * }
+     * }
+     * @apiError (403) {Number} status 响应状态码
+     * @apiError (403) {Number} code 消息码
+     * @apiError (403) {String} msg 说明
+     * @apiErrorExample {json} 403错误
+     * HTTP/1.1 403 403响应
+     * {
+     * "status": 403,
+     * "code": 199,
+     * "msg": "未找到用户信息！"
+     * }
+     * @apiError (404) {Number} status 响应状态码
+     * @apiError (404) {Number} code 消息码
+     * @apiError (404) {String} msg 说明
+     * @apiErrorExample {json} 404错误
+     * HTTP/1.1 404 404响应
+     * {
+     * "status": 404,
+     * "code": 200,
+     * "msg": "接口未注册！"
+     * }
+     * @apiError (500) {Number} status 响应状态码
+     * @apiError (500) {Number} code 消息码
+     * @apiError (500) {String} msg 说明
+     * @apiErrorExample {json} 500错误
+     * HTTP/1.1 500 500响应
+     * {
+     * "status": 500,
+     * "code": 205,
+     * "msg": "服务器未响应！"
+     * }
+     */
+    @GetMapping(value = "/{id}/getUnReadCount")
+    public CommonResult<Map<String, Object>> getUnReadCount(@PathVariable(name = "id") @ApiParam(name = "id", value = "消息接收者用户id", required = true, example = "1") Long userId) {
+        return this.messageFeignClient.getUnReadCount(userId);
     }
 }

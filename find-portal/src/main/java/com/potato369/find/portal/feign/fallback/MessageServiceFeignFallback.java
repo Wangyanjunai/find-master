@@ -74,4 +74,15 @@ public class MessageServiceFeignFallback implements MessageService {
         log.error("进入了熔断器方法！！！");
         return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
     }
+
+    /**
+     * 获取未读（点赞，评论，申请加微信）消息总条数
+     *
+     * @param userId 消息接收者用户id
+     */
+    @Override
+    public CommonResult<Map<String, Object>> getUnReadCount(Long userId) {
+        log.error("进入了熔断器方法！！！");
+        return CommonResult.failed("fallback; reason was: 服务忙，稍后重试！");
+    }
 }

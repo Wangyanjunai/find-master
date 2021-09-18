@@ -50,11 +50,4 @@ public class MessageVO {
     @JSONField(name = "list")
     @JsonProperty(value = "list")
     private List<MessageInfoVO> messageInfoVOs;
-
-    /**
-     * unReadCount:未读消息总条数
-     */
-    @JSONField(name = "unReadCount")
-    @JsonProperty(value = "unReadCount")
-    private Long unReadCount;
 }

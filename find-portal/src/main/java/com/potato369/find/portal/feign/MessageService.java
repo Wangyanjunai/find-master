@@ -61,4 +61,12 @@ public interface MessageService {
                                             @RequestParam(name = "type") String type,
                                             @RequestParam(name = "content", required = false) String content,
                                             @RequestParam(name = "weChatId", required = false) String weChatId);
+
+    /**
+     * 获取未读（点赞，评论，申请加微信）消息总条数
+     *
+     * @param userId 消息接收者用户id
+     */
+    @GetMapping(value = "/find/v1/message/{id}/count.do")
+    CommonResult<Map<String, Object>> getUnReadCount(@PathVariable(name = "id") Long userId);
 }
